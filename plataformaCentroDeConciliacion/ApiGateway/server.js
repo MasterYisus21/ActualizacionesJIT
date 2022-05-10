@@ -1,12 +1,15 @@
+
 const express = require('express')
+const axios = require('axios')
 const app = express()
+
 
 // app.use(express.static("public"))
 // app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // app.set('view engine', 'ejs')
-app.use(logger)
+// app.use(verifier)
 
 /* 
 app.get('/', logger, (req, res) => {
@@ -29,9 +32,67 @@ app.get('/', (req, res) => {
     res.send("Hello ApiGateway")
 })
 
-function logger(req, res, next) {
-    console.log(req.originalUrl)
-    next()
+app.post('/auth/ingresar', (req, res) => {
+    const data = req.body;
+    axios.post('http://127.0.0.1:4000/auth', data)
+      .then(function (response) {
+        // console.log(response);
+        // req.headers['Authorization'] = "Bearer " + response.data.token
+        res.set({ "Authorization": "Bearer " + response.data.token })
+        res.status(200).json(response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+        res.sendStatus(500)
+      });
+})
+
+app.get("/auth/verificar", (req, res) => {
+    axios.get("http://127.0.0.1:4000/get_identity", {
+        headers: {
+            Authorization: req.headers.authorization
+        }
+    })
+        .then(response => {
+            res.status(200).json(response.data)
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.sendStatus(500)
+        })
+})
+
+app.get("/protectedView", verifier, (req, res) => {
+    res.json({
+        answer: "Passed Through authentication"
+    })
+})
+
+function verifier(req, res, next) {
+    console.log(req.headers.authorization)
+    if(req.headers.authorization){
+        axios.get("http://127.0.0.1:4000/get_identity", {
+        headers: {
+            Authorization: req.headers.authorization
+        }
+    })
+        .then(response => {
+            if(response.data["logged_in_as"]){
+                console.log(response.data["logged_in_as"])
+                next()
+            }
+            else {
+                res.sendStatus(401)
+            }
+        })
+        .catch(function (error) {
+            res.sendStatus(404)
+        })
+    }
+    else {
+        res.sendStatus(401)
+    }
+    
 }
 
 const port = 3001;
