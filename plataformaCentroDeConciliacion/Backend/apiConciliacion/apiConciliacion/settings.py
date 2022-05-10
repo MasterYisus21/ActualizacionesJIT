@@ -107,9 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "centroconciliacion.ugc.edu.co",
-]
+#CORS_ALLOWED_ORIGINS = [
+#    "centroconciliacion.ugc.edu.co",
+#]
 
 
 # Internationalization

@@ -19,6 +19,6 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),   # Acede a la funcion Admin cuando se ingresa la url admin/
-    path('api/v1/', include('apiConciliacionApp.routers')), # Todas las url de apiConciliacionApp  deberan empezar por 'api/'
+    path('api/conciliaciones/v1/', include('apiConciliacionApp.routers')), # Todas las url de apiConciliacionApp  deberan empezar por 'api/'
 
 ]

@@ -5,7 +5,7 @@ from pydoc import describe
 from pyexpat import model
 from django.db import models
 
-from apiConciliacionApp.base.general_models import BaseModels
+from apiConciliacionApp.base.general_models import BaseModels, StateModel
 
 # Create your models here.
 # Campos Comunes
@@ -34,7 +34,7 @@ class Departamento(BaseModels):
 
 class Ciudad(BaseModels):
 
-    Departamento_Id = models.ForeignKey(Departamento, on_delete=models.CASCADE, blank=False,null=False)
+    Departamento_Id = models.ForeignKey(Departamento, on_delete=models.SET_NULL, blank=False,null=True)
   
     class Meta:
         verbose_name = ("Ciudad")
@@ -46,7 +46,7 @@ class Ciudad(BaseModels):
 
 class Localidad(BaseModels):
 
-    Ciudad_Id = models.ForeignKey(Ciudad, on_delete=models.CASCADE, blank=False,null=False)
+    Ciudad_Id = models.ForeignKey(Ciudad, on_delete=models.SET_NULL, blank=False,null=True)
    
     class Meta:
         verbose_name = ("Localidad")
@@ -58,7 +58,7 @@ class Localidad(BaseModels):
 
 class Barrio(BaseModels):
 
-    Localidad_Id = models.ForeignKey(Localidad, on_delete=models.CASCADE, blank=False,null=False)
+    Localidad_Id = models.ForeignKey(Localidad, on_delete=models.SET_NULL, blank=False,null=True)
     class Meta:
         verbose_name = ("Barrio")
         verbose_name_plural = ("Barrios")
@@ -89,7 +89,7 @@ class Tema(BaseModels):
 
 class Subtema(BaseModels):
     
-    Tema_Id = models.ForeignKey(Tema, on_delete=models.CASCADE, blank=False,null=False)
+    Tema_Id = models.ForeignKey(Tema, on_delete=models.SET_NULL, blank=False,null=True)
 
     class Meta:
         verbose_name = ("Subtema")
@@ -110,7 +110,7 @@ class Objetivo_servicio(BaseModels):
 
 class Tipo_servicio(BaseModels):
 
-    Objetivo_servicio_ID= models.ForeignKey(Objetivo_servicio,  on_delete=models.CASCADE , blank=False, null=False)
+    Objetivo_servicio_ID= models.ForeignKey(Objetivo_servicio,  on_delete=models.SET_NULL , blank=False, null=True)
 
     class Meta:
         verbose_name = ("Tipo_servicio")
@@ -129,30 +129,30 @@ class Tipo_resultado(BaseModels):
         return self.Nombre
 
 
-class Solicitud(models.Model):
+class Solicitud(StateModel):
 
     Numero_caso = models.AutoField(primary_key=True,auto_created = True,)
     Descripcion = models.TextField(blank=True,null=True)
     Fecha_registro = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) # Se crea automaticamente 
     Fecha_finalizacion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
-    Area_Id = models.ForeignKey(Area, on_delete=models.CASCADE, blank=False ,null=False)
-    Subtema_Id =  models.ForeignKey(Subtema, on_delete=models.CASCADE, blank=False ,null=False)
-    Tipo_servicio_Id = models.ForeignKey(Tipo_servicio, on_delete=models.CASCADE, blank=False ,null=False)
-    Tipo_resultado_Id = models.ForeignKey(Tipo_resultado, on_delete=models.CASCADE, blank=False ,null=False)
+    Area_Id = models.ForeignKey(Area, on_delete= models.SET_NULL, blank=False ,null=True)
+    Subtema_Id =  models.ForeignKey(Subtema, on_delete= models.SET_NULL, blank=False ,null=True)
+    Tipo_servicio_Id = models.ForeignKey(Tipo_servicio, on_delete= models.SET_NULL, blank=False ,null=True)
+    Tipo_resultado_Id = models.ForeignKey(Tipo_resultado, on_delete= models.SET_NULL, blank=False ,null=True)
     
 
     class Meta:
         verbose_name = ("Solicitud")   
-        verbose_name_plural = ("Solicituds")
+        verbose_name_plural = ("Solicitudes")
 
     def __str__(self):
-        return self.Numero_caso
+        return self.Descripcion
 
     def get_absolute_url(self):
         return reverse("Solicitud_detail", kwargs={"pk": self.pk})
 
 
-class Hechos(models.Model):
+class Hechos(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Fecha = models.DateField(blank=False,null=False)
@@ -160,8 +160,8 @@ class Hechos(models.Model):
     Descripcion_pretension = models.TextField(blank=True)
     Flag_interviene_tercero = models.BooleanField(default=False)
     Flag_Violencia=models.BooleanField(default=False)
-    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.CASCADE, blank=False,null=False)
-    Barrio_Id = models.ForeignKey(Barrio, on_delete=models.CASCADE, blank=False,null=False)
+    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False,null=True)
+    Barrio_Id = models.ForeignKey(Barrio, on_delete=models.SET_NULL, blank=False,null=True)
    
     class Meta:
         verbose_name = ("Hechos")
@@ -181,12 +181,12 @@ class Tipo_estado(BaseModels):
         return self.Nombre
 
 
-class Documento(models.Model):
+class Documento(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
     Ruta_directorio = models.FileField(upload_to=None, max_length=100)
     Tamanio = models.PositiveIntegerField()
-    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.CASCADE, blank=False, null=False)
-    Tipo_estado_Id = models.ForeignKey(Tipo_estado, on_delete=models.CASCADE, blank=False, null=False)
+    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
+    Tipo_estado_Id = models.ForeignKey(Tipo_estado, on_delete=models.SET_NULL, blank=False, null=True)
 
     class Meta:
         verbose_name = ("Documento")
@@ -195,14 +195,14 @@ class Documento(models.Model):
     def __str__(self):
         return self.Id
 
-class Historico_solicitud(models.Model):
+class Historico_solicitud(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Fecha = models.DateTimeField( auto_now=True, auto_now_add=False)
     Descripcion = models.TextField(blank=False,null=False)
     Flag_requiere_documento = models.BooleanField()
-    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.CASCADE, blank=False, null=False)
-    Tipo_estado_Id = models.ForeignKey(Tipo_estado, on_delete=models.CASCADE, blank=False, null=False)
+    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
+    Tipo_estado_Id = models.ForeignKey(Tipo_estado, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
         verbose_name = ("Historico_solicitud")
@@ -234,15 +234,15 @@ class Turno(BaseModels):
         return self.Fanja_horaria
 
 
-class Citacion(models.Model):
+class Citacion(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Fecha_sesion = models.DateTimeField( blank=False, null=False)
     Descripcion = models.TextField(blank=False,null=False)
     Enlace= models.CharField(max_length=150,blank=True,null=True)
-    Turno_Id = models.ForeignKey(Turno, on_delete=models.CASCADE, blank=False, null=False)
-    Tipo_medio_Id = models.ForeignKey(Tipo_medio, on_delete=models.CASCADE, blank=False, null=False)
-    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.CASCADE, blank=False, null=False)
+    Turno_Id = models.ForeignKey(Turno, on_delete=models.SET_NULL, blank=False, null=True)
+    Tipo_medio_Id = models.ForeignKey(Tipo_medio, on_delete=models.SET_NULL, blank=False, null=True)
+    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
 
     class Meta:
         verbose_name = ("Citacion")
@@ -252,7 +252,7 @@ class Citacion(models.Model):
         return self.Fecha_sesion
 
 
-class Estrato_socioeconomico(models.Model):
+class Estrato_socioeconomico(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Numero = models.PositiveSmallIntegerField(blank=False,null=False)
@@ -306,7 +306,7 @@ class Tipo_vivienda(BaseModels):
 
 
 
-class Rol_permiso(models.Model):
+class Rol_permiso(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True,)
     Descipcion = models.CharField(max_length=100,blank=False,null=False,unique=True)
@@ -325,7 +325,7 @@ class Rol_permiso(models.Model):
 
 class Rol(BaseModels):
 
-    Rol_permiso_Id=models.ForeignKey(Rol_permiso,on_delete=models.CASCADE,blank=False,null=False)
+    Rol_permiso_Id=models.ForeignKey(Rol_permiso,on_delete=models.SET_NULL,blank=False,null=True)
 
     class Meta:
         verbose_name = ("Rol")
@@ -343,10 +343,10 @@ class Perfil(BaseModels):
         verbose_name_plural = ("Perfiles")
 
     def __str__(self):
-        return self.Descripcion
+        return self.Nombre
 
 
-class Persona(models.Model):
+class Persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Identificacion = models.BigIntegerField(blank=False,null=False)
@@ -357,14 +357,14 @@ class Persona(models.Model):
     Correo = models.EmailField(max_length=120,blank=False,null=False)
     Telefono = models.BigIntegerField(blank=True,null=True)
     Fecha_de_nacimiento = models.DateField(blank=True,null=True)
-    Tipo_documento_Id=models.ForeignKey(Documento,on_delete=models.CASCADE,blank=False,null=False)
-    Tipo_vivienda_Id =models.ForeignKey(Tipo_vivienda,on_delete=models.CASCADE,blank=False,null=False)
-    Barrio_Id =models.ForeignKey(Barrio,on_delete=models.CASCADE,blank=False,null=False)
-    Tipo_persona_Id=models.ForeignKey(Tipo_persona,on_delete=models.CASCADE,blank=False,null=False)
-    Estrato_socioeconomico_Id= models.ForeignKey(Estrato_socioeconomico,on_delete=models.CASCADE,blank=False,null=False)
-    Tipo_estado_Id=models.ForeignKey(Tipo_estado,on_delete=models.CASCADE,blank=True,null=True)
-    Perfil_Id=models.ForeignKey(Perfil,on_delete=models.CASCADE,blank=True,null=True)
-    Tipo_cargo_Id=models.ForeignKey(Tipo_cargo,on_delete=models.CASCADE,blank=True,null=True)
+    Tipo_documento_Id=models.ForeignKey(Documento,on_delete=models.SET_NULL,blank=False,null=True)
+    Tipo_vivienda_Id =models.ForeignKey(Tipo_vivienda,on_delete=models.SET_NULL,blank=False,null=True)
+    Barrio_Id =models.ForeignKey(Barrio,on_delete=models.SET_NULL,blank=False,null=True)
+    Tipo_persona_Id=models.ForeignKey(Tipo_persona,on_delete=models.SET_NULL,blank=False,null=True)
+    Estrato_socioeconomico_Id= models.ForeignKey(Estrato_socioeconomico,on_delete=models.SET_NULL,blank=False,null=True)
+    Tipo_estado_Id=models.ForeignKey(Tipo_estado,on_delete=models.SET_NULL,blank=True,null=True)
+    Perfil_Id=models.ForeignKey(Perfil,on_delete=models.SET_NULL,blank=True,null=True)
+    Tipo_cargo_Id=models.ForeignKey(Tipo_cargo,on_delete=models.SET_NULL,blank=True,null=True)
 
 
     class Meta:
@@ -375,12 +375,12 @@ class Persona(models.Model):
         return self.Primer_nombre
 
 
-class Usuario(models.Model):
+class Usuario(StateModel):
 
     Usuario = models.BigIntegerField(primary_key=True,auto_created=False,null=False)
     Contraseña =models.CharField( max_length=100)
-    Rol_Id=models.ForeignKey(Rol,on_delete=models.CASCADE,blank=False,null=False)
-    Persona_Id=models.ForeignKey(Persona,on_delete=models.CASCADE,blank=True,null=True)
+    Rol_Id=models.ForeignKey(Rol,on_delete=models.SET_NULL,blank=False,null=True)
+    Persona_Id=models.ForeignKey(Persona,on_delete=models.SET_NULL,blank=True,null=True)
 
     class Meta:
         verbose_name = ("Usuario")
@@ -390,11 +390,11 @@ class Usuario(models.Model):
         return self.Usuario
 
 
-class Relacion_citacion_persona(models.Model):
+class Relacion_citacion_persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Citacion_Id = models.ForeignKey(Citacion, on_delete=models.CASCADE, blank=False, null=False)
-    Persona_Id  = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
+    Citacion_Id = models.ForeignKey(Citacion, on_delete=models.SET_NULL, blank=False, null=True)
+    Persona_Id  = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
 
     class Meta:
         verbose_name = ("Relacion_citacion_persona")
@@ -414,12 +414,12 @@ class Tipo_cliente(BaseModels):
         return self.Nombre
 
 
-class Relacion_solicitud_persona(models.Model):
+class Relacion_solicitud_persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.CASCADE, blank=False, null=False)
-    Persona_Id  = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
-    Tipo_cliente_Id  = models.ForeignKey(Tipo_cliente, on_delete=models.CASCADE, blank=False, null=False)
+    Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
+    Persona_Id  = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
+    Tipo_cliente_Id  = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=False, null=True)
 
     class Meta:
         verbose_name = ("Relacion_persona_solicitud")
@@ -430,11 +430,11 @@ class Relacion_solicitud_persona(models.Model):
 
 
         
-class Relacion_area_perfil(models.Model):
+class Relacion_area_perfil(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Perfil_Id= models.ForeignKey(Perfil, on_delete=models.CASCADE, blank=False, null=False)
-    Area_Id = models.ForeignKey(Area, on_delete=models.CASCADE, blank=False, null=False)
+    Perfil_Id= models.ForeignKey(Perfil, on_delete=models.SET_NULL, blank=False, null=True)
+    Area_Id = models.ForeignKey(Area, on_delete=models.SET_NULL, blank=False, null=True)
 
     class Meta:
         verbose_name = ("Relacion_area_perfil")
@@ -444,7 +444,7 @@ class Relacion_area_perfil(models.Model):
         return self.Id 
 
 
-class Pregunta(models.Model):
+class Pregunta(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Pregunta = models.CharField(max_length=100,blank=False,null=False,unique=True)
@@ -465,14 +465,13 @@ class Medio_conocimiento (BaseModels):
     def __str__(self):
         return self.Nombre
 
-    def get_absolute_url(self):
-        return reverse("Medio_conocimiento _detail", kwargs={"pk": self.pk})
 
-class Encuesta(models.Model):
+
+class Encuesta(StateModel):
     
     Id = models.AutoField(primary_key=True,auto_created = True)
     Fecha = models.DateField()
-    Solicitud_Id=  models.ForeignKey(Solicitud, on_delete=models.CASCADE, blank=False, null=False)
+    Solicitud_Id=  models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
 
 
     class Meta:
@@ -483,12 +482,12 @@ class Encuesta(models.Model):
         return self.Id
 
 
-class Respuesta(models.Model):
+class Respuesta(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Calificacion = models.SmallIntegerField(blank=False)
-    Pregunta_Id = models.ForeignKey(Pregunta, on_delete=models.CASCADE, blank=False, null=False)
-    Medio_conocimiento_Id=  models.ForeignKey(Medio_conocimiento, on_delete=models.CASCADE, blank=False, null=False)
+    Pregunta_Id = models.ForeignKey(Pregunta, on_delete=models.SET_NULL, blank=False, null=True)
+    Medio_conocimiento_Id=  models.ForeignKey(Medio_conocimiento, on_delete=models.SET_NULL, blank=False, null=True)
 
 
     class Meta:
