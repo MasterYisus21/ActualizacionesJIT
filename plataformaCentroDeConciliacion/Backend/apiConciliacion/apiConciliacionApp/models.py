@@ -1,8 +1,7 @@
-from asyncio.format_helpers import _format_callback_source
-from email import charset
-from pickle import TRUE
-from pydoc import describe
-from pyexpat import model
+
+
+
+from hashlib import blake2b
 from django.db import models
 
 from apiConciliacionApp.base.general_models import BaseModels, StateModel
@@ -19,18 +18,17 @@ class Pais(BaseModels):# Es una extencion del modelo BaseModels del archivo gene
         verbose_name_plural = ("Paises")
 
     def __str__(self):
-        return self.Nombre # Devuelve el nombre en vez del Id
-
+        return str(self.Nombre) # Devuelve el nombre en vez del Id)
          
 class Departamento(BaseModels):
-
+    
+    Pais_Id = models.ForeignKey(Pais, on_delete=models.SET_NULL, blank=False,null=True)
     class Meta:
         verbose_name = ("Departamento")
         verbose_name_plural = ("Departamentos")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Ciudad(BaseModels):
 
@@ -41,8 +39,7 @@ class Ciudad(BaseModels):
         verbose_name_plural = ("Ciudades")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Localidad(BaseModels):
 
@@ -53,8 +50,7 @@ class Localidad(BaseModels):
         verbose_name_plural = ("Localidades")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Barrio(BaseModels):
 
@@ -64,8 +60,7 @@ class Barrio(BaseModels):
         verbose_name_plural = ("Barrios")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 class Area(BaseModels):
 
     class Meta:
@@ -73,8 +68,7 @@ class Area(BaseModels):
         verbose_name_plural = ("Areas")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Tema(BaseModels):
     
@@ -83,8 +77,7 @@ class Tema(BaseModels):
         verbose_name_plural =   ("Temas")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 
 class Subtema(BaseModels):
@@ -96,8 +89,7 @@ class Subtema(BaseModels):
         verbose_name_plural =   ("Subtemas")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 class Objetivo_servicio(BaseModels):
 
     class Meta:
@@ -105,20 +97,18 @@ class Objetivo_servicio(BaseModels):
         verbose_name_plural = ("Objetivo_servicios")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Tipo_servicio(BaseModels):
 
-    Objetivo_servicio_ID= models.ForeignKey(Objetivo_servicio,  on_delete=models.SET_NULL , blank=False, null=True)
+    Objetivo_servicio_Id= models.ForeignKey(Objetivo_servicio,  on_delete=models.SET_NULL , blank=False, null=True)
 
     class Meta:
         verbose_name = ("Tipo_servicio")
         verbose_name_plural = ("Tipo_servicios")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 class Tipo_resultado(BaseModels):
 
     class Meta:
@@ -126,8 +116,7 @@ class Tipo_resultado(BaseModels):
         verbose_name_plural = ("Tipo_resultados")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Solicitud(StateModel):
 
@@ -138,7 +127,7 @@ class Solicitud(StateModel):
     Area_Id = models.ForeignKey(Area, on_delete= models.SET_NULL, blank=False ,null=True)
     Subtema_Id =  models.ForeignKey(Subtema, on_delete= models.SET_NULL, blank=False ,null=True)
     Tipo_servicio_Id = models.ForeignKey(Tipo_servicio, on_delete= models.SET_NULL, blank=False ,null=True)
-    Tipo_resultado_Id = models.ForeignKey(Tipo_resultado, on_delete= models.SET_NULL, blank=False ,null=True)
+    Tipo_resultado_Id = models.ForeignKey(Tipo_resultado, on_delete= models.SET_NULL, blank=True ,null=True)
     
 
     class Meta:
@@ -146,11 +135,7 @@ class Solicitud(StateModel):
         verbose_name_plural = ("Solicitudes")
 
     def __str__(self):
-        return self.Descripcion
-
-    def get_absolute_url(self):
-        return reverse("Solicitud_detail", kwargs={"pk": self.pk})
-
+        return str(self.Numero_caso)
 
 class Hechos(StateModel):
 
@@ -165,11 +150,10 @@ class Hechos(StateModel):
    
     class Meta:
         verbose_name = ("Hechos")
-        verbose_name_plural = ("Hechoss")
+        verbose_name_plural = ("Hechos")
 
     def __str__(self):
-        return self.Descripcion_hecho
-
+        return str(self.Descripcion_hecho)
 
 class Tipo_estado(BaseModels):
 
@@ -178,13 +162,12 @@ class Tipo_estado(BaseModels):
         verbose_name_plural = ("Tipo_estados")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Documento(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
     Ruta_directorio = models.FileField(upload_to=None, max_length=100)
-    Tamanio = models.PositiveIntegerField()
+    Tamanio = models.CharField( max_length=50, blank=True, null=True)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Tipo_estado_Id = models.ForeignKey(Tipo_estado, on_delete=models.SET_NULL, blank=False, null=True)
 
@@ -193,7 +176,7 @@ class Documento(StateModel):
         verbose_name_plural = ("Documentos")
 
     def __str__(self):
-        return self.Id
+        return str(self.Id)
 
 class Historico_solicitud(StateModel):
 
@@ -206,11 +189,10 @@ class Historico_solicitud(StateModel):
     
     class Meta:
         verbose_name = ("Historico_solicitud")
-        verbose_name_plural = ("Historico_solicituds")
+        verbose_name_plural = ("Historico_solicitudes")
 
     def __str__(self):
-        return self.Descripcion
-
+        return str(self.Descripcion)
 
 class Tipo_medio(BaseModels):
     
@@ -219,8 +201,7 @@ class Tipo_medio(BaseModels):
         verbose_name_plural = ("Tipo_Medios")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
     
 class Turno(BaseModels):
@@ -231,8 +212,7 @@ class Turno(BaseModels):
         verbose_name_plural = ("Turnos")
 
     def __str__(self):
-        return self.Fanja_horaria
-
+        return str(self.Nombre)
 
 class Citacion(StateModel):
 
@@ -246,11 +226,10 @@ class Citacion(StateModel):
 
     class Meta:
         verbose_name = ("Citacion")
-        verbose_name_plural = ("Citacions")
+        verbose_name_plural = ("Citaciones")
 
     def __str__(self):
-        return self.Fecha_sesion
-
+        return str(str(self.Descripcion))
 
 class Estrato_socioeconomico(StateModel):
 
@@ -262,8 +241,7 @@ class Estrato_socioeconomico(StateModel):
         verbose_name_plural = ("Estratos")
 
     def __str__(self):
-        return self.Numero
-
+        return str(str(self.Id))
 
 class Tipo_persona(BaseModels):
    
@@ -272,8 +250,7 @@ class Tipo_persona(BaseModels):
         verbose_name_plural = ("Tipo_personas")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Tipo_cargo(BaseModels):
 
@@ -282,8 +259,7 @@ class Tipo_cargo(BaseModels):
         verbose_name_plural = ("Tipo_cargos")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Tipo_documento(BaseModels):
 
@@ -292,8 +268,7 @@ class Tipo_documento(BaseModels):
         verbose_name_plural = ("Tipo_documentos")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Tipo_vivienda(BaseModels):
 
@@ -302,8 +277,7 @@ class Tipo_vivienda(BaseModels):
         verbose_name_plural = ("Tipo_viviendas")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 
 class Rol_permiso(StateModel):
@@ -320,8 +294,7 @@ class Rol_permiso(StateModel):
         verbose_name_plural = ("Rol_permisos")
 
     def __str__(self):
-        return self.Descipcion
-
+        return str(self.Descipcion)
 
 class Rol(BaseModels):
 
@@ -332,10 +305,13 @@ class Rol(BaseModels):
         verbose_name_plural = ("Roles")
 
     def __str__(self):
-        return self.Nombre 
+        return str(self.Nombre )
 
+class Perfil(StateModel):
 
-class Perfil(BaseModels):
+    Id = models.AutoField(primary_key=True,auto_created = True)
+    Nombre = models.CharField(max_length=150,blank=False,null=False,unique=True)
+
 
  
     class Meta:
@@ -343,8 +319,7 @@ class Perfil(BaseModels):
         verbose_name_plural = ("Perfiles")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Persona(StateModel):
 
@@ -352,12 +327,12 @@ class Persona(StateModel):
     Identificacion = models.BigIntegerField(blank=False,null=False)
     Primer_nombre = models.CharField(max_length=15,blank=False,null=False)
     Segundo_nombre = models.CharField(max_length=15,blank=True,null=True)
-    Primer_Apellido = models.CharField(max_length=15,blank=False,null=False)
-    Segundo_Apellido = models.CharField(max_length=15,blank=True,null=True)
+    Primer_apellido = models.CharField(max_length=15,blank=False,null=False)
+    Segundo_apellido = models.CharField(max_length=15,blank=True,null=True)
     Correo = models.EmailField(max_length=120,blank=False,null=False)
     Telefono = models.BigIntegerField(blank=True,null=True)
     Fecha_de_nacimiento = models.DateField(blank=True,null=True)
-    Tipo_documento_Id=models.ForeignKey(Documento,on_delete=models.SET_NULL,blank=False,null=True)
+    Tipo_documento_Id=models.ForeignKey(Tipo_documento,on_delete=models.SET_NULL,blank=False,null=True)
     Tipo_vivienda_Id =models.ForeignKey(Tipo_vivienda,on_delete=models.SET_NULL,blank=False,null=True)
     Barrio_Id =models.ForeignKey(Barrio,on_delete=models.SET_NULL,blank=False,null=True)
     Tipo_persona_Id=models.ForeignKey(Tipo_persona,on_delete=models.SET_NULL,blank=False,null=True)
@@ -372,8 +347,7 @@ class Persona(StateModel):
         verbose_name_plural = ("Personas")
 
     def __str__(self):
-        return self.Primer_nombre
-
+        return  '%s %s' % (self.Primer_nombre,self.Primer_apellido  )
 
 class Usuario(StateModel):
 
@@ -387,8 +361,7 @@ class Usuario(StateModel):
         verbose_name_plural = ("Usuarios")
 
     def __str__(self):
-        return self.Usuario
-
+        return str(self.Usuario)
 
 class Relacion_citacion_persona(StateModel):
 
@@ -401,8 +374,7 @@ class Relacion_citacion_persona(StateModel):
         verbose_name_plural = ("Relacion_citacion_personas")
 
     def __str__(self):
-        return self.Id
-
+        return str(self.Id)
 
 class Tipo_cliente(BaseModels):
 
@@ -411,8 +383,7 @@ class Tipo_cliente(BaseModels):
         verbose_name_plural = ("Tipo_clientes")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 class Relacion_solicitud_persona(StateModel):
 
@@ -422,12 +393,11 @@ class Relacion_solicitud_persona(StateModel):
     Tipo_cliente_Id  = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=False, null=True)
 
     class Meta:
-        verbose_name = ("Relacion_persona_solicitud")
-        verbose_name_plural = ("Relacion_persona_solicituds")
+        verbose_name = ("Relacion_solicitud_persona")
+        verbose_name_plural = ("Relacion_solicitud_persona")
 
     def __str__(self):
-        return self. Id
-
+        return str(str(self.Id))
 
         
 class Relacion_area_perfil(StateModel):
@@ -441,8 +411,7 @@ class Relacion_area_perfil(StateModel):
         verbose_name_plural = ("Relacion_area_perfils")
 
     def __str__(self):
-        return self.Id 
-
+        return str(self.Id )
 
 class Pregunta(StateModel):
 
@@ -454,17 +423,16 @@ class Pregunta(StateModel):
         verbose_name_plural = ("Preguntas")
 
     def __str__(self):
-        return self.Pregunta
+        return str(self.Pregunta)
 class Medio_conocimiento (BaseModels):
     
     
     class Meta:
         verbose_name = ("Medio_conocimiento ")
-        verbose_name_plural = ("Medio_conocimiento s")
+        verbose_name_plural = ("Medios_conocimiento")
 
     def __str__(self):
-        return self.Nombre
-
+        return str(self.Nombre)
 
 
 class Encuesta(StateModel):
@@ -472,6 +440,8 @@ class Encuesta(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
     Fecha = models.DateField()
     Solicitud_Id=  models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
+    Medio_conocimiento_Id=  models.ForeignKey(Medio_conocimiento, on_delete=models.SET_NULL, blank=False, null=True)
+    Usuario_Id=  models.ForeignKey(Usuario, on_delete=models.SET_NULL, blank=False, null=True)
 
 
     class Meta:
@@ -479,15 +449,14 @@ class Encuesta(StateModel):
         verbose_name_plural = ("Encuestas")
 
     def __str__(self):
-        return self.Id
-
+        return str(self.Id)
 
 class Respuesta(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Calificacion = models.SmallIntegerField(blank=False)
     Pregunta_Id = models.ForeignKey(Pregunta, on_delete=models.SET_NULL, blank=False, null=True)
-    Medio_conocimiento_Id=  models.ForeignKey(Medio_conocimiento, on_delete=models.SET_NULL, blank=False, null=True)
+   
 
 
     class Meta:
@@ -495,4 +464,4 @@ class Respuesta(StateModel):
         verbose_name_plural = ("Respuesta")
 
     def __str__(self):
-        return self.Calificacion
+     return str(self.Calificacion)

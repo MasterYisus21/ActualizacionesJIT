@@ -9,9 +9,11 @@ from apiConciliacionApp.base.general_views import  GeneralViewSet
 
 class PaisViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PaisSerializer
+  
 
 class DepartamentoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = DepartamentoSerializer
+
 
 class CiudadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = CiudadSerializer
@@ -49,8 +51,17 @@ class HechosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest
 class Tipo_estadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Tipo_estadoSerializer
 
-class DocumentoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class DocumentoViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
+   
     serializer_class = DocumentoSerializer
+    def get_queryset(self,pk=None):
+        model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
+        if pk is None:
+            return model.filter(State=True)
+ 
+        return model.filter(State=True, Id=pk).first() # retorna todos los valores con estado = true
+    
+
 
 class Historico_solicitudViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Historico_solicitudSerializer

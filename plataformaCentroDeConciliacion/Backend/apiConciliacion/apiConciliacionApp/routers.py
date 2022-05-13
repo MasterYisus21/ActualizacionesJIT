@@ -2,6 +2,7 @@ from rest_framework.routers import DefaultRouter
 from .views import *
 
 router = DefaultRouter()
+
 router.register(r'paises',PaisViewSet,basename='Paises'),
 router.register(r'departamentos',DepartamentoViewSet,basename='Departamento')
 router.register(r'ciudades',CiudadViewSet,basename='Ciudad')
@@ -28,9 +29,15 @@ router.register(r'subtemas',SubtemaViewSet,basename='Subtema')
 router.register(r'temas',TemaViewSet,basename='Tema')
 router.register(r'documentos',DocumentoViewSet,basename='Documento')
 router.register(r'tipos_estado',Tipo_estadoViewSet,basename='Tipo_estado')
+router.register(r'citaciones',CitacionViewSet,basename='Tipo_estado')
 router.register(r'historico_solicitudes',Historico_solicitudViewSet,basename='Historico_solicitud')
 router.register(r'relaciones_citacion_persona',Relacion_citacion_personaViewSet,basename='Relacion_citacion_persona')
 router.register(r'tipos_medio',Tipo_medioViewSet,basename='Tipo_Medio')
 router.register(r'turnos',TurnoViewSet,basename='Turno')
+router.register(r'tipo_cliente',Tipo_clienteViewSet,basename='Tipo_cliente')
+router.register(r'preguntas',PreguntaViewSet,basename='Preguntas')
+router.register(r'medio_conocimiento',Medio_conocimientoViewSet,basename='Medio_conocimiento')
+router.register(r'Encuesta',EncuestaViewSet,basename='Encuesta')
+router.register(r'Respuesta',RespuestaViewSet,basename='Respuesta')
 router.register(r'relaciones_solicitud_persona',Relacion_solicitud_personaViewSet,basename='Relacion_solicitud_persona')
 urlpatterns = router.urls

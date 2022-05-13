@@ -1,11 +1,12 @@
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response 
-from apiConciliacionApp.models import *
+from apiConciliacionApp.models import *  
 from apiConciliacionApp.serializers import * 
 
 
 class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     serializer_class = None
+   # filter_fields ='__all__'
    
     def get_queryset(self,pk=None):
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
@@ -19,7 +20,7 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     #     serializer = self.serializer_class(data = request.data)
     #     if serializer.is_valid():#Valida que los datos sean compatibles con la Base de datos
     #         serializer.save() #Crea un nuevo registro en la base de datos  o actualiza una instancia existente
-    #         return Response ({'message': "Creado correctamente"},status = status.HTTP_201_CREATED )
+    #         return Response ({'message': "Creado correctamente"},status = status.HTTP_201_ CREATED )
 
       
     #     return Response(serializer.errors,status = status.HTTP_400_BAD_REQUEST) # mostrar los errores si no es valido el dato
