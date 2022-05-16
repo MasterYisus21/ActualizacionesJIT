@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CORS_ALLOWED_ORIGINS = [
     #"centroconciliacion.ugc.edu.co",
-   "http://localhost:3001",
+   'http://localhost',
 ]
 
 

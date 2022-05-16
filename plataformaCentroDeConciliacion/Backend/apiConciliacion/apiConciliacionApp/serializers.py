@@ -8,16 +8,14 @@ from .models import *
 
 
 class PaisSerializer(serializers.ModelSerializer):
-
     
-
     class Meta:
         model = Pais     # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
 
 class DepartamentoSerializer(serializers.ModelSerializer):
-    Pais_Id = PaisSerializer()
+    #Pais_Id = PaisSerializer()
     class Meta:
         model = Departamento     # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 

@@ -1,12 +1,13 @@
 
-const express = require('express')
-const axios = require('axios')
-const app = express()
+const express = require('express') // 
+const axios = require('axios') 
+const app = express() // aplicaicon express 
 
 
 // app.use(express.static("public"))
 // app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+
+app.use(express.json()) // para usar json
 
 // app.set('view engine', 'ejs')
 // app.use(verifier)
@@ -28,9 +29,7 @@ app.get('/', logger, (req, res) => {
 
 // app.use('/users', userRouter)
 
-app.get('/', (req, res) => {
-    res.send("Hello ApiGateway")
-})
+
 
 app.post('/auth/ingresar', (req, res) => {
     const data = req.body;
@@ -94,6 +93,9 @@ function verifier(req, res, next) {
     }
     
 }
+
+const routes =require('./routers/routers')
+app.use('/api/gateway/',routes)
 
 const port = 3001;
 

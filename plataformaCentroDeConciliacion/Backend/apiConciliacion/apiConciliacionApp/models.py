@@ -1,6 +1,7 @@
 
 
 
+from ast import Pass
 from hashlib import blake2b
 from django.db import models
 
@@ -21,6 +22,7 @@ class Pais(BaseModels):# Es una extencion del modelo BaseModels del archivo gene
         return str(self.Nombre) # Devuelve el nombre en vez del Id)
          
 class Departamento(BaseModels):
+    
     
     Pais_Id = models.ForeignKey(Pais, on_delete=models.SET_NULL, blank=False,null=True)
     class Meta:
