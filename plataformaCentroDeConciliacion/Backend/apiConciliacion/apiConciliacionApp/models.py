@@ -185,7 +185,7 @@ class Historico_solicitud(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
     Fecha = models.DateTimeField( auto_now=True, auto_now_add=False)
     Descripcion = models.TextField(blank=False,null=False)
-    Flag_requiere_documento = models.BooleanField()
+    Flag_requiere_documento = models.BooleanField(default=False)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Tipo_estado_Id = models.ForeignKey(Tipo_estado, on_delete=models.SET_NULL, blank=False, null=True)
     
@@ -392,8 +392,7 @@ class Relacion_solicitud_persona(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Persona_Id  = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
-    Tipo_cliente_Id  = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=False, null=True)
-
+    
     class Meta:
         verbose_name = ("Relacion_solicitud_persona")
         verbose_name_plural = ("Relacion_solicitud_persona")

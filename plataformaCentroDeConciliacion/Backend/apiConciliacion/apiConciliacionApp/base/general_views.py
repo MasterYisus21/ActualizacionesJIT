@@ -6,7 +6,7 @@ from apiConciliacionApp.serializers import *
 
 class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     serializer_class = None
-   # filter_fields ='__all__'
+    filter_fields ='__all__'
    
     def get_queryset(self,pk=None):
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
