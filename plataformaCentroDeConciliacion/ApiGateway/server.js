@@ -95,7 +95,7 @@ function verifier(req, res, next) {
 }
 
 const routes =require('./routers/routers')
-app.use('/api/gateway/',routes)
+app.use('/api/gateway/v1/',routes)
 
 const port = 3001;
 
