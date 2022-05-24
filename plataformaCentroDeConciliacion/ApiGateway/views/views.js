@@ -63,6 +63,24 @@ views.Barrios= (req,res)=>{
     
 }
 
+views.Conciliador= (req,res)=>{
+
+    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Tipo_cargo_Id=2")
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        console.log(error);
+        res.sendStatus(500)
+    })
+    
+}
+
+
+
+
+
+
 module.exports = views
 
 

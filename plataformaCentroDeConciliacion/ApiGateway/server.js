@@ -9,6 +9,11 @@ const app = express() // aplicaicon express
 
 app.use(express.json()) // para usar json
 
+
+var cors = require('cors')
+
+app.use(cors()) // Use this after the variable declaration
+
 // app.set('view engine', 'ejs')
 // app.use(verifier)
 
