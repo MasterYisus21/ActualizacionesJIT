@@ -1,0 +1,137 @@
+Id;Nombre;Id_tema;State
+1;Donaciones y modos de adquirir el dominio distintos de la compraventa o la sucesión por causa de muerte;1;1
+2;Competencia desleal;2;1
+3;Clausulas abusivas;3;1
+4;Comercio electronico;3;1
+5;Condiciones negociales y contratos de adhesion;3;1
+6;Daños por producto defectuoso;3;1
+7;Especulacion, acaparamiento y usura;3;1
+8;Garantia legal;3;1
+9;Garantias suplementarias;3;1
+10;Informacion;3;1
+11;Operaciones mediante sistemas de financiacion;3;1
+12;Publicidad;3;1
+13;Ventas por metodos no tradicionales o a distancia;3;1
+14;Otros;3;1
+15;Agencia comercial;4;1
+16;Aparceria;4;1
+17;Arrendamiento comercial;4;1
+18;Arrendamiento de vivienda;4;1
+19;Comision;4;1
+20;Comodato;4;1
+21;Compraventa distinta de actos de consumo;4;1
+22;Consignacion;4;1
+23;Contratos atipicos;4;1
+24;Corretaje;4;1
+25;Depositvo civil;4;1
+26;Depositvo mercantil;4;1
+27;Edicion;4;1
+28;Mandato;4;1
+29;Mutuo distinto de operaciones de crédito realizadas por establecimientos de crédito y sociedades de servicios financieros;4;1
+30;Obra;4;1
+31;Otras formas de arrendamiento distintas del arrendamiento financiero o leasing;4;1
+32;Permuta;4;1
+33;Preposicion;4;1
+34;Suministro;4;1
+35;Transaccion;4;1
+36;Transporte de cosas;4;1
+37;Transporte de personas;4;1
+38;Otros;4;1
+39;Cooperativas de ahorro y credito;5;1
+40;Arrendamiento, usufructo y anticresis;6;1
+41;Deshaucio;6;1
+42;Renovacion del contrato de arrendamiento;6;1
+43;Subarriendo;6;1
+44;Otros;6;1
+45;Anticresis sobre inmuebles;7;1
+46;Fianza;7;1
+47;Fiducia en garantia;7;1
+48;Garantias inmobiliarias;7;1
+49;Hipoteca;7;1
+50;Otras garantias inmobiliarias;7;1
+51;Propiedad horizontal;8;1
+52;Responsabilidad extracontractual;9;1
+53;Seguros;10;1
+54;Sociedades, personas juridicas de derecho privado y otras formas asociativas;11;1
+55;Titulos valores;12;1
+56;Turismo;13;1
+57;Otros;14;1
+58;Prevencion de violencia intrafamiliar;15;1
+59;Capitulaciones matrimoniales;16;1
+60;Disolucion y liquidacion de la sociedad conyugal;16;1
+61;Separacion de bienes y cuerpos;16;1
+62;Alimentos;17;1
+63;Custodia y regimen sobre menores e incapaces;17;1
+64;Direccion conjunta del hogar y ejercicio de la patria potestad;17;1
+65;Alimentos de adulto mayor;17;1
+66;Rescision de la particion en las sucesiones;18;1
+67;Declaracion de union marital de hecho;19;1
+68;Disolucion y liquidacion de la sociedad patrimonial de hecho;19;1
+69;Usura y recargo de ventas a plazo;20;1
+70;Ofrecimiento engañoso de productos y servicios;20;1
+71;Hurto simple cuya cuantía no exceda de 150 salarios mínimos mensuales legales vigentes;21;1
+72;Hurto simple para hacer uso de la cosa, con restitución en término no mayor de 24 horas;21;1
+73;Hurto simple cometido por socio, copropietario, comunero o heredero, o sobre cosa común indivisible o común divisible, excediendo su cuota parte;21;1
+74;Alteración, desfiguración y suplantación de marcas de ganado;21;1
+75;Estafa cuya cuantía no exceda de 150 salarios mínimos mensuales legales vigentes;21;1
+76;Emisión y transferencia ilegal de cheques;21;1
+77;Abuso de confianza;21;1
+78;Aprovechamiento de error ajeno o caso fortuito;21;1
+79;Alzamiento de bienes;21;1
+80;Sustracción de bien propio;21;1
+81;Disposición de bien propio gravado con prenda (garantía mobiliaria);21;1
+82;Defraudación de fluidos;21;1
+83;Malversación y dilapidación de bienes;21;1
+84;Usurpación de inmuebles;21;1
+85;Usurpación de aguas;21;1
+86;Invasión de tierras o edificaciones;21;1
+87;Perturbación de la posesión sobre inmueble;21;1
+88;Daño en bien ajeno;21;1
+89;Abuso de autoridad por acto arbitrario e injusto;22;1
+90;Abuso de autoridad por omisión de denuncia simple;22;1
+91;Revelación de secreto simple;22;1
+92;Utilización indebida de información oficial privilegiada;22;1
+93;Asesoramiento y otras actuaciones ilegales simple;22;1
+94;Intervención en política;22;1
+95;Utilización indebida de información obtenida en el ejercicio de función pública;22;1
+96;Utilización indebida de influencias derivadas del ejercicio de función pública;22;1
+97;Utilización de asunto sometido a secreto o reserva;22;1
+98;Falsa autoacusación;23;1
+99;Favorecimiento de la fuga culposa simple;23;1
+100;Infidelidad a los deberes profesionales;23;1
+101;Aceptación indebida de honores;24;1
+102;Violación de inmunidad diplomática;24;1
+103;Maltrato mediante restricción a la libertad física;25;1
+104;Malversación y dilapidación de los bienes de familiares;25;1
+105;Inasistencia alimentaria;25;1
+106;Circulación y uso de efecto oficial o sello falsificado;26;1
+107;Falsedad para obtener prueba de hecho verdadero;26;1
+108;Falsedad personal;26;1
+109;Falsificación o uso fraudulento de sello oficial;26;1
+110;Supresión de signo de anulación de efecto oficial;26;1
+111;Uso y circulación de efecto oficial anulado;26;1
+112;Calumnia;27;1
+113;Injuria;27;1
+114;Injuria por vías de hecho;27;1
+115;Injuria y calumnia indirecta;27;1
+116;Injurias recíprocas;27;1
+117;Daños o agravios a personas o a cosas destinadas al culto;28;1
+118;Divulgación y empleo de documentos reservados;28;1
+119;Impedimento y perturbación de ceremonia religiosa;28;1
+120;Irrespeto a cadáveres;28;1
+121;Ofrecimiento, venta o compra de instrumento apto para interceptar la comunicación privada entre personas;28;1
+122;Violación a la libertad religiosa;28;1
+123;Violación de habitación ajena;28;1
+124;Violación de habitación ajena por servidor público;28;1
+125;Violación de la libertad de trabajo;28;1
+126;Violación de los derechos de reunión y asociación;28;1
+127;Violación en lugar de trabajo;28;1
+128;Omisión de denuncia de quien tuviere conocimiento de la utilización de menores para la realización de delitos de explotación sexual;29;1
+129;Instigación a delinquir simple;30;1
+130;Inducción o ayuda al suicidio;31;1
+131;Lesiones personales sin secuelas que produjeren incapacidad para trabajar o enfermedad sin exceder de sesenta (60) días;31;1
+132;Lesiones personales con deformidad física transitoria;31;1
+133;Lesiones personales con perturbación funcional transitoria;31;1
+134;Parto o aborto preterintencional;31;1
+135;Lesiones personales culposas;31;1
+136;Omisión de socorro;31;1

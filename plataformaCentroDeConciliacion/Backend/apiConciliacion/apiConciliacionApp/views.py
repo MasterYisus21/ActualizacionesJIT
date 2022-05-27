@@ -130,6 +130,14 @@ class RespuestaViewSet(GeneralViewSet):  # Una sola clase para los metodos de re
     serializer_class = RespuestaSerializer
 
 
+class Solicitante_servicioViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+    serializer_class = Solicitante_servicio
+
+
+class Inicio_conflictoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+    serializer_class = RespuestaSerializer
+
+
 
 
 
