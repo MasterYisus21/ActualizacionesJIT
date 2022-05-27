@@ -103,6 +103,8 @@ class Objetivo_servicio(BaseModels):
 
 class Tipo_servicio(BaseModels):
 
+    Cuantia = models.PositiveIntegerField(blank=True)
+    Cuantia_indeterminada = models.BooleanField(default=False)
     Objetivo_servicio_Id= models.ForeignKey(Objetivo_servicio,  on_delete=models.SET_NULL , blank=False, null=True)
 
     class Meta:
@@ -170,6 +172,7 @@ class Documento(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
     Ruta_directorio = models.FileField(upload_to=None, max_length=100)
     Tamanio = models.CharField( max_length=50, blank=True, null=True)
+    Fecha_documento = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) # Se crea automaticamente 
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Tipo_estado_Id = models.ForeignKey(Tipo_estado, on_delete=models.SET_NULL, blank=False, null=True)
 

@@ -1,5 +1,7 @@
 import React, {useEffect,useState} from  'react' // rfce
 import axios from 'axios';
+import ModuloSolicitud from './components/ModuloSolicitud';
+import './App.css'
 
 
 function App() {
@@ -29,8 +31,8 @@ function App() {
   }
 
   return (
-    
     <div>
+      <ModuloSolicitud />
     <ul>
       {
       equipo.map(item => (
