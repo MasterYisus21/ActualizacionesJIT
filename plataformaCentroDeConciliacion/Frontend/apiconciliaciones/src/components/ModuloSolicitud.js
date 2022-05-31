@@ -2,7 +2,11 @@ import React from 'react'
 import './css/ModuloSolicitud.css';
 
 function ModuloSolicitud() {
-  return (
+
+    const date = new Date()
+    const today = date.getFullYear() + '-' + (date.getMonth().toString().length > 1 ? (1+date.getMonth()) : '0' + (1 + date.getMonth())) + '-' + (date.getDate().toString().length > 1 ? (date.getDate()) : '0' + (date.getDate()));
+
+    return (
     <div className='modulo-solicitud-wrapper'>
         <div className='modulo-solicitud-container'>
             <div className='modulo-solicitud-navbar'>
@@ -22,36 +26,36 @@ function ModuloSolicitud() {
                 </div>
                 <div className='modulo-solicitud-content-main'>
                     <div className='modulo-solicitud-content-main-column1'>
-                        <div class="mb-3">
-                            <label for="Numero_caso" class="form-label">ID del caso</label>
-                            <input type="text" class="form-control" id="Numero_caso" name='Numero_caso' placeholder="123456789" />
+                        <div className="mb-3">
+                            <label htmlFor="Numero_caso" className="form-label">ID del caso</label>
+                            <input type="text" className="form-control" id="Numero_caso" name='Numero_caso' placeholder="Se generara automaticamente" disabled />
                         </div>
-                        <div class="mb-3">
-                            <label for="solicitante" class="form-label">Solicitante del servicio</label>
-                            <input type="text" class="form-control" id="solicitante" name='' placeholder="Felipe Villamizar" />
+                        <div className="mb-3">
+                            <label htmlFor="solicitante" className="form-label">Solicitante del servicio</label>
+                            <input type="text" className="form-control" id="solicitante" name='' placeholder="Felipe Villamizar" />
                         </div>
-                        <div class="mb-3">
-                            <label for="tiempoconflicto" class="form-label">Hace cuanto incio el conflicto:</label>
-                            <input type="date" class="form-control" id="tiempoconflicto" name='' />
+                        <div className="mb-3">
+                            <label htmlFor="tiempoconflicto" className="form-label">Hace cuanto inicio el conflicto:</label>
+                            <input type="date" className="form-control" id="tiempoconflicto" name='' />
                         </div>
-                        <div class="mb-3">
-                            <label for="tiempoconflicto" class="form-label">Hace cuanto incio el conflicto:</label>
-                            <input type="date" class="form-control" id="tiempoconflicto" name='' />
+                        <div className="mb-3">
+                            <label htmlFor="fechasolicitud" className="form-label">Fecha de solicitud:</label>
+                            <input type="date" className="form-control" id="fechasolicitud" name='' defaultValue={today} disabled/>
                         </div>
-                        <div class="mb-3">
-                            <label for="Numero_caso" class="form-label">ID del caso</label>
-                            <input type="text" class="form-control" id="Numero_caso" name='Numero_caso' placeholder="123456789" />
+                        <div className="mb-3">
+                            <label htmlFor="Numero_caso" className="form-label">ID del caso</label>
+                            <input type="text" className="form-control" id="Numero_caso" name='Numero_caso' placeholder="123456789" />
                         </div>
                         
                     </div>
-                    <div>
+                    <div className='modulo-solicitud-content-main-column2'>
                         <h3>Definición del asunto juridico</h3>
                         <div className='modulo-solicitud-content-main-column2-form1'>
                             ¿Asunto juridico definible?
                             <input type="radio" id="si" name="asunto_definible" value="si" />
-                            <label for="si">SI</label><br />
+                            <label htmlFor="si">SI</label><br />
                             <input type="radio" id="no" name="asunto_definible" value="no" />
-                            <label for="no">NO</label><br />
+                            <label htmlFor="no">NO</label><br />
                         </div>
                         <h3>Area y Tema</h3>
                         <div className='modulo-solicitud-content-main-column2-form2'>
@@ -67,7 +71,7 @@ function ModuloSolicitud() {
             </div>
         </div>
     </div>
-  )
-}
+    )
+    }
 
 export default ModuloSolicitud

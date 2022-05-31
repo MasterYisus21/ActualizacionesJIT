@@ -53,10 +53,11 @@
 
 .modulo-solicitud-content-main {
     border: 1px solid black;
-    width: 60%;
+    width: 75%;
     display: flex;
     justify-content: space-evenly;
     padding: 15px;
+    
 }
 
 .modulo-solicitud-content-main-column1 {
@@ -64,6 +65,11 @@
     border: 1px solid black;
     display: flex;
     flex-direction: column;
+    width: 45%;
+}
+
+.modulo-solicitud-content-main-column2{
+    width: 45%;
 }
 
 .modulo-solicitud-content-main-column2-form1 {
