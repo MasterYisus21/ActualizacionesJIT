@@ -263,3 +263,17 @@ class RespuestaSerializer(serializers.ModelSerializer):
         model = Respuesta    # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
+
+class Solicitante_servicioSerializer(serializers.ModelSerializer):
+    #Pregunta_Id= serializers.StringRelatedField()
+    #Medio_conocimiento_Id= serializers.StringRelatedField()
+    class Meta:
+        model = Solicitante_servicio    # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+
+class Inicio_conflictoSerializer(serializers.ModelSerializer):
+    #Pregunta_Id= serializers.StringRelatedField()
+    #Medio_conocimiento_Id= serializers.StringRelatedField()
+    class Meta:
+        model = Inicio_conflicto   # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 

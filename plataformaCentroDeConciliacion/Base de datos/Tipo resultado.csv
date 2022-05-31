@@ -1,0 +1,14 @@
+Id;Nombre;State
+1;Acta de acuerdo parcial;1
+2;Acta de acuerdo total;1
+3;Constancia de no acuerdo;1
+4;Constancia de inasistencia de una de las partes;1
+5;Constancia de inasistencia de las dos partes;1
+6;Constancia de asunto no conciliable;1
+7;Falta de competencia;1
+8;Retiro de la solicitud;1
+9;Acuerdo extraconciliacion;1
+10;Otros;1
+11;Falta de pago del servicio;1
+12;Desistimiento de una o ambas partes;1
+13;Anulada;1

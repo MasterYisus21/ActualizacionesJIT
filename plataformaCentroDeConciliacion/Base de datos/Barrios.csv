@@ -1,0 +1,139 @@
+Id;Nombre;Localidad_Id;State
+1;Paseo de los Libertadores;1;1
+2;Verbenal;1;1
+3;La Uribe;1;1
+4;San Cristóbal Norte;1;1
+5;Toberín;1;1
+6;Los Cedros;1;1
+7;Usaquén;1;1
+8;Country Club;1;1
+9;Santa Bárbara;1;1
+10;El Refugio;2;1
+11;San Isidro-Patios;2;1
+12;Pardo Rubio;2;1
+13;Chicó Lago;2;1
+14;Chapinero;2;1
+15;Sagrado Corazón;3;1
+16;La Macarena;3;1
+17;Las Nieves;3;1
+18;Las Cruces;3;1
+19;Lourdes;3;1
+20;San Blas;4;1
+21;Sociego;4;1
+22;20 de Julio;4;1
+23;La Gloria;4;1
+24;Los Libertadores;4;1
+25;La Flora;5;1
+26;Danubio;5;1
+27;Gran Yomasa;5;1
+28;Comuneros;5;1
+29;Alfonso López;5;1
+30;Parque Entrenubes;5;1
+31;Ciudad Usme;5;1
+32;Venecia;6;1
+33;Tunjuelito;6;1
+34;Apogeo;7;1
+35;Bosa Occidental;7;1
+36;Bosa Central;7;1
+37;El Porvenir;7;1
+38;Tintal Sur;7;1
+39;Castilla;8;1
+40;Américas;8;1
+41;Carvajal;8;1
+42;Kennedy Central;8;1
+43;Timiza;8;1
+44;Tintal Norte;8;1
+45;Calandaima;8;1
+46;Corabastos;8;1
+47;Gran Britalia;8;1
+48;Patio Bonito;8;1
+49;Las Margaritas;8;1
+50;Bavaria;8;1
+51;Fontibón;9;1
+52;Fontibón-San Pablo;9;1
+53;Zona Franca;9;1
+54;Ciudad Salitre Occidente;9;1
+55;Granjas de Techo;9;1
+56;Modelia;9;1
+57;Capellanía;9;1
+58;Aeropuerto Eldorado;9;1
+59;Las Ferias;10;1
+60;Minuto de Dios;10;1
+61;Boyacá Real;10;1
+62;Santa Cecilia;10;1
+63;Bolivia;10;1
+64;Garcés Navas;10;1
+65;Engativá;10;1
+66;Jardín Botánico;10;1
+67;Álamos;10;1
+68;La Academia;11;1
+69;Guaymaral;11;1
+70;San José de Bavaria;11;1
+71;Britalia;11;1
+72;El Prado;11;1
+73;La Alhambra;11;1
+74;Casablanca Suba;11;1
+75;Niza;11;1
+76;La Floresta;11;1
+77;Suba;11;1
+78;El Rincón;11;1
+79;Tibabuyes;11;1
+80;Los Andes;12;1
+81;12 de Octubre;12;1
+82;Los Alcázares;12;1
+83;Parque Salitre;12;1
+84;Galerías;13;1
+85;Teusaquillo;13;1
+86;Parque Simón Bolívar;13;1
+87;La Esmeralda;13;1
+88;Quinta Paredes;13;1
+89;Ciudad Salitre Oriental;13;1
+90;Santa Isabel;14;1
+91;La Sabana;14;1
+92;Ciudad Jardín;15;1
+93;Restrepo;15;1
+94;Ciudad Montes;16;1
+95;Muzú;16;1
+96;San Rafael;16;1
+97;Zona Industrial;16;1
+98;Puente Aranda;16;1
+99;La Candelaria;17;1
+100;San José;18;1
+101;Quiroga;18;1
+102;Marco Fidel Suárez;18;1
+103;Marruecos;18;1
+104;Diana Turbay;18;1
+105;El Mochuelo;19;1
+106;Monteblanco;19;1
+107;Arborizadora;19;1
+108;San Francisco;19;1
+109;Lucero;19;1
+110;El Tesoro;19;1
+111;Ismael Perdomo;19;1
+112;Jerusalén;19;1
+113;Nazareth;20;1
+114;Los Ríos;20;1
+115;Las Auras;20;1
+116;Las Palmas;20;1
+117;Las Sopas;20;1
+118;Taquecitos;20;1
+119;Las Animas;20;1
+120;Santa Rosa;20;1
+121;Betania;20;1
+122;Istmo;20;1
+123;Tabaco;20;1
+124;Raizal;20;1
+125;Peñaliza;20;1
+126;Laguna Verde;20;1
+127;San Juan de Sumapaz;20;1
+128;La Unión;20;1
+129;Chorreras;20;1
+130;Tunal Alto;20;1
+131;Tunal Bajo;20;1
+132;San Antonio;20;1
+133;Las Vegas;20;1
+134;Capitolio;20;1
+135;San José;20;1
+136;Concepción;20;1
+137;El toldo;20;1
+138;Santo Domingo;20;1

@@ -103,6 +103,7 @@ class Objetivo_servicio(BaseModels):
 
 class Tipo_servicio(BaseModels):
 
+   
     Objetivo_servicio_Id= models.ForeignKey(Objetivo_servicio,  on_delete=models.SET_NULL , blank=False, null=True)
 
     class Meta:
@@ -119,17 +120,41 @@ class Tipo_resultado(BaseModels):
 
     def __str__(self):
         return str(self.Nombre)
+class Solicitante_servicio(BaseModels):
+
+    
+    class Meta:
+        verbose_name = ("Solicitante_servicio")
+        verbose_name_plural = ("Solicitante_servicios")
+
+    def __str__(self):
+        return self.Nombre
+  
+class Inicio_conflicto(BaseModels):
+
+    
+
+    class Meta:
+        verbose_name = ("Inicio_conflicto")
+        verbose_name_plural = ("Inicio_conflictos")
+
+    def __str__(self):
+        return self.Nombre
+
 
 class Solicitud(StateModel):
 
-    Numero_caso = models.AutoField(primary_key=True,auto_created = True,)
-    Descripcion = models.TextField(blank=True,null=True)
-    Fecha_registro = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) # Se crea automaticamente 
-    Fecha_finalizacion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
-    Area_Id = models.ForeignKey(Area, on_delete= models.SET_NULL, blank=False ,null=True)
-    Subtema_Id =  models.ForeignKey(Subtema, on_delete= models.SET_NULL, blank=False ,null=True)
-    Tipo_servicio_Id = models.ForeignKey(Tipo_servicio, on_delete= models.SET_NULL, blank=False ,null=True)
-    Tipo_resultado_Id = models.ForeignKey(Tipo_resultado, on_delete= models.SET_NULL, blank=True ,null=True)
+    Numero_caso               = models.AutoField(primary_key=True,auto_created = True,)
+    Descripcion               = models.TextField(blank=True,null=True)
+    Fecha_registro            = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) # Se crea automaticamente 
+    Fecha_finalizacion        = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
+    Area_Id                   = models.ForeignKey(Area, on_delete= models.SET_NULL, blank=False ,null=True)
+    Subtema_Id                =  models.ForeignKey(Subtema, on_delete= models.SET_NULL, blank=False ,null=True)
+    Tipo_servicio_Id         = models.ForeignKey(Tipo_servicio, on_delete= models.SET_NULL, blank=False ,null=True)
+    Tipo_resultado_Id         = models.ForeignKey(Tipo_resultado, on_delete= models.SET_NULL, blank=True ,null=True)
+    Inicio_conflicto_Id       = models.ForeignKey(Inicio_conflicto, on_delete= models.SET_NULL, blank=True ,null=True)
+    Solicitante_servicio_Id   = models.ForeignKey(Solicitante_servicio, on_delete= models.SET_NULL, blank=True ,null=True)
+    Caso_gratuito               = models.BooleanField(default=True, blank=True,null=True)
     
 
     class Meta:
@@ -145,10 +170,12 @@ class Hechos(StateModel):
     Fecha = models.DateField(blank=False,null=False)
     Descripcion_hecho = models.TextField(blank=False)
     Descripcion_pretension = models.TextField(blank=True)
-    Flag_interviene_tercero = models.BooleanField(default=False)
-    Flag_Violencia=models.BooleanField(default=False)
+    Flag_interviene_tercero = models.BooleanField(default=False, blank=True)
+    Flag_Violencia=models.BooleanField(default=False,blank=True)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False,null=True)
     Barrio_Id = models.ForeignKey(Barrio, on_delete=models.SET_NULL, blank=False,null=True)
+    Cuantia = models.PositiveIntegerField(blank=True,null=True)
+    Cuantia_indeterminada = models.BooleanField(default=False)
    
     class Meta:
         verbose_name = ("Hechos")
@@ -170,6 +197,7 @@ class Documento(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
     Ruta_directorio = models.FileField(upload_to=None, max_length=100)
     Tamanio = models.CharField( max_length=50, blank=True, null=True)
+    Fecha_documento = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) # Se crea automaticamente 
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Tipo_estado_Id = models.ForeignKey(Tipo_estado, on_delete=models.SET_NULL, blank=False, null=True)
 
@@ -466,3 +494,6 @@ class Respuesta(StateModel):
 
     def __str__(self):
      return str(self.Calificacion)
+
+
+

@@ -4,16 +4,46 @@ const axios = require('axios')
 const views = {}
 
 views.General= (req,res)=>{
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/" +req.params.nombre)
+
+    let datos={}
+    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_servicio")
     .then(response => {
-        res.status(200).json(response.data)
+       datos["Tipo_servicio"]=response.data
+           
+        axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/objetivos_servicio")
+        .then(response => {
+            datos["Objetivo_servicio"]=response.data
+            
+            
+            axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/areas")
+            .then(response => {
+                datos["Area"]=response.data
+                res.status(200).json(datos)
+                
+               
+            })
+            
+
+
+        })
     })
     .catch(function (error) {
         console.log(error);
         res.sendStatus(500)
     })
-    
+
+
+   
+  
 }
+
+
+
+
+
+
+
+
 
 views.Departamentos= (req,res)=>{
     axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/departamentos?Pais_Id=" +req.params.id)
