@@ -5,6 +5,10 @@ const express = require('express')
 const router = express.Router()
 const views = require('../views/views_solicitud')
 
+router.get('/',views.GeneralGet)
+router.post('/',views.GeneralPost)
+router.get('/subtemas/:id',views.SolicitudSubtema)
+
 
 // designar un docente conciliador 
 // router.get('/solicitud/:id/docentes',views.ListarDocentes) // Listar docentes 
@@ -25,7 +29,7 @@ const views = require('../views/views_solicitud')
 //router.route()
 
 
-router.get('/',views.General)
+
 
 
 

@@ -3,30 +3,55 @@ const axios = require('axios')
 
 const views = {}
 
-views.General= (req,res)=>{
+views.GeneralGet= (req,res)=>{
 
     let datos={}
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_servicio")
+    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/solicitante_servicios")
     .then(response => {
-       datos["Tipo_servicio"]=response.data
-           
-        axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/objetivos_servicio")
+       datos["Solicitante_servicio"]=response.data
+
+        axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_servicio")
         .then(response => {
-            datos["Objetivo_servicio"]=response.data
-            
-            
-            axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/areas")
+        datos["Tipo_servicio"]=response.data
+
+
+            axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/inicio_conflictos")
             .then(response => {
-                datos["Area"]=response.data
-                res.status(200).json(datos)
-                
+            datos["Inicio_conflicto"]=response.data
+
                
-            })
+                    
+                
+                axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/areas")
+                .then(response => {
+                    datos["Area"]=response.data
+                    
+
+
+                    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/temas")
+                    .then(response => {
+                        datos["Tema"]=response.data
+                        res.status(200).json(datos)
+                        
+                        
+
+
+                        
+                
+                    })
+
+                        
+                
+                
             
+                })
+                    
+               
 
-
+            })
         })
     })
+
     .catch(function (error) {
         console.log(error);
         res.sendStatus(500)
@@ -37,10 +62,70 @@ views.General= (req,res)=>{
   
 }
 
+views.SolicitudSubtema= (req,res)=>{
+    let datos = {}
+    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/subtemas?Tema_Id=" +req.params.id)
+    .then(response => {
+        datos["Subtema"]=response.data
+        res.status(200).json(datos)
+
+    })
+
+
+    .catch(function (error) {
+        console.log(error);
+        res.sendStatus(500)
+    })
+    
+}
 
 
 
+views.GeneralPost= (req,res)=>{
 
+    axios.post("http://127.0.0.1:8000/api/conciliaciones/v1/solicitudes",{
+
+        "Numero_caso": 1,
+        "Descripcion": "",
+        "Fecha_registro": "2022-05-31",
+        "Fecha_finalizacion": "2022-06-30",
+        "Caso_gratuito": true,
+        "Asunto_juridico_definible": false,
+        "Area_Id": 1,
+        "Subtema_Id": 2,
+        "Tipo_servicio_Id": 1,
+        "Tipo_resultado_Id": null,
+        "Inicio_conflicto_Id": null,
+        "Solicitante_servicio_Id": null
+    
+    
+    // "Descripcion": req.body.Descripcion,
+    // "Fecha_finalizacion": req.body.Fecha_finalizacion,
+    // "Caso_gratuito": req.body.Caso_gratuito,
+    // "Asunto_juridico_definible": req.body.Asunto_juridico_definible,
+    // "Area_Id": req.body.Area_Id,
+    // "Subtema_Id": req.body.Subtema_Id,
+    // "Tipo_servicio_Id": req.body.Tipo_servicio_Id,
+    // "Tipo_resultado_Id": req.body.Tipo_resultado_Id,
+    // "Inicio_conflicto_Id": req.body.Inicio_conflicto_Id,
+    // "Solicitante_servicio_Id": req.body.Solicitante_servicio_Id
+    })
+   
+    .then(function (response) {
+        console.log(response);})
+
+    .catch(function (error) {
+        console.log(error);
+        res.send(error)
+    })
+    
+  
+    
+
+    
+   
+  
+}
 
 
 
