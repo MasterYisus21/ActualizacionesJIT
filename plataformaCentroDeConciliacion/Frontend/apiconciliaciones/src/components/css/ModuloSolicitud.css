@@ -11,12 +11,14 @@
     margin: 2%;
     border: 1px solid rgb(0, 0, 0);
     padding-bottom: 50px;
+    padding: 20px;
 }
 
 .modulo-solicitud-navbar {
     width: 100%;
     display: flex;
     justify-content: end;
+    
 }
 
 .modulo-solicitud-navbar > a {
@@ -36,7 +38,8 @@
     display: flex;
     flex-direction: column;
     background-color: #CBC9C9;
-    padding: 20px 18px 20px 18px
+    padding: 20px 18px 20px 18px;
+    width: 12%;
 }
 
 .modulo-solicitud-content-navbar-link {
@@ -49,6 +52,22 @@
     color: black;
     text-align: left;
     font-weight: bold;
+    transition: margin-left 180ms;
+    transition: color 180ms;
+}
+
+.modulo-solicitud-content-navbar-link:hover {
+    background-color: #5c9e31;
+    margin-left: 30px;
+    width: 100%;
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.modulo-solicitud-content-navbar-link:focus {
+    background-color: #5c9e31;
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .modulo-solicitud-content-main {
@@ -57,7 +76,7 @@
     display: flex;
     justify-content: space-evenly;
     padding: 15px;
-    
+    padding-top: 80px;
 }
 
 .modulo-solicitud-content-main-column1 {
@@ -70,17 +89,40 @@
 
 .modulo-solicitud-content-main-column2{
     width: 45%;
+    height: 100%;
+    padding: 15px;
 }
 
 .modulo-solicitud-content-main-column2-form1 {
     border: 1px solid black;
     display: flex;
+    padding: 15px;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 17%;
 }
 
 .modulo-solicitud-content-main-column2-form2 {
     border: 1px solid black;
     display: flex;
     flex-direction: column;
+    padding: 15px;
+    height: 67%;
+}
+.modulo-solicitud-content-main-column2-save-button {
+    background: none;
+    border: none;
+    max-width: fit-content;
+    max-height: fit-content;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modulo-solicitud-content-main-column2-save-button-img {
+    float: right;
+    max-height: 60px;
 }
 
 .modulo-solicitud-content-main-text-input {
