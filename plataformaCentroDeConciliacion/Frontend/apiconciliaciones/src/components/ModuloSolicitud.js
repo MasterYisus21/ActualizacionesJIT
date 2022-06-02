@@ -1,6 +1,7 @@
 import React from 'react'
 import ModuloSolicitudDatosGenerales from './ModuloSolicitudDatosGenerales';
 import './css/ModuloSolicitud.css';
+import ModuloSolicitudHechos from './ModuloSolicitudHechos';
 
 function ModuloSolicitud() {
 
@@ -27,7 +28,7 @@ function ModuloSolicitud() {
                 
                 <div className='modulo-solicitud-content-main'>
                     {/* <ModuloSolicitudDatosGenerales /> */}
-                    
+                    <ModuloSolicitudHechos />
                 </div>
             </div>
         </div>
