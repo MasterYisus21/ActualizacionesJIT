@@ -1,9 +1,9 @@
 import React from 'react'
 import ModuloSolicitudDatosGenerales from './ModuloSolicitudDatosGenerales';
 import './css/ModuloSolicitud.css';
+import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 
 function ModuloSolicitud() {
-
 
     return (
     <div className='modulo-solicitud-wrapper'>
@@ -27,7 +27,8 @@ function ModuloSolicitud() {
                 
                 <div className='modulo-solicitud-content-main'>
                     {/* <ModuloSolicitudDatosGenerales /> */}
-                    
+                    <ModuloInformacionConvocante />
+
                 </div>
             </div>
         </div>

@@ -1,0 +1,19 @@
+
+.container{
+    max-width: 90%;
+}
+.titulo-informacion-convocante{
+    max-width: fit-content;
+    /* border: 1px solid black; */
+    margin-bottom: 4%;
+}
+.contenedor-navbar-agregar-convocante{
+    margin-bottom: 3%;
+}
+#boton-agregar-convocante{
+    background-color: rgb(56, 165, 42);
+    border-color: rgb(56, 165, 42);;
+}
+.contenedor-tabla-convocante{
+    font-size: small;
+}
