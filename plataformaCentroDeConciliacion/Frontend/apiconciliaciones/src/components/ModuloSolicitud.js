@@ -1,5 +1,6 @@
 import React from 'react'
 import ModuloSolicitudDatosGenerales from './ModuloSolicitudDatosGenerales';
+import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
 
@@ -29,7 +30,7 @@ function ModuloSolicitud() {
                     {/* <ModuloSolicitudDatosGenerales /> */}
                     <ModuloInformacionConvocante />
 
-                    <ModuloSolicitudHechos />
+                    {/* <ModuloSolicitudHechos /> */}
                 </div>
             </div>
         </div>
