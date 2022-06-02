@@ -3,35 +3,15 @@
 const express = require('express')
 
 const router = express.Router()
-const views = require('../views/views_solicitud')
+const views_solicitud = require('../views/views_solicitud')
+const views_convocante = require('../views/views_convocante')
+// solicitud
+router.get('/',views_solicitud.GeneralGet)
+router.post('/',views_solicitud.GeneralPost)
+router.get('/subtemas/:id',views_solicitud.SolicitudSubtema)
 
-router.get('/',views.GeneralGet)
-router.post('/',views.GeneralPost)
-router.get('/subtemas/:id',views.SolicitudSubtema)
+// convocante //
 
-
-// designar un docente conciliador 
-// router.get('/solicitud/:id/docentes',views.ListarDocentes) // Listar docentes 
-// router.get('/solicitud/:id/docentes',views.AsignarDocentes) // Relacionar docentes a unsa solicitud 
-
-
-
-// /// Radicar solicitud
-
-
-// router.get('/:nombre',views.General)
-// router.get('/paises/:id',views.Departamentos)
-// router.get('/paises/:id/ciudades/:id2',views.Ciudades)
-// router.get('/paises/:id/ciudades/:id2/localidades/:id3',views.Localidades)
-// router.get('/paises/:id/ciudades/:id2/localidades/:id3/barrios/:id4',views.Barrios)
-
-
-//router.route()
-
-
-
-
-
-
+router.get('/:id/convocante',views_convocante.GeneralGet)
 
 module.exports = router 
