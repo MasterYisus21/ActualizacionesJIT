@@ -1,0 +1,55 @@
+.modulo-solicitud-content-main-hechos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modulo-solicitud-content-main-hechos-lugar {
+    border: 1px solid black;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    padding-top: 55px;
+    position: relative;
+}
+
+.modulo-solicitud-content-main-hechos-lugar-titulo {
+    position: absolute;
+    top: -30px;
+    left: 10px;
+    border: 1px solid black;
+    max-width: fit-content;
+    background-color: white;
+    padding: 15px;
+    border-radius: 20px;
+}
+
+.modulo-solicitud-content-main-hechos-lugar > div {
+    width: 46%;
+}
+
+.modulo-solicitud-content-main-hechos-resumen {
+    border: 1px solid black;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 12px;
+    padding: 10px;
+}
+
+.modulo-solicitud-content-main-hechos-resumen > div {
+    width: 50%;
+}
+
+.modulo-solicitud-content-main-hechos-determinacion-cuantia {
+    border: 1px solid black;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 40px;
+    padding: 10px;
+    padding-top: 55px;
+    position: relative;
+}

@@ -1,6 +1,7 @@
 import React, {useEffect,useState} from  'react' // rfce
 import axios from 'axios';
 import ModuloSolicitud from './components/ModuloSolicitud';
+import InicioSesion from './components/InicioSesion';
 import './App.css'
 
 
@@ -32,7 +33,7 @@ function App() {
 
   return (
     <div>
-      <ModuloSolicitud />
+      <ModuloSolicitud />  
     <ul>
       {
       equipo.map(item => (
