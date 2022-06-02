@@ -27,8 +27,6 @@ function ModuloSolicitud() {
                 
                 <div className='modulo-solicitud-content-main'>
                     {/* <ModuloSolicitudDatosGenerales /> */}
-                    <ModuloInformacionConvocante />
-
                     <ModuloSolicitudHechos />
                 </div>
             </div>
