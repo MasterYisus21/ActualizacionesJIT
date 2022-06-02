@@ -1,5 +1,6 @@
 import React from 'react'
 import ModuloSolicitudDatosGenerales from './ModuloSolicitudDatosGenerales';
+import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
 
@@ -27,7 +28,13 @@ function ModuloSolicitud() {
                 
                 <div className='modulo-solicitud-content-main'>
                     {/* <ModuloSolicitudDatosGenerales /> */}
+<<<<<<< HEAD
                     <ModuloSolicitudHechos />
+=======
+                    <ModuloInformacionConvocante />
+
+                    {/* <ModuloSolicitudHechos /> */}
+>>>>>>> 28aaf0b1cb515c3098ad7b3641e5967f5e2510a0
                 </div>
             </div>
         </div>
