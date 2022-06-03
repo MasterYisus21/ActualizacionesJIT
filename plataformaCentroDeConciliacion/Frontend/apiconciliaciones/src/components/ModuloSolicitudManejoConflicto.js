@@ -15,6 +15,7 @@ function ModuloSolicitudManejoConflicto() {
                     <select className="form-select modulo-solicitud-content-main-manejo-conflicto-form1-select" aria-label="Default select example" id="Departamento" name='Departamento'>
                         <option selected disabled>Selecciona uno</option>
                         <option>Con violencia fisica</option>
+                        <option>Sin violencia fisica</option>
                     </select>
                 </div>
                 <br />

@@ -4,6 +4,7 @@ import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
 import ModuloSolicitudManejoConflicto from './ModuloSolicitudManejoConflicto';
+import ModuloSolicitudResultado from './ModuloSolicitudResultado';
 
 function ModuloSolicitud() {
 
@@ -32,7 +33,8 @@ function ModuloSolicitud() {
                     {/* <ModuloInformacionConvocante /> */}
 
                     {/* <ModuloSolicitudHechos /> */}
-                    <ModuloSolicitudManejoConflicto />
+                    {/* <ModuloSolicitudManejoConflicto /> */}
+                    <ModuloSolicitudResultado />
                 </div>
             </div>
         </div>
