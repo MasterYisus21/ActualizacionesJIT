@@ -3,6 +3,7 @@ import ModuloSolicitudDatosGenerales from './ModuloSolicitudDatosGenerales';
 import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
+import ModuloSolicitudManejoConflicto from './ModuloSolicitudManejoConflicto';
 
 function ModuloSolicitud() {
 
@@ -28,9 +29,10 @@ function ModuloSolicitud() {
                 
                 <div className='modulo-solicitud-content-main'>
                     {/* <ModuloSolicitudDatosGenerales /> */}
-                    <ModuloInformacionConvocante />
+                    {/* <ModuloInformacionConvocante /> */}
 
                     {/* <ModuloSolicitudHechos /> */}
+                    <ModuloSolicitudManejoConflicto />
                 </div>
             </div>
         </div>
