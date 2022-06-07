@@ -252,7 +252,7 @@ class Turno(StateModel):
 class Citacion(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Fecha_sesion = models.DateField( blank=False, null=False)
+    Fecha_sesion = models.DateField( blank=False, null=False, default="2022-05-05")
     Descripcion = models.TextField(blank=False,null=False)
     Enlace= models.CharField(max_length=150,blank=True,null=True)
     Turno_Id = models.ForeignKey(Turno, on_delete=models.SET_NULL, blank=False, null=True)
@@ -423,7 +423,7 @@ class Tipo_cliente(BaseModels):
 class Relacion_solicitud_persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Tipo_cliente_Id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=True, null=True)
+    #Tipo_cliente_Id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=True, null=True)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Persona_Id  = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
     

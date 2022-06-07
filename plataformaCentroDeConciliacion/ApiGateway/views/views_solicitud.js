@@ -9,7 +9,7 @@ views.GeneralGet= (req,res)=>{
     axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/solicitante_servicios")
     .then(response => {
        datos["Solicitante_servicio"]=response.data
-
+ 
         axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_servicio")
         .then(response => {
         datos["Tipo_servicio"]=response.data
@@ -95,6 +95,9 @@ views.GeneralPost= (req,res)=>{
           res.sendStatus(500).json(error)
     })
 
+    
+}
+views.GeneralPost= (req,res)=>{
     
 }
 

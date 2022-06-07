@@ -45,6 +45,17 @@ views.General= (req,res)=>{
     
 }
 
+views.GeneralId= (req,res)=>{
+    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/" +req.params.nombre + "/" + +req.params.id)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        console.log(error);
+        res.sendStatus(500)
+    })
+    
+}
 views.Docentes= (req,res)=>{
 
     axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Tipo_cargo_Id=2")
@@ -138,5 +149,7 @@ views.InformacionPersona= (req,res)=>{
 
 
 }
+
+
 
 module.exports = views
