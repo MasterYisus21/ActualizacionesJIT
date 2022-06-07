@@ -40,4 +40,6 @@ router.register(r'medios_conocimiento',Medio_conocimientoViewSet,basename='Medio
 router.register(r'encuestas',EncuestaViewSet,basename='Encuesta')
 router.register(r'respuestas',RespuestaViewSet,basename='Respuesta')
 router.register(r'relaciones_solicitud_persona',Relacion_solicitud_personaViewSet,basename='Relacion_solicitud_persona')
+router.register(r'solicitante_servicios',Solicitante_servicioViewSet,basename='Solicitante_servicio')
+router.register(r'inicio_conflictos',Inicio_conflictoViewSet,basename='Inicio_conflicto')
 urlpatterns = router.urls

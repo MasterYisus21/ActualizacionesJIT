@@ -4,6 +4,8 @@ import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 import ModuloInformacionConvocado from './ModuloInformacionConvocado';
 import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
+import ModuloSolicitudManejoConflicto from './ModuloSolicitudManejoConflicto';
+import ModuloSolicitudResultado from './ModuloSolicitudResultado';
 
 function ModuloSolicitud() {
 
@@ -29,9 +31,15 @@ function ModuloSolicitud() {
                 
                 <div className='modulo-solicitud-content-main'>
                     {/* <ModuloSolicitudDatosGenerales /> */}
+<<<<<<< HEAD
                     <ModuloInformacionConvocado />
+=======
+                    {/* <ModuloInformacionConvocante /> */}
+>>>>>>> ca4e11c99c2183f52c256d2f2892880de9e3ff9e
 
                     {/* <ModuloSolicitudHechos /> */}
+                    {/* <ModuloSolicitudManejoConflicto /> */}
+                    <ModuloSolicitudResultado />
                 </div>
             </div>
         </div>

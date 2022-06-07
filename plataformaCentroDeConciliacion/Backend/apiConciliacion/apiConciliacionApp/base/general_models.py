@@ -14,7 +14,7 @@ class StateModel(models.Model):
 class BaseModels(StateModel): # Crea un modelo base para los demas modelos 
 
     Id = models.AutoField(primary_key=True, unique=True) # los modelos que apliquen baseModels tendran estos dos campos
-    Nombre= models.CharField(max_length=30,blank=False, null=False)
+    Nombre= models.CharField(max_length=50,blank=False, null=False)
     
 
     

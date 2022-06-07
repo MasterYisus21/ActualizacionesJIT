@@ -99,8 +99,10 @@ function verifier(req, res, next) {
     
 }
 
-const routes =require('./routers/routers_solicitud')
-app.use('/api/gateway/v1/solicitud',routes)
+const Solicitud =require('./routers/routers_solicitud')
+
+app.use('/api/gateway/v1/solicitud',Solicitud)
+
 
 const port = 3001;
 

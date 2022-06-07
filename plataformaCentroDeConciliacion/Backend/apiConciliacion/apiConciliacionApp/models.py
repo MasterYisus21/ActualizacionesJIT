@@ -93,7 +93,7 @@ class Subtema(BaseModels):
     def __str__(self):
         return str(self.Nombre)
 class Objetivo_servicio(BaseModels):
-
+    
     class Meta:
         verbose_name = ("Objetivo_servicio")
         verbose_name_plural = ("Objetivo_servicios")
@@ -120,6 +120,8 @@ class Tipo_resultado(BaseModels):
 
     def __str__(self):
         return str(self.Nombre)
+
+
 class Solicitante_servicio(BaseModels):
 
     
@@ -155,6 +157,7 @@ class Solicitud(StateModel):
     Inicio_conflicto_Id       = models.ForeignKey(Inicio_conflicto, on_delete= models.SET_NULL, blank=True ,null=True)
     Solicitante_servicio_Id   = models.ForeignKey(Solicitante_servicio, on_delete= models.SET_NULL, blank=True ,null=True)
     Caso_gratuito               = models.BooleanField(default=True, blank=True,null=True)
+    Asunto_juridico_definible   = models.BooleanField(default=False, blank=False,null=False)
     
 
     class Meta:
@@ -173,7 +176,7 @@ class Hechos(StateModel):
     Flag_interviene_tercero = models.BooleanField(default=False, blank=True)
     Flag_Violencia=models.BooleanField(default=False,blank=True)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False,null=True)
-    Barrio_Id = models.ForeignKey(Barrio, on_delete=models.SET_NULL, blank=False,null=True)
+    Ciudad_Id = models.ForeignKey(Ciudad, on_delete=models.SET_NULL, blank=False,null=True)
     Cuantia = models.PositiveIntegerField(blank=True,null=True)
     Cuantia_indeterminada = models.BooleanField(default=False)
    
@@ -315,7 +318,7 @@ class Rol_permiso(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True,)
     Descipcion = models.CharField(max_length=100,blank=False,null=False,unique=True)
     Permiso_colsulta= models.BooleanField(default=False,blank=False,null=False)
-    Permiso_crar= models.BooleanField(default=False,blank=False,null=False)
+    Permiso_crear= models.BooleanField(default=False,blank=False,null=False)
     Permiso_actualizar= models.BooleanField(default=False,blank=False,null=False)
     Permiso_eliminar= models.BooleanField(default=False,blank=False,null=False)
     Permiso_reportes= models.BooleanField(default=False,blank=False,null=False)
