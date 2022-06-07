@@ -31,11 +31,7 @@ function ModuloSolicitud() {
                 
                 <div className='modulo-solicitud-content-main'>
                     {/* <ModuloSolicitudDatosGenerales /> */}
-<<<<<<< HEAD
-                    <ModuloInformacionConvocado />
-=======
                     {/* <ModuloInformacionConvocante /> */}
->>>>>>> ca4e11c99c2183f52c256d2f2892880de9e3ff9e
 
                     {/* <ModuloSolicitudHechos /> */}
                     {/* <ModuloSolicitudManejoConflicto /> */}
