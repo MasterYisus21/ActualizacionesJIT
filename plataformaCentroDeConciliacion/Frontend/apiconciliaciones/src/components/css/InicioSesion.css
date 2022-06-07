@@ -38,6 +38,7 @@
     border-radius: 3vh;
     backdrop-filter: blur(0.4vh);
     flex-wrap: wrap;
+    gap: 7%;
 }
 
 .login{

@@ -34,13 +34,13 @@ function App() {
   return (
     <div>
       <ModuloSolicitud />  
-    <ul>
+    {/* <ul>
       {
       equipo.map(item => (
           <li key="item.Id"> { item.Nombre}</li>
         ))
       }
-    </ul>
+    </ul> */}
 
     <p> Nosotros</p>
 
