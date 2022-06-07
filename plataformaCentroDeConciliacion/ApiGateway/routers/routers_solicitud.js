@@ -17,6 +17,7 @@ router.get('/',views_solicitud.GeneralGet)
 router.post('/',views_solicitud.GeneralPost)
 
 
+
 // convocante //
 
 router.get('/:id/convocante',views_convocante.ListarConvocantes)
