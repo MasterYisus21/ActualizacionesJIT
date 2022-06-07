@@ -48,3 +48,10 @@
 .modulo-solicitud-content-main-text-input {
     border: none;
 }
+
+
+.modulo-solicitud-content-main-datos {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}

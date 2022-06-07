@@ -66,7 +66,7 @@ views.GeneralGet= (req,res)=>{
 
 
 views.GeneralPost= (req,res)=>{
-
+console.log(req.body)
     let datos =
         {
             "Descripcion": req.body.Descripcion,
@@ -97,9 +97,7 @@ views.GeneralPost= (req,res)=>{
 
     
 }
-views.GeneralPost= (req,res)=>{
-    
-}
+
 
 module.exports = views
 

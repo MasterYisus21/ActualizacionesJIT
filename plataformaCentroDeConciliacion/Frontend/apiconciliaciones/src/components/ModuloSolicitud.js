@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ModuloSolicitudDatosGenerales from './ModuloSolicitudDatosGenerales';
 import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 import ModuloInformacionConvocado from './ModuloInformacionConvocado';
@@ -8,6 +8,8 @@ import ModuloSolicitudManejoConflicto from './ModuloSolicitudManejoConflicto';
 import ModuloSolicitudResultado from './ModuloSolicitudResultado';
 
 function ModuloSolicitud() {
+
+    
 
     return (
     <div className='modulo-solicitud-wrapper'>
@@ -30,12 +32,12 @@ function ModuloSolicitud() {
                 </div>
                 
                 <div className='modulo-solicitud-content-main'>
-                    {/* <ModuloSolicitudDatosGenerales /> */}
+                    <ModuloSolicitudDatosGenerales />
                     {/* <ModuloInformacionConvocante /> */}
 
                     {/* <ModuloSolicitudHechos /> */}
                     {/* <ModuloSolicitudManejoConflicto /> */}
-                    <ModuloSolicitudResultado />
+                    {/* <ModuloSolicitudResultado /> */}
                 </div>
             </div>
         </div>
