@@ -1,6 +1,7 @@
 import React from 'react'
 import ModuloSolicitudDatosGenerales from './ModuloSolicitudDatosGenerales';
 import ModuloInformacionConvocante from './ModuloInformacionConvocante';
+import ModuloInformacionConvocado from './ModuloInformacionConvocado';
 import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
 import ModuloSolicitudManejoConflicto from './ModuloSolicitudManejoConflicto';

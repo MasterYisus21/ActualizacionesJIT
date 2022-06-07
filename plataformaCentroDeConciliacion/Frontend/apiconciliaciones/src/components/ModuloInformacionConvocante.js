@@ -35,7 +35,7 @@ function ModuloInformacionConvocante() {
             <table className='table table-striped table-responsive '>
               <thead>
                 <tr>
-                  <th>Clave del Convocante</th>
+                  <th>Clase del Convocante</th>
                   <th>Tipo de documento</th>
                   <th>Identificación</th>
                   <th>Nombre</th>
