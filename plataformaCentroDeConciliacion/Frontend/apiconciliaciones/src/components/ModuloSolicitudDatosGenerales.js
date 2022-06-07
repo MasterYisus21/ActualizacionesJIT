@@ -108,10 +108,18 @@ function ModuloSolicitudDatosGenerales() {
         </div>
         <div className='modulo-solicitud-content-main-column2-form1'>
             ¿Asunto juridico definible?
-            <input type="radio" id="si" name="asunto_definible" value="si" checked={1} readOnly/>
-            <label htmlFor="si">SI</label><br />
-            <input type="radio" id="no" name="asunto_definible" value="no" />
-            <label htmlFor="no">NO</label><br />
+            <div className="form-check">
+                <input className="form-check-input" type="radio" name="asunto_definible" id="asunto_definible1" value="si" />
+                <label className="form-check-label" htmlFor="asunto_definible1">
+                    SI
+                </label>
+            </div>
+            <div className="form-check">
+                <input className="form-check-input" type="radio" name="asunto_definible" id="asunto_definible2" value="no" />
+                <label className="form-check-label" htmlFor="asunto_definible2">
+                    NO
+                </label>
+            </div>
         </div>
         <br />
         <div>
