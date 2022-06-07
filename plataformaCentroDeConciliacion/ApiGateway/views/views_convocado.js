@@ -90,45 +90,47 @@ views.AgregarConvocado=(req,res)=>{
 }
    
 
-views.InformacionConvocado=(req,res)=>{
+// views.InformacionConvocado=(req,res)=>{
 
-    let datos={}
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Identificacion="+req.params.documento)
-    .then(response => {
-          
-                res.status(201).json(response.data)
-        
-    })             
-
-    
-
-    .catch((err) => {
-       res.status(404).json(err)
-   });
-   
-
-}
-   
-// views.EliminarConvocado=(req,res)=>{
+//     let datos={}
 //     axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Identificacion="+req.params.documento)
 //     .then(response => {
+          
+//                 res.status(201).json(response.data)
         
-//         axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona?Solicitud_Id="+ req.params.id+ "&Persona_Id="+response.data[0].Id) 
-//         .then( response =>{
-            
-//             response.data[0].Id
-           
-//             axios.delete("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona/"+response.data[0].Id)
-//             .then( response => {
-//                 res.sendStatus(500).json(response)
-//             })
-//         })
-//     })
-    
+//     })             
+
+
+
 //     .catch((err) => {
-//         res.status(404).json(err)
-//     });
+//        res.status(404).json(err)
+//    });
+   
+
 // }
+   
+views.EliminarConvocado=(req,res)=>{
+    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Identificacion="+req.params.documento)
+    .then(response => {
+        console.log(response.data)
+        axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona?Solicitud_Id="+ req.params.id+ "&Persona_Id="+response.data[0].Id ) 
+        .then( response =>{
+            
+            console.log(response.data)
+            console.log ("////////")
+           
+            axios.delete("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona/"+response.data[0].Id + "/")
+            .then( rest => {
+                console.log(rest.data)
+                res.status(202).json(rest.data)
+            })
+        })
+    })
+    
+    .catch((err) => {
+        res.status(404).json(err)
+    });
+}
 
 module.exports = views
 

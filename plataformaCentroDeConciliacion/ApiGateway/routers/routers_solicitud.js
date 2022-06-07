@@ -21,16 +21,18 @@ router.post('/',views_solicitud.GeneralPost)
 // convocante //
 
 router.get('/:id/convocante',views_convocante.ListarConvocantes)
-router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
+//router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 router.post('/:id/convocante/:documento',views_convocante.AgregarConvocante)
-//router.delete('/:id/convocante/:documento',views_convocante.EliminarConvocante)
+router.delete('/:id/convocante/:documento',views_convocante.EliminarConvocante)
 
 
-// convocado//
+// convocado//  
 
 router.get('/:id/convocado',views_convocado.ListarConvocados)
-router.get('/:id/convocado/:documento',views_convocado.InformacionConvocado)
+//router.get('/:id/convocado/:documento',views_convocado.InformacionConvocado)
 router.post('/:id/convocado/:documento',views_convocado.AgregarConvocado)
+router.delete('/:id/convocante/:documento',views_convocado.EliminarConvocado)
+
 
 
 // hechos //
@@ -42,6 +44,8 @@ router.post('/:id/hechos',views_hechos.AgregarHechos)
 
 router.get('/:id/conciliador',views_conciliador.ListarConciliadores)
 router.post('/:id/conciliador/:Persona_Id',views_conciliador.AsignarConciliador)
+
+
 
 // manejo conflicto
 router.get('/:id/manejo_conflicto',views_manejo_conflicto.ListarManejoConflicto)

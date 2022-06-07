@@ -4,7 +4,7 @@ const router = express.Router()
 const views_generales = require('../views/views_generales')
 
 router.get('/ciudades/:id',views_generales.Ciudades)
-router.get('/subtemas/:id',views_generales.Subtema)
+router.get('/temas/:id',views_generales.Subtema)
 router.get('/docentes/',views_generales.Docentes)
 router.get('/personas/:identificacion',views_generales.InformacionPersona)
 
