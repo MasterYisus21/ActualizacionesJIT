@@ -29,9 +29,9 @@ const datosPersona = async (response) => {
 
 
 
-views.ListarConvocantes=(req,res)=>{
+views.ListarConvocados=(req,res)=>{
     
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona?Tipo_cliente_Id=1&Solicitud_Id=" + req.params.id)
+    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona?Tipo_cliente_Id=2&Solicitud_Id=" + req.params.id)
    .then(response => { 
    
          datosPersona(response)
@@ -54,7 +54,7 @@ views.ListarConvocantes=(req,res)=>{
     
     
 
-views.AgregarConvocante=(req,res)=>{
+views.AgregarConvocado=(req,res)=>{
 
     let datos={}
     axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Identificacion="+req.params.documento)
@@ -62,7 +62,7 @@ views.AgregarConvocante=(req,res)=>{
            datos = {
                "Solicitud_Id":req.params.id,
                "Persona_Id":response.data[0].Id,
-               "Tipo_cliente_Id":1
+               "Tipo_cliente_Id":2
            }
             
             axios.post("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona/",datos)
@@ -90,7 +90,7 @@ views.AgregarConvocante=(req,res)=>{
 }
    
 
-views.InformacionConvocante=(req,res)=>{
+views.InformacionConvocado=(req,res)=>{
 
     let datos={}
     axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Identificacion="+req.params.documento)
@@ -109,7 +109,7 @@ views.InformacionConvocante=(req,res)=>{
 
 }
    
-// views.EliminarConvocante=(req,res)=>{
+// views.EliminarConvocado=(req,res)=>{
 //     axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Identificacion="+req.params.documento)
 //     .then(response => {
         

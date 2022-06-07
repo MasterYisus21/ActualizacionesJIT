@@ -174,7 +174,7 @@ class Hechos(StateModel):
     Descripcion_hecho = models.TextField(blank=False)
     Descripcion_pretension = models.TextField(blank=True)
     Flag_interviene_tercero = models.BooleanField(default=False, blank=True)
-    Flag_Violencia=models.BooleanField(default=False,blank=True)
+    Flag_violencia=models.BooleanField(default=False,blank=True)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False,null=True)
     Ciudad_Id = models.ForeignKey(Ciudad, on_delete=models.SET_NULL, blank=False,null=True)
     Cuantia = models.PositiveIntegerField(blank=True,null=True)
@@ -237,20 +237,22 @@ class Tipo_medio(BaseModels):
         return str(self.Nombre)
 
     
-class Turno(BaseModels):
+class Turno(StateModel):
 
-   
+    Id = models.AutoField(primary_key=True,auto_created = True)
+    Franja_horaria = models.CharField(max_length=100,blank=True,null=True)
+
     class Meta:
         verbose_name = ("Turno")
         verbose_name_plural = ("Turnos")
 
     def __str__(self):
-        return str(self.Nombre)
+        return str(self.Franja_horaria)
 
 class Citacion(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Fecha_sesion = models.DateTimeField( blank=False, null=False)
+    Fecha_sesion = models.DateField( blank=False, null=False)
     Descripcion = models.TextField(blank=False,null=False)
     Enlace= models.CharField(max_length=150,blank=True,null=True)
     Turno_Id = models.ForeignKey(Turno, on_delete=models.SET_NULL, blank=False, null=True)
@@ -357,7 +359,7 @@ class Perfil(StateModel):
 class Persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Identificacion = models.BigIntegerField(blank=False,null=False)
+    Identificacion = models.BigIntegerField(blank=False,null=False,unique=True)
     Primer_nombre = models.CharField(max_length=15,blank=False,null=False)
     Segundo_nombre = models.CharField(max_length=15,blank=True,null=True)
     Primer_apellido = models.CharField(max_length=15,blank=False,null=False)
@@ -421,6 +423,7 @@ class Tipo_cliente(BaseModels):
 class Relacion_solicitud_persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
+    Tipo_cliente_Id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=True, null=True)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Persona_Id  = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
     

@@ -62,23 +62,6 @@ views.GeneralGet= (req,res)=>{
   
 }
 
-views.SolicitudSubtema= (req,res)=>{
-
-    let datos = {}
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/subtemas?Tema_Id=" +req.params.id)
-    .then(response => {
-        datos["Subtema"]=response.data
-        res.status(200).json(datos)
-
-    })
-
-
-    .catch(function (error) {
-        console.log(error);
-        res.sendStatus(500).json(error)
-    })
-    
-}
 
 
 
