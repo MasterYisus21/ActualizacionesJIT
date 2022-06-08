@@ -77,5 +77,5 @@
     display: flex;
     justify-content: space-evenly;
     padding: 15px;
-    padding-top: 80px;
+    /* padding-top: 80px; */
 }

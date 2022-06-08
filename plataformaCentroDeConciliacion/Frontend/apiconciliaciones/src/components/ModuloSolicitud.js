@@ -2,6 +2,8 @@ import React from 'react'
 import ModuloSolicitudDatosGenerales from './ModuloSolicitudDatosGenerales';
 import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 import ModuloInformacionConvocado from './ModuloInformacionConvocado';
+import ModuloInformacionConciliador from './ModuloInformacionConciliador';
+import ModuloSolicitudAudiencia  from './ModuloSolicitudAudiencia';
 import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
 import ModuloSolicitudManejoConflicto from './ModuloSolicitudManejoConflicto';
@@ -31,15 +33,12 @@ function ModuloSolicitud() {
                 
                 <div className='modulo-solicitud-content-main'>
                     {/* <ModuloSolicitudDatosGenerales /> */}
-<<<<<<< HEAD
-                    <ModuloInformacionConvocado />
-=======
+                    <ModuloSolicitudAudiencia/>
                     {/* <ModuloInformacionConvocante /> */}
->>>>>>> ca4e11c99c2183f52c256d2f2892880de9e3ff9e
 
                     {/* <ModuloSolicitudHechos /> */}
                     {/* <ModuloSolicitudManejoConflicto /> */}
-                    <ModuloSolicitudResultado />
+                    {/* <ModuloSolicitudResultado /> */}
                 </div>
             </div>
         </div>

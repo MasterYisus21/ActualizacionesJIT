@@ -4,7 +4,9 @@ import './css/ModuloInformacionConvocado.css';
 
 
 function ModuloInformacionConvocado() {
+
   const [isOpen, setIsOpen] = useState(false);
+
   return (
         <>
         <div className='container'> 
@@ -24,10 +26,10 @@ function ModuloInformacionConvocado() {
                         />
                         </form>
                         <div class="d-flex align-items-end">
-                        <button type="button" class="btn btn-primary me-3" id='boton-agregar-convocante'
-                            onClick={()=>setIsOpen(!isOpen)}>
-                            Agregar convocado
-                        </button>
+                          <button type="button" class="btn btn-primary me-3" id='boton-agregar-convocante'
+                              onClick={()=>setIsOpen(!isOpen)}>
+                              Agregar convocado
+                          </button>
                         </div> 
                     </div>
                 </nav>                
@@ -55,14 +57,15 @@ function ModuloInformacionConvocado() {
                       <option value="2">Boyacá</option>
                       <option value="3">Santander</option>
                     </select>
-                    <input className="input-registro-convocado form-control rounded" placeholder="Acciones"></input>
                     <button class="btn btn-primary me-3"  id='boton-aceptar-registro-convocante'>Aceptar</button>
                 </div>}
                 
-          <div className='contenedor-tabla-convocante'>
-            <table className='table table-striped table-responsive '>
-              <thead>
+          <form className='contenedor-tabla-convocante'>
+
+            <table className='table table-striped table-bordered table-responsive '>
+              <thead >
                 <tr>
+                  <th></th>
                   <th>Clase del Convocado</th>
                   <th>Tipo de documento</th>
                   <th>Identificación</th>
@@ -74,35 +77,38 @@ function ModuloInformacionConvocado() {
               </thead> 
               <tbody> 
                 <tr>
-                  <td>Juan</td>
+                <td><input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input></td>
+                  <td>Pedro</td>
                   <td>Diego</td>
                   <td>1044556824</td>
                   <td>Ninguna</td>
                   <td>Diego</td>
                   <td>1044556824</td>
-                  <td>Diego</td>
+                  <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
                 </tr>
                 <tr>
+                <td><input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input></td>
                   <td>Juan</td>
                   <td>Diego</td>
                   <td>1044556824</td>
                   <td>Ninguna</td>
                   <td>Diego</td>
                   <td>1044556824</td>
-                  <td>Diego</td>
+                  <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
                 </tr>
                 <tr>
-                  <td>Juan</td>
+                <td><input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input></td>
+                  <td>Issac</td>
                   <td>Diego</td>
                   <td>1044556824</td>
                   <td>Ninguna</td>
                   <td>Diego</td>
                   <td>1044556824</td>
-                  <td>Diego</td>
+                  <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
                 </tr>
               </tbody>    
             </table>
-          </div>
+          </form>
           </div>
         </>
   )
