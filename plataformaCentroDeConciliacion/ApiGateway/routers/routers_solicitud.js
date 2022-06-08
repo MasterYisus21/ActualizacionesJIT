@@ -15,23 +15,22 @@ const views_audiencia = require('../views/views_audiencia')
 
 router.get('/',views_solicitud.GeneralGet)
 router.post('/',views_solicitud.GeneralPost)
+router.delete('/:id/persona/:documento',views_solicitud.EliminarPersona)
 
 
 
 // convocante //
 
 router.get('/:id/convocante',views_convocante.ListarConvocantes)
-//router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 router.post('/:id/convocante/:documento',views_convocante.AgregarConvocante)
-router.delete('/:id/convocante/:documento',views_convocante.EliminarConvocante)
+//router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 
 
 // convocado//  
 
 router.get('/:id/convocado',views_convocado.ListarConvocados)
-//router.get('/:id/convocado/:documento',views_convocado.InformacionConvocado)
 router.post('/:id/convocado/:documento',views_convocado.AgregarConvocado)
-router.delete('/:id/convocante/:documento',views_convocado.EliminarConvocado)
+//router.get('/:id/convocado/:documento',views_convocado.InformacionConvocado)
 
 
 

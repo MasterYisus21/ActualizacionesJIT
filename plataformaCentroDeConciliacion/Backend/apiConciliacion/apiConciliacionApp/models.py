@@ -55,7 +55,7 @@ class Localidad(BaseModels):
         return str(self.Nombre)
 
 class Barrio(BaseModels):
-
+    Nombre= models.CharField(max_length=80,blank=False, null=False)
     Localidad_Id = models.ForeignKey(Localidad, on_delete=models.SET_NULL, blank=False,null=True)
     class Meta:
         verbose_name = ("Barrio")
@@ -73,6 +73,8 @@ class Area(BaseModels):
         return str(self.Nombre)
 
 class Tema(BaseModels):
+
+    Nombre= models.CharField(max_length=150,blank=False, null=False)
     
     class Meta:
         verbose_name = ("Tema")
@@ -83,9 +85,11 @@ class Tema(BaseModels):
 
 
 class Subtema(BaseModels):
-    
-    Tema_Id = models.ForeignKey(Tema, on_delete=models.SET_NULL, blank=False,null=True)
 
+    Nombre= models.CharField(max_length=150,blank=False, null=False)
+    Tema_Id = models.ForeignKey(Tema, on_delete=models.SET_NULL, blank=False,null=True)
+    
+    
     class Meta:
         verbose_name = ("Subtema")
         verbose_name_plural =   ("Subtemas")
@@ -154,7 +158,7 @@ class Solicitud(StateModel):
     Subtema_Id                =  models.ForeignKey(Subtema, on_delete= models.SET_NULL, blank=False ,null=True)
     Tipo_servicio_Id         = models.ForeignKey(Tipo_servicio, on_delete= models.SET_NULL, blank=False ,null=True)
     Tipo_resultado_Id         = models.ForeignKey(Tipo_resultado, on_delete= models.SET_NULL, blank=True ,null=True)
-    Inicio_conflicto_Id       = models.ForeignKey(Inicio_conflicto, on_delete= models.SET_NULL, blank=True ,null=True)
+    Inicio_conflicto_Id       = models.ForeignKey(Inicio_conflicto, on_delete= models.SET_NULL, blank=False ,null=True)
     Solicitante_servicio_Id   = models.ForeignKey(Solicitante_servicio, on_delete= models.SET_NULL, blank=True ,null=True)
     Caso_gratuito               = models.BooleanField(default=True, blank=True,null=True)
     Asunto_juridico_definible   = models.BooleanField(default=False, blank=False,null=False)
@@ -361,16 +365,16 @@ class Persona(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
     Identificacion = models.BigIntegerField(blank=False,null=False,unique=True)
     Primer_nombre = models.CharField(max_length=15,blank=False,null=False)
-    Segundo_nombre = models.CharField(max_length=15,blank=True,null=True)
+    Segundo_nombre = models.CharField(max_length=15,blank=True,null=False,default="")
     Primer_apellido = models.CharField(max_length=15,blank=False,null=False)
-    Segundo_apellido = models.CharField(max_length=15,blank=True,null=True)
+    Segundo_apellido = models.CharField(max_length=15,blank=True,null=False,default="")
     Correo = models.EmailField(max_length=120,blank=False,null=False)
-    Telefono = models.BigIntegerField(blank=True,null=True)
-    Fecha_de_nacimiento = models.DateField(blank=True,null=True)
+    Telefono = models.BigIntegerField(blank=True,default=0)
+    Fecha_de_nacimiento = models.DateField(blank=True)
     Tipo_documento_Id=models.ForeignKey(Tipo_documento,on_delete=models.SET_NULL,blank=False,null=True)
     Tipo_vivienda_Id =models.ForeignKey(Tipo_vivienda,on_delete=models.SET_NULL,blank=False,null=True)
     Barrio_Id =models.ForeignKey(Barrio,on_delete=models.SET_NULL,blank=False,null=True)
-    Tipo_persona_Id=models.ForeignKey(Tipo_persona,on_delete=models.SET_NULL,blank=False,null=True)
+    Tipo_persona_Id=models.ForeignKey(Tipo_persona,on_delete=models.SET_NULL,blank=True,null=True)
     Estrato_socioeconomico_Id= models.ForeignKey(Estrato_socioeconomico,on_delete=models.SET_NULL,blank=False,null=True)
     Tipo_estado_Id=models.ForeignKey(Tipo_estado,on_delete=models.SET_NULL,blank=True,null=True)
     Perfil_Id=models.ForeignKey(Perfil,on_delete=models.SET_NULL,blank=True,null=True)
@@ -423,7 +427,7 @@ class Tipo_cliente(BaseModels):
 class Relacion_solicitud_persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    #Tipo_cliente_Id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=True, null=True)
+    Tipo_cliente_Id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=True, null=True)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Persona_Id  = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
     
