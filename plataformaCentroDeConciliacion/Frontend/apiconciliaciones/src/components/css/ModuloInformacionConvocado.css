@@ -2,20 +2,20 @@
     max-width: 90%;
     
 }
-.titulo-informacion-convocante{
+.titulo-informacion-convocado{
     max-width: fit-content;
     margin-bottom: 4%;
     display: grid;
 }
-.contenedor-navbar-agregar-convocante{
+.contenedor-navbar-agregar-convocado{
     margin-bottom: 3%;
     
 }
-#boton-agregar-convocante{
+#boton-agregar-convocado{
     background-color: rgb(56, 165, 42);
     border-color: rgb(56, 165, 42);;
 }
-.contenedor-tabla-convocante{
+.contenedor-tabla-convocado{
     font-size: small;
     text-align: center;
 }
@@ -32,7 +32,7 @@
 .input-registro-convocado, .drowdown-registro-convocado{
     width: 30%;
 }
-#boton-aceptar-registro-convocante{
+#boton-aceptar-registro-convocado{
     width: 12%;
     background-color: rgb(56, 165, 42);
     border-color: rgb(56, 165, 42);

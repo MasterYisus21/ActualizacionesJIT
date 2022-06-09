@@ -26,7 +26,7 @@ function ModuloInformacionConciliador() {
                           </form>
                           <div class="d-flex align-items-end">
                             <button type="button" class="btn btn-primary me-3" id='boton-agregar-conciliador'
-                                onClick={()=>setIsOpen(!isOpen)}>
+                                onClick={()=>setIsOpen(!isOpen)}>     
                                 Agregar convocado
                             </button>
                           </div> 
@@ -34,7 +34,6 @@ function ModuloInformacionConciliador() {
                   </nav>                
               </div>
               {isOpen &&<div className='registro-convocado'>
-  
                       <input className="input-registro-convocado form-control rounded" placeholder="Nombre"></input>
                       <select class="form-select drowdown-registro-convocado" aria-label="Default select example">
                         <option selected>Tipo de Documento</option>
