@@ -2,12 +2,12 @@
 const axios = require('axios'); 
 const views = {}
 const datosPersonas = require('../views/datos')
-
+const config =require ('../config.json')
 
 
 views.ListarConvocantes=(req,res)=>{
     
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona?Tipo_cliente_Id=1&Solicitud_Id=" + req.params.id)
+    axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=1&Solicitud_Id=" + req.params.id)
    .then(response => { 
    
         datosPersonas.datosBasicos(response)
@@ -33,7 +33,7 @@ views.ListarConvocantes=(req,res)=>{
 views.AgregarConvocante=(req,res)=>{
 
     let datos={}
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Identificacion="+req.params.documento)
+    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.documento)
     .then(response => {
            datos = {
                "Solicitud_Id":req.params.id,
@@ -41,7 +41,7 @@ views.AgregarConvocante=(req,res)=>{
                "Tipo_cliente_Id":1
            }
             
-            axios.post("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona/",datos)
+            axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
             .then(response => {
         
                 res.status(201).json(response.data)
@@ -69,7 +69,7 @@ views.AgregarConvocante=(req,res)=>{
 // views.InformacionConvocante=(req,res)=>{
 
     
-//     axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Identificacion="+req.params.documento)
+//     axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.documento)
 //     .then(response => {
           
 //                 res.status(201).json(response.data)

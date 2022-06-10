@@ -34,17 +34,14 @@ function ModuloSolicitud() {
                 </div>
                 
                 <div className='modulo-solicitud-content-main'>
-<<<<<<< HEAD
                     {/* <ModuloSolicitudDatosGenerales /> */}
-                    <ModuloSolicitudAudiencia/>
-=======
-                    <ModuloSolicitudDatosGenerales />
->>>>>>> f17a95309aa956462436a06ddfb1edf53c2d5352
-                    {/* <ModuloInformacionConvocante /> */}
+                    {/* <ModuloSolicitudAudiencia/> */}
+                    {/* <ModuloSolicitudDatosGenerales /> */}
+                    {/* <ModuloInformacionConciliador /> */}
 
                     {/* <ModuloSolicitudHechos /> */}
                     {/* <ModuloSolicitudManejoConflicto /> */}
-                    {/* <ModuloSolicitudResultado /> */}
+                    <ModuloSolicitudResultado />
                 </div>
             </div>
         </div>

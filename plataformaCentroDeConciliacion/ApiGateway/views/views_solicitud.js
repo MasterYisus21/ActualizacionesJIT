@@ -1,34 +1,35 @@
 
 const axios = require('axios') 
-
+const config =require ('../config.json')
 const views = {}
 
-views.GeneralGet= (req,res)=>{
+
+views.Traer_datos= (req,res)=>{
 
     let datos={}
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/solicitante_servicios")
+    axios.get(config.urlApiConciliacion + "/solicitante_servicios")
     .then(response => {
        datos["Solicitante_servicio"]=response.data
  
-        axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_servicio")
+        axios.get(config.urlApiConciliacion + "/tipos_servicio")
         .then(response => {
         datos["Tipo_servicio"]=response.data
 
 
-            axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/inicio_conflictos")
+            axios.get(config.urlApiConciliacion + "/inicio_conflictos")
             .then(response => {
             datos["Inicio_conflicto"]=response.data
 
                
                     
                 
-                axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/areas")
+                axios.get(config.urlApiConciliacion + "/areas")
                 .then(response => {
                     datos["Area"]=response.data
                     
 
 
-                    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/temas")
+                    axios.get(config.urlApiConciliacion + "/temas")
                     .then(response => {
                         datos["Tema"]=response.data
                         res.status(200).json(datos)
@@ -65,7 +66,7 @@ views.GeneralGet= (req,res)=>{
 
 
 
-views.GeneralPost= (req,res)=>{
+views.Crear= (req,res)=>{
 console.log(req.body)
     let datos =
         {
@@ -83,7 +84,7 @@ console.log(req.body)
         }
     
 
-    axios.post("http://127.0.0.1:8000/api/conciliaciones/v1/solicitudes/",datos)
+    axios.post(config.urlApiConciliacion + "/solicitudes/",datos)
     
       
     .then(response => {
@@ -99,15 +100,15 @@ console.log(req.body)
 }
 
 views.EliminarPersona=(req,res)=>{
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas?Identificacion="+req.params.documento)
+    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.documento)
     .then(response => {
         console.log(response.data)
-        axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona?Solicitud_Id="+ req.params.id+ "&Persona_Id="+response.data[0].Id ) 
+        axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+ req.params.id+ "&Persona_Id="+response.data[0].Id ) 
         .then( response =>{
             
            
            
-            axios.delete("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona/"+response.data[0].Id + "/")
+            axios.delete(config.urlApiConciliacion + "/relaciones_solicitud_persona/"+response.data[0].Id + "/")
             .then( rest => {
                 console.log(rest.data)
                 res.status(202).json(rest.data)
@@ -120,6 +121,28 @@ views.EliminarPersona=(req,res)=>{
     });
 }
 
+
+views.Personas_de_una_solicitud=(req,res)=>{
+
+    axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id=" + req.params.id)
+    .then(response => { 
+    
+          datosPersonas.datosBasicos(response)
+          .then((result) => {
+              
+              res.status(200).json(result)
+              
+          }).catch((err) => {
+             res.status(404).json(err)
+          });   
+     
+         }
+     )
+     
+    .catch((err) => {
+        res.status(404).json(err)
+    });
+}
 module.exports = views
 
 

@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div>
-      <ModuloSolicitud />  
+      <InicioSesion />  
     {/* <ul>
       {
       equipo.map(item => (

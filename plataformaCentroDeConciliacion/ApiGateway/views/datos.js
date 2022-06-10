@@ -1,27 +1,21 @@
 const axios = require('axios'); 
 const res = require('express/lib/response');
-
+const config =require ('../config.json')
 datosPersonas = {}
 
-const valor= async()=>{
-    try{
-        return  console.log("hola")
-    }catch{
 
-    }
-}
 datosPersonas.datosBasicos = async (response) => {
     let datos= {}
    
     try {
         for await (const informacion_data of response.data) {
             // Incrementando el tamaño total.
-            const resp = await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas/"+informacion_data.Persona_Id);
-            const barrio= await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/barrios/"+resp.data.Barrio_Id);
-            const localidad = await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/localidades/"+barrio.data.Localidad_Id);
-            const ciudad = await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/ciudades/"+localidad.data.Ciudad_Id);
-            const departamento = await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/departamentos/"+ciudad.data.Departamento_Id);
-            const pais = await  axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/paises/"+departamento.data.Pais_Id);
+            const resp = await axios.get(config.urlApiConciliacion + "/personas/"+informacion_data.Persona_Id);
+            const barrio= await axios.get(config.urlApiConciliacion + "/barrios/"+resp.data.Barrio_Id);
+            const localidad = await axios.get(config.urlApiConciliacion + "/localidades/"+barrio.data.Localidad_Id);
+            const ciudad = await axios.get(config.urlApiConciliacion + "/ciudades/"+localidad.data.Ciudad_Id);
+            const departamento = await axios.get(config.urlApiConciliacion + "/departamentos/"+ciudad.data.Departamento_Id);
+            const pais = await  axios.get(config.urlApiConciliacion + "/paises/"+departamento.data.Pais_Id);
           
             departamento.data.Pais_Id = pais.data
             ciudad.data.Departamento_Id = departamento.data
@@ -53,19 +47,19 @@ datosPersonas.datosCompletos = async (response) => {
     try {
         for await (const informacion_data of response.data) {
             // Incrementando el tamaño total.
-            const resp = await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/personas/"+informacion_data.Id);
-            const barrio= await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/barrios/"+resp.data.Barrio_Id);
-            const localidad = await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/localidades/"+barrio.data.Localidad_Id);
-            const ciudad = await await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/ciudades/"+localidad.data.Ciudad_Id);
-            const departamento = await await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/departamentos/"+ciudad.data.Departamento_Id);
-            const pais = await await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/paises/"+departamento.data.Pais_Id);
-            const tipo_persona =(resp.data.Tipo_persona_Id=== null | '') ? resp.data.Tipo_persona_Id='' :  await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_persona/"+resp.data.Tipo_persona_Id).then(result=>{ resp.data.Tipo_persona_Id=result.data});
-            const documento= (resp.data.Tipo_documento_Id=== null | '') ? resp.data.Tipo_documento_Id='' :  await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_documento/"+resp.data.Tipo_documento_Id).then(result=>{resp.data.Tipo_documento_Id=result.data})
-            const vivienda= (resp.data.Tipo_documento_Id=== null | '') ? resp.data.Tipo_vivienda_Id='' :  await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_vivienda/"+resp.data.Tipo_vivienda_Id).then(result=>{resp.data.Tipo_vivienda_Id=result.data})
-            const tipo_estado= (resp.data.Tipo_estado_Id=== null | '') ? resp.data.Tipo_estado_Id='' :  await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_estado/"+resp.data.Tipo_estado_Id).then(result=>{resp.data.Tipo_estado_Id=result.data})
-            const estrato=(resp.data.Estrato_socioeconomico_Id=== null | '') ? resp.data.Estrato_socioeconomico_Id='' :  await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/estratos_socioeconomicos/"+resp.data.Estrato_socioeconomico_Id).then(result=>{resp.data.Estrato_socioeconomico_Id=result.data})
-            const perfil=(resp.data.Perfil_Id=== null | '') ? resp.data.Perfil_Id='' :  await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/perfiles/"+resp.data.Perfil_Id).then(result=>{resp.data.Perfil_Id=result.data})
-            const cargo=(resp.data.Tipo_cargo_Id=== null | '') ? resp.data.Tipo_cargo_Id='' :  await axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/tipos_cargo/"+resp.data.Tipo_cargo_Id).then(result=>{resp.data.Tipo_cargo_Id=result.data})
+            const resp = await axios.get(config.urlApiConciliacion + "/personas/"+informacion_data.Id);
+            const barrio= await axios.get(config.urlApiConciliacion + "/barrios/"+resp.data.Barrio_Id);
+            const localidad = await axios.get(config.urlApiConciliacion + "/localidades/"+barrio.data.Localidad_Id);
+            const ciudad = await await axios.get(config.urlApiConciliacion + "/ciudades/"+localidad.data.Ciudad_Id);
+            const departamento = await await axios.get(config.urlApiConciliacion + "/departamentos/"+ciudad.data.Departamento_Id);
+            const pais = await await axios.get(config.urlApiConciliacion + "/paises/"+departamento.data.Pais_Id);
+            const tipo_persona =(resp.data.Tipo_persona_Id=== null | '') ? resp.data.Tipo_persona_Id='' :  await axios.get(config.urlApiConciliacion + "/tipos_persona/"+resp.data.Tipo_persona_Id).then(result=>{ resp.data.Tipo_persona_Id=result.data});
+            const documento= (resp.data.Tipo_documento_Id=== null | '') ? resp.data.Tipo_documento_Id='' :  await axios.get(config.urlApiConciliacion + "/tipos_documento/"+resp.data.Tipo_documento_Id).then(result=>{resp.data.Tipo_documento_Id=result.data})
+            const vivienda= (resp.data.Tipo_documento_Id=== null | '') ? resp.data.Tipo_vivienda_Id='' :  await axios.get(config.urlApiConciliacion + "/tipos_vivienda/"+resp.data.Tipo_vivienda_Id).then(result=>{resp.data.Tipo_vivienda_Id=result.data})
+            const tipo_estado= (resp.data.Tipo_estado_Id=== null | '') ? resp.data.Tipo_estado_Id='' :  await axios.get(config.urlApiConciliacion + "/tipos_estado/"+resp.data.Tipo_estado_Id).then(result=>{resp.data.Tipo_estado_Id=result.data})
+            const estrato=(resp.data.Estrato_socioeconomico_Id=== null | '') ? resp.data.Estrato_socioeconomico_Id='' :  await axios.get(config.urlApiConciliacion + "/estratos_socioeconomicos/"+resp.data.Estrato_socioeconomico_Id).then(result=>{resp.data.Estrato_socioeconomico_Id=result.data})
+            const perfil=(resp.data.Perfil_Id=== null | '') ? resp.data.Perfil_Id='' :  await axios.get(config.urlApiConciliacion + "/perfiles/"+resp.data.Perfil_Id).then(result=>{resp.data.Perfil_Id=result.data})
+            const cargo=(resp.data.Tipo_cargo_Id=== null | '') ? resp.data.Tipo_cargo_Id='' :  await axios.get(config.urlApiConciliacion + "/tipos_cargo/"+resp.data.Tipo_cargo_Id).then(result=>{resp.data.Tipo_cargo_Id=result.data})
             if(resp.data.Fecha_de_nacimiento=== null ) resp.data.Fecha_de_nacimiento='';
 
             departamento.data.Pais_Id = pais.data
