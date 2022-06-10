@@ -1,25 +1,29 @@
-.container{
+.container {
     max-width: 90%;
-    
 }
-.titulo-informacion-conciliador{
+
+.titulo-informacion-conciliador {
     max-width: fit-content;
     margin-bottom: 4%;
     display: grid;
 }
-.contenedor-navbar-agregar-conciliador{
+
+.contenedor-navbar-agregar-conciliador {
     margin-bottom: 3%;
-    
+
 }
-#boton-agregar-conciliador{
+
+#boton-agregar-conciliador {
     background-color: rgb(56, 165, 42);
-    border-color: rgb(56, 165, 42);;
+    border-color: rgb(56, 165, 42);
 }
-.contenedor-tabla-conciliador{
+
+.contenedor-tabla-conciliador {
     font-size: small;
     text-align: center;
 }
-.registro-convocado{
+
+.registro-convocado {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -29,19 +33,24 @@
     border: 1px solid;
     border-radius: 5px;
 }
-.input-registro-convocado, .drowdown-registro-convocado{
+
+.input-registro-convocado,
+.drowdown-registro-convocado {
     width: 30%;
 }
-#boton-aceptar-registro-conciliador{
+
+#boton-aceptar-registro-conciliador {
     width: 12%;
     background-color: rgb(56, 165, 42);
     border-color: rgb(56, 165, 42);
     font-size: 1vw;
 }
-.boton-tabla-eliminar{
+
+.boton-tabla-eliminar {
     background-color: transparent;
     border-color: transparent;
 }
-.boton-tabla-eliminar:hover{
+
+.boton-tabla-eliminar:hover {
     color: red;
 }

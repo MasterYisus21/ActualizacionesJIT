@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import './css/ModuloSolicitudDatosGenerales.css';
+import config from '../config.json'
 
 function ModuloSolicitudDatosGenerales() {
     const date = new Date()
@@ -14,7 +15,7 @@ function ModuloSolicitudDatosGenerales() {
     const [texto, setTexto] = useState([])
 
     const obtenerOpcionesGenerales = () => {
-        axios.get("http://127.0.0.1:3001/api/gateway/v1/solicitud")
+        axios.get(config.apiGatewayURL + "/solicitud")
         .then(response => {
             setSolicitanteServicioOpciones(response.data["Solicitante_servicio"])
             setTipoServicioOpciones(response.data["Tipo_servicio"])
@@ -28,7 +29,7 @@ function ModuloSolicitudDatosGenerales() {
     }
 
     const obtenerOpcionesSubtema = (e) => {
-        axios.get("http://127.0.0.1:3001/api/gateway/v1/temas/" + e.target.value)
+        axios.get(config.apiGatewayURL + "/temas/" + e.target.value)
         .then(response => {
             setSubTemaOpciones(response.data)
         })
