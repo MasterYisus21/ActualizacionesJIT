@@ -7,3 +7,80 @@ body {
     font-family: Segoe UI;
     font-size: large;
 }
+
+.icon {
+    width: 25px;
+    height: 25px;
+}
+
+.beautiful-icon-container-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid rgba(113, 113, 113, 0.412);
+    padding: 8px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.beautiful-icon-container-1:hover {
+    background-color: rgb(208, 206, 206);
+}
+
+.beautiful-icon-container-2 {
+    display: flex;
+    height: 100%;
+    padding: 0px 10px 0px 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-left: 1px solid rgba(113, 113, 113, 0.412);
+}
+
+.beautiful-icon-container-3 {
+    display: flex;
+    border-radius: 10px;
+    color: black;
+    border: 1px solid rgba(113, 113, 113, 0.412);
+    height: 100%;
+    padding: 0px 10px 0px 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+
+.div-green-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #00913D;
+    color: white;
+    padding: 5px 10px 5px 10px;
+}
+
+.div-table-rounded {
+    border-radius: 10px;
+    border: 1px solid black;
+    margin: 10px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.content100 {
+    width: 100%;
+}
+
+
+.content80 {
+    width: 80%;
+}
+
+.content20 {
+    width: 20%;
+}

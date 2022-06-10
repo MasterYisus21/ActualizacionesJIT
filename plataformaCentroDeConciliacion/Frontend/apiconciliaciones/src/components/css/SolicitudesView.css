@@ -1,0 +1,26 @@
+.solicitudes-view{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 30px;
+    width: 100%;
+}
+.solicitudes-view-column-1{
+    width: 70%;
+}
+
+.solicitudes-view-column-1-tabla-1 {
+    border: 1px solid rgb(108, 104, 104);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.solicitudes-view-column-1-tabla-1-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px 0px 10px;
+}
+
+.content20 > img {
+    max-height: 50px;
+}
+
