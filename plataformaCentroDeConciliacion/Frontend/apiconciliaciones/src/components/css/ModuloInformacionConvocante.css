@@ -20,4 +20,38 @@
 
 .contenedor-tabla-convocante {
     font-size: small;
+    text-align: center;
+}
+
+.registro-convocante {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 30px;
+    padding: 5%;
+    margin-bottom: 50px;
+    /* border: 1px solid; */
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 10%), 0 4px 20px rgb(0 0 0 / 10%);
+}
+
+.input-registro-convocante,
+.drowdown-registro-convocante {
+    width: 30%;
+}
+
+#boton-aceptar-registro-convocante {
+    width: 12%;
+    background-color: rgb(56, 165, 42);
+    border-color: rgb(56, 165, 42);
+    font-size: 1vw;
+}
+
+.boton-tabla-eliminar {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.boton-tabla-eliminar:hover {
+    color: red;
 }
