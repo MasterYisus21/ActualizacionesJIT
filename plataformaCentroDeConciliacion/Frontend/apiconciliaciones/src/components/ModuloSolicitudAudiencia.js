@@ -34,7 +34,7 @@ function ModuloSolicitudAudiencia() {
                             <input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input>
                             <label for="exampleFormControlTextarea1" class="form-label">Virtual </label>
                             <input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input>
-                            <label for="exampleFormControlTextarea1" class="form-label">Precencial </label>
+                            <label for="exampleFormControlTextarea1" class="form-label">Presencial </label>
                         </div>
                     </div>
                 </div>
