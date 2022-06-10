@@ -3,47 +3,16 @@ import axios from 'axios';
 import ModuloSolicitud from './components/ModuloSolicitud';
 import InicioSesion from './components/InicioSesion';
 import './App.css'
+import Dashboard from './components/Dashboard/Dashboard';
 
 
 function App() {
-  
-  
-  const[equipo,setequipo]=useState([])
-
-
-  useEffect(()=> {  // le estamos indicando a React que el componente tiene que hacer algo después de renderizarse. React recordará la función que le hemos pasado (nos referiremos a ella como nuestro “efecto”), y la llamará más tarde después de actualizar el DOM. 
-
-    
-    obtenerdatos()
-  },[]) //  debemos usar los [] para que la peticion solo se ejecute una vez 
-
-
-
-
-  const obtenerdatos= async ()=>{
-     
-    const data= await axios.get('http://localhost:3001/api/gateway/v1/paises/1')
-    .then (response => {
-
-     this.setequipo(response.data)
-     
-    })    
-
-  }
 
   return (
     <div>
-      <ModuloSolicitud />  
-    {/* <ul>
-      {
-      equipo.map(item => (
-          <li key="item.Id"> { item.Nombre}</li>
-        ))
-      }
-    </ul> */}
-
-    <p> Nosotros</p>
-
+      {/* <InicioSesion /> */}
+      <Dashboard />
+      {/* <ModuloSolicitud /> */}
     </div>
   )
 }
