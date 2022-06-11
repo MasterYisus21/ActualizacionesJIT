@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import './css/ModuloSolicitudDatosGenerales.css';
-import config from '../config.json'
+import config from '../../config.json'
 
 function ModuloSolicitudDatosGenerales() {
     const date = new Date()

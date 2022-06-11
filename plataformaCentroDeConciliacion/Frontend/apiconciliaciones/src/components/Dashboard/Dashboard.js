@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SolicitudesView from '../SolicitudesView';
-import ModuloSolicitud from '../ModuloSolicitud'
+import { ModuloSolicitud } from '../ModuloSolicitud'
 
 import './css/Dashboard.css';
 
