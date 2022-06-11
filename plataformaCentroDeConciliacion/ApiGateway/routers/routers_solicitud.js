@@ -13,9 +13,10 @@ const views_audiencia = require('../views/views_audiencia')
 
 // solicitud
 
-router.get('/',views_solicitud.GeneralGet)
-router.post('/',views_solicitud.GeneralPost)
+router.get('/',views_solicitud.Traer_datos)
+router.get('/:id',views_solicitud.Personas_de_una_solicitud)
 router.delete('/:id/persona/:documento',views_solicitud.EliminarPersona)
+
 
 
 
@@ -51,8 +52,11 @@ router.get('/:id/manejo_conflicto',views_manejo_conflicto.ListarManejoConflicto)
 router.patch('/:id/manejo_conflicto',views_manejo_conflicto.Agregar)
 
 // audiencia
+
 router.get('/:id/audiencia',views_audiencia.ListarCitaciones)
 router.post('/:id/audiencia',views_audiencia.CrearCitacion)
+router.get('/:id/fechas/:fecha',views_audiencia.FechasDisponibles)
+// audiencia
 
 module.exports = router 
 

@@ -18,10 +18,10 @@
     width: 100%;
     display: flex;
     justify-content: end;
-    
+
 }
 
-.modulo-solicitud-navbar > a {
+.modulo-solicitud-navbar>a {
     width: 3%;
 }
 

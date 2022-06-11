@@ -1,6 +1,6 @@
 const axios = require('axios'); 
 const { get } = require('express/lib/response');
-
+const config =require ('../config.json')
 const views = {}
 const datosPersonas = require('../views/datos')
 
@@ -8,7 +8,7 @@ const datosPersonas = require('../views/datos')
 
 views.ListarConciliadores=(req,res)=>{
     
-    axios.get("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
+    axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
    .then(response => { 
    
         datosPersonas.datosBasicos(response)
@@ -40,7 +40,7 @@ views.AsignarConciliador=(req,res)=>{
             "Tipo_cliente_Id":3
         }
         
-        axios.post("http://127.0.0.1:8000/api/conciliaciones/v1/relaciones_solicitud_persona/",datos)
+        axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
         .then(response => {
     
             res.status(201).json(response.data)
