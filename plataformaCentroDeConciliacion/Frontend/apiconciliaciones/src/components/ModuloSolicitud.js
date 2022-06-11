@@ -34,11 +34,11 @@ function ModuloSolicitud() {
                 </div>
                 
                 <div className='modulo-solicitud-content-main'>
-                    {/* <ModuloSolicitudDatosGenerales /> */}
+                    <ModuloSolicitudDatosGenerales />
 
                     {/* <ModuloInformacionConvocante /> */}
                     {/* <ModuloInformacionConciliador /> */}
-                    <ModuloInformacionConvocante />
+                    {/* <ModuloInformacionConvocante /> */}
                     {/* <ModuloInformacionConvocado /> */}
                     {/* <ModuloInformacionConciliador />                    */}
                     {/* <ModuloSolicitudAudiencia /> */}

@@ -6,7 +6,7 @@
     height: 100%;
 }
 .solicitudes-view-column-1{
-    width: 70%;
+    width: 60%;
     /* background-color: black; */
     height: inherit;
     display: flex;
@@ -41,10 +41,21 @@
     border: 1px solid rgb(108, 104, 104);
     border-radius: 10px;
     background-color: white;
-    height: 98%;
+    /* height: 98%; */
     overflow: scroll;
 }
 
-.solicitudes-view-mis-solicitudes-div {
-    
+.solicitudes-view-column-2 {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    align-items: center;
+}
+
+.solicitudes-view-column-2-seccion-buscar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 80%;
+    margin: 20px;
 }
