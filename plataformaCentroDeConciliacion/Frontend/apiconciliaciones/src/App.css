@@ -13,6 +13,11 @@ body {
     height: 25px;
 }
 
+.small-image {
+    width: 50px;
+    height: 50;
+}
+
 .beautiful-icon-container-1 {
     display: flex;
     align-items: center;
@@ -72,8 +77,25 @@ body {
     display: flex;
 }
 
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.position-sticky {
+    position: sticky;
+    top: 0px;
+}
+
 .content100 {
     width: 100%;
+}
+
+.content100-height {
+    height: 100%;
 }
 
 
@@ -83,4 +105,20 @@ body {
 
 .content20 {
     width: 20%;
+}
+
+.contentfitcontent {
+    width: fit-content;
+}
+
+.padding0 {
+    padding-left: 0px;
+}
+
+.overflow-scroll {
+    overflow: scroll;
+}
+
+.z-index-top {
+    z-index: 100000;
 }

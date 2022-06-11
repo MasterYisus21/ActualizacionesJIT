@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SolicitudesView from '../SolicitudesView';
+import ModuloSolicitud from '../ModuloSolicitud'
 
 import './css/Dashboard.css';
 
 function Dashboard() {
+
+
   return (
     <div className='dashboard-main'>
-      <div className='dashboard-navbar'>
+      <div className='dashboard-navbar z-index-top'>
         <div className='dashboard-corner-navbar'>
           <img className='icon dashboard-corner-navbar-icon' src='icons/escudo_ugc_1.png'/>
         </div>
@@ -27,7 +30,7 @@ function Dashboard() {
         </nav>
         
       </div>
-      <nav className='dashboard-sidebar'>
+      <nav className='dashboard-sidebar z-index-top'>
         <a className='dashboard-sidebar-link' href='#'>
           <div className='beautiful-icon-container-1'>
             <img className='icon' src='icons/solicitud_icon_1.png'/>
@@ -49,7 +52,7 @@ function Dashboard() {
             <img className='icon' src='icons/solicitud_icon_1.png'/>
           </div>
           <div className='dashboard-sidebar-link-label'>
-            Solicitudes generales
+            Solicitudes generales e importantes
           </div>
         </a>
         <a className='dashboard-sidebar-link' href='#'>
@@ -80,6 +83,7 @@ function Dashboard() {
 
       <div className='dashboard-content'>
         <SolicitudesView />
+        {/* <ModuloSolicitud /> */}
       </div>
     </div>
   )
