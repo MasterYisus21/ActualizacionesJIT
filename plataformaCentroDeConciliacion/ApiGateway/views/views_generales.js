@@ -77,6 +77,14 @@ views.PatchGeneralId= (req,res)=>{
     
 }
 views.GetGeneralId= (req,res)=>{
+    axios.get(config.urlApiConciliacion + "/solicitudes/"+req.params.id)
+    .then((result) => {
+        res.status(200).json(result.data)
+    }).catch((err) => {
+        res.status(404).json(err)
+        
+    });
+
 
 }
 views.Docentes= (req,res)=>{
@@ -92,7 +100,7 @@ views.Docentes= (req,res)=>{
 
 }
 views.SolicitudesDeDocente= (req,res)=>{
-    console.log("////")
+    
     console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
     axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
     
