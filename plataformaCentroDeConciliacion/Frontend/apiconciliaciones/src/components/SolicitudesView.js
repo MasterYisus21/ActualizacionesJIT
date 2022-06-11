@@ -67,7 +67,7 @@ function SolicitudesView() {
                     </div>
                 </div>
                 <div className='div-table-rounded solicitudes-view-mis-solicitudes-div'>
-                    <table className="table table-hover">
+                    <table className="table table-hover table-bordered">
                         <thead className='table-light'>
                             <tr>
                             <th scope="col">#</th>
@@ -111,7 +111,7 @@ function SolicitudesView() {
                     </div>
                 </div>
                 <div className='div-table-rounded solicitudes-view-mis-solicitudes-div'>
-                    <table className="table table-hover">
+                    <table className="table table-hover table-bordered">
                         <thead className='table-light'>
                             <tr>
                             <th scope="col">#</th>
@@ -149,8 +149,8 @@ function SolicitudesView() {
         </div>
         <div className='solicitudes-view-column-2'>
             <div className='solicitudes-view-column-2-seccion-buscar'>
-                <input className='form-control-lg' placeholder='Solicitud'/>
-                <button className='btn btn-success btn-lg'> Buscar </button>
+                <input className='form-control' placeholder='Solicitud'/>
+                <button className='btn btn-success'> Buscar </button>
             </div>
             <div className='solicitudes-view-column-2-tabla-1'>
                 <div className='solicitudes-view-column-1-tabla-2-header position-sticky'>
@@ -161,7 +161,7 @@ function SolicitudesView() {
                     </div>
                 </div>
                 <div className='div-table-rounded solicitudes-view-mis-solicitudes-div'>
-                    <table className="table table-hover">
+                    <table className="table table-sm table-hover table-bordered">
                         <thead className='table-light'>
                             <tr>
                             <th scope="col">#</th>
