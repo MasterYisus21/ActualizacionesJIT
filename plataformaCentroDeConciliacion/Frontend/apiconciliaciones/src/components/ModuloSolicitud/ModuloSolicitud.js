@@ -8,10 +8,11 @@ import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
 import ModuloSolicitudManejoConflicto from './ModuloSolicitudManejoConflicto';
 import ModuloSolicitudResultado from './ModuloSolicitudResultado';
+import { Link, Outlet, useParams } from 'react-router-dom';
 
 function ModuloSolicitud() {
 
-    
+    const UrlParams = useParams();
 
     return (
     <div className='modulo-solicitud-wrapper'>
@@ -22,18 +23,38 @@ function ModuloSolicitud() {
             </div> */}
             <div className='modulo-solicitud-content'>
                 <div className='modulo-solicitud-content-navbar'>
-                    <a href='#' className='modulo-solicitud-content-navbar-link'>Datos Generales</a>
-                    <a href='#' className='modulo-solicitud-content-navbar-link'>Convocante</a>
-                    <a href='#' className='modulo-solicitud-content-navbar-link'>Convocado</a>
-                    <a href='#' className='modulo-solicitud-content-navbar-link'>Hechos</a>
-                    <a href='#' className='modulo-solicitud-content-navbar-link'>Conciliador</a>
-                    <a href='#' className='modulo-solicitud-content-navbar-link'>Manejo Conflicto</a>
-                    <a href='#' className='modulo-solicitud-content-navbar-link'>Audiencia</a>
-                    <a href='#' className='modulo-solicitud-content-navbar-link'>Resultado</a>
+                    {Object.keys(UrlParams).length === 0 ? console.log("igual"):console.log("diferente")}
+                    
+                    {Object.keys(UrlParams).length === 0 &&
+                        <>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Datos Generales</Link>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Convocante</Link>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Convocado</Link>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Hechos</Link>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Conciliador</Link>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Manejo Conflicto</Link>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Audiencia</Link>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Resultado</Link>
+                        </>
+                    }
+
+                    {Object.keys(UrlParams).length > 0 &&
+                        <>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/datos_generales"} className='modulo-solicitud-content-navbar-link'>Datos Generales</Link>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/convocantes"} className='modulo-solicitud-content-navbar-link'>Convocante</Link>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/convocados"} className='modulo-solicitud-content-navbar-link'>Convocado</Link>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/hechos"} className='modulo-solicitud-content-navbar-link'>Hechos</Link>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/conciliador"} className='modulo-solicitud-content-navbar-link'>Conciliador</Link>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/manejo_conflicto"} className='modulo-solicitud-content-navbar-link'>Manejo Conflicto</Link>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/audiencias"} className='modulo-solicitud-content-navbar-link'>Audiencia</Link>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/resultado"} className='modulo-solicitud-content-navbar-link'>Resultado</Link>
+                        </>
+                    }
                 </div>
                 
                 <div className='modulo-solicitud-content-main'>
-                    <ModuloSolicitudDatosGenerales />{/* <ModuloInformacionConciliador /> */}
+                    {/* <ModuloSolicitudDatosGenerales /> */}
+                    {/* <ModuloInformacionConciliador /> */}
                     {/* <ModuloInformacionConvocante /> */}
                     {/* <ModuloInformacionConvocado /> */}
                     {/* <ModuloInformacionConciliador /> */}
@@ -41,6 +62,7 @@ function ModuloSolicitud() {
                     {/* <ModuloSolicitudHechos /> */}
                     {/* <ModuloSolicitudManejoConflicto /> */}
                     {/* <ModuloSolicitudResultado />  */}
+                    <Outlet/>
 
                 </div>
             </div>

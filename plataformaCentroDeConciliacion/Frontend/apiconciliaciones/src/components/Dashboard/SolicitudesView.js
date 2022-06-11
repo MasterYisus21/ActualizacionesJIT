@@ -55,7 +55,7 @@ function SolicitudesView() {
             <div className='solicitudes-view-column-1-tabla-1'>
                 <div className='solicitudes-view-column-1-tabla-1-header position-sticky'>
                     <div className='contentfitcontent'>
-                        <img className='small-image' src="icons/asignacion_icon_1.png"></img>
+                        <img className='small-image' src="/icons/asignacion_icon_1.png"></img>
                     </div>
                     <div className='div-green-table-header content100'>
                         <div>
@@ -88,7 +88,7 @@ function SolicitudesView() {
                                     <td className='display-flex'>
                                         <a href="#">
                                             <div className='beautiful-icon-container-1'>
-                                                <img className='icon' src='icons/eye_icon_1.png'/>
+                                                <img className='icon' src='/icons/eye_icon_1.png'/>
                                             </div>
                                         </a>
                                     </td>
@@ -132,7 +132,7 @@ function SolicitudesView() {
                                     <td className='display-flex'>
                                         <a href="#">
                                             <div className='beautiful-icon-container-1'>
-                                                <img className='icon' src='icons/eye_icon_1.png'/>
+                                                <img className='icon' src='/icons/eye_icon_1.png'/>
                                             </div>
                                         </a>
                                     </td>
@@ -184,7 +184,7 @@ function SolicitudesView() {
                                     <td className='display-flex'>
                                         <a href="#">
                                             <div className='beautiful-icon-container-1'>
-                                                <img className='icon' src='icons/eye_icon_1.png'/>
+                                                <img className='icon' src='/icons/eye_icon_1.png'/>
                                             </div>
                                         </a>
                                     </td>

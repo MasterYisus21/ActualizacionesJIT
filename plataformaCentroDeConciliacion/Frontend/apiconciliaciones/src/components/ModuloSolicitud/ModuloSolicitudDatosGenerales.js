@@ -150,7 +150,7 @@ function ModuloSolicitudDatosGenerales() {
             </div>
             <br />
             <button className="modulo-solicitud-content-main-column2-save-button">
-                <img src='images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
+                <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
                 <p>GUARDAR</p>
             </button>
         </div>
