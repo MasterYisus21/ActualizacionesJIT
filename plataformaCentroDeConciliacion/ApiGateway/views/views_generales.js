@@ -91,6 +91,31 @@ views.Docentes= (req,res)=>{
 
 
 }
+views.SolicitudesDeDocente= (req,res)=>{
+    console.log("////")
+    console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
+    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
+    
+    .then((result) => {
+        
+        console.log(result.data)
+        axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
+        .then((result) => {
+            console.log(result.data)
+            datosPersonas.Solicitudes(result)
+            .then((result) => {
+            res.status(200).json(result)
+            })
+        })
+       
+    }).catch((err) => {
+        res.status(404).json(err)
+
+        
+    });
+
+
+}
 
 views.InformacionPersona= (req,res)=>{
 
