@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import SolicitudesView from '../SolicitudesView';
+import SolicitudesView from './SolicitudesView';
 import { ModuloSolicitud } from '../ModuloSolicitud'
 
 import './css/Dashboard.css';
@@ -82,8 +82,8 @@ function Dashboard() {
       </nav>
 
       <div className='dashboard-content'>
-        {/* <SolicitudesView /> */}
-        <ModuloSolicitud />
+        <SolicitudesView />
+        {/* <ModuloSolicitud /> */}
       </div>
     </div>
   )

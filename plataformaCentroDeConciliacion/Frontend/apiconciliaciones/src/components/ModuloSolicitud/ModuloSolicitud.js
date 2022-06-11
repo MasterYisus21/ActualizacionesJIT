@@ -36,11 +36,11 @@ function ModuloSolicitud() {
                     <ModuloSolicitudDatosGenerales />{/* <ModuloInformacionConciliador /> */}
                     {/* <ModuloInformacionConvocante /> */}
                     {/* <ModuloInformacionConvocado /> */}
-                    {/* <ModuloInformacionConciliador />                    */}
+                    {/* <ModuloInformacionConciliador /> */}
                     {/* <ModuloSolicitudAudiencia /> */}
                     {/* <ModuloSolicitudHechos /> */}
                     {/* <ModuloSolicitudManejoConflicto /> */}
-                    {/* <ModuloSolicitudResultado />                     */}
+                    {/* <ModuloSolicitudResultado />  */}
 
                 </div>
             </div>
