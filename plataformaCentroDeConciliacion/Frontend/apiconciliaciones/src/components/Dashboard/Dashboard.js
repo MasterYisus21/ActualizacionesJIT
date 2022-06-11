@@ -36,7 +36,7 @@ function Dashboard() {
             <img className='icon' src='icons/solicitud_icon_1.png' />
           </div>
           <div className='dashboard-sidebar-link-label'>
-            Solicitudes
+            Mis Solicitudes
           </div>
         </a>
         <a className='dashboard-sidebar-link' href='#'>

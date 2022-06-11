@@ -14,26 +14,6 @@ var cors = require('cors')
 
 app.use(cors()) // Use this after the variable declaration
 
-// app.set('view engine', 'ejs')
-// app.use(verifier)
-
-/* 
-app.get('/', logger, (req, res) => {
-    console.log("Here")
-    // res.sendStatus(500)
-    // res.send("Hi")
-    // res.status(500).send("Hi")
-    // res.status(500).json({ message : "Error"})
-    // res.json({ message : "Error"})
-    // res.download('server.js')
-    res.render("index", { text: 'World' })
-})
- */
-
-// const userRouter = require('./routes/users')
-
-// app.use('/users', userRouter)
-
 
 
 app.post('/auth/ingresar', (req, res) => {
@@ -99,8 +79,8 @@ function verifier(req, res, next) {
     
 }
 
-const Solicitud =require('./routers/routers_solicitud')
-const Genericos =require('./routers/routers_genericos')
+const Solicitud = require('./routers/routers_solicitud')
+const Genericos = require('./routers/routers_genericos')
 
 app.use('/api/gateway/v1/solicitud',Solicitud)
 app.use('/api/gateway/v1/',Genericos)
