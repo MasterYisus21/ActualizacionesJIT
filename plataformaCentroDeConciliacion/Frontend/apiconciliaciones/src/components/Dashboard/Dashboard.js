@@ -82,8 +82,8 @@ function Dashboard() {
       </nav>
 
       <div className='dashboard-content'>
-        <SolicitudesView />
-        {/* <ModuloSolicitud /> */}
+        {/* <SolicitudesView /> */}
+        <ModuloSolicitud />
       </div>
     </div>
   )

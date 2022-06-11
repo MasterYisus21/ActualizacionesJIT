@@ -16,11 +16,10 @@ function ModuloSolicitud() {
     return (
     <div className='modulo-solicitud-wrapper'>
         <div className='modulo-solicitud-container'>
-            <div className='modulo-solicitud-navbar'>
+            {/* <div className='modulo-solicitud-navbar'>
                 <a href='#'><img src='images/user.png' alt='imagen usuario' className="modulo-solicitud-small-image" /></a>
                 <a href='#'><img src='images/salida.png' alt='imagen usuario' className="modulo-solicitud-small-image" /></a>
-            </div>
-            <br /><br />
+            </div> */}
             <div className='modulo-solicitud-content'>
                 <div className='modulo-solicitud-content-navbar'>
                     <a href='#' className='modulo-solicitud-content-navbar-link'>Datos Generales</a>
@@ -35,7 +34,6 @@ function ModuloSolicitud() {
                 
                 <div className='modulo-solicitud-content-main'>
                     <ModuloSolicitudDatosGenerales />
-
                     {/* <ModuloInformacionConvocante /> */}
                     {/* <ModuloInformacionConciliador /> */}
                     {/* <ModuloInformacionConvocante /> */}
@@ -44,7 +42,8 @@ function ModuloSolicitud() {
                     {/* <ModuloSolicitudAudiencia /> */}
                     {/* <ModuloSolicitudHechos /> */}
                     {/* <ModuloSolicitudManejoConflicto /> */}
-                    {/* <ModuloSolicitudResultado /> */}                    
+                    {/* <ModuloSolicitudResultado />                     */}
+
                 </div>
             </div>
         </div>

@@ -105,7 +105,7 @@ function ModuloSolicitudDatosGenerales() {
     </div>
     <div className='modulo-solicitud-content-main-column2'>
         <div>
-            <h3>Definición del asunto juridico</h3>
+            <h5>Definición del asunto juridico</h5>
         </div>
         <div className='modulo-solicitud-content-main-column2-form1'>
             ¿Asunto juridico definible?
@@ -124,7 +124,7 @@ function ModuloSolicitudDatosGenerales() {
         </div>
         <br />
         <div>
-            <h3>Area y Tema</h3>
+            <h5>Area y Tema</h5>
         </div>
         <div className='modulo-solicitud-content-main-column2-form2'>
             <div className="mb-3">
