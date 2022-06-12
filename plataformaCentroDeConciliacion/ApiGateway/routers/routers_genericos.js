@@ -6,7 +6,9 @@ const views_generales = require('../views/views_generales')
 router.get('/ciudades/:id',views_generales.Ciudades)
 router.get('/temas/:id',views_generales.Subtema)
 router.get('/docentes',views_generales.Docentes)// lista a todos los docentes
-router.get('/solicitudes_view/:identificacion',views_generales.Solicitudesview) // trae las solicitudes de la eprsona que ingrese
+router.get('/solicitudes_view/',views_generales.Solicitudesview) // trae las solicitudes de la eprsona que ingrese
+router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
+router.get('/solicitudes_view/historico',views_generales.SolicitudesviewHistorial) // trae el historial de las solicitudes de la eprsona que ingrese
 router.get('/personas/:identificacion',views_generales.InformacionPersona) // trae los datos completos de una perosona
 router.get('/citaciones/:id',views_generales.InformacionCitacion)// trae los datos completos de una citacion
 

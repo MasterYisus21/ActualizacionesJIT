@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.shortcuts import render
 from .serializers import*
 from apiConciliacionApp.base.general_views import  GeneralViewSet
+from rest_framework import filters
 
 
 
@@ -44,6 +45,8 @@ class Tipo_resultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos 
 
 class SolicitudViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = SolicitudSerializer
+    # filter_backends = [filters.SearchFilter]
+    # search_fields = ['Numero_caso','Fecha_registro']
 
 class HechosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = HechosSerializer
@@ -101,6 +104,8 @@ class PerfilViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest
 
 class PersonaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PersonaSerializer
+    # filter_backends = [filters.SearchFilter]
+    # search_fields = ['Nombres','Apellidos','=Identificacion']
 
 class UsuarioViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = UsuarioSerializer

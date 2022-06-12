@@ -98,10 +98,8 @@ datosPersonas.Solicitudes = async (response) => {
     try {
        
         for await (const informacion_data of response.data) {
-            // Incrementando el tamaño total.
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
-           console.log(resp.data)
             const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
             datos[informacion_data.Solicitud_Id]={
                 Solicitud_Id:informacion_data.Solicitud_Id,
@@ -109,23 +107,66 @@ datosPersonas.Solicitudes = async (response) => {
                 Tipo_Estado:estado.data.Nombre
             }
             
-            // const barrio= await axios.get(config.urlApiConciliacion + "/barrios/"+resp.data.Barrio_Id);
-            // const localidad = await axios.get(config.urlApiConciliacion + "/localidades/"+barrio.data.Localidad_Id);
-            // const ciudad = await axios.get(config.urlApiConciliacion + "/ciudades/"+localidad.data.Ciudad_Id);
-            // const departamento = await axios.get(config.urlApiConciliacion + "/departamentos/"+ciudad.data.Departamento_Id);
-            // const pais = await  axios.get(config.urlApiConciliacion + "/paises/"+departamento.data.Pais_Id);
-            
-            // departamento.data.Pais_Id = pais.data
-            // ciudad.data.Departamento_Id = departamento.data
-            // localidad.data.Ciudad_Id=ciudad.data
-            // barrio.data.Localidad_Id= localidad.data
-            // resp.data.Barrio_Id=barrio.data
-            
+           
+          }
+          return datos
+        
+        
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
 
-            // datos[informacion_data.Persona_Id] = resp.data
-            
+
+    
+}
+
+datosPersonas.Historial = async (response) => {
+    let datos={}
+    
+    try {
+       
+        for await (const informacion_data of response.data) {
+            const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
+            const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
+            const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
+
+            historico.data[0].Tipo_estado_Id = estado.data
+            datos[informacion_data.Solicitud_Id]= historico.data
             
            
+          }
+          return datos
+        
+        
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
+
+    
+}
+datosPersonas.SolicitudesSearch = async (response,search) => {
+    let datos={}
+    
+    try {
+
+        for await (const informacion_data of response.data) {
+
+            if(informacion_data.Solicitud_Id==search){
+            const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
+            const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
+            const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
+
+            historico.data[0].Tipo_estado_Id = estado.data
+            datos[informacion_data.Solicitud_Id]={
+                Solicitud_Id:informacion_data.Solicitud_Id,
+                Fecha_registro:resp.data.Fecha_registro,
+                Tipo_Estado:estado.data.Nombre
+            }
+            
+            
+            }
           }
           return datos
         

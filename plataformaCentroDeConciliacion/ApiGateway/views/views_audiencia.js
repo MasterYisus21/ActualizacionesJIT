@@ -136,7 +136,7 @@ views.ListarCitaciones=(req,res)=>{
         
         InfoCitaciones(response)
         .then((result) => {
-         
+            
             res.status(200).json(result)
             
         }).catch((err) => {

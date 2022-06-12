@@ -149,6 +149,7 @@ class Inicio_conflicto(BaseModels):
 
 
 class Solicitud(StateModel):
+    
 
     Numero_caso               = models.AutoField(primary_key=True,auto_created = True,)
     Descripcion               = models.TextField(blank=True,null=True)
@@ -218,7 +219,7 @@ class Documento(StateModel):
 class Historico_solicitud(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Fecha = models.DateTimeField( auto_now=True, auto_now_add=False)
+    Fecha =  models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False)
     Descripcion = models.TextField(blank=False,null=False)
     Flag_requiere_documento = models.BooleanField(default=False)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
@@ -364,10 +365,8 @@ class Persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Identificacion = models.BigIntegerField(blank=False,null=False,unique=True)
-    Primer_nombre = models.CharField(max_length=15,blank=False,null=False)
-    Segundo_nombre = models.CharField(max_length=15,blank=True,null=False,default="")
-    Primer_apellido = models.CharField(max_length=15,blank=False,null=False)
-    Segundo_apellido = models.CharField(max_length=15,blank=True,null=False,default="")
+    Nombres = models.CharField(max_length=15,blank=False,null=False)
+    Apellidos = models.CharField(max_length=15,blank=True,null=False,default="")
     Correo = models.EmailField(max_length=120,blank=False,null=False)
     Telefono = models.BigIntegerField(blank=True,default=0)
     Fecha_de_nacimiento = models.DateField(blank=True)
@@ -386,7 +385,7 @@ class Persona(StateModel):
         verbose_name_plural = ("Personas")
 
     def __str__(self):
-        return  '%s %s' % (self.Primer_nombre,self.Primer_apellido  )
+        return  '%s %s' % (self.Nombres,self.Apellidos  )
 
 class Usuario(StateModel):
 
