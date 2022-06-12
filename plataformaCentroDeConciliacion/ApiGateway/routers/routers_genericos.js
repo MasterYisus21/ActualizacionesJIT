@@ -12,30 +12,36 @@ const views_audiencia = require('../views/views_audiencia')
 
 
 
-router.get('/temas/:id',views_generales.Subtema)
+
 router.get('/docentes',views_generales.Docentes)// lista a todos los docentes
-router.get('/solicitudes_view/',views_generales.Solicitudesview) // trae las solicitudes de la eprsona que ingrese
-router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
-router.get('/solicitudes_view/historico',views_generales.SolicitudesviewHistorial) // trae el historial de las solicitudes de la eprsona que ingrese
+
 router.get('/personas/:identificacion',views_generales.InformacionPersona) // trae los datos completos de una perosona
 router.get('/citaciones/:id',views_generales.InformacionCitacion)// trae los datos completos de una citacion
+
 
 //router.patch('/citaciones/:id',views_generales.ActualizarCitacion)
 //router.get('/fechas/:fecha',views_generales.FechasDisponibles)
 
 
-
+// Solicitudesviews//
+router.get('/solicitudes_view/',views_generales.Solicitudesview) // trae las solicitudes de la eprsona que ingrese
+router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
+router.get('/solicitudes_view/historico',views_generales.SolicitudesviewHistorial) // trae el historial de las solicitudes de la eprsona que ingrese
 
 // Traer y agregar solicitudes 
-router.get('/solicitudes',views_solicitud.ListarSolicitudes)
-router.get('/solicitudes/:id',views_solicitud.InformacionSolicitud)
-router.post('/solicitudes/',views_solicitud.CrearSolicitud)
+router.get('/temas/:id',views_generales.Subtema) // trae los temas
+router.get('/solicitudes',views_solicitud.ListarSolicitudes)// trae las solicitudes
+router.get('/solicitudes/:id',views_solicitud.InformacionSolicitud)// trae una solicitud 
+router.post('/solicitudes/',views_solicitud.CrearSolicitud)// Crea una solicitud
+router.post('/solicitudes/:id',views_solicitud.ActualizarSolicitud)// Acutaliza una solicitud
+
 
 
 
 
 // actualizar// 
 router.patch('/:nombre/:id',views_generales.Actualizar)
+
 // hechos //
 
 router.get('/departamentos',views_generales.ListarDepartamentos)

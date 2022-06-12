@@ -3,7 +3,18 @@ const res = require('express/lib/response');
 const config =require ('../config.json')
 datosPersonas = {}
 
-
+datosPersonas.Actualizar= (req,res)=>{
+   
+    axios.patch(config.urlApiConciliacion + "/"+req.params.nombre+"/" +req.params.id+"/",req.body)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        //console.log(error);
+        res.sendStatus(500)
+    })
+    
+}
 datosPersonas.datosBasicos = async (response) => {
     let datos= {}
    

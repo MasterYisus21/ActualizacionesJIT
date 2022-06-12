@@ -16,14 +16,14 @@ const views_audiencia = require('../views/views_audiencia')
 router.get('/',views_solicitud.Traer_datos)
 
 //router.get('/:id',views_solicitud.Personas_de_una_solicitud)
-//router.delete('/:id/persona/:documento',views_solicitud.EliminarPersona)
+router.delete('/:id/persona/:documento',views_solicitud.EliminarPersona) // eliminar persona de solicitud
 
 
 
 
 // convocante //
 
-router.get('/:id/convocante',views_convocante.ListarConvocantes)
+router.get('/:id/convocantes',views_convocante.ListarConvocantes)
 router.post('/:id/convocante/:documento',views_convocante.AgregarConvocante)
 //router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 

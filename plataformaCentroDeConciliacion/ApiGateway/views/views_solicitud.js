@@ -7,7 +7,7 @@ const datosPersonas = require('../views/datos')
 views.Traer_datos= (req,res)=>{
 
     let datos={}
-    axios.get(config.urlApiConciliacion + "/solicitante_servicios")
+    axios.get(config.urlApiConciliacion + "/solicitantes_servicio")
     .then(response => {
        datos["Solicitante_servicio"]=response.data
  
@@ -16,7 +16,7 @@ views.Traer_datos= (req,res)=>{
         datos["Tipo_servicio"]=response.data
 
 
-            axios.get(config.urlApiConciliacion + "/inicio_conflictos")
+            axios.get(config.urlApiConciliacion + "/inicios_conflicto")
             .then(response => {
             datos["Inicio_conflicto"]=response.data
 
@@ -80,6 +80,10 @@ console.log(req.body)
                               
         }
     
+    if ((axios.post(config.urlApiConciliacion + "/solicitudes/"+req.params.id).length>0)) {
+        
+        
+    }
 
     axios.post(config.urlApiConciliacion + "/solicitudes/",datos)
     
@@ -170,6 +174,18 @@ views.InformacionSolicitud= (req,res)=>{
 
 }
 
+views.ActualizarSolicitud= (req,res)=>{
+    console.log(req.body)
+    axios.patch(config.urlApiConciliacion + "/solicitudes/" +req.params.id+"/",req.body)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        //console.log(error);
+        res.sendStatus(500)
+    })
+    
+}
 
 
 views.CrearSolicitud= (req,res)=>{
