@@ -24,7 +24,6 @@ function App() {
       
 
       <Routes>
-        
           {/* {loggedIn ? <Navigate to="/dashboard" replace={true} /> : <Navigate to="/login" replace={true} />} */}
           <Route
             path="/login"
@@ -36,8 +35,8 @@ function App() {
           >
             <Route path='' element={<SolicitudesView />}/>
             <Route path='modulo-solicitudes/' element={<ModuloSolicitud />}>
-              <Route path='crear' element={<ModuloSolicitudDatosGenerales />}/>
-              <Route path=':Id_solicitud/datos_generales' element={<ModuloSolicitudDatosGenerales />}/>
+              <Route path='crear' element={<ModuloSolicitudDatosGenerales nuevo={true} />}/>
+              <Route path=':Id_solicitud/datos_generales' element={<ModuloSolicitudDatosGenerales nuevo={false} />}/>
               <Route path=':Id_solicitud/convocantes' element={<ModuloInformacionConvocante />}/>
               <Route path=':Id_solicitud/convocados' element={<ModuloInformacionConvocado />}/>
               <Route path=':Id_solicitud/hechos' element={<ModuloSolicitudHechos />}/>
@@ -48,6 +47,7 @@ function App() {
             </Route>
           </Route>
           <Route exact path='/' element={loggedIn ? <Navigate to="/dashboard" replace={true} /> : <Navigate to="/login" replace={true} />}></Route>
+          <Route path='/page-not-found' element={<ErrorPage  code={404} codeMessage={"Pagina no encontrada"} message={"La URL buscada no existe"} />}></Route>
           <Route path='*' element={<ErrorPage  code={404} codeMessage={"Pagina no encontrada"} message={"La URL buscada no existe"} />}></Route>
       </Routes>
     </div>

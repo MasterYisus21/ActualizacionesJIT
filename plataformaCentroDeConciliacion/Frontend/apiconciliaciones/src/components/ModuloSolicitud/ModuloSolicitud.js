@@ -23,7 +23,7 @@ function ModuloSolicitud() {
             </div> */}
             <div className='modulo-solicitud-content'>
                 <div className='modulo-solicitud-content-navbar'>
-                    {Object.keys(UrlParams).length === 0 ? console.log("igual"):console.log("diferente")}
+                    {/* {Object.keys(UrlParams).length === 0 ? console.log("igual"):console.log("diferente")} */}
                     
                     {Object.keys(UrlParams).length === 0 &&
                         <>
