@@ -24,18 +24,10 @@ views.ListarHechos=(req,res)=>{
             axios.get(config.urlApiConciliacion +"/departamentos/" + resp.data.Departamento_Id)
             .then(respon=>{
                
-                resp.data.Departamento_Id=respon.data.Nombre
+                resp.data.Departamento_Id=respon.data
                 response.data[0].Ciudad_Id = resp.data
-                console.log(response.data)
-                datos = {
-                   Fecha:response.data[0].Fecha,
-                   Descripcion_hecho: response.data[0].Descripcion_hecho,
-                   Descripcion_pretension: response.data[0].Descripcion_pretension,
-                   Cuantia:response.data[0].Cuantia,
-                   Cuantia_indeterminada: response.data[0].Cuantia_indeterminada,
-                   Ciudad_Id:resp.data
-                }
-                res.status(201).json(datos)
+                
+                res.status(201).json(response.data)
             })
            
         })
