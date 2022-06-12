@@ -170,18 +170,6 @@ views.InformacionSolicitud= (req,res)=>{
 
 }
 
-views.ActualizarSolicitud= (req,res)=>{
-    console.log(req.body)
-    axios.patch(config.urlApiConciliacion + "/solicitudes/" +req.params.id+"/",req.body)
-    .then(response => {
-        res.status(200).json(response.data)
-    })
-    .catch(function (error) {
-        //console.log(error);
-        res.sendStatus(500)
-    })
-    
-}
 
 
 views.CrearSolicitud= (req,res)=>{
@@ -218,14 +206,4 @@ views.CrearSolicitud= (req,res)=>{
 }
 module.exports = views
 
-views.ListarDepartamentos= (req,res)=>{
-    axios.get(config.urlApiConciliacion + "/departamentos")
-    .then(response => {
-        res.status(200).json(response.data)
-    })
-    .catch(function (error) {
-        console.log(error);
-        res.sendStatus(500)
-    })
-    
-}
+

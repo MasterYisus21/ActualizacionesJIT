@@ -39,18 +39,6 @@ views.Subtema= (req,res)=>{
 }
 
 
-views.GetGeneral= (req,res)=>{
-    axios.get(config.urlApiConciliacion + "/" +req.params.nombre)
-    .then(response => {
-        res.status(200).json(response.data)
-    })
-    .catch(function (error) {
-        console.log(error);
-        res.sendStatus(500)
-    })
-    
-}
-
 
 views.Docentes= (req,res)=>{
 
@@ -273,6 +261,30 @@ axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id)
 
 }
 
+views.ListarDepartamentos= (req,res)=>{
+    axios.get(config.urlApiConciliacion + "/departamentos")
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        console.log(error);
+        res.sendStatus(500)
+    })
+    
+}
+
+views.Actualizar= (req,res)=>{
+   
+    axios.patch(config.urlApiConciliacion + "/"+req.params.nombre+"/" +req.params.id+"/",req.body)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        //console.log(error);
+        res.sendStatus(500)
+    })
+    
+}
 
     
 module.exports = views

@@ -11,7 +11,7 @@ const views_manejo_conflicto = require('../views/views_manejo_conflicto')
 const views_audiencia = require('../views/views_audiencia')
 
 
-router.get('/ciudades/:id',views_generales.Ciudades)
+
 router.get('/temas/:id',views_generales.Subtema)
 router.get('/docentes',views_generales.Docentes)// lista a todos los docentes
 router.get('/solicitudes_view/',views_generales.Solicitudesview) // trae las solicitudes de la eprsona que ingrese
@@ -30,14 +30,16 @@ router.get('/citaciones/:id',views_generales.InformacionCitacion)// trae los dat
 router.get('/solicitudes',views_solicitud.ListarSolicitudes)
 router.get('/solicitudes/:id',views_solicitud.InformacionSolicitud)
 router.post('/solicitudes/',views_solicitud.CrearSolicitud)
-router.patch('/solicitudes/',views_solicitud.ActualizarSolicitud)
 
 
 
 
+// actualizar// 
+router.patch('/:nombre/:id',views_generales.Actualizar)
 // hechos //
 
-router.get('/departamentos',views_solicitud.ListarDepartamentos)
+router.get('/departamentos',views_generales.ListarDepartamentos)
+router.get('/departamentos/:id',views_generales.Ciudades)
 
 
 module.exports = router 
