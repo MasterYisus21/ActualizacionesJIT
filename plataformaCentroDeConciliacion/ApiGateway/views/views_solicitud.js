@@ -218,5 +218,14 @@ views.CrearSolicitud= (req,res)=>{
 }
 module.exports = views
 
-
-
+views.ListarDepartamentos= (req,res)=>{
+    axios.get(config.urlApiConciliacion + "/departamentos")
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        console.log(error);
+        res.sendStatus(500)
+    })
+    
+}
