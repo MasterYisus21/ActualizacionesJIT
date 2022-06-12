@@ -13,6 +13,11 @@ body {
     height: 25px;
 }
 
+.small-image {
+    width: 40px;
+    height: 40px;
+}
+
 .beautiful-icon-container-1 {
     display: flex;
     align-items: center;
@@ -57,6 +62,7 @@ body {
     justify-content: space-between;
     background-color: #00913D;
     color: white;
+    font-size: 1.5vw;
     padding: 5px 10px 5px 10px;
 }
 
@@ -68,12 +74,33 @@ body {
     overflow: hidden;
 }
 
+.green-btn {
+    
+}
+
 .display-flex {
     display: flex;
 }
 
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.position-sticky {
+    position: sticky;
+    top: 0px;
+}
+
 .content100 {
     width: 100%;
+}
+
+.content100-height {
+    height: 100%;
 }
 
 
@@ -83,4 +110,38 @@ body {
 
 .content20 {
     width: 20%;
+}
+
+.contentfitcontent {
+    width: fit-content;
+}
+
+.padding0 {
+    padding-left: 0px;
+}
+
+.overflow-scroll {
+    overflow: scroll;
+}
+
+.z-index-top {
+    z-index: 100000;
+}
+
+.state {
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(113, 113, 113, 0.412);
+    padding: 2px;
+    border-radius: 5px;
+    margin: 0px 30% 0px 30%;
+}
+
+.success-state {
+    background-color: rgba(71, 210, 71, 0.766);
+}
+
+.action-required-state {
+    background-color: rgba(254, 254, 4, 0.716);
+
 }

@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import './css/ModuloSolicitudDatosGenerales.css';
-import config from '../config.json'
+import config from '../../config.json'
+import { useParams, useNavigate } from 'react-router-dom';
+import ErrorPage from '../ErrorPage';
 
-function ModuloSolicitudDatosGenerales() {
+function ModuloSolicitudDatosGenerales(props) {
+    let navigate = useNavigate();
     const date = new Date()
     const today = date.getFullYear() + '-' + (date.getMonth().toString().length > 1 ? (1+date.getMonth()) : '0' + (1 + date.getMonth())) + '-' + (date.getDate().toString().length > 1 ? (date.getDate()) : '0' + (date.getDate()));
     const [solicitanteServicioOpciones, setSolicitanteServicioOpciones] = useState([])
@@ -13,6 +16,22 @@ function ModuloSolicitudDatosGenerales() {
     const [temaOpciones, setTemaOpciones] = useState([])
     const [subTemaOpciones, setSubTemaOpciones] = useState([])
     const [texto, setTexto] = useState([])
+
+
+
+    const UrlParams = useParams();
+    const obtenerDatosGenerales = () => {
+        if(Object.keys(UrlParams).length > 0) {
+            axios.get(config.apiGatewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch((error)=> {
+                navigate('/page-not-found', { replace: true} )
+            })
+        }
+        
+    }
 
     const obtenerOpcionesGenerales = () => {
         axios.get(config.apiGatewayURL + "/solicitud")
@@ -42,6 +61,10 @@ function ModuloSolicitudDatosGenerales() {
         obtenerOpcionesGenerales()
     }, [])
 
+    useEffect(() => {
+        obtenerDatosGenerales()
+    }, [])
+
 
     const postForm = (e) => {
         e.preventDefault();
@@ -57,7 +80,20 @@ function ModuloSolicitudDatosGenerales() {
             "Inicio_conflicto_Id": e.target.Inicio_conflicto_Id.value,
             "Solicitante_servicio_Id": e.target.solicitante.value
         }
-        axios.post("http://127.0.0.1:3001/api/gateway/v1/solicitud/", datos)
+        if(Object.keys(UrlParams).length > 0) {
+            axios.patch(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"], datos)
+            .then((response) => {
+                navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
+                // setData(response.data)
+            })
+        } else {
+            axios.post(config.apiGatewayURL + "/solicitudes/", datos)
+            .then((response) => {
+                navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
+                // setData(response.data)
+        })
+        }
+        
         
     }
 
@@ -67,7 +103,7 @@ function ModuloSolicitudDatosGenerales() {
     <div className='modulo-solicitud-content-main-column1'>
         <div className="mb-3">
             <label htmlFor="Numero_caso" className="form-label">ID del caso</label>
-            <input type="text" className="form-control" id="Numero_caso" name='Numero_caso' placeholder="Se generara automaticamente" disabled />
+            <input type="text" className="form-control" id="Numero_caso" name='Numero_caso' placeholder={Object.keys(UrlParams).length === 0 ? "Se generara automaticamente":"data['Numero_caso']"} disabled />
         </div>
         <div className="mb-3">
             <label htmlFor="solicitante" className="form-label">Solicitante del Servicio:</label>
@@ -105,7 +141,7 @@ function ModuloSolicitudDatosGenerales() {
     </div>
     <div className='modulo-solicitud-content-main-column2'>
         <div>
-            <h3>Definición del asunto juridico</h3>
+            <h5>Definición del asunto juridico</h5>
         </div>
         <div className='modulo-solicitud-content-main-column2-form1'>
             ¿Asunto juridico definible?
@@ -124,7 +160,7 @@ function ModuloSolicitudDatosGenerales() {
         </div>
         <br />
         <div>
-            <h3>Area y Tema</h3>
+            <h5>Area y Tema</h5>
         </div>
         <div className='modulo-solicitud-content-main-column2-form2'>
             <div className="mb-3">
@@ -150,11 +186,12 @@ function ModuloSolicitudDatosGenerales() {
             </div>
             <br />
             <button className="modulo-solicitud-content-main-column2-save-button">
-                <img src='images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
+                <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
                 <p>GUARDAR</p>
             </button>
         </div>
     </div>
+    
     </form>
     </>
     )
