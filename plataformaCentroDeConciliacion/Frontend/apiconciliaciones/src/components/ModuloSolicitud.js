@@ -36,10 +36,6 @@ function ModuloSolicitud() {
                 <div className='modulo-solicitud-content-main'>
                     {/* <ModuloSolicitudDatosGenerales /> */}
                     <ModuloInformacionConvocante />
-<<<<<<< HEAD
-                    {/* <ModuloInformacionConciliador /> */}
-=======
->>>>>>> e90a9ed9040ecef6dc18ae476438757ecf0fc773
                     {/* <ModuloInformacionConvocado /> */}
                     {/* <ModuloInformacionConciliador />                    */}
                     {/* <ModuloSolicitudAudiencia /> */}
