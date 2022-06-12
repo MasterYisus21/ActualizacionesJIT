@@ -37,7 +37,7 @@ router.patch('/solicitudes/',views_solicitud.ActualizarSolicitud)
 
 // hechos //
 
-router.patch('/despartamentos',views_solicitud.ListarDepartamentos)
+router.patch('/departamentos',views_solicitud.ListarDepartamentos)
 
 
 module.exports = router 
