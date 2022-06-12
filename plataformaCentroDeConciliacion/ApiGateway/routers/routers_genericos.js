@@ -34,7 +34,7 @@ router.get('/solicitudes',views_solicitud.ListarSolicitudes)// trae las solicitu
 router.get('/solicitudes/:id',views_solicitud.InformacionSolicitud)// trae una solicitud 
 router.post('/solicitudes/',views_solicitud.CrearSolicitud)// Crea una solicitud
 router.post('/solicitudes/:id',views_solicitud.ActualizarSolicitud)// Acutaliza una solicitud
-
+router.get('/solicitud',views_solicitud.Traer_datos)
 
 
 

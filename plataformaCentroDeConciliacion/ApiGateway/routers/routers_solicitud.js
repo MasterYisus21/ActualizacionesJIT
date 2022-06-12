@@ -13,10 +13,10 @@ const views_audiencia = require('../views/views_audiencia')
 
 // solicitud
 
-router.get('/',views_solicitud.Traer_datos)
+//router.get('/',views_solicitud.Traer_datos)
 
 //router.get('/:id',views_solicitud.Personas_de_una_solicitud)
-router.delete('/:id/persona/:documento',views_solicitud.EliminarPersona) // eliminar persona de solicitud
+router.delete('/:id/personas/:documento',views_solicitud.EliminarPersona) // eliminar persona de solicitud
 
 
 
@@ -24,14 +24,14 @@ router.delete('/:id/persona/:documento',views_solicitud.EliminarPersona) // elim
 // convocante //
 
 router.get('/:id/convocantes',views_convocante.ListarConvocantes)
-router.post('/:id/convocante/:documento',views_convocante.AgregarConvocante)
+router.post('/:id/convocantes/:documento',views_convocante.AgregarConvocante)
 //router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 
 
 // convocado//  
 
-router.get('/:id/convocado',views_convocado.ListarConvocados)
-router.post('/:id/convocado/:documento',views_convocado.AgregarConvocado)
+router.get('/:id/convocados',views_convocado.ListarConvocados)
+router.post('/:id/convocados/:documento',views_convocado.AgregarConvocado)
 //router.get('/:id/convocado/:documento',views_convocado.InformacionConvocado)
 
 
