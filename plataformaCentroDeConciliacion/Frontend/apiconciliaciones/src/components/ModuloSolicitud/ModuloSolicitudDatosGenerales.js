@@ -16,7 +16,6 @@ function ModuloSolicitudDatosGenerales(props) {
     const [temaOpciones, setTemaOpciones] = useState([])
     const [subTemaOpciones, setSubTemaOpciones] = useState([])
     const [texto, setTexto] = useState([])
-    const [data, setData] = useState({})
 
 
 
@@ -26,7 +25,6 @@ function ModuloSolicitudDatosGenerales(props) {
             axios.get(config.apiGatewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
             .then(response => {
                 console.log(response.data)
-                setData(response.data)
             })
             .catch((error)=> {
                 navigate('/page-not-found', { replace: true} )
@@ -86,13 +84,13 @@ function ModuloSolicitudDatosGenerales(props) {
             axios.patch(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"], datos)
             .then((response) => {
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
-                setData(response.data)
+                // setData(response.data)
             })
         } else {
             axios.post(config.apiGatewayURL + "/solicitudes/", datos)
             .then((response) => {
-            navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
-            setData(response.data)
+                navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
+                // setData(response.data)
         })
         }
         
@@ -105,7 +103,7 @@ function ModuloSolicitudDatosGenerales(props) {
     <div className='modulo-solicitud-content-main-column1'>
         <div className="mb-3">
             <label htmlFor="Numero_caso" className="form-label">ID del caso</label>
-            <input type="text" className="form-control" id="Numero_caso" name='Numero_caso' placeholder={Object.keys(UrlParams).length === 0 ? "Se generara automaticamente":data["Numero_caso"]} disabled />
+            <input type="text" className="form-control" id="Numero_caso" name='Numero_caso' placeholder={Object.keys(UrlParams).length === 0 ? "Se generara automaticamente":"data['Numero_caso']"} disabled />
         </div>
         <div className="mb-3">
             <label htmlFor="solicitante" className="form-label">Solicitante del Servicio:</label>
