@@ -28,15 +28,13 @@ views.AgregarHechos=(req,res)=>{
     let datos={}
     datos = {
                 
-        "Fecha": req.body.Fecha,
+
         "Descripcion_hecho": req.body.Descripcion_hecho,
         "Descripcion_pretension": req.body.Descripcion_pretension,
-        "Flag_interviene_tercero": req.body.Flag_interviene_tercero,
-        "Flag_violencia": req.body.Flag_violencia,
         "Cuantia": req.body.Cuantia,
         "Cuantia_indeterminada": req.body.Cuantia_indeterminada,
-        "Solicitud_Id": req.body.Solicitud_Id,
-        "Ciudad_Id": req.Ciudad_Id
+        "Solicitud_Id": req.params.Id,
+        "Ciudad_Id": req.body.Ciudad_Id
     }
     axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
     

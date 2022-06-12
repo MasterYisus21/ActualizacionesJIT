@@ -14,8 +14,9 @@ const views_audiencia = require('../views/views_audiencia')
 // solicitud
 
 router.get('/',views_solicitud.Traer_datos)
-router.get('/:id',views_solicitud.Personas_de_una_solicitud)
-router.delete('/:id/persona/:documento',views_solicitud.EliminarPersona)
+
+//router.get('/:id',views_solicitud.Personas_de_una_solicitud)
+//router.delete('/:id/persona/:documento',views_solicitud.EliminarPersona)
 
 
 

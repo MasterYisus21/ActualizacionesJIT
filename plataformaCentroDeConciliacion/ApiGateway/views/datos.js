@@ -121,6 +121,41 @@ datosPersonas.Solicitudes = async (response) => {
     
 }
 
+datosPersonas.SolicitudesEspecificas = async (response) => {
+    let datos={}
+    
+    try {
+        informacion_data=response.data
+       
+            console.log("entro")
+            const area =(informacion_data.Area_Id=== null | '') ? informacion_data.Area_Id='' : await axios.get(config.urlApiConciliacion + "/areas/"+informacion_data.Area_Id);
+            const subtema = (informacion_data.Subtema_Id=== null | '') ? informacion_data.Subtema_Id='' : await axios.get(config.urlApiConciliacion + "/subtemas/"+informacion_data.Subtema_Id);
+            const tipo_servicio =(informacion_data.Tipo_servicio_Id=== null | '') ? informacion_data.Tipo_servicio_Id='' : await axios.get(config.urlApiConciliacion + "/tipos_servicio/"+informacion_data.Tipo_servicio_Id);
+            const tipos_resultado =(informacion_data.Tipo_resultado_Id=== null | '') ? informacion_data.Tipo_resultado_Id='' : await axios.get(config.urlApiConciliacion + "/tipos_resultado/"+informacion_data.Tipo_resultado_Id);
+            const inicio_conflicto =(informacion_data.Inicio_conficto_Id=== null | '') ? informacion_data.Inicio_conficto_Id='' : await axios.get(config.urlApiConciliacion + "/inicios_conflicto/"+informacion_data.Inicio_conficto_Id);
+            const solicitante = (informacion_data.Solicitante_servicio_Id=== null | '') ? informacion_data.Solicitante_servicio_Id='' :await axios.get(config.urlApiConciliacion + "/solicitantes_servicios/"+informacion_data.Solicitante_servicio_Id);
+            informacion_data.Area_Id=area.data
+            informacion_data.Solicitud_Id=subtema.data
+            informacion_data.Tipo_servicios_Id=tipo_servicio.data
+            informacion_data.Tipo_resultados_Id=tipos_resultado.data
+            informacion_data.Inicio_conficto_Id=inicio_conflicto.data
+            informacion_data.Solicitante_servicio_Id=solicitante
+            datos=informacion_data
+            
+           
+          
+          return datos
+        
+        
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
+
+
+    
+}
+
 datosPersonas.Historial = async (response) => {
     let datos={}
     

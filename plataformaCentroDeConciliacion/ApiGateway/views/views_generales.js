@@ -51,42 +51,7 @@ views.GetGeneral= (req,res)=>{
     
 }
 
-views.GetGeneralId= (req,res)=>{
-    axios.get(config.urlApiConciliacion + "/" +req.params.nombre + "/" + +req.params.id)
-    .then(response => {
-        res.status(200).json(response.data)
-    })
-    .catch(function (error) {
-        console.log(error);
-        res.sendStatus(500)
-    })
-    
-}
 
-
-views.PatchGeneralId= (req,res)=>{
-    console.log(req.body)
-    axios.patch(config.urlApiConciliacion + "/" +req.params.nombre + "/" +req.params.id+"/",req.body)
-    .then(response => {
-        res.status(200).json(response.data)
-    })
-    .catch(function (error) {
-        //console.log(error);
-        res.sendStatus(500)
-    })
-    
-}
-views.GetGeneralId= (req,res)=>{
-    axios.get(config.urlApiConciliacion + "/solicitudes/"+req.params.id)
-    .then((result) => {
-        res.status(200).json(result.data)
-    }).catch((err) => {
-        res.status(404).json(err)
-        
-    });
-
-
-}
 views.Docentes= (req,res)=>{
 
     axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
@@ -232,38 +197,7 @@ views.FechasDisponibles=(req,res)=>{
    }
 
 
-views.CrearSolicitud= (req,res)=>{
 
-    let datos =
-        {
-            "Descripcion": req.body.Descripcion,
-            "Fecha_finalizacion": req.body.Fecha_finalizacion,
-            "Caso_gratuito": req.body.Caso_gratuito,
-            "Asunto_juridico_definible": req.body.Asunto_juridico_definible,
-            "Area_Id": req.body.Area_Id,
-            "Subtema_Id": req.body.Subtema_Id,
-            "Tipo_servicio_Id": req.body.Tipo_servicio_Id,
-            "Tipo_resultado_Id": req.body.Tipo_resultado_Id,
-            "Inicio_conflicto_Id": req.body.Inicio_conflicto_Id,
-            "Solicitante_servicio_Id": req.body.Solicitante_servicio_Id
-                                
-        }
-    
-
-    axios.post(config.urlApiConciliacion + "/solicitudes/",datos)
-    
-        
-    .then(response => {
-        
-        res.status(201).json(response.data)
-
-    })
-    .catch(function (error) {
-            res.sendStatus(500).json(error)
-    })
-
-    
-}
 // Esta funcion envia los datos especificos de la citacio con las personas incluidaas 
 
 const InfoCitaciones = async (resp,response)=>{ /// resp   las personas repsonse citacion especifica
@@ -338,5 +272,7 @@ axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id)
 })
 
 }
+
+
     
 module.exports = views
