@@ -99,10 +99,10 @@ views.Docentes= (req,res)=>{
 
 
 }
-views.SolicitudesDeDocente= (req,res)=>{
-    
-    console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
-    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
+views.Solicitudesview= (req,res)=>{
+    identificacion=12345
+   // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
+    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
     
     .then((result) => {
         
