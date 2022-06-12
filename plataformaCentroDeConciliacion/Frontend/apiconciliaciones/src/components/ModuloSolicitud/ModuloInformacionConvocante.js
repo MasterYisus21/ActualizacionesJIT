@@ -74,42 +74,90 @@ function ModuloInformacionConvocante() {
             </div>
           </nav>
         </div>
+
         {isOpen &&
-          <div className='registro-convocante mb-3'>
-            <input className="input-registro-convocante form-control rounded w-25" placeholder="Identificación"></input>
-            Nombre:<input className="input-registro-convocante form-control rounded w-25" placeholder="Nombres"></input>
-            <input className="input-registro-convocante form-control rounded w-25" placeholder="Apellidos"></input>
-            <input type="email" className="input-registro-convocante form-control rounded w-25" placeholder="Correo"></input>
-            <input type="text" className="input-registro-convocante form-control rounded w-25" placeholder="Teléfono"></input>
-            Fecha de Naciemiento<input type="date" class="form-control w-25" id="exampleFormControlInput1" placeholder="name@example.com"></input>
-            <select className="form-select drowdown-registro-convocante" aria-label="Default select example">
-              <option selected>Tipo de Documento</option>
-              <option value="1">Cedula</option>
-              <option value="2">Documento de Identificación</option>
-              <option value="3">Pasaporte</option>
-            </select>
-            <select className="form-select drowdown-registro-convocante" aria-label="Default select example">
-              <option selected>Tipo de Vivienda</option>
-              <option value="1">Cedula</option>
-              <option value="2">Documento de Identificación</option>
-              <option value="3">Pasaporte</option>
-            </select>
-            <select className="form-select drowdown-registro-convocante" aria-label="Default select example">
-              <option selected>Barrio</option>
-              <option value="1">Cedula</option>
-              <option value="2">Documento de Identificación</option>
-              <option value="3">Pasaporte</option>
-            </select>
-            <input className="input-registro-convocante form-control rounded" placeholder="Tipo de persona"></input>
-            <select className="form-select drowdown-registro-convocante" aria-label="Default select example">
-              <option selected>Estrato Socieconómico</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-            
+          <div className='registro-convocante mb-5'>
+            <div className='container d-grid gap-3'>
+              <label>Nombre</label>
+              <div className='row gap-3 ps-3 px-3'>
+              <input className="form-control rounded col" placeholder="Nombre(s)"></input>
+              <input className="form-control rounded col" placeholder="Apellidos"></input>
+              </div>
+            </div>
+            <div className='container d-grid gap-3'>
+              <label>Fecha de Nacimiento</label>
+              <input type="date" class="form-control" placeholder="fecha de Nacimiento"></input>
+            </div>
+            <div className='container d-grid gap-3'>
+              <label>Identificación</label>
+              <select className="form-select" aria-label="Default select example">
+                <option selected>Tipo de Documento</option>
+                <option value="1">Cedula</option>
+                <option value="2">Documento de Identificación</option>
+                <option value="3">Pasaporte</option>
+              </select>
+              <input className="form-control rounded" placeholder="Número de documento"></input>
+            </div>
+            <div className='container d-grid gap-3'>
+              <label>Datos adicionales</label>
+              <div className=' d-grid gap-3 ps-3 px-3'>
+                <div className='row gap-3'>
+                  <input type="email" className="form-control rounded col" placeholder="Correo"></input>
+                  <input type="text" className="form-control rounded col" placeholder="Teléfono"></input>
+                </div>
+                <div className='row gap-3'>
+                  <select className="form-select col" aria-label="Default select example">
+                    <option selected>Tipo de Vivienda</option>
+                    <option value="1">Propia</option>
+                    <option value="2">Arriendo</option>
+                  </select>
+                  <select className="form-select col" aria-label="Default select example">
+                    <option selected>Tipo Persona</option>
+                    <option value="1">Jurídica</option>
+                    <option value="2">Natural</option>
+                  </select>
+                </div>
+                <div className='row gap-3'>
+                  <select className="form-select drowdown-registro-convocante" aria-label="Default select example">
+                    <option selected>Estrato Socieconómico</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+                <div className='row gap-3'>
+                  <select className="form-select col" aria-label="Default select example">
+                    <option selected>Departamento</option>
+                    <option value="1">Cundinamarca</option>
+                    <option value="2">Boyacá</option>
+                    <option value="3">Meta</option>
+                  </select>
+                  <select className="form-select col" aria-label="Default select example">
+                    <option selected>Ciudad</option>
+                    <option value="1">Bototá</option>
+                    <option value="2">Medellín</option>
+                    <option value="3">Tunja</option>
+                  </select>
+                </div>
+                <div className='row gap-3'>
+                  <select className="form-select col" aria-label="Default select example">
+                    <option selected>Localidad</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                  <select className="form-select col" aria-label="Default select example">
+                    <option selected>Barrio</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+              </div>
+            </div>
             <button className="btn btn-primary me-3" id='boton-aceptar-registro-convocante'>Registrar</button>
           </div>}
+
         <form className='contenedor-tabla-convocante'>
           <table className='table table-striped table-bordered table-responsive '>
             <thead >

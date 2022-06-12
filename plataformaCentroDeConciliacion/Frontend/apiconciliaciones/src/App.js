@@ -33,9 +33,10 @@ function App() {
             path="/dashboard/"
             element={loggedIn ? <Dashboard /> : <Navigate to="/login" replace={true} />}
           >
+            {/* ModuloSolicitudDatosGenerales  */}
             <Route path='' element={<SolicitudesView />}/>
             <Route path='modulo-solicitudes/' element={<ModuloSolicitud />}>
-              <Route path='crear' element={<ModuloSolicitudDatosGenerales nuevo={true} />}/>
+              <Route path='crear' element={<ModuloInformacionConvocante nuevo={true} />}/>
               <Route path=':Id_solicitud/datos_generales' element={<ModuloSolicitudDatosGenerales nuevo={false} />}/>
               <Route path=':Id_solicitud/convocantes' element={<ModuloInformacionConvocante />}/>
               <Route path=':Id_solicitud/convocados' element={<ModuloInformacionConvocado />}/>
