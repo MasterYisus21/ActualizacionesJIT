@@ -8,6 +8,7 @@ const views_convocante = require('../views/views_convocante')
 const views_convocado = require('../views/views_convocado')
 const views_hechos = require('../views/views_hechos')
 const views_conciliador = require('../views/views_conciliador')
+const views_estudiantes = require('../views/views_estudiantes')
 const views_manejo_conflicto = require('../views/views_manejo_conflicto')
 const views_audiencia = require('../views/views_audiencia')
 
@@ -43,9 +44,12 @@ router.post('/:id/hechos',views_hechos.AgregarHechos)
 
 // conciliador //
 
-router.get('/:id/conciliador',views_conciliador.ListarConciliadores)
-router.post('/:id/conciliador/:Persona_Id',views_conciliador.AsignarConciliador)
+router.get('/:id/conciliadores',views_conciliador.ListarConciliadores)
+router.post('/:id/conciliadores/:identificacion',views_conciliador.AsignarConciliador)
 
+// estudiante//
+router.get('/:id/estudiantes',views_estudiantes.ListarEstudiantes)
+router.post('/:id/estudiantes/:identificacion',views_estudiantes.AsignarEstudiante)
 
 
 // manejo conflicto
