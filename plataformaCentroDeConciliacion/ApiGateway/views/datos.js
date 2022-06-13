@@ -27,12 +27,14 @@ datosPersonas.datosBasicos = async (response) => {
             const ciudad = await axios.get(config.urlApiConciliacion + "/ciudades/"+localidad.data.Ciudad_Id);
             const departamento = await axios.get(config.urlApiConciliacion + "/departamentos/"+ciudad.data.Departamento_Id);
             const pais = await  axios.get(config.urlApiConciliacion + "/paises/"+departamento.data.Pais_Id);
+            const documento = await  axios.get(config.urlApiConciliacion + "/tipos_documento/"+resp.data.Tipo_documento_Id);
           
             departamento.data.Pais_Id = pais.data
             ciudad.data.Departamento_Id = departamento.data
             localidad.data.Ciudad_Id=ciudad.data
             barrio.data.Localidad_Id= localidad.data
             resp.data.Barrio_Id=barrio.data
+            resp.data.Tipo_documento_Id= documento.data
             
 
             datos.push(resp.data)

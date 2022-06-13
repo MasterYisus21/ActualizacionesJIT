@@ -8,9 +8,10 @@ const views = {}
 views.ListarHechos=async(req,res)=>{
     let datos={}
     
-    axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
+    try{
+   await axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
 
-    .then(response => { 
+    .then(async response => { 
         
         if (response.data.length ===0 ){
            
@@ -18,10 +19,10 @@ views.ListarHechos=async(req,res)=>{
              
         }   
         else{
-        axios.get(config.urlApiConciliacion +"/ciudades/" + response.data[0].Ciudad_Id)
-        .then(resp=>{
+            await  axios.get(config.urlApiConciliacion +"/ciudades/" + response.data[0].Ciudad_Id)
+        .then(async resp=>{
             
-            axios.get(config.urlApiConciliacion +"/departamentos/" + resp.data.Departamento_Id)
+           await axios.get(config.urlApiConciliacion +"/departamentos/" + resp.data.Departamento_Id)
             .then(respon=>{
                
                 resp.data.Departamento_Id=respon.data
@@ -34,6 +35,12 @@ views.ListarHechos=async(req,res)=>{
        
         }
     })
+}catch(error){
+    console.log(error)
+        
+
+    res.sendStatus(400)
+}
 
 }
 
@@ -57,19 +64,17 @@ views.AgregarHechos=async (req,res)=>{
     
     await axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
     
-    .then(response => { 
+    .then(async response => { 
       
         if  (response.data.length<1){      
                 console.log(datos)
-                axios.post(config.urlApiConciliacion + "/hechos/",datos)
+               await axios.post(config.urlApiConciliacion + "/hechos/",datos)
                 .then((result) => {
                     console.log("Creado")
                     res.status(200).json(result.data)
                     
                 })
-                .catch(function (error) { 
-                    res.sendStatus(500).json(error)
-              })
+               
           
           
         }
@@ -78,7 +83,7 @@ views.AgregarHechos=async (req,res)=>{
          
             console.log(response.data[0].Id)
     
-            axios.patch(config.urlApiConciliacion + "/hechos/" +response.data[0].Id +"/",datos)
+            await axios.patch(config.urlApiConciliacion + "/hechos/" +response.data[0].Id +"/",datos)
           
             .then((result)=>{
                 
@@ -86,10 +91,7 @@ views.AgregarHechos=async (req,res)=>{
                 res.status(200).json(result.data)
 
             })
-            .catch(function (error) {
-                console.log(error)
-                res.status(500).json(error)
-          })
+           
       
             
         }
