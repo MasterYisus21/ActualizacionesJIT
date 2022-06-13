@@ -175,7 +175,7 @@ class Solicitud(StateModel):
 class Hechos(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Fecha = models.DateField(blank=False,null=False)
+    Fecha = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) # Se crea automaticamente 
     Descripcion_hecho = models.TextField(blank=False)
     Descripcion_pretension = models.TextField(blank=True)
     Flag_interviene_tercero = models.BooleanField(default=False, blank=True)

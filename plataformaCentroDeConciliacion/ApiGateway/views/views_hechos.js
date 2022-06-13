@@ -57,9 +57,9 @@ views.AgregarHechos=(req,res)=>{
     axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
     
     .then(response => { 
-        
-        if (response.data.length===0){      
-           
+      
+        if (response.data.length<1){      
+                console.log(datos)
                 axios.post(config.urlApiConciliacion + "/hechos/",datos)
                 .then((result) => {
                     console.log("Creado")
@@ -74,15 +74,19 @@ views.AgregarHechos=(req,res)=>{
         }
 
         else{
+         
             console.log(response.data[0].Id)
+    
             axios.patch(config.urlApiConciliacion + "/hechos/" +response.data[0].Id +"/",datos)
+          
             .then((result)=>{
                 
+                console.log("entre")
                 res.status(200).json(result.data)
 
             })
             .catch(function (error) {
-                
+                console.log(error)
                 res.sendStatus(500).json(error)
           })
       
