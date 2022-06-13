@@ -146,7 +146,7 @@ datosPersonas.SolicitudesEspecificas = async (response) => {
             const inicio_conflicto =(informacion_data.Inicio_conflicto_Id=== null | '') ? informacion_data.Inicio_conflicto_Id='' : await axios.get(config.urlApiConciliacion + "/inicios_conflicto/"+informacion_data.Inicio_conflicto_Id);
             const solicitante = (informacion_data.Solicitante_servicio_Id=== null | '') ? informacion_data.Solicitante_servicio_Id='' :await axios.get(config.urlApiConciliacion + "/solicitantes_servicio/"+informacion_data.Solicitante_servicio_Id);
             informacion_data.Area_Id=area.data
-            informacion_data.Solicitud_Id=subtema.data
+            informacion_data.Subtema_Id=subtema.data
             informacion_data.Tipo_servicios_Id=tipo_servicio.data
             informacion_data.Tipo_resultados_Id=tipos_resultado.data
             informacion_data.Inicio_conficto_Id=inicio_conflicto.data

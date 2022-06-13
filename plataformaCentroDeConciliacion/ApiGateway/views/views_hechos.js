@@ -14,7 +14,7 @@ views.ListarHechos=(req,res)=>{
         
         if (response.data.length ===0 ){
            
-                // res.status(200).json({})
+                 res.status(200).json({})
              
         }   
         else{
@@ -49,7 +49,7 @@ views.AgregarHechos=(req,res)=>{
         "Descripcion_pretension": req.body.Descripcion_pretension,
         "Cuantia": req.body.Cuantia,
         "Cuantia_indeterminada": req.body.Cuantia_indeterminada,
-        "Solicitud_Id": req.params.Id,
+        "Solicitud_Id": req.params.id,
         "Ciudad_Id": req.body.Ciudad_Id
     }
 
