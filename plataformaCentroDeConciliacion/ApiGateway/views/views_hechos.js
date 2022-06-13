@@ -40,8 +40,9 @@ views.ListarHechos=(req,res)=>{
 
 
 
-views.AgregarHechos=(req,res)=>{
+views.AgregarHechos=async (req,res)=>{
     let datos={}
+    try {
     datos = {
                 
 
@@ -54,11 +55,11 @@ views.AgregarHechos=(req,res)=>{
     }
 
     
-    axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
+    await axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
     
     .then(response => { 
       
-        if (response.data.length<1){      
+        if  (response.data.length<1){      
                 console.log(datos)
                 axios.post(config.urlApiConciliacion + "/hechos/",datos)
                 .then((result) => {
@@ -95,6 +96,9 @@ views.AgregarHechos=(req,res)=>{
 
         
     })
+}catch(error){
+    console.log(error)
+}
 
 }
 
