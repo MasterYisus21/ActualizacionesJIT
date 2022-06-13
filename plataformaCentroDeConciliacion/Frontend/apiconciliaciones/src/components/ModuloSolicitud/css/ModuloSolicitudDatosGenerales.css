@@ -29,6 +29,12 @@
     padding: 15px;
     height: 67%;
 }
+
+.modulo-solicitud-content-main-column2-save-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .modulo-solicitud-content-main-column2-save-button {
     background: none;
     border: none;

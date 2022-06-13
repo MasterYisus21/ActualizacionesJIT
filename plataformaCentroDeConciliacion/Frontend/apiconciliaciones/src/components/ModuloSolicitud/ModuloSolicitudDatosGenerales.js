@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './css/ModuloSolicitudDatosGenerales.css';
 import config from '../../config.json'
 import { useParams, useNavigate } from 'react-router-dom';
@@ -35,15 +35,15 @@ function ModuloSolicitudDatosGenerales(props) {
             .then(response => {
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])
-                setSolicitante(response.data["Solicitante_servicio_Id"])
+                setSolicitante(response.data["Solicitante_servicio_Id"]["Id"])
                 setInicioConflicto(response.data["Inicio_conflicto_Id"])
                 setFinalidadServicio(response.data["Tipo_servicio_Id"])
                 setCasoGratuito(response.data["Caso_gratuito"])
                 setAsuntoJuridicoDefinible(response.data["Asunto_juridico_definible"])
                 setArea(response.data["Area_Id"]["Id"])
-                setTema(response.data["Solicitud_Id"]["Tema_Id"])
-                obtenerOpcionesSubtema(response.data["Solicitud_Id"]["Tema_Id"])
-                setSubtema(response.data["Solicitud_Id"]["Id"])
+                setTema(response.data["Subtema_Id"]["Tema_Id"])
+                obtenerOpcionesSubtema(response.data["Subtema_Id"]["Tema_Id"])
+                setSubtema(response.data["Subtema_Id"]["Id"])
             })
             .catch((error)=> {
                 navigate('/page-not-found', { replace: true} )
@@ -105,17 +105,25 @@ function ModuloSolicitudDatosGenerales(props) {
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])
+                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
+            })
+            .catch((error) => {
+                alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"
             })
         } else {
             axios.post(config.apiGatewayURL + "/solicitudes/", datos)
             .then((response) => {
+                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
                 setNumeroCaso(response.data["Numero_caso"])
+                
         })
         }
         
         
     }
+
+    const alertContainer = useRef("");
 
     return (
     <>
@@ -205,10 +213,13 @@ function ModuloSolicitudDatosGenerales(props) {
                 </select>
             </div>
             <br />
-            <button className="modulo-solicitud-content-main-column2-save-button">
-                <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
-                <p>GUARDAR</p>
-            </button>
+            <div className='modulo-solicitud-content-main-column2-save-button-container'>
+                <div ref={alertContainer}></div>
+                <button className="modulo-solicitud-content-main-column2-save-button">
+                    <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
+                    <p>GUARDAR</p>
+                </button>
+            </div>
         </div>
     </div>
     

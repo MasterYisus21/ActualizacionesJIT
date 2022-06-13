@@ -35,7 +35,7 @@ function ModuloSolicitudManejoConflicto() {
             </div>
             <div className='modulo-solicitud-content-main-manejo-conflicto-guardar'>
                 <button>
-                    <img src='images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
+                    <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
                     <p>GUARDAR</p>
                 </button>
             </div>

@@ -11,9 +11,11 @@ function ModuloSolicitudHechos() {
     const [departamentoOpciones, setDepartamentoOpciones] = useState([])
     const [ciudadesOpciones, setCiudadesOpciones] = useState([])
     const [ciudad, setCiudad] = useState('')
-    const [departamento, setDepartamento] = useState('6')
+    const [departamento, setDepartamento] = useState('')
+    const [resumen, setResumen] = useState('')
+    const [pretensiones, setPretensiones] = useState('')
     const [cuantiaIndeterminada, setCuantiaIndeterminada] = useState(false)
-    const [cuantia, setCuantia] = useState("0")
+    const [cuantia, setCuantia] = useState("")
 
     const UrlParams = useParams()
 
@@ -28,14 +30,18 @@ function ModuloSolicitudHechos() {
     useEffect(() => {
         axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos")
         .then((response) => {
-            setCiudad(response.data[0]["Ciudad_Id"])
+            setDepartamento(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
+            obtenerCiudadesOpciones(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
+            setCiudad(response.data[0]["Ciudad_Id"]["Id"])
+            setResumen(response.data[0]["Descripcion_hecho"])
+            setPretensiones(response.data[0]["Descripcion_pretension"])
             setCuantia(response.data[0]["Cuantia"])
             setCuantiaIndeterminada(response.data[0]["Cuantia_indeterminada"])
         })
     }, [])
 
-    const obtenerCiudadesOpciones = (e) => {
-        axios.get(config.apiGatewayURL + "/departamentos/" + e.target.value)
+    const obtenerCiudadesOpciones = (value) => {
+        axios.get(config.apiGatewayURL + "/departamentos/" + value)
         .then((response) => {
             setCiudadesOpciones(response.data)
         })
@@ -44,12 +50,10 @@ function ModuloSolicitudHechos() {
     const postform = (event) => {
         event.preventDefault()
         const datos = {
-            "Fecha": "2022-06-09",
             "Descripcion_hecho": event.target.resumen.value,
             "Descripcion_pretension": event.target.pretensiones.value,
             "Cuantia": cuantia,
             "Cuantia_indeterminada": cuantiaIndeterminada,
-            "Solicitud_Id": UrlParams["Id_solicitud"],
             "Ciudad_Id": event.target.Ciudad.value
         }
         axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos", datos)
@@ -65,15 +69,15 @@ function ModuloSolicitudHechos() {
                 <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h4>Lugar de los hechos</h4></div>
                 <div className="mb-3">
                     <label htmlFor="Departamento" className="form-label">Departamento:</label>
-                    <select className="form-select" aria-label="Default select example" id="Departamento" name='Departamento' onChange={e => {obtenerCiudadesOpciones(e); setDepartamento(e.target.value)}} value={departamento} required>
-                        <option value={"Selecciona uno"} label={"Selecciona uno"} disabled></option>
+                    <select className="form-select" aria-label="Default select example" id="Departamento" name='Departamento' onChange={e => {obtenerCiudadesOpciones(e.target.value); setDepartamento(e.target.value)}} value={departamento} required>
+                        <option value="" label={"Selecciona uno"} disabled></option>
                         {departamentoOpciones.map(departamento => <option key={departamento["Id"]} value={departamento["Id"]} label={departamento["Nombre"]}> </option>)}
                     </select>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="Ciudad" className="form-label">Ciudad:</label>
-                    <select className="form-select" aria-label="Default select example" id="Ciudad" name='Ciudad' defaultValue="Selecciona uno" required>
-                        <option disabled>Selecciona uno</option>
+                    <select className="form-select" aria-label="Default select example" id="Ciudad" name='Ciudad' value={ciudad} onChange={(e) => {setCiudad(e.target.value)}} required>
+                        <option value="" label={"Selecciona uno"} disabled></option>
                         {ciudadesOpciones.map(ciudades => <option key={ciudades["Id"]} value={ciudades["Id"]} >{ciudades["Nombre"]} </option>)}
                     </select>
                 </div>
@@ -81,11 +85,11 @@ function ModuloSolicitudHechos() {
             <div className='modulo-solicitud-content-main-hechos-resumen'>
                 <div>
                     <label htmlFor="resumen">Resumen de los hechos:</label>
-                    <textarea className="form-control" rows="8" id="resumen" name="resumen" required></textarea>
+                    <textarea className="form-control" rows="8" id="resumen" name="resumen" value={resumen} onChange={(e) => {setResumen(e.target.value)}} required></textarea>
                 </div>
                 <div>
                     <label htmlFor="pretensiones">Pretensiones iniciales:</label>
-                    <textarea className="form-control" rows="8" id="pretensiones" name='pretensiones' required></textarea>
+                    <textarea className="form-control" rows="8" id="pretensiones" name='pretensiones' value={pretensiones} onChange={(e) => {setPretensiones(e.target.value)}} required></textarea>
                 </div>
             </div>
             <div className='modulo-solicitud-content-main-hechos-determinacion-cuantia'>
