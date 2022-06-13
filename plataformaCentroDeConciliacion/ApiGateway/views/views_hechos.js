@@ -5,7 +5,7 @@ const { Ciudades } = require('./views_generales');
 
 const views = {}
 
-views.ListarHechos=(req,res)=>{
+views.ListarHechos=async(req,res)=>{
     let datos={}
     
     axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)

@@ -65,6 +65,7 @@ router.get('/:id/fechas/:fecha',views_audiencia.FechasDisponibles)
 //router.delete('/:id/citaciones/:documento',views_solicitud.EliminarPersona) 
 // audiencia
 
+
 module.exports = router 
 
 

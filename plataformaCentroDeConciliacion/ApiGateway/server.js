@@ -79,12 +79,13 @@ function verifier(req, res, next) {
     
 }
 
+
 const Solicitud = require('./routers/routers_solicitud')
 const Genericos = require('./routers/routers_genericos')
 
 app.use('/api/gateway/v1/solicitudes',Solicitud)
 app.use('/api/gateway/v1/',Genericos)
-
+ 
 
 const port = 3001;
 

@@ -16,7 +16,7 @@ datosPersonas.Actualizar= (req,res)=>{
     
 }
 datosPersonas.datosBasicos = async (response) => {
-    let datos= {}
+    let datos= []
    
     try {
         for await (const informacion_data of response.data) {
