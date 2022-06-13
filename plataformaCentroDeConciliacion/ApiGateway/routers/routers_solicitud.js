@@ -15,7 +15,7 @@ const views_audiencia = require('../views/views_audiencia')
 
 //router.get('/',views_solicitud.Traer_datos)
 
-//router.get('/:id',views_solicitud.Personas_de_una_solicitud)
+router.get('/:id/personas',views_solicitud.Personas_de_una_solicitud)
 router.delete('/:id/personas/:documento',views_solicitud.EliminarPersona) // eliminar persona de solicitud
 
 
@@ -49,14 +49,19 @@ router.post('/:id/conciliador/:Persona_Id',views_conciliador.AsignarConciliador)
 
 
 // manejo conflicto
-router.get('/:id/manejo_conflicto',views_manejo_conflicto.ListarManejoConflicto)
-router.patch('/:id/manejo_conflicto',views_manejo_conflicto.Agregar)
+router.get('/:id/manejos_conflicto',views_manejo_conflicto.ListarManejoConflicto)
+router.patch('/:id/manejos_conflicto',views_manejo_conflicto.Agregar)
 
 // audiencia
 
-router.get('/:id/audiencia',views_audiencia.ListarCitaciones)
-router.post('/:id/audiencia',views_audiencia.CrearCitacion)
+router.get('/:id/citaciones',views_audiencia.ListarCitaciones)
+router.get('/:id/citaciones/:id2',views_audiencia.CitacionEspecifica)
+router.post('/:id/citaciones',views_audiencia.CrearCitacion)
+router.delete('/:id/citaciones/personas/id2',views_audiencia.EliminarPersonas)
+
 router.get('/:id/fechas/:fecha',views_audiencia.FechasDisponibles)
+
+//router.delete('/:id/citaciones/:documento',views_solicitud.EliminarPersona) 
 // audiencia
 
 module.exports = router 

@@ -155,6 +155,62 @@ views.ListarCitaciones=(req,res)=>{
 
     
 }
+views.CitacionEspecifica=(req,res)=>{
+   
+
+    axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id2)
+    .then(response => {
+        response.data=[response.data]
+        InfoCitaciones(response)
+        .then((result) => {
+            
+            res.status(200).json(result)
+            
+        }).catch((err) => {
+           
+           res.status(404).json(err)
+        });   
+
+
+            
+    }).catch(err =>{
+        res.status(400).json(err)
+    }
+
+    )
+    
+
+    
+}
+
+views.CitacionEspecifica=(req,res)=>{
+   
+
+    axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id2)
+    .then(response => {
+        response.data=[response.data]
+        InfoCitaciones(response)
+        .then((result) => {
+            
+            res.status(200).json(result)
+            
+        }).catch((err) => {
+           
+           res.status(404).json(err)
+        });   
+
+
+            
+    }).catch(err =>{
+        res.status(400).json(err)
+    }
+
+    )
+    
+
+    
+}
+
 
 
 
@@ -235,4 +291,16 @@ views.FechasDisponibles=(req,res)=>{
 
    }
 
+
+
+views.EliminarPersonas=(req,res)=>{
+
+   datosPersonas.EliminarPersonasDeCitacion(req)
+
+
+    
+    
+
+    
+}
 module.exports = views

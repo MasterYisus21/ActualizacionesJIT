@@ -224,4 +224,41 @@ datosPersonas.SolicitudesSearch = async (response,search) => {
 
     
 }
+
+datosPersonas.EliminarPersonasDeCitacion = async (response) => {
+    let datos={}
+    
+    try {
+
+        for await (const informacion_data of response.body) {
+
+            if(informacion_data.Solicitud_Id==search){
+            const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
+            const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
+            const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
+
+            historico.data[0].Tipo_estado_Id = estado.data
+            datos[informacion_data.Solicitud_Id]={
+                Solicitud_Id:informacion_data.Solicitud_Id,
+                Fecha_registro:resp.data.Fecha_registro,
+                Tipo_Estado:estado.data.Nombre
+            }
+            
+            
+            }
+          }
+          return datos
+        
+        
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
+
+    
+}
+
+
+
+
 module.exports = datosPersonas
