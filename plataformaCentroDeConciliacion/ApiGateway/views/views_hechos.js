@@ -6,8 +6,7 @@ const { Ciudades } = require('./views_generales');
 const views = {}
 
 views.ListarHechos=async(req,res)=>{
-    let datos={}
-    
+ 
     try{
    await axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
 
@@ -30,6 +29,8 @@ views.ListarHechos=async(req,res)=>{
                 
                 res.status(201).json(response.data)
             })
+            .catch((err) => {
+                res.status(404).json(err)})
            
         })
        
@@ -38,7 +39,6 @@ views.ListarHechos=async(req,res)=>{
 }catch(error){
     console.log(error)
         
-
     res.sendStatus(400)
 }
 
@@ -74,6 +74,8 @@ views.AgregarHechos=async (req,res)=>{
                     res.status(200).json(result.data)
                     
                 })
+                .catch((err) => {
+                    res.status(404).json(err)})
                
           
           
@@ -91,6 +93,8 @@ views.AgregarHechos=async (req,res)=>{
                 res.status(200).json(result.data)
 
             })
+            .catch((err) => {
+                res.status(404).json(err)})
            
       
             
@@ -101,7 +105,7 @@ views.AgregarHechos=async (req,res)=>{
 }catch(error){
     
     console.log(error)
-    res.status(400).json()
+    res.sendStatus(400)
 }
 
 }

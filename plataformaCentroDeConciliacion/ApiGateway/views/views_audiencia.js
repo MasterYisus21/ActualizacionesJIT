@@ -137,11 +137,11 @@ try{
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-views.ListarCitaciones=(req,res)=>{
+views.ListarCitaciones=async(req,res)=>{
    
-
-    axios.get(config.urlApiConciliacion + "/citaciones?Solicitud_Id="+req.params.id)
-    .then(response => {
+    try{
+   await axios.get(config.urlApiConciliacion + "/citaciones?Solicitud_Id="+req.params.id)
+    .then(async response => {
         
         InfoCitaciones(response)
         .then((result) => {
@@ -160,16 +160,20 @@ views.ListarCitaciones=(req,res)=>{
     }
 
     )
+}catch(error){
     
+    console.log(error)
+    res.sendStatus(400)
+}
 
     
 }
 
 
-views.CitacionEspecifica=(req,res)=>{
+views.CitacionEspecifica=async(req,res)=>{
    
-
-    axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id2)
+    try{
+    await axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id2)
     .then(response => {
         response.data=[response.data]
         InfoCitaciones(response)
@@ -185,18 +189,23 @@ views.CitacionEspecifica=(req,res)=>{
 
             
     }).catch(err =>{
-        res.status(400).json(err)
+        res.status(404).json(err)
     }
 
     )
     
-
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
     
 }
 
 
 
-views.CrearCitacion=(req,res)=>{
+views.CrearCitacion=async(req,res)=>{
+    try{
     let datos ={}
     console.log(req.body)
       datos=  {
@@ -211,7 +220,7 @@ views.CrearCitacion=(req,res)=>{
         
     
 
-    axios.post(config.urlApiConciliacion + "/citaciones/",datos)
+    await axios.post(config.urlApiConciliacion + "/citaciones/",datos)
 
     .then(response=>{
     //    asisgnarPersonas(response,req)
@@ -222,37 +231,38 @@ views.CrearCitacion=(req,res)=>{
     }).catch((err) => {
         res.status(404).json(err)
     });
-
     
+
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+} 
 }
 
 
 
 
-views.FechasDisponibles=(req,res)=>{
-    
-    axios.get(config.urlApiConciliacion + "/citaciones?Fecha_sesion="+req.params.fecha)// traer los Id de todas las citaciones para esa fecha 
+views.FechasDisponibles=async(req,res)=>{
+try{
+   await axios.get(config.urlApiConciliacion + "/citaciones?Fecha_sesion="+req.params.fecha)// traer los Id de todas las citaciones para esa fecha 
   
   
-    .then(rest=> {
-        console.log("/////////")
-        console.log(rest.data)
-        console.log("/////")
+    .then(async rest=> {
+       
+        
         // buscar a la persona
 
-        axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)// me trae el docente de la solicitud
+       await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)// me trae el docente de la solicitud
         
         .then(response=>{
-            console.log("/////////")
-        console.log(response.data)
-        console.log("/////")
-        // buscar a la persona
+         
            
     //         .then(turno=>{
         citaciones(rest,response)
             .then(resp=>{
                 
-                console.log(resp)
+               
                 res.status(200).json(resp)
             
                     // Turnos(turno=turno, lista=lista)
@@ -268,11 +278,15 @@ views.FechasDisponibles=(req,res)=>{
         res.status(404).json(err)
     });   
 
-   }
+   }catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
 
+}
 
-
-views.EliminarPersonas=(req,res)=>{
+views.EliminarPersonas=async(req,res)=>{
 
   datosPersonas.EliminarPersonasDeCitacion(req)
   .then(result=>{
