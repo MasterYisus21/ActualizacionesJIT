@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import './css/ModuloSolicitudDatosGenerales.css';
 import config from '../../config.json'
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import ErrorPage from '../ErrorPage';
 
 function ModuloSolicitudDatosGenerales(props) {
@@ -16,17 +16,30 @@ function ModuloSolicitudDatosGenerales(props) {
     const [temaOpciones, setTemaOpciones] = useState([])
     const [subTemaOpciones, setSubTemaOpciones] = useState([])
     const [numeroCaso, setNumeroCaso] = useState('')
-    const [solicitante, setSolicitante] = useState('default')
-    const [inicioConflicto, setInicioConflicto] = useState('default')
-    const [finalidadServicio, setFinalidadServicio] = useState('default')
+    const [solicitante, setSolicitante] = useState('')
+    const [inicioConflicto, setInicioConflicto] = useState('')
+    const [finalidadServicio, setFinalidadServicio] = useState('')
     const [casoGratuito, setCasoGratuito] = useState(false)
     const [asuntoJuridicoDefinible, setAsuntoJuridicoDefinible] = useState(false)
-    const [area, setArea] = useState('default')
-    const [tema, setTema] = useState('default')
-    const [subtema, setSubtema] = useState('default')
-    const [texto, setTexto] = useState([])
+    const [area, setArea] = useState('')
+    const [tema, setTema] = useState('')
+    const [subtema, setSubtema] = useState('')
 
+    let location = useLocation();
 
+    useEffect(()=>{
+        if(location.pathname == "/dashboard/modulo-solicitudes/crear") {
+            setNumeroCaso('')
+            setSolicitante('')
+            setInicioConflicto('')
+            setFinalidadServicio('')
+            setCasoGratuito(false)
+            setAsuntoJuridicoDefinible(false)
+            setArea('')
+            setTema('')
+            setSubtema('')
+        }
+    },[location])
 
     const UrlParams = useParams();
     const obtenerDatosGenerales = () => {
@@ -53,6 +66,7 @@ function ModuloSolicitudDatosGenerales(props) {
     }
 
     const obtenerOpcionesGenerales = () => {
+        console.log("entra aqui")
         axios.get(config.apiGatewayURL + "/solicitud")
         .then(response => {
             setSolicitanteServicioOpciones(response.data["Solicitante_servicio"])
@@ -105,7 +119,7 @@ function ModuloSolicitudDatosGenerales(props) {
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])
-                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
+                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
             })
             .catch((error) => {
                 alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"
@@ -136,14 +150,14 @@ function ModuloSolicitudDatosGenerales(props) {
         <div className="mb-3">
             <label htmlFor="solicitante" className="form-label">Solicitante del Servicio:</label>
             <select className="form-select" aria-label="Default select example" id="solicitante" name='solicitante' value={solicitante} onChange={e => setSolicitante(e.target.value)} required>
-                <option value={"default"} label={"Selecciona uno"} disabled></option>
+                <option value="" label={"Selecciona uno"} disabled></option>
                 {solicitanteServicioOpciones.map(solicitanteServicioOpciones => <option key={solicitanteServicioOpciones["id"]} value={solicitanteServicioOpciones["id"]} label={solicitanteServicioOpciones["Nombre"]}>{solicitanteServicioOpciones["Id"]} </option>)}
             </select>
         </div>
         <div className="mb-3">
             <label htmlFor="Inicio_conflicto_Id" className="form-label">Hace cuanto incio el conflicto:</label>
             <select className="form-select" aria-label="Default select example" id="Inicio_conflicto_Id" name='Inicio_conflicto_Id' value={inicioConflicto} onChange={e => setInicioConflicto(e.target.value)} required>
-                <option value={"default"} label={"Selecciona uno"} disabled></option>
+                <option value="" label={"Selecciona uno"} disabled></option>
                 {inicioConflictoOpciones.map(inicioConflictoOpciones => <option key={inicioConflictoOpciones["Id"]} value={inicioConflictoOpciones["Id"]} label={inicioConflictoOpciones["Nombre"]}>{inicioConflictoOpciones["Id"]} </option>)}
             </select>
         </div>
@@ -154,7 +168,7 @@ function ModuloSolicitudDatosGenerales(props) {
         <div className="mb-3">
             <label htmlFor="Tipo_servicio_Id" className="form-label">Finalidad de adquisición del servicio:</label>
             <select className="form-select" aria-label="Default select example" id="Tipo_servicio_Id" name='Tipo_servicio_Id' value={finalidadServicio} onChange={e=>setFinalidadServicio(e.target.value)} required>
-                <option value={"default"} label={"Selecciona uno"} disabled></option>
+                <option value="" label={"Selecciona uno"} disabled></option>
                 {tipoServicioOpciones.map(tipoServicioOpciones => <option key={tipoServicioOpciones["id"]} value={tipoServicioOpciones["id"]} label={tipoServicioOpciones["Nombre"]}>{tipoServicioOpciones["Id"]} </option>)}
             </select>
         </div>
@@ -194,21 +208,21 @@ function ModuloSolicitudDatosGenerales(props) {
             <div className="mb-3">
                 <label htmlFor="Area_Id" className="form-label">Area:</label>
                 <select className="form-select" aria-label="Default select example" id="Area_Id" name='Area_Id' value={area} onChange={(e) => setArea(e.target.value)} required>
-                    <option value={"default"} label={"Selecciona uno"} disabled></option>
+                    <option value="" label={"Selecciona uno"} disabled></option>
                     {areaOpciones.map(areaOpciones => <option key={areaOpciones["id"]} value={areaOpciones["id"]} label={areaOpciones["Nombre"]}>{areaOpciones["Id"]} </option>)}
                 </select>
             </div>
             <div className="mb-3">
                 <label htmlFor="Tema" className="form-label">Tema:</label>
                 <select className="form-select" aria-label="Default select example" id="Tema" name='Tema' onChange={e => {obtenerOpcionesSubtema(e.target.value); setTema(e.target.value)}} value={tema} required>
-                    <option value={"default"} label={"Selecciona uno"} disabled></option>
+                    <option value="" label={"Selecciona uno"} disabled></option>
                     {temaOpciones.map(temaOpciones => <option key={temaOpciones["id"]} value={temaOpciones["id"]} label={temaOpciones["Nombre"]}>{temaOpciones["Id"]} </option>)}
                 </select>
             </div>
             <div className="mb-3">
                 <label htmlFor="Subtema_Id" className="form-label">Subtema:</label>
                 <select className="form-select" aria-label="Default select example" id="Subtema_Id" name='Subtema_Id' value={subtema} onChange={(e)=>setSubtema(e.target.value)} required>
-                    <option value={"default"} label={"Selecciona uno"} disabled></option>
+                    <option value="" label={"Selecciona uno"} disabled></option>
                     {subTemaOpciones.map(subTemaOpciones => <option key={subTemaOpciones["Id"]} value={subTemaOpciones["Id"]} label={subTemaOpciones["Nombre"]}>{subTemaOpciones["Id"]} </option>)}
                 </select>
             </div>
