@@ -6,20 +6,20 @@ const config =require ('../config.json')
 const views = {}
 
 
-const asisgnarPersonas=async(response,req)=>{       
+const asisgnarPersonas=async(req)=>{       
     let datos={}
     
 try{
 
-    for await (const informacion_data of req.body.Personas) {
+    for await (const informacion_data of req.body) {
         
         let data={
-            "Citacion_Id": response.data.Id,
-            "Persona_Id": informacion_data.Id
+            "Citacion_Id": req.params.id2,
+            "Persona_Id": informacion_data
         }
         const resp=await axios.post(config.urlApiConciliacion + "/relaciones_citacion_persona/",data)
                        
-       datos[informacion_data.Id]=resp.data
+       datos[informacion_data]=resp.data
         
     }
     return datos
@@ -36,13 +36,20 @@ try{
 const InfoCitaciones = async(response)=>{
     let endpoints = []
     let datos={}
-
+    let personas={}
 try{
 
+    
     for await (const informacion_data of response.data) {
+        const resp = await  axios.get( config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+informacion_data.Id)
+        for await (const dat of resp.data) { const persona= await axios.get( config.urlApiConciliacion + "/personas/"+dat.Persona_Id) 
+        personas[dat.Persona_Id]=persona.data}
+        datos["personas"]=personas
         endpoints = [
             config.urlApiConciliacion + "/turnos/"+informacion_data.Turno_Id,
             config.urlApiConciliacion + "/tipos_medio/"+informacion_data.Tipo_medio_Id
+           
+
     ]
         
        await Promise.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
@@ -50,6 +57,8 @@ try{
             informacion_data.Turno_Id=allData[0].data
             informacion_data.Tipo_medio_Id=allData[1].data
            
+           
+                     
             datos[informacion_data.Id] = informacion_data
              
             })
@@ -157,20 +166,46 @@ views.ListarCitaciones=(req,res)=>{
 }
 
 
+views.CitacionEspecifica=(req,res)=>{
+   
 
+    axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id2)
+    .then(response => {
+        response.data=[response.data]
+        InfoCitaciones(response)
+        .then((result) => {
+            
+            res.status(200).json(result)
+            
+        }).catch((err) => {
+           
+           res.status(404).json(err)
+        });   
+
+
+            
+    }).catch(err =>{
+        res.status(400).json(err)
+    }
+
+    )
+    
+
+    
+}
 
 
 
 views.CrearCitacion=(req,res)=>{
     let datos ={}
-   
+    console.log(req.body)
       datos=  {
-            "Fecha_sesion": req.body.Citacion[0].Fecha_sesion,
-            "Descripcion": req.body.Citacion[0].Descripcion,
-            "Enlace": req.body.Citacion[0].Enlace,
-            "Turno_Id": req.body.Citacion[0].Turno_Id,
-            "Tipo_medio_Id": req.body.Citacion[0].Tipo_medio_Id,
-            "Solicitud_Id": req.body.Citacion[0].Solicitud_Id
+            "Fecha_sesion": req.body.Fecha_sesion,
+            "Descripcion": req.body.Descripcion,
+            "Enlace": req.body.Enlace,
+            "Turno_Id": req.body.Turno_Id,
+            "Tipo_medio_Id": req.body.Tipo_medio_Id,
+            "Solicitud_Id": req.body.Solicitud_Id
         }
 
         
@@ -179,10 +214,10 @@ views.CrearCitacion=(req,res)=>{
     axios.post(config.urlApiConciliacion + "/citaciones/",datos)
 
     .then(response=>{
-        asisgnarPersonas(response,req)
-        .then(result=>{
-            res.status(200).json(result)
-        })
+    //    asisgnarPersonas(response,req)
+        
+        res.status(200).json(response.data)
+      
         
     }).catch((err) => {
         res.status(404).json(err)
@@ -235,4 +270,27 @@ views.FechasDisponibles=(req,res)=>{
 
    }
 
+
+
+views.EliminarPersonas=(req,res)=>{
+
+  datosPersonas.EliminarPersonasDeCitacion(req)
+  .then(result=>{
+    res.status(200).json(result)
+  })
+
+
+    
+    
+
+    
+}
+
+views.AsignarPersonas=(req,res)=>{
+    asisgnarPersonas(req)
+    .then(result=>{
+        
+        res.status(201).json(result)
+    })
+}
 module.exports = views

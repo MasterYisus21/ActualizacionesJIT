@@ -3,7 +3,18 @@ const res = require('express/lib/response');
 const config =require ('../config.json')
 datosPersonas = {}
 
-
+datosPersonas.Actualizar= (req,res)=>{
+   
+    axios.patch(config.urlApiConciliacion + "/"+req.params.nombre+"/" +req.params.id+"/",req.body)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        //console.log(error);
+        res.sendStatus(500)
+    })
+    
+}
 datosPersonas.datosBasicos = async (response) => {
     let datos= {}
    
@@ -121,6 +132,41 @@ datosPersonas.Solicitudes = async (response) => {
     
 }
 
+datosPersonas.SolicitudesEspecificas = async (response) => {
+    let datos={}
+    
+    try {
+        informacion_data=response.data
+       
+       
+            const area =(informacion_data.Area_Id=== null | '') ? informacion_data.Area_Id='' : await axios.get(config.urlApiConciliacion + "/areas/"+informacion_data.Area_Id);
+            const subtema = (informacion_data.Subtema_Id=== null | '') ? informacion_data.Subtema_Id='' : await axios.get(config.urlApiConciliacion + "/subtemas/"+informacion_data.Subtema_Id);
+            const tipo_servicio =(informacion_data.Tipo_servicio_Id=== null | '') ? informacion_data.Tipo_servicio_Id='' : await axios.get(config.urlApiConciliacion + "/tipos_servicio/"+informacion_data.Tipo_servicio_Id);
+            const tipos_resultado =(informacion_data.Tipo_resultado_Id=== null | '') ? informacion_data.Tipo_resultado_Id='' : await axios.get(config.urlApiConciliacion + "/tipos_resultado/"+informacion_data.Tipo_resultado_Id);
+            const inicio_conflicto =(informacion_data.Inicio_conflicto_Id=== null | '') ? informacion_data.Inicio_conflicto_Id='' : await axios.get(config.urlApiConciliacion + "/inicios_conflicto/"+informacion_data.Inicio_conflicto_Id);
+            const solicitante = (informacion_data.Solicitante_servicio_Id=== null | '') ? informacion_data.Solicitante_servicio_Id='' :await axios.get(config.urlApiConciliacion + "/solicitantes_servicio/"+informacion_data.Solicitante_servicio_Id);
+            informacion_data.Area_Id=area.data
+            informacion_data.Solicitud_Id=subtema.data
+            informacion_data.Tipo_servicios_Id=tipo_servicio.data
+            informacion_data.Tipo_resultados_Id=tipos_resultado.data
+            informacion_data.Inicio_conficto_Id=inicio_conflicto.data
+            informacion_data.Solicitante_servicio_Id=solicitante.data
+            datos=informacion_data
+            
+           
+          
+          return datos
+        
+        
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
+
+
+    
+}
+
 datosPersonas.Historial = async (response) => {
     let datos={}
     
@@ -178,4 +224,34 @@ datosPersonas.SolicitudesSearch = async (response,search) => {
 
     
 }
+
+datosPersonas.EliminarPersonasDeCitacion = async (req) => {
+    let datos={}
+  
+    try {
+
+        for await (const informacion_data of req.body) {
+
+            
+            const resp = await axios.get(config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+req.params.id2+"&Persona_Id="+informacion_data);
+            const eliminar = await axios.delete(config.urlApiConciliacion + "/relaciones_citacion_persona/"+ resp.data[0].Id + "/");
+           
+            datos[informacion_data]=resp.data
+            
+            }         
+          
+          return datos
+        
+        
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
+
+    
+}
+
+
+
+
 module.exports = datosPersonas

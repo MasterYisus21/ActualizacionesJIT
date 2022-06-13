@@ -28,8 +28,6 @@ views.ListarConvocantes=(req,res)=>{
     
 }
     
-    
-
 views.AgregarConvocante=(req,res)=>{
 
     let datos={}
