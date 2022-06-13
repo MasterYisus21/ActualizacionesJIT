@@ -11,7 +11,7 @@ views.ListarConvocados=(req,res)=>{
     
     axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=2&Solicitud_Id=" + req.params.id)
    .then(response => { 
-   z
+   
          datosPersonas.datosBasicos(response)
          .then((result) => {
              

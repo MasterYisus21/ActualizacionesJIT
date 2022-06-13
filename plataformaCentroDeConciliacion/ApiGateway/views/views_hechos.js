@@ -88,7 +88,7 @@ views.AgregarHechos=async (req,res)=>{
             })
             .catch(function (error) {
                 console.log(error)
-                res.sendStatus(500).json(error)
+                res.status(500).json(error)
           })
       
             
@@ -97,7 +97,9 @@ views.AgregarHechos=async (req,res)=>{
         
     })
 }catch(error){
+    
     console.log(error)
+    res.status(400).json()
 }
 
 }
