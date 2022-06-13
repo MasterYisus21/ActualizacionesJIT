@@ -35,7 +35,7 @@ datosPersonas.datosBasicos = async (response) => {
             resp.data.Barrio_Id=barrio.data
             
 
-            datos[informacion_data.Persona_Id] = resp.data
+            datos.push(resp.data)
             
             
            
