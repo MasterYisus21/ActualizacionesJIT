@@ -300,7 +300,7 @@ views.EliminarPersonas=async(req,res)=>{
     
 }
 
-views.AsignarPersonas=(req,res)=>{
+views.AsignarPersonas=async(req,res)=>{
     asisgnarPersonas(req)
     .then(result=>{
         
