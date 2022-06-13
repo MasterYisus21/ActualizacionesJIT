@@ -210,6 +210,7 @@ function ModuloInformacionConvocado() {
                     <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
                     <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Nombre"]}</td>
                     <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Nombre"]}</td>
+                    <td><button className='boton-tabla-eliminar' onClick={}>Eliminar</button></td>
                   </tr>
                 )
               })}
