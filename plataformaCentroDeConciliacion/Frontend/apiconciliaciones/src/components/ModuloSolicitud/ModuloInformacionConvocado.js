@@ -40,11 +40,23 @@ function ModuloInformacionConvocado() {
       timeElapsed: "10 sec ago",
     }
   ];
-
+  const eliminarConvocado = (event) =>{
+    event.preventDefault()
+    axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
+    .then((response) => {
+      obtenerConvocados()
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
   const agregarConvocado = (event) => {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/" + event.target.cedula.value)
-    obtenerConvocados()
+    .then((response) => {
+      obtenerConvocados()
+    })
+
   }
 
   const obtenerConvocados = () => {
@@ -210,7 +222,7 @@ function ModuloInformacionConvocado() {
                     <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
                     <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Nombre"]}</td>
                     <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Nombre"]}</td>
-                    <td><button className='boton-tabla-eliminar' onClick={}>Eliminar</button></td>
+                    <td><button className='boton-tabla-eliminar' value={dato["Identificacion"]} onClick={eliminarConvocado}>Eliminar</button></td>
                   </tr>
                 )
               })}
