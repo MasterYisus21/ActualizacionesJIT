@@ -38,6 +38,8 @@ views.ListarHechos=(req,res)=>{
 }
 
 
+
+
 views.AgregarHechos=(req,res)=>{
     let datos={}
     datos = {
