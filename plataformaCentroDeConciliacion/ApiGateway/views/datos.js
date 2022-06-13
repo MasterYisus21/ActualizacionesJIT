@@ -55,7 +55,7 @@ datosPersonas.datosBasicos = async (response) => {
 };
 
 datosPersonas.datosCompletos = async (response) => {
-    let datos= {}
+    let datos= []
   
    
     try {
@@ -88,7 +88,7 @@ datosPersonas.datosCompletos = async (response) => {
           
             
 
-            datos[informacion_data.Id] = resp.data
+             datos.push(resp.data)
             
             
            
