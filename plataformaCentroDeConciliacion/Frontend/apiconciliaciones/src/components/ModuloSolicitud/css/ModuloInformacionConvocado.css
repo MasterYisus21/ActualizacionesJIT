@@ -19,7 +19,7 @@
 }
 
 .contenedor-tabla-convocado {
-    /* font-size: small; */
+    font-size: small;
     text-align: center;
 }
 
@@ -33,12 +33,6 @@
     border: 1px solid;
     border-radius: 5px;
 }
-
-.input-registro-convocado,
-.drowdown-registro-convocado {
-    width: 30%;
-}
-
 #boton-aceptar-registro-convocado {
     width: 12%;
     background-color: rgb(56, 165, 42);

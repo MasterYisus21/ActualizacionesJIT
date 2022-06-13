@@ -10,7 +10,7 @@ function ModuloSolicitudAudiencia() {
             <div className='titulo-informacion-audiencia '>
                 <h2>Sesion de Audiencia</h2>
             </div>
-            <div className='contenedor-citacion-descripcion container'>
+            <div className='contenedor-citacion-descripcion container m-0 p-0'>
                 <div class="registro">
                     <label for="exampleFormControlInput1" class="form-label">Fecha de la Sesión: </label>
                     <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"></input>
