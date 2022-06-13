@@ -58,12 +58,12 @@ views.Solicitudesview= (req,res)=>{
     axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
     
     .then((result) => {
-        console.log("//////////////////////////////////")
+      
         console.log(result.data)
         axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
         .then((result) => {
            
-            console.log(result.data)
+            
             datosPersonas.Solicitudes(result)
             .then((result) => {
                 

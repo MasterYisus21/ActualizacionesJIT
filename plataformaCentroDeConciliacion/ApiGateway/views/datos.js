@@ -117,7 +117,8 @@ datosPersonas.Solicitudes = async (response) => {
                 Fecha_registro:resp.data.Fecha_registro,
                 Tipo_Estado:estado.data.Nombre
             }
-            
+            console.log("////")
+            console.log(datos)
            
           }
           return datos

@@ -210,7 +210,10 @@ views.CrearSolicitud= (req,res)=>{
     
         
     .then(response => {
-        
+        let historico={Descripcion:"Nuevo",
+                        Solicitud_Id:response.data.Id,
+                        Tipo_Estado: 1}
+        axios.post(config.urlApiConciliacion + "/historicos_solicitud/",historico)
         res.status(201).json(response.data)
 
     })
