@@ -144,13 +144,13 @@ datosPersonas.SolicitudesEspecificas = async (response) => {
             const tipo_servicio =(informacion_data.Tipo_servicio_Id=== null | '') ? informacion_data.Tipo_servicio_Id='' : await axios.get(config.urlApiConciliacion + "/tipos_servicio/"+informacion_data.Tipo_servicio_Id);
             const tipos_resultado =(informacion_data.Tipo_resultado_Id=== null | '') ? informacion_data.Tipo_resultado_Id='' : await axios.get(config.urlApiConciliacion + "/tipos_resultado/"+informacion_data.Tipo_resultado_Id);
             const inicio_conflicto =(informacion_data.Inicio_conflicto_Id=== null | '') ? informacion_data.Inicio_conflicto_Id='' : await axios.get(config.urlApiConciliacion + "/inicios_conflicto/"+informacion_data.Inicio_conflicto_Id);
-            const solicitante = (informacion_data.Solicitante_servicio_Id=== null | '') ? informacion_data.Solicitante_servicio_Id='' :await axios.get(config.urlApiConciliacion + "/solicitantes_servicios/"+informacion_data.Solicitante_servicio_Id);
+            const solicitante = (informacion_data.Solicitante_servicio_Id=== null | '') ? informacion_data.Solicitante_servicio_Id='' :await axios.get(config.urlApiConciliacion + "/solicitantes_servicio/"+informacion_data.Solicitante_servicio_Id);
             informacion_data.Area_Id=area.data
             informacion_data.Solicitud_Id=subtema.data
             informacion_data.Tipo_servicios_Id=tipo_servicio.data
             informacion_data.Tipo_resultados_Id=tipos_resultado.data
             informacion_data.Inicio_conficto_Id=inicio_conflicto.data
-            informacion_data.Solicitante_servicio_Id=solicitante
+            informacion_data.Solicitante_servicio_Id=solicitante.data
             datos=informacion_data
             
            
