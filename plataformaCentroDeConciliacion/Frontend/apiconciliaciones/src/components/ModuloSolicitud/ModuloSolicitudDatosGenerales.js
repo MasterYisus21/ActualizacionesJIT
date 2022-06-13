@@ -17,6 +17,13 @@ function ModuloSolicitudDatosGenerales(props) {
     const [subTemaOpciones, setSubTemaOpciones] = useState([])
     const [numeroCaso, setNumeroCaso] = useState('')
     const [solicitante, setSolicitante] = useState('default')
+    const [inicioConflicto, setInicioConflicto] = useState('default')
+    const [finalidadServicio, setFinalidadServicio] = useState('default')
+    const [casoGratuito, setCasoGratuito] = useState(false)
+    const [asuntoJuridicoDefinible, setAsuntoJuridicoDefinible] = useState(false)
+    const [area, setArea] = useState('default')
+    const [tema, setTema] = useState('default')
+    const [subtema, setSubtema] = useState('default')
     const [texto, setTexto] = useState([])
 
 
@@ -29,6 +36,14 @@ function ModuloSolicitudDatosGenerales(props) {
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])
                 setSolicitante(response.data["Solicitante_servicio_Id"])
+                setInicioConflicto(response.data["Inicio_conflicto_Id"])
+                setFinalidadServicio(response.data["Tipo_servicio_Id"])
+                setCasoGratuito(response.data["Caso_gratuito"])
+                setAsuntoJuridicoDefinible(response.data["Asunto_juridico_definible"])
+                setArea(response.data["Area_Id"]["Id"])
+                setTema(response.data["Solicitud_Id"]["Tema_Id"])
+                obtenerOpcionesSubtema(response.data["Solicitud_Id"]["Tema_Id"])
+                setSubtema(response.data["Solicitud_Id"]["Id"])
             })
             .catch((error)=> {
                 navigate('/page-not-found', { replace: true} )
@@ -51,8 +66,8 @@ function ModuloSolicitudDatosGenerales(props) {
         })
     }
 
-    const obtenerOpcionesSubtema = (e) => {
-        axios.get(config.apiGatewayURL + "/temas/" + e.target.value)
+    const obtenerOpcionesSubtema = (value) => {
+        axios.get(config.apiGatewayURL + "/temas/" + value)
         .then(response => {
             setSubTemaOpciones(response.data)
         })
@@ -119,9 +134,9 @@ function ModuloSolicitudDatosGenerales(props) {
         </div>
         <div className="mb-3">
             <label htmlFor="Inicio_conflicto_Id" className="form-label">Hace cuanto incio el conflicto:</label>
-            <select className="form-select" aria-label="Default select example" id="Inicio_conflicto_Id" name='Inicio_conflicto_Id' defaultValue={"default"} required>
+            <select className="form-select" aria-label="Default select example" id="Inicio_conflicto_Id" name='Inicio_conflicto_Id' value={inicioConflicto} onChange={e => setInicioConflicto(e.target.value)} required>
                 <option value={"default"} label={"Selecciona uno"} disabled></option>
-                {inicioConflictoOpciones.map(inicioConflictoOpciones => <option key={inicioConflictoOpciones["id"]} value={inicioConflictoOpciones["id"]} label={inicioConflictoOpciones["Nombre"]}>{inicioConflictoOpciones["Id"]} </option>)}
+                {inicioConflictoOpciones.map(inicioConflictoOpciones => <option key={inicioConflictoOpciones["Id"]} value={inicioConflictoOpciones["Id"]} label={inicioConflictoOpciones["Nombre"]}>{inicioConflictoOpciones["Id"]} </option>)}
             </select>
         </div>
         <div className="mb-3">
@@ -130,14 +145,14 @@ function ModuloSolicitudDatosGenerales(props) {
         </div>
         <div className="mb-3">
             <label htmlFor="Tipo_servicio_Id" className="form-label">Finalidad de adquisición del servicio:</label>
-            <select className="form-select" aria-label="Default select example" id="Tipo_servicio_Id" name='Tipo_servicio_Id' defaultValue={"default"} required>
+            <select className="form-select" aria-label="Default select example" id="Tipo_servicio_Id" name='Tipo_servicio_Id' value={finalidadServicio} onChange={e=>setFinalidadServicio(e.target.value)} required>
                 <option value={"default"} label={"Selecciona uno"} disabled></option>
                 {tipoServicioOpciones.map(tipoServicioOpciones => <option key={tipoServicioOpciones["id"]} value={tipoServicioOpciones["id"]} label={tipoServicioOpciones["Nombre"]}>{tipoServicioOpciones["Id"]} </option>)}
             </select>
         </div>
         <br />
         <div className="form-check">
-            <input className="form-check-input" type="checkbox" id="Caso_gratuito" name='Caso_gratuito' />
+            <input className="form-check-input" type="checkbox" id="Caso_gratuito" name='Caso_gratuito' checked={casoGratuito} onChange={()=>setCasoGratuito(!casoGratuito)} />
             <label className="form-check-label" htmlFor="flexCheckChecked" >
                 Caso Gratuito
             </label>
@@ -151,13 +166,13 @@ function ModuloSolicitudDatosGenerales(props) {
         <div className='modulo-solicitud-content-main-column2-form1'>
             ¿Asunto juridico definible?
             <div className="form-check">
-                <input className="form-check-input" type="radio" name="asunto_definible" id="asunto_definible1" value="si" />
+                <input className="form-check-input" type="radio" name="asunto_definible" id="asunto_definible1" value="si" checked={asuntoJuridicoDefinible} onChange={()=>{setAsuntoJuridicoDefinible(true)}} />
                 <label className="form-check-label" htmlFor="asunto_definible1">
                     SI
                 </label>
             </div>
             <div className="form-check">
-                <input className="form-check-input" type="radio" name="asunto_definible" id="asunto_definible2" value="no" />
+                <input className="form-check-input" type="radio" name="asunto_definible" id="asunto_definible2" value="no" checked={!asuntoJuridicoDefinible} onChange={()=>{setAsuntoJuridicoDefinible(false)}} />
                 <label className="form-check-label" htmlFor="asunto_definible2">
                     NO
                 </label>
@@ -170,21 +185,21 @@ function ModuloSolicitudDatosGenerales(props) {
         <div className='modulo-solicitud-content-main-column2-form2'>
             <div className="mb-3">
                 <label htmlFor="Area_Id" className="form-label">Area:</label>
-                <select className="form-select" aria-label="Default select example" id="Area_Id" name='Area_Id' defaultValue={"default"} required>
+                <select className="form-select" aria-label="Default select example" id="Area_Id" name='Area_Id' value={area} onChange={(e) => setArea(e.target.value)} required>
                     <option value={"default"} label={"Selecciona uno"} disabled></option>
                     {areaOpciones.map(areaOpciones => <option key={areaOpciones["id"]} value={areaOpciones["id"]} label={areaOpciones["Nombre"]}>{areaOpciones["Id"]} </option>)}
                 </select>
             </div>
             <div className="mb-3">
                 <label htmlFor="Tema" className="form-label">Tema:</label>
-                <select className="form-select" aria-label="Default select example" id="Tema" name='Tema' onChange={e => obtenerOpcionesSubtema(e)} defaultValue={"default"} required>
+                <select className="form-select" aria-label="Default select example" id="Tema" name='Tema' onChange={e => {obtenerOpcionesSubtema(e.target.value); setTema(e.target.value)}} value={tema} required>
                     <option value={"default"} label={"Selecciona uno"} disabled></option>
                     {temaOpciones.map(temaOpciones => <option key={temaOpciones["id"]} value={temaOpciones["id"]} label={temaOpciones["Nombre"]}>{temaOpciones["Id"]} </option>)}
                 </select>
             </div>
             <div className="mb-3">
                 <label htmlFor="Subtema_Id" className="form-label">Subtema:</label>
-                <select className="form-select" aria-label="Default select example" id="Subtema_Id" name='Subtema_Id' defaultValue={"default"} required>
+                <select className="form-select" aria-label="Default select example" id="Subtema_Id" name='Subtema_Id' value={subtema} onChange={(e)=>setSubtema(e.target.value)} required>
                     <option value={"default"} label={"Selecciona uno"} disabled></option>
                     {subTemaOpciones.map(subTemaOpciones => <option key={subTemaOpciones["Id"]} value={subTemaOpciones["Id"]} label={subTemaOpciones["Nombre"]}>{subTemaOpciones["Id"]} </option>)}
                 </select>
