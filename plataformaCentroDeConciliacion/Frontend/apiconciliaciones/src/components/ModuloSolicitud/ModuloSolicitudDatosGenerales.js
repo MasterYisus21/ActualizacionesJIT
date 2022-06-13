@@ -66,7 +66,6 @@ function ModuloSolicitudDatosGenerales(props) {
     }
 
     const obtenerOpcionesGenerales = () => {
-        console.log("entra aqui")
         axios.get(config.apiGatewayURL + "/solicitud")
         .then(response => {
             setSolicitanteServicioOpciones(response.data["Solicitante_servicio"])
