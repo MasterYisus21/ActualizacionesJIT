@@ -2,10 +2,11 @@ const axios = require('axios');
 const config =require ('../config.json')
 const views = {}
 
-views.ListarManejoConflicto= (req,res)=>{
+views.ListarManejoConflicto= async (req,res)=>{
   
+        try{
         let datos={}
-        axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
+        await axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
     
         .then(response => { 
             datos = {
@@ -16,12 +17,21 @@ views.ListarManejoConflicto= (req,res)=>{
             res.status(201).json(datos)
             
         })
+        .catch (error=>{
+            res.status(400).json(error)
+        })
+        }catch(error){
     
+            console.log(error)
+            res.sendStatus(400)
+        }
+        
     }
     
 
 
-views.Agregar=(req,res)=>{
+views.Agregar=async(req,res)=>{
+    try{
     let datos={}
     datos = {
                 
@@ -29,7 +39,7 @@ views.Agregar=(req,res)=>{
         "Flag_violencia": req.body.Flag_violencia,
         
     }
-    axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
+    await axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
     .then((result) => {
         
         axios.patch(config.urlApiConciliacion + "/hechos/"+ result.data[0].Id +"/",datos)
@@ -41,12 +51,17 @@ views.Agregar=(req,res)=>{
     })
                
     .catch(function (error) {
-        res.sendStatus(500).json(error)
+        res.sendStatus(404).json(error)
     })
           
           
        
-
+    }catch(error){
+    
+        console.log(error)
+        res.sendStatus(400)
+    }
+    
 }
 
 module.exports = views
