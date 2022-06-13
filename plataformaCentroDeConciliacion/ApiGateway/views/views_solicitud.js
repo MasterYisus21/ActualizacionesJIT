@@ -140,9 +140,9 @@ views.EliminarPersona=async(req,res)=>{
 
 }
 
-views.Personas_de_una_solicitud=(req,res)=>{
-
-    axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id=" + req.params.id)
+views.Personas_de_una_solicitud=async(req,res)=>{
+try{
+   await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id=" + req.params.id)
     .then(response => { 
     
           datosPersonas.datosBasicos(response)
@@ -160,10 +160,17 @@ views.Personas_de_una_solicitud=(req,res)=>{
     .catch((err) => {
         res.status(404).json(err)
     });
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
 }
 
-views.ListarSolicitudes= (req,res)=>{
-    axios.get(config.urlApiConciliacion + "/solicitudes")
+}
+
+views.ListarSolicitudes= async(req,res)=>{
+    try{
+    await axios.get(config.urlApiConciliacion + "/solicitudes")
     .then(response => {
         res.status(200).json(response.data)
     })
@@ -171,11 +178,17 @@ views.ListarSolicitudes= (req,res)=>{
         console.log(error);
         res.sendStatus(500)
     })
+}catch(error){
     
+    console.log(error)
+    res.sendStatus(400)
+}
+   
 }
 
-views.InformacionSolicitud= (req,res)=>{
-    axios.get(config.urlApiConciliacion + "/solicitudes/"+req.params.id)
+views.InformacionSolicitud= async(req,res)=>{
+try{
+    await axios.get(config.urlApiConciliacion + "/solicitudes/"+req.params.id)
     .then((result) => {
         console.log( result)
         datosPersonas.SolicitudesEspecificas(result)
@@ -188,13 +201,20 @@ views.InformacionSolicitud= (req,res)=>{
         res.status(404).json(err)
         
     });
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
+
 
 
 }
 
-views.ActualizarSolicitud= (req,res)=>{
+views.ActualizarSolicitud= async(req,res)=>{
+try{
     console.log(req.body)
-    axios.patch(config.urlApiConciliacion + "/solicitudes/" +req.params.id+"/",req.body)
+    await axios.patch(config.urlApiConciliacion + "/solicitudes/" +req.params.id+"/",req.body)
     .then(response => {
         res.status(200).json(response.data)
     })
@@ -202,12 +222,17 @@ views.ActualizarSolicitud= (req,res)=>{
         //console.log(error);
         res.sendStatus(500)
     })
+}catch(error){
     
+    console.log(error)
+    res.sendStatus(400)
+}
+
 }
 
 
-views.CrearSolicitud= (req,res)=>{
-
+views.CrearSolicitud= async(req,res)=>{
+    try{
     let datos =
         {
             "Descripcion": req.body.Descripcion,
@@ -224,14 +249,14 @@ views.CrearSolicitud= (req,res)=>{
         }
     
 
-    axios.post(config.urlApiConciliacion + "/solicitudes/",datos)
+    await axios.post(config.urlApiConciliacion + "/solicitudes/",datos)
     
         
-    .then(response => {
+    .then(async response => {
         let historico={Descripcion:"Nuevo",
                         Solicitud_Id:response.data.Id,
                         Tipo_Estado: 1}
-        axios.post(config.urlApiConciliacion + "/historicos_solicitud/",historico)
+        await axios.post(config.urlApiConciliacion + "/historicos_solicitud/",historico)
         res.status(201).json(response.data)
 
     })
@@ -239,7 +264,12 @@ views.CrearSolicitud= (req,res)=>{
             res.sendStatus(500).json(error)
     })
 
+}catch(error){
     
+    console.log(error)
+    res.sendStatus(400)
+}
+   
 }
 module.exports = views
 
