@@ -4,32 +4,32 @@ const config =require ('../config.json')
 const views = {}
 const datosPersonas = require('../views/datos')
 
-views.Traer_datos= (req,res)=>{
-
+views.Traer_datos= async(req,res)=>{
+try{
     let datos={}
-    axios.get(config.urlApiConciliacion + "/solicitantes_servicio")
-    .then(response => {
+    await axios.get(config.urlApiConciliacion + "/solicitantes_servicio")
+    .then(async response => {
        datos["Solicitante_servicio"]=response.data
  
-        axios.get(config.urlApiConciliacion + "/tipos_servicio")
-        .then(response => {
+       await  axios.get(config.urlApiConciliacion + "/tipos_servicio")
+        .then(async response => {
         datos["Tipo_servicio"]=response.data
 
 
-            axios.get(config.urlApiConciliacion + "/inicios_conflicto")
-            .then(response => {
+            await axios.get(config.urlApiConciliacion + "/inicios_conflicto")
+            .then(async response => {
             datos["Inicio_conflicto"]=response.data
 
                
                     
                 
-                axios.get(config.urlApiConciliacion + "/areas")
-                .then(response => {
+                await axios.get(config.urlApiConciliacion + "/areas")
+                .then(async response => {
                     datos["Area"]=response.data
                     
 
 
-                    axios.get(config.urlApiConciliacion + "/temas")
+                   await axios.get(config.urlApiConciliacion + "/temas")
                     .then(response => {
                         datos["Tema"]=response.data
                         res.status(200).json(datos)
@@ -55,9 +55,14 @@ views.Traer_datos= (req,res)=>{
 
     .catch(function (error) {
         console.log(error);
-        res.sendStatus(500).json(error)
+        res.sendStatus(404).json(error)
     })
 
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
 
    
   

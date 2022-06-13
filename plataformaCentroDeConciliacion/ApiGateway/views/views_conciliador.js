@@ -6,9 +6,9 @@ const datosPersonas = require('../views/datos')
 
 
 
-views.ListarConciliadores=(req,res)=>{
-    
-    axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
+views.ListarConciliadores=async(req,res)=>{
+    try{
+    await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
    .then(response => { 
    
         datosPersonas.datosBasicos(response)
@@ -26,12 +26,17 @@ views.ListarConciliadores=(req,res)=>{
    .catch((err) => {
        res.status(404).json(err)
    });
+}catch(error){
     
+    console.log(error)
+    res.sendStatus(400)
+}
+
 }
 
 
-views.AsignarConciliador=(req,res)=>{
-
+views.AsignarConciliador=async(req,res)=>{
+    try{
     let datos={}
     
         datos = {
@@ -40,7 +45,7 @@ views.AsignarConciliador=(req,res)=>{
             "Tipo_cliente_Id":3
         }
         
-        axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
+       await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
         .then(response => {
     
             res.status(201).json(response.data)
@@ -50,7 +55,12 @@ views.AsignarConciliador=(req,res)=>{
                 res.sendStatus(500).json(error)
         })
         
-
+    }catch(error){
+    
+        console.log(error)
+        res.sendStatus(400)
+    }
+    
 }
    
 module.exports = views

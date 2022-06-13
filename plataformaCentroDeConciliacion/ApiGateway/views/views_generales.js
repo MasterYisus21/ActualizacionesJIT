@@ -8,8 +8,9 @@ const res = require('express/lib/response');
 
 
 
-views.Ciudades= (req,res)=>{
-    axios.get(config.urlApiConciliacion + "/ciudades?Departamento_Id=" +req.params.id)
+views.Ciudades= async(req,res)=>{
+    try{
+    await axios.get(config.urlApiConciliacion + "/ciudades?Departamento_Id=" +req.params.id)
     .then(response => {
         res.status(200).json(response.data)
     })
@@ -17,13 +18,19 @@ views.Ciudades= (req,res)=>{
         console.log(error);
         res.sendStatus(500)
     })
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
+
     
 }
 
-views.Subtema= (req,res)=>{
-
+views.Subtema= async(req,res)=>{
+try{
     let datos = {}
-    axios.get(config.urlApiConciliacion + "/subtemas?Tema_Id=" +req.params.id)
+    await axios.get(config.urlApiConciliacion + "/subtemas?Tema_Id=" +req.params.id)
     .then(response => {
         datos=response.data
         res.status(200).json(datos)
@@ -33,9 +40,14 @@ views.Subtema= (req,res)=>{
 
     .catch(function (error) {
         console.log(error);
-        res.sendStatus(500).json(error)
+        res.sendStatus(404).json(error)
     })
+}catch(error){
     
+    console.log(error)
+    res.sendStatus(400)
+}
+
 }
 
 

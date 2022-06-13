@@ -5,9 +5,9 @@ const datosPersonas = require('../views/datos')
 const config =require ('../config.json')
 
 
-views.ListarConvocantes=(req,res)=>{
-    
-    axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=1&Solicitud_Id=" + req.params.id)
+views.ListarConvocantes=async(req,res)=>{
+   try{ 
+    await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=1&Solicitud_Id=" + req.params.id)
    .then(response => { 
    
         datosPersonas.datosBasicos(response)
@@ -25,28 +25,34 @@ views.ListarConvocantes=(req,res)=>{
    .catch((err) => {
        res.status(404).json(err)
    });
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
+
     
 }
     
-views.AgregarConvocante=(req,res)=>{
-
+views.AgregarConvocante=async(req,res)=>{
+try{
     let datos={}
-    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.documento)
-    .then(response => {
+    await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.documento)
+    .then(async response => {
            datos = {
                "Solicitud_Id":req.params.id,
                "Persona_Id":response.data[0].Id,
                "Tipo_cliente_Id":1
            }
             
-            axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
+            await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
             .then(response => {
         
                 res.status(201).json(response.data)
         
             })
             .catch(function (error) {
-                  res.sendStatus(500).json(error)
+                  res.sendStatus(400).json(error)
             })
         
 
@@ -60,6 +66,11 @@ views.AgregarConvocante=(req,res)=>{
    });
    
 
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
 
 }
    
