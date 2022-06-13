@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import './css/ModuloInformacionConvocado.css';
+import config from '../../config.json'
+import { useParams } from 'react-router-dom';
 
 
 function ModuloInformacionConvocado() {
@@ -38,32 +41,55 @@ function ModuloInformacionConvocado() {
     }
   ];
 
+  const agregarConvocado = (event) => {
+    event.preventDefault()
+    axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/" + event.target.cedula.value)
+    obtenerConvocados()
+  }
+
+  const obtenerConvocados = () => {
+    axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados")
+      .then((response) => {
+        console.log(response.data)
+        setConvocados(response.data)
+      })
+  }
+
+  const UrlParams = useParams();
+
+  const [convocados, setConvocados] = useState([])
+
+  useEffect(() => {
+    obtenerConvocados()
+  }, [])
+
   return (
     <>
-      <div className='container'>
+      <div className='container container-convocado pt-3'>
         <div className='titulo-informacion-convocado'>
           <h1>Informacion del convocado</h1>
         </div>
         <div className='contenedor-navbar-agregar-convocado'>
-          <nav class="navbar navbar-light ">
-            <div class="container-fluid">
-              <form class="d-flex input-group w-auto align-items-sm-baseline gap-3">
+          <nav class="navbar p-0">
+            <div class="container">
+              <form class="d-flex input-group w-auto align-items-sm-baseline gap-3" onSubmit={agregarConvocado}>
                 <input
                   type="text"
+                  name="cedula"
                   class="form-control rounded"
                   placeholder="Cédula"
                   aria-label="Search"
                   aria-describedby="search-addon"
                 />
-                <button className='border-0 bg-transparent'>
+                <button className='border-0 bg-transparent' type='submit'>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                   </svg>
                 </button>
 
               </form>
-              <div class="d-flex align-items-end">
-                <button type="button" class="btn btn-primary me-3" id='boton-agregar-convocado'
+              <div className="d-flex align-items-end">
+                <button type="button" class="btn btn-primary" id='boton-agregar-convocado'
                   onClick={() => setIsOpen(!isOpen)}>
                   Agregar convocado
                 </button>
@@ -71,14 +97,14 @@ function ModuloInformacionConvocado() {
             </div>
           </nav>
         </div>
-        
+
         {isOpen &&
           <div className='registro-convocante mb-5'>
             <div className='container d-grid gap-3'>
               <label>Nombre</label>
               <div className='row gap-3 ps-3 px-3'>
-              <input className="form-control rounded col" placeholder="Nombre(s)"></input>
-              <input className="form-control rounded col" placeholder="Apellidos"></input>
+                <input className="form-control rounded col" placeholder="Nombre(s)"></input>
+                <input className="form-control rounded col" placeholder="Apellidos"></input>
               </div>
             </div>
             <div className='container d-grid gap-3'>
@@ -104,9 +130,10 @@ function ModuloInformacionConvocado() {
                 </div>
                 <div className='row gap-3'>
                   <select className="form-select col" aria-label="Default select example">
-                    <option selected>Tipo de Vivienda</option>
-                    <option value="1">Propia</option>
-                    <option value="2">Arriendo</option>
+                    <option selected>Sexo</option>
+                    <option value="1">Femenino</option>
+                    <option value="2">Masculino</option>
+                    <option value="3">Personalizado</option>
                   </select>
                   <select className="form-select col" aria-label="Default select example">
                     <option selected>Tipo Persona</option>
@@ -115,7 +142,12 @@ function ModuloInformacionConvocado() {
                   </select>
                 </div>
                 <div className='row gap-3'>
-                  <select className="form-select drowdown-registro-convocante" aria-label="Default select example">
+                  <select className="form-select col" aria-label="Default select example">
+                    <option selected>Tipo de Vivienda</option>
+                    <option value="1">Propia</option>
+                    <option value="2">Arriendo</option>
+                  </select>
+                  <select className="form-select col" aria-label="Default select example">
                     <option selected>Estrato Socieconómico</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -169,7 +201,19 @@ function ModuloInformacionConvocado() {
               </tr>
             </thead>
             <tbody>
-              {lista.map((data, key) => {
+              {convocados.map((dato) => {
+                return (
+                  <tr>
+                    <td key={dato["Id"]}>{dato["Id"]}</td>
+                    <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
+                    <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
+                    <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
+                    <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Nombre"]}</td>
+                    <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Nombre"]}</td>
+                  </tr>
+                )
+              })}
+              {/* {lista.map((data, key) => {
                 return (
                   <tr>
                     <td>{data.company}</td>
@@ -181,7 +225,7 @@ function ModuloInformacionConvocado() {
                     <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
                   </tr>
                 );
-              })}
+              })} */}
             </tbody>
           </table>
         </form>

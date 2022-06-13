@@ -1,4 +1,4 @@
-.container {
+.container-conciliador {
     max-width: 90%;
 }
 
@@ -19,25 +19,15 @@
 }
 
 .contenedor-tabla-conciliador {
+    display: flex;
+    flex-direction: column;
     font-size: small;
     text-align: center;
-}
-
-.registro-convocado {
-    display: flex;
-    flex-wrap: wrap;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 10%), 0 4px 20px rgb(0 0 0 / 10%);
     align-items: center;
-    gap: 30px;
-    padding: 5%;
-    margin-bottom: 50px;
-    border: 1px solid;
-    border-radius: 5px;
+    
 }
 
-.input-registro-convocado,
-.drowdown-registro-convocado {
-    width: 30%;
-}
 
 #boton-aceptar-registro-conciliador {
     width: 12%;

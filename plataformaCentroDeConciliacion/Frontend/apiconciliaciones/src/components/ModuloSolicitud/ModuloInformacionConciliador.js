@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import './css/ModuloInformacionConciliador.css';
+import config from '../../config.json'
+import { useParams } from 'react-router-dom';
 
 
 function ModuloInformacionConciliador() {
@@ -39,10 +42,31 @@ function ModuloInformacionConciliador() {
       timeElapsed: "10 sec ago",
     }
   ];
+
+  const [variable, setVariable] = useState([])
+
+  const UrlParams = useParams();
+
+  // useEffect(()=>{
+  //   axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/123")
+  //   .then((response)=>{
+  //     console.log(response.data)
+  //     setVariable(response.data[0]["Tipo_cliente_Id"])
+  //   })
+  // })
+
+  useEffect(()=>{
+    axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados")
+    .then((response) => {
+      console.log(response.data)
+    })
+  })
+
+
   return (
 
     <>
-      <div className='container'>
+      <div className='container container-conciliador pt-3'>
         <div className='titulo-informacion-conciliador'>
           <h1>Informacion del Conciliador</h1>
         </div>
@@ -68,8 +92,9 @@ function ModuloInformacionConciliador() {
           </nav>
         </div>
         {isOpen &&
-          <form className='contenedor-tabla-convocado pb-5'>
-            <table className='table table-striped table-bordered table-responsive '>
+          <form className='contenedor-tabla-conciliador mb-5 pt-3 pb-3'>
+            <label className='pb-3 h5'>Seleccione el conciliador que desea agregar</label>
+            <table className='table table-striped table-bordered table-responsive'>
               <thead >
                 <tr>
                   <th></th>
@@ -82,7 +107,7 @@ function ModuloInformacionConciliador() {
                 </tr>
               </thead>
               <tbody>
-                {lista.map((data, key) => {
+                {variable.map((data, key) => {
                   return (
                     <tr>
                       <td><input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input></td>
@@ -116,6 +141,9 @@ function ModuloInformacionConciliador() {
               </tr>
             </thead>
             <tbody>
+              {variable.map((value) => {
+                <td>{value}</td>
+              })}
               {lista.map((data, key) => {
                 return (
                   <tr>

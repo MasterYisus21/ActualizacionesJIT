@@ -43,13 +43,13 @@ function ModuloInformacionConvocante() {
 
   return (
     <>
-      <div className='container pt-3'>
+      <div className='container container-convocante pt-3'>
         <div className='titulo-informacion-convocante align-items-center'>
           <h1>Informacion del convocante</h1>
         </div>
         <div className='contenedor-navbar-agregar-convocante'>
-          <nav className="navbar navbar-light ">
-            <div className="container-fluid">
+          <nav className="navbar p-0">
+            <div className="container">
               <form className="d-flex input-group w-auto align-items-sm-baseline gap-3">
                 <input
                   type="text"
@@ -80,8 +80,8 @@ function ModuloInformacionConvocante() {
             <div className='container d-grid gap-3'>
               <label>Nombre</label>
               <div className='row gap-3 ps-3 px-3'>
-              <input className="form-control rounded col" placeholder="Nombre(s)"></input>
-              <input className="form-control rounded col" placeholder="Apellidos"></input>
+                <input className="form-control rounded col" placeholder="Nombre(s)"></input>
+                <input className="form-control rounded col" placeholder="Apellidos"></input>
               </div>
             </div>
             <div className='container d-grid gap-3'>
@@ -107,9 +107,10 @@ function ModuloInformacionConvocante() {
                 </div>
                 <div className='row gap-3'>
                   <select className="form-select col" aria-label="Default select example">
-                    <option selected>Tipo de Vivienda</option>
-                    <option value="1">Propia</option>
-                    <option value="2">Arriendo</option>
+                    <option selected>Sexo</option>
+                    <option value="1">Femenino</option>
+                    <option value="2">Masculino</option>
+                    <option value="3">Personalizado</option>
                   </select>
                   <select className="form-select col" aria-label="Default select example">
                     <option selected>Tipo Persona</option>
@@ -118,7 +119,12 @@ function ModuloInformacionConvocante() {
                   </select>
                 </div>
                 <div className='row gap-3'>
-                  <select className="form-select drowdown-registro-convocante" aria-label="Default select example">
+                  <select className="form-select col" aria-label="Default select example">
+                    <option selected>Tipo de Vivienda</option>
+                    <option value="1">Propia</option>
+                    <option value="2">Arriendo</option>
+                  </select>
+                  <select className="form-select col" aria-label="Default select example">
                     <option selected>Estrato Socieconómico</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
