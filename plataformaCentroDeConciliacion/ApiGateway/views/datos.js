@@ -225,28 +225,21 @@ datosPersonas.SolicitudesSearch = async (response,search) => {
     
 }
 
-datosPersonas.EliminarPersonasDeCitacion = async (response) => {
+datosPersonas.EliminarPersonasDeCitacion = async (req) => {
     let datos={}
-    
+  
     try {
 
-        for await (const informacion_data of response.body) {
+        for await (const informacion_data of req.body) {
 
-            if(informacion_data.Solicitud_Id==search){
-            const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
-            const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
-            const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
-
-            historico.data[0].Tipo_estado_Id = estado.data
-            datos[informacion_data.Solicitud_Id]={
-                Solicitud_Id:informacion_data.Solicitud_Id,
-                Fecha_registro:resp.data.Fecha_registro,
-                Tipo_Estado:estado.data.Nombre
-            }
             
+            const resp = await axios.get(config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+req.params.id2+"&Persona_Id="+informacion_data);
+            const eliminar = await axios.delete(config.urlApiConciliacion + "/relaciones_citacion_persona/"+ resp.data[0].Id + "/");
+           
+            datos[informacion_data]=resp.data
             
-            }
-          }
+            }         
+          
           return datos
         
         

@@ -57,7 +57,8 @@ router.patch('/:id/manejos_conflicto',views_manejo_conflicto.Agregar)
 router.get('/:id/citaciones',views_audiencia.ListarCitaciones)
 router.get('/:id/citaciones/:id2',views_audiencia.CitacionEspecifica)
 router.post('/:id/citaciones',views_audiencia.CrearCitacion)
-router.delete('/:id/citaciones/personas/id2',views_audiencia.EliminarPersonas)
+router.post('/:id/personas/citaciones/:id2',views_audiencia.AsignarPersonas) // id 2 es id de citacion
+router.delete('/:id/personas/citaciones/:id2',views_audiencia.EliminarPersonas) // id2 es id de citacion
 
 router.get('/:id/fechas/:fecha',views_audiencia.FechasDisponibles)
 
