@@ -68,7 +68,8 @@ try{
   
 }
 
-views.Crear= (req,res)=>{
+views.Crear= async (req,res)=>{
+    try{
 console.log(req.body)
     let datos =
         {
@@ -85,12 +86,12 @@ console.log(req.body)
                               
         }
     
-    if ((axios.post(config.urlApiConciliacion + "/solicitudes/"+req.params.id).length>0)) {
+    if ((await axios.post(config.urlApiConciliacion + "/solicitudes/"+req.params.id).length>0)) {
         
         
     }
 
-    axios.post(config.urlApiConciliacion + "/solicitudes/",datos)
+    await axios.post(config.urlApiConciliacion + "/solicitudes/",datos)
     
       
     .then(response => {
@@ -102,19 +103,25 @@ console.log(req.body)
           res.sendStatus(500).json(error)
     })
 
+}catch(error){
     
+    console.log(error)
+    res.sendStatus(400)
 }
 
-views.EliminarPersona=(req,res)=>{
-    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.documento)
-    .then(response => {
+}
+
+views.EliminarPersona=async(req,res)=>{
+    try{
+   await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.documento)
+    .then(async response => {
         console.log(response.data)
-        axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+ req.params.id+ "&Persona_Id="+response.data[0].Id ) 
-        .then( response =>{
+        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+ req.params.id+ "&Persona_Id="+response.data[0].Id ) 
+        .then( async response =>{
             
            
            
-            axios.delete(config.urlApiConciliacion + "/relaciones_solicitud_persona/"+response.data[0].Id + "/")
+          await  axios.delete(config.urlApiConciliacion + "/relaciones_solicitud_persona/"+response.data[0].Id + "/")
             .then( rest => {
                 console.log(rest.data)
                 res.status(202).json(rest.data)
@@ -125,6 +132,12 @@ views.EliminarPersona=(req,res)=>{
     .catch((err) => {
         res.status(404).json(err)
     });
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
+
 }
 
 views.Personas_de_una_solicitud=(req,res)=>{
