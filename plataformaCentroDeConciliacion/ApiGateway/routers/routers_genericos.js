@@ -24,7 +24,7 @@ router.get('/citaciones/:id',views_generales.InformacionCitacion)// trae los dat
 
 
 // Solicitudesviews//
-router.get('/solicitudes_view/',views_generales.Solicitudesview) // trae las solicitudes de la eprsona que ingrese
+router.get('/solicitudes_view',views_generales.Solicitudesview) // trae las solicitudes de la eprsona que ingrese
 router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
 router.get('/solicitudes_view/historico',views_generales.SolicitudesviewHistorial) // trae el historial de las solicitudes de la eprsona que ingrese
 
