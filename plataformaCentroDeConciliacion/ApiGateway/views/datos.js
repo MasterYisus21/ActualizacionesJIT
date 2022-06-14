@@ -115,12 +115,12 @@ datosPersonas.Solicitudes = async (response) => {
         for await (const informacion_data of response.data) {
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
-            const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
-            
+            const estado = (historico.data.Tipo_estado_Id== null | '') ? historico.data.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
+            historico.data.Tipo_estado_Id=estado
             let data={
                 Solicitud_Id:informacion_data.Solicitud_Id,
                 Fecha_registro:resp.data.Fecha_registro,
-                Tipo_Estado:estado.data.Nombre
+                Tipo_Estado:historico.data.Tipo_estado_Id
             }
             datos.push(data)
             console.log("////")
