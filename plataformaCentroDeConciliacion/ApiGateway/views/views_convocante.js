@@ -45,15 +45,20 @@ try{
                "Tipo_cliente_Id":1
            }
             
-            await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
-            .then(response => {
-        
-                datos={
-                    "persona":resp.data,
-                    "relacion":response.data
-                }
-                res.status(201).json(datos)
-            })
+           axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
+           .then( async response => {
+               const resp = await axios.get(config.urlApiConciliacion + "/personas/"+response.data.Persona_Id);
+               const documento = await  axios.get(config.urlApiConciliacion + "/tipos_documento/"+resp.data.Tipo_documento_Id);
+               const tipo = await  axios.get(config.urlApiConciliacion + "/tipos_persona/"+resp.data.Tipo_persona_Id);
+               resp.data.Tipo_documento_Id= documento.data
+               resp.data.Tipo_persona_Id=tipo.data            
+                       datos={
+                           "persona":resp.data,
+                           "relacion":response.data
+                       }
+                       res.status(201).json(datos)
+                         
+                     })
             .catch(function (error) {
                   res.sendStatus(400).json(error)
             })

@@ -15,7 +15,7 @@ datosPersonas.Actualizar= (req,res)=>{
     })
     
 }
-datosPersonas.datosBasicos = async (response) => {
+datosPersonas.datosBasicos = async(response) => {
     let datos= []
    
     try {
