@@ -8,40 +8,6 @@ import { useLocation, useParams } from 'react-router-dom';
 function ModuloInformacionConciliador() {
 
   const [isOpen, setIsOpen] = useState(false);
-  const lista = [
-    {
-      "company": "Twitter Inc",
-      "ticker": "TWTR",
-      stockPrice: "22.76 USD",
-      timeElapsed: "5 sec ago",
-
-    },
-    {
-      company: "Square Inc",
-      ticker: "SQ",
-      stockPrice: "45.28 USD",
-      timeElapsed: "10 sec ago",
-    },
-
-    {
-      company: "Shopify Inc",
-      ticker: "SHOP",
-      stockPrice: "341.79 USD",
-      timeElapsed: "3 sec ago",
-    },
-    {
-      company: "Sunrun Inc",
-      ticker: "RUN",
-      stockPrice: "9.87 USD",
-      timeElapsed: "4 sec ago",
-    },
-    {
-      company: "Adobe Inc",
-      ticker: "ADBE",
-      stockPrice: "300.99 USD",
-      timeElapsed: "10 sec ago",
-    }
-  ];
 
   const verDocente = () => {
 
@@ -51,9 +17,13 @@ function ModuloInformacionConciliador() {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores/" + event.target.identificacionPersona.value)
       .then((response) => {
+        if (response.data.localeCompare("Ya esta asignado")) {
+          setConciliadores([...conciliadores, response.data["persona"]])
+          alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+        } else {
+          alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se puede agregar, esta persona ya está asignada a esta solicitud.</div>"
+        }
         console.log()
-        setConciliadores([...conciliadores, response.data["persona"]])
-        alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
       })
       .catch((error) => {
         console.log(error.response.status)
