@@ -55,11 +55,11 @@ function ModuloInformacionConciliador() {
   //   })
   // })
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados")
-    .then((response) => {
-      console.log(response.data)
-    })
+      .then((response) => {
+        console.log(response.data)
+      })
   })
 
 
@@ -107,7 +107,7 @@ function ModuloInformacionConciliador() {
                 </tr>
               </thead>
               <tbody>
-                {variable.map((data, key) => {
+                {lista.map((data, key) => {
                   return (
                     <tr>
                       <td><input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input></td>
@@ -131,7 +131,7 @@ function ModuloInformacionConciliador() {
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
               <tr>
-                <th>Nombre</th>
+                <th></th>
                 <th>Clase del Convocado</th>
                 <th>Tipo de documento</th>
                 <th>Identificación</th>
@@ -141,9 +141,6 @@ function ModuloInformacionConciliador() {
               </tr>
             </thead>
             <tbody>
-              {variable.map((value) => {
-                <td>{value}</td>
-              })}
               {lista.map((data, key) => {
                 return (
                   <tr>
