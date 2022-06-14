@@ -58,16 +58,13 @@ function ModuloInformacionConvocado() {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/" + event.target.cedula.value)
       .then((response) => {
-        if (response.data.localeCompare("Ya esta asignado")) {
-          setConvocados([...convocados, response.data["persona"]])
-          alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
-        } else {
-          alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se puede agregar, esta persona ya está asignada a esta solicitud.</div>"
-        }
+        console.log()
+        setConvocados([...convocados, response.data["persona"]])
+        alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
       })
       .catch(error => {
         console.log(error.response.status)
-        if (error.response.status == 404) {
+        if(error.response.status == 404) {
           alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Persona no encontrada</div>"
         } else {
           alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Hubo un error en el servidor, intente mas tarde.</div>"

@@ -17,12 +17,9 @@ function ModuloInformacionConciliador() {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores/" + event.target.identificacionPersona.value)
       .then((response) => {
-        if (response.data.localeCompare("Ya esta asignado")) {
-          setConciliadores([...conciliadores, response.data["persona"]])
-          alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
-        } else {
-          alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se puede agregar, esta persona ya está asignada a esta solicitud.</div>"
-        }
+        setConciliadores([...conciliadores, response.data["persona"]])
+        alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+
         console.log()
       })
       .catch((error) => {
