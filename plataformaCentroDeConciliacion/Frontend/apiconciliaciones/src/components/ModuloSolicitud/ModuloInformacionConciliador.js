@@ -64,7 +64,6 @@ function ModuloInformacionConciliador() {
 
 
   return (
-
     <>
       <div className='container container-conciliador pt-3'>
         <div className='titulo-informacion-conciliador'>
@@ -131,26 +130,24 @@ function ModuloInformacionConciliador() {
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
               <tr>
-                <th></th>
                 <th>Clase del Convocado</th>
                 <th>Tipo de documento</th>
                 <th>Identificación</th>
                 <th>Nombre</th>
-                <th>Ciudad</th>
-                <th>Departamento</th>
+                {/* <th>Ciudad</th>
+                <th>Departamento</th> */}
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {lista.map((data, key) => {
                 return (
                   <tr>
-                    <td>Pepito</td>
                     <td>{data.company}</td>
                     <td>{data.ticker}</td>
                     <td>{data.stockPrice}</td>
                     <td>{data.timeElapsed}</td>
-                    <td>Bogotá</td>
-                    <td>Cundinamarca</td>
+                    <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
                   </tr>
                 );
               })}

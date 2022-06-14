@@ -4,6 +4,7 @@ import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 import ModuloInformacionConvocado from './ModuloInformacionConvocado';
 import ModuloInformacionConciliador from './ModuloInformacionConciliador';
 import ModuloSolicitudAudiencia  from './ModuloSolicitudAudiencia';
+import ModuloSolicitudAudiencia_registro  from './moduloSolicitudAudiencia_registro';
 import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
 import ModuloSolicitudManejoConflicto from './ModuloSolicitudManejoConflicto';

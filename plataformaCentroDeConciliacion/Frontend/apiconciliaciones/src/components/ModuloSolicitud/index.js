@@ -7,6 +7,7 @@ import ModuloSolicitudDatosGenerales from "./ModuloSolicitudDatosGenerales";
 import ModuloSolicitudHechos from "./ModuloSolicitudHechos";
 import ModuloSolicitudManejoConflicto from "./ModuloSolicitudManejoConflicto";
 import ModuloSolicitudResultado from "./ModuloSolicitudResultado";
+import ModuloSolicitudAudiencia_registro from "./moduloSolicitudAudiencia_registro";
 
 export {
     ModuloSolicitud,
@@ -17,5 +18,6 @@ export {
     ModuloSolicitudDatosGenerales,
     ModuloSolicitudHechos,
     ModuloSolicitudManejoConflicto,
-    ModuloSolicitudResultado
+    ModuloSolicitudResultado,
+    ModuloSolicitudAudiencia_registro
 }
