@@ -40,17 +40,20 @@ views.AsignarConciliador=async(req,res)=>{
 
         let datos={}
         axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
-        .then(response => {
+        .then(async resp => {
                datos = {
                    "Solicitud_Id":req.params.id,
-                   "Persona_Id":response.data[0].Id,
+                   "Persona_Id":resp.data[0].Id,
                    "Tipo_cliente_Id":3
                }
                 
-                axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
+               await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
                 .then(response => {
-            
-                    res.status(201).json(response.data)
+                    datos={
+                        "persona":resp.data,
+                        "relacion":response.data
+                    }
+                    res.status(201).json(datos)
             
                 })
                 .catch(function (error) {
