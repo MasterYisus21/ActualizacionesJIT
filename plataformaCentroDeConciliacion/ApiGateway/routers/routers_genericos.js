@@ -43,8 +43,14 @@ router.patch('/:nombre/:id',views_generales.Actualizar)
 
 // hechos //
 
+
+
+// crear personas
+
 router.get('/departamentos',views_generales.ListarDepartamentos)
 router.get('/departamentos/:id',views_generales.Ciudades)
+router.get('/personas',views_generales.DatosCrearPersonas)
+
 
 
 module.exports = router 

@@ -196,8 +196,32 @@ views.FechasDisponibles=(req,res)=>{
 
    }
 
+views.DatosCrearPersonas=async (req,res)=>{
+    let datos={}
+    try{
+    const departamentos = await axios.get(config.urlApiConciliacion + "/departamentos")
+    const documento = await axios.get(config.urlApiConciliacion + "/tipos_documento")
+    const vivienda =await axios.get(config.urlApiConciliacion + "/tipos_vivienda")
+    const persona =await axios.get(config.urlApiConciliacion + "/tipos_persona")
+    const estrato = await axios.get(config.urlApiConciliacion + "/estratos_socioeconomicos")
+    const cargo = await axios.get(config.urlApiConciliacion + "/tipos_cargo")
+    const perfil = await axios.get(config.urlApiConciliacion + "/perfiles")
+    
+    datos={"departamentos":departamentos.data,
+            "Tipo_documento":documento.data,
+            "Tipo_vivienda":vivienda.data,
+            "Tipo_persona":persona.data,
+            "Estrato_socioeconomico":estrato.data,
+            "Tipo_cargo":cargo.data,
+            "Perfil":perfil.data
+                                            }
 
-
+    res.status(200).json(datos)
+   
+    }catch(error){
+    console.log(error)
+}
+}
 // Esta funcion envia los datos especificos de la citacio con las personas incluidaas 
 
 const InfoCitaciones = async (resp,response)=>{ /// resp   las personas repsonse citacion especifica

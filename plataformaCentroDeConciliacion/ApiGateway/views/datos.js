@@ -1,4 +1,5 @@
 const axios = require('axios'); 
+const { response } = require('express');
 const res = require('express/lib/response');
 const config =require ('../config.json')
 datosPersonas = {}
@@ -54,6 +55,8 @@ datosPersonas.datosBasicos = async(response) => {
 
     
 };
+
+datosPersonas.datosCrearPersonas = async(response)=>{}
 
 datosPersonas.datosCompletos = async (response) => {
     let datos= []
@@ -124,7 +127,7 @@ datosPersonas.Solicitudes = async (response) => {
                 Tipo_Estado:historico.data.Tipo_estado_Id
             }
             datos.push(data)
-            console.log("////")
+          
            
            
           }
