@@ -39,21 +39,29 @@ views.AsignarEstudiante=async(req,res)=>{
     try{
     let datos={}
     
+     
+        await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
+        .then(async resp => {
         datos = {
             "Solicitud_Id":req.params.id,
-            "Persona_Id":req.params.Persona_Id,
+            "Persona_Id":resp.data[0].Id,
             "Tipo_cliente_Id":4
         }
-        
-       await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
+
+        await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
         .then(response => {
-    
-            res.status(201).json(response.data)
+            
+            datos={
+                "persona":resp.data,
+                "relacion":response.data
+            }
+            res.status(201).json(datos)
     
         })
-        .catch(function (error) {
-                res.sendStatus(500).json(error)
-        })
+        
+             })
+        
+     
         
     }catch(error){
     
