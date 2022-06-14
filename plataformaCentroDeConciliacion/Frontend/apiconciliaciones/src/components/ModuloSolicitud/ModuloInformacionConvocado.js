@@ -47,6 +47,8 @@ function ModuloInformacionConvocado() {
       setConvocados(convocados.filter((object) => {
         return object["Identificacion"] != event.target.value
       }))
+      alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Eliminado correctamente</div>"
+
     })
     .catch((error)=>{
       console.log(error)

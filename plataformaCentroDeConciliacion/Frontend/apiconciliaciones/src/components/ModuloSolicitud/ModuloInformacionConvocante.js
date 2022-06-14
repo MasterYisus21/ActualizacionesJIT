@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import axios from 'axios';
+import config from '../../config.json'
 import './css/ModuloInformacionConvocante.css';
+import { useLocation, useParams } from 'react-router-dom';
 
 
 
@@ -41,6 +44,53 @@ function ModuloInformacionConvocante() {
     }
   ];
 
+  const agregarConvocante = (event) => {
+    event.preventDefault()
+    axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes/" + event.target.cedula.value)
+    .then((response) => {
+      console.log()
+      setConvocantes([...convocantes, response.data["persona"]])
+      alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+
+  const eliminarConvocante = (event) => {
+    event.preventDefault()
+    axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
+    .then((response) => {
+      setConvocantes(convocantes.filter((object) => {
+        return object["Identificacion"] != event.target.value
+      }))
+      alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Eliminado correctamente</div>"
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
+
+  let location = useLocation();
+  const UrlParams = useParams();
+  
+  const [convocantes, setConvocantes] = useState([])
+
+  const obtenerConvocantes = () => {
+    axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes")
+      .then((response) => {
+        console.log(response.data)
+        setConvocantes(response.data)
+      })
+  }
+
+  useEffect(() => {
+    obtenerConvocantes()
+  }, [location])
+
+  const alertContainer = useRef("");
+
+
   return (
     <>
       <div className='container container-convocante pt-3'>
@@ -50,10 +100,11 @@ function ModuloInformacionConvocante() {
         <div className='contenedor-navbar-agregar-convocante'>
           <nav className="navbar p-0">
             <div className="container">
-              <form className="d-flex input-group w-auto align-items-sm-baseline gap-3">
+              <form className="d-flex input-group w-auto align-items-sm-baseline gap-3" onSubmit={agregarConvocante}>
                 <input
                   type="text"
                   className="form-control rounded"
+                  name="cedula"
                   placeholder="Cédula"
                   aria-label="Search"
                   aria-describedby="search-addon"
@@ -63,7 +114,7 @@ function ModuloInformacionConvocante() {
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                   </svg>
                 </button>
-
+                <div ref={alertContainer}></div>
               </form>
               <div className="d-flex align-items-end">
                 <button type="button" className="btn btn-primary me-3" id='boton-agregar-convocante'
@@ -172,25 +223,21 @@ function ModuloInformacionConvocante() {
                 <th>Tipo de documento</th>
                 <th>Identificación</th>
                 <th>Nombre</th>
-                <th>Ciudad</th>
-                <th>Departamento</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {lista.map((data, key) => {
-                return (
-                  <tr>
-                    <td>{data.company}</td>
-                    <td>{data.ticker}</td>
-                    <td>{data.stockPrice}</td>
-                    <td>{data.timeElapsed}</td>
-                    <td>Bogotá</td>
-                    <td>Cundinamarca</td>
-                    <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
-                  </tr>
-                );
-              })}
+              {convocantes.map((dato) => {
+                  return (
+                    <tr>
+                      <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
+                      <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
+                      <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
+                      <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
+                      <td><button className='boton-tabla-eliminar' value={dato["Identificacion"]} onClick={eliminarConvocante}>Eliminar</button></td>
+                    </tr>
+                  )
+                })}
             </tbody>
           </table>
         </form>
