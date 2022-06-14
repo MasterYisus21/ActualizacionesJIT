@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import './css/ModuloInformacionConvocado.css';
 import config from '../../config.json'
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 
 function ModuloInformacionConvocado() {
@@ -45,8 +45,6 @@ function ModuloInformacionConvocado() {
     axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
     .then((response) => {
       setConvocados(convocados.filter((object) => {
-        console.log(object)
-        console.log(event.target.value)
         return object["Identificacion"] != event.target.value
       }))
     })
@@ -58,7 +56,12 @@ function ModuloInformacionConvocado() {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/" + event.target.cedula.value)
     .then((response) => {
-      obtenerConvocados()
+      console.log()
+      setConvocados([...convocados, response.data["persona"]])
+      alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+    })
+    .catch(error => {
+      console.log(error)
     })
 
   }
@@ -75,9 +78,15 @@ function ModuloInformacionConvocado() {
 
   const [convocados, setConvocados] = useState([])
 
+  let location = useLocation();
+
   useEffect(() => {
     obtenerConvocados()
-  }, [])
+  }, [location])
+
+  const alertContainer = useRef("");
+
+
 
   return (
     <>
@@ -102,7 +111,7 @@ function ModuloInformacionConvocado() {
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                   </svg>
                 </button>
-
+                <div ref={alertContainer}></div>
               </form>
               <div className="d-flex align-items-end">
                 <button type="button" class="btn btn-primary" id='boton-agregar-convocado'
@@ -220,7 +229,7 @@ function ModuloInformacionConvocado() {
               {convocados.map((dato) => {
                 return (
                   <tr>
-                    <td key={dato["Id"]}>{dato["Id"]}</td>
+                    <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
                     <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
                     <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
                     <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
@@ -230,19 +239,6 @@ function ModuloInformacionConvocado() {
                   </tr>
                 )
               })}
-              {/* {lista.map((data, key) => {
-                return (
-                  <tr>
-                    <td>{data.company}</td>
-                    <td>{data.ticker}</td>
-                    <td>{data.stockPrice}</td>
-                    <td>{data.timeElapsed}</td>
-                    <td>Bogotá</td>
-                    <td>Cundinamarca</td>
-                    <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
-                  </tr>
-                );
-              })} */}
             </tbody>
           </table>
         </form>

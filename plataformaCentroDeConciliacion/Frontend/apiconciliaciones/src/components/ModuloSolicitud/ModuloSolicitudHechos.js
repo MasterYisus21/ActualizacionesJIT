@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './css/ModuloSolicitudHechos.css';
 import config from '../../config.json'
 import Select from 'react-select'
@@ -58,9 +58,15 @@ function ModuloSolicitudHechos() {
         }
         axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos", datos)
             .then((response) => {
+                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
                 console.log(response.data)
         })
+            .catch(error => {
+                alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"
+            })
     }
+
+    const alertContainer = useRef("");
 
     return (
     <>
@@ -104,10 +110,13 @@ function ModuloSolicitudHechos() {
                         Cuantía indeterminada
                     </label>
                 </div>
-                <button className="modulo-solicitud-content-main-column2-save-button">
-                    <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
+                <div className={{display: "flex"}}>
+                        <button className="modulo-solicitud-content-main-column2-save-button">
+                        <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
                     <p>GUARDAR</p>
                 </button>
+                </div>
+                <div ref={alertContainer}></div>
             </div>
         </form>
     </>

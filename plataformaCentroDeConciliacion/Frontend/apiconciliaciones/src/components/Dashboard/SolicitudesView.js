@@ -14,7 +14,10 @@ function SolicitudesView() {
             axios.get(config.apiGatewayURL + "/solicitudes_view")
             .then((response) => {
                 console.log(response.data)
-                setMisSolicitudes(response.data)
+                if(response.data.length > 0 ){
+                    setMisSolicitudes(response.data)
+                }
+                
             })
             .catch((error) => {
                 console.log(error)
@@ -120,14 +123,14 @@ function SolicitudesView() {
                                 return (
                                 <tr>
                                     <th scope="row">{datos["Solicitud_Id"]}</th>
-                                    <td>{datos["Fecha_Solicitud"]}</td>
-                                    <td>{datos["Estado"]}</td>
+                                    <td>{datos["Fecha_registro"]}</td>
+                                    <td>{datos["Tipo_Estado"]}</td>
                                     <td className='display-flex'>
-                                        <a href="#">
+                                        <Link to={"/dashboard/modulo-solicitudes/"+ datos["Solicitud_Id"] +"/datos_generales"}>
                                             <div className='beautiful-icon-container-1'>
                                                 <img className='icon' src='/icons/eye_icon_1.png'/>
                                             </div>
-                                        </a>
+                                        </Link>
                                     </td>
                                 </tr>
                                 )
