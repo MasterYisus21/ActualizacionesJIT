@@ -37,31 +37,44 @@ views.ListarConciliadores=async(req,res)=>{
 
 views.AsignarConciliador=async(req,res)=>{
     try{
-    let datos={}
+
+        let datos={}
+        axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
+        .then(response => {
+               datos = {
+                   "Solicitud_Id":req.params.id,
+                   "Persona_Id":response.data[0].Id,
+                   "Tipo_cliente_Id":3
+               }
+                
+                axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
+                .then(response => {
+            
+                    res.status(201).json(response.data)
+            
+                })
+                .catch(function (error) {
+                      res.sendStatus(500).json(error)
+                })
+            
     
-        datos = {
-            "Solicitud_Id":req.params.id,
-            "Persona_Id":req.params.Persona_Id,
-            "Tipo_cliente_Id":3
+                
+                
+    
+        })
+    
+        .catch((err) => {
+           res.status(404).json(err)
+       });
+       
+        }catch(error){
+        
+            console.log(error)
+            res.sendStatus(400)
         }
         
-       await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
-        .then(response => {
     
-            res.status(201).json(response.data)
-    
-        })
-        .catch(function (error) {
-                res.sendStatus(500).json(error)
-        })
-        
-    }catch(error){
-    
-        console.log(error)
-        res.sendStatus(400)
-    }
-    
-}
+    }    
 
 views.BuscarConciliador= async(req,res)=>{
     try{
