@@ -49,8 +49,7 @@ router.post('/:id/hechos',views_hechos.AgregarHechos)
 router.get('/:id/conciliadores',views_conciliador.ListarConciliadores)
 router.get('/:id/conciliadores/:search',views_conciliador.BuscarConciliador)
 router.post('/:id/conciliadores/:identificacion',views_conciliador.AsignarConciliador)
-//Buscar personas 
-router.get('/con',views_solicitud.Traer_datos)
+
 
 // estudiante//
 router.get('/:id/estudiantes',views_estudiantes.ListarEstudiantes)

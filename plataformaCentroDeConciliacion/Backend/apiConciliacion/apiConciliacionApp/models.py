@@ -365,8 +365,8 @@ class Persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
     Identificacion = models.BigIntegerField(blank=False,null=False,unique=True)
-    Nombres = models.CharField(max_length=15,blank=False,null=False)
-    Apellidos = models.CharField(max_length=15,blank=True,null=False,default="")
+    Nombres = models.CharField(max_length=30,blank=False,null=False)
+    Apellidos = models.CharField(max_length=30,blank=True,null=False,default="")
     Correo = models.EmailField(max_length=120,blank=False,null=False)
     Telefono = models.BigIntegerField(blank=True,default=0)
     Fecha_de_nacimiento = models.DateField(blank=True)

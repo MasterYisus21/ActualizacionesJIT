@@ -108,7 +108,8 @@ datosPersonas.datosCompletos = async (response) => {
 };
 
 datosPersonas.Solicitudes = async (response) => {
-    let datos={}
+    lista={}
+    let datos=[]
     
     try {
        
@@ -116,13 +117,14 @@ datosPersonas.Solicitudes = async (response) => {
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
             const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
-            datos[informacion_data.Solicitud_Id]={
+            lista[informacion_data.Solicitud_Id]={
                 Solicitud_Id:informacion_data.Solicitud_Id,
                 Fecha_registro:resp.data.Fecha_registro,
                 Tipo_Estado:estado.data.Nombre
             }
-            console.log("////")
-            console.log(datos)
+            datos.push(lista)
+            // console.log("////")
+            // console.log(datos)
            
           }
           return datos
