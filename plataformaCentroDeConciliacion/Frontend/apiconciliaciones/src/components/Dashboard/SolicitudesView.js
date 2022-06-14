@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import './css/SolicitudesView.css'
+import config from '../../config.json';
+import { Link } from 'react-router-dom';
 
 function SolicitudesView() {
 
@@ -8,24 +11,14 @@ function SolicitudesView() {
 
     useEffect(() => {
         setMisSolicitudes([
-            {Id: 1, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 2, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 3, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 4, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 5, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 6, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 7, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Iniciada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Cerrada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Cerrada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Cerrada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Cerrada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Cerrada"},
-            {Id: 8, Fecha_Solicitud: "22/08/2021",Estado: "Cerrada"},
+            axios.get(config.apiGatewayURL + "/solicitudes_view")
+            .then((response) => {
+                console.log(response.data)
+                setMisSolicitudes(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
             
         ])
     }, [])
@@ -79,18 +72,18 @@ function SolicitudesView() {
                         <tbody>
                             
                             {misSolicitudes.map((datos) => {
-                                if(datos["Estado"] != "Cerrada"){
+                                if(datos["Estado"] != "Resuelta"){
                                 return (
                                 <tr>
-                                    <th scope="row">{datos["Id"]}</th>
-                                    <td>{datos["Fecha_Solicitud"]}</td>
-                                    <td>{datos["Estado"]}</td>
+                                    <th scope="row">{datos["Solicitud_Id"]}</th>
+                                    <td>{datos["Fecha_registro"]}</td>
+                                    <td>{datos["Tipo_Estado"]}</td>
                                     <td className='display-flex'>
-                                        <a href="#">
+                                        <Link to={"/dashboard/modulo-solicitudes/"+ datos["Solicitud_Id"] +"/datos_generales"}>
                                             <div className='beautiful-icon-container-1'>
                                                 <img className='icon' src='/icons/eye_icon_1.png'/>
                                             </div>
-                                        </a>
+                                        </Link>
                                     </td>
                                 </tr>
                                 )
@@ -123,10 +116,10 @@ function SolicitudesView() {
                         <tbody>
                             
                             {misSolicitudes.map((datos) => {
-                                if(datos["Estado"] == "Cerrada"){
+                                if(datos["Estado"] == "Resuelta"){
                                 return (
                                 <tr>
-                                    <th scope="row">{datos["Id"]}</th>
+                                    <th scope="row">{datos["Solicitud_Id"]}</th>
                                     <td>{datos["Fecha_Solicitud"]}</td>
                                     <td>{datos["Estado"]}</td>
                                     <td className='display-flex'>

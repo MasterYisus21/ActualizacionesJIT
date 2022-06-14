@@ -44,7 +44,9 @@ function ModuloInformacionConvocado() {
     event.preventDefault()
     axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
     .then((response) => {
-      obtenerConvocados()
+      setConvocados(convocados.filter(object => {
+        return object.id != event.target.value
+      }))
     })
     .catch((error)=>{
       console.log(error)
@@ -54,7 +56,7 @@ function ModuloInformacionConvocado() {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/" + event.target.cedula.value)
     .then((response) => {
-      obtenerConvocados()
+      obtenerConvocados
     })
 
   }
@@ -207,8 +209,8 @@ function ModuloInformacionConvocado() {
                 <th>Tipo de documento</th>
                 <th>Identificación</th>
                 <th>Nombre</th>
-                <th>Ciudad</th>
-                <th>Departamento</th>
+                {/* <th>Ciudad</th>
+                <th>Departamento</th> */}
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -220,8 +222,8 @@ function ModuloInformacionConvocado() {
                     <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
                     <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
                     <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
-                    <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Nombre"]}</td>
-                    <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Nombre"]}</td>
+                    {/* <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Nombre"]}</td> */}
+                    {/* <td key={dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"]}>{dato["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Nombre"]}</td> */}
                     <td><button className='boton-tabla-eliminar' value={dato["Identificacion"]} onClick={eliminarConvocado}>Eliminar</button></td>
                   </tr>
                 )
