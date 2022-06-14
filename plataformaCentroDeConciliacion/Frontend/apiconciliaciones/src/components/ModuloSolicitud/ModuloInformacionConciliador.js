@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import './css/ModuloInformacionConciliador.css';
 import config from '../../config.json'
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 
 function ModuloInformacionConciliador() {
@@ -43,24 +43,73 @@ function ModuloInformacionConciliador() {
     }
   ];
 
-  const [variable, setVariable] = useState([])
+  const verDocente = () => {
 
-  const UrlParams = useParams();
+  }
 
-  // useEffect(()=>{
-  //   axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/123")
-  //   .then((response)=>{
-  //     console.log(response.data)
-  //     setVariable(response.data[0]["Tipo_cliente_Id"])
-  //   })
-  // })
+  const agregarConciliador = (event) => {
+    event.preventDefault()
+    axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores/" + event.target.identificacionPersona.value)
+      .then((response) => {
+        console.log()
+        setConciliadores([...conciliadores, response.data["persona"]])
+        alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+      })
+      .catch((error) => {
+        console.log(error.response.status)
+        if (error.response.status == 404) {
+          alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Persona no encontrada</div>"
+        } else {
+          alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Hubo un error en el servidor, intente mas tarde.</div>"
+        }
+      })
+  }
 
-  useEffect(() => {
-    axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados")
+  const eliminarConciliadores = (event) => {
+    event.preventDefault()
+    axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
+      .then((response) => {
+        setConciliadores(conciliadores.filter((object) => {
+          return object["Identificacion"] != event.target.value
+        }))
+        alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Eliminado correctamente</div>"
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
+  const obtenerConciliadores = () => {
+    axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores")
       .then((response) => {
         console.log(response.data)
+        setConciliadores(response.data)
       })
-  })
+  }
+
+  let location = useLocation();
+  const UrlParams = useParams();
+
+  const [conciliadores, setConciliadores] = useState([])
+  const [conciliadoresDisponibles, setConciliadoresDisponibles] = useState([])
+
+  useEffect(() => {
+    obtenerConciliadores()
+  }, [location])
+
+  useEffect(() => {
+    if (conciliadoresDisponibles.length == 0 && isOpen) {
+      axios.get(config.apiGatewayURL + "/docentes")
+        .then((response) => {
+          console.log(response.data)
+          setConciliadoresDisponibles(response.data)
+        })
+    }
+
+  }, [location, isOpen])
+
+  const alertContainer = useRef("");
 
 
   return (
@@ -81,6 +130,7 @@ function ModuloInformacionConciliador() {
                   aria-label="Search"
                   aria-describedby="search-addon"
                 />
+                <div ref={alertContainer}></div>
               </form>
               <div className="d-flex align-items-end">
                 <button type="button" class="btn btn-primary me-3" id='boton-agregar-conciliador'
@@ -92,38 +142,32 @@ function ModuloInformacionConciliador() {
           </nav>
         </div>
         {isOpen &&
-          <form className='contenedor-tabla-conciliador mb-5 pt-3 pb-3'>
+          <form className='contenedor-tabla-conciliador mb-5 pt-3 pb-3' onSubmit={agregarConciliador}>
             <label className='pb-3 h5'>Seleccione el conciliador que desea agregar</label>
             <table className='table table-striped table-bordered table-responsive'>
               <thead >
                 <tr>
                   <th></th>
-                  <th>Clase del Convocado</th>
                   <th>Tipo de documento</th>
                   <th>Identificación</th>
                   <th>Nombre</th>
-                  <th>Ciudad</th>
-                  <th>Departamento</th>
                 </tr>
               </thead>
               <tbody>
-                {lista.map((data, key) => {
+                {conciliadoresDisponibles.map((dato, key) => {
                   return (
                     <tr>
-                      <td><input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input></td>
-                      <td>{data.company}</td>
-                      <td>{data.ticker}</td>
-                      <td>{data.stockPrice}</td>
-                      <td>{data.timeElapsed}</td>
-                      <td>Bogotá</td>
-                      <td>Cundinamarca</td>
+                      <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio' value={dato["Identificacion"]}></input></td>
+                      <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
+                      <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
+                      <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
             <div className=''>
-              <button type="button" className="btn btn-primary me-3" id='boton-agregar-conciliador'> Agregar</button>
+              <button type="submit" className="btn btn-primary me-3" id='boton-agregar-conciliador'> Agregar</button>
             </div>
           </form>
         }
@@ -131,28 +175,24 @@ function ModuloInformacionConciliador() {
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
               <tr>
-                <th></th>
                 <th>Clase del Convocado</th>
                 <th>Tipo de documento</th>
                 <th>Identificación</th>
                 <th>Nombre</th>
-                <th>Ciudad</th>
-                <th>Departamento</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {lista.map((data, key) => {
+              {conciliadores.map((dato) => {
                 return (
                   <tr>
-                    <td>Pepito</td>
-                    <td>{data.company}</td>
-                    <td>{data.ticker}</td>
-                    <td>{data.stockPrice}</td>
-                    <td>{data.timeElapsed}</td>
-                    <td>Bogotá</td>
-                    <td>Cundinamarca</td>
+                    <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
+                    <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
+                    <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
+                    <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
+                    <td><button className='boton-tabla-eliminar' value={dato["Identificacion"]} onClick={eliminarConciliadores}>Eliminar</button></td>
                   </tr>
-                );
+                )
               })}
             </tbody>
           </table>
