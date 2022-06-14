@@ -110,13 +110,13 @@ datosPersonas.datosCompletos = async (response) => {
 datosPersonas.Solicitudes = async (response) => {
     let datos=[]
     
-   
     try {
        
         for await (const informacion_data of response.data) {
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
             const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
+            
             let data={
                 Solicitud_Id:informacion_data.Solicitud_Id,
                 Fecha_registro:resp.data.Fecha_registro,
@@ -124,7 +124,7 @@ datosPersonas.Solicitudes = async (response) => {
             }
             datos.push(data)
             console.log("////")
-            console.log(datos)
+           
            
           }
           return datos
