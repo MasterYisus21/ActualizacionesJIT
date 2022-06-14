@@ -25,16 +25,18 @@ router.delete('/:id/personas/:documento',views_solicitud.EliminarPersona) // eli
 // convocante //
 
 router.get('/:id/convocantes',views_convocante.ListarConvocantes)
-router.get('/:id/convocantes/:search',views_convocante.BuscarConvocante)
 router.post('/:id/convocantes/:documento',views_convocante.AgregarConvocante)
+router.get('/:id/convocantes/:search',views_convocante.BuscarConvocante)
+
 //router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 
 
 // convocado//  
 
 router.get('/:id/convocados',views_convocado.ListarConvocados)
-router.get('/:id/convocados/:search',views_convocado.BuscarConvocado)
 router.post('/:id/convocados/:documento',views_convocado.AgregarConvocado)
+router.get('/:id/convocados/:search',views_convocado.BuscarConvocado)
+
 //router.get('/:id/convocado/:documento',views_convocado.InformacionConvocado)
 
 

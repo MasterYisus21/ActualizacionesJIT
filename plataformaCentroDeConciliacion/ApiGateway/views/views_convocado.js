@@ -39,7 +39,7 @@ views.ListarConvocados=async(req,res)=>{
 
 views.AgregarConvocado=async(req,res)=>{
     try{
-
+    
     let datos={}
     axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.documento)
     .then(async resp => {
@@ -48,6 +48,10 @@ views.AgregarConvocado=async(req,res)=>{
                "Persona_Id":resp.data[0].Id,
                "Tipo_cliente_Id":2
            }
+           
+          const validacion= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+req.params.id + "&Persona_Id="+resp.data[0].Id)
+        
+          if(validacion.data.length>0){res.status(200).json("Ya esta asignado")}else{
               axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
             .then( async response => {
                 const resp = await axios.get(config.urlApiConciliacion + "/personas/"+response.data.Persona_Id);
@@ -72,7 +76,7 @@ views.AgregarConvocado=async(req,res)=>{
                   res.sendStatus(500).json(error)
             })
         
-
+        }
             
             
 
