@@ -56,7 +56,11 @@ views.Docentes= (req,res)=>{
 
     axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
     .then((result) => {
-        res.status(200).json(result.data)
+        datosPersonas.datosBasicosDocentes(result)
+        .then(rest=>{
+            res.status(200).json(rest)
+        })
+        
     }).catch((err) => {
         res.status(404).json(err)
         

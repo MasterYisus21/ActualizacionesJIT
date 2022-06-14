@@ -83,7 +83,6 @@ class Estrato_socioeconomicoViewSet(GeneralViewSet):  # Una sola clase para los 
 
 class Tipo_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Tipo_personaSerializer
-    
 
 class Tipo_cargoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Tipo_cargoSerializer
@@ -119,12 +118,7 @@ class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de
 
 class Relacion_solicitud_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Relacion_solicitud_personaSerializer
-    def get_queryset(self,pk=None):
-        model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
-        if pk is None:
-            return model.filter(State=True)
- 
-        return model.filter(State=True, Id=pk).first() # retorna todos los valores con estado = true
+
 class Relacion_area_perfilViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Relacion_area_perfilSerializer
 

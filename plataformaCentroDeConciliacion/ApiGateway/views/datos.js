@@ -21,6 +21,8 @@ datosPersonas.datosBasicos = async(response) => {
    
     try {
         for await (const informacion_data of response.data) {
+            console.log("///")
+            console.log(informacion_data)
             // Incrementando el tamaño total.
             const resp = await axios.get(config.urlApiConciliacion + "/personas/"+informacion_data.Persona_Id);
             // const barrio= await axios.get(config.urlApiConciliacion + "/barrios/"+resp.data.Barrio_Id);
@@ -55,7 +57,47 @@ datosPersonas.datosBasicos = async(response) => {
 
     
 };
+datosPersonas.datosBasicosDocentes = async(response) => {
+    let datos= []
+   
+    try {
+        for await (const informacion_data of response.data) {
+            console.log("///")
+            console.log(informacion_data)
+            // Incrementando el tamaño total.
+           
+            // const barrio= await axios.get(config.urlApiConciliacion + "/barrios/"+resp.data.Barrio_Id);
+            // const localidad = await axios.get(config.urlApiConciliacion + "/localidades/"+barrio.data.Localidad_Id);
+            // const ciudad = await axios.get(config.urlApiConciliacion + "/ciudades/"+localidad.data.Ciudad_Id);
+            // const departamento = await axios.get(config.urlApiConciliacion + "/departamentos/"+ciudad.data.Departamento_Id);
+            // const pais = await  axios.get(config.urlApiConciliacion + "/paises/"+departamento.data.Pais_Id);
+            const documento = await  axios.get(config.urlApiConciliacion + "/tipos_documento/"+informacion_data.Tipo_documento_Id);
+            const tipo = await  axios.get(config.urlApiConciliacion + "/tipos_persona/"+informacion_data.Tipo_persona_Id);
+            
+            // departamento.data.Pais_Id = pais.data
+            // ciudad.data.Departamento_Id = departamento.data
+            // localidad.data.Ciudad_Id=ciudad.data
+            // barrio.data.Localidad_Id= localidad.data
+            // resp.data.Barrio_Id=barrio.data
+            informacion_data.Tipo_documento_Id= documento.data
+            informacion_data.Tipo_persona_Id=tipo.data
+            
 
+            datos.push(informacion_data)
+            
+            
+           
+          }
+          return datos
+        
+        
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
+
+    
+};
 datosPersonas.datosCrearPersonas = async(response)=>{}
 
 datosPersonas.datosCompletos = async (response) => {
