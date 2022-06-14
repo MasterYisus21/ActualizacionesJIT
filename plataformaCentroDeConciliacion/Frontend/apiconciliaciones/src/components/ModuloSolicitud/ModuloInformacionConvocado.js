@@ -44,8 +44,10 @@ function ModuloInformacionConvocado() {
     event.preventDefault()
     axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
     .then((response) => {
-      setConvocados(convocados.filter(object => {
-        return object.id != event.target.value
+      setConvocados(convocados.filter((object) => {
+        console.log(object)
+        console.log(event.target.value)
+        return object["Identificacion"] != event.target.value
       }))
     })
     .catch((error)=>{
@@ -56,7 +58,7 @@ function ModuloInformacionConvocado() {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/" + event.target.cedula.value)
     .then((response) => {
-      obtenerConvocados
+      obtenerConvocados()
     })
 
   }
