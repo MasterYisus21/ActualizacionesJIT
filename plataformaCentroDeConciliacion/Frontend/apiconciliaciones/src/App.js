@@ -29,6 +29,7 @@ function App() {
             path="/login"
             element={<InicioSesion />}
           />
+          
           <Route
             path="/dashboard/"
             element={loggedIn ? <Dashboard /> : <Navigate to="/login" replace={true} />}
