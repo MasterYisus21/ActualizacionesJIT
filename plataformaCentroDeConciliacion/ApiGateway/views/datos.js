@@ -110,6 +110,7 @@ datosPersonas.datosCompletos = async (response) => {
 datosPersonas.Solicitudes = async (response) => {
     let datos=[]
     
+   
     try {
        
         for await (const informacion_data of response.data) {
