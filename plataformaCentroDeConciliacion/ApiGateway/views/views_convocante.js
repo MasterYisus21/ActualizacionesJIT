@@ -73,7 +73,36 @@ try{
 }
 
 }
-   
+
+views.BuscarConvocante= async(req,res)=>{
+    try{
+        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=1&Solicitud_Id=" + req.params.id)
+       .then(response => { 
+       
+            datosPersonas.BuscarPersona(response,req)
+                .then((result) => {
+                    
+                    res.status(200).json(result)
+                    
+                }).catch((err) => {
+                res.status(404).json(err)
+                });  
+            
+        
+            }
+        )
+        
+       .catch((err) => {
+           res.status(404).json(err)
+       });
+    }catch(error){
+        
+        console.log(error)
+        res.sendStatus(400)
+    }
+    
+
+}
 
 // views.InformacionConvocante=(req,res)=>{
 

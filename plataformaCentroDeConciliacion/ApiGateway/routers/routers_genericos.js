@@ -38,7 +38,6 @@ router.get('/solicitud',views_solicitud.Traer_datos)
 
 
 
-
 // actualizar// 
 router.patch('/:nombre/:id',views_generales.Actualizar)
 

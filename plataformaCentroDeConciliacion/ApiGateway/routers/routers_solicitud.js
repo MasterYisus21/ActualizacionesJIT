@@ -25,6 +25,7 @@ router.delete('/:id/personas/:documento',views_solicitud.EliminarPersona) // eli
 // convocante //
 
 router.get('/:id/convocantes',views_convocante.ListarConvocantes)
+router.get('/:id/convocantes/:search',views_convocante.BuscarConvocante)
 router.post('/:id/convocantes/:documento',views_convocante.AgregarConvocante)
 //router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 
@@ -32,6 +33,7 @@ router.post('/:id/convocantes/:documento',views_convocante.AgregarConvocante)
 // convocado//  
 
 router.get('/:id/convocados',views_convocado.ListarConvocados)
+router.get('/:id/convocados/:search',views_convocado.BuscarConvocado)
 router.post('/:id/convocados/:documento',views_convocado.AgregarConvocado)
 //router.get('/:id/convocado/:documento',views_convocado.InformacionConvocado)
 
@@ -45,10 +47,14 @@ router.post('/:id/hechos',views_hechos.AgregarHechos)
 // conciliador //
 
 router.get('/:id/conciliadores',views_conciliador.ListarConciliadores)
+router.get('/:id/conciliadores/:search',views_conciliador.BuscarConciliador)
 router.post('/:id/conciliadores/:identificacion',views_conciliador.AsignarConciliador)
+//Buscar personas 
+router.get('/con',views_solicitud.Traer_datos)
 
 // estudiante//
 router.get('/:id/estudiantes',views_estudiantes.ListarEstudiantes)
+router.get('/:id/estudiantes/:search',views_estudiantes.BuscarEstudiante)
 router.post('/:id/estudiantes/:identificacion',views_estudiantes.AsignarEstudiante)
 
 
