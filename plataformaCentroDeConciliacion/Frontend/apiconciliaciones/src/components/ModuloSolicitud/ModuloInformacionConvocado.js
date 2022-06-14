@@ -40,29 +40,36 @@ function ModuloInformacionConvocado() {
       timeElapsed: "10 sec ago",
     }
   ];
-  const eliminarConvocado = (event) =>{
+  const eliminarConvocado = (event) => {
     event.preventDefault()
     axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
-    .then((response) => {
-      setConvocados(convocados.filter((object) => {
-        return object["Identificacion"] != event.target.value
-      }))
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
+      .then((response) => {
+        setConvocados(convocados.filter((object) => {
+          return object["Identificacion"] != event.target.value
+        }))
+        alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Eliminado correctamente</div>"
+
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
   const agregarConvocado = (event) => {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/" + event.target.cedula.value)
-    .then((response) => {
-      console.log()
-      setConvocados([...convocados, response.data["persona"]])
-      alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
-    })
-    .catch(error => {
-      console.log(error)
-    })
+      .then((response) => {
+        console.log()
+        setConvocados([...convocados, response.data["persona"]])
+        alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+      })
+      .catch(error => {
+        console.log(error.response.status)
+        if(error.response.status == 404) {
+          alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Persona no encontrada</div>"
+        } else {
+          alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Hubo un error en el servidor, intente mas tarde.</div>"
+        }
+      })
 
   }
 
