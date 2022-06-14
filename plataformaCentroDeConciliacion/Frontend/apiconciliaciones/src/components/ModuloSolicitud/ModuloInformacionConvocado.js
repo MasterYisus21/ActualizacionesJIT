@@ -56,7 +56,7 @@ function ModuloInformacionConvocado() {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocados/" + event.target.cedula.value)
     .then((response) => {
-      obtenerConvocados
+      obtenerConvocados()
     })
 
   }
