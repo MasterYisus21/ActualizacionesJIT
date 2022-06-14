@@ -47,33 +47,38 @@ function ModuloInformacionConvocante() {
   const agregarConvocante = (event) => {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes/" + event.target.cedula.value)
-    .then((response) => {
-      console.log()
-      setConvocantes([...convocantes, response.data["persona"]])
-      alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
-    })
-    .catch(error => {
-      console.log(error)
-    })
+      .then((response) => {
+        console.log()
+        setConvocantes([...convocantes, response.data["persona"]])
+        alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+      })
+      .catch((error) => {
+        console.log(error.response.status)
+        if (error.response.status == 404) {
+          alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Persona no encontrada</div>"
+        } else {
+          alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Hubo un error en el servidor, intente mas tarde.</div>"
+        }
+      })
   }
 
   const eliminarConvocante = (event) => {
     event.preventDefault()
     axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
-    .then((response) => {
-      setConvocantes(convocantes.filter((object) => {
-        return object["Identificacion"] != event.target.value
-      }))
-      alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Eliminado correctamente</div>"
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
+      .then((response) => {
+        setConvocantes(convocantes.filter((object) => {
+          return object["Identificacion"] != event.target.value
+        }))
+        alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Eliminado correctamente</div>"
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   let location = useLocation();
   const UrlParams = useParams();
-  
+
   const [convocantes, setConvocantes] = useState([])
 
   const obtenerConvocantes = () => {
@@ -228,16 +233,16 @@ function ModuloInformacionConvocante() {
             </thead>
             <tbody>
               {convocantes.map((dato) => {
-                  return (
-                    <tr>
-                      <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
-                      <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
-                      <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
-                      <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
-                      <td><button className='boton-tabla-eliminar' value={dato["Identificacion"]} onClick={eliminarConvocante}>Eliminar</button></td>
-                    </tr>
-                  )
-                })}
+                return (
+                  <tr>
+                    <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
+                    <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
+                    <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
+                    <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
+                    <td><button className='boton-tabla-eliminar' value={dato["Identificacion"]} onClick={eliminarConvocante}>Eliminar</button></td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </form>
