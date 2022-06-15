@@ -33,6 +33,9 @@ views.ListarManejoConflicto= async (req,res)=>{
 views.Agregar=async(req,res)=>{
     try{
     let datos={}
+  
+    if (typeof req.body.Flag_interviene_tercero != 'boolean'){req.body.Flag_interviene_tercero=false}
+    if (typeof req.body.Flag_violencia != 'boolean'){req.body.Flag_violencia=false}
     datos = {
                 
         "Flag_interviene_tercero": req.body.Flag_interviene_tercero,
@@ -40,9 +43,9 @@ views.Agregar=async(req,res)=>{
         
     }
     await axios.get(config.urlApiConciliacion + "/hechos?Solicitud_Id=" + req.params.id)
-    .then((result) => {
+    .then(async(result) => {
         
-        axios.patch(config.urlApiConciliacion + "/hechos/"+ result.data[0].Id +"/",datos)
+        await axios.patch(config.urlApiConciliacion + "/hechos/"+ result.data[0].Id +"/",datos)
         .then((result) => {
             
             res.status(200).json(result.data)

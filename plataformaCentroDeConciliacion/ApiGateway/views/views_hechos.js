@@ -99,9 +99,11 @@ views.AgregarHechos=async (req,res)=>{
       
             
         }
+    
 
         
-    })
+    }).catch((err) => {
+        res.status(404).json(err)})
 }catch(error){
     
     console.log(error)

@@ -166,6 +166,7 @@ class Solicitud(StateModel):
     
 
     class Meta:
+        ordering = ["-Fecha_registro", "-Numero_caso"]
         verbose_name = ("Solicitud")   
         verbose_name_plural = ("Solicitudes")
 
@@ -219,18 +220,19 @@ class Documento(StateModel):
 class Historico_solicitud(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Fecha =  models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False)
+    Fecha =  models.DateTimeField( auto_now=True,blank=False,null=False)
     Descripcion = models.TextField(blank=False,null=False)
     Flag_requiere_documento = models.BooleanField(default=False)
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Tipo_estado_Id = models.ForeignKey(Tipo_estado, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
+        ordering = ["-Fecha"]      
         verbose_name = ("Historico_solicitud")
         verbose_name_plural = ("Historico_solicitudes")
 
     def __str__(self):
-        return str(self.Descripcion)
+        return '%s %s %s '% (self.Id,self.Tipo_estado_Id,self.Solicitud_Id,)
 
 class Tipo_medio(BaseModels):
     
@@ -387,6 +389,20 @@ class Persona(StateModel):
     def __str__(self):
         return  '%s %s' % (self.Nombres,self.Apellidos  )
 
+class Genero_biologico(BaseModels):
+    
+    
+
+    class Meta:
+        verbose_name = ("Genero_biologico")
+        verbose_name_plural = ("Generos_biologicos")
+
+    def __str__(self):
+        return self.name
+
+
+
+
 class Usuario(StateModel):
 
     Usuario = models.BigIntegerField(primary_key=True,auto_created=False,null=False)
@@ -431,11 +447,13 @@ class Relacion_solicitud_persona(StateModel):
     Persona_Id  = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
+        ordering = ["-Id","-Solicitud_Id"]
         verbose_name = ("Relacion_solicitud_persona")
         verbose_name_plural = ("Relacion_solicitud_persona")
 
     def __str__(self):
-        return str(str(self.Id))
+#        return str(str(self.Tipo_cliente_Id))
+         return  '%s %s %s' % (self.Solicitud_Id,self.Tipo_cliente_Id,self.Persona_Id)
 
         
 class Relacion_area_perfil(StateModel):

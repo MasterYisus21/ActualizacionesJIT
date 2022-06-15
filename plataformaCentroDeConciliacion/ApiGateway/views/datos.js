@@ -21,6 +21,7 @@ datosPersonas.datosBasicos = async(response) => {
    
     try {
         for await (const informacion_data of response.data) {
+            if (response.data!=0){
             console.log("///")
             console.log(informacion_data)
             // Incrementando el tamaño total.
@@ -45,7 +46,7 @@ datosPersonas.datosBasicos = async(response) => {
             datos.push(resp.data)
             
             
-           
+            }
           }
           return datos
         
@@ -105,6 +106,7 @@ datosPersonas.datosCompletos = async (response) => {
   
    
     try {
+        if (response.data!=0){
         for await (const informacion_data of response.data) {
             // Incrementando el tamaño total.
             const resp = await axios.get(config.urlApiConciliacion + "/personas/"+informacion_data.Id);
@@ -137,7 +139,7 @@ datosPersonas.datosCompletos = async (response) => {
              datos.push(resp.data)
             
             
-           
+        }
           }
           return datos
         
@@ -155,12 +157,17 @@ datosPersonas.datosCompletos = async (response) => {
 datosPersonas.Solicitudes = async (response) => {
     let datos=[]
    
-    
+    console.log(response.data)
     try {
-       
+        if (response.data!=0){
         for await (const informacion_data of response.data) {
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
+            console.log("solicitud")
+            console.log(resp.data)
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
+            if(historico.data.length>0){
+            console.log("Historicos")
+            console.log(historico.data)
             const estado = (historico.data[0].Tipo_estado_Id === null | '') ? historico.data.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id).then(result=>{ historico.data.Tipo_estado_Id=result.data.Nombre});;
         
             let data={
@@ -170,8 +177,11 @@ datosPersonas.Solicitudes = async (response) => {
             }
             datos.push(data)
           
+        }
            
-           
+          }}
+          else{
+            return datos
           }
           return datos
         
@@ -186,9 +196,11 @@ datosPersonas.Solicitudes = async (response) => {
 }
 
 datosPersonas.SolicitudesEspecificas = async (response) => {
-    let datos={}
+    let datos=[]
     
-    try {
+    try { 
+       // console.log(response.data)
+        if (response.data!=0){
         informacion_data=response.data
        
        
@@ -207,7 +219,7 @@ datosPersonas.SolicitudesEspecificas = async (response) => {
             datos=informacion_data
             
            
-          
+        }
           return datos
         
         
@@ -224,16 +236,25 @@ datosPersonas.Historial = async (response) => {
     let datos=[]
     
     try {
-       
+        if (response.data!=0){
         for await (const informacion_data of response.data) {
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
-            const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
-            // datos.push(""+resp.data.Solicitud_Id)
-            historico.data[0].Tipo_estado_Id = estado.data
-            datos[datos.length]=historico.data
-            
+            console.log("Historicos")
+            console.log(historico.data[0])
+            for await (const historial of historico.data) {
+            historial.Fecha=historial.Fecha.substring(0,(historial.Fecha.indexOf("T")))
+            const estado = (historial.Tipo_estado_Id === null | '') ? historial.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historial.Tipo_estado_Id).then(result=>{ historial.Tipo_estado_Id=result.data.Nombre});;
+            datos[datos.length]=historial   
+
            
+        }
+            // datos.push(""+resp.data.Solicitud_Id)
+            // historico.data[0].Tipo_estado_Id = estado.data
+            
+            
+            
+    } 
           }
           return datos
         
@@ -246,27 +267,41 @@ datosPersonas.Historial = async (response) => {
     
 }
 datosPersonas.SolicitudesSearch = async (response,search) => {
-    let datos={}
+    let datos=[]
     
     try {
-
+        if (response.data!=0){
         for await (const informacion_data of response.data) {
+           
 
             if(informacion_data.Solicitud_Id==search){
-            const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
-            const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
-            const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id);
 
-            historico.data[0].Tipo_estado_Id = estado.data
-            datos[informacion_data.Solicitud_Id]={
-                Solicitud_Id:informacion_data.Solicitud_Id,
-                Fecha_registro:resp.data.Fecha_registro,
-                Tipo_Estado:estado.data.Nombre
-            }
+
+                const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
+                console.log("solicitud")
+                console.log(resp.data)
+                const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
+                console.log("Historicos")
+                //console.log(historico.data)
+                if(historico.data.length>0){
+                const estado = (historico.data[0].Tipo_estado_Id === null | '') ? historico.data.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id).then(result=>{ historico.data.Tipo_estado_Id=result.data.Nombre});;
+                    
+                let data={
+                    Solicitud_Id:informacion_data.Solicitud_Id,
+                    Fecha_registro:resp.data.Fecha_registro,
+                    Tipo_Estado:historico.data.Tipo_estado_Id
+                }
+
+                datos.push(data)
+            }else{data={}}
+
+           
+            
             
             
             }
           }
+        }
           return datos
         
         
@@ -308,9 +343,10 @@ datosPersonas.BuscarPersona = async (response,search) => {
     let datos= []
    
     try {
+        if (response.data.length>0){
         for await (const informacion_data of response.data) {
             // Incrementando el tamaño total.
-         await axios.get(config.urlApiConciliacion + "/personas/"+informacion_data.Persona_Id+"?Nombres="+search.params.search)
+         await axios.get(config.urlApiConciliacion + "/personas/"+informacion_data.Persona_Id+"?Identificacion="+search.params.search)
           .then(async result => {
             const documento = await  axios.get(config.urlApiConciliacion + "/tipos_documento/"+result.data.Tipo_documento_Id);
             const tipo = await  axios.get(config.urlApiConciliacion + "/tipos_persona/"+result.data.Tipo_persona_Id);
@@ -328,7 +364,7 @@ datosPersonas.BuscarPersona = async (response,search) => {
           //  datos.push(resp.data)
             
             
-           
+    }
           }
           return datos
         

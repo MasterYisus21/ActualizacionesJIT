@@ -35,40 +35,51 @@ try{
 
 const InfoCitaciones = async(response)=>{
     let endpoints = []
-    let datos={}
+    let datos=[{personas:[]}, {cita:[]}]
     let personas={}
+    let data={}
+    //datos[0]="personas"
 try{
 
     
     for await (const informacion_data of response.data) {
+        
         const resp = await  axios.get( config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+informacion_data.Id)
+        console.log(resp)
         for await (const dat of resp.data) { const persona= await axios.get( config.urlApiConciliacion + "/personas/"+dat.Persona_Id) 
-        personas[dat.Persona_Id]=persona.data}
-        datos["personas"]=personas
+        personas[dat.Persona_Id]=persona.data
+        datos[0].personas=personas}
+        console.log(personas)
+       // datos["personas"]=personas
+      //  datos.push(personas)
+            
         endpoints = [
             config.urlApiConciliacion + "/turnos/"+informacion_data.Turno_Id,
             config.urlApiConciliacion + "/tipos_medio/"+informacion_data.Tipo_medio_Id
            
 
     ]
-        
+    //datos[datos.length]="Citaciones"        
        await Promise.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
             axios.spread((...allData) => {
             informacion_data.Turno_Id=allData[0].data
             informacion_data.Tipo_medio_Id=allData[1].data
+            
+            
+
+            datos[1].cita=(informacion_data)
            
-           
-                     
-            datos[informacion_data.Id] = informacion_data
+            
+            
              
             })
             );
-        
+       
     }
     return datos
 
 } catch(err){
-    throw new Error(err);
+    console.log(err);
 }
 
 }
@@ -107,10 +118,7 @@ try{
 
     if (rest.data.length>=1){
     for await (const citaciones_fechas of rest.data) {
-        console.log("persona"+response.data[0].Persona_Id)
-        console.log("Ciacion"+citaciones_fechas.Id)
-        console.log(config.urlApiConciliacion + "/relaciones_citacion_persona?Persona_Id="+ response.data[0].Persona_Id +"&Citacion_Id="+citaciones_fechas.Id)
-        
+       
     const buscar_coincidencia = await axios.get(config.urlApiConciliacion + "/relaciones_citacion_persona?Persona_Id="+ response.data[0].Persona_Id +"&Citacion_Id="+citaciones_fechas.Id)//+ response.data[0].Persona_Id) // me trae las citaciones del docente
       
             if(buscar_coincidencia.data.length>=1)lista.push(citaciones_fechas.Turno_Id) 
@@ -174,7 +182,7 @@ views.CitacionEspecifica=async(req,res)=>{
    
     try{
     await axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id2)
-    .then(response => {
+    .then(response => { 
         response.data=[response.data]
         InfoCitaciones(response)
         .then((result) => {
@@ -207,14 +215,16 @@ views.CitacionEspecifica=async(req,res)=>{
 views.CrearCitacion=async(req,res)=>{
     try{
     let datos ={}
-    console.log(req.body)
+    //console.log(req.body)
+    if(req.body.Descripcion === null | ''){res.sendStatus(404)} else{
+   
       datos=  {
             "Fecha_sesion": req.body.Fecha_sesion,
             "Descripcion": req.body.Descripcion,
             "Enlace": req.body.Enlace,
             "Turno_Id": req.body.Turno_Id,
             "Tipo_medio_Id": req.body.Tipo_medio_Id,
-            "Solicitud_Id": req.body.Solicitud_Id
+            "Solicitud_Id": req.params.id
         }
 
         
@@ -224,7 +234,7 @@ views.CrearCitacion=async(req,res)=>{
 
     .then(response=>{
     //    asisgnarPersonas(response,req)
-        
+
         res.status(200).json(response.data)
       
         
@@ -232,7 +242,7 @@ views.CrearCitacion=async(req,res)=>{
         res.status(404).json(err)
     });
     
-
+    }
 }catch(error){
     
     console.log(error)

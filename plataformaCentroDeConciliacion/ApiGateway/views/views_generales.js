@@ -5,7 +5,7 @@ const datosPersonas = require('../views/datos')
 const config =require ('../config.json');
 const { response } = require('express');
 const res = require('express/lib/response');
-
+const identificacion=1234
 
 
 views.Ciudades= async(req,res)=>{
@@ -52,11 +52,11 @@ try{
 
 
 
-views.Docentes= (req,res)=>{
-
-    axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
-    .then((result) => {
-        datosPersonas.datosBasicosDocentes(result)
+views.Docentes= async(req,res)=>{
+try{
+   await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
+    .then(async(result) => {
+       await datosPersonas.datosBasicosDocentes(result)
         .then(rest=>{
             res.status(200).json(rest)
         })
@@ -65,22 +65,24 @@ views.Docentes= (req,res)=>{
         res.status(404).json(err)
         
     });
-
+}catch(error){
+    console.log(error)
+}
 
 }
-views.Solicitudesview= (req,res)=>{
-    identificacion=12345
-   // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
-    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
+views.Solicitudesview= async (req,res)=>{
+    try{
     
-    .then((result) => {
+   // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
+   await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
+    
+    .then(async(result) => {
       
-        console.log(result.data)
-        axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
-        .then((result) => {
-           console.log("resultadooooo")
-            console.log(result.data)
-           datosPersonas.Solicitudes(result)
+       
+       await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
+        .then(async(result) => {
+           
+          await datosPersonas.Solicitudes(result)
             .then((result) => {
                 
             res.status(200).json(result)
@@ -93,21 +95,24 @@ views.Solicitudesview= (req,res)=>{
         
     });
 
-
+    }catch(error){
+        console.log(error)
+    }
 }
 
-views.SolicitudesviewHistorial= (req,res)=>{
-    identificacion=12345
+views.SolicitudesviewHistorial= async(req,res)=>{
+    try{
+   
    // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
-    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
+    await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
     
-    .then((result) => {
+    .then(async(result) => {
         
-        console.log(result.data)
-        axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
-        .then((result) => {
+       
+       await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
+        .then(async(result) => {
             console.log(result.data)
-            datosPersonas.Historial(result)
+           await datosPersonas.Historial(result)
             .then((result) => {
             res.status(200).json(result)
             })
@@ -119,20 +124,23 @@ views.SolicitudesviewHistorial= (req,res)=>{
         
     });
 
-
+    }catch(err){
+        console.log(err)
+    }
 }
-views.SolicitudesviewEspecificas= (req,res)=>{
-    identificacion=12345
-   // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
-    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
+views.SolicitudesviewEspecificas= async(req,res)=>{
+    try{
     
-    .then((result) => {
+   // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
+   await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
+    
+    .then(async(result) => {
         
-        console.log(result.data)
-        axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
-        .then((result) => {
-            console.log(result.data)
-            datosPersonas.SolicitudesSearch(result,req.params.search)
+        
+      await  axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
+        .then(async(result) => {
+            
+            await datosPersonas.SolicitudesSearch(result,req.params.search)
             .then((result) => {
             res.status(200).json(result)
             })
@@ -144,16 +152,18 @@ views.SolicitudesviewEspecificas= (req,res)=>{
         
     });
 
-
+    }catch(err){
+        console.log(error)
+    }
 }
-views.InformacionPersona= (req,res)=>{
+views.InformacionPersona= async(req,res)=>{
 
     let datos={}
-    
-    axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
-    .then(response => {
+    try{
+   await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
+    .then(async response => {
         console.log(response)
-        datosPersonas.datosCompletos(response)
+       await datosPersonas.datosCompletos(response)
         .then((result) => {
              
             res.status(200).json(result)
@@ -166,24 +176,24 @@ views.InformacionPersona= (req,res)=>{
   .catch((err) => {
       res.status(404).json(err)
   });
-   
+}catch(err){
+    console.log(err)
+}
    
 
 
 }
 
-
-
-views.FechasDisponibles=(req,res)=>{
-
-    axios.get(config.urlApiConciliacion + "/citaciones?Fecha_sesion="+req.params.fecha)
+views.FechasDisponibles= async(req,res)=>{
+try{
+  await  axios.get(config.urlApiConciliacion + "/citaciones?Fecha_sesion="+req.params.fecha)
    
-    .then(response=>{
+    .then(async response=>{
 
-        axios.get(config.urlApiConciliacion + "/turnos")
-        .then(turno=>{
+       await axios.get(config.urlApiConciliacion + "/turnos")
+        .then(async turno=>{
 
-            Turnos(response,turno)
+           await Turnos(response,turno)
             .then(lista=>{
                 res.status(200).json(lista)
             })
@@ -196,7 +206,10 @@ views.FechasDisponibles=(req,res)=>{
     })
     .catch((err) => {
         res.status(404).json(err)
-    });   
+    });
+}catch(err){
+    console.log(err)
+}   
 
    }
 
@@ -273,17 +286,17 @@ try{
 }    
 
 // Esta funcion envia los datos especificos de la citacio con las personas incluidaas 
-views.InformacionCitacion=(req,res)=>{
-
+views.InformacionCitacion=async(req,res)=>{
+try{
     let datos={}
-axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id)
-.then(response => {
+await axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id)
+.then(async response => {
 
-    axios.get(config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+req.params.id)
-    .then(resp => {
+   await axios.get(config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+req.params.id)
+    .then(async resp => {
     
        
-    InfoCitaciones(resp,response)
+   await InfoCitaciones(resp,response)
     .then(response => {
        // console.log(response)
         res.status(200).json(response)
@@ -298,31 +311,41 @@ axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id)
 })
     
 })
+}catch(err){
+    console.log(err)
+}
 
 }
 
-views.ListarDepartamentos= (req,res)=>{
-    axios.get(config.urlApiConciliacion + "/departamentos")
+views.ListarDepartamentos= async(req,res)=>{
+    try{
+   await axios.get(config.urlApiConciliacion + "/departamentos")
     .then(response => {
         res.status(200).json(response.data)
     })
     .catch(function (error) {
-        console.log(error);
-        res.sendStatus(500)
+        
+        res.sendStatus(404)
     })
+}catch(err){
+    console.log(err)
+}
     
 }
 
-views.Actualizar= (req,res)=>{
-   
-    axios.patch(config.urlApiConciliacion + "/"+req.params.nombre+"/" +req.params.id+"/",req.body)
+views.Actualizar= async (req,res)=>{
+   try{
+   await axios.patch(config.urlApiConciliacion + "/"+req.params.nombre+"/" +req.params.id+"/",req.body)
     .then(response => {
         res.status(200).json(response.data)
     })
     .catch(function (error) {
         //console.log(error);
-        res.sendStatus(500)
+        res.sendStatus(404)
     })
+}catch(err){
+    console.log(err)
+}
     
 }
 

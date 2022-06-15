@@ -46,7 +46,7 @@ try{
            }
            const validacion= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+req.params.id + "&Persona_Id="+resp.data[0].Id)
         
-           if(validacion.data.length>0){res.status(200).json("Ya esta asignado")}else{
+           if(validacion.data.length>0){res.sendStatus(208)}else{
            axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
            .then( async response => {
                const resp = await axios.get(config.urlApiConciliacion + "/personas/"+response.data.Persona_Id);

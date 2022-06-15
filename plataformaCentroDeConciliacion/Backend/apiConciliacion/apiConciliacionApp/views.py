@@ -45,8 +45,8 @@ class Tipo_resultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos 
 
 class SolicitudViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = SolicitudSerializer
-    # filter_backends = [filters.SearchFilter]
-    # search_fields = ['Numero_caso','Fecha_registro']
+   # filter_backends = [filters.SearchFilter]
+   # search_fields = ['=Numero_caso','Fecha_registro','Fecha_finalizacion']
 
 class HechosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = HechosSerializer
