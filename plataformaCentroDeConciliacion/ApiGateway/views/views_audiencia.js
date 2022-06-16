@@ -35,7 +35,7 @@ try{
 
 const InfoCitaciones = async(response)=>{
     let endpoints = []
-    let datos=[{personas:[]}, {cita:[]}]
+    let datos=[]
     let personas={}
     let data={}
     //datos[0]="personas"
@@ -44,15 +44,16 @@ try{
     
     for await (const informacion_data of response.data) {
         
-        const resp = await  axios.get( config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+informacion_data.Id)
-        console.log(resp)
-        for await (const dat of resp.data) { const persona= await axios.get( config.urlApiConciliacion + "/personas/"+dat.Persona_Id) 
-        personas[dat.Persona_Id]=persona.data
-        datos[0].personas=personas}
-        console.log(personas)
-       // datos["personas"]=personas
-      //  datos.push(personas)
-            
+    //     const resp = await  axios.get( config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+informacion_data.Id)
+    //     console.log(resp)
+    //     if(resp.data == ""){console.log("no hay nadie citado")}else{
+    //     for await (const dat of resp.data) { const persona= await axios.get( config.urlApiConciliacion + "/personas/"+dat.Persona_Id) 
+    //     personas[dat.Persona_Id]=persona.data
+    //     datos[0].personas_Disponibles=personas}
+    //     console.log(personas)
+    //    // datos["personas"]=personas
+    //   //  datos.push(personas)
+    //     }
         endpoints = [
             config.urlApiConciliacion + "/turnos/"+informacion_data.Turno_Id,
             config.urlApiConciliacion + "/tipos_medio/"+informacion_data.Tipo_medio_Id
@@ -67,7 +68,7 @@ try{
             
             
 
-            datos[1].cita=(informacion_data)
+            datos.push(informacion_data)
            
             
             
@@ -76,6 +77,8 @@ try{
             );
        
     }
+
+
     return datos
 
 } catch(err){
@@ -84,7 +87,85 @@ try{
 
 }
 
+const CitacionEspecifica = async(response, solicitud)=>{
+    let endpoints = []
+    let datos=[{personas_disponibles:[]},{personas_citadas:[]},{citacion:[]}]
+    let personas=[]
+    let data=[]
+    let solicitantes = []
+    //datos[0]="personas"
+try{
 
+    
+    for await (const informacion_data of response.data) {
+        
+        const resp = await  axios.get( config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+informacion_data.Id)
+       
+
+        if(resp.data == ""){
+            await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud)
+                .then(async res=>{
+                   
+                   await datosPersonas.datosBasicos(res)
+                    .then(async resp=>{
+                        personas=resp
+                        console.log(personas)
+                        datos[0].personas_disponibles=personas})
+                })    
+    }else{
+        for await (const dat of resp.data) { const persona= await axios.get( config.urlApiConciliacion + "/personas/"+dat.Persona_Id) 
+        data.push(persona.data.Id)
+        personas.push(persona.data)
+        }
+        datos[1].personas_citadas=personas
+
+        await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud)
+        .then(async resp=>{
+            if(resp.data == ""){}else{
+            for await (const dat of resp.data){solicitantes.push(dat.Persona_Id) }
+            personas_no_incluidas=solicitantes.filter(element => !data.includes(element))
+            for await (const i of personas_no_incluidas){ await axios.get(config.urlApiConciliacion + "/personas/"+ i)
+            .then(res=>{datos[0].personas_disponibles.push(res.data)})} 
+           
+        }
+        })
+        
+     
+       // datos["personas"]=personas
+      //  datos.push(personas)
+        }
+        endpoints = [
+            config.urlApiConciliacion + "/turnos/"+informacion_data.Turno_Id,
+            config.urlApiConciliacion + "/tipos_medio/"+informacion_data.Tipo_medio_Id
+           
+
+    ]
+    //datos[datos.length]="Citaciones"        
+       await Promise.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
+            axios.spread((...allData) => {
+            informacion_data.Turno_Id=allData[0].data
+            informacion_data.Tipo_medio_Id=allData[1].data
+            
+            
+
+            datos[2].citacion=informacion_data
+           
+            
+            
+             
+            })
+            );
+       
+    }
+
+
+    return datos
+
+} catch(err){
+    console.log(err);
+}
+
+}
 const Turnos = async(turno, lista)=>{
     // trae todos los Id de citaciones para esa fecha 
     // lista turnos ocupados
@@ -184,7 +265,7 @@ views.CitacionEspecifica=async(req,res)=>{
     await axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id2)
     .then(response => { 
         response.data=[response.data]
-        InfoCitaciones(response)
+        CitacionEspecifica(response,req.params.id)
         .then((result) => {
             
             res.status(200).json(result)
