@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './css/ModuloSolicitudAudiencia.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import config from '../../config.json'
+
 function ModuloSolicitudAudiencia() {
+
+    const UrlParams = useParams();
+
+    const [audiencias, setAudiencias] = useState([])
+
+    useEffect(() => {
+        axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones')
+            .then(response => {
+                console.log(response.data)
+                setAudiencias(response.data)
+            })
+    }, [])
 
 
     return (
@@ -25,32 +40,24 @@ function ModuloSolicitudAudiencia() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>16/07/2021</td>
-                            <td>Pepito Cardenas Arias</td>
-                            <td>No</td>
-                            <td>
-                                <button className='m-0 border-0 bg-transparent'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
-                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>16/07/2021</td>
-                            <td>Pepito Cardenas Arias</td>
-                            <td>No</td>
-                            <td>
-                                <button className='m-0 border-0 bg-transparent'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
-                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
+                        {audiencias.map(dato => {
+                            return (
+                                <tr>
+                                    <td>{dato["Fecha_sesion"]}</td>
+                                    <td>{dato["Turno_Id"]["Franja_horaria"]}</td>
+                                    <td>{dato["Tipo_medio_Id"]["Nombre"]}</td>
+                                    <td>
+                                        <Link to={'/dashboard/modulo-solicitudes/' + UrlParams["Id_solicitud"] + '/audiencias/' + dato["Id"]} className='m-0 border-0 bg-transparent' value={dato["Id"]}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                            </svg>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+
                     </tbody>
                 </table>
             </form>
