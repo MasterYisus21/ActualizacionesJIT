@@ -14,6 +14,7 @@ const views_audiencia = require('../views/views_audiencia')
 
 
 router.get('/docentes',views_generales.Docentes)// lista a todos los docentes
+router.get('/estudiantes',views_generales.Estudiantes)// lista a todos los docentes
 
 router.get('/personas/:identificacion',views_generales.InformacionPersona) // trae los datos completos de una perosona
 router.get('/citaciones/:id',views_generales.InformacionCitacion)// trae los datos completos de una citacion

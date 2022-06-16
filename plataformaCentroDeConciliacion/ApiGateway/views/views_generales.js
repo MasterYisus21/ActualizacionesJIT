@@ -108,6 +108,25 @@ try{
 }
 
 }
+
+views.Estudiantes= async(req,res)=>{
+    try{
+       await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=3")
+        .then(async(result) => {
+           await datosPersonas.datosBasicosDocentes(result)
+            .then(rest=>{
+                res.status(200).json(rest)
+            })
+            
+        }).catch((err) => {
+            res.status(404).json(err)
+            
+        });
+    }catch(error){
+        console.log(error)
+    }
+    
+    }
 views.Solicitudesview= async (req,res)=>{
     try{
     
