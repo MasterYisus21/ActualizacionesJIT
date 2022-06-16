@@ -53,9 +53,7 @@ views.Agregar=async(req,res)=>{
         })
     })
                
-    .catch(function (error) {
-        res.sendStatus(404).json(error)
-    })
+   
           
           
        
