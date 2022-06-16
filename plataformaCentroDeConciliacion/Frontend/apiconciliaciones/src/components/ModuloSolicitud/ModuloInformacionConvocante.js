@@ -99,7 +99,7 @@ function ModuloInformacionConvocante() {
     <>
       <div className='container container-convocante pt-3'>
         <div className='titulo-informacion-convocante align-items-center'>
-          <h1>Informacion del convocante</h1>
+          <h5>Informacion del convocante</h5>
         </div>
         <div className='contenedor-navbar-agregar-convocante'>
           <nav className="navbar p-0">
@@ -107,7 +107,7 @@ function ModuloInformacionConvocante() {
               <form className="d-flex input-group w-auto align-items-sm-baseline gap-1" onSubmit={agregarConvocante}>
                 <input
                   type="text"
-                  className="form-control rounded"
+                  className="form-control form-control-sm rounded"
                   name="cedula"
                   placeholder="Cédula"
                   aria-label="Search"
@@ -121,7 +121,7 @@ function ModuloInformacionConvocante() {
                 <div ref={alertContainer}></div>
               </form>
               <div className="d-flex align-items-end">
-                <button type="button" className="btn btn-primary" id='boton-agregar-convocante'
+                <button type="button" className="btn btn-primary btn-sm" id='boton-agregar-convocante'
                   onClick={() => setIsOpen(!isOpen)}>
                   Crea un convocante
                 </button>

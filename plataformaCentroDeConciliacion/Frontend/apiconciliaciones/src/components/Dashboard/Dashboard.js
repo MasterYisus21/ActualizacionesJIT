@@ -49,7 +49,7 @@ function Dashboard() {
             Agregar Solicitud
           </div>
         </Link>
-        <Link className='dashboard-sidebar-link' to='/dashboard/modulo-solicitudes/crear'>
+        <Link className='dashboard-sidebar-link' to='/dashboard/personas'>
           <div className='beautiful-icon-container-1'>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="bg-dark" className="bi bi-people-fill icon" viewBox="0 0 16 16">
               <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />

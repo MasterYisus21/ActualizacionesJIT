@@ -1,20 +1,21 @@
 .modulo-solicitud-wrapper {
+    /* display: block; */
     margin: 0px;
     background-color: rgb(255, 255, 255);
     position: absolute;
     overflow: auto;
     padding: 20px;
-    width: 100%;
+    width: 93%;
     padding-right: 5%;
-    height: fit-content;
+    
 }
 
 .modulo-solicitud-container {
-    margin: 2%;
-    border: 1px solid rgb(0, 0, 0);
-    padding-bottom: 50px;
-    padding: 20px;
-    font-size: 1vw;
+    /* margin: 2%; */
+    /* border: 1px solid rgb(0, 0, 0); */
+    /* padding-bottom: 50px; */
+    /* padding: 20px; */
+    font-size: 1.2vw;
     max-width: 100%;
 }
 
@@ -46,6 +47,8 @@
     padding: 20px 20px 20px 20px;
     width: 36vh;
     background-color: #cbc9c9;
+    max-height: fit-content;
+    align-self: flex-start;
 }
 
 .modulo-solicitud-content-navbar-link {

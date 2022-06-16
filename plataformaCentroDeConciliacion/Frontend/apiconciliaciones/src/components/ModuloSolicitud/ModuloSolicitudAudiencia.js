@@ -7,11 +7,11 @@ function ModuloSolicitudAudiencia() {
     return (
         <div className='contenedor-principal-modulo-audiencia mt-3'>
             <div className='titulo-modulo-audiencia'>
-                <h1>Sesion de Audiencia</h1>
+                <h5>Sesion de Audiencia</h5>
             </div>
             <div className='contenedor-boton-audiencia mb-4'>
                 <Link to='crear'>
-                    <button className='boton-audiencia btn btn-primary m3-3'>Crear audiencia</button>
+                    <button className='btn btn-sm btn-success boton-audiencia btn btn-primary m3-3'>Crear audiencia</button>
                 </Link>
             </div>
             <form className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
