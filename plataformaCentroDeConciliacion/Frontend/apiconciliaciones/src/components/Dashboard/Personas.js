@@ -12,7 +12,7 @@ function Personas() {
             <div className="formulario-personas">
                 <div className='registro-personas mt-2'>
                     <div className='container d-grid gap-1'>
-                        <label className="m-0 p-1 h6 mt-2">Nombre</label>
+                        <label className="m-0 p-1 h6 mt-1">Nombre</label>
                         <div className='row gap-3 ps-3 px-2 mb-2'>
                             <input className="form-control rounded col" placeholder="Nombre(s)"></input>
                             <input className="form-control rounded col" placeholder="Apellidos"></input>
@@ -25,7 +25,7 @@ function Personas() {
                     <div className='container d-grid gap-2 mb-2'>
                     <label className="h6 mt-2 col">Identificación</label>
                         <div className='row gap-3 ps-3 px-3'>
-                            <select className="form-select col" aria-label="Default select example">
+                            <select className="form-control col" aria-label="Default select example">
                                 <option selected>Tipo de Documento</option>
                                 <option value="1">Cedula</option>
                                 <option value="2">Documento de Identificación</option>
@@ -74,7 +74,7 @@ function Personas() {
                                     <option value="2">Boyacá</option>
                                     <option value="3">Meta</option>
                                 </select>
-                                <select className="form-select col" aria-label="Default select example">
+                                <select className="form-select col" aria-label="">
                                     <option selected>Ciudad</option>
                                     <option value="1">Bototá</option>
                                     <option value="2">Medellín</option>

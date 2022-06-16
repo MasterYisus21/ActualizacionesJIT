@@ -49,3 +49,6 @@
 .boton-tabla-eliminar:hover {
     color: red;
 }
+.form-control, .form-select{
+    padding: 1%;
+}
