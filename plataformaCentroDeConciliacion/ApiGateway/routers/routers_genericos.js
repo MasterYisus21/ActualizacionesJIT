@@ -56,6 +56,9 @@ router.get('/departamentos/:id/ciudades/:id2/barrios/:id3',views_generales.Barri
 router.get('/datos_persona',views_generales.DatosCrearPersonas)
 
 
+// citaciones//
+
+router.delete('/citaciones/:id',views_generales.EliminarCitacion)
 
 
 

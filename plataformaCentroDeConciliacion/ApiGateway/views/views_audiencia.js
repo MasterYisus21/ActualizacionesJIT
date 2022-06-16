@@ -96,62 +96,65 @@ const CitacionEspecifica = async(response, solicitud)=>{
     //datos[0]="personas"
 try{
 
-    
     for await (const informacion_data of response.data) {
         
         const resp = await  axios.get( config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+informacion_data.Id)
-       
-
-        if(resp.data == ""){
-            await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud)
-                .then(async res=>{
-                   
-                   await datosPersonas.datosBasicos(res)
-                    .then(async resp=>{
-                        personas=resp
-                        console.log(personas)
-                        datos[0].personas_disponibles=personas})
-                })    
+       if(resp.data == ""){ datos[1].personas_citadas=personas
     }else{
-        for await (const dat of resp.data) { const persona= await axios.get( config.urlApiConciliacion + "/personas/"+dat.Persona_Id) 
+        
+        for await (const dat of resp.data) { 
+        const relacion_sol_per= await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud+"&Persona_Id="+dat.Persona_Id)
+        
+        const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data[0].Tipo_cliente_Id)
+        const persona= await axios.get( config.urlApiConciliacion + "/personas/"+dat.Persona_Id)
         data.push(persona.data.Id)
+        persona.data={ 
+                "Identificacion": persona.data.Identificacion,
+                "Nombres": persona.data.Nombres,
+                "Apellidos":  persona.data.Apellidos,
+                "Tipo_cliente":tipo_cliente.data.Nombre,
+                    }       
         personas.push(persona.data)
         }
         datos[1].personas_citadas=personas
+    }
 
         await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud)
         .then(async resp=>{
-            if(resp.data == ""){}else{
+            if(resp.data == ""){datos[0].personas_disponibles=[]}else{
             for await (const dat of resp.data){solicitantes.push(dat.Persona_Id) }
             personas_no_incluidas=solicitantes.filter(element => !data.includes(element))
-            for await (const i of personas_no_incluidas){ await axios.get(config.urlApiConciliacion + "/personas/"+ i)
-            .then(res=>{datos[0].personas_disponibles.push(res.data)})} 
-           
+            for await (const i of personas_no_incluidas){ 
+
+                const relacion_sol_per= await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud+"&Persona_Id="+i)
+                const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data[0].Tipo_cliente_Id)
+                const person= await axios.get( config.urlApiConciliacion + "/personas/"+i)
+                person.data={ 
+                        "Identificacion": person.data.Identificacion,
+                        "Nombres": person.data.Nombres,
+                        "Apellidos":  person.data.Apellidos,
+                        "Tipo_cliente":tipo_cliente.data.Nombre,
+                            }
+                
+            datos[0].personas_disponibles.push(person.data)} 
+            
         }
         })
         
-     
-       // datos["personas"]=personas
-      //  datos.push(personas)
-        }
+           
         endpoints = [
             config.urlApiConciliacion + "/turnos/"+informacion_data.Turno_Id,
             config.urlApiConciliacion + "/tipos_medio/"+informacion_data.Tipo_medio_Id
            
 
     ]
-    //datos[datos.length]="Citaciones"        
+      
        await Promise.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
             axios.spread((...allData) => {
             informacion_data.Turno_Id=allData[0].data
             informacion_data.Tipo_medio_Id=allData[1].data
-            
-            
-
-            datos[2].citacion=informacion_data
-           
-            
-            
+                       
+            datos[2].citacion=informacion_data            
              
             })
             );
@@ -330,6 +333,8 @@ views.CrearCitacion=async(req,res)=>{
     res.sendStatus(400)
 } 
 }
+
+
 
 
 

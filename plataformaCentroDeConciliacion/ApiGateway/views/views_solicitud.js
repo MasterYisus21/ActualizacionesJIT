@@ -3,7 +3,7 @@ const axios = require('axios')
 const config =require ('../config.json')
 const views = {}
 const datosPersonas = require('../views/datos')
-
+const identificacion=1234
 views.Traer_datos= async(req,res)=>{
 try{
     let datos={}
@@ -250,19 +250,28 @@ views.CrearSolicitud= async(req,res)=>{
     
 
     await axios.post(config.urlApiConciliacion + "/solicitudes/",datos)
-    
-        
     .then(async response => {
+        let datos ={}
         let historico={Descripcion:"Nuevo",
                         Solicitud_Id:response.data.Id,
                         Tipo_Estado: 1}
         await axios.post(config.urlApiConciliacion + "/historicos_solicitud/",historico)
+       
+        //const admin = await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=1")
+       
+        datos={
+            "Solicitud_Id":response.data.Numero_caso,
+            "Persona_Id": 8, //admin.data[0].Id,
+            "Tipo_cliente_Id":null
+        }
+        const relacion_sol_per = await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
+       
+        
+
         res.status(201).json(response.data)
 
     })
-    .catch(function (error) {
-            res.sendStatus(500).json(error)
-    })
+
 
 }catch(error){
     
