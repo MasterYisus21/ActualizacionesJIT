@@ -151,7 +151,7 @@ function ModuloSolicitudAudiencia_registro() {
                         </tr>
                     </tbody>
                 </table>
-            </form>}
+            </form> }
 
         </div>
     )
