@@ -8,7 +8,7 @@ import './App.css'
 import { Dashboard } from './components/Dashboard';
 import ErrorPage from './components/ErrorPage';
 import SolicitudesView from './components/Dashboard/SolicitudesView';
-
+import Personas from './components/Dashboard/Personas';
 
 
 function App() {
@@ -34,6 +34,7 @@ function App() {
             path="/dashboard/"
             element={loggedIn ? <Dashboard /> : <Navigate to="/login" replace={true} />}
           >
+            <Route path='personas/' element={<Personas />}/>
             {/* ModuloSolicitudDatosGenerales  */}
             <Route path='' element={<SolicitudesView />}/>
             <Route path='modulo-solicitudes/' element={<ModuloSolicitud />}>
