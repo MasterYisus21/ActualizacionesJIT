@@ -2,7 +2,7 @@ import React, {useEffect,useState} from  'react' // rfce
 import { Routes, Route, Link, Navigate } from "react-router-dom"
 
 import axios from 'axios';
-import {ModuloInformacionConciliador, ModuloInformacionConvocado, ModuloInformacionConvocante, ModuloSolicitud, ModuloSolicitudAudiencia, ModuloSolicitudAudiencia_registro, ModuloSolicitudDatosGenerales, ModuloSolicitudHechos, ModuloSolicitudManejoConflicto, ModuloSolicitudResultado} from './components/ModuloSolicitud';
+import {ModuloInformacionConciliador, ModuloInformacionConvocado, ModuloInformacionConvocante, ModuloSolicitudEstudiantes, ModuloSolicitud, ModuloSolicitudAudiencia, ModuloSolicitudAudiencia_registro, ModuloSolicitudDatosGenerales, ModuloSolicitudHechos, ModuloSolicitudManejoConflicto, ModuloSolicitudResultado} from './components/ModuloSolicitud';
 import InicioSesion from './components/InicioSesion';
 import './App.css'
 import { Dashboard } from './components/Dashboard';
@@ -41,6 +41,7 @@ function App() {
               <Route path=':Id_solicitud/datos_generales' element={<ModuloSolicitudDatosGenerales nuevo={false} />}/>
               <Route path=':Id_solicitud/convocantes' element={<ModuloInformacionConvocante />}/>
               <Route path=':Id_solicitud/convocados' element={<ModuloInformacionConvocado />}/>
+              <Route path=':Id_solicitud/estudiantes' element={<ModuloSolicitudEstudiantes />}/>
               <Route path=':Id_solicitud/hechos' element={<ModuloSolicitudHechos />}/>
               <Route path=':Id_solicitud/conciliador' element={<ModuloInformacionConciliador />}/>
               <Route path=':Id_solicitud/manejo_conflicto' element={<ModuloSolicitudManejoConflicto />}/>

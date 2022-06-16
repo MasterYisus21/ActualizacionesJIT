@@ -9,6 +9,7 @@ import './css/ModuloSolicitud.css';
 import ModuloSolicitudHechos from './ModuloSolicitudHechos';
 import ModuloSolicitudManejoConflicto from './ModuloSolicitudManejoConflicto';
 import ModuloSolicitudResultado from './ModuloSolicitudResultado';
+import ModuloSolicitudEstudiantes from './ModuloSolicitudEstudiantes';
 import { Link, Outlet, useParams } from 'react-router-dom';
 
 function ModuloSolicitud() {
@@ -31,10 +32,12 @@ function ModuloSolicitud() {
                             <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Datos Generales</Link>
                             <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Convocante</Link>
                             <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Convocado</Link>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Estudiantes</Link>
                             <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Hechos</Link>
                             <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Conciliador</Link>
                             <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Manejo Conflicto</Link>
                             <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Audiencia</Link>
+                            <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Resultado</Link>
                             <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Resultado</Link>
                         </>
                     }
@@ -44,11 +47,13 @@ function ModuloSolicitud() {
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/datos_generales"} className='modulo-solicitud-content-navbar-link'>Datos Generales</Link>
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/convocantes"} className='modulo-solicitud-content-navbar-link'>Convocante</Link>
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/convocados"} className='modulo-solicitud-content-navbar-link'>Convocado</Link>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/estudiantes"} className='modulo-solicitud-content-navbar-link'>Estudiantes</Link>
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/hechos"} className='modulo-solicitud-content-navbar-link'>Hechos</Link>
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/conciliador"} className='modulo-solicitud-content-navbar-link'>Conciliador</Link>
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/manejo_conflicto"} className='modulo-solicitud-content-navbar-link'>Manejo Conflicto</Link>
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/audiencias"} className='modulo-solicitud-content-navbar-link'>Audiencia</Link>
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/resultado"} className='modulo-solicitud-content-navbar-link'>Resultado</Link>
+                            
                         </>
                     }
                 </div>
@@ -58,13 +63,13 @@ function ModuloSolicitud() {
                     {/* <ModuloInformacionConciliador /> */}
                     {/* <ModuloInformacionConvocante /> */}
                     {/* <ModuloInformacionConvocado /> */}
+                    {/* <ModuloSolicitudEstudiantes />  */}
                     {/* <ModuloInformacionConciliador /> */}
                     {/* <ModuloSolicitudAudiencia /> */}
                     {/* <ModuloSolicitudHechos /> */}
                     {/* <ModuloSolicitudManejoConflicto /> */}
                     {/* <ModuloSolicitudResultado />  */}
                     <Outlet/>
-
                 </div>
             </div>
         </div>

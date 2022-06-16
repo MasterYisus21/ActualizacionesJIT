@@ -88,7 +88,7 @@ function ModuloInformacionConciliador() {
         <div className='contenedor-navbar-agregar-conciliador'>
           <nav className="navbar navbar-light ">
             <div className="container-fluid">
-              <form className="d-flex input-group w-auto">
+              <form className="d-flex input-group w-autd-flex input-group w-auto align-items-sm-baseline gap-1">
                 <input
                   type="search"
                   class="form-control rounded"
@@ -108,7 +108,7 @@ function ModuloInformacionConciliador() {
           </nav>
         </div>
         {isOpen &&
-          <form className='contenedor-tabla-conciliador mb-5 pt-3 pb-3' onSubmit={agregarConciliador}>
+          <form className='contenedor-tabla-seleccion-conciliador mb-5 p-4 pb-3' onSubmit={agregarConciliador}>
             <label className='pb-3 h5'>Seleccione el conciliador que desea agregar</label>
             <table className='table table-striped table-bordered table-responsive'>
               <thead >

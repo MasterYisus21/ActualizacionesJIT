@@ -1,50 +1,27 @@
 import React from 'react'
 import './css/ModuloSolicitudAudiencia.css';
-
+import { Link } from 'react-router-dom';
 function ModuloSolicitudAudiencia() {
 
 
     return (
-
         <div className='contenedor-principal-modulo-audiencia mt-3'>
-            <div className='titulo-informacion-audiencia '>
-                <h2>Sesion de Audiencia</h2>
+            <div className='titulo-modulo-audiencia'>
+                <h1>Sesion de Audiencia</h1>
             </div>
-            <div className='contenedor-citacion-descripcion container m-0 p-0'>
-                <div class="registro">
-                    <label for="exampleFormControlInput1" class="form-label">Fecha de la Sesión: </label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"></input>
-                </div>
-                <div class=" registro">
-                    <label for="exampleFormControlInput1" class="form-label">Hora: </label>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Seleccione</option>
-                        <option value="1">7:05</option>
-                        <option value="2">15:30</option>
-                        <option value="3">4:06</option>
-                    </select>
-                </div>
-                <div class="registro">
-                    <label for="exampleFormControlTextarea1" class="form-label">Descripcion: </label>
-                    <textarea class="form-control h-50" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div className=" registro">
-                    <label for="exampleFormControlTextarea1" class="form-label">Tipo de medio: </label><br></br>
-                    <div className='separador-virtual-presencial'>
-                        <input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input>
-                        <label for="exampleFormControlTextarea1" class="form-label">Virtual </label>
-                        <input className='class="custom-control-input"' name="flexRadioDefault" type='radio'></input>
-                        <label for="exampleFormControlTextarea1" class="form-label">Presencial </label>
-                    </div>
-                </div>
+            <div className='contenedor-boton-audiencia mb-4'>
+                <Link to='crear'>
+                    <button className='boton-audiencia btn btn-primary m3-3'>Crear audiencia</button>
+                </Link>
             </div>
-            <form className='contenedor-tabla-conciliador d-flex align-items-center flex-column '>
+            <form className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
                 <table className='table table-striped table-bordered '>
                     <thead>
                         <tr>
                             <th>Fecha</th>
                             <th>Hora</th>
                             <th>Medio</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,15 +29,33 @@ function ModuloSolicitudAudiencia() {
                             <td>16/07/2021</td>
                             <td>Pepito Cardenas Arias</td>
                             <td>No</td>
+                            <td>
+                                <button className='m-0 border-0 bg-transparent'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                    </svg>
+                                </button>
+                            </td>
                         </tr>
                         <tr>
                             <td>16/07/2021</td>
                             <td>Pepito Cardenas Arias</td>
                             <td>No</td>
+                            <td>
+                                <button className='m-0 border-0 bg-transparent'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                    </svg>
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </form>
+
+
         </div>
     )
 

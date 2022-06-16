@@ -1,33 +1,23 @@
 .contenedor-principal-modulo-audiencia {
-    width: 100%;
+    width: 85%;
     height: 100%;
-    display: grid;
-    grid-template-rows: 1fr 4fr 4fr;
-    grid-gap: 1em;
+    
 }
 
-.contenedor-citacion-descripcion {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-}
-
-.titulo-informacion-audiencia {
+.titulo-modulo-audiencia {
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
-.contenedor-tabla-conciliador>table {
-    width: 85%;
-}
-
-.registro {
-    width: 20vw;
-}
-
-.separador-virtual-presencial {
+.contenedor-boton-audiencia{
     display: flex;
-    align-items: baseline;
-    gap: 1vw;
+    justify-content: end;
+}
+.boton-audiencia{
+    background-color: rgb(56, 165, 42);
+    border-color: rgb(56, 165, 42);
+}
+.contenedor-tabla-audiencia {
+    font-size: small;
+    text-align: center;
 }

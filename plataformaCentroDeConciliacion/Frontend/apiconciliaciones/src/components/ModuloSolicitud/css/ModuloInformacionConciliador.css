@@ -18,14 +18,13 @@
     border-color: rgb(56, 165, 42);
 }
 
-.contenedor-tabla-conciliador {
+.contenedor-tabla-seleccion-conciliador {
     display: flex;
     flex-direction: column;
     font-size: small;
     text-align: center;
     box-shadow: 0px 2px 4px rgb(0 0 0 / 10%), 0 4px 20px rgb(0 0 0 / 10%);
     align-items: center;
-    
 }
 
 

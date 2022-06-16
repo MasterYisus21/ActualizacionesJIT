@@ -1,33 +1,49 @@
-.contenedor-principal-modulo-audiencia {
-    width: 100%;
+.contenedor-principal-modulo-audiencia-registro {
+    width: 85%;
     height: 100%;
     display: grid;
-    grid-template-rows: 1fr 4fr 4fr;
     grid-gap: 1em;
+}
+
+.contenedor-asignacion-turnos {
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+    text-align: center;
+    /* box-shadow: 0px 2px 4px rgb(0 0 0 / 10%), 0 4px 20px rgb(0 0 0 / 10%); */
+    align-items: center;
 }
 
 .contenedor-citacion-descripcion {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+}
+
+.contenedor-boton-audiencia {
+    display: flex;
+    justify-content: start;
 }
 
 .titulo-informacion-audiencia {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
-.contenedor-tabla-conciliador>table {
+.contenedor-tabla-audiencia-registro {
+    font-size: small;
+}
+
+.contenedor-tabla-audiencia-registro>table {
     width: 85%;
-}
-
-.registro {
-    width: 20vw;
 }
 
 .separador-virtual-presencial {
     display: flex;
     align-items: baseline;
+    justify-content: center;
     gap: 1vw;
+
 }

@@ -104,7 +104,7 @@ function ModuloInformacionConvocante() {
         <div className='contenedor-navbar-agregar-convocante'>
           <nav className="navbar p-0">
             <div className="container">
-              <form className="d-flex input-group w-auto align-items-sm-baseline gap-3" onSubmit={agregarConvocante}>
+              <form className="d-flex input-group w-auto align-items-sm-baseline gap-1" onSubmit={agregarConvocante}>
                 <input
                   type="text"
                   className="form-control rounded"
@@ -114,14 +114,14 @@ function ModuloInformacionConvocante() {
                   aria-describedby="search-addon"
                 />
                 <button className='border-0 bg-transparent '>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                   </svg>
                 </button>
                 <div ref={alertContainer}></div>
               </form>
               <div className="d-flex align-items-end">
-                <button type="button" className="btn btn-primary me-3" id='boton-agregar-convocante'
+                <button type="button" className="btn btn-primary" id='boton-agregar-convocante'
                   onClick={() => setIsOpen(!isOpen)}>
                   Crea un convocante
                 </button>
