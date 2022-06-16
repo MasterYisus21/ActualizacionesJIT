@@ -72,7 +72,7 @@ function ModuloSolicitudHechos() {
     <>
         <form className='modulo-solicitud-content-main-hechos' onSubmit={postform}>
             <div className='modulo-solicitud-content-main-hechos-lugar'>
-                <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h4>Lugar de los hechos</h4></div>
+                <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h6>Lugar de los hechos</h6></div>
                 <div className="mb-3">
                     <label htmlFor="Departamento" className="form-label">Departamento:</label>
                     <select className="form-select" aria-label="Default select example" id="Departamento" name='Departamento' onChange={e => {obtenerCiudadesOpciones(e.target.value); setDepartamento(e.target.value)}} value={departamento} required>
@@ -99,7 +99,7 @@ function ModuloSolicitudHechos() {
                 </div>
             </div>
             <div className='modulo-solicitud-content-main-hechos-determinacion-cuantia'>
-                <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h4>Determinacion De la cuantia</h4></div>
+                <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h6>Determinacion De la cuantia</h6></div>
                 <div className="mb-3" style={{display: "flex", width: "35%", justifyContent: "space-evenly"}}>
                     <label htmlFor="cuantia" className="form-label">Cuantía:</label>
                     <input type="text" className="form-control" id="cuantia" name='cuantia' placeholder="" value={cuantia} style={{width: "60%"}} onChange={e => setCuantia(e.target.value)} disabled={cuantiaIndeterminada} required />

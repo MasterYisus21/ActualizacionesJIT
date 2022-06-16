@@ -79,7 +79,7 @@ function ModuloSolicitudEstudiantes() {
         <>
             <div className='container container-estudiantes pt-3'>
                 <div className='titulo-informacion-estudiantes'>
-                    <h1>Informacion del estudiantes</h1>
+                    <h5>Informacion de estudiantes</h5>
                 </div>
                 <div className='contenedor-navbar-agregar-estudiantes'>
                     <nav className="navbar navbar-light ">
@@ -87,7 +87,7 @@ function ModuloSolicitudEstudiantes() {
                             <form className="d-flex input-group w-autd-flex input-group w-auto align-items-sm-baseline gap-1">
                                 <input
                                     type="search"
-                                    class="form-control rounded"
+                                    class="form-control form-control-sm rounded"
                                     placeholder="Buscar"
                                     aria-label="Search"
                                     aria-describedby="search-addon"
@@ -95,7 +95,7 @@ function ModuloSolicitudEstudiantes() {
                                 <div ref={alertContainer}></div>
                             </form>
                             <div className="d-flex align-items-end">
-                                <button type="button" class="btn btn-primary me-3" id='boton-agregar-estudiantes'
+                                <button type="button" class="btn btn-primary btn-sm me-3" id='boton-agregar-estudiantes'
                                     onClick={() => setIsOpen(!isOpen)}>
                                     Agregar estudiantes
                                 </button>

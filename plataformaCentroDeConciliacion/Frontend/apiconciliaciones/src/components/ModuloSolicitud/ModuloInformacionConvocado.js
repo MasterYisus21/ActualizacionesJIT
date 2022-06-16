@@ -99,7 +99,7 @@ function ModuloInformacionConvocado() {
     <>
       <div className='container container-convocado pt-3'>
         <div className='titulo-informacion-convocado'>
-          <h1>Informacion del convocado</h1>
+          <h5>Informacion del convocado</h5>
         </div>
         <div className='contenedor-navbar-agregar-convocado'>
           <nav class="navbar p-0">
@@ -108,7 +108,7 @@ function ModuloInformacionConvocado() {
                 <input
                   type="text"
                   name="cedula"
-                  class="form-control rounded"
+                  class="form-control form-control-sm rounded"
                   placeholder="Cédula"
                   aria-label="Search"
                   aria-describedby="search-addon"
@@ -121,7 +121,7 @@ function ModuloInformacionConvocado() {
                 <div ref={alertContainer}></div>
               </form>
               <div className="d-flex align-items-end">
-                <button type="button" class="btn btn-primary" id='boton-agregar-convocado'
+                <button type="button" class="btn btn-primary btn-sm" id='boton-agregar-convocado'
                   onClick={() => setIsOpen(!isOpen)}>
                   Agregar convocado
                 </button>

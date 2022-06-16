@@ -83,7 +83,7 @@ function ModuloInformacionConciliador() {
     <>
       <div className='container container-conciliador pt-3'>
         <div className='titulo-informacion-conciliador'>
-          <h1>Informacion del Conciliador</h1>
+          <h5>Informacion del Conciliador</h5>
         </div>
         <div className='contenedor-navbar-agregar-conciliador'>
           <nav className="navbar navbar-light ">
@@ -91,7 +91,7 @@ function ModuloInformacionConciliador() {
               <form className="d-flex input-group w-autd-flex input-group w-auto align-items-sm-baseline gap-1">
                 <input
                   type="search"
-                  class="form-control rounded"
+                  class="form-control form-control-sm rounded"
                   placeholder="Buscar"
                   aria-label="Search"
                   aria-describedby="search-addon"
@@ -99,7 +99,7 @@ function ModuloInformacionConciliador() {
                 <div ref={alertContainer}></div>
               </form>
               <div className="d-flex align-items-end">
-                <button type="button" class="btn btn-primary me-3" id='boton-agregar-conciliador'
+                <button type="button" class="btn btn-primary btn-sm me-3" id='boton-agregar-conciliador'
                   onClick={() => setIsOpen(!isOpen)}>
                   Agregar conciliador
                 </button>

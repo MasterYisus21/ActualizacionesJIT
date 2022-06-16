@@ -144,29 +144,29 @@ function ModuloSolicitudDatosGenerales(props) {
     <div className='modulo-solicitud-content-main-column1'>
         <div className="mb-3">
             <label htmlFor="Numero_caso" className="form-label">ID del caso</label>
-            <input type="text" className="form-control" id="Numero_caso" name='Numero_caso' placeholder={Object.keys(UrlParams).length === 0 ? "Se generara automaticamente":numeroCaso} disabled />
+            <input type="text" className="form-control form-control-sm" id="Numero_caso" name='Numero_caso' placeholder={Object.keys(UrlParams).length === 0 ? "Se generara automaticamente":numeroCaso} disabled />
         </div>
         <div className="mb-3">
             <label htmlFor="solicitante" className="form-label">Solicitante del Servicio:</label>
-            <select className="form-select" aria-label="Default select example" id="solicitante" name='solicitante' value={solicitante} onChange={e => setSolicitante(e.target.value)} required>
+            <select className="form-select form-select-sm" aria-label="Default select example" id="solicitante" name='solicitante' value={solicitante} onChange={e => setSolicitante(e.target.value)} required>
                 <option value="" label={"Selecciona uno"} disabled></option>
                 {solicitanteServicioOpciones.map(solicitanteServicioOpciones => <option key={solicitanteServicioOpciones["id"]} value={solicitanteServicioOpciones["id"]} label={solicitanteServicioOpciones["Nombre"]}>{solicitanteServicioOpciones["Id"]} </option>)}
             </select>
         </div>
         <div className="mb-3">
             <label htmlFor="Inicio_conflicto_Id" className="form-label">Hace cuanto incio el conflicto:</label>
-            <select className="form-select" aria-label="Default select example" id="Inicio_conflicto_Id" name='Inicio_conflicto_Id' value={inicioConflicto} onChange={e => setInicioConflicto(e.target.value)} required>
+            <select className="form-select form-select-sm" aria-label="Default select example" id="Inicio_conflicto_Id" name='Inicio_conflicto_Id' value={inicioConflicto} onChange={e => setInicioConflicto(e.target.value)} required>
                 <option value="" label={"Selecciona uno"} disabled></option>
                 {inicioConflictoOpciones.map(inicioConflictoOpciones => <option key={inicioConflictoOpciones["Id"]} value={inicioConflictoOpciones["Id"]} label={inicioConflictoOpciones["Nombre"]}>{inicioConflictoOpciones["Id"]} </option>)}
             </select>
         </div>
         <div className="mb-3">
             <label htmlFor="fechasolicitud" className="form-label">Fecha de solicitud:</label>
-            <input type="date" className="form-control" id="fechasolicitud" name='' defaultValue={today} disabled/>
+            <input type="date" className="form-control form-control-sm" id="fechasolicitud" name='' defaultValue={today} disabled/>
         </div>
         <div className="mb-3">
             <label htmlFor="Tipo_servicio_Id" className="form-label">Finalidad de adquisición del servicio:</label>
-            <select className="form-select" aria-label="Default select example" id="Tipo_servicio_Id" name='Tipo_servicio_Id' value={finalidadServicio} onChange={e=>setFinalidadServicio(e.target.value)} required>
+            <select className="form-select form-select-sm" aria-label="Default select example" id="Tipo_servicio_Id" name='Tipo_servicio_Id' value={finalidadServicio} onChange={e=>setFinalidadServicio(e.target.value)} required>
                 <option value="" label={"Selecciona uno"} disabled></option>
                 {tipoServicioOpciones.map(tipoServicioOpciones => <option key={tipoServicioOpciones["id"]} value={tipoServicioOpciones["id"]} label={tipoServicioOpciones["Nombre"]}>{tipoServicioOpciones["Id"]} </option>)}
             </select>
@@ -182,7 +182,7 @@ function ModuloSolicitudDatosGenerales(props) {
     </div>
     <div className='modulo-solicitud-content-main-column2'>
         <div>
-            <h5>Definición del asunto juridico</h5>
+            <h6>Definición del asunto juridico</h6>
         </div>
         <div className='modulo-solicitud-content-main-column2-form1'>
             ¿Asunto juridico definible?
@@ -201,26 +201,26 @@ function ModuloSolicitudDatosGenerales(props) {
         </div>
         <br />
         <div>
-            <h5>Area y Tema</h5>
+            <h6>Area y Tema</h6>
         </div>
         <div className='modulo-solicitud-content-main-column2-form2'>
             <div className="mb-3">
                 <label htmlFor="Area_Id" className="form-label">Area:</label>
-                <select className="form-select" aria-label="Default select example" id="Area_Id" name='Area_Id' value={area} onChange={(e) => setArea(e.target.value)} required>
+                <select className="form-select form-select-sm" aria-label="Default select example" id="Area_Id" name='Area_Id' value={area} onChange={(e) => setArea(e.target.value)} required>
                     <option value="" label={"Selecciona uno"} disabled></option>
                     {areaOpciones.map(areaOpciones => <option key={areaOpciones["id"]} value={areaOpciones["id"]} label={areaOpciones["Nombre"]}>{areaOpciones["Id"]} </option>)}
                 </select>
             </div>
             <div className="mb-3">
                 <label htmlFor="Tema" className="form-label">Tema:</label>
-                <select className="form-select" aria-label="Default select example" id="Tema" name='Tema' onChange={e => {obtenerOpcionesSubtema(e.target.value); setTema(e.target.value)}} value={tema} required>
+                <select className="form-select form-select-sm" aria-label="Default select example" id="Tema" name='Tema' onChange={e => {obtenerOpcionesSubtema(e.target.value); setTema(e.target.value)}} value={tema} required>
                     <option value="" label={"Selecciona uno"} disabled></option>
                     {temaOpciones.map(temaOpciones => <option key={temaOpciones["id"]} value={temaOpciones["id"]} label={temaOpciones["Nombre"]}>{temaOpciones["Id"]} </option>)}
                 </select>
             </div>
             <div className="mb-3">
                 <label htmlFor="Subtema_Id" className="form-label">Subtema:</label>
-                <select className="form-select" aria-label="Default select example" id="Subtema_Id" name='Subtema_Id' value={subtema} onChange={(e)=>setSubtema(e.target.value)} required>
+                <select className="form-select form-select-sm" aria-label="Default select example" id="Subtema_Id" name='Subtema_Id' value={subtema} onChange={(e)=>setSubtema(e.target.value)} required>
                     <option value="" label={"Selecciona uno"} disabled></option>
                     {subTemaOpciones.map(subTemaOpciones => <option key={subTemaOpciones["Id"]} value={subTemaOpciones["Id"]} label={subTemaOpciones["Nombre"]}>{subTemaOpciones["Id"]} </option>)}
                 </select>

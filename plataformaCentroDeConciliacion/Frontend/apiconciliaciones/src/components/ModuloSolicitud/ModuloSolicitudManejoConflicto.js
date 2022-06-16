@@ -45,19 +45,19 @@ function ModuloSolicitudManejoConflicto() {
             <form className='modulo-solicitud-content-main-manejo-conflicto-main' onSubmit={(event) =>{modificarManejoConflicto(event)}}>
                 <div className='modulo-solicitud-content-main-manejo-conflicto'>
                     <div className='modulo-solicitud-content-main-manejo-conflicto-titulo'>
-                        <h4 className='tab'>Escalada del Conflicto</h4>
+                        <h5 className='tab'>Escalada del Conflicto</h5>
                         <hr />
                     </div>
                     <div className='modulo-solicitud-content-main-manejo-conflicto-form1'>
                         Escala del conflicto:
-                        <select className="form-select modulo-solicitud-content-main-manejo-conflicto-form1-select" aria-label="Default select example" id="violencia" name='violencia' value={escalaConflicto} onChange={event => setEscaladaConflicto(event.target.value)} required>
+                        <select className="form-select form-select-sm modulo-solicitud-content-main-manejo-conflicto-form1-select" aria-label="Default select example" id="violencia" name='violencia' value={escalaConflicto} onChange={event => setEscaladaConflicto(event.target.value)} required>
                             <option value="si">Con violencia fisica</option>
                             <option value="no">Sin violencia fisica</option>
                         </select>
                     </div>
                     <br />
                     <div className='modulo-solicitud-content-main-manejo-conflicto-titulo'>
-                        <h4 className='tab'>Intervención de terceros</h4>
+                        <h5 className='tab'>Intervención de terceros</h5>
                         <hr />
                     </div>
 
