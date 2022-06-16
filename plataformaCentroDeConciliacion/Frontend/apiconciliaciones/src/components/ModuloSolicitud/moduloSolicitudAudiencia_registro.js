@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react'
 import './css/moduloSolicitudAudiencia_registro.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../config.json';
 
 function ModuloSolicitudAudiencia_registro() {
 
-    const UrlParams = useParams()
+    const UrlParams = useParams();
     const alertContainer = useRef("");
+    const navigate = useNavigate();
 
     const [turnosDisponibles, setTurnosDisponibles] = useState([])
     const [turnoSeleccionado, setTurnoSeleccionado] = useState("")
@@ -15,6 +16,7 @@ function ModuloSolicitudAudiencia_registro() {
     const [descripcion, setDescripcion] = useState("")
     const [tipoMedio, setTipoMedio] = useState(0)
     const [link, setLink] = useState("")
+    const [showPeopleForms, setShowPeopleForms] = useState(UrlParams.hasOwnProperty('Id_audiencia'))
 
 
     const obtenerTurnos = (event) => {
@@ -34,9 +36,15 @@ function ModuloSolicitudAudiencia_registro() {
             "Tipo_medio_Id": tipoMedio
         }
         axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/', data)
-        .then((response) => {
-            console.log(response.data)
-        })
+            .then((response) => {
+                console.log(response.data)
+                navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
+                setShowPeopleForms(true)
+                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
+            })
+            .catch(error => {
+                alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se pudo procesar la solicitud por un error desconocido.</div>"
+            })
 
     }
 
@@ -59,7 +67,7 @@ function ModuloSolicitudAudiencia_registro() {
 
                     <div class="row m-0 p-4 pt-3">
                         <label class="">Fecha de la Sesión: </label>
-                        <input type="date" class="form-control form-control-sm col mb-3" id="exampleFormControlInput1" value={fecha} onChange={(e) => {setFecha(e.target.value);obtenerTurnos(e)}} required></input>
+                        <input type="date" class="form-control form-control-sm col mb-3" id="exampleFormControlInput1" value={fecha} onChange={(e) => { setFecha(e.target.value); obtenerTurnos(e) }} required></input>
 
                         <label class="">Descripcion: </label>
                         <textarea className="form-control form-control-sm" rows="2" value={descripcion} onChange={(e) => { setDescripcion(e.target.value) }} required></textarea>
@@ -90,9 +98,8 @@ function ModuloSolicitudAudiencia_registro() {
                         <p>GUARDAR</p>
                     </button>
                 </div>
-
             </form>
-            <form className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
+            {showPeopleForms && <form className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
                 <label className='pt-3 h5 w-100 d-flex justify-content-start'>Personas citadas</label>
                 <table className='table table-striped table-bordered '>
                     <thead >
@@ -117,8 +124,9 @@ function ModuloSolicitudAudiencia_registro() {
                         </tr>
                     </tbody>
                 </table>
-            </form>
-            <form className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
+            </form>}
+
+            {showPeopleForms && <form className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
                 <label className='pt-3 h5 w-100 d-flex justify-content-start'>Personas que puedo citar</label>
                 <table className='table table-striped table-bordered '>
                     <thead >
@@ -143,7 +151,8 @@ function ModuloSolicitudAudiencia_registro() {
                         </tr>
                     </tbody>
                 </table>
-            </form>
+            </form>}
+
         </div>
     )
 

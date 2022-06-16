@@ -48,6 +48,7 @@ function App() {
               <Route path=':Id_solicitud/manejo_conflicto' element={<ModuloSolicitudManejoConflicto />}/>
               <Route path=':Id_solicitud/audiencias/' element={<ModuloSolicitudAudiencia />}/>
               <Route path=':Id_solicitud/audiencias/crear' element={<ModuloSolicitudAudiencia_registro />}/>
+              <Route path=':Id_solicitud/audiencias/:Id_audiencia' element={<ModuloSolicitudAudiencia_registro />}/>
               <Route path=':Id_solicitud/resultado' element={<ModuloSolicitudResultado />}/>
             </Route>
           </Route>
