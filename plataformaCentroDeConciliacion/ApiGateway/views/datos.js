@@ -355,13 +355,15 @@ datosPersonas.SolicitudesSearch = async (response,search) => {
 
 datosPersonas.EliminarPersonasDeCitacion = async (req) => {
     let datos={}
-  
+    
     try {
+
+        
 
         for await (const informacion_data of req.body) {
 
-            
-            const resp = await axios.get(config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+req.params.id2+"&Persona_Id="+informacion_data);
+            const personas = await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+informacion_data)
+            const resp = await axios.get(config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+req.params.id2+"&Persona_Id="+personas.data[0].Id);
             const eliminar = await axios.delete(config.urlApiConciliacion + "/relaciones_citacion_persona/"+ resp.data[0].Id + "/");
            
             datos[informacion_data]=resp.data

@@ -386,9 +386,8 @@ views.EliminarPersonas=async(req,res)=>{
 
   datosPersonas.EliminarPersonasDeCitacion(req)
   .then(result=>{
-    res.status(200).json(result)
+    res.sendStatus(200)
   })
-
 
     
     
