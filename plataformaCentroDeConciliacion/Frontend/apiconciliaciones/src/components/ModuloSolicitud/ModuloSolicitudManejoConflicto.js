@@ -31,6 +31,13 @@ function ModuloSolicitudManejoConflicto() {
         .then((response) => {
             alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
         })
+        .catch((error) => {
+            if(error.response.status == 400){
+                alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>No se pudó crear, debes crear la información de hechos primero.</div>"
+            } else {
+                alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se pudó procesar la solicitud por un error desconocido.</div>"
+            }
+        })
     }
 
     return (
