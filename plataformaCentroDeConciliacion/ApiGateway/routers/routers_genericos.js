@@ -49,7 +49,12 @@ router.patch('/:nombre/:id',views_generales.Actualizar)
 
 router.get('/departamentos',views_generales.ListarDepartamentos)
 router.get('/departamentos/:id',views_generales.Ciudades)
-router.get('/personas',views_generales.DatosCrearPersonas)
+router.get('/departamentos/:id/ciudades/:id2',views_generales.Localidades)
+router.get('/departamentos/:id/ciudades/:id2/barrios/:id3',views_generales.Barrios)
+
+router.get('/datos_persona',views_generales.DatosCrearPersonas)
+
+
 
 
 

@@ -27,6 +27,44 @@ views.Ciudades= async(req,res)=>{
     
 }
 
+views.Localidades= async(req,res)=>{
+    try{
+    await axios.get(config.urlApiConciliacion + "/localidades?Ciudad_Id=" +req.params.id2)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        console.log(error);
+        res.sendStatus(500)
+    })
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
+
+    
+}
+
+views.Barrios= async(req,res)=>{
+    try{
+    await axios.get(config.urlApiConciliacion + "/barrios?Localidad_Id=" +req.params.id3)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+    .catch(function (error) {
+        console.log(error);
+        res.sendStatus(500)
+    })
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
+
+    
+}
+
 views.Subtema= async(req,res)=>{
 try{
     let datos = {}
@@ -40,7 +78,7 @@ try{
 
     .catch(function (error) {
         console.log(error);
-        res.sendStatus(404).json(error)
+        res.sendStatus(404); console.log("1").json(error)
     })
 }catch(error){
     
@@ -223,6 +261,7 @@ views.DatosCrearPersonas=async (req,res)=>{
     const estrato = await axios.get(config.urlApiConciliacion + "/estratos_socioeconomicos")
     const cargo = await axios.get(config.urlApiConciliacion + "/tipos_cargo")
     const perfil = await axios.get(config.urlApiConciliacion + "/perfiles")
+    const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado")
     
     datos={"departamentos":departamentos.data,
             "Tipo_documento":documento.data,
@@ -230,7 +269,8 @@ views.DatosCrearPersonas=async (req,res)=>{
             "Tipo_persona":persona.data,
             "Estrato_socioeconomico":estrato.data,
             "Tipo_cargo":cargo.data,
-            "Perfil":perfil.data
+            "Perfil":perfil.data,
+            "Tipo_estado":estado.data
                                             }
 
     res.status(200).json(datos)
@@ -239,6 +279,8 @@ views.DatosCrearPersonas=async (req,res)=>{
     console.log(error)
 }
 }
+
+
 // Esta funcion envia los datos especificos de la citacio con las personas incluidaas 
 
 const InfoCitaciones = async (resp,response)=>{ /// resp   las personas repsonse citacion especifica
@@ -325,7 +367,7 @@ views.ListarDepartamentos= async(req,res)=>{
     })
     .catch(function (error) {
         
-        res.sendStatus(404)
+        res.sendStatus(404); console.log("1")
     })
 }catch(err){
     console.log(err)
@@ -341,7 +383,7 @@ views.Actualizar= async (req,res)=>{
     })
     .catch(function (error) {
         //console.log(error);
-        res.sendStatus(404)
+        res.sendStatus(404); console.log("1")
     })
 }catch(err){
     console.log(err)

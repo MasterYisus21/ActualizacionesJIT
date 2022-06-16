@@ -398,7 +398,7 @@ class Genero_biologico(BaseModels):
         verbose_name_plural = ("Generos_biologicos")
 
     def __str__(self):
-        return self.name
+        return self.Nombre
 
 
 
@@ -512,7 +512,7 @@ class Respuesta(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
     Calificacion = models.SmallIntegerField(blank=False)
     Pregunta_Id = models.ForeignKey(Pregunta, on_delete=models.SET_NULL, blank=False, null=True)
-   
+    Encuesta=  models.ForeignKey(Usuario, on_delete=models.SET_NULL, blank=False, null=True)
 
 
     class Meta:

@@ -13,7 +13,8 @@ views.ListarConvocantes=async(req,res)=>{
         datosPersonas.datosBasicos(response)
          .then((result) => {
              
-             res.status(200).json(result)
+            res.status(200).json(result)
+            
              
          }).catch((err) => {
             res.status(404).json(err)
@@ -114,6 +115,43 @@ views.BuscarConvocante= async(req,res)=>{
 
 }
 
+views.CrearPersonasConvocante=async (req,res)=>{
+    let datos={}
+    try{
+      await  datosPersonas.CrearPersona(req)
+        .then(async resp=>{
+            
+        await axios.post(config.urlApiConciliacion + "/personas/",resp)
+         .then(async response=>{
+            res.status(200).json(response.data)
+           // console.log(response.data)
+            datos = {
+                "Solicitud_Id":req.params.id,
+                "Persona_Id":response.data.Id,
+                "Tipo_cliente_Id":1
+            }
+           
+             await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
+            .then(res=>{
+              console.log(res.data)
+              res.status(200).json(response.data)
+            })
+  
+            
+         })
+        })
+        
+        
+        .catch( err=>{
+            res.status(404).json(err)
+        })  
+   
+    }catch(error){
+        console.log(error)
+    }
+    
+
+}
 // views.InformacionConvocante=(req,res)=>{
 
     

@@ -154,6 +154,52 @@ datosPersonas.datosCompletos = async (response) => {
     
 };
 
+datosPersonas.CrearPersona = async (req) => {
+    let datos={}
+    try{
+        if (req.body.Fecha_de_nacimiento === '' ){{req.body.Fecha_de_nacimiento=""}}
+        if (req.body.Telefono ==='' ){{req.body.Telefono=0}}
+        if (typeof req.body.Perfil_Id != 'number'){{req.body.Perfil_Id=""}}
+        if (typeof req.body.Tipo_cargo_Id  !='number'){{req.body.Tipo_cargo_Id=null}}
+        if (req.body.Identificacion ===null | '' ){res.sendStatus(404);}
+        else if (typeof req.body.Nombres != 'string'& null&''){res.sendStatus(404); }
+        else if (typeof req.body.Apellidos != 'string'& null&''){{res.sendStatus(404); }}
+        else if (typeof req.body.Telefono != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Tipo_documento_Id != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Tipo_vivienda_Id != 'number' ){{res.sendStatus(404); console.log("1")}}
+        else if (typeof req.body.Barrio_Id != 'number' ){{res.sendStatus(404); console.log("2")}}
+        else if (typeof req.body.Tipo_persona_Id != 'number' ){{res.sendStatus(404); console.log("3")}}
+        else if (typeof req.body.Estrato_socioeconomico_Id != 'number' ){{res.sendStatus(404); console.log("4")}}
+        else if (typeof req.body.Tipo_estado_Id != 'number' ){{res.sendStatus(404); console.log("5")}}
+       
+        
+        else{
+                           
+      datos=  {
+            
+            "Identificacion": req.body.Identificacion,
+            "Nombres": req.body.Nombres,
+            "Apellidos": req.body.Apellidos,
+            "Correo": req.body.Correo,
+            "Telefono": req.body.Telefono,
+            "Fecha_de_nacimiento":req.body.Fecha_de_nacimiento,
+            "Tipo_documento_Id": req.body.Tipo_documento_Id,
+            "Tipo_vivienda_Id": req.body.Tipo_vivienda_Id,
+            "Barrio_Id": req.body.Barrio_Id,
+            "Tipo_persona_Id": req.body.Tipo_persona_Id,
+            "Estrato_socioeconomico_Id": req.body.Estrato_socioeconomico_Id,
+            "Tipo_estado_Id": 1,
+            "Perfil_Id": req.body.Perfil_Id,
+            "Tipo_cargo_Id": req.body.Tipo_cargo_Id
+        }
+    
+}return(datos)
+
+    }catch(error){
+        console.log(error)
+    }
+}
+
 datosPersonas.Solicitudes = async (response) => {
     let datos=[]
    

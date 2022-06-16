@@ -25,8 +25,11 @@ router.delete('/:id/personas/:documento',views_solicitud.EliminarPersona) // eli
 // convocante //
 
 router.get('/:id/convocantes',views_convocante.ListarConvocantes)
+router.post('/:id/convocantes/crear_personas',views_convocante.CrearPersonasConvocante)
 router.post('/:id/convocantes/:documento',views_convocante.AgregarConvocante)
+
 router.get('/:id/convocantes/:search',views_convocante.BuscarConvocante)
+
 
 //router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 
@@ -34,6 +37,7 @@ router.get('/:id/convocantes/:search',views_convocante.BuscarConvocante)
 // convocado//  
 
 router.get('/:id/convocados',views_convocado.ListarConvocados)
+router.post('/:id/convocados/crear_personas',views_convocado.CrearPersonasConvocado)
 router.post('/:id/convocados/:documento',views_convocado.AgregarConvocado)
 router.get('/:id/convocados/:search',views_convocado.BuscarConvocado)
 
@@ -62,6 +66,7 @@ router.post('/:id/estudiantes/:identificacion',views_estudiantes.AsignarEstudian
 // manejo conflicto
 router.get('/:id/manejos_conflicto',views_manejo_conflicto.ListarManejoConflicto)
 router.patch('/:id/manejos_conflicto',views_manejo_conflicto.Agregar)
+
 
 // audiencia
 
