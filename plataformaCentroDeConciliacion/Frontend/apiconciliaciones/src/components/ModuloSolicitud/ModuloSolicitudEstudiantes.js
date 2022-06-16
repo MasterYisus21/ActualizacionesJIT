@@ -8,6 +8,73 @@ function ModuloSolicitudEstudiantes() {
 
     const [isOpen, setIsOpen] = useState(false);
 
+
+
+    const agregarestudiantes = (event) => {
+        event.preventDefault()
+        axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/estudiantes/" + event.target.identificacionPersona.value)
+            .then((response) => {
+                setConciliadores([...conciliadores, response.data["persona"]])
+                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+
+                console.log()
+            })
+            .catch((error) => {
+                console.log(error.response.status)
+                if (error.response.status == 404) {
+                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Persona no encontrada</div>"
+                } else {
+                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Hubo un error en el servidor, intente mas tarde.</div>"
+                }
+            })
+    }
+
+    const eliminarConciliadores = (event) => {
+        event.preventDefault()
+        axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
+            .then((response) => {
+                setConciliadores(conciliadores.filter((object) => {
+                    return object["Identificacion"] != event.target.value
+                }))
+                alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Eliminado correctamente</div>"
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+
+    const obtenerConciliadores = () => {
+        axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/estudiantes")
+            .then((response) => {
+                console.log(response.data)
+                setConciliadores(response.data)
+            })
+    }
+
+    let location = useLocation();
+    const UrlParams = useParams();
+
+    const [conciliadores, setConciliadores] = useState([])
+    const [conciliadoresDisponibles, setConciliadoresDisponibles] = useState([])
+
+    useEffect(() => {
+        obtenerConciliadores()
+    }, [location])
+
+    useEffect(() => {
+        if (conciliadoresDisponibles.length == 0 && isOpen) {
+            axios.get(config.apiGatewayURL + "/estudiantes")
+                .then((response) => {
+                    console.log(response.data)
+                    setConciliadoresDisponibles(response.data)
+                })
+        }
+
+    }, [location, isOpen])
+
+    const alertContainer = useRef("");
+
     return (
         <>
             <div className='container container-estudiantes pt-3'>
@@ -25,7 +92,7 @@ function ModuloSolicitudEstudiantes() {
                                     aria-label="Search"
                                     aria-describedby="search-addon"
                                 />
-                                {/* <div ref={alertContainer}></div> */}
+                                <div ref={alertContainer}></div>
                             </form>
                             <div className="d-flex align-items-end">
                                 <button type="button" class="btn btn-primary me-3" id='boton-agregar-estudiantes'
@@ -37,7 +104,7 @@ function ModuloSolicitudEstudiantes() {
                     </nav>
                 </div>
                 {isOpen &&
-                    <form className='contenedor-tabla-seleccion-estudiantes mb-5 p-4 pb-3' /* onSubmit={agregarestudiantes} */>
+                    <form className='contenedor-tabla-seleccion-estudiantes mb-5 p-4 pb-3' onSubmit={agregarestudiantes}>
                         <label className='pb-3 h5'>Seleccione el estudiantes que desea agregar</label>
                         <table className='table table-striped table-bordered table-responsive'>
                             <thead >
@@ -49,7 +116,7 @@ function ModuloSolicitudEstudiantes() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {estudiantesesDisponibles.map((dato, key) => {
+                                {conciliadoresDisponibles.map((dato, key) => {
                                     return (
                                         <tr>
                                             <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio' value={dato["Identificacion"]}></input></td>
@@ -58,7 +125,7 @@ function ModuloSolicitudEstudiantes() {
                                             <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
                                         </tr>
                                     );
-                                })} */}
+                                })}
                             </tbody>
                         </table>
                         <div className=''>
@@ -78,17 +145,17 @@ function ModuloSolicitudEstudiantes() {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {estudianteses.map((dato) => {
+                            {conciliadores.map((dato) => {
                                 return (
                                     <tr>
                                         <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
                                         <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
                                         <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
                                         <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
-                                        <td><button className='boton-tabla-eliminar' value={dato["Identificacion"]} onClick={eliminarestudianteses}>Eliminar</button></td>
+                                        <td><button className='boton-tabla-eliminar' value={dato["Identificacion"]} onClick={eliminarConciliadores}>Eliminar</button></td>
                                     </tr>
                                 )
-                            })} */}
+                            })}
                         </tbody>
                     </table>
                 </form>
