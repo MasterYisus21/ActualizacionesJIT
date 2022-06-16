@@ -1,4 +1,5 @@
 .modulo-solicitud-wrapper {
+    /* display: block; */
     margin: 0px;
     background-color: rgb(255, 255, 255);
     position: absolute;
@@ -6,7 +7,7 @@
     padding: 20px;
     width: 93%;
     padding-right: 5%;
-    height: fit-content;
+    
 }
 
 .modulo-solicitud-container {
