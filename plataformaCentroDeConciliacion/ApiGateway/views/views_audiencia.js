@@ -11,12 +11,13 @@ const asisgnarPersonas=async(req)=>{
     
 try{
 
-    const persona=await axios.post(config.urlApiConciliacion + "/relaciones_citacion_persona/",data)
+   
     for await (const informacion_data of req.body) {
-        
+        const personas = await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+informacion_data) 
+        console.log(personas.data) 
         let data={
             "Citacion_Id": req.params.id2,
-            "Persona_Id": informacion_data
+            "Persona_Id": personas.data[0].Id
         }
         const resp=await axios.post(config.urlApiConciliacion + "/relaciones_citacion_persona/",data)
                        
