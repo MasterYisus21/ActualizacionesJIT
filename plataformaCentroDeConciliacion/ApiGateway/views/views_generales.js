@@ -138,6 +138,7 @@ views.Solicitudesview= async (req,res)=>{
        
        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
         .then(async(result) => {
+            console.log("relacion solicitud")
            
           await datosPersonas.Solicitudes(result)
             .then((result) => {
