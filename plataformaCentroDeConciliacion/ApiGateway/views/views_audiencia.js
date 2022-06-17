@@ -31,7 +31,7 @@ try{
 
 }catch(err){
     console.log(err)
-    throw new Error(err);
+    
 }
 }
 
@@ -383,7 +383,7 @@ views.EliminarPersonas=async(req,res)=>{
 
 views.AsignarPersonas=async(req,res)=>{
     try{
-    asisgnarPersonas(req)
+    await asisgnarPersonas(req)
     .then(result=>{
         
         res.status(201).json(result)
