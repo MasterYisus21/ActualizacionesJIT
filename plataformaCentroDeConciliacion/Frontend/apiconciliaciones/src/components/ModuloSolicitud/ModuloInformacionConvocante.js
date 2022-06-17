@@ -48,8 +48,13 @@ function ModuloInformacionConvocante() {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes/" + event.target.cedula.value)
       .then((response) => {
-        setConvocantes([...convocantes, response.data["persona"]])
-        alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+        if (response.status != 208) {
+          setConvocantes([...convocantes, response.data["persona"]])
+          alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+        } else {
+          alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Persona ya agregada a esta solicitud.</div>"
+        }
+
       })
       .catch((error) => {
         console.log(error.response.status)

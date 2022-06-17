@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './css/moduloSolicitudAudiencia_registro.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -17,6 +17,8 @@ function ModuloSolicitudAudiencia_registro() {
     const [tipoMedio, setTipoMedio] = useState(0)
     const [link, setLink] = useState("")
     const [showPeopleForms, setShowPeopleForms] = useState(UrlParams.hasOwnProperty('Id_audiencia'))
+    const [personasPosibles, setPersonasPosibles] = useState([])
+    const [personasCitadas, setPersonasCitadas] = useState([])
 
 
     const obtenerTurnos = (event) => {
@@ -35,18 +37,100 @@ function ModuloSolicitudAudiencia_registro() {
             "Turno_Id": turnoSeleccionado,
             "Tipo_medio_Id": tipoMedio
         }
-        axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/', data)
-            .then((response) => {
-                console.log(response.data)
-                navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
-                setShowPeopleForms(true)
-                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
-            })
-            .catch(error => {
-                alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se pudo procesar la solicitud por un error desconocido.</div>"
-            })
+        if (UrlParams.hasOwnProperty('Id_audiencia')) {
+            axios.patch(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"], data)
+                .then((response) => {
+                    console.log(response.data)
+                    navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
+                    setShowPeopleForms(true)
+                    alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
+                })
+                .catch(error => {
+                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se pudo procesar la solicitud por un error desconocido.</div>"
+                })
+
+        } else {
+            axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/', data)
+                .then((response) => {
+                    console.log(response.data)
+                    navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
+                    setShowPeopleForms(true)
+                    alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
+                    axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + response.data["Id"])
+                        .then(response => {
+                            console.log(response.data)
+                            setPersonasPosibles(response.data[0]["personas_disponibles"])
+                            setPersonasCitadas(response.data[1]["personas_citadas"])
+                        })
+                })
+                .catch(error => {
+                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se pudo procesar la solicitud por un error desconocido.</div>"
+                })
+
+        }
+
 
     }
+
+    const citarPersona = (event) => {
+        event.preventDefault()
+        const data = [
+            event.target.identificacion.value,
+        ]
+        axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas', data)
+            .then(response => {
+                const personas1 = personasPosibles.filter(object => {
+                    return object["Identificacion"] == event.target.identificacion.value
+                })
+                const personas2 = personasPosibles.filter(object => {
+                    return object["Identificacion"] != event.target.identificacion.value
+                })
+                setPersonasCitadas([...personasCitadas, ...personas1])
+                setPersonasPosibles(personas2)
+            })
+    }
+
+    const eliminarPersona = (event) => {
+        event.preventDefault()
+        const data = [
+            event.target.identificacion.value,
+        ]
+        axios.delete(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas/', { data: data })
+            .then(response => {
+                const personas1 = personasCitadas.filter(object => {
+                    return object["Identificacion"] == event.target.identificacion.value
+                })
+                const personas2 = personasCitadas.filter(object => {
+                    return object["Identificacion"] != event.target.identificacion.value
+                })
+                setPersonasPosibles([...personasPosibles, ...personas1])
+                setPersonasCitadas(personas2)
+            })
+    }
+
+    useEffect(() => {
+        if (UrlParams.hasOwnProperty('Id_audiencia')) {
+            axios.get(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"])
+                .then(response => {
+                    console.log(response.data)
+                    setFecha(response.data["Fecha_sesion"])
+                    setTurnoSeleccionado(response.data["Turno_Id"]["Id"])
+                    setDescripcion(response.data["Descripcion"])
+                    setTipoMedio(response.data["Tipo_medio_Id"]["Id"])
+                    setLink(response.data["Enlace"])
+                    setTurnosDisponibles([{
+                        Id: response.data["Turno_Id"]["Id"],
+                        Franja_horaria: response.data["Turno_Id"]["Franja_horaria"]
+                    }])
+                })
+            axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"])
+                .then(response => {
+                    console.log(response.data)
+                    setPersonasPosibles(response.data[0]["personas_disponibles"])
+                    setPersonasCitadas(response.data[1]["personas_citadas"])
+                })
+        }
+    }, [])
 
     return (
         <div className='contenedor-principal-modulo-audiencia mt-3'>
@@ -65,15 +149,15 @@ function ModuloSolicitudAudiencia_registro() {
                 <h6 className='pt-1 d-flex align-items-center'>Ingrese los datos de la audiencia</h6>
                 <div className='contenedor-citacion-descripcion'>
 
-                    <div class="row m-0 p-4 pt-3">
-                        <label class="">Fecha de la Sesión: </label>
+                    <div className="row m-0 p-4 pt-3">
+                        <label className="">Fecha de la Sesión: </label>
                         <input type="date" class="form-control form-control-sm col mb-3" id="exampleFormControlInput1" value={fecha} onChange={(e) => { setFecha(e.target.value); obtenerTurnos(e) }} required></input>
 
-                        <label class="">Descripcion: </label>
+                        <label className="">Descripcion: </label>
                         <textarea className="form-control form-control-sm" rows="2" value={descripcion} onChange={(e) => { setDescripcion(e.target.value) }} required></textarea>
                     </div>
 
-                    <div class="row m-0 p-4 pt-3">
+                    <div className="row m-0 p-4 pt-3">
                         <label class="">Hora: </label>
                         <select className="form-select form-select-sm mb-3" value={turnoSeleccionado} onChange={(e) => { setTurnoSeleccionado(e.target.value) }} required>
                             <option value="">Seleccione</option>
@@ -81,12 +165,12 @@ function ModuloSolicitudAudiencia_registro() {
                                 return <option value={data["Id"]}>{data["Franja_horaria"]}</option>
                             })}
                         </select>
-                        <label class="">Tipo de medio: </label><br></br>
+                        <label className="">Tipo de medio: </label><br></br>
                         <div className='separador-virtual-presencial'>
                             <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' checked={tipoMedio == 2 ? true : false} onChange={() => { setTipoMedio(2) }} required></input>
-                            <label class="">Virtual </label>
+                            <label className="">Virtual </label>
                             <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' checked={tipoMedio == 1 ? true : false} onChange={() => { setTipoMedio(1) }} required></input>
-                            <label class="">Presencial </label>
+                            <label className="">Presencial </label>
                         </div>
                         <input type="url" class="form-control col" placeholder="link" value={link} onChange={e => setLink(e.target.value)} required={tipoMedio == 2} disabled={tipoMedio != 2}></input>
                     </div>
@@ -99,61 +183,70 @@ function ModuloSolicitudAudiencia_registro() {
                     </button>
                 </div>
             </form>
-            {showPeopleForms && <form className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
+            {showPeopleForms && <div className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
                 <label className='pt-3 h5 w-100 d-flex justify-content-start'>Personas citadas</label>
                 <table className='table table-striped table-bordered '>
                     <thead >
                         <tr>
-                            <th>Clase del Convocado</th>
-                            <th>Tipo de documento</th>
                             <th>Identificación</th>
-                            <th>Nombre</th>
+                            <th>Nombres y Apellidos</th>
+                            <th>Rol</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>16/07/2021</td>
-                            <td>Pepito Cardenas Arias</td>
-                            <td>No</td>
-                        </tr>
-                        <tr>
-                            <td>16/07/2021</td>
-                            <td>Pepito Cardenas Arias</td>
-                            <td>No</td>
-                        </tr>
+                        {personasCitadas.map(dato => {
+                            return (
+                                <tr>
+                                    <td>{dato["Identificacion"]}</td>
+                                    <td>{dato["Nombres"] + " " + dato["Apellidos"]}</td>
+                                    <td>{dato["Tipo_cliente"]}</td>
+                                    <td>
+                                        <form onSubmit={event => eliminarPersona(event)}>
+                                            <button className='btn btn-outline btn-sm' name="identificacion" value={dato["Identificacion"]}>
+                                                <img className='mini-image' src="/icons/down_icon_1.png"></img>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
-            </form>}
+            </div>}
 
-            {showPeopleForms && <form className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
+            {showPeopleForms && <div className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
                 <label className='pt-3 h5 w-100 d-flex justify-content-start'>Personas que puedo citar</label>
                 <table className='table table-striped table-bordered '>
                     <thead >
                         <tr>
-                            <th>Clase del Convocado</th>
-                            <th>Tipo de documento</th>
                             <th>Identificación</th>
-                            <th>Nombre</th>
+                            <th>Nombres y Apellidos</th>
+                            <th>Rol</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>16/07/2021</td>
-                            <td>Pepito Cardenas Arias</td>
-                            <td>No</td>
-                        </tr>
-                        <tr>
-                            <td>16/07/2021</td>
-                            <td>Pepito Cardenas Arias</td>
-                            <td>No</td>
-                        </tr>
+                        {personasPosibles.map(dato => {
+                            return (
+                                <tr>
+                                    <td>{dato["Identificacion"]}</td>
+                                    <td>{dato["Nombres"] + " " + dato["Apellidos"]}</td>
+                                    <td>{dato["Tipo_cliente"]}</td>
+                                    <td>
+                                        <form onSubmit={event => citarPersona(event)}>
+                                            <button className='btn btn-outline btn-sm' name="identificacion" value={dato["Identificacion"]}>
+                                                <img className='mini-image' src="/icons/up_icon_1.png"></img>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
-            </form> }
-
-        </div>
+            </div>}
+        </div >
     )
 
 }
