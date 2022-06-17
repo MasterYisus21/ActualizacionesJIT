@@ -32,7 +32,7 @@ function App() {
           
           <Route
             path="/dashboard/"
-            element={loggedIn ? <Dashboard /> : <Navigate to="/login" replace={true} />}
+            element={loggedIn ? <Dashboard loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> : <Navigate to="/login" replace={true} />}
           >
             <Route path='personas/' element={<Personas />}/>
             {/* ModuloSolicitudDatosGenerales  */}

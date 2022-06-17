@@ -5,7 +5,7 @@ import { ModuloSolicitud } from '../ModuloSolicitud'
 import './css/Dashboard.css';
 import { Link, Outlet, Route, Routes } from 'react-router-dom';
 
-function Dashboard() {
+function Dashboard({ loggedIn, setLoggedIn }) {
 
 
   return (
@@ -23,9 +23,11 @@ function Dashboard() {
           </div>
           <div className='dashboard-top-navbar-utilities'>
             Centro de conciliaciones
-            <div className='beautiful-icon-container-1'>
+
+            <a href="#" className='beautiful-icon-container-1' onClick={e => setLoggedIn(false)}>
               <img className='icon' src='/icons/sign_out_icon_1.jpg' />
-            </div>
+            </a>
+
             {/* <div className='beautiful-icon-container-2'>1010074595 - Andres Felipe Villamizar Palacio</div> */}
           </div>
         </nav>
