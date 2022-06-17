@@ -111,7 +111,7 @@ function Personas() {
                             </div>
                         </div>
                     </div>
-                    <button className="btn btn-primary p-1 me-3 mb-3" id='boton-aceptar-registro-personas'>Registrar</button>
+                    <button className="btn btn-primary p-1 me-3 mb-2" id='boton-aceptar-registro-personas'>Registrar</button>
                 </div>
             </div>
 
