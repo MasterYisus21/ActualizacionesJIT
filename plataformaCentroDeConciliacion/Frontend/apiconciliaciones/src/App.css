@@ -14,6 +14,11 @@ body {
     height: 25px;
 }
 
+.mini-image {
+    width: 25px;
+    height: 25px;
+}
+
 .small-image {
     width: 40px;
     height: 40px;

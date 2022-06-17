@@ -17,10 +17,15 @@ function ModuloInformacionConciliador() {
     event.preventDefault()
     axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores/" + event.target.identificacionPersona.value)
       .then((response) => {
-        setConciliadores([...conciliadores, response.data["persona"]])
-        alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+        setIsOpen(false)
+        if (response.status != 208) {
+          setConciliadores([...conciliadores, response.data["persona"]])
+          alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+        }
+        else {
+          alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Persona ya agregada a esta solicitud.</div>"
+        }
 
-        console.log()
       })
       .catch((error) => {
         console.log(error.response.status)
