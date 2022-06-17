@@ -11,6 +11,7 @@ const asisgnarPersonas=async(req)=>{
     
 try{
 
+    const persona=await axios.post(config.urlApiConciliacion + "/relaciones_citacion_persona/",data)
     for await (const informacion_data of req.body) {
         
         let data={
@@ -89,7 +90,7 @@ try{
 
 const CitacionEspecifica = async(response, solicitud)=>{
     let endpoints = []
-    let datos=[{personas_disponibles:[]},{personas_citadas:[]},{citacion:[]}]
+    let datos=[{personas_disponibles:[]},{personas_citadas:[]}]
     let personas=[]
     let data=[]
     let solicitantes = []
@@ -142,22 +143,6 @@ try{
         })
         
            
-        endpoints = [
-            config.urlApiConciliacion + "/turnos/"+informacion_data.Turno_Id,
-            config.urlApiConciliacion + "/tipos_medio/"+informacion_data.Tipo_medio_Id
-           
-
-    ]
-      
-       await Promise.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
-            axios.spread((...allData) => {
-            informacion_data.Turno_Id=allData[0].data
-            informacion_data.Tipo_medio_Id=allData[1].data
-                       
-            datos[2].citacion=informacion_data            
-             
-            })
-            );
        
     }
 
@@ -396,10 +381,14 @@ views.EliminarPersonas=async(req,res)=>{
 }
 
 views.AsignarPersonas=async(req,res)=>{
+    try{
     asisgnarPersonas(req)
     .then(result=>{
         
         res.status(201).json(result)
     })
+}catch(error) {
+    res.status(400).json(error)
+}
 }
 module.exports = views

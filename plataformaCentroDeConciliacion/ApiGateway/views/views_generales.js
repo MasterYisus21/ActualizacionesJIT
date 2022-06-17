@@ -294,19 +294,13 @@ try{
             response.data.Turno_Id=allData[0].data
             response.data.Tipo_medio_Id=allData[1].data
             
-            datos["Citacion"] = response.data
+            datos=response.data
           //  console.log(response.data)
             })
             );
-            console.log("//////////////")
+            
      
-        for await (const informacion_data of resp.data) {
-            const res = await axios.get(config.urlApiConciliacion + "/personas/"+informacion_data.Persona_Id);
-           personas[informacion_data.Persona_Id]=res.data
-
-           
-        }
-       datos["Personas"]=personas
+       
             return datos
          
     //console.log(datos)
