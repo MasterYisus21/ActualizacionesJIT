@@ -2,13 +2,14 @@ import React, {useEffect,useState} from  'react' // rfce
 import { Routes, Route, Link, Navigate } from "react-router-dom"
 
 import axios from 'axios';
-import {ModuloInformacionConciliador, ModuloInformacionConvocado, ModuloInformacionConvocante, ModuloSolicitudEstudiantes, ModuloSolicitud, ModuloSolicitudAudiencia, ModuloSolicitudAudiencia_registro, ModuloSolicitudDatosGenerales, ModuloSolicitudHechos, ModuloSolicitudDocumentos, ModuloSolicitudManejoConflicto, ModuloSolicitudResultado} from './components/ModuloSolicitud';
+import {ModuloInformacionConciliador, ModuloInformacionConvocado, ModuloInformacionConvocante, ModuloSolicitudEstudiantes, ModuloSolicitud, ModuloSolicitudAudiencia, ModuloSolicitudAudiencia_registro, ModuloSolicitudDatosGenerales, ModuloSolicitudHechos, ModuloSolicitudDocumentos, ModuloSolicitudManejoConflicto, ModuloSolicitudResultado, ModuloEncuesta} from './components/ModuloSolicitud';
 import InicioSesion from './components/InicioSesion';
 import './App.css'
 import { Dashboard } from './components/Dashboard';
 import ErrorPage from './components/ErrorPage';
 import SolicitudesView from './components/Dashboard/SolicitudesView';
 import Personas from './components/Dashboard/Personas';
+import ModuloEncuestas from './components/ModuloSolicitud/ModuloEncuesta';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
               <Route path=':Id_solicitud/audiencias/crear' element={<ModuloSolicitudAudiencia_registro />}/>
               <Route path=':Id_solicitud/audiencias/:Id_audiencia' element={<ModuloSolicitudAudiencia_registro />}/>
               <Route path=':Id_solicitud/resultado' element={<ModuloSolicitudResultado />}/>
+              <Route path=':Id_solicitud/encuesta' element={<ModuloEncuesta />}/>
             </Route>
           </Route>
           <Route exact path='/' element={loggedIn ? <Navigate to="/dashboard" replace={true} /> : <Navigate to="/login" replace={true} />}></Route>

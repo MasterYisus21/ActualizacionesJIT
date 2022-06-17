@@ -10,6 +10,7 @@ import ModuloSolicitudManejoConflicto from "./ModuloSolicitudManejoConflicto";
 import ModuloSolicitudResultado from "./ModuloSolicitudResultado";
 import ModuloSolicitudAudiencia_registro from "./moduloSolicitudAudiencia_registro";
 import ModuloSolicitudEstudiantes from "./ModuloSolicitudEstudiantes";
+import ModuloEncuesta from "./ModuloEncuesta";
 
 export {
     ModuloSolicitud,
@@ -23,6 +24,6 @@ export {
     ModuloSolicitudDocumentos,
     ModuloSolicitudManejoConflicto,
     ModuloSolicitudResultado,
-    ModuloSolicitudAudiencia_registro
-    
+    ModuloSolicitudAudiencia_registro,
+    ModuloEncuesta
 }

@@ -23,7 +23,7 @@ function Personas() {
                         <input type="date" class="form-control" placeholder="fecha de Nacimiento"></input>
                     </div>
                     <div className='container d-grid gap-2 mb-2'>
-                    <label className="h6 mt-2 col">Identificación</label>
+                        <label className="h6 mt-2 col">Identificación</label>
                         <div className='row gap-3 ps-3 px-3'>
                             <select className="form-control col" aria-label="Default select example">
                                 <option selected>Tipo de Documento</option>
