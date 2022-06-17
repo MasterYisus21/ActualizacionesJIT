@@ -61,5 +61,8 @@ router.get('/datos_persona',views_generales.DatosCrearPersonas)
 router.delete('/citaciones/:id',views_generales.EliminarCitacion)
 
 
+// encuestas//
+router.get('/preguntas/',views_generales.Preguntas)
+router.get('/respuestas/',views_generales.Respuestas)
 
 module.exports = router 
