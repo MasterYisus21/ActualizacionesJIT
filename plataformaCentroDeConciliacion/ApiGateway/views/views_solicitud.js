@@ -253,16 +253,16 @@ views.CrearSolicitud= async(req,res)=>{
     .then(async response => {
         let datos ={}
         let historico={Descripcion:"Nuevo",
-                        Solicitud_Id:response.data.Id,
-                        Tipo_Estado: 1}
+                        Solicitud_Id:response.data.Numero_caso,
+                        Tipo_estado_Id: 1}
         await axios.post(config.urlApiConciliacion + "/historicos_solicitud/",historico)
        
-        //const admin = await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=1")
+        const admin = await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
        
         datos={
             "Solicitud_Id":response.data.Numero_caso,
-            "Persona_Id": 8, //admin.data[0].Id,
-            "Tipo_cliente_Id":null
+            "Persona_Id": admin.data[0].Id, //admin.data[0].Id,
+            "Tipo_cliente_Id":3
         }
         const relacion_sol_per = await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
        

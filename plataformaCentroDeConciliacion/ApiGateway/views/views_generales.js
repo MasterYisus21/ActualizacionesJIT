@@ -88,8 +88,6 @@ try{
 
 }
 
-
-
 views.Docentes= async(req,res)=>{
 try{
    await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
@@ -138,6 +136,7 @@ views.Solicitudesview= async (req,res)=>{
        
        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
         .then(async(result) => {
+            console.log("relacion solicitud")
            
           await datosPersonas.Solicitudes(result)
             .then((result) => {
@@ -399,5 +398,43 @@ views.EliminarCitacion=async(req,res)=>{
 } 
 }
 
+views.Preguntas=async(req,res)=>{
+  
+    try{
+    await axios.get(config.urlApiConciliacion + "/preguntas")
+    .then(response=>{
+   
+        res.status(200).json(response.data)
+              
+    }).catch((err) => {
+        res.status(404).json(err)
+    });
     
+    
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+} 
+}
+
+views.Respuestas=async(req,res)=>{
+  
+    try{
+    await axios.get(config.urlApiConciliacion + "/respuestas")
+    .then(response=>{
+   
+        res.status(200).json(response.data)
+              
+    }).catch((err) => {
+        res.status(404).json(err)
+    });
+    
+    
+}catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+} 
+}
 module.exports = views

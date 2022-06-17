@@ -105,6 +105,7 @@ try{
     }else{
         
         for await (const dat of resp.data) { 
+            console.log(dat)
         const relacion_sol_per= await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud+"&Persona_Id="+dat.Persona_Id)
         
         const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data[0].Tipo_cliente_Id)
