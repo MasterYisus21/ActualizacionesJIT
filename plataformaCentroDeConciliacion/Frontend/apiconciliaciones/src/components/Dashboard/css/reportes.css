@@ -1,0 +1,38 @@
+.contenedor-principal-reportes {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    box-sizing: content-box;
+    justify-content: center;
+    align-items: center;
+}
+
+.contedor-encapsulamiento-gris {
+    width: 98%;
+    height: 95%;
+    background-color: #ebebeb;
+    box-sizing: content-box;
+    border-radius: 15px;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    
+}
+
+.contenedor-opciones-reporte {
+    background-color: rgba(0, 255, 255, 0);
+}
+
+.tabla-reportes-encapsulamiento-blanco{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.tabla-reportes{
+    width: 90%;
+    height: 95%;
+    background-color: white;
+    border-radius: 15px;
+    
+}
