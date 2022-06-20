@@ -3,6 +3,7 @@
 
 from ast import Pass
 from hashlib import blake2b
+from operator import truediv
 from django.db import models
 
 from apiConciliacionApp.base.general_models import BaseModels, StateModel
@@ -204,7 +205,7 @@ class Tipo_estado(BaseModels):
 
 class Documento(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Ruta_directorio = models.FileField(upload_to=None, max_length=100)
+    Ruta_directorio = models.FileField(upload_to='documentos/', max_length=100, blank=True,null=True)
     Tamanio = models.CharField( max_length=50, blank=True, null=True)
     Fecha_documento = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) # Se crea automaticamente 
     Solicitud_Id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
@@ -494,10 +495,10 @@ class Medio_conocimiento (BaseModels):
 class Encuesta(StateModel):
     
     Id = models.AutoField(primary_key=True,auto_created = True)
-    Fecha = models.DateField()
+    Fecha = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False)
     Solicitud_Id=  models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     Medio_conocimiento_Id=  models.ForeignKey(Medio_conocimiento, on_delete=models.SET_NULL, blank=False, null=True)
-    Usuario_Id=  models.ForeignKey(Usuario, on_delete=models.SET_NULL, blank=False, null=True)
+    Persona_Id=  models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
 
 
     class Meta:
