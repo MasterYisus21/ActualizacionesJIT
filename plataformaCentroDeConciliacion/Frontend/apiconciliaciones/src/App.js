@@ -11,6 +11,7 @@ import SolicitudesView from './components/Dashboard/SolicitudesView';
 import Personas from './components/Dashboard/Personas';
 import Reportes from './components/Dashboard/reportes';
 import ModuloEncuestas from './components/ModuloSolicitud/ModuloEncuesta';
+import ModuloEncuestaPreguntas from './components/ModuloSolicitud/ModuloEncuestaPreguntas';
 
 
 function App() {
@@ -54,7 +55,8 @@ function App() {
               <Route path=':Id_solicitud/audiencias/crear' element={<ModuloSolicitudAudiencia_registro />}/>
               <Route path=':Id_solicitud/audiencias/:Id_audiencia' element={<ModuloSolicitudAudiencia_registro />}/>
               <Route path=':Id_solicitud/resultado' element={<ModuloSolicitudResultado />}/>
-              <Route path=':Id_solicitud/encuesta' element={<ModuloEncuesta />}/>
+              <Route path=':Id_solicitud/encuestas' element={<ModuloEncuesta />}/>
+              <Route path=':Id_solicitud/encuestas/:Id_persona' element={<ModuloEncuestaPreguntas />}/>
             </Route>
           </Route>
           <Route exact path='/' element={loggedIn ? <Navigate to="/dashboard" replace={true} /> : <Navigate to="/login" replace={true} />}></Route>

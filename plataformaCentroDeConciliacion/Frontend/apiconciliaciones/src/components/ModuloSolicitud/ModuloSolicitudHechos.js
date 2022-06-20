@@ -30,13 +30,15 @@ function ModuloSolicitudHechos() {
     useEffect(() => {
         axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos")
         .then((response) => {
-            setDepartamento(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
-            obtenerCiudadesOpciones(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
-            setCiudad(response.data[0]["Ciudad_Id"]["Id"])
-            setResumen(response.data[0]["Descripcion_hecho"])
-            setPretensiones(response.data[0]["Descripcion_pretension"])
-            setCuantia(response.data[0]["Cuantia"])
-            setCuantiaIndeterminada(response.data[0]["Cuantia_indeterminada"])
+            if(response.data.hasOwnProperty("Ciudad_Id")){
+                setDepartamento(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
+                obtenerCiudadesOpciones(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
+                setCiudad(response.data[0]["Ciudad_Id"]["Id"])
+                setResumen(response.data[0]["Descripcion_hecho"])
+                setPretensiones(response.data[0]["Descripcion_pretension"])
+                setCuantia(response.data[0]["Cuantia"])
+                setCuantiaIndeterminada(response.data[0]["Cuantia_indeterminada"])
+            }
         })
     }, [])
 
