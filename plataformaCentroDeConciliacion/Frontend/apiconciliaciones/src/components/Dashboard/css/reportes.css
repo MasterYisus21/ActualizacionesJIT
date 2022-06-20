@@ -15,24 +15,51 @@
     border-radius: 15px;
     display: grid;
     grid-template-rows: 1fr 2fr;
-    
+
 }
 
 .contenedor-opciones-reporte {
-    background-color: rgba(0, 255, 255, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.tabla-reportes-encapsulamiento-blanco{
+.tabla-reportes-encapsulamiento-blanco {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
 }
 
-.tabla-reportes{
+.tabla-reportes {
     width: 90%;
     height: 95%;
     background-color: white;
     border-radius: 15px;
-    
+    border: 1px solid rgba(4, 4, 4, 0.29);
+}
+.seleccionar-buscar{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fecha-inicio-finalizacion{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.iconos-reportes{
+    width: 70px;
+}
+
+.seleccionar-reporte > label{
+    color: green;
 }
