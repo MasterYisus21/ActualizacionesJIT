@@ -238,7 +238,7 @@ function ModuloInformacionConvocante() {
             <tbody>
               {convocantes.map((dato) => {
                 return (
-                  <tr>
+                  <tr key={dato["Id"]}>
                     <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
                     <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
                     <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>

@@ -106,26 +106,26 @@ function ModuloInformacionConvocado() {
           <h5>Informacion del convocado</h5>
         </div>
         <div className='contenedor-navbar-agregar-convocado'>
-          <nav class="navbar p-0">
-            <div class="container">
-              <form class="d-flex input-group w-auto align-items-sm-baseline gap-1" onSubmit={agregarConvocado}>
+          <nav className="navbar p-0">
+            <div className="container">
+              <form className="d-flex input-group w-auto align-items-sm-baseline gap-1" onSubmit={agregarConvocado}>
                 <input
                   type="text"
                   name="cedula"
-                  class="form-control form-control-sm rounded"
+                  className="form-control form-control-sm rounded"
                   placeholder="Cédula"
                   aria-label="Search"
                   aria-describedby="search-addon"
                 />
                 <button className='border-0 bg-transparent' type='submit'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                   </svg>
                 </button>
                 <div ref={alertContainer}></div>
               </form>
               <div className="d-flex align-items-end">
-                <button type="button" class="btn btn-primary btn-sm" id='boton-agregar-convocado'
+                <button type="button" className="btn btn-primary btn-sm" id='boton-agregar-convocado'
                   onClick={() => setIsOpen(!isOpen)}>
                   Agregar convocado
                 </button>
@@ -145,7 +145,7 @@ function ModuloInformacionConvocado() {
             </div>
             <div className='container d-grid gap-3'>
               <label>Fecha de Nacimiento</label>
-              <input type="date" class="form-control" placeholder="fecha de Nacimiento"></input>
+              <input type="date" className="form-control" placeholder="fecha de Nacimiento"></input>
             </div>
             <div className='container d-grid gap-3'>
               <label>Identificación</label>
@@ -237,7 +237,7 @@ function ModuloInformacionConvocado() {
             <tbody>
               {convocados.map((dato) => {
                 return (
-                  <tr>
+                  <tr key={dato["Id"]}>
                     <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
                     <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
                     <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
