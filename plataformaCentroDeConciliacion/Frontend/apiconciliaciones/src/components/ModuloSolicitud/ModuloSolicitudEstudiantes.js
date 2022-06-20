@@ -53,7 +53,9 @@ function ModuloSolicitudEstudiantes() {
         axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/estudiantes")
             .then((response) => {
                 console.log(response.data)
-                setConciliadores(response.data)
+                if (response.data != "") {
+                    setConciliadores(response.data)
+                }
             })
     }
 

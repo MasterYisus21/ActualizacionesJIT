@@ -55,7 +55,7 @@ function ModuloSolicitudResultado() {
         ])
 
 
-    }, [resultadoOpciones,]);
+    }, []);
     return (
         <>
         <div className='modulo-solicitud-content-main-resultado'>
@@ -71,9 +71,9 @@ function ModuloSolicitudResultado() {
             </div>
             <div className='modulo-solicitud-content-main-resultado-column'>
                 <div className='modulo-solicitud-content-main-resultado-titulo2'>Descargar documento</div>
-                <div class="mb-3">
-                    <label for="formFile" class="form-label"></label>
-                    <input class="form-control" type="file" id="formFile"/>
+                <div className="mb-3">
+                    <label htmlFor="formFile" className="form-label"></label>
+                    <input className="form-control" type="file" id="formFile"/>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="fechasolicitud" className="form-label">Fecha de solicitud:</label>

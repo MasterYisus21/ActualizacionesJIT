@@ -56,7 +56,9 @@ function ModuloInformacionConciliador() {
     axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores")
       .then((response) => {
         console.log(response.data)
-        setConciliadores(response.data)
+        if (response.data != "") {
+          setConciliadores(response.data)
+        }
       })
   }
 
