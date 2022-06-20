@@ -64,4 +64,32 @@ for await  (const iterator of req.body[0].preguntas) {
     //res.sendStatus(400)
 } 
 }
+
+views.EncuestaEspecifica=async(req,res)=>{
+
+    
+   data=[]
+    try{
+       await axios.get(config.urlApiConciliacion+"/encuestas?Solicitud_Id="+req.params.id+"&Persona_Id="+req.params.id2)
+        .then(async resp=>{
+            console.log(resp.data)
+            
+            if(resp.data===''){res.status(200).json(resp.data)}else{
+           
+            await axios.get(config.urlApiConciliacion + "/respuestas?Encuesta_Id="+resp.data[0].Id)
+            .then(response=>{
+                res.status(200).json(response.data)
+            })  
+        }
+             
+        })
+   
+   
+   }catch(error){
+       
+       console.log(error)
+       res.sendStatus(400)
+   } 
+}
+   
 module.exports = views

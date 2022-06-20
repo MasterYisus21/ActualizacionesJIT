@@ -88,6 +88,8 @@ router.get('/:id/fechas/:fecha',views_audiencia.FechasDisponibles)
  // encuesta//
 
  router.post('/:id/respuestas',views_encuesta.Respuestas)
+ router.get('/:id/encuestas/:id2',views_encuesta.EncuestaEspecifica)
+
 
  // documentos 
  router.get('/:id/documentos',views_documento.VerDocumentos)
