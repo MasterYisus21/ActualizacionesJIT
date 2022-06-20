@@ -60,6 +60,8 @@ router.get('/departamentos/:id/ciudades/:id2',views_generales.Localidades)
 router.get('/departamentos/:id/ciudades/:id2/barrios/:id3',views_generales.Barrios)
 
 router.get('/datos_persona',views_generales.DatosCrearPersonas)
+router.post('/personas',views_generales.CrearPersonas)
+
 
 
 // citaciones//

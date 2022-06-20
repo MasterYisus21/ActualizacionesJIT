@@ -470,6 +470,7 @@ views.Preguntas=async(req,res)=>{
 
 
 views.CrearPersonas=async(req,res)=>{
+    
  
     let datos={}
     try{
@@ -478,20 +479,26 @@ views.CrearPersonas=async(req,res)=>{
             
         await axios.post(config.urlApiConciliacion + "/personas/",resp)
          .then(async response=>{
-            res.status(200).json(response.data)
-           // console.log(response.data)
-            datos = {
-                "Solicitud_Id":req.params.id,
-                "Persona_Id":response.data.Id,
-                "Tipo_cliente_Id":1
+            console.log("entre")
+            if(response.data.Tipo_cargo_Id ===null | response.data.Tipo_cargo_Id ===''){res.status(200).json(response.data)}
+            else{
+                datos = {
+                    "Usuario":response.data.Identificacion,
+                    "Rol_Id":response.data.Tipo_cargo_Id,
+                    "Persona_Id":response.data.Id
+                    
+                    
+                }
+                console.log(datos)
+                await axios.post(config.urlApiConciliacion + "/usuarios/",datos)
+                .then(resp=>{
+                    res.status(200).json(response.data)
+                })
+
+               
             }
-           
-             await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
-            .then(res=>{
-              console.log(res.data)
-              res.status(200).json(response.data)
-            })
-  
+            
+            
             
          })
         })
