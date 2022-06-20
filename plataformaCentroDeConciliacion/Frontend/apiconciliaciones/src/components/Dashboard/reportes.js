@@ -13,8 +13,8 @@ function reportes() {
 
                     <div className="seleccionar-buscar">
                         <div className='seleccionar-reporte container'>
-                            <label className="h5">Seleccionar reporte</label><br></br>
-                            <select className="">
+                            <label className="h4">Seleccionar reporte</label><br></br>
+                            <select className="input-reportes">
                                 <option selected>reportes</option>
                                 <option value="1">#1</option>
                                 <option value="2">#2</option>
@@ -24,17 +24,17 @@ function reportes() {
                         <input
                             type="text"
                             name="cedula"
-                            class="form-control form-control-sm rounded w-25"
+                            class="input-busqueda"
                             placeholder="solicitud"
                             aria-label="Search"
                             aria-describedby="search-addon" />
-                        <button>Buscar</button>
+                        <button className="boton-busqueda">Buscar</button>
                     </div>
 
-                    <div className="fecha-inicio-finalizacion container">
+                    <div className="fecha-inicio-finalizacion">
                         <img src="/icons/calendar.png" className="iconos-reportes"></img>
-                        <input type="date" class="" placeholder="fecha de inicio"></input>
-                        <input type="date" class="" placeholder="fecha de Nacimiento"></input>
+                        <input type="text" class="input-fecha" placeholder="Fecha de inicio"></input>
+                        <input type="text" class="input-fecha" placeholder="Fecha de finalización"></input>
                         <img src="/icons/sobresalir.png" className="iconos-reportes"></img>
                     </div>
 

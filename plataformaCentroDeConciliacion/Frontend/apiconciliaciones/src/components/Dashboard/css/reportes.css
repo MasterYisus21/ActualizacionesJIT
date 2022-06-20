@@ -39,16 +39,18 @@
     border-radius: 15px;
     border: 1px solid rgba(4, 4, 4, 0.29);
 }
-.seleccionar-buscar{
+
+.seleccionar-buscar {
     width: 90%;
     height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items:inherit;
+    gap: 1%;
 }
 
-.fecha-inicio-finalizacion{
+.fecha-inicio-finalizacion {
     width: 90%;
     height: 100%;
     display: flex;
@@ -56,10 +58,62 @@
     justify-content: space-between;
 }
 
-.iconos-reportes{
+.iconos-reportes {
     width: 70px;
 }
 
-.seleccionar-reporte > label{
-    color: green;
+.seleccionar-reporte>label {
+    color: hsl(145deg 100% 28%);
+}
+
+.input-fecha {
+    text-align: center;
+    width: 30%;
+    height: 40%;
+    border-radius: 25px;
+    font-size: 30px;
+    font-weight: 500 white;
+    border: 1px solid black;
+}
+
+.input-busqueda {
+    width: 25%;
+    height: 40%;
+    border-radius: 15px;
+    font-size: 30px;
+    font-weight: 500 white;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.boton-busqueda{
+    width: 15%;
+    height: 40%;
+    border-radius: 15px;
+    font-size: 30px;
+    font-weight: 500 white;
+    border: 1px solid black;
+    text-align: center;
+    background-color: hsl(145deg 100% 28%);
+    color: white;
+}
+
+.input-reportes{
+    text-align: center;
+    width: 40%;
+    height: 40%;
+    border-radius: 25px;
+    font-size: 30px;
+    font-weight: 500 white;
+    border: 1px solid black;
+}
+
+.input-busqueda{
+    text-align: center;
+    width: 40%;
+    height: 40%;
+    border-radius: 25px;
+    font-size: 30px;
+    font-weight: 500 white;
+    border: 1px solid black;
 }
