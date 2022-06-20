@@ -63,6 +63,11 @@ class SubtemaSerializer(serializers.ModelSerializer):
         fields = '__all__'  # Coje todos los campos del modelo 
 
 
+class GeneroSerializer(serializers.ModelSerializer):
+    #Tema_Id = serializers.StringRelatedField()
+    class Meta:
+        model = Genero    # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
 class Objetivo_servicioSerializer(serializers.ModelSerializer):
     
     class Meta:

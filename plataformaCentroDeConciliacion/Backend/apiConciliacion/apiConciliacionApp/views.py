@@ -102,6 +102,9 @@ class Rol_permisoViewSet(GeneralViewSet):  # Una sola clase para los metodos de 
 class RolViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = RolSerializer
 
+class GeneroViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+    serializer_class = GeneroSerializer
+
 class PerfilViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PerfilSerializer
 

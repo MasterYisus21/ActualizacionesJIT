@@ -17,9 +17,13 @@ views.Respuestas=async(req,res)=>{
  let datos={}
 data=[]
  try{
-
+const persona=  await axios.get(config.urlApiConciliacion+"/encuestas?Solicitud_Id="+req.params.id+"&Persona_Id="+req.body[1].idpersona)
+ console.log(config.urlApiConciliacion+"/encuestas?Solicitud_Id="+req.params.id+"&Persona_Id="+req.body[1].idpersona)
+ console.log(persona.data)
  if (req.body[1].idpersona ===null |req.body[1].idpersona === ''){res.sendStatus(404);}
- else if (req.body[2].idmedioConocimiento ===null |req.body[2].idmedioConocimiento === '' ){res.sendStatus(404);}else{
+ else if (req.body[2].idmedioConocimiento ===null |req.body[2].idmedioConocimiento === '' ){res.sendStatus(404);}
+
+ else if (persona.data.length){res.sendStatus(208)}else{
    
 for await  (const iterator of req.body[0].preguntas) {
     if (iterator.idpregunta ===null |iterator.idpregunta === ''){console.log("if 1");res.sendStatus(404);break;}
