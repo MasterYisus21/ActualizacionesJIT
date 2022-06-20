@@ -18,9 +18,10 @@ app.use(cors()) // Use this after the variable declaration
 
 app.post('/auth/ingresar', (req, res) => {
     const data = req.body;
-    data.rol=1
-    data.app="conciliaciones    "
-    
+    /////////////////////////////////// 
+    data.rol = 1 
+    data.app = "CentroConciliaciones"
+    ///////////////////////////////////
     axios.post('http://127.0.0.1:4000/auth', data)
       .then(function (response) {
         // console.log(response);
@@ -36,8 +37,8 @@ app.post('/auth/ingresar', (req, res) => {
       });
 })
 
-app.get("/auth/verificar", (req, res) => {
-    axios.get("http://127.0.0.1:4000/get_identity", {
+app.post("/auth/verificar", (req, res) => {
+    axios.post("http://127.0.0.1:4000/get_identity", {}, {
         headers: {
             Authorization: req.headers.authorization
         }
@@ -51,6 +52,22 @@ app.get("/auth/verificar", (req, res) => {
         })
 })
 
+app.post("/auth/refresh", (req, res) => {
+    axios.post("http://127.0.0.1:4000/refresh", {}, {
+        headers: {
+            Authorization: req.headers.authorization
+        }
+    })
+        .then(response => {
+            res.status(200).json(response.data)
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.sendStatus(500)
+        })
+})
+
+
 app.get("/protectedView", verifier, (req, res) => {
     res.json({
         answer: "Passed Through authentication"
@@ -59,16 +76,16 @@ app.get("/protectedView", verifier, (req, res) => {
 
 
 function verifier(req, res, next) {
-    console.log(req.headers.authorization)
+    // console.log(req.headers.authorization)
     if(req.headers.authorization){
-        axios.get("http://127.0.0.1:4000/get_identity", {
+        axios.post("http://127.0.0.1:4000/get_identity", {}, {
         headers: {
             Authorization: req.headers.authorization
         }
     })
         .then(response => {
             if(response.data["logged_in_as"]){
-                console.log(response.data["logged_in_as"])
+                // console.log(response.data["logged_in_as"])
                 next()
             }
             else {
@@ -76,6 +93,9 @@ function verifier(req, res, next) {
             }
         })
         .catch(function (error) {
+            if (error.response.status == 401) {
+                res.sendStatus(401)
+            }
             res.sendStatus(404)
         })
     }
@@ -85,6 +105,7 @@ function verifier(req, res, next) {
     
 }
 
+app.use(verifier)
 
 const Solicitud = require('./routers/routers_solicitud')
 const Genericos = require('./routers/routers_genericos')
