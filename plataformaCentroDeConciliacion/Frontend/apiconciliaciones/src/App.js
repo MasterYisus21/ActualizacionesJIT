@@ -9,6 +9,7 @@ import { Dashboard } from './components/Dashboard';
 import ErrorPage from './components/ErrorPage';
 import SolicitudesView from './components/Dashboard/SolicitudesView';
 import Personas from './components/Dashboard/Personas';
+import Reportes from './components/Dashboard/reportes';
 import ModuloEncuestas from './components/ModuloSolicitud/ModuloEncuesta';
 
 
@@ -36,6 +37,7 @@ function App() {
             element={loggedIn ? <Dashboard loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> : <Navigate to="/login" replace={true} />}
           >
             <Route path='personas/' element={<Personas />}/>
+            <Route path='reportes/' element={<Reportes />}/>
             {/* ModuloSolicitudDatosGenerales  */}
             <Route path='' element={<SolicitudesView />}/>
             <Route path='modulo-solicitudes/' element={<ModuloSolicitud />}>
