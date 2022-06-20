@@ -42,7 +42,7 @@ function ModuloSolicitudAudiencia() {
                     <tbody>
                         {audiencias.map(dato => {
                             return (
-                                <tr>
+                                <tr key={dato["Id"]}>
                                     <td>{dato["Fecha_sesion"]}</td>
                                     <td>{dato["Turno_Id"]["Franja_horaria"]}</td>
                                     <td>{dato["Tipo_medio_Id"]["Nombre"]}</td>

@@ -30,7 +30,7 @@ function ModuloSolicitudHechos() {
     useEffect(() => {
         axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos")
         .then((response) => {
-            if(response.data.hasOwnProperty("Ciudad_Id")){
+            if(response.data[0].hasOwnProperty("Ciudad_Id")){
                 setDepartamento(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
                 obtenerCiudadesOpciones(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
                 setCiudad(response.data[0]["Ciudad_Id"]["Id"])
