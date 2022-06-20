@@ -1,11 +1,14 @@
 const axios = require('axios'); 
-
+var fileupload = require("express-fileupload");
 const views = {}
 const datosPersonas = require('../views/datos')
 const config =require ('../config.json');
 const { response } = require('express');
 const res = require('express/lib/response');
 const identificacion=1234
+const express = require("express");
+const app = express();
+app.use(fileupload());
 
 views.VerDocumentos=async(req,res)=>{
     let data=[]
@@ -40,14 +43,14 @@ views.VerDocumentos=async(req,res)=>{
 views.CargarDocumentos=async(req,res)=>{
    
     try{
-        axios.post(config.urlApiConciliacion+"/documentos/", req, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
+        app.post(config.urlApiConciliacion+"/documentos/", (req, res) => {
+            let username = req.body;
+            let userPicture = req.files;
+            res.send(`
+              Your username is: ${username}
+              Uploaded image name is: ${userPicture.name}
+            `);
+        });
 }catch(error){
     console.log(error)
 }
