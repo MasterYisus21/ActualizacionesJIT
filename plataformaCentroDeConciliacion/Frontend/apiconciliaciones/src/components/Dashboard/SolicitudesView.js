@@ -86,7 +86,7 @@ function SolicitudesView() {
                                 {misSolicitudes.map((datos) => {
                                     if (datos["Estado"] != "Resuelta") {
                                         return (
-                                            <tr>
+                                            <tr key={datos["Solicitud_Id"]}>
                                                 <th scope="row">{datos["Solicitud_Id"]}</th>
                                                 <td>{datos["Fecha_registro"]}</td>
                                                 <td>{datos["Tipo_Estado"]}</td>
@@ -130,7 +130,7 @@ function SolicitudesView() {
                                 {misSolicitudes.map((datos) => {
                                     if (datos["Estado"] == "Resuelta") {
                                         return (
-                                            <tr>
+                                            <tr key={datos["Solicitud_Id"]}>
                                                 <th scope="row">{datos["Solicitud_Id"]}</th>
                                                 <td>{datos["Fecha_registro"]}</td>
                                                 <td>{datos["Tipo_Estado"]}</td>
@@ -182,7 +182,7 @@ function SolicitudesView() {
 
                                 {historial.map((datos) => {
                                     return (
-                                        <tr>
+                                        <tr key={datos["Id"]}>
                                             <th scope="row">{datos["Id"]}</th>
                                             <td>{datos["Fecha"]}</td>
                                             <td>{datos["Descripcion"]}</td>
