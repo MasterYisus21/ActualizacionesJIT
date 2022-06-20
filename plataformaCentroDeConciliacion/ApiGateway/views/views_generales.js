@@ -6,7 +6,7 @@ const config =require ('../config.json');
 const { response } = require('express');
 const res = require('express/lib/response');
 const identificacion=1234
-const querystring = require('querystring');
+
 
 // views.Documentos= async(req,res)=>{
 //     try{
@@ -274,6 +274,7 @@ views.DatosCrearPersonas=async (req,res)=>{
     const cargo = await axios.get(config.urlApiConciliacion + "/tipos_cargo")
     const perfil = await axios.get(config.urlApiConciliacion + "/perfiles")
     const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado")
+    const genero = await axios.get(config.urlApiConciliacion + "/generos")
     
     datos={"departamentos":departamentos.data,
             "Tipo_documento":documento.data,
@@ -282,7 +283,8 @@ views.DatosCrearPersonas=async (req,res)=>{
             "Estrato_socioeconomico":estrato.data,
             "Tipo_cargo":cargo.data,
             "Perfil":perfil.data,
-            "Tipo_estado":estado.data
+            "Tipo_estado":estado.data,
+            "Genero":genero.data
                                             }
 
     res.status(200).json(datos)
@@ -462,4 +464,47 @@ views.Preguntas=async(req,res)=>{
     res.sendStatus(400)
 } 
 }
+
+
+
+
+
+views.CrearPersonas=async(req,res)=>{
+ 
+    let datos={}
+    try{
+      await  datosPersonas.CrearPersona(req)
+        .then(async resp=>{
+            
+        await axios.post(config.urlApiConciliacion + "/personas/",resp)
+         .then(async response=>{
+            res.status(200).json(response.data)
+           // console.log(response.data)
+            datos = {
+                "Solicitud_Id":req.params.id,
+                "Persona_Id":response.data.Id,
+                "Tipo_cliente_Id":1
+            }
+           
+             await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
+            .then(res=>{
+              console.log(res.data)
+              res.status(200).json(response.data)
+            })
+  
+            
+         })
+        })
+        
+        
+        .catch( err=>{
+            res.status(404).json(err)
+        })  
+   
+    }catch(error){
+        console.log(error)
+    }
+    
+}
+
 module.exports = views
