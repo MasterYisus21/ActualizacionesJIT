@@ -6,29 +6,25 @@ const config =require ('../config.json');
 const { response } = require('express');
 const res = require('express/lib/response');
 const identificacion=1234
-const querystring = require('querystring');
 
-// views.Documentos= async(req,res)=>{
-//     try{
+// generar documento //
 
-//         console.log(req)
 
-//     // await axios.post(config.urlApiConciliacion + "/documentos/", 
-//     // {
-//     //     Headers:{'Content-Type': `multipart/form-data;`},
-//     //     data:req.body
-//     // })
-//     // .then(resp=>{
-//     //     res.status(200).json(resp.data)
-//     // })
-//     }
-// catch(error){
+
+
+views.GenerarDocumentos= async(req,res)=>{
+    try{
+
+        console.log(req)
+
+    }
+catch(error){
     
-//     console.log(error)
-//     res.sendStatus(400)
-// }
+    console.log(error)
+    res.sendStatus(400)
+}
 
-// }  
+}  
 
 views.Ciudades= async(req,res)=>{
     try{

@@ -71,6 +71,6 @@ router.delete('/citaciones/:id',views_generales.EliminarCitacion)
 router.get('/preguntas/',views_generales.Preguntas)
 //router.post('/respuestas/',views_generales.CrearRespuesta)
 // router.post('/documentos',views_generales.Documentos)
-
+router.get('/generar/',views_generales.GenerarDocumentos)
 
 module.exports = router 
