@@ -18,12 +18,17 @@ app.use(cors()) // Use this after the variable declaration
 
 app.post('/auth/ingresar', (req, res) => {
     const data = req.body;
+    data.rol=1
+    data.app="conciliaciones    "
+    
     axios.post('http://127.0.0.1:4000/auth', data)
       .then(function (response) {
         // console.log(response);
         // req.headers['Authorization'] = "Bearer " + response.data.token
-        res.set({ "Authorization": "Bearer " + response.data.token })
+        //res.set({ "Authorization": "Bearer " + response.data.token })
+
         res.status(200).json(response.data)
+        
       })
       .catch(function (error) {
         console.log(error);
@@ -51,6 +56,7 @@ app.get("/protectedView", verifier, (req, res) => {
         answer: "Passed Through authentication"
     })
 })
+
 
 function verifier(req, res, next) {
     console.log(req.headers.authorization)

@@ -68,7 +68,7 @@ for await  (const iterator of req.body[0].preguntas) {
 views.EncuestaEspecifica=async(req,res)=>{
 
     
-   data=[]
+   
     try{
        await axios.get(config.urlApiConciliacion+"/encuestas?Solicitud_Id="+req.params.id+"&Persona_Id="+req.params.id2)
         .then(async resp=>{

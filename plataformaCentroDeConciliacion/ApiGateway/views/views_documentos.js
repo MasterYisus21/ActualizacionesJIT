@@ -36,4 +36,21 @@ views.VerDocumentos=async(req,res)=>{
 }
 
 
+
+views.CargarDocumentos=async(req,res)=>{
+   
+    try{
+        axios.post(config.urlApiConciliacion+"/documentos/", req, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+}catch(error){
+    console.log(error)
+}
+}
+
 module.exports = views

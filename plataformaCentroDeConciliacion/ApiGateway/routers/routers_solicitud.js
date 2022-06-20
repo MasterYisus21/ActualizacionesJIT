@@ -93,6 +93,7 @@ router.get('/:id/fechas/:fecha',views_audiencia.FechasDisponibles)
 
  // documentos 
  router.get('/:id/documentos',views_documento.VerDocumentos)
+ router.post('/:id/documentos',views_documento.CargarDocumentos)
 
  //router.get('/:id/respuestas',views_documento.VerDocumentos)
 module.exports = router 
