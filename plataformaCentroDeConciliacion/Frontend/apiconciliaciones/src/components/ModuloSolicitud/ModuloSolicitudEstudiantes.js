@@ -92,7 +92,7 @@ function ModuloSolicitudEstudiantes() {
                             <form className="d-flex input-group w-autd-flex input-group w-auto align-items-sm-baseline gap-1">
                                 <input
                                     type="search"
-                                    class="form-control form-control-sm rounded"
+                                    className="form-control form-control-sm rounded"
                                     placeholder="Buscar"
                                     aria-label="Search"
                                     aria-describedby="search-addon"
@@ -100,7 +100,7 @@ function ModuloSolicitudEstudiantes() {
                                 <div ref={alertContainer}></div>
                             </form>
                             <div className="d-flex align-items-end">
-                                <button type="button" class="btn btn-primary btn-sm me-3" id='boton-agregar-estudiantes'
+                                <button type="button" className="btn btn-primary btn-sm me-3" id='boton-agregar-estudiantes'
                                     onClick={() => setIsOpen(!isOpen)}>
                                     Agregar estudiantes
                                 </button>
@@ -123,7 +123,7 @@ function ModuloSolicitudEstudiantes() {
                             <tbody>
                                 {conciliadoresDisponibles.map((dato, key) => {
                                     return (
-                                        <tr>
+                                        <tr key={dato["Id"]}>
                                             <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio' value={dato["Identificacion"]}></input></td>
                                             <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
                                             <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
@@ -152,7 +152,7 @@ function ModuloSolicitudEstudiantes() {
                         <tbody>
                             {conciliadores.map((dato) => {
                                 return (
-                                    <tr>
+                                    <tr key={dato["Id"]}>
                                         <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
                                         <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
                                         <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
