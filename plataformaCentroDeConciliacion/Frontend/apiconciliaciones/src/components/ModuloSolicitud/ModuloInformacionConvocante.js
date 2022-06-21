@@ -80,7 +80,7 @@ function ModuloInformacionConvocante() {
       "Genero_Id": parseInt(event.target.sexo.value),
     }
 
-    axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/convocantes/crear_personas', data)
+    axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/convocantes/crear_personas', data)
     .then(response => {
       console.log(response)
       setIsOpen(false)
