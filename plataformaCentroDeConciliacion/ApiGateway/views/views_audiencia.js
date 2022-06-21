@@ -219,6 +219,13 @@ try{
 views.ListarCitaciones=async(req,res)=>{
    
     try{
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_consulta){
+            
+            res.sendStatus(401)
+            return
+        }
    await axios.get(config.urlApiConciliacion + "/citaciones?Solicitud_Id="+req.params.id)
     .then(async response => {
         
@@ -252,6 +259,13 @@ views.ListarCitaciones=async(req,res)=>{
 views.CitacionEspecifica=async(req,res)=>{
    
     try{
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_consulta){
+            
+            res.sendStatus(401)
+            return
+        }
     await axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id2)
     .then(response => { 
         response.data=[response.data]
@@ -285,7 +299,14 @@ views.CitacionEspecifica=async(req,res)=>{
 
 views.CrearCitacion=async(req,res)=>{
     try{
+        
     let datos ={}
+    const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_crear){
+            res.sendStatus(401)
+            return
+        }
     //console.log(req.body)
     if(req.body.Descripcion === null | ''){res.sendStatus(404)} else{
    
@@ -328,6 +349,12 @@ views.CrearCitacion=async(req,res)=>{
 
 views.FechasDisponibles=async(req,res)=>{
 try{
+    const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_crear){
+            res.sendStatus(401)
+            return
+        }
    await axios.get(config.urlApiConciliacion + "/citaciones?Fecha_sesion="+req.params.fecha)// traer los Id de todas las citaciones para esa fecha 
   
   
@@ -370,7 +397,13 @@ try{
 }
 
 views.EliminarPersonas=async(req,res)=>{
-
+    
+    const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+    if(!response.data.Permiso_eliminar){
+        res.sendStatus(401)
+        return
+    }
   datosPersonas.EliminarPersonasDeCitacion(req)
   .then(result=>{
     res.sendStatus(200)
@@ -383,7 +416,14 @@ views.EliminarPersonas=async(req,res)=>{
 }
 
 views.AsignarPersonas=async(req,res)=>{
+
     try{
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_crear){
+            res.sendStatus(401)
+            return
+        }
     await asisgnarPersonas(req)
     .then(result=>{
         

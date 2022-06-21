@@ -16,7 +16,9 @@ function ModuloEncuesta() {
         axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/personas')
             .then(response => {
                 console.log(response.data)
-                setPersonas(response.data)
+                if(response.data != "") {
+                    setPersonas(response.data)
+                }
             })
     }, [])
 

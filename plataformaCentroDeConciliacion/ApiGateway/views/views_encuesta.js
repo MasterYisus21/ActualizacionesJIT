@@ -70,6 +70,12 @@ views.EncuestaEspecifica=async(req,res)=>{
     
    
     try{
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_consulta){
+            res.sendStatus(401)
+            return
+        }
        await axios.get(config.urlApiConciliacion+"/encuestas?Solicitud_Id="+req.params.id+"&Persona_Id="+req.params.id2)
         .then(async resp=>{
             console.log(resp.data)

@@ -181,7 +181,7 @@ class Rol_permisoSerializer(serializers.ModelSerializer):
 
 class RolSerializer(serializers.ModelSerializer):
     
-    Rol_permiso_Id= serializers.StringRelatedField()
+   # Rol_permiso_Id= serializers.StringRelatedField()
     class Meta:
         model = Rol     # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 

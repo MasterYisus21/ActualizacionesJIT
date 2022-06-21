@@ -317,10 +317,9 @@ datosPersonas.SolicitudesSearch = async (response,search) => {
 
 
                 const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
-                console.log("solicitud")
-                console.log(resp.data)
+                
                 const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
-                console.log("Historicos")
+                
                 //console.log(historico.data)
                 if(historico.data.length>0){
                 const estado = (historico.data[0].Tipo_estado_Id === null | '') ? historico.data.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[0].Tipo_estado_Id).then(result=>{ historico.data.Tipo_estado_Id=result.data.Nombre});;
