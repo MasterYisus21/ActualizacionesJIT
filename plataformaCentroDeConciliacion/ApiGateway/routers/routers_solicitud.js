@@ -14,23 +14,53 @@ const views_audiencia = require('../views/views_audiencia')
 const views_encuesta = require('../views/views_encuesta')
 const views_documento = require('../views/views_documentos')
 
+
+
+
+////////////////////////////////////////////////////////// NO PROTEGIDAS ///////
+
+ // solicitud
+
+ router.get('/:id/personas',views_solicitud.Personas_de_una_solicitud)
+
+ // convocante //
+ 
+ router.get('/:id/convocantes',views_convocante.ListarConvocantes)
+ router.post('/:id/convocantes/crear_personas',views_convocante.CrearPersonasConvocante)
+ router.post('/:id/convocantes/:documento',views_convocante.AgregarConvocante)
+ 
+ router.get('/:id/convocantes/:search',views_convocante.BuscarConvocante)
+ 
+ 
+ // convocado//  
+ 
+ router.get('/:id/convocados',views_convocado.ListarConvocados)
+ router.post('/:id/convocados/crear_personas',views_convocado.CrearPersonasConvocado)
+ router.post('/:id/convocados/:documento',views_convocado.AgregarConvocado)
+ router.get('/:id/convocados/:search',views_convocado.BuscarConvocado)
+ 
+ // hechos //
+ 
+ router.get('/:id/hechos',views_hechos.ListarHechos)
+ router.post('/:id/hechos',views_hechos.AgregarHechos)
+ 
+ // manejo conflicto
+ router.get('/:id/manejos_conflicto',views_manejo_conflicto.ListarManejoConflicto)
+ router.patch('/:id/manejos_conflicto',views_manejo_conflicto.Agregar)
+
+ 
+ ///////////////////////////////////////]//Rutas Protegidas////////////////
+
 // solicitud
 
-//router.get('/',views_solicitud.Traer_datos)
 
 
 router.delete('/:id/personas/:documento',views_solicitud.EliminarPersona) // eliminar persona de solicitud
 
-
 //router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 
 
-
-
 //router.get('/:id/convocado/:documento',views_convocado.InformacionConvocado)
-
-
-
 
 
 // conciliador //
@@ -44,9 +74,6 @@ router.post('/:id/conciliadores/:identificacion',views_conciliador.AsignarConcil
 router.get('/:id/estudiantes',views_estudiantes.ListarEstudiantes)
 router.get('/:id/estudiantes/:search',views_estudiantes.BuscarEstudiante)
 router.post('/:id/estudiantes/:identificacion',views_estudiantes.AsignarEstudiante)
-
-
-
 
 
 // audiencia
@@ -64,49 +91,19 @@ router.get('/:id/fechas/:fecha',views_audiencia.FechasDisponibles)
 // audiencia
 
 
- // encuesta//
+// encuesta//
 
- router.post('/:id/respuestas',views_encuesta.Respuestas)
- router.get('/:id/encuestas/:id2',views_encuesta.EncuestaEspecifica)
-
-
- // documentos 
- router.get('/:id/documentos',views_documento.VerDocumentos)
- //router.post('/:id/documentos',views_documento.CargarDocumentos)
-
- //router.get('/:id/respuestas',views_documento.VerDocumentos)
-
- //////////////////////////////////////////////////////////
-
- // solicitud
-
-router.get('/:id/personas',views_solicitud.Personas_de_una_solicitud)
-
-// convocante //
-
-router.get('/:id/convocantes',views_convocante.ListarConvocantes)
-router.post('/:id/convocantes/crear_personas',views_convocante.CrearPersonasConvocante)
-router.post('/:id/convocantes/:documento',views_convocante.AgregarConvocante)
-
-router.get('/:id/convocantes/:search',views_convocante.BuscarConvocante)
+router.post('/:id/respuestas',views_encuesta.Respuestas)
+router.get('/:id/encuestas/:id2',views_encuesta.EncuestaEspecifica)
 
 
-// convocado//  
+// documentos 
+router.get('/:id/documentos',views_documento.VerDocumentos)
+//router.post('/:id/documentos',views_documento.CargarDocumentos)
 
-router.get('/:id/convocados',views_convocado.ListarConvocados)
-router.post('/:id/convocados/crear_personas',views_convocado.CrearPersonasConvocado)
-router.post('/:id/convocados/:documento',views_convocado.AgregarConvocado)
-router.get('/:id/convocados/:search',views_convocado.BuscarConvocado)
+//router.get('/:id/respuestas',views_documento.VerDocumentos)
 
-// hechos //
-
-router.get('/:id/hechos',views_hechos.ListarHechos)
-router.post('/:id/hechos',views_hechos.AgregarHechos)
-
-// manejo conflicto
-router.get('/:id/manejos_conflicto',views_manejo_conflicto.ListarManejoConflicto)
-router.patch('/:id/manejos_conflicto',views_manejo_conflicto.Agregar)
-
+ 
 module.exports = router 
 
 
