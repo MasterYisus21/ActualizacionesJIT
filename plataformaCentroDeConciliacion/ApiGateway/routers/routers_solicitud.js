@@ -11,6 +11,8 @@ const views_conciliador = require('../views/views_conciliador')
 const views_estudiantes = require('../views/views_estudiantes')
 const views_manejo_conflicto = require('../views/views_manejo_conflicto')
 const views_audiencia = require('../views/views_audiencia')
+const views_encuesta = require('../views/views_encuesta')
+const views_documento = require('../views/views_documentos')
 
 // solicitud
 
@@ -83,6 +85,17 @@ router.get('/:id/fechas/:fecha',views_audiencia.FechasDisponibles)
 // audiencia
 
 
+ // encuesta//
+
+ router.post('/:id/respuestas',views_encuesta.Respuestas)
+ router.get('/:id/encuestas/:id2',views_encuesta.EncuestaEspecifica)
+
+
+ // documentos 
+ router.get('/:id/documentos',views_documento.VerDocumentos)
+ //router.post('/:id/documentos',views_documento.CargarDocumentos)
+
+ //router.get('/:id/respuestas',views_documento.VerDocumentos)
 module.exports = router 
 
 

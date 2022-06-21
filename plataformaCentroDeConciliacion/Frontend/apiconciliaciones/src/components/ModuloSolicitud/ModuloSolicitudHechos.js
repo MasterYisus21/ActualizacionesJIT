@@ -1,9 +1,10 @@
-import axios from 'axios';
+
 import React, { useEffect, useRef, useState } from 'react'
 import './css/ModuloSolicitudHechos.css';
 import config from '../../config.json'
 import Select from 'react-select'
 import { useParams, useNavigate } from 'react-router-dom';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 
 function ModuloSolicitudHechos() {
@@ -20,7 +21,7 @@ function ModuloSolicitudHechos() {
     const UrlParams = useParams()
 
     useEffect(() => {
-        axios.get(config.apiGatewayURL + "/departamentos")
+        axiosApiInstance.get(config.apiGatewayURL + "/departamentos")
         .then((response) => {
             setDepartamentoOpciones(response.data)
         })
@@ -28,20 +29,22 @@ function ModuloSolicitudHechos() {
     }, []);
 
     useEffect(() => {
-        axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos")
+        axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos")
         .then((response) => {
-            setDepartamento(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
-            obtenerCiudadesOpciones(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
-            setCiudad(response.data[0]["Ciudad_Id"]["Id"])
-            setResumen(response.data[0]["Descripcion_hecho"])
-            setPretensiones(response.data[0]["Descripcion_pretension"])
-            setCuantia(response.data[0]["Cuantia"])
-            setCuantiaIndeterminada(response.data[0]["Cuantia_indeterminada"])
+            if(response.data[0].hasOwnProperty("Ciudad_Id")){
+                setDepartamento(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
+                obtenerCiudadesOpciones(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
+                setCiudad(response.data[0]["Ciudad_Id"]["Id"])
+                setResumen(response.data[0]["Descripcion_hecho"])
+                setPretensiones(response.data[0]["Descripcion_pretension"])
+                setCuantia(response.data[0]["Cuantia"])
+                setCuantiaIndeterminada(response.data[0]["Cuantia_indeterminada"])
+            }
         })
     }, [])
 
     const obtenerCiudadesOpciones = (value) => {
-        axios.get(config.apiGatewayURL + "/departamentos/" + value)
+        axiosApiInstance.get(config.apiGatewayURL + "/departamentos/" + value)
         .then((response) => {
             setCiudadesOpciones(response.data)
         })
@@ -56,7 +59,7 @@ function ModuloSolicitudHechos() {
             "Cuantia_indeterminada": cuantiaIndeterminada,
             "Ciudad_Id": event.target.Ciudad.value
         }
-        axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos", datos)
+        axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos", datos)
             .then((response) => {
                 alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
                 console.log(response.data)

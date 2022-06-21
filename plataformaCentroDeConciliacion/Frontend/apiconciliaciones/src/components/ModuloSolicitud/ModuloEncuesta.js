@@ -1,57 +1,69 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from 'react-router-dom';
+import config from '../../config.json';
 import './css/ModuloEncuesta.css';
+import axiosApiInstance from "../Utilities/axiosApiInstance";
 
 function ModuloEncuesta() {
+
+
+    const UrlParams = useParams();
+
+    const [personas, setPersonas] = useState([])
+
+    useEffect(() => {
+        axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/personas')
+            .then(response => {
+                console.log(response.data)
+                setPersonas(response.data)
+            })
+    }, [])
+
+
     return (
-        <div className="contenedor-main-encuesta">
-            <div className="cantenedor-descripcion-califcaion ">
-
-                <label className="h4">
-                    Seleciona de 1 a 5 tu calificacion siendo 1 el más bajo y 5 el más alto
-                </label>
-
+        <div className='contenedor-principal-modulo-audiencia mt-3'>
+            <div className='titulo-modulo-audiencia'>
+                <h5>Encuestas de satisfacción.</h5>
             </div>
+            {/* <div className='contenedor-boton-audiencia mb-4'>
+                <Link to='crear'>
+                    <button className='btn btn-sm btn-success boton-audiencia btn btn-primary m3-3'>Crear audiencia</button>
+                </Link>
+            </div> */}
+            <div className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
+                <table className='table table-striped table-bordered '>
+                    <thead>
+                        <tr>
+                            <th>Identificación</th>
+                            <th>Nombres y Apellidos</th>
 
-            <div className="tabla-pregunta-respuesta">
-
-                <table className="table table-bordered">
-                    <thead className="">
-                        <tr className="">
-                            <th>
-                                <h6>
-                                    Pregunta
-                                </h6>
-                            </th>
-                            <th>
-                                <h6>
-                                    Calificación
-                                </h6>
-                            </th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="w-50 p-2">
-                                <tr><h6>pregunta</h6></tr>
-                                <tr><h6>pregunta</h6></tr>
-                                <tr><h6>pregunta</h6></tr>
-                                <tr><h6>pregunta</h6></tr>
-                                <tr><h6>pregunta</h6></tr>
-                                <tr><h6>pregunta</h6></tr>
-                                <tr><h6>pregunta</h6></tr>
-                            </td>
-                            <td className="w-50 p-2">
-                                <tr><h6>Calificación</h6></tr>
+                        {personas.map(dato => {
+                            return (
+                                <tr key={dato["Id"]}>
+                                    <td>{dato["Identificacion"]}</td>
+                                    <td>{dato["Nombres"] + ' ' + dato["Apellidos"] }</td>
+                                    <td>
+                                        <Link to={'/dashboard/modulo-solicitudes/' + UrlParams["Id_solicitud"] + '/encuestas/' + dato["Id"]} className='m-0 border-0 bg-transparent' value={dato["Id"]}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                            </svg>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            )
+                        })}
 
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
-            <div className="d-flex justify-content-center gap-3">
-                <label>Medio por el que conocio el servicio: </label>
-                <button className="boton-medio-conocimiento">Medio de conocimiento</button>
-            </div>
+
+
         </div>
     )
 }

@@ -7,6 +7,24 @@ const { response } = require('express');
 const res = require('express/lib/response');
 const identificacion=1234
 
+// generar documento //
+
+
+
+
+views.GenerarDocumentos= async(req,res)=>{
+    try{
+
+        console.log(req)
+
+    }
+catch(error){
+    
+    console.log(error)
+    res.sendStatus(400)
+}
+
+}  
 
 views.Ciudades= async(req,res)=>{
     try{
@@ -252,6 +270,7 @@ views.DatosCrearPersonas=async (req,res)=>{
     const cargo = await axios.get(config.urlApiConciliacion + "/tipos_cargo")
     const perfil = await axios.get(config.urlApiConciliacion + "/perfiles")
     const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado")
+    const genero = await axios.get(config.urlApiConciliacion + "/generos")
     
     datos={"departamentos":departamentos.data,
             "Tipo_documento":documento.data,
@@ -260,7 +279,8 @@ views.DatosCrearPersonas=async (req,res)=>{
             "Estrato_socioeconomico":estrato.data,
             "Tipo_cargo":cargo.data,
             "Perfil":perfil.data,
-            "Tipo_estado":estado.data
+            "Tipo_estado":estado.data,
+            "Genero":genero.data
                                             }
 
     res.status(200).json(datos)
@@ -401,6 +421,7 @@ views.EliminarCitacion=async(req,res)=>{
 views.Preguntas=async(req,res)=>{
   
     try{
+    await axios.get(config.urlApiConciliacion + "/respuestas?Solicitud_Id="+req.params.id + "&Persona_Id="+identificacion)
     await axios.get(config.urlApiConciliacion + "/preguntas")
     .then(response=>{
    
@@ -418,14 +439,16 @@ views.Preguntas=async(req,res)=>{
 } 
 }
 
-views.Respuestas=async(req,res)=>{
-  
+
+
+views.Preguntas=async(req,res)=>{
+ 
     try{
-    await axios.get(config.urlApiConciliacion + "/respuestas")
+    await axios.get(config.urlApiConciliacion + "/preguntas")
     .then(response=>{
-   
         res.status(200).json(response.data)
-              
+        
+       
     }).catch((err) => {
         res.status(404).json(err)
     });
@@ -437,4 +460,54 @@ views.Respuestas=async(req,res)=>{
     res.sendStatus(400)
 } 
 }
+
+
+
+
+
+views.CrearPersonas=async(req,res)=>{
+    
+ 
+    let datos={}
+    try{
+      await  datosPersonas.CrearPersona(req)
+        .then(async resp=>{
+            
+        await axios.post(config.urlApiConciliacion + "/personas/",resp)
+         .then(async response=>{
+            console.log("entre")
+            if(response.data.Tipo_cargo_Id ===null | response.data.Tipo_cargo_Id ===''){res.status(200).json(response.data)}
+            else{
+                datos = {
+                    "Usuario":response.data.Identificacion,
+                    "Rol_Id":response.data.Tipo_cargo_Id,
+                    "Persona_Id":response.data.Id
+                    
+                    
+                }
+                console.log(datos)
+                await axios.post(config.urlApiConciliacion + "/usuarios/",datos)
+                .then(resp=>{
+                    res.status(200).json(response.data)
+                })
+
+               
+            }
+            
+            
+            
+         })
+        })
+        
+        
+        .catch( err=>{
+            res.status(404).json(err)
+        })  
+   
+    }catch(error){
+        console.log(error)
+    }
+    
+}
+
 module.exports = views

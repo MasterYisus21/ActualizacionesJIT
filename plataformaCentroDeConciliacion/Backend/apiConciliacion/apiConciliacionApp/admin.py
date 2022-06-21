@@ -44,6 +44,7 @@ admin.site.register(Respuesta)
 admin.site.register(Relacion_solicitud_persona)
 admin.site.register(Solicitante_servicio)
 admin.site.register(Inicio_conflicto)
+admin.site.register(Genero)
 
 
 

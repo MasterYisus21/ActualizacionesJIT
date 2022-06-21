@@ -90,7 +90,7 @@ try{
 }
 
 const CitacionEspecifica = async(response, solicitud)=>{
-    let endpoints = []
+    
     let datos=[{personas_disponibles:[]},{personas_citadas:[]}]
     let personas=[]
     let data=[]

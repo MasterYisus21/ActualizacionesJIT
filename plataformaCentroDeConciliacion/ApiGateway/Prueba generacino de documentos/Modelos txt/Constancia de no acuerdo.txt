@@ -1,0 +1,42 @@
+{nombre_apellidos_convocante}
+{numero_cedula_convocante} 
+{nombre_apellidos_convocados}
+{numero_cedula_convocado} 
+{ciudad_convocante}, 
+{barrio_convocante}
+{localidad_convocante}, 
+{telefono_convocante}, 
+{email_convocante},
+{ciudad_convocado}  
+{barrio_convocado}  
+{localidad_convocado}  
+{telefono_convocado}  
+{email_convocado}  
+
+{nombre_apellidos_conciliador} 
+{numero_identificacion_conciliador}
+{nombre_apellidos_estudiante}  
+
+
+({
+    nombre_apellidos_convocante: "John",
+    numero_cedula_convocante: 12345456,
+    ciudad_convocante:"Bogota",
+    barrio_convocante:"Santa Librada",
+    localidad_convocante:"Usme",
+    telefono_convocante:"31442",
+    email_convocante:"jairo123@gmail.com",
+    nombre_apellidos_convocados:"jairo",
+    numero_cedula_convocado:1234,
+    ciudad_convocado:"Bogota",
+    barrio_convocado:"Santa Librada",
+    localidad_convocado:"Usme",
+    telefono_convocado:"31442",
+    email_convocado:"jairo123@gmail.com",
+    nombre_apellidos_conciliador:"luz helena G",
+    numero_identificacion_conciliador: 12345,
+    nombre_apellidos_estudiante:"Kevin andres U"
+   
+})
+
+

@@ -3,13 +3,15 @@ const express = require('express')
 const router = express.Router()
 const views_generales = require('../views/views_generales')
 const views_solicitud = require('../views/views_solicitud')
-const views_convocante = require('../views/views_convocante')
-const views_convocado = require('../views/views_convocado')
-const views_hechos = require('../views/views_hechos')
-const views_conciliador = require('../views/views_conciliador')
-const views_manejo_conflicto = require('../views/views_manejo_conflicto')
-const views_audiencia = require('../views/views_audiencia')
 
+
+const axios = require('axios'); 
+const config =require ('../config.json')
+const identificacion=1234
+axios.get(config.urlApiConciliacion+"/personas?Identificacion="+identificacion).then(resp=>{
+   // console.log(resp.data[0].Id)
+    id_persona=resp.data[0].id
+    }).catch(error=>{console.log(error)})
 
 
 
@@ -54,6 +56,8 @@ router.get('/departamentos/:id/ciudades/:id2',views_generales.Localidades)
 router.get('/departamentos/:id/ciudades/:id2/barrios/:id3',views_generales.Barrios)
 
 router.get('/datos_persona',views_generales.DatosCrearPersonas)
+router.post('/personas',views_generales.CrearPersonas)
+
 
 
 // citaciones//
@@ -63,6 +67,8 @@ router.delete('/citaciones/:id',views_generales.EliminarCitacion)
 
 // encuestas//
 router.get('/preguntas/',views_generales.Preguntas)
-router.get('/respuestas/',views_generales.Respuestas)
+//router.post('/respuestas/',views_generales.CrearRespuesta)
+// router.post('/documentos',views_generales.Documentos)
+router.get('/generar/',views_generales.GenerarDocumentos)
 
 module.exports = router 

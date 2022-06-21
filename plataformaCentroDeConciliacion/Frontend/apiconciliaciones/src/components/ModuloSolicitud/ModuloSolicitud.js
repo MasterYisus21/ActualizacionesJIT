@@ -56,7 +56,7 @@ function ModuloSolicitud() {
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/manejo_conflicto"} className='modulo-solicitud-content-navbar-link'>Manejo Conflicto</Link>
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/audiencias"} className='modulo-solicitud-content-navbar-link'>Audiencia</Link>
                             <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/resultado"} className='modulo-solicitud-content-navbar-link'>Resultado</Link>
-                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/encuesta"} className='modulo-solicitud-content-navbar-link'>Encuesta</Link>
+                            <Link to={"/dashboard/modulo-solicitudes/"+UrlParams["Id_solicitud"]+"/encuestas"} className='modulo-solicitud-content-navbar-link'>Encuesta</Link>
                             
                         </>
                     }

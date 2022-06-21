@@ -9,12 +9,14 @@ import { Dashboard } from './components/Dashboard';
 import ErrorPage from './components/ErrorPage';
 import SolicitudesView from './components/Dashboard/SolicitudesView';
 import Personas from './components/Dashboard/Personas';
+import Reportes from './components/Dashboard/reportes';
 import ModuloEncuestas from './components/ModuloSolicitud/ModuloEncuesta';
+import ModuloEncuestaPreguntas from './components/ModuloSolicitud/ModuloEncuestaPreguntas';
 
 
 function App() {
 
-  const[loggedIn, setLoggedIn] = useState(true)
+  const[loggedIn, setLoggedIn] = useState(localStorage.getItem('conciliacionesToken') ? true:false)
 
   // useEffect(() => {})
 
@@ -28,7 +30,9 @@ function App() {
           {/* {loggedIn ? <Navigate to="/dashboard" replace={true} /> : <Navigate to="/login" replace={true} />} */}
           <Route
             path="/login"
-            element={<InicioSesion />}
+            element={<InicioSesion
+            loggedIn={loggedIn} setLoggedIn={setLoggedIn}  
+            />}
           />
           
           <Route
@@ -36,6 +40,7 @@ function App() {
             element={loggedIn ? <Dashboard loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> : <Navigate to="/login" replace={true} />}
           >
             <Route path='personas/' element={<Personas />}/>
+            <Route path='reportes/' element={<Reportes />}/>
             {/* ModuloSolicitudDatosGenerales  */}
             <Route path='' element={<SolicitudesView />}/>
             <Route path='modulo-solicitudes/' element={<ModuloSolicitud />}>
@@ -52,7 +57,8 @@ function App() {
               <Route path=':Id_solicitud/audiencias/crear' element={<ModuloSolicitudAudiencia_registro />}/>
               <Route path=':Id_solicitud/audiencias/:Id_audiencia' element={<ModuloSolicitudAudiencia_registro />}/>
               <Route path=':Id_solicitud/resultado' element={<ModuloSolicitudResultado />}/>
-              <Route path=':Id_solicitud/encuesta' element={<ModuloEncuesta />}/>
+              <Route path=':Id_solicitud/encuestas' element={<ModuloEncuesta />}/>
+              <Route path=':Id_solicitud/encuestas/:Id_persona' element={<ModuloEncuestaPreguntas />}/>
             </Route>
           </Route>
           <Route exact path='/' element={loggedIn ? <Navigate to="/dashboard" replace={true} /> : <Navigate to="/login" replace={true} />}></Route>

@@ -56,7 +56,10 @@ class Tipo_estadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de 
 
 class DocumentoViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
    
+    
     serializer_class = DocumentoSerializer
+    filterset_fields = ['Solicitud_Id']
+    
     def get_queryset(self,pk=None):
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
         if pk is None:
@@ -98,6 +101,9 @@ class Rol_permisoViewSet(GeneralViewSet):  # Una sola clase para los metodos de 
 
 class RolViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = RolSerializer
+
+class GeneroViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+    serializer_class = GeneroSerializer
 
 class PerfilViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PerfilSerializer

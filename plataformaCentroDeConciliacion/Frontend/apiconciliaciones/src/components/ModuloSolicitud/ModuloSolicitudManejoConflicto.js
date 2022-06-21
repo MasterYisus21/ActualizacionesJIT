@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import axios from 'axios';
 import config from '../../config.json'
 import './css/ModuloSolicitudManejoConflicto.css';
 import { useParams } from 'react-router-dom';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 function ModuloSolicitudManejoConflicto() {
     const [escalaConflicto, setEscaladaConflicto] = useState("no")
@@ -13,7 +13,7 @@ function ModuloSolicitudManejoConflicto() {
     const UrlParams = useParams()
 
     useEffect(()=> {
-        axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/manejos_conflicto")
+        axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/manejos_conflicto")
         .then((response) => {
             console.log(response.data["Flag_interviene_tercero"] )
             setEscaladaConflicto(response.data["Flag_violencia"] ? "si":"no")
@@ -27,7 +27,7 @@ function ModuloSolicitudManejoConflicto() {
             "Flag_interviene_tercero": intervieneTercero,
             "Flag_violencia": escalaConflicto == "no" ? false : true
         }
-        axios.patch(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/manejos_conflicto", data)
+        axiosApiInstance.patch(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/manejos_conflicto", data)
         .then((response) => {
             alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
         })

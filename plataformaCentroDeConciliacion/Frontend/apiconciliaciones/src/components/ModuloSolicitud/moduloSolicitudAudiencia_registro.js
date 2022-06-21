@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './css/moduloSolicitudAudiencia_registro.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import config from '../../config.json';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 function ModuloSolicitudAudiencia_registro() {
 
@@ -22,7 +22,7 @@ function ModuloSolicitudAudiencia_registro() {
 
 
     const obtenerTurnos = (event) => {
-        axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/fechas/' + event.target.value)
+        axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/fechas/' + event.target.value)
             .then(response => {
                 setTurnosDisponibles(response.data)
             })
@@ -38,7 +38,7 @@ function ModuloSolicitudAudiencia_registro() {
             "Tipo_medio_Id": tipoMedio
         }
         if (UrlParams.hasOwnProperty('Id_audiencia')) {
-            axios.patch(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"], data)
+            axiosApiInstance.patch(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"], data)
                 .then((response) => {
                     console.log(response.data)
                     navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
@@ -50,13 +50,13 @@ function ModuloSolicitudAudiencia_registro() {
                 })
 
         } else {
-            axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/', data)
+            axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/', data)
                 .then((response) => {
                     console.log(response.data)
                     navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
                     setShowPeopleForms(true)
                     alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
-                    axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + response.data["Id"])
+                    axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + response.data["Id"])
                         .then(response => {
                             console.log(response.data)
                             setPersonasPosibles(response.data[0]["personas_disponibles"])
@@ -77,7 +77,7 @@ function ModuloSolicitudAudiencia_registro() {
         const data = [
             event.target.identificacion.value,
         ]
-        axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas', data)
+        axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas', data)
             .then(response => {
                 const personas1 = personasPosibles.filter(object => {
                     return object["Identificacion"] == event.target.identificacion.value
@@ -95,7 +95,7 @@ function ModuloSolicitudAudiencia_registro() {
         const data = [
             event.target.identificacion.value,
         ]
-        axios.delete(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas/', { data: data })
+        axiosApiInstance.delete(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas/', { data: data })
             .then(response => {
                 const personas1 = personasCitadas.filter(object => {
                     return object["Identificacion"] == event.target.identificacion.value
@@ -110,7 +110,7 @@ function ModuloSolicitudAudiencia_registro() {
 
     useEffect(() => {
         if (UrlParams.hasOwnProperty('Id_audiencia')) {
-            axios.get(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"])
+            axiosApiInstance.get(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"])
                 .then(response => {
                     console.log(response.data)
                     setFecha(response.data["Fecha_sesion"])
@@ -123,7 +123,7 @@ function ModuloSolicitudAudiencia_registro() {
                         Franja_horaria: response.data["Turno_Id"]["Franja_horaria"]
                     }])
                 })
-            axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"])
+            axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"])
                 .then(response => {
                     console.log(response.data)
                     setPersonasPosibles(response.data[0]["personas_disponibles"])
@@ -136,8 +136,8 @@ function ModuloSolicitudAudiencia_registro() {
         <div className='contenedor-principal-modulo-audiencia mt-3'>
             <div className='contenedor-boton-audiencia'>
                 <Link to={'../' + UrlParams["Id_solicitud"] + '/audiencias/'}> {/* Modifica la ruta al ID */}
-                    <button className='boton-audiencia btn btn-primary'>regresar  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z" />
+                    <button className='boton-audiencia btn btn-primary'>regresar  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                        <path fillRule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z" />
                     </svg></button>
                 </Link>
             </div>
@@ -151,18 +151,18 @@ function ModuloSolicitudAudiencia_registro() {
 
                     <div className="row m-0 p-4 pt-3">
                         <label className="">Fecha de la Sesión: </label>
-                        <input type="date" class="form-control form-control-sm col mb-3" id="exampleFormControlInput1" value={fecha} onChange={(e) => { setFecha(e.target.value); obtenerTurnos(e) }} required></input>
+                        <input type="date" className="form-control form-control-sm col mb-3" id="exampleFormControlInput1" value={fecha} onChange={(e) => { setFecha(e.target.value); obtenerTurnos(e) }} required></input>
 
                         <label className="">Descripcion: </label>
                         <textarea className="form-control form-control-sm" rows="2" value={descripcion} onChange={(e) => { setDescripcion(e.target.value) }} required></textarea>
                     </div>
 
                     <div className="row m-0 p-4 pt-3">
-                        <label class="">Hora: </label>
+                        <label className="">Hora: </label>
                         <select className="form-select form-select-sm mb-3" value={turnoSeleccionado} onChange={(e) => { setTurnoSeleccionado(e.target.value) }} required>
-                            <option value="">Seleccione</option>
+                            <option key={""} value="">Seleccione</option>
                             {turnosDisponibles.map((data) => {
-                                return <option value={data["Id"]}>{data["Franja_horaria"]}</option>
+                                return <option key={data["Id"]} value={data["Id"]}>{data["Franja_horaria"]}</option>
                             })}
                         </select>
                         <label className="">Tipo de medio: </label><br></br>
@@ -172,7 +172,7 @@ function ModuloSolicitudAudiencia_registro() {
                             <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' checked={tipoMedio == 1 ? true : false} onChange={() => { setTipoMedio(1) }} required></input>
                             <label className="">Presencial </label>
                         </div>
-                        <input type="url" class="form-control col" placeholder="link" value={link} onChange={e => setLink(e.target.value)} required={tipoMedio == 2} disabled={tipoMedio != 2}></input>
+                        <input type="url" className="form-control col" placeholder="link" value={link} onChange={e => setLink(e.target.value)} required={tipoMedio == 2} disabled={tipoMedio != 2}></input>
                     </div>
                 </div>
                 <div className='pt-3 h5 d-flex align-items-center'>
@@ -197,7 +197,7 @@ function ModuloSolicitudAudiencia_registro() {
                     <tbody>
                         {personasCitadas.map(dato => {
                             return (
-                                <tr>
+                                <tr key={dato["Id"]}>
                                     <td>{dato["Identificacion"]}</td>
                                     <td>{dato["Nombres"] + " " + dato["Apellidos"]}</td>
                                     <td>{dato["Tipo_cliente"]}</td>
@@ -229,7 +229,7 @@ function ModuloSolicitudAudiencia_registro() {
                     <tbody>
                         {personasPosibles.map(dato => {
                             return (
-                                <tr>
+                                <tr key={dato["Id"]}>
                                     <td>{dato["Identificacion"]}</td>
                                     <td>{dato["Nombres"] + " " + dato["Apellidos"]}</td>
                                     <td>{dato["Tipo_cliente"]}</td>
