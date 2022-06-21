@@ -178,9 +178,10 @@ views.ListarSolicitudes = async (req, res) => {
       config.urlApiConciliacion + "/rol_permisos/" + req.idpermiso
     );
 
-    if (!response.data.Permiso_colsulta) {
-      res.sendStatus(401);
-      return;
+    if(!response.data.Permiso_consulta){
+        console.log("error")
+        res.sendStatus(401)
+        return
     }
 
     await axios
@@ -208,10 +209,11 @@ views.InformacionSolicitud = async (req, res) => {
       config.urlApiConciliacion + "/rol_permisos/" + req.idpermiso
     );
 
-    if (!response.data.Permiso_colsulta) {
-      res.sendStatus(401);
-      return;
-    }
+    if(!response.data.Permiso_consulta){
+      console.log("error")
+      res.sendStatus(401)
+      return
+  }
 
     await axios
       .get(config.urlApiConciliacion + "/solicitudes/" + req.params.id)

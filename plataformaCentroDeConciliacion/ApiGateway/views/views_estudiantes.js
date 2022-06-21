@@ -12,7 +12,7 @@ views.ListarEstudiantes=async(req,res)=>{
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
-            
+            console.log("error")
             res.sendStatus(401)
             return
         }
@@ -49,11 +49,11 @@ views.AsignarEstudiante=async(req,res)=>{
     let datos={}
     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
-        if(!response.data.Permiso_consulta){
-            
-            res.sendStatus(401)
-            return
-        }
+    if(!response.data.Permiso_consulta){
+        console.log("error")
+        res.sendStatus(401)
+        return
+    }
      
         await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
         .then(async resp => {
@@ -99,7 +99,7 @@ views.BuscarEstudiante= async(req,res)=>{
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
-            
+            console.log("error")
             res.sendStatus(401)
             return
         }

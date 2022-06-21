@@ -112,11 +112,11 @@ try{
     if(req.idpermiso==0){res.sendStatus(401);return }
     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
-        if(!response.data.Permiso_colsulta){
-            console.log("error")
-            res.sendStatus(401)
-            return
-        }
+    if(!response.data.Permiso_consulta){
+        console.log("error")
+        res.sendStatus(401)
+        return
+    }
         await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
         .then(async(result) => {
            await datosPersonas.datosBasicosDocentes(result)
@@ -144,7 +144,7 @@ views.Estudiantes= async(req,res)=>{
         if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
-        if(!response.data.Permiso_colsulta){
+        if(!response.data.Permiso_consulta){
             console.log("error")
             res.sendStatus(401)
             return
@@ -170,7 +170,8 @@ views.Solicitudesview= async (req,res)=>{
         if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
-        if(!response.data.Permiso_colsulta){
+        if(!response.data.Permiso_consulta){
+            console.log("error")
             res.sendStatus(401)
             return
         }
@@ -209,7 +210,7 @@ views.SolicitudesviewHistorial= async(req,res)=>{
         if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
-        if(!response.data.Permiso_colsulta){
+        if(!response.data.Permiso_consulta){
             console.log("error")
             res.sendStatus(401)
             return
@@ -283,7 +284,7 @@ views.InformacionPersona= async(req,res)=>{
         if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
-        if(!response.data.Permiso_colsulta){
+        if(!response.data.Permiso_consulta){
             console.log("error")
             res.sendStatus(401)
             return
@@ -391,7 +392,7 @@ try{
     if(req.idpermiso==0){res.sendStatus(401);return }
     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
-    if(!response.data.Permiso_colsulta){
+    if(!response.data.Permiso_consulta){
         console.log("error")
         res.sendStatus(401)
         return
