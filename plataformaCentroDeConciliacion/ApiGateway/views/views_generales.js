@@ -5,7 +5,7 @@ const datosPersonas = require('../views/datos')
 const config =require ('../config.json');
 const { response } = require('express');
 const res = require('express/lib/response');
-const identificacion=1234
+
 
 // generar documento //
 
@@ -107,18 +107,31 @@ try{
 }
 
 views.Docentes= async(req,res)=>{
+
 try{
-   await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
-    .then(async(result) => {
-       await datosPersonas.datosBasicosDocentes(result)
-        .then(rest=>{
-            res.status(200).json(rest)
-        })
+    const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_colsulta){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
+        await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
+        .then(async(result) => {
+           await datosPersonas.datosBasicosDocentes(result)
+            .then(rest=>{
+                res.status(200).json(rest)
+            })
+            
+        }).catch((err) => {
+            res.status(404).json(err)
+            
+        });
+   
         
-    }).catch((err) => {
-        res.status(404).json(err)
-        
-    });
+    
+    
+   
 }catch(error){
     console.log(error)
 }
@@ -127,6 +140,13 @@ try{
 
 views.Estudiantes= async(req,res)=>{
     try{
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_colsulta){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
        await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=3")
         .then(async(result) => {
            await datosPersonas.datosBasicosDocentes(result)
@@ -145,6 +165,15 @@ views.Estudiantes= async(req,res)=>{
     }
 views.Solicitudesview= async (req,res)=>{
     try{
+        
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_colsulta){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
+       let identificacion = req.identificacion
     
    // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
    await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
@@ -176,7 +205,15 @@ views.Solicitudesview= async (req,res)=>{
 
 views.SolicitudesviewHistorial= async(req,res)=>{
     try{
-   
+
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_colsulta){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
+       let identificacion = req.identificacion
    // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
     await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
     
@@ -204,6 +241,15 @@ views.SolicitudesviewHistorial= async(req,res)=>{
 }
 views.SolicitudesviewEspecificas= async(req,res)=>{
     try{
+        
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_colsulta){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
+       let identificacion = req.identificacion
     
    // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
    await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
@@ -234,6 +280,13 @@ views.InformacionPersona= async(req,res)=>{
 
     let datos={}
     try{
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_colsulta){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
    await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
     .then(async response => {
         console.log(response)
@@ -334,7 +387,14 @@ try{
 // Esta funcion envia los datos especificos de la citacio con las personas incluidaas 
 views.InformacionCitacion=async(req,res)=>{
 try{
-    let datos={}
+
+    const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+    if(!response.data.Permiso_colsulta){
+        console.log("error")
+        res.sendStatus(401)
+        return
+    }
 await axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id)
 .then(async response => {
 

@@ -18,39 +18,20 @@ const views_documento = require('../views/views_documentos')
 
 //router.get('/',views_solicitud.Traer_datos)
 
-router.get('/:id/personas',views_solicitud.Personas_de_una_solicitud)
+
 router.delete('/:id/personas/:documento',views_solicitud.EliminarPersona) // eliminar persona de solicitud
-
-
-
-
-// convocante //
-
-router.get('/:id/convocantes',views_convocante.ListarConvocantes)
-router.post('/:id/convocantes/crear_personas',views_convocante.CrearPersonasConvocante)
-router.post('/:id/convocantes/:documento',views_convocante.AgregarConvocante)
-
-router.get('/:id/convocantes/:search',views_convocante.BuscarConvocante)
 
 
 //router.get('/:id/convocante/:documento',views_convocante.InformacionConvocante)
 
 
-// convocado//  
 
-router.get('/:id/convocados',views_convocado.ListarConvocados)
-router.post('/:id/convocados/crear_personas',views_convocado.CrearPersonasConvocado)
-router.post('/:id/convocados/:documento',views_convocado.AgregarConvocado)
-router.get('/:id/convocados/:search',views_convocado.BuscarConvocado)
 
 //router.get('/:id/convocado/:documento',views_convocado.InformacionConvocado)
 
 
 
-// hechos //
 
-router.get('/:id/hechos',views_hechos.ListarHechos)
-router.post('/:id/hechos',views_hechos.AgregarHechos)
 
 // conciliador //
 
@@ -65,9 +46,7 @@ router.get('/:id/estudiantes/:search',views_estudiantes.BuscarEstudiante)
 router.post('/:id/estudiantes/:identificacion',views_estudiantes.AsignarEstudiante)
 
 
-// manejo conflicto
-router.get('/:id/manejos_conflicto',views_manejo_conflicto.ListarManejoConflicto)
-router.patch('/:id/manejos_conflicto',views_manejo_conflicto.Agregar)
+
 
 
 // audiencia

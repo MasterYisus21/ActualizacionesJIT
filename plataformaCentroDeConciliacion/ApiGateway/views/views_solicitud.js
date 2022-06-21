@@ -170,16 +170,31 @@ try{
 }
 
 views.ListarSolicitudes= async(req,res)=>{
-    console.log(req)
     try{
-    await axios.get(config.urlApiConciliacion + "/solicitudes")
-    .then(response => {
-        res.status(200).json(response.data)
-    })
-    .catch(function (error) {
-        console.log(error);
-        res.sendStatus(500)
-    })
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_colsulta){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
+    
+    if (req.rol!= 1&req.rol!= 2 ) {
+        res.sendStatus(401)
+        return
+    }
+        await axios.get(config.urlApiConciliacion + "/solicitudes")
+        .then(response => {
+            res.status(200).json(response.data)
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.sendStatus(500)
+        })
+       
+
+  
+   
 }catch(error){
     
     console.log(error)
@@ -190,6 +205,14 @@ views.ListarSolicitudes= async(req,res)=>{
 
 views.InformacionSolicitud= async(req,res)=>{
 try{
+    const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+    if(!response.data.Permiso_colsulta){
+        console.log("error")
+        res.sendStatus(401)
+        return
+    }
+   
     await axios.get(config.urlApiConciliacion + "/solicitudes/"+req.params.id)
     .then((result) => {
         console.log( result)
