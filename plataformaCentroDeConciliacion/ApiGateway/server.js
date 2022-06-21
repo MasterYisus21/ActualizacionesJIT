@@ -35,8 +35,8 @@ app.post("/auth/ingresar", async (req, res) => {
               res.status(200).json(response.data);
             })
             .catch(function (error) {
-              console.log(error);
-              res.sendStatus(500);
+             
+              res.sendStatus(401);
             });
         }else{
             res.sendStatus(401)

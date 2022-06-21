@@ -141,6 +141,7 @@ views.EliminarPersona=async(req,res)=>{
 }
 
 views.Personas_de_una_solicitud=async(req,res)=>{
+
 try{
    await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id=" + req.params.id)
     .then(response => { 
@@ -169,6 +170,7 @@ try{
 }
 
 views.ListarSolicitudes= async(req,res)=>{
+    console.log(req)
     try{
     await axios.get(config.urlApiConciliacion + "/solicitudes")
     .then(response => {
