@@ -43,8 +43,6 @@ views.VerDocumentos=async(req,res)=>{
 
 
 
-<<<<<<< HEAD
-=======
 views.CargarDocumentos=async(req,res)=>{
    
     try{
@@ -56,5 +54,4 @@ views.CargarDocumentos=async(req,res)=>{
 }
 }
 
->>>>>>> dbbf8765a1449c04a3ebd40eae2b996856af8881
 module.exports = views
