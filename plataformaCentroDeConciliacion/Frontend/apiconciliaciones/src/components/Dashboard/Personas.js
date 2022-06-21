@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function Personas() {
 
-    const [isOpen, setIsOpen] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
     const [opcionesTipoDocumento, setOpcionesTipoDocumento] = useState([])
     const [opcionesSexo, setOpcionesSexo] = useState([])
     const [opcionesTipoPersona, setOpcionesTipoPersona] = useState([])
@@ -25,42 +25,6 @@ function Personas() {
     const [ciudadSeleccionada, setCiudadSeleccionada] = useState("")
 
 
-    const agregarConvocante = (event) => {
-        event.preventDefault()
-        axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes/" + event.target.cedula.value)
-            .then((response) => {
-                if (response.status != 208) {
-                    setConvocantes([...convocantes, response.data["persona"]])
-                    alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
-                } else {
-                    alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Persona ya agregada a esta solicitud.</div>"
-                }
-
-            })
-            .catch((error) => {
-                console.log(error.response.status)
-                if (error.response.status == 404) {
-                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Persona no encontrada</div>"
-                } else {
-                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Hubo un error en el servidor, intente mas tarde.</div>"
-                }
-            })
-    }
-
-    const eliminarConvocante = (event) => {
-        event.preventDefault()
-        axiosApiInstance.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
-            .then((response) => {
-                setConvocantes(convocantes.filter((object) => {
-                    return object["Identificacion"] != event.target.value
-                }))
-                alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Eliminado correctamente</div>"
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
     const crearPersona = (event) => {
         event.preventDefault()
         const data = {
@@ -76,16 +40,16 @@ function Personas() {
             "Tipo_persona_Id": parseInt(event.target.tipoPersona.value),
             "Estrato_socioeconomico_Id": parseInt(event.target.estratoSocioeconomico.value),
             "Tipo_estado_Id": 1,
-            "Perfil_Id": null,
-            "Tipo_cargo_Id": null,
+            "Perfil_Id": parseInt(event.target.perfil.value),
+            "Tipo_cargo_Id": parseInt(event.target.Tipo_cargo.value),
             "Genero_Id": parseInt(event.target.sexo.value),
         }
 
-        axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/convocantes/crear_personas', data)
+        axios.post(config.apiGatewayURL + '/personas/', data)
             .then(response => {
                 console.log(response)
-                setIsOpen(false)
-                setConvocantes([...convocantes])
+                // setIsOpen(false)
+                // setConvocantes([...convocantes])
             })
         // api/gateway/v1/solicitudes/:Id/convocados/crear_personas
 
@@ -133,28 +97,9 @@ function Personas() {
     let location = useLocation();
     const UrlParams = useParams();
 
-    const [convocantes, setConvocantes] = useState([])
-
-    const obtenerConvocantes = () => {
-        axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes")
-            .then((response) => {
-                console.log(response.data)
-                if (response.data != "") {
-                    setConvocantes(response.data)
-                }
-            })
-    }
-
     useEffect(() => {
-        if ( opcionesDepartamentos.length == 0) {
-            obtenerOpcionesCrearPersona()
-        }
-
-    }, [isOpen])
-
-    useEffect(() => {
-        obtenerConvocantes()
-    }, [location])
+        obtenerOpcionesCrearPersona()
+    }, [])
 
     const alertContainer = useRef("");
 
@@ -170,12 +115,12 @@ function Personas() {
                         <label className="m-0 p-1 h6 mt-1">Nombre</label>
                         <div className='row gap-3 ps-3 px-2 mb-2'>
                             <input className="form-control rounded col" placeholder="Nombre(s)" name='nombres' required></input>
-                            <input className="form-control rounded col" placeholder="Apellidos" required></input>
+                            <input className="form-control rounded col" placeholder="Apellidos" name='apellidos' required></input>
                         </div>
                     </div>
                     <div className='container d-grid gap-1 mb-2'>
                         <label className="h6 mt-2">Fecha de Nacimiento</label>
-                        <input type="date" className="form-control" placeholder="fecha de Nacimiento" required></input>
+                        <input type="date" className="form-control" placeholder="fecha de Nacimiento" name='fechaNacimiento' required></input>
                     </div>
                     <div className='container d-grid gap-2 mb-2'>
                         <label className="h6 mt-2 col">Identificación</label>
@@ -184,15 +129,15 @@ function Personas() {
                                 <option value="">Tipo de Documento</option>
                                 {opcionesTipoDocumento.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
                             </select>
-                            <input className="form-control rounded col" placeholder="Número de documento" required></input>
+                            <input className="form-control rounded col" placeholder="Número de documento" name="numeroDocumento" required></input>
                         </div>
                     </div>
                     <div className='container d-grid gap-1 mb-2'>
                         <label className="h6 mt-2">Datos adicionales</label>
                         <div className=' d-grid gap-2 ps-3 px-3 mb-2'>
                             <div className='row gap-3'>
-                                <input type="email" className="form-control rounded col" placeholder="Correo" required></input>
-                                <input type="text" className="form-control rounded col" placeholder="Teléfono" required></input>
+                                <input type="email" className="form-control rounded col" placeholder="Correo" name="email" required></input>
+                                <input type="text" className="form-control rounded col" placeholder="Teléfono" name="telefono" required></input>
                             </div>
                             <div className='row gap-3'>
                                 <select className="form-select col" aria-label="Default select example" defaultValue="" name="sexo" required>
@@ -235,6 +180,7 @@ function Personas() {
                                     {opcionesBarrios.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
                                 </select>
                             </div>
+                            <hr/>
                             <div className='row gap-3'>
                                 <select className="form-select col" aria-label="Default select example" defaultValue="" name="perfil">
                                 {OpcionesPerfil.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
