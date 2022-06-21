@@ -31,26 +31,25 @@ app.post("/auth/ingresar", async (req, res) => {
               data.rol = response.data.Rol_permiso_Id;
               data.app = "CentroConciliaciones";
               await axios
-                    .get(
-                      config.urlApiConciliacion +
-                        "/personas?Identificacion=" +
-                        data.username
-                    )
-                    .then((result) => {
-                      console.log(result.data);
-                      data.nombres = result.data[0].Nombres;
-                      data.apellidos = result.data[0].Apellidos;
-                      res.status(200).json(response.data);
-                    });
-                    
-              await axios
                 .post("http://127.0.0.1:4000/auth", data)
                 .then(async function (response) {
                   // console.log(response);
                   // req.headers['Authorization'] = "Bearer " + response.data.token
                   //res.set({ "Authorization": "Bearer " + response.data.token })
 
-                  
+                  await axios
+                    .get(
+                      config.urlApiConciliacion +
+                        "/personas?Identificacion=" +
+                        data.username
+                    )
+                    .then((result) => {
+                      console.log(data.nombres =
+                         result.data[0].Nombres);
+                      response.data.nombres = result.data[0].Nombres;
+                      response.data.apellidos = result.data[0].Apellidos;
+                      res.status(200).json(response.data );
+                    });
                 })
                 .catch(function (error) {
                   res.sendStatus(401);
