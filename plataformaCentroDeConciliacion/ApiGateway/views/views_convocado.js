@@ -133,7 +133,18 @@ views.CrearPersonasConvocado=async (req,res)=>{
             
         await axios.post(config.urlApiConciliacion + "/personas/",resp)
          .then(async response=>{
-            res.status(200).json(response.data)
+
+            await axios.get(config.urlApiConciliacion+"/tipos_documento/"+response.data.Tipo_documento_Id)
+            .then(res=>{
+             console.log(config.urlApiConciliacion+"/tipos_documento/"+response.data.Tipo_documento_Id)
+             response.data.Tipo_documento_Id=res.data
+            })
+            await axios.get(config.urlApiConciliacion+"/tipos_persona/"+response.data.Tipo_persona_Id)
+            .then(resp=>{
+             response.data.Tipo_persona_Id=resp.data
+             res.status(200).json(response.data)
+            })
+           
            // console.log(response.data)
             datos = {
                 "Solicitud_Id":req.params.id,
@@ -153,7 +164,7 @@ views.CrearPersonasConvocado=async (req,res)=>{
         
         
         .catch( err=>{
-            res.status(404).json(err)
+            res.sendStatus(208)
         })  
    
     }catch(error){

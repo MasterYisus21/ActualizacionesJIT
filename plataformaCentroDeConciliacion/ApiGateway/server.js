@@ -23,16 +23,18 @@ app.post('/auth/ingresar', (req, res) => {
     data.app = "CentroConciliaciones"
     ///////////////////////////////////
     axios.post('http://127.0.0.1:4000/auth', data)
-        .then(function (response) {
-            // console.log(response);
-            // req.headers['Authorization'] = "Bearer " + response.data.token
-            res.set({ "Authorization": "Bearer " + response.data.token })
-            res.status(200).json(response.data)
-        })
-        .catch(function (error) {
-            console.log(error);
-            res.sendStatus(500)
-        });
+      .then(function (response) {
+        // console.log(response);
+        // req.headers['Authorization'] = "Bearer " + response.data.token
+        //res.set({ "Authorization": "Bearer " + response.data.token })
+
+        res.status(200).json(response.data)
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+        res.sendStatus(500)
+      });
 })
 
 app.post("/auth/verificar", (req, res) => {
@@ -108,7 +110,7 @@ async function verifier(req, res, next) {
     } 
 }
 
-app.use(verifier)
+//app.use(verifier)
 
 const Solicitud = require('./routers/routers_solicitud')
 const Genericos = require('./routers/routers_genericos')
