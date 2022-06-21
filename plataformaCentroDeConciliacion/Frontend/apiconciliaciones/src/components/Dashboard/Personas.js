@@ -180,7 +180,7 @@ function Personas() {
                     <div className='container d-grid gap-2 mb-2'>
                         <label className="h6 mt-2 col">Identificación</label>
                         <div className='row gap-3 ps-3 px-3'>
-                            <select className="form-select" aria-label="Default select example" defaultValue="" name='tipoDocumento' >
+                            <select className="form-select" aria-label="Default select example" defaultValue="" name='tipoDocumento'  required>
                                 <option value="">Tipo de Documento</option>
                                 {opcionesTipoDocumento.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
                             </select>
