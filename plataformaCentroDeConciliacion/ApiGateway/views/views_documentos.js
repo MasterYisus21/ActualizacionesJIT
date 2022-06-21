@@ -41,8 +41,6 @@ views.VerDocumentos = async (req, res) => {
     }
 }
 
-
-
 views.CargarDocumentos = async (req, res) => {
 
     try {
@@ -52,6 +50,7 @@ views.CargarDocumentos = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+
 }
 
 module.exports = views
