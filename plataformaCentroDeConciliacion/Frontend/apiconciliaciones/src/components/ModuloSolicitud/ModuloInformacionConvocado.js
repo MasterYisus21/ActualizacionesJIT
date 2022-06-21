@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import './css/ModuloInformacionConvocado.css';
 import config from '../../config.json'
 import { useLocation, useParams } from 'react-router-dom';
@@ -91,11 +91,11 @@ function ModuloInformacionConvocado() {
     }
 
     axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/convocados/crear_personas', data)
-    .then(response => {
-      console.log(response)
-      setIsOpen(false)
-      setConvocados([...convocados])
-    })
+      .then(response => {
+        console.log(response)
+        setIsOpen(false)
+        setConvocados([...convocados])
+      })
     // api/gateway/v1/solicitudes/:Id/convocados/crear_personas
 
     console.log(data)
