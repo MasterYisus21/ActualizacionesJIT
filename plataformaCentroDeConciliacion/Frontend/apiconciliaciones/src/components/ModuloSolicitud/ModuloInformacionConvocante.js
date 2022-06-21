@@ -84,7 +84,8 @@ function ModuloInformacionConvocante() {
     .then(response => {
       console.log(response)
       setIsOpen(false)
-      setConvocantes([...convocantes])
+      const persona = response.data
+      setConvocantes([...convocantes, persona])
     })
     // api/gateway/v1/solicitudes/:Id/convocados/crear_personas
 

@@ -31,13 +31,6 @@ app.post("/auth/ingresar", async (req, res) => {
               data.rol = response.data.Rol_permiso_Id;
               data.app = "CentroConciliaciones";
               await axios
-                .post("http://127.0.0.1:4000/auth", data)
-                .then(async function (response) {
-                  // console.log(response);
-                  // req.headers['Authorization'] = "Bearer " + response.data.token
-                  //res.set({ "Authorization": "Bearer " + response.data.token })
-
-                  await axios
                     .get(
                       config.urlApiConciliacion +
                         "/personas?Identificacion=" +
@@ -49,6 +42,15 @@ app.post("/auth/ingresar", async (req, res) => {
                       data.apellidos = result.data[0].Apellidos;
                       res.status(200).json(response.data);
                     });
+                    
+              await axios
+                .post("http://127.0.0.1:4000/auth", data)
+                .then(async function (response) {
+                  // console.log(response);
+                  // req.headers['Authorization'] = "Bearer " + response.data.token
+                  //res.set({ "Authorization": "Bearer " + response.data.token })
+
+                  
                 })
                 .catch(function (error) {
                   res.sendStatus(401);
@@ -115,6 +117,8 @@ app.get("/protectedView", verifier, (req, res) => {
   });
 });
 
+
+
 async function verifier(req, res, next) {
   // console.log(req.headers.authorization)
   try {
@@ -137,7 +141,9 @@ async function verifier(req, res, next) {
             // console.log(response.data["logged_in_as"])
             next();
           } else {
-            res.sendStatus(401);
+            req.idpermiso = 0
+            req.identificacion = 0
+            //res.sendStatus(401);
           }
         })
         .catch(function (error) {
@@ -147,7 +153,9 @@ async function verifier(req, res, next) {
           res.sendStatus(404);
         });
     } else {
-      res.sendStatus(401);
+      req.idpermiso = 0
+      req.identificacion = 0
+      next()
     }
   } catch (error) {
     console.log(error);
@@ -155,7 +163,7 @@ async function verifier(req, res, next) {
   }
 }
 
-//app.use(verifier);
+app.use(verifier);
 const Solicitud = require("./routers/routers_solicitud");
 const Genericos = require("./routers/routers_genericos");
 

@@ -13,45 +13,7 @@ const views_audiencia = require("../views/views_audiencia");
 const views_encuesta = require("../views/views_encuesta");
 const views_documento = require("../views/views_documentos");
 
-const verifier = async function (req, res, next) {
-  // console.log(req.headers.authorization)
-  try {
-    if (req.headers.authorization) {
-      await axios
-        .post(
-          "http://127.0.0.1:4000/get_identity",
-          {},
-          {
-            headers: {
-              Authorization: req.headers.authorization,
-            },
-          }
-        )
-        .then((response) => {
-          if (response.data["logged_in_as"]) {
-            req.idpermiso = response.data.claims.rol;
-            req.identificacion = response.data.claims.sub;
-            //  req.mivariable = response.data.
-            // console.log(response.data["logged_in_as"])
-            next();
-          } else {
-            res.sendStatus(401);
-          }
-        })
-        .catch(function (error) {
-          if (error.response.status == 401) {
-            res.sendStatus(401);
-          }
-          res.sendStatus(404);
-        });
-    } else {
-      res.sendStatus(401);
-    }
-  } catch (error) {
-    console.log(error);
-    // res.sendStatus(400)
-  }
-};
+
 
 ////////////////////////////////////////////////////////// NO PROTEGIDAS ///////
 
@@ -62,10 +24,7 @@ router.get("/:id/personas", views_solicitud.Personas_de_una_solicitud);
 // convocante //
 
 router.get("/:id/convocantes", views_convocante.ListarConvocantes);
-router.post(
-  "/:id/convocantes/crear_personas",
-  views_convocante.CrearPersonasConvocante
-);
+router.post("/:id/convocantes/crear_personas",views_convocante.CrearPersonasConvocante);
 router.post("/:id/convocantes/:documento", views_convocante.AgregarConvocante);
 
 router.get("/:id/convocantes/:search", views_convocante.BuscarConvocante);
@@ -73,10 +32,7 @@ router.get("/:id/convocantes/:search", views_convocante.BuscarConvocante);
 // convocado//
 
 router.get("/:id/convocados", views_convocado.ListarConvocados);
-router.post(
-  "/:id/convocados/crear_personas",
-  views_convocado.CrearPersonasConvocado
-);
+router.post("/:id/convocados/crear_personas",views_convocado.CrearPersonasConvocado);
 router.post("/:id/convocados/:documento", views_convocado.AgregarConvocado);
 router.get("/:id/convocados/:search", views_convocado.BuscarConvocado);
 
@@ -96,7 +52,7 @@ router.post("/:id/respuestas", views_encuesta.Respuestas);
 
 ///////////////////////////////////////]//Rutas Protegidas////////////////
 
-router.use(verifier);
+
 // solicitud
 
 router.delete("/:id/personas/:documento", views_solicitud.EliminarPersona); // eliminar persona de solicitud

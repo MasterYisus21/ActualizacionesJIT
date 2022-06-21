@@ -8,10 +8,11 @@ const datosPersonas = require('../views/datos')
 
 views.ListarEstudiantes=async(req,res)=>{
     try{
+        if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
-            
+            console.log("error")
             res.sendStatus(401)
             return
         }
@@ -44,14 +45,15 @@ views.ListarEstudiantes=async(req,res)=>{
 
 views.AsignarEstudiante=async(req,res)=>{
     try{
+        if(req.idpermiso==0){res.sendStatus(401);return }
     let datos={}
     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
-        if(!response.data.Permiso_consulta){
-            
-            res.sendStatus(401)
-            return
-        }
+    if(!response.data.Permiso_consulta){
+        console.log("error")
+        res.sendStatus(401)
+        return
+    }
      
         await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
         .then(async resp => {
@@ -93,10 +95,11 @@ views.AsignarEstudiante=async(req,res)=>{
    
 views.BuscarEstudiante= async(req,res)=>{
     try{
+        if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
-            
+            console.log("error")
             res.sendStatus(401)
             return
         }

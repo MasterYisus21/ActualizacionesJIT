@@ -5,50 +5,7 @@ const router = express.Router()
 const views_generales = require('../views/views_generales')
 const views_solicitud = require('../views/views_solicitud')
 
-
-
 const config =require ('../config.json')
-
-
-const verifier =async function (req, res, next) {
-    // console.log(req.headers.authorization)
-    try {
-      if (req.headers.authorization) {
-        await axios
-          .post(
-            "http://127.0.0.1:4000/get_identity",
-            {},
-            {
-              headers: {
-                Authorization: req.headers.authorization,
-              },
-            }
-          )
-          .then((response) => {
-            if (response.data["logged_in_as"]) {
-              req.idpermiso = response.data.claims.rol;
-              req.identificacion = response.data.claims.sub;
-              //  req.mivariable = response.data.
-              // console.log(response.data["logged_in_as"])
-              next();
-            } else {
-              res.sendStatus(401);
-            }
-          })
-          .catch(function (error) {
-            if (error.response.status == 401) {
-              res.sendStatus(401);
-            }
-            res.sendStatus(404);
-          });
-      } else {
-        res.sendStatus(401);
-      }
-    } catch (error) {
-      console.log(error);
-      // res.sendStatus(400)
-    }
-  }
 
 
 //////////////////////////////////////////////////////////// RUTAS NO PROTEGIDAS ///////////
@@ -74,7 +31,6 @@ router.get('/preguntas/',views_generales.Preguntas)
 
 ////////////////////// RUTAS PROTEGIDASSSS /////////////////
 
-router.use(verifier)
 
 
 
