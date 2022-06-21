@@ -2,16 +2,16 @@
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
-    align-items:center;
+    align-items: center;
     width: 100%;
     justify-content: space-evenly;
-    
+
 }
 
 .cantenedor-descripcion-califcaion {
     width: 80%;
     box-sizing: content-box;
-    
+
 }
 
 .tabla-pregunta-respuesta {
@@ -28,4 +28,3 @@
     color: white;
     font-size: large;
 }
-

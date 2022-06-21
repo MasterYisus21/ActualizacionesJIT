@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import './css/ModuloInformacionConvocado.css';
 import config from '../../config.json'
 import { useLocation, useParams } from 'react-router-dom';
