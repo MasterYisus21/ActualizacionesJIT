@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import './css/InicioSesion.css';
 import axios from "axios";
 import config from '../config.json'
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function InicioSesion({ loggedIn, setLoggedIn }) {
 
     let navigate = useNavigate();
+    const alertContainer = useRef("");
 
     const login = (event) => {
         event.preventDefault()
@@ -24,8 +25,10 @@ function InicioSesion({ loggedIn, setLoggedIn }) {
         })
         .catch(error => {
             console.log(error)
+            if(error.response.status == 401) {
+                alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Credenciales invalidas</div>"
+            }
         })
-        // to get token JSON.parse
     }
 
     useEffect(()=>{
@@ -51,6 +54,7 @@ function InicioSesion({ loggedIn, setLoggedIn }) {
                             <input type="password" name="password" required />
                         </div>
                     </form>
+                    <div ref={alertContainer} ></div>
                     <a href="#">¿Has olvidado tu contraseña?</a>
                     <button className="boton-login" form="form-inicio">Ingresar</button>
 
