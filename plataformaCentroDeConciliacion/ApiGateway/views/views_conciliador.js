@@ -8,6 +8,13 @@ const datosPersonas = require('../views/datos')
 
 views.ListarConciliadores=async(req,res)=>{
     try{
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_consulta){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
     await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
    .then(response => { 
    
@@ -37,7 +44,13 @@ views.ListarConciliadores=async(req,res)=>{
 
 views.AsignarConciliador=async(req,res)=>{
     try{
-
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_crear){
+            
+            res.sendStatus(401)
+            return
+        }
         let datos={}
         axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
         .then(async resp => {
@@ -86,6 +99,13 @@ views.AsignarConciliador=async(req,res)=>{
 
 views.BuscarConciliador= async(req,res)=>{
     try{
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_consulta){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
         await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
        .then(response => { 
        

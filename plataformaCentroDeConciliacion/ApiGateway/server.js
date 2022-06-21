@@ -17,32 +17,38 @@ app.post("/auth/ingresar", async (req, res) => {
     const data = req.body;
     ///////////////////////////////////
     await axios
-      .get(
-        config.urlApiConciliacion + "/usuarios?Usuario=" + data.username
-      ).catch(error=>{
+      .get(config.urlApiConciliacion + "/usuarios?Usuario=" + data.username)
+      .catch((error) => {
         res.sendStatus(401);
       })
       .then(async (response) => {
         if (response.data != "") {
           await axios
             .get(
-              config.urlApiConciliacion + 
-                "/roles/" +
-                response.data[0].Rol_Id
+              config.urlApiConciliacion + "/roles/" + response.data[0].Rol_Id
             )
             .then(async (response) => {
-              
-
-              data.rol = response.data.Rol_permiso_Id
+              data.rol = response.data.Rol_permiso_Id;
               data.app = "CentroConciliaciones";
-             await axios
+              await axios
                 .post("http://127.0.0.1:4000/auth", data)
-                .then(function (response) {
+                .then(async function (response) {
                   // console.log(response);
                   // req.headers['Authorization'] = "Bearer " + response.data.token
                   //res.set({ "Authorization": "Bearer " + response.data.token })
 
-                  res.status(200).json(response.data);
+                  await axios
+                    .get(
+                      config.urlApiConciliacion +
+                        "/personas?Identificacion=" +
+                        data.username
+                    )
+                    .then((result) => {
+                      console.log(result.data);
+                      data.nombres = result.data[0].Nombres;
+                      data.apellidos = result.data[0].Apellidos;
+                      res.status(200).json(response.data);
+                    });
                 })
                 .catch(function (error) {
                   res.sendStatus(401);
@@ -52,8 +58,7 @@ app.post("/auth/ingresar", async (req, res) => {
           res.sendStatus(401);
         }
       });
-     
-      
+
     // data.rol = 1
     // data.app = "CentroConciliaciones"
     ///////////////////////////////////
@@ -150,9 +155,7 @@ async function verifier(req, res, next) {
   }
 }
 
-
-app.use(verifier);
-
+//app.use(verifier);
 const Solicitud = require("./routers/routers_solicitud");
 const Genericos = require("./routers/routers_genericos");
 

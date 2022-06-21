@@ -113,6 +113,13 @@ console.log(req.body)
 
 views.EliminarPersona=async(req,res)=>{
     try{
+        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+    
+        if(!response.data.Permiso_eliminar){
+            console.log("error")
+            res.sendStatus(401)
+            return
+        }
    await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+req.params.documento)
     .then(async response => {
         console.log(response.data)
