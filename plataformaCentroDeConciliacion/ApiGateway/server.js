@@ -115,6 +115,8 @@ app.get("/protectedView", verifier, (req, res) => {
   });
 });
 
+
+
 async function verifier(req, res, next) {
   // console.log(req.headers.authorization)
   try {
@@ -137,7 +139,9 @@ async function verifier(req, res, next) {
             // console.log(response.data["logged_in_as"])
             next();
           } else {
-            res.sendStatus(401);
+            req.idpermiso = 0
+            req.identificacion = 0
+            //res.sendStatus(401);
           }
         })
         .catch(function (error) {
@@ -147,7 +151,9 @@ async function verifier(req, res, next) {
           res.sendStatus(404);
         });
     } else {
-      res.sendStatus(401);
+      req.idpermiso = 0
+      req.identificacion = 0
+      next()
     }
   } catch (error) {
     console.log(error);
@@ -155,7 +161,7 @@ async function verifier(req, res, next) {
   }
 }
 
-//app.use(verifier);
+app.use(verifier);
 const Solicitud = require("./routers/routers_solicitud");
 const Genericos = require("./routers/routers_genericos");
 

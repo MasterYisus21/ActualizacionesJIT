@@ -219,6 +219,7 @@ try{
 views.ListarCitaciones=async(req,res)=>{
    
     try{
+        if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
@@ -259,6 +260,7 @@ views.ListarCitaciones=async(req,res)=>{
 views.CitacionEspecifica=async(req,res)=>{
    
     try{
+        if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
@@ -299,7 +301,7 @@ views.CitacionEspecifica=async(req,res)=>{
 
 views.CrearCitacion=async(req,res)=>{
     try{
-        
+        if(req.idpermiso==0){res.sendStatus(401);return }
     let datos ={}
     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
@@ -349,6 +351,7 @@ views.CrearCitacion=async(req,res)=>{
 
 views.FechasDisponibles=async(req,res)=>{
 try{
+    if(req.idpermiso==0){res.sendStatus(401);return }
     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_crear){
@@ -397,7 +400,7 @@ try{
 }
 
 views.EliminarPersonas=async(req,res)=>{
-    
+    if(req.idpermiso==0){res.sendStatus(401);return }
     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
     if(!response.data.Permiso_eliminar){
@@ -418,6 +421,7 @@ views.EliminarPersonas=async(req,res)=>{
 views.AsignarPersonas=async(req,res)=>{
 
     try{
+        if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_crear){

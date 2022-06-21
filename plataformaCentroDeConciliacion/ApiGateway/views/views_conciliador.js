@@ -8,6 +8,7 @@ const datosPersonas = require('../views/datos')
 
 views.ListarConciliadores=async(req,res)=>{
     try{
+        if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
@@ -44,6 +45,7 @@ views.ListarConciliadores=async(req,res)=>{
 
 views.AsignarConciliador=async(req,res)=>{
     try{
+        if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_crear){
@@ -99,6 +101,7 @@ views.AsignarConciliador=async(req,res)=>{
 
 views.BuscarConciliador= async(req,res)=>{
     try{
+        if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
