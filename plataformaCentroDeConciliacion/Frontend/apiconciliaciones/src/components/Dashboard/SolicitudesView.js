@@ -24,22 +24,7 @@ function SolicitudesView() {
     }, [])
 
     useEffect(() => {
-        // setHistorial([
-        //     { Id: 3, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: 7, Flag_requiere_documento: true },
-        //     { Id: 4, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: 5, Flag_requiere_documento: false },
-        //     { Id: 5, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: 234, Flag_requiere_documento: false },
-        //     { Id: 3, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: 7, Flag_requiere_documento: true },
-        //     { Id: 3, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 7 }, Flag_requiere_documento: true },
-        //     { Id: 3, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 7 }, Flag_requiere_documento: true },
-        //     { Id: 4, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 5 }, Flag_requiere_documento: false },
-        //     { Id: 4, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 5 }, Flag_requiere_documento: false },
-        //     { Id: 4, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 5 }, Flag_requiere_documento: false },
-        //     { Id: 3, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 7 }, Flag_requiere_documento: true },
-        //     { Id: 4, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 5 }, Flag_requiere_documento: false },
-        //     { Id: 4, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 5 }, Flag_requiere_documento: false },
-        //     { Id: 4, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 5 }, Flag_requiere_documento: false },
-        //     { Id: 3, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 7 }, Flag_requiere_documento: true },
-        // ])
+
 
         axiosApiInstance.get(config.apiGatewayURL + "/solicitudes_view/historico")
         .then((response) => {

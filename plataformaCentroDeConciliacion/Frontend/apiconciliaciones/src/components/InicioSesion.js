@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './css/InicioSesion.css';
 import axios from "axios";
 import config from '../config.json'
 import { useNavigate } from 'react-router-dom';
 
-function InicioSesion() {
+function InicioSesion({ loggedIn, setLoggedIn }) {
 
     let navigate = useNavigate();
 
@@ -18,6 +18,7 @@ function InicioSesion() {
         axios.post('http://127.0.0.1:3001' + '/auth/ingresar', data)
         .then(response => {
             console.log(response.data)
+            setLoggedIn(true)
             localStorage.setItem("conciliacionesToken", JSON.stringify({access_token: response.data["access_token"], refresh_token: response.data["refresh_token"]}))
             navigate('/dashboard', { replace: true} )
         })
@@ -26,6 +27,10 @@ function InicioSesion() {
         })
         // to get token JSON.parse
     }
+
+    useEffect(()=>{
+        // localStorage.removeItem("conciliacionesToken")
+    }, [])
 
 
     return (

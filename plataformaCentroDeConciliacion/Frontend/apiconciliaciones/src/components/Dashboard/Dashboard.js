@@ -3,10 +3,16 @@ import SolicitudesView from './SolicitudesView';
 import { ModuloSolicitud } from '../ModuloSolicitud'
 
 import './css/Dashboard.css';
-import { Link, Outlet, Route, Routes } from 'react-router-dom';
+import { Link, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 
 function Dashboard({ loggedIn, setLoggedIn }) {
 
+  let navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem('conciliacionesToken')
+    navigate('/login', { replace: true} )
+  }
 
 
   return (
@@ -25,7 +31,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
           <div className='dashboard-top-navbar-utilities'>
             Centro de conciliaciones
 
-            <a href="#" className='beautiful-icon-container-1' onClick={e => setLoggedIn(false)}>
+            <a href="#" className='beautiful-icon-container-1' onClick={e => {logout()}}>
               <img className='icon' src='/icons/sign_out_icon_1.jpg' />
             </a>
 

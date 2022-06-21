@@ -1,11 +1,15 @@
 // import { useNavigate } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom';
+import config from '../../config.json'
+
 const axios = require('axios');
 const axiosApiInstance = axios.create();
-// import config from '../../config.json'
+
 
 
 const refreshAccessToken = async() => {
+  
   const refresh_token = JSON.parse(localStorage.getItem('conciliacionesToken'))["refresh_token"]
   console.log(refresh_token)
   await axios.post("http://127.0.0.1:3001" + "/auth/refresh", {}, {
@@ -19,7 +23,9 @@ const refreshAccessToken = async() => {
     return(response.data["access_token"])
   })
   .catch(error => {
+    localStorage.removeItem("conciliacionesToken")
     console.log(error)
+    window.location.href = config.webAppURL;
   })
 }
 

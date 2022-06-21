@@ -110,7 +110,7 @@ async function verifier(req, res, next) {
     } 
 }
 
-//app.use(verifier)
+app.use(verifier)
 
 const Solicitud = require('./routers/routers_solicitud')
 const Genericos = require('./routers/routers_genericos')

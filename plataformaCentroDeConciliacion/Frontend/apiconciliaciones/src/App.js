@@ -16,7 +16,7 @@ import ModuloEncuestaPreguntas from './components/ModuloSolicitud/ModuloEncuesta
 
 function App() {
 
-  const[loggedIn, setLoggedIn] = useState(true)
+  const[loggedIn, setLoggedIn] = useState(localStorage.getItem('conciliacionesToken') ? true:false)
 
   // useEffect(() => {})
 
@@ -30,7 +30,9 @@ function App() {
           {/* {loggedIn ? <Navigate to="/dashboard" replace={true} /> : <Navigate to="/login" replace={true} />} */}
           <Route
             path="/login"
-            element={<InicioSesion />}
+            element={<InicioSesion
+            loggedIn={loggedIn} setLoggedIn={setLoggedIn}  
+            />}
           />
           
           <Route
