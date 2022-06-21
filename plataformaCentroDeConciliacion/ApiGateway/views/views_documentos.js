@@ -43,18 +43,4 @@ views.VerDocumentos=async(req,res)=>{
 
 
 
-<<<<<<< HEAD
-=======
-views.CargarDocumentos=async(req,res)=>{
-   
-    try{
-
-     console.log(req.files)
-       
-}catch(error){
-    console.log(error)
-}
-}
-
->>>>>>> dbbf8765a1449c04a3ebd40eae2b996856af8881
 module.exports = views

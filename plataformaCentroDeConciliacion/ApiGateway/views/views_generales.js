@@ -6,10 +6,6 @@ const config =require ('../config.json');
 const { response } = require('express');
 const res = require('express/lib/response');
 const identificacion=1234
-<<<<<<< HEAD
-=======
-
->>>>>>> dbbf8765a1449c04a3ebd40eae2b996856af8881
 
 // generar documento //
 

@@ -3,12 +3,8 @@ const express = require('express')
 const router = express.Router()
 const views_generales = require('../views/views_generales')
 const views_solicitud = require('../views/views_solicitud')
-const views_convocante = require('../views/views_convocante')
-const views_convocado = require('../views/views_convocado')
-const views_hechos = require('../views/views_hechos')
-const views_conciliador = require('../views/views_conciliador')
-const views_manejo_conflicto = require('../views/views_manejo_conflicto')
-const views_audiencia = require('../views/views_audiencia')
+
+
 const axios = require('axios'); 
 const config =require ('../config.json')
 const identificacion=1234
