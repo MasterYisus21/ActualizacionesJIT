@@ -114,7 +114,7 @@ function ModuloSolicitudDatosGenerales(props) {
             "Solicitante_servicio_Id": e.target.solicitante.value
         }
         if(Object.keys(UrlParams).length > 0) {
-            axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"], datos)
+            axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"], datos)
             .then((response) => {
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
                 console.log(response.data)
@@ -125,7 +125,7 @@ function ModuloSolicitudDatosGenerales(props) {
                 alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"
             })
         } else {
-            axios.post(config.apiGatewayURL + "/solicitudes/", datos)
+            axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/", datos)
             .then((response) => {
                 alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
