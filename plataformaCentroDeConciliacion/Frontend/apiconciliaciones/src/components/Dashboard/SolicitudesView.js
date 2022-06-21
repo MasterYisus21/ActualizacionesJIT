@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
 import './css/SolicitudesView.css'
 import config from '../../config.json';
 import { Link } from 'react-router-dom';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 function SolicitudesView() {
 
@@ -10,7 +10,7 @@ function SolicitudesView() {
     const [historial, setHistorial] = useState([]);
 
     useEffect(() => {
-        axios.get(config.apiGatewayURL + "/solicitudes_view")
+        axiosApiInstance.get(config.apiGatewayURL + "/solicitudes_view")
             .then((response) => {
                 console.log(response.data)
                 if (response.data.length > 0) {
@@ -41,7 +41,7 @@ function SolicitudesView() {
         //     { Id: 3, Fecha: "06/06/2022", Descripcion: "desc", Solicitud_Id: { Id: 7 }, Flag_requiere_documento: true },
         // ])
 
-        axios.get(config.apiGatewayURL + "/solicitudes_view/historico")
+        axiosApiInstance.get(config.apiGatewayURL + "/solicitudes_view/historico")
         .then((response) => {
             console.log(response.data)
             if (response.data.length > 0) {

@@ -184,7 +184,8 @@ datosPersonas.CrearPersona = async (req) => {
             "Estrato_socioeconomico_Id": req.body.Estrato_socioeconomico_Id,
             "Tipo_estado_Id": 1,
             "Perfil_Id": req.body.Perfil_Id,
-            "Tipo_cargo_Id": req.body.Tipo_cargo_Id
+            "Tipo_cargo_Id": req.body.Tipo_cargo_Id,
+            "Genero_Id":req.body.Genero_Id
         }
     
 }return(datos)

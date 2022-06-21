@@ -3,6 +3,7 @@ import axios from 'axios';
 import './css/ModuloInformacionConciliador.css';
 import config from '../../config.json'
 import { useLocation, useParams } from 'react-router-dom';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 
 function ModuloInformacionConciliador() {
@@ -15,7 +16,7 @@ function ModuloInformacionConciliador() {
 
   const agregarConciliador = (event) => {
     event.preventDefault()
-    axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores/" + event.target.identificacionPersona.value)
+    axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores/" + event.target.identificacionPersona.value)
       .then((response) => {
         setIsOpen(false)
         if (response.status != 208) {
@@ -39,7 +40,7 @@ function ModuloInformacionConciliador() {
 
   const eliminarConciliadores = (event) => {
     event.preventDefault()
-    axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
+    axiosApiInstance.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
       .then((response) => {
         setConciliadores(conciliadores.filter((object) => {
           return object["Identificacion"] != event.target.value
@@ -53,10 +54,12 @@ function ModuloInformacionConciliador() {
 
 
   const obtenerConciliadores = () => {
-    axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores")
+    axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores")
       .then((response) => {
         console.log(response.data)
-        setConciliadores(response.data)
+        if (response.data != "") {
+          setConciliadores(response.data)
+        }
       })
   }
 
@@ -72,7 +75,7 @@ function ModuloInformacionConciliador() {
 
   useEffect(() => {
     if (conciliadoresDisponibles.length == 0 && isOpen) {
-      axios.get(config.apiGatewayURL + "/docentes")
+      axiosApiInstance.get(config.apiGatewayURL + "/docentes")
         .then((response) => {
           console.log(response.data)
           setConciliadoresDisponibles(response.data)
@@ -96,7 +99,7 @@ function ModuloInformacionConciliador() {
               <form className="d-flex input-group w-autd-flex input-group w-auto align-items-sm-baseline gap-1">
                 <input
                   type="search"
-                  class="form-control form-control-sm rounded"
+                  className="form-control form-control-sm rounded"
                   placeholder="Buscar"
                   aria-label="Search"
                   aria-describedby="search-addon"
@@ -104,7 +107,7 @@ function ModuloInformacionConciliador() {
                 <div ref={alertContainer}></div>
               </form>
               <div className="d-flex align-items-end">
-                <button type="button" class="btn btn-primary btn-sm me-3" id='boton-agregar-conciliador'
+                <button type="button" className="btn btn-primary btn-sm me-3" id='boton-agregar-conciliador'
                   onClick={() => setIsOpen(!isOpen)}>
                   Agregar conciliador
                 </button>
@@ -156,7 +159,7 @@ function ModuloInformacionConciliador() {
             <tbody>
               {conciliadores.map((dato) => {
                 return (
-                  <tr>
+                  <tr key={dato["Id"]}>
                     <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
                     <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
                     <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>

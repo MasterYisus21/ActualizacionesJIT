@@ -364,6 +364,17 @@ class Perfil(StateModel):
     def __str__(self):
         return str(self.Nombre)
 
+class Genero(BaseModels):
+    
+    
+
+    class Meta:
+        verbose_name = ("Genero_biologico")
+        verbose_name_plural = ("Generos_biologicos")
+
+    def __str__(self):
+        return self.Nombre
+        
 class Persona(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True)
@@ -381,6 +392,7 @@ class Persona(StateModel):
     Tipo_estado_Id=models.ForeignKey(Tipo_estado,on_delete=models.SET_NULL,blank=True,null=True)
     Perfil_Id=models.ForeignKey(Perfil,on_delete=models.SET_NULL,blank=True,null=True)
     Tipo_cargo_Id=models.ForeignKey(Tipo_cargo,on_delete=models.SET_NULL,blank=True,null=True)
+    Genero_Id=models.ForeignKey(Genero,on_delete=models.SET_NULL,blank=True,null=True,default=3)
 
 
     class Meta:
@@ -390,16 +402,7 @@ class Persona(StateModel):
     def __str__(self):
         return  '%s %s' % (self.Nombres,self.Apellidos  )
 
-class Genero_biologico(BaseModels):
-    
-    
 
-    class Meta:
-        verbose_name = ("Genero_biologico")
-        verbose_name_plural = ("Generos_biologicos")
-
-    def __str__(self):
-        return self.Nombre
 
 
 
@@ -407,7 +410,7 @@ class Genero_biologico(BaseModels):
 class Usuario(StateModel):
 
     Usuario = models.BigIntegerField(primary_key=True,auto_created=False,null=False)
-    Contraseña =models.CharField( max_length=100)
+
     Rol_Id=models.ForeignKey(Rol,on_delete=models.SET_NULL,blank=False,null=True)
     Persona_Id=models.ForeignKey(Persona,on_delete=models.SET_NULL,blank=True,null=True)
 

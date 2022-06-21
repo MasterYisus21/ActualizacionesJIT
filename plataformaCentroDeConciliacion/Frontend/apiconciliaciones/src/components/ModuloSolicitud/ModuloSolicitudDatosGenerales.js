@@ -4,6 +4,7 @@ import './css/ModuloSolicitudDatosGenerales.css';
 import config from '../../config.json'
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import ErrorPage from '../ErrorPage';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 function ModuloSolicitudDatosGenerales(props) {
     let navigate = useNavigate();
@@ -44,7 +45,7 @@ function ModuloSolicitudDatosGenerales(props) {
     const UrlParams = useParams();
     const obtenerDatosGenerales = () => {
         if(Object.keys(UrlParams).length > 0) {
-            axios.get(config.apiGatewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
+            axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
             .then(response => {
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])
@@ -66,7 +67,7 @@ function ModuloSolicitudDatosGenerales(props) {
     }
 
     const obtenerOpcionesGenerales = () => {
-        axios.get(config.apiGatewayURL + "/solicitud")
+        axiosApiInstance.get(config.apiGatewayURL + "/solicitud")
         .then(response => {
             setSolicitanteServicioOpciones(response.data["Solicitante_servicio"])
             setTipoServicioOpciones(response.data["Tipo_servicio"])
@@ -80,7 +81,7 @@ function ModuloSolicitudDatosGenerales(props) {
     }
 
     const obtenerOpcionesSubtema = (value) => {
-        axios.get(config.apiGatewayURL + "/temas/" + value)
+        axiosApiInstance.get(config.apiGatewayURL + "/temas/" + value)
         .then(response => {
             setSubTemaOpciones(response.data)
         })

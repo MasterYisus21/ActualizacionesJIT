@@ -3,9 +3,15 @@ const axios = require('axios');
 const views = {}
 const datosPersonas = require('../views/datos')
 const config =require ('../config.json');
-const { response } = require('express');
-const res = require('express/lib/response');
+
 const identificacion=1234
+
+//////////////////////////////////////////
+const express = require("express");
+var fileupload = require("express-fileupload");
+
+const app = express();
+app.use(fileupload());
 
 views.VerDocumentos=async(req,res)=>{
     let data=[]
@@ -37,4 +43,18 @@ views.VerDocumentos=async(req,res)=>{
 
 
 
+<<<<<<< HEAD
+=======
+views.CargarDocumentos=async(req,res)=>{
+   
+    try{
+
+     console.log(req.files)
+       
+}catch(error){
+    console.log(error)
+}
+}
+
+>>>>>>> dbbf8765a1449c04a3ebd40eae2b996856af8881
 module.exports = views

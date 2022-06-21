@@ -6,6 +6,10 @@ const config =require ('../config.json');
 const { response } = require('express');
 const res = require('express/lib/response');
 const identificacion=1234
+<<<<<<< HEAD
+=======
+
+>>>>>>> dbbf8765a1449c04a3ebd40eae2b996856af8881
 
 // generar documento //
 
@@ -270,6 +274,7 @@ views.DatosCrearPersonas=async (req,res)=>{
     const cargo = await axios.get(config.urlApiConciliacion + "/tipos_cargo")
     const perfil = await axios.get(config.urlApiConciliacion + "/perfiles")
     const estado = await axios.get(config.urlApiConciliacion + "/tipos_estado")
+    const genero = await axios.get(config.urlApiConciliacion + "/generos")
     
     datos={"departamentos":departamentos.data,
             "Tipo_documento":documento.data,
@@ -278,7 +283,8 @@ views.DatosCrearPersonas=async (req,res)=>{
             "Estrato_socioeconomico":estrato.data,
             "Tipo_cargo":cargo.data,
             "Perfil":perfil.data,
-            "Tipo_estado":estado.data
+            "Tipo_estado":estado.data,
+            "Genero":genero.data
                                             }
 
     res.status(200).json(datos)
@@ -458,4 +464,54 @@ views.Preguntas=async(req,res)=>{
     res.sendStatus(400)
 } 
 }
+
+
+
+
+
+views.CrearPersonas=async(req,res)=>{
+    
+ 
+    let datos={}
+    try{
+      await  datosPersonas.CrearPersona(req)
+        .then(async resp=>{
+            
+        await axios.post(config.urlApiConciliacion + "/personas/",resp)
+         .then(async response=>{
+            console.log("entre")
+            if(response.data.Tipo_cargo_Id ===null | response.data.Tipo_cargo_Id ===''){res.status(200).json(response.data)}
+            else{
+                datos = {
+                    "Usuario":response.data.Identificacion,
+                    "Rol_Id":response.data.Tipo_cargo_Id,
+                    "Persona_Id":response.data.Id
+                    
+                    
+                }
+                console.log(datos)
+                await axios.post(config.urlApiConciliacion + "/usuarios/",datos)
+                .then(resp=>{
+                    res.status(200).json(response.data)
+                })
+
+               
+            }
+            
+            
+            
+         })
+        })
+        
+        
+        .catch( err=>{
+            res.status(404).json(err)
+        })  
+   
+    }catch(error){
+        console.log(error)
+    }
+    
+}
+
 module.exports = views
