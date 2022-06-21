@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './css/ModuloSolicitudAudiencia.css';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
 import config from '../../config.json'
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 function ModuloSolicitudAudiencia() {
 
@@ -11,7 +11,7 @@ function ModuloSolicitudAudiencia() {
     const [audiencias, setAudiencias] = useState([])
 
     useEffect(() => {
-        axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones')
+        axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones')
             .then(response => {
                 console.log(response.data)
                 setAudiencias(response.data)

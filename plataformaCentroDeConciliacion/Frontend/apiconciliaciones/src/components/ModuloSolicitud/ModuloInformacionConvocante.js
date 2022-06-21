@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import axios from 'axios';
 import config from '../../config.json'
 import './css/ModuloInformacionConvocante.css';
 import { useLocation, useParams } from 'react-router-dom';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
+import axios from 'axios';
 
 
 
@@ -25,7 +26,7 @@ function ModuloInformacionConvocante() {
 
   const agregarConvocante = (event) => {
     event.preventDefault()
-    axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes/" + event.target.cedula.value)
+    axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes/" + event.target.cedula.value)
       .then((response) => {
         if (response.status != 208) {
           setConvocantes([...convocantes, response.data["persona"]])
@@ -47,7 +48,7 @@ function ModuloInformacionConvocante() {
 
   const eliminarConvocante = (event) => {
     event.preventDefault()
-    axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
+    axiosApiInstance.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
       .then((response) => {
         setConvocantes(convocantes.filter((object) => {
           return object["Identificacion"] != event.target.value
@@ -91,7 +92,7 @@ function ModuloInformacionConvocante() {
   }
 
   const obtenerOpcionesCrearPersona = () => {
-    axios.get(config.apiGatewayURL + "/datos_persona")
+    axiosApiInstance.get(config.apiGatewayURL + "/datos_persona")
       .then(response => {
         console.log(response.data)
         setOpcionesTipoDocumento(response.data["Tipo_documento"])
@@ -104,21 +105,21 @@ function ModuloInformacionConvocante() {
   }
 
   const obtenerOpcionesCiudades = (value) => {
-    axios.get(config.apiGatewayURL + "/departamentos/" + value)
+    axiosApiInstance.get(config.apiGatewayURL + "/departamentos/" + value)
       .then((response) => {
         setOpcionesCiudades(response.data)
       })
   }
 
   const obtenerOpcionesLocalidades = (value) => {
-    axios.get(config.apiGatewayURL + "/departamentos/" + departamentoSeleccionado + '/ciudades/' + value)
+    axiosApiInstance.get(config.apiGatewayURL + "/departamentos/" + departamentoSeleccionado + '/ciudades/' + value)
       .then((response) => {
         setOpcionesLocalidades(response.data)
       })
   }
 
   const obtenerOpcionesBarrios = (value) => {
-    axios.get(config.apiGatewayURL + "/departamentos/" + departamentoSeleccionado + '/ciudades/' + ciudadSeleccionada + '/barrios/' + value)
+    axiosApiInstance.get(config.apiGatewayURL + "/departamentos/" + departamentoSeleccionado + '/ciudades/' + ciudadSeleccionada + '/barrios/' + value)
       .then((response) => {
         console.log(response.data)
         setOpcionesBarrios(response.data)
@@ -132,7 +133,7 @@ function ModuloInformacionConvocante() {
   const [convocantes, setConvocantes] = useState([])
 
   const obtenerConvocantes = () => {
-    axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes")
+    axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/convocantes")
       .then((response) => {
         console.log(response.data)
         if (response.data != "") {

@@ -1,8 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import config from '../../config.json';
 import './css/ModuloEncuesta.css';
+import axiosApiInstance from "../Utilities/axiosApiInstance";
 
 
 function ModuloEncuestaPreguntas() {
@@ -28,7 +28,7 @@ function ModuloEncuestaPreguntas() {
             idmedioConocimiento: 1
         }]
         console.log(data)
-        axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + "/respuestas", data)
+        axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + "/respuestas", data)
         .then(response =>{
             // console.log(response)
             navigate("/dashboard/modulo-solicitudes/" + UrlParams["Id_solicitud"] + "/encuestas")
@@ -36,7 +36,7 @@ function ModuloEncuestaPreguntas() {
     }
 
     useEffect(() => {
-        axios.get(config.apiGatewayURL + '/preguntas')
+        axiosApiInstance.get(config.apiGatewayURL + '/preguntas')
             .then(response => {
                 console.log(response.data)
                 setPreguntas(response.data)

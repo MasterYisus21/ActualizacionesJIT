@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import config from '../../config.json';
 import './css/ModuloEncuesta.css';
+import axiosApiInstance from "../Utilities/axiosApiInstance";
 
 function ModuloEncuesta() {
 
@@ -12,7 +13,7 @@ function ModuloEncuesta() {
     const [personas, setPersonas] = useState([])
 
     useEffect(() => {
-        axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/personas')
+        axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/personas')
             .then(response => {
                 console.log(response.data)
                 setPersonas(response.data)

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import axios from 'axios';
 import './css/ModuloSolicitudEstudiantes.css';
 import config from '../../config.json'
 import { useLocation, useParams } from 'react-router-dom';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 function ModuloSolicitudEstudiantes() {
 
@@ -12,7 +12,7 @@ function ModuloSolicitudEstudiantes() {
 
     const agregarestudiantes = (event) => {
         event.preventDefault()
-        axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/estudiantes/" + event.target.identificacionPersona.value)
+        axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/estudiantes/" + event.target.identificacionPersona.value)
             .then((response) => {
                 setIsOpen(false)
                 if (response.status != 208) {
@@ -36,7 +36,7 @@ function ModuloSolicitudEstudiantes() {
 
     const eliminarConciliadores = (event) => {
         event.preventDefault()
-        axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
+        axiosApiInstance.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
             .then((response) => {
                 setConciliadores(conciliadores.filter((object) => {
                     return object["Identificacion"] != event.target.value
@@ -50,7 +50,7 @@ function ModuloSolicitudEstudiantes() {
 
 
     const obtenerConciliadores = () => {
-        axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/estudiantes")
+        axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/estudiantes")
             .then((response) => {
                 console.log(response.data)
                 if (response.data != "") {
@@ -71,7 +71,7 @@ function ModuloSolicitudEstudiantes() {
 
     useEffect(() => {
         if (conciliadoresDisponibles.length == 0 && isOpen) {
-            axios.get(config.apiGatewayURL + "/estudiantes")
+            axiosApiInstance.get(config.apiGatewayURL + "/estudiantes")
                 .then((response) => {
                     console.log(response.data)
                     setConciliadoresDisponibles(response.data)

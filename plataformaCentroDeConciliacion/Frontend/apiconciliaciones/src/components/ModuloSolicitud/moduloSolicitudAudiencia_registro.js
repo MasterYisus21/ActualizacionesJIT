@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './css/moduloSolicitudAudiencia_registro.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import config from '../../config.json';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 function ModuloSolicitudAudiencia_registro() {
 
@@ -22,7 +22,7 @@ function ModuloSolicitudAudiencia_registro() {
 
 
     const obtenerTurnos = (event) => {
-        axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/fechas/' + event.target.value)
+        axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/fechas/' + event.target.value)
             .then(response => {
                 setTurnosDisponibles(response.data)
             })
@@ -38,7 +38,7 @@ function ModuloSolicitudAudiencia_registro() {
             "Tipo_medio_Id": tipoMedio
         }
         if (UrlParams.hasOwnProperty('Id_audiencia')) {
-            axios.patch(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"], data)
+            axiosApiInstance.patch(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"], data)
                 .then((response) => {
                     console.log(response.data)
                     navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
@@ -50,13 +50,13 @@ function ModuloSolicitudAudiencia_registro() {
                 })
 
         } else {
-            axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/', data)
+            axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/', data)
                 .then((response) => {
                     console.log(response.data)
                     navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
                     setShowPeopleForms(true)
                     alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
-                    axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + response.data["Id"])
+                    axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + response.data["Id"])
                         .then(response => {
                             console.log(response.data)
                             setPersonasPosibles(response.data[0]["personas_disponibles"])
@@ -77,7 +77,7 @@ function ModuloSolicitudAudiencia_registro() {
         const data = [
             event.target.identificacion.value,
         ]
-        axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas', data)
+        axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas', data)
             .then(response => {
                 const personas1 = personasPosibles.filter(object => {
                     return object["Identificacion"] == event.target.identificacion.value
@@ -95,7 +95,7 @@ function ModuloSolicitudAudiencia_registro() {
         const data = [
             event.target.identificacion.value,
         ]
-        axios.delete(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas/', { data: data })
+        axiosApiInstance.delete(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"] + '/personas/', { data: data })
             .then(response => {
                 const personas1 = personasCitadas.filter(object => {
                     return object["Identificacion"] == event.target.identificacion.value
@@ -110,7 +110,7 @@ function ModuloSolicitudAudiencia_registro() {
 
     useEffect(() => {
         if (UrlParams.hasOwnProperty('Id_audiencia')) {
-            axios.get(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"])
+            axiosApiInstance.get(config.apiGatewayURL + '/citaciones/' + UrlParams["Id_audiencia"])
                 .then(response => {
                     console.log(response.data)
                     setFecha(response.data["Fecha_sesion"])
@@ -123,7 +123,7 @@ function ModuloSolicitudAudiencia_registro() {
                         Franja_horaria: response.data["Turno_Id"]["Franja_horaria"]
                     }])
                 })
-            axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"])
+            axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + UrlParams["Id_audiencia"])
                 .then(response => {
                     console.log(response.data)
                     setPersonasPosibles(response.data[0]["personas_disponibles"])

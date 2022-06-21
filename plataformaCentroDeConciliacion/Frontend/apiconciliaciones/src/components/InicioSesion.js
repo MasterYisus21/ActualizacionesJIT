@@ -1,7 +1,33 @@
 import React from 'react'
 import './css/InicioSesion.css';
+import axios from "axios";
+import config from '../config.json'
+import { useNavigate } from 'react-router-dom';
 
 function InicioSesion() {
+
+    let navigate = useNavigate();
+
+    const login = (event) => {
+        event.preventDefault()
+        const data = {
+            username: event.target.username.value,
+            password: event.target.password.value
+        }
+        // axios.post(config.apiGatewayURL + '/auth/ingresar', data)
+        axios.post('http://127.0.0.1:3001' + '/auth/ingresar', data)
+        .then(response => {
+            console.log(response.data)
+            localStorage.setItem("conciliacionesToken", JSON.stringify({access_token: response.data["access_token"], refresh_token: response.data["refresh_token"]}))
+            navigate('/dashboard', { replace: true} )
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        // to get token JSON.parse
+    }
+
+
     return (
         <div className='wrapper-main'>
             <div className="main">
@@ -10,14 +36,14 @@ function InicioSesion() {
                     <div className="logo">
                         <img src="images/logo@2x.png" />
                     </div>
-                    <form className="form-inicio-sesion" id="form-inicio">
+                    <form className="form-inicio-sesion" id="form-inicio" onSubmit={login}>
                         <div className="user">
                             <img src="images/people.png" />
-                            <input type="text" required />
+                            <input type="text" name='username' required />
                         </div>
                         <div className="password">
                             <img src="images/padlock.png" />
-                            <input type="password" required />
+                            <input type="password" name="password" required />
                         </div>
                     </form>
                     <a href="#">¿Has olvidado tu contraseña?</a>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import './css/ModuloInformacionConciliador.css';
 import config from '../../config.json'
 import { useLocation, useParams } from 'react-router-dom';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 
 function ModuloInformacionConciliador() {
@@ -15,7 +16,7 @@ function ModuloInformacionConciliador() {
 
   const agregarConciliador = (event) => {
     event.preventDefault()
-    axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores/" + event.target.identificacionPersona.value)
+    axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores/" + event.target.identificacionPersona.value)
       .then((response) => {
         setIsOpen(false)
         if (response.status != 208) {
@@ -39,7 +40,7 @@ function ModuloInformacionConciliador() {
 
   const eliminarConciliadores = (event) => {
     event.preventDefault()
-    axios.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
+    axiosApiInstance.delete(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/personas/" + event.target.value)
       .then((response) => {
         setConciliadores(conciliadores.filter((object) => {
           return object["Identificacion"] != event.target.value
@@ -53,7 +54,7 @@ function ModuloInformacionConciliador() {
 
 
   const obtenerConciliadores = () => {
-    axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores")
+    axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/conciliadores")
       .then((response) => {
         console.log(response.data)
         if (response.data != "") {
@@ -74,7 +75,7 @@ function ModuloInformacionConciliador() {
 
   useEffect(() => {
     if (conciliadoresDisponibles.length == 0 && isOpen) {
-      axios.get(config.apiGatewayURL + "/docentes")
+      axiosApiInstance.get(config.apiGatewayURL + "/docentes")
         .then((response) => {
           console.log(response.data)
           setConciliadoresDisponibles(response.data)
