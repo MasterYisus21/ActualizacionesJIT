@@ -19,7 +19,9 @@ app.post("/auth/ingresar", async (req, res) => {
     await axios
       .get(
         config.urlApiConciliacion + "/usuarios?Usuario=" + data.username
-      )
+      ).catch(error=>{
+        res.sendStatus(401);
+      })
       .then(async (response) => {
         if (response.data != "") {
           await axios
@@ -50,6 +52,8 @@ app.post("/auth/ingresar", async (req, res) => {
           res.sendStatus(401);
         }
       });
+     
+      
     // data.rol = 1
     // data.app = "CentroConciliaciones"
     ///////////////////////////////////
@@ -145,6 +149,7 @@ async function verifier(req, res, next) {
     // res.sendStatus(400)
   }
 }
+
 
 app.use(verifier);
 

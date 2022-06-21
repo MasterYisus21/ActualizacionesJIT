@@ -29,7 +29,7 @@ router.get('/citaciones/:id',views_generales.InformacionCitacion)// trae los dat
 // Solicitudesviews//
 router.get('/solicitudes_view',views_generales.Solicitudesview) // trae las solicitudes de la persoas que ingrese
 router.get('/solicitudes_view/historico',views_generales.SolicitudesviewHistorial) // trae el historial de las solicitudes de la eprsona que ingrese
-router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
+//router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
 
 
 // Traer y agregar solicitudes 
@@ -62,4 +62,26 @@ router.delete('/citaciones/:id',views_generales.EliminarCitacion)
 // router.post('/documentos',views_generales.Documentos)
 router.get('/generar/',views_generales.GenerarDocumentos)
 
+
+
+////////////////////////////////////////////////////////////
+router.get('/temas/:id',views_generales.Subtema) // trae los temas
+router.post('/solicitudes/',views_solicitud.CrearSolicitud)// Crea una solicitud
+router.get('/solicitud',views_solicitud.Traer_datos)
+
+
+// crear personas
+
+router.get('/departamentos',views_generales.ListarDepartamentos)
+router.get('/departamentos/:id',views_generales.Ciudades)
+router.get('/departamentos/:id/ciudades/:id2',views_generales.Localidades)
+router.get('/departamentos/:id/ciudades/:id2/barrios/:id3',views_generales.Barrios)
+
+router.get('/datos_persona',views_generales.DatosCrearPersonas)
+router.post('/personas',views_generales.CrearPersonas)
+
+// encuestas//
+router.get('/preguntas/',views_generales.Preguntas)
+
+module.exports = router 
 module.exports = router 
