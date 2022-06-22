@@ -12,6 +12,8 @@ import Personas from './components/Dashboard/Personas';
 import Reportes from './components/Dashboard/reportes';
 import ModuloEncuestas from './components/ModuloSolicitud/ModuloEncuesta';
 import ModuloEncuestaPreguntas from './components/ModuloSolicitud/ModuloEncuestaPreguntas';
+import FormularioSolicitud from './components/FormularioSolicitud';
+import Home from './components/Home';
 
 
 function App() {
@@ -61,7 +63,15 @@ function App() {
               <Route path=':Id_solicitud/encuestas/:Id_persona' element={<ModuloEncuestaPreguntas />}/>
             </Route>
           </Route>
-          <Route exact path='/' element={loggedIn ? <Navigate to="/dashboard" replace={true} /> : <Navigate to="/login" replace={true} />}></Route>
+
+          <Route
+            path="/nueva-solicitud"
+            // element={<Dashboard />}
+            element={<FormularioSolicitud />}
+          />
+
+          {/* <Route exact path='/' element={loggedIn ? <Navigate to="/dashboard" replace={true} /> : <Navigate to="/login" replace={true} />}></Route> */}
+          <Route exact path='/' element={<Home />}></Route>
           <Route path='/page-not-found' element={<ErrorPage  code={404} codeMessage={"Pagina no encontrada"} message={"La URL buscada no existe"} />}></Route>
           <Route path='*' element={<ErrorPage  code={404} codeMessage={"Pagina no encontrada"} message={"La URL buscada no existe"} />}></Route>
       </Routes>
