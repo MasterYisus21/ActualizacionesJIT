@@ -47,7 +47,8 @@ function ModuloSolicitudDatosGenerales() {
 
     const UrlParams = useParams();
     const obtenerDatosGenerales = () => {
-        if(Object.keys(UrlParams).length > 0) {
+        if(UrlParams.hasOwnProperty('Id_solicitud')) {
+            console.log(UrlParams["Id_solicitud"])
             axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
             .then(response => {
                 console.log(response.data)
