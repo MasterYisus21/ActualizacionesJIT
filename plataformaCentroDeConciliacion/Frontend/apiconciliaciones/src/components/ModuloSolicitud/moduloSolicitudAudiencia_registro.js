@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './css/moduloSolicitudAudiencia_registro.css';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import config from '../../config.json';
 import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 function ModuloSolicitudAudiencia_registro() {
+
+    const [estado, setEstado] = useOutletContext();
 
     const UrlParams = useParams();
     const alertContainer = useRef("");
@@ -65,6 +67,7 @@ function ModuloSolicitudAudiencia_registro() {
                     axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
                     .then(response=>{
                         console.log("Estado cambiado")
+                        setEstado(response.data)
                     })
                     axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + response.data["Id"])
                         .then(response => {

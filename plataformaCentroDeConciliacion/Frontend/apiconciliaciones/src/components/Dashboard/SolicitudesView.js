@@ -113,7 +113,7 @@ function SolicitudesView() {
                             <tbody>
 
                                 {misSolicitudes.map((datos) => {
-                                    if (datos["Estado"] == "Resuelta") {
+                                    if (datos["Estado"] == "Cerrada") {
                                         return (
                                             <tr key={datos["Solicitud_Id"]}>
                                                 <th scope="row">{datos["Solicitud_Id"]}</th>

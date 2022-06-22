@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useOutletContext, useParams } from 'react-router-dom';
 import config from '../../config.json';
 import './css/ModuloEncuesta.css';
 import axiosApiInstance from "../Utilities/axiosApiInstance";
 
 function ModuloEncuesta() {
 
+    const [estado, setEstado] = useOutletContext();
 
     const UrlParams = useParams();
 
@@ -22,6 +23,7 @@ function ModuloEncuesta() {
         axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
         .then(response=>{
             console.log("Estado cambiado")
+            setEstado(response.data)
         })
     }
 

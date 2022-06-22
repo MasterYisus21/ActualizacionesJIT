@@ -20,6 +20,7 @@ function ModuloSolicitud() {
     const UrlParams = useParams();
 
     const [estado, setEstado] = useState({})
+    
 
     const getStatus = () => {
         axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud')
@@ -91,7 +92,7 @@ function ModuloSolicitud() {
                         {/* <ModuloSolicitudManejoConflicto /> */}
                         {/* <ModuloSolicitudResultado />  */}
                         {/* <ModuloEncuesta />  */}
-                        <Outlet />
+                        <Outlet context={[estado, setEstado]} />
                     </div>
 
                     <div className="wrapper">

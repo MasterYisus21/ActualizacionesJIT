@@ -3,11 +3,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import './css/ModuloSolicitudHechos.css';
 import config from '../../config.json'
 import Select from 'react-select'
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 
 function ModuloSolicitudHechos() {
+
+    const [estado, setEstado] = useOutletContext();
 
     const [departamentoOpciones, setDepartamentoOpciones] = useState([])
     const [ciudadesOpciones, setCiudadesOpciones] = useState([])
@@ -70,6 +72,7 @@ function ModuloSolicitudHechos() {
                 axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
                 .then(response=>{
                     console.log("Estado cambiado")
+                    setEstado(response.data)
                 })
         })
             .catch(error => {
