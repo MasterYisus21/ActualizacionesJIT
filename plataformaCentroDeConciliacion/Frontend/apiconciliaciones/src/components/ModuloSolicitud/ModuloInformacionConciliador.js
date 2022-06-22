@@ -22,6 +22,15 @@ function ModuloInformacionConciliador() {
         if (response.status != 208) {
           setConciliadores([...conciliadores, response.data["persona"]])
           alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Agregado correctamente</div>"
+          const dataEstado = {
+            "Descripcion": "Descripcion",
+            "Flag_requiere_documento": false,
+            "Tipo_estado_Id": 2
+          }
+          axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
+            .then(response => {
+              console.log("Estado cambiado")
+            })
         }
         else {
           alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>Persona ya agregada a esta solicitud.</div>"

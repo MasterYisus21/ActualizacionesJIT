@@ -8,6 +8,7 @@ import axiosApiInstance from "../Utilities/axiosApiInstance";
 function ModuloEncuestaPreguntas() {
 
     const [preguntas, setPreguntas] = useState([])
+    const [respuestas, setRespuestas] = useState([])
     const UrlParams = useParams();
     const navigate = useNavigate();
 
@@ -34,6 +35,17 @@ function ModuloEncuestaPreguntas() {
             navigate("/dashboard/modulo-solicitudes/" + UrlParams["Id_solicitud"] + "/encuestas")
         })
     }
+
+    useEffect(()=> {
+        // console.log(UrlParams)
+        if(UrlParams.hasOwnProperty("Id_persona")) {
+            axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/encuestas/' + UrlParams["Id_persona"])
+            .then(response => {
+                console.log(response.data)
+                setRespuestas(response.data)
+            })
+        }
+    }, [])
 
     useEffect(() => {
         axiosApiInstance.get(config.apiGatewayURL + '/preguntas')
@@ -79,19 +91,19 @@ function ModuloEncuestaPreguntas() {
                                     </td>
                                     <td className="w-50 p-2">
                                         <div className="btn-group" role="group">
-                                            <input type="radio" className="btn-check" id={"btnradio1" + dato["Id"]} name={"a" + dato["Id"]} value="1" />
+                                            <input type="radio" className="btn-check" id={"btnradio1" + dato["Id"]} name={"a" + dato["Id"]} value="1" checked={respuestas.length > 0 ? respuestas.filter(dato2 => {console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"]})[0]["Calificacion"] == "1" : null}/>
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio1" + dato["Id"]}>1</label>
 
-                                            <input type="radio" className="btn-check" id={"btnradio2" + dato["Id"]} name={"a" + dato["Id"]} value="2" />
+                                            <input type="radio" className="btn-check" id={"btnradio2" + dato["Id"]} name={"a" + dato["Id"]} value="2" checked={respuestas.length > 0 ? respuestas.filter(dato2 => {console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"]})[0]["Calificacion"] == "2" : null} />
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio2" + dato["Id"]}>2</label>
 
-                                            <input type="radio" className="btn-check" id={"btnradio3" + dato["Id"]} name={"a" + dato["Id"]} value="3" defaultChecked={true} />
+                                            <input type="radio" className="btn-check" id={"btnradio3" + dato["Id"]} name={"a" + dato["Id"]} value="3" checked={respuestas.length > 0 ? respuestas.filter(dato2 => {console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"]})[0]["Calificacion"] == "3" : null} />
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio3" + dato["Id"]}>3</label>
 
-                                            <input type="radio" className="btn-check" id={"btnradio4" + dato["Id"]} name={"a" + dato["Id"]} value="4" />
+                                            <input type="radio" className="btn-check" id={"btnradio4" + dato["Id"]} name={"a" + dato["Id"]} value="4" checked={respuestas.length > 0 ? respuestas.filter(dato2 => {console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"]})[0]["Calificacion"] == "4" : null} />
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio4" + dato["Id"]}>4</label>
 
-                                            <input type="radio" className="btn-check" id={"btnradio5" + dato["Id"]} name={"a" + dato["Id"]} value="5" />
+                                            <input type="radio" className="btn-check" id={"btnradio5" + dato["Id"]} name={"a" + dato["Id"]} value="5" checked={respuestas.length > 0 ? respuestas.filter(dato2 => {console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"]})[0]["Calificacion"] == "5" : null} />
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio5" + dato["Id"]}>5</label>
                                         </div>
                                     </td>

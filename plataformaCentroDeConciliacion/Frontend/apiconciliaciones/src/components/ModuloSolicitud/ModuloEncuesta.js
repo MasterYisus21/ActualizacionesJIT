@@ -1,22 +1,37 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useOutletContext, useParams } from 'react-router-dom';
 import config from '../../config.json';
 import './css/ModuloEncuesta.css';
 import axiosApiInstance from "../Utilities/axiosApiInstance";
 
 function ModuloEncuesta() {
 
+    const [estado, setEstado] = useOutletContext();
 
     const UrlParams = useParams();
 
     const [personas, setPersonas] = useState([])
 
+    const cerrarCaso = (event) => {
+        event.preventDefault()
+        const dataEstado = {
+            "Descripcion": "Descripcion",
+            "Flag_requiere_documento": false,
+            "Tipo_estado_Id": 7
+        }
+        axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
+        .then(response=>{
+            console.log("Estado cambiado")
+            setEstado(response.data)
+        })
+    }
+
     useEffect(() => {
         axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/personas')
             .then(response => {
                 console.log(response.data)
-                if(response.data != "") {
+                if (response.data != "") {
                     setPersonas(response.data)
                 }
             })
@@ -48,7 +63,7 @@ function ModuloEncuesta() {
                             return (
                                 <tr key={dato["Id"]}>
                                     <td>{dato["Identificacion"]}</td>
-                                    <td>{dato["Nombres"] + ' ' + dato["Apellidos"] }</td>
+                                    <td>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
                                     <td>
                                         <Link to={'/dashboard/modulo-solicitudes/' + UrlParams["Id_solicitud"] + '/encuestas/' + dato["Id"]} className='m-0 border-0 bg-transparent' value={dato["Id"]}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -64,7 +79,15 @@ function ModuloEncuesta() {
                     </tbody>
                 </table>
             </div>
-
+            <form onSubmit={cerrarCaso}>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="cerrarCasoCheckbox" required />
+                        <label class="form-check-label" for="cerrarCasoCheckbox" >
+                            Cerrar Caso
+                        </label>
+                </div>
+                <button class="btn btn-danger">Cerrar caso</button>
+            </form>
 
         </div>
     )

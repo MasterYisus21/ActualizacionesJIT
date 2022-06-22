@@ -1,12 +1,15 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './css/ModuloSolicitudDatosGenerales.css';
 import config from '../../config.json'
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, useOutletContext } from 'react-router-dom';
 import ErrorPage from '../ErrorPage';
 import axiosApiInstance from '../Utilities/axiosApiInstance';
 
-function ModuloSolicitudDatosGenerales(props) {
+function ModuloSolicitudDatosGenerales() {
+
+    const [estado, setEstado] = useOutletContext();
+
     let navigate = useNavigate();
     const date = new Date()
     const today = date.getFullYear() + '-' + (date.getMonth().toString().length > 1 ? (1+date.getMonth()) : '0' + (1 + date.getMonth())) + '-' + (date.getDate().toString().length > 1 ? (date.getDate()) : '0' + (date.getDate()));
@@ -130,7 +133,7 @@ function ModuloSolicitudDatosGenerales(props) {
                 alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
                 setNumeroCaso(response.data["Numero_caso"])
-                
+                setEstado({Tipo_estado_Id: 1})
         })
         }
         

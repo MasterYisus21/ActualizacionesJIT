@@ -327,7 +327,7 @@ class Rol_permiso(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True,)
     Descripcion = models.CharField(max_length=100,blank=False,null=False,unique=True)
-    Permiso_cosulta= models.BooleanField(default=False,blank=False,null=False)
+    Permiso_consulta= models.BooleanField(default=False,blank=False,null=False)
     Permiso_crear= models.BooleanField(default=False,blank=False,null=False)
     Permiso_actualizar= models.BooleanField(default=False,blank=False,null=False)
     Permiso_eliminar= models.BooleanField(default=False,blank=False,null=False)
@@ -337,7 +337,7 @@ class Rol_permiso(StateModel):
         verbose_name_plural = ("Rol_permisos")
 
     def __str__(self):
-        return str(self.Descipcion)
+        return str(self.Descripcion)
 
 class Rol(BaseModels):
 

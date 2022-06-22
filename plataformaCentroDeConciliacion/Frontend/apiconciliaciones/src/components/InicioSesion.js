@@ -65,7 +65,7 @@ function InicioSesion({ loggedIn, setLoggedIn }) {
                         <h2>SISTEMA<br /> CENTRO DE CONCILIACIÓN</h2>
                         <p><b>Busca ser una de las entidades en prestación de servicios sociales y juridicos mas eficaz y comprometida con la causa de las personas que a diario acuden a sus servicios, contribuyendo al desarrollo de nuestro país.</b></p>
                     </div>
-                    <Link to="/crear">
+                    <Link to="/nueva-solicitud">
                         <button className='boton-entrar-sin-registro'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />

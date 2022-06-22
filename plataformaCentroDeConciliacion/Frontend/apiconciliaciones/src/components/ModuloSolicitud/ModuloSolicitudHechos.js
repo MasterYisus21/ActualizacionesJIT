@@ -3,11 +3,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import './css/ModuloSolicitudHechos.css';
 import config from '../../config.json'
 import Select from 'react-select'
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 
 function ModuloSolicitudHechos() {
+
+    const [estado, setEstado] = useOutletContext();
 
     const [departamentoOpciones, setDepartamentoOpciones] = useState([])
     const [ciudadesOpciones, setCiudadesOpciones] = useState([])
@@ -62,7 +64,16 @@ function ModuloSolicitudHechos() {
         axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos", datos)
             .then((response) => {
                 alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
-                console.log(response.data)
+                const dataEstado = {
+                    "Descripcion": "Descripcion",
+                    "Flag_requiere_documento": false,
+                    "Tipo_estado_Id": 6
+                }
+                axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
+                .then(response=>{
+                    console.log("Estado cambiado")
+                    setEstado(response.data)
+                })
         })
             .catch(error => {
                 alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"
