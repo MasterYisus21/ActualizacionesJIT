@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import './css/ModuloInformacionConvocado.css';
 import config from '../../config.json'
 import { useLocation, useParams } from 'react-router-dom';
@@ -90,11 +90,12 @@ function ModuloInformacionConvocado() {
       "Genero_Id": parseInt(event.target.sexo.value),
     }
 
-    axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/convocados/crear_personas', data)
+    axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/convocados/crear_personas', data)
     .then(response => {
       console.log(response)
       setIsOpen(false)
-      setConvocados([...convocados])
+      const persona = response.data
+      setConvocados([...convocados, persona])
     })
     // api/gateway/v1/solicitudes/:Id/convocados/crear_personas
 

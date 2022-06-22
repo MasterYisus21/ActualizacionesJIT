@@ -61,6 +61,28 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    
+}
+.boton-entrar-sin-registro{
+    position:absolute;
+    top: 80%;
+    left: 50%;
+    width: 50%;
+    height: 9%;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;    
+    border-color: transparent;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3%;
+    font-weight:500;
+}
+
+.boton-entrar-sin-registro:hover{
+    background-color: #2da05f;
 }
 
 .intro-text {
@@ -72,6 +94,7 @@
     font-family: var(--letra-login);
     content: initial;
     padding: 3vh;
+   
 }
 
 .intro-text>h2 {

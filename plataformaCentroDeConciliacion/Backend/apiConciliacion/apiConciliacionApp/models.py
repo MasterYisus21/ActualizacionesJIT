@@ -326,8 +326,8 @@ class Tipo_vivienda(BaseModels):
 class Rol_permiso(StateModel):
 
     Id = models.AutoField(primary_key=True,auto_created = True,)
-    Descipcion = models.CharField(max_length=100,blank=False,null=False,unique=True)
-    Permiso_colsulta= models.BooleanField(default=False,blank=False,null=False)
+    Descripcion = models.CharField(max_length=100,blank=False,null=False,unique=True)
+    Permiso_consulta= models.BooleanField(default=False,blank=False,null=False)
     Permiso_crear= models.BooleanField(default=False,blank=False,null=False)
     Permiso_actualizar= models.BooleanField(default=False,blank=False,null=False)
     Permiso_eliminar= models.BooleanField(default=False,blank=False,null=False)
