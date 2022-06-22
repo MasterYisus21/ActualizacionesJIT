@@ -202,6 +202,7 @@ datosPersonas.Solicitudes = async (response) => {
     try {
         if (response.data!=0){
         for await (const informacion_data of response.data) {
+            if(typeof(informacion_data.Solicitud_Id) !== 'number'){return datos}
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
@@ -277,6 +278,7 @@ datosPersonas.Historial = async (response) => {
     try {
         if (response.data!=0){
         for await (const informacion_data of response.data) {
+            if(typeof(informacion_data.Solicitud_Id) !== 'number'){return datos}
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
             console.log("Historicos")

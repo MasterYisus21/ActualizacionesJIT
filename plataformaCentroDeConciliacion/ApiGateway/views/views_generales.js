@@ -195,7 +195,7 @@ views.Solicitudesview= async (req,res)=>{
                 
             res.status(200).json(result)
             })
-            .catch(erro=>{
+            .catch(error=>{
                 console.log(error)
             })
         })
@@ -235,6 +235,7 @@ views.SolicitudesviewHistorial= async(req,res)=>{
             .then((result) => {
             res.status(200).json(result)
             })
+            .catch(error=>{console.log(error)})
         })
        
     }).catch((err) => {
