@@ -44,8 +44,7 @@ app.post("/auth/ingresar", async (req, res) => {
                         data.username
                     )
                     .then((result) => {
-                      console.log(data.nombres =
-                         result.data[0].Nombres);
+                      
                       response.data.nombres = result.data[0].Nombres;
                       response.data.apellidos = result.data[0].Apellidos;
                       res.status(200).json(response.data );

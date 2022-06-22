@@ -192,6 +192,9 @@ views.Solicitudesview= async (req,res)=>{
                 
             res.status(200).json(result)
             })
+            .catch(erro=>{
+                console.log(error)
+            })
         })
        
     }).catch((err) => {
