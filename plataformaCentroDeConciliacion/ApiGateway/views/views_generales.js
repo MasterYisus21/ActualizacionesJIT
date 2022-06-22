@@ -15,7 +15,7 @@ const res = require('express/lib/response');
 views.GenerarDocumentos= async(req,res)=>{
     try{
 
-        console.log(req)
+        
 
     }
 catch(error){
@@ -96,7 +96,7 @@ try{
 
     .catch(function (error) {
         console.log(error);
-        res.sendStatus(404); console.log("1").json(error)
+        res.sendStatus(404); 
     })
 }catch(error){
     
@@ -468,7 +468,7 @@ views.Actualizar= async (req,res)=>{
     })
     .catch(function (error) {
         //console.log(error);
-        res.sendStatus(404); console.log("1")
+        res.sendStatus(404); 
     })
 }catch(err){
     console.log(err)
@@ -563,7 +563,7 @@ views.CrearPersonas=async(req,res)=>{
             
         await axios.post(config.urlApiConciliacion + "/personas/",resp)
          .then(async response=>{
-            console.log("entre")
+            
             if(response.data.Tipo_cargo_Id ===null | response.data.Tipo_cargo_Id ===''){res.status(200).json(response.data)}
             else{
                 datos = {
@@ -573,7 +573,7 @@ views.CrearPersonas=async(req,res)=>{
                     
                     
                 }
-                console.log(datos)
+              
                 await axios.post(config.urlApiConciliacion + "/usuarios/",datos)
                 .then(resp=>{
                     res.status(200).json(response.data)

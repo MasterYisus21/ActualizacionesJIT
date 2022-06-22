@@ -64,7 +64,7 @@ datosPersonas.datosBasicosDocentes = async(response) => {
     try {
         for await (const informacion_data of response.data) {
             
-            console.log(informacion_data)
+        
            
             const documento = await  axios.get(config.urlApiConciliacion + "/tipos_documento/"+informacion_data.Tipo_documento_Id);
             const tipo = await  axios.get(config.urlApiConciliacion + "/tipos_persona/"+informacion_data.Tipo_persona_Id);
@@ -160,11 +160,11 @@ datosPersonas.CrearPersona = async (req) => {
         else if (typeof req.body.Apellidos != 'string'& null&''){{res.sendStatus(404); }}
         else if (typeof req.body.Telefono != 'number' ){{res.sendStatus(404); }}
         else if (typeof req.body.Tipo_documento_Id != 'number' ){{res.sendStatus(404); }}
-        else if (typeof req.body.Tipo_vivienda_Id != 'number' ){{res.sendStatus(404); console.log("1")}}
-        else if (typeof req.body.Barrio_Id != 'number' ){{res.sendStatus(404); console.log("2")}}
-        else if (typeof req.body.Tipo_persona_Id != 'number' ){{res.sendStatus(404); console.log("3")}}
-        else if (typeof req.body.Estrato_socioeconomico_Id != 'number' ){{res.sendStatus(404); console.log("4")}}
-        else if (typeof req.body.Tipo_estado_Id != 'number' ){{res.sendStatus(404); console.log("5")}}
+        else if (typeof req.body.Tipo_vivienda_Id != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Barrio_Id != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Tipo_persona_Id != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Estrato_socioeconomico_Id != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Tipo_estado_Id != 'number' ){{res.sendStatus(404);}}
        
         
         else{
@@ -399,6 +399,7 @@ datosPersonas.BuscarPersona = async (response,search) => {
             datos.push(result.data)
             
         }).catch((err) => {
+            console.log(err)
        
         }); 
           

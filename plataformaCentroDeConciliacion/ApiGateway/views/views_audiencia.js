@@ -14,7 +14,7 @@ try{
    
     for await (const informacion_data of req.body) {
         const personas = await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+informacion_data) 
-        console.log(personas.data) 
+      
         let data={
             "Citacion_Id": req.params.id2,
             "Persona_Id": personas.data[0].Id
@@ -105,7 +105,7 @@ try{
     }else{
         
         for await (const dat of resp.data) { 
-            console.log(dat)
+           
         const relacion_sol_per= await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud+"&Persona_Id="+dat.Persona_Id)
         
         const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data[0].Tipo_cliente_Id)
@@ -199,7 +199,7 @@ try{
    
     }
 
-    console.log("lista es"+lista)
+  
     const turno = await axios.get(config.urlApiConciliacion + "/turnos")
     const resultado = await Turnos(turno,lista)
     

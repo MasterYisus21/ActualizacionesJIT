@@ -50,7 +50,7 @@ views.Traer_datos = async (req, res) => {
 
 views.Crear = async (req, res) => {
   try {
-    console.log(req.body);
+
     let datos = {
       Descripcion: req.body.Descripcion,
       Fecha_finalizacion: req.body.Fecha_finalizacion,
@@ -108,7 +108,7 @@ views.EliminarPersona = async (req, res) => {
           req.params.documento
       )
       .then(async (response) => {
-        console.log(response.data);
+        
         await axios
           .get(
             config.urlApiConciliacion +
@@ -126,7 +126,7 @@ views.EliminarPersona = async (req, res) => {
                   "/"
               )
               .then((rest) => {
-                console.log(rest.data);
+                console.log("PERSONA ELIMINADA");
                 res.status(202).json(rest.data);
               });
           });
@@ -215,11 +215,13 @@ views.InformacionSolicitud = async (req, res) => {
       res.sendStatus(401)
       return
   }
-
-    await axios
+  if(typeof(req.params.id) !== 'number' & typeof(req.params.id) !== 'string'){return res.sendStatus(400)}
+ 
+  await axios
+    
       .get(config.urlApiConciliacion + "/solicitudes/" + req.params.id)
       .then((result) => {
-        console.log(result);
+       
         datosPersonas.SolicitudesEspecificas(result).then((result) => {
           res.status(200).json(result);
         });
@@ -268,7 +270,7 @@ views.ActualizarSolicitud = async (req, res) => {
 
 views.EstadoSolicitud = async (req, res) => {
   try{
-    if(typeof(req.params.id) !== 'number' & typeof(req.params.id) !== 'string'){return res.sendStatus(200)}
+    if(typeof(req.params.id) !== 'number' & typeof(req.params.id) !== 'string'){return res.sendStatus(400)}
     const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+req.params.id);
     const estado = (historico.data[historico.data.length-1].Tipo_estado_Id === null | '') ? historico.data.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[historico.data.length-1].Tipo_estado_Id)
     .then(result=>{ historico.data.Tipo_estado_Id=result.data.Nombre; res.status(200).json(historico.data)})
@@ -339,7 +341,7 @@ views.CrearSolicitud = async (req, res) => {
 
 
         if (req.idpermiso == 0) {
-            console.log("if")
+           
           const admin = await axios.get(
             config.urlApiConciliacion + "/personas?Tipo_cargo_Id=" + 1
           );
@@ -349,7 +351,7 @@ views.CrearSolicitud = async (req, res) => {
             Tipo_cliente_Id: 3,
           };
         } else {
-            console.log("entre")
+           
           const admin = await axios.get(config.urlApiConciliacion +"/personas?Identificacion=" + req.identificacion);
           datos = {
             Solicitud_Id: response.data.Numero_caso,
