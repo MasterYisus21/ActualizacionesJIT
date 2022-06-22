@@ -169,7 +169,7 @@ views.Solicitudesview= async (req,res)=>{
     try{
         
         if(req.idpermiso==0){res.sendStatus(401);return }
-        console.log(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+       
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
         
         if(!response.data.Permiso_consulta){
@@ -230,7 +230,7 @@ views.SolicitudesviewHistorial= async(req,res)=>{
        
        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
         .then(async(result) => {
-            console.log(result.data)
+            
            await datosPersonas.Historial(result)
             .then((result) => {
             res.status(200).json(result)

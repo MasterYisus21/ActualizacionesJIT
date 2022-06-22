@@ -85,6 +85,7 @@ router.delete('/citaciones/:id',views_generales.EliminarCitacion)
 router.get('/generar/',views_generales.GenerarDocumentos)
 
 
-
+// ESTADOS
+router.get("/estados", views_solicitud.ListarEstados);
 
 module.exports = router 

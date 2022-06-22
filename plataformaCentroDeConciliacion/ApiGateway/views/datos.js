@@ -198,7 +198,7 @@ datosPersonas.CrearPersona = async (req) => {
 datosPersonas.Solicitudes = async (response) => {
     let datos=[]
    
-    console.log(response.data)
+    
     try {
         if (response.data!=0){
         for await (const informacion_data of response.data) {
@@ -283,8 +283,8 @@ datosPersonas.Historial = async (response) => {
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             //console.log(resp.data)
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
-            console.log("Historicos")
-            console.log(historico.data[0])
+          
+           
             for await (const historial of historico.data) {
             historial.Fecha=historial.Fecha.substring(0,(historial.Fecha.indexOf("T")))
             const estado = (historial.Tipo_estado_Id === null | '') ? historial.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historial.Tipo_estado_Id).then(result=>{ historial.Tipo_estado_Id=result.data.Nombre});;
