@@ -91,19 +91,19 @@ function ModuloEncuestaPreguntas() {
                                     </td>
                                     <td className="w-50 p-2">
                                         <div className="btn-group" role="group">
-                                            <input type="radio" className="btn-check" id={"btnradio1" + dato["Id"]} name={"a" + dato["Id"]} value="1" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "1" : null} required />
+                                            <input type="radio" className="btn-check" id={"btnradio1" + dato["Id"]} name={"a" + dato["Id"]} value="1" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "1" : null} required />
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio1" + dato["Id"]}>1</label>
 
-                                            <input type="radio" className="btn-check" id={"btnradio2" + dato["Id"]} name={"a" + dato["Id"]} value="2" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "2" : null} required />
+                                            <input type="radio" className="btn-check" id={"btnradio2" + dato["Id"]} name={"a" + dato["Id"]} value="2" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "2" : null} required />
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio2" + dato["Id"]}>2</label>
 
-                                            <input type="radio" className="btn-check" id={"btnradio3" + dato["Id"]} name={"a" + dato["Id"]} value="3" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "3" : null} required />
+                                            <input type="radio" className="btn-check" id={"btnradio3" + dato["Id"]} name={"a" + dato["Id"]} value="3" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "3" : null} required />
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio3" + dato["Id"]}>3</label>
 
-                                            <input type="radio" className="btn-check" id={"btnradio4" + dato["Id"]} name={"a" + dato["Id"]} value="4" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "4" : null} required />
+                                            <input type="radio" className="btn-check" id={"btnradio4" + dato["Id"]} name={"a" + dato["Id"]} value="4" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "4" : null} required />
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio4" + dato["Id"]}>4</label>
 
-                                            <input type="radio" className="btn-check" id={"btnradio5" + dato["Id"]} name={"a" + dato["Id"]} value="5" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { console.log(dato2["Pregunta_Id"] == dato["Id"]); return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "5" : null} required />
+                                            <input type="radio" className="btn-check" id={"btnradio5" + dato["Id"]} name={"a" + dato["Id"]} value="5" checked={respuestas.length > 0 ? respuestas.filter(dato2 => { return dato2["Pregunta_Id"] == dato["Id"] })[0]["Calificacion"] == "5" : null} required />
                                             <label className="btn btn-outline-primary" htmlFor={"btnradio5" + dato["Id"]}>5</label>
                                         </div>
                                     </td>
