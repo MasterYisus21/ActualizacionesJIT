@@ -167,15 +167,18 @@ views.Estudiantes= async(req,res)=>{
     }
 views.Solicitudesview= async (req,res)=>{
     try{
+        
         if(req.idpermiso==0){res.sendStatus(401);return }
+        console.log(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
-    
+        
         if(!response.data.Permiso_consulta){
             console.log("error")
             res.sendStatus(401)
             return
         }
        let identificacion = req.identificacion
+      
     
    // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)
    await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+identificacion)
@@ -201,7 +204,7 @@ views.Solicitudesview= async (req,res)=>{
     });
 
     }catch(error){
-        console.log(error)
+     //   console.log(error)
     }
 }
 
@@ -429,7 +432,7 @@ await axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id)
 
 }
 
-views.ListarDepartamentos= async(req,res)=>{
+views.  ListarDepartamentos= async(req,res)=>{
     try{
    await axios.get(config.urlApiConciliacion + "/departamentos")
     .then(response => {

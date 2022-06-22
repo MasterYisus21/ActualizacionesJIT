@@ -337,7 +337,7 @@ class Rol_permiso(StateModel):
         verbose_name_plural = ("Rol_permisos")
 
     def __str__(self):
-        return str(self.Descipcion)
+        return str(self.Descripcion)
 
 class Rol(BaseModels):
 
