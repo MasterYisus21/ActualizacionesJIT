@@ -286,7 +286,6 @@ datosPersonas.Historial = async (response) => {
           
            
             for await (const historial of historico.data) {
-            historial.Fecha=historial.Fecha.substring(0,(historial.Fecha.indexOf("T")))
             const estado = (historial.Tipo_estado_Id === null | '') ? historial.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historial.Tipo_estado_Id).then(result=>{ historial.Tipo_estado_Id=result.data.Nombre});;
             datos[datos.length]=historial   
 

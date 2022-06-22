@@ -158,7 +158,7 @@ function ModuloSolicitudDatosGenerales() {
             </select>
         </div>
         <div className="mb-3">
-            <label htmlFor="Inicio_conflicto_Id" className="form-label">Hace cuanto incio el conflicto:</label>
+            <label htmlFor="Inicio_conflicto_Id" className="form-label">Hace cuanto inicio el conflicto:</label>
             <select className="form-select form-select-sm" aria-label="Default select example" id="Inicio_conflicto_Id" name='Inicio_conflicto_Id' value={inicioConflicto} onChange={e => setInicioConflicto(e.target.value)} required>
                 <option value="" label={"Selecciona uno"} disabled></option>
                 {inicioConflictoOpciones.map(inicioConflictoOpciones => <option key={inicioConflictoOpciones["Id"]} value={inicioConflictoOpciones["Id"]} label={inicioConflictoOpciones["Nombre"]}>{inicioConflictoOpciones["Id"]} </option>)}
