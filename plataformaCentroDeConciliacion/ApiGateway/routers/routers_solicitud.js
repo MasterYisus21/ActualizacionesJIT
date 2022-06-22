@@ -97,4 +97,6 @@ router.get("/:id/documentos", views_documento.VerDocumentos);
 
 //router.get('/:id/respuestas',views_documento.VerDocumentos)
 
+// estado 
+router.get("/:id/estado_solicitud", views_solicitud.EstadoSolicitud);
 module.exports = router;
