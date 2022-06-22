@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ModuloSolicitudDatosGenerales from './ModuloSolicitudDatosGenerales';
 import ModuloInformacionConvocante from './ModuloInformacionConvocante';
 import ModuloInformacionConvocado from './ModuloInformacionConvocado';
@@ -12,10 +12,27 @@ import ModuloSolicitudResultado from './ModuloSolicitudResultado';
 import ModuloSolicitudEstudiantes from './ModuloSolicitudEstudiantes';
 import ModuloEncuesta from './ModuloEncuesta';
 import { Link, Outlet, useParams } from 'react-router-dom';
+import axiosApiInstance from '../Utilities/axiosApiInstance';
+import config from './../../config.json'
 
 function ModuloSolicitud() {
 
     const UrlParams = useParams();
+
+    const [estado, setEstado] = useState({})
+
+    const getStatus = () => {
+        axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud')
+            .then(response => {
+                // console.log(response.data)
+                console.log(response.data[0]["Tipo_estado_Id"])
+                setEstado(response.data[0])
+            })
+    }
+
+    useEffect(() => {
+        getStatus()
+    }, [])
 
     return (
         <div className='modulo-solicitud-wrapper'>
@@ -79,21 +96,17 @@ function ModuloSolicitud() {
 
                     <div className="wrapper">
                         <ul className="StepProgress">
-                            <li className="StepProgress-item is-done"><strong>Nueva</strong></li>
-                            <li className="StepProgress-item is-done"><strong>Asignada</strong></li>
-                            <li className="StepProgress-item is-done"><strong>Se requiere informacion</strong></li>
-                            <li className="StepProgress-item is-done"><strong>Audiencia pendiente</strong></li>
-                            <li className="StepProgress-item is-done"><strong>Generacion de resultado</strong></li>
-                            <li className="StepProgress-item is-done"><strong>Resuelta</strong></li>
-                            <li className="StepProgress-item is-done"><strong>Cerrada</strong></li>
-                            <li className="StepProgress-item is-done"><strong>Award an entry</strong>
-                                Got more entries that you love? Buy more entries anytime! Just hover on your favorite entry and click the Buy button
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 1 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Nueva</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] == 6 && estado["Tipo_estado_Id"] != 8 || estado["Tipo_estado_Id"] > 1 ? "is-done": "")}><strong>Se requiere informacion</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 2 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Asignada</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 3 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Audiencia pendiente</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 4 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Generacion de resultado</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 5 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Resuelta</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 7 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Cerrada</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 8 ? "is-done": "")}><strong>Anulada</strong>
+                                {/* La solicitud ha sido anulada por */}
                             </li>
-                            <li className="StepProgress-item current"><strong>Post a contest</strong></li>
-                            <li className="StepProgress-item"><strong>Handover</strong></li>
-                            <li className="StepProgress-item"><strong>Provide feedback</strong></li>
 
-                            <li className=""><strong>Anulada</strong></li>
                         </ul>
                     </div>
                 </div>

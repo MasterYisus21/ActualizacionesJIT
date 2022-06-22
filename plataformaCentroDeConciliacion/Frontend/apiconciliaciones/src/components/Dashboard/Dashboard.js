@@ -11,7 +11,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
 
   const logout = () => {
     localStorage.removeItem('conciliacionesToken')
-    navigate('/login', { replace: true} )
+    navigate('/', { replace: true} )
   }
 
 

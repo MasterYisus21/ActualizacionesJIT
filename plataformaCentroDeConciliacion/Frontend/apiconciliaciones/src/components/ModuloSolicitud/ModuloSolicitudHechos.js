@@ -62,7 +62,15 @@ function ModuloSolicitudHechos() {
         axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos", datos)
             .then((response) => {
                 alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
-                console.log(response.data)
+                const dataEstado = {
+                    "Descripcion": "Descripcion",
+                    "Flag_requiere_documento": false,
+                    "Tipo_estado_Id": 6
+                }
+                axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
+                .then(response=>{
+                    console.log("Estado cambiado")
+                })
         })
             .catch(error => {
                 alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"

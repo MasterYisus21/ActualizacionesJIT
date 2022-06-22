@@ -44,6 +44,7 @@ function ModuloSolicitudAudiencia_registro() {
                     navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
                     setShowPeopleForms(true)
                     alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
+
                 })
                 .catch(error => {
                     alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se pudo procesar la solicitud por un error desconocido.</div>"
@@ -56,6 +57,15 @@ function ModuloSolicitudAudiencia_registro() {
                     navigate("/dashboard/modulo-solicitudes/" + response.data["Solicitud_Id"] + "/audiencias/" + response.data["Id"])
                     setShowPeopleForms(true)
                     alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
+                    const dataEstado = {
+                        "Descripcion": "Descripcion",
+                        "Flag_requiere_documento": false,
+                        "Tipo_estado_Id": 3
+                    }
+                    axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
+                    .then(response=>{
+                        console.log("Estado cambiado")
+                    })
                     axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/citaciones/' + response.data["Id"])
                         .then(response => {
                             console.log(response.data)
