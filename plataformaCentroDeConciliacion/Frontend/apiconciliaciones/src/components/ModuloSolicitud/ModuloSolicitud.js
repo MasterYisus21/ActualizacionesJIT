@@ -102,7 +102,7 @@ function ModuloSolicitud() {
                             <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 3 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Audiencia pendiente</strong></li>
                             <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 4 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Generacion de resultado</strong></li>
                             <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 5 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Resuelta</strong></li>
-                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 7 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Cerrada</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 7 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Cerrado</strong></li>
                             <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 8 ? "is-done": "")}><strong>Anulada</strong>
                                 {/* La solicitud ha sido anulada por */}
                             </li>
