@@ -199,9 +199,12 @@ datosPersonas.Solicitudes = async (response) => {
     let datos=[]
    
     console.log(response.data)
+
     try {
         if (response.data!=0){
+            
         for await (const informacion_data of response.data) {
+            if (informacion_data.Solicitud_Id === 'undefined' ||informacion_data.Solicitud_Id === null ) {datos = [];return}
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
