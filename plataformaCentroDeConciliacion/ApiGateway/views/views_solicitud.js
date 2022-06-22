@@ -272,7 +272,40 @@ views.EstadoSolicitud = async (req, res) => {
     const estado = (historico.data[historico.data.length-1].Tipo_estado_Id === null | '') ? historico.data.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historico.data[historico.data.length-1].Tipo_estado_Id)
     .then(result=>{ historico.data.Tipo_estado_Id=result.data.Nombre; res.status(200).json(historico.data)})
   .catch(error=>{res.sendStatus(400)})
-  }catch(error){console.log(error)}}
+  }catch(error){console.log(error)}
+}
+
+views.CambiarEstadoSolicitud = async (req, res) => {
+  try{
+    let datos={}
+    datos={
+      "Descripcion":req.body.Descripcion,
+      "Flag_requiere_documento":req.body.Flag_requiere_documento,
+      "Solicitud_Id":req.params.id,
+      "Tipo_estado_Id":req.body.Tipo_estado_Id
+
+    }
+    axios.post(config.urlApiConciliacion+"/historicos_solicitud/",datos)
+    .then(resp=>{
+      res.status(200).json(resp.data)
+    })
+    .catch(error=>{res.sendStatus(400)})
+  }catch(error){console.log(error)}
+}
+
+views.ListarEstados = async (req, res) => {
+  try{
+    axios.get(config.urlApiConciliacion+"/tipos_estado")
+    .then(resp=>{
+      res.status(200).json(resp.data)
+  })
+  .catch(err=>{
+    res.sendStatus(400);
+  })
+  }catch(err){
+    console.log(err)
+  }
+}
 views.CrearSolicitud = async (req, res) => {
   try {
    
