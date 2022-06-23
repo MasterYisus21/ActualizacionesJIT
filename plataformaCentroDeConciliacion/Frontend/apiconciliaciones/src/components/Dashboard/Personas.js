@@ -21,6 +21,9 @@ function Personas() {
     const [OpcionesPerfil, setOpcionesPerfil] = useState([])
     // const [personaBuscada, setPersonaBuscada] = useState({})
 
+    // Estado para conocer si es registro nuevo
+    const [nuevo, setNuevo] = useState(true)
+
     // Estado para los formularios
     const [nombres, setNombres] = useState("")
     const [apellidos, setApellidos] = useState("")
@@ -68,14 +71,37 @@ function Personas() {
         }
 
         console.log(data)
+        if (nuevo) {
+            axiosApiInstance.post(config.apiGatewayURL + '/personas/', data)
+                .then(response => {
+                    console.log(response)
+                    if (response.status == 208) {
+                        alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible' role='alert'>Persona ya existente</div>"
+                    } else {
+                        alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
+                        setNuevo(false)
+                    }
+                    // setIsOpen(false)
+                    // setConvocantes([...convocantes])
+                })
+                .catch(error => {
+                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error desconocido</div>"
+                })
+        } else {
+            axiosApiInstance.patch(config.apiGatewayURL + '/personas/' + numeroDocumento, data)
+                .then(response => {
+                    console.log(response)
 
-        axiosApiInstance.post(config.apiGatewayURL + '/personas/', data)
-            .then(response => {
-                console.log(response)
-                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
-                // setIsOpen(false)
-                // setConvocantes([...convocantes])
-            })
+                    alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
+
+                    // setIsOpen(false)
+                    // setConvocantes([...convocantes])
+                })
+                .catch(error => {
+                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error desconocido</div>"
+                })
+        }
+
         // api/gateway/v1/solicitudes/:Id/convocados/crear_personas
 
 
@@ -104,14 +130,14 @@ function Personas() {
     }
 
     const obtenerOpcionesLocalidades = (value, departamento) => {
-        axiosApiInstance.get(config.apiGatewayURL + "/departamentos/" + (departamento? departamento : departamentoSeleccionado) + '/ciudades/' + value)
+        axiosApiInstance.get(config.apiGatewayURL + "/departamentos/" + (departamento ? departamento : departamentoSeleccionado) + '/ciudades/' + value)
             .then((response) => {
                 setOpcionesLocalidades(response.data)
             })
     }
 
     const obtenerOpcionesBarrios = (value, departamento, ciudad) => {
-        axiosApiInstance.get(config.apiGatewayURL + "/departamentos/" + (departamento? departamento : departamentoSeleccionado) + '/ciudades/' + (ciudad? ciudad : ciudadSeleccionada) + '/barrios/' + value)
+        axiosApiInstance.get(config.apiGatewayURL + "/departamentos/" + (departamento ? departamento : departamentoSeleccionado) + '/ciudades/' + (ciudad ? ciudad : ciudadSeleccionada) + '/barrios/' + value)
             .then((response) => {
                 console.log(response.data)
                 setOpcionesBarrios(response.data)
@@ -121,35 +147,37 @@ function Personas() {
     const consultarPersona = (event) => {
         event.preventDefault()
         axiosApiInstance.get(config.apiGatewayURL + '/personas/' + event.target.identificación.value)
-        .then(response => {
-            console.log(response.data)
-            setNombres(response.data[0]["Nombres"])
-            setApellidos(response.data[0]["Apellidos"])
-            setFechaNacimiento(response.data[0]["Fecha_de_nacimiento"])
-            setTipoDocumento(response.data[0]["Tipo_documento_Id"]["Id"])
-            setNumeroDocumento(response.data[0]["Identificacion"])
-            setCorreo(response.data[0]["Correo"])
-            setTelefono(response.data[0]["Telefono"])
-            setGenero(response.data[0]["Genero_Id"])
-            setTipoPersona(response.data[0]["Tipo_persona_Id"]["Id"])
-            setTipoVivienda(response.data[0]["Tipo_vivienda_Id"]["Id"])
-            setEstratoSocioeconomico(response.data[0]["Estrato_socioeconomico_Id"]["Id"])
-            setDepartamentoSeleccionado(response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"])
+            .then(response => {
+                console.log(response.data)
+                setNombres(response.data[0]["Nombres"])
+                setApellidos(response.data[0]["Apellidos"])
+                setFechaNacimiento(response.data[0]["Fecha_de_nacimiento"])
+                setTipoDocumento(response.data[0]["Tipo_documento_Id"]["Id"])
+                setNumeroDocumento(response.data[0]["Identificacion"])
+                setCorreo(response.data[0]["Correo"])
+                setTelefono(response.data[0]["Telefono"])
+                setGenero(response.data[0]["Genero_Id"])
+                setTipoPersona(response.data[0]["Tipo_persona_Id"]["Id"])
+                setTipoVivienda(response.data[0]["Tipo_vivienda_Id"]["Id"])
+                setEstratoSocioeconomico(response.data[0]["Estrato_socioeconomico_Id"]["Id"])
+                setDepartamentoSeleccionado(response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"])
 
-            obtenerOpcionesCiudades(response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"])
+                obtenerOpcionesCiudades(response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"])
 
-            setCiudadSeleccionada(response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"])
+                setCiudadSeleccionada(response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"])
 
-            obtenerOpcionesLocalidades(response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"], response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"])
+                obtenerOpcionesLocalidades(response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"], response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"])
 
-            setLocalidad(response.data[0]["Barrio_Id"]["Localidad_Id"]["Id"])
+                setLocalidad(response.data[0]["Barrio_Id"]["Localidad_Id"]["Id"])
 
-            obtenerOpcionesBarrios(response.data[0]["Barrio_Id"]["Localidad_Id"]["Id"], response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"], response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"])
-            
-            setBarrio(response.data[0]["Barrio_Id"]["Id"])
-            setPerfil(response.data[0]["Perfil_Id"]["Id"])
-            setTipoCargo(response.data[0]["Tipo_cargo_Id"]["Id"])
-        })
+                obtenerOpcionesBarrios(response.data[0]["Barrio_Id"]["Localidad_Id"]["Id"], response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Id"], response.data[0]["Barrio_Id"]["Localidad_Id"]["Ciudad_Id"]["Departamento_Id"]["Id"])
+
+                setBarrio(response.data[0]["Barrio_Id"]["Id"])
+                setPerfil(response.data[0]["Perfil_Id"]["Id"])
+                setTipoCargo(response.data[0]["Tipo_cargo_Id"]["Id"])
+
+                setNuevo(false)
+            })
     }
 
 
@@ -192,7 +220,7 @@ function Personas() {
                                     <option value="">Tipo de Documento</option>
                                     {opcionesTipoDocumento.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
                                 </select>
-                                <input className="form-control rounded col" placeholder="Número de documento" name="numeroDocumento" required value={numeroDocumento} onChange={event => {setNumeroDocumento(event.target.value)}}></input>
+                                <input className="form-control rounded col" placeholder="Número de documento" name="numeroDocumento" required value={numeroDocumento} onChange={event => { setNumeroDocumento(event.target.value) }}></input>
                             </div>
                         </div>
                         <div className='container d-grid gap-1 mb-2'>
@@ -224,7 +252,7 @@ function Personas() {
                                     </select>
                                 </div>
                                 <div className='row gap-3'>
-                                    <select className="form-select col" aria-label="Default select example" defaultValue="" onChange={e => { obtenerOpcionesCiudades(e.target.value); setDepartamentoSeleccionado(e.target.value) }} required  value={departamentoSeleccionado}>
+                                    <select className="form-select col" aria-label="Default select example" defaultValue="" onChange={e => { obtenerOpcionesCiudades(e.target.value); setDepartamentoSeleccionado(e.target.value) }} required value={departamentoSeleccionado}>
                                         <option value="">Departamento</option>
                                         {opcionesDepartamentos.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
                                     </select>
@@ -256,7 +284,8 @@ function Personas() {
                                 </div>
                             </div>
                         </div>
-                        <button className="btn btn-success p-1 me-3 mb-2" id='boton-aceptar-registro-personas'>Registrar</button>
+                        {nuevo ? <button className="btn btn-success p-1 me-3 mb-2" id='boton-aceptar-registro-personas'>Registrar</button> : <button className="btn btn-success p-1 me-3 mb-2" id='boton-aceptar-registro-personas'>Actualizar</button>}
+                        
                         <div ref={alertContainer}></div>
                     </div>
                 </form>
