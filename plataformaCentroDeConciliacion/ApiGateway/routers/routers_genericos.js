@@ -43,6 +43,9 @@ router.get('/estudiantes',views_generales.Estudiantes)// lista a todos los docen
 router.get('/personas/:identificacion',views_generales.InformacionPersona) // trae los datos completos de una perosona
 router.get('/citaciones/:id',views_generales.InformacionCitacion)// trae los datos completos de una citacion
 
+// actualizar// 
+router.patch('/personas/:identificacion',views_generales.Actualizar)
+
 
 //router.patch('/citaciones/:id',views_generales.ActualizarCitacion)
 //router.get('/fechas/:fecha',views_generales.FechasDisponibles)

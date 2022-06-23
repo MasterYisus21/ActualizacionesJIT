@@ -45,23 +45,35 @@ app.use(express.static('public'))
 app.post("/api/uploadFile", upload.single("myFile"), async(req, res) => {
   try {
 
-    const filename = "dowload.jpeg"; // existing local file on server
+//     const filename = "dowload.jpeg"; // existing local file on server
 
 unirest
-    .post('http://127.0.0.1:8000/api/conciliaciones/v1/documentos/')
-    .field('Tamanio', 123)
-    .field('Solicitud_Id', 102)
-    .field('Tipo_estado_Id', 1)
+    .post('http://127.0.0.1:8000/api/conciliaciones/v1/documentos_prueba/')
+    // .field('Tamanio', 123)
+    // .field('Solicitud_Id', 102)
+    // .field('Tipo_estado_Id', 1)
     
-    .attach('Ruta_directorio', req.file.path) // reads directly from local file
+    .attach('myFile', req.file.path) // reads directly from local file
 //.attach('myFile', fs.createReadStream(req.file.path)) // creates a read stream
     //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
     .then(function (response) {
         console.log(response.body) // 201
-        res.status(200).json(response.body)
+        res.status(200).render("http://127.0.0.1:8000/media/pruebas/myFile-1655994845971.png")
     })
     .catch((error) => console.log(error.response.data));
-       
+// var form = new FormData();
+// form.append('myFile', fs.createReadStream(req.file.path));
+// axios({
+//   method: "post",
+//   url: "http://127.0.0.1:8000/api/conciliaciones/v1/documentos_prueba/",
+//   data: form,
+//   headers: { "Content-Type": "multipart/form-data" },
+// })
+//   .then(function (response) {
+//     //handle success
+//     console.log(response);
+//   })
+
       }
     catch (err){
       console.log(err)
