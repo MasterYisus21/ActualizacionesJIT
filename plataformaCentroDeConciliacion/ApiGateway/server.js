@@ -29,7 +29,7 @@ app.post("/auth/ingresar", async (req, res) => {
               config.urlApiConciliacion + "/roles/" + response.data[0].Rol_Id
             )
             .then(async (response) => {
-              console.log(response.data)
+             
               data.rol = response.data.Rol_permiso_Id;
               data.app = "CentroConciliaciones";
               await axios

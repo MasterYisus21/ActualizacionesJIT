@@ -351,12 +351,15 @@ views.CrearSolicitud = async (req, res) => {
             Tipo_cliente_Id: 3,
           };
         } else {
-           
+          let tipocliente
           const admin = await axios.get(config.urlApiConciliacion +"/personas?Identificacion=" + req.identificacion);
+          const cargo = admin.data[0].Tipo_cargo_Id
+          if (cargo==1){tipocliente=5}else if(cargo==2){tipocliente =3 } else if(cargo==3){tipocliente =4}
+         
           datos = {
             Solicitud_Id: response.data.Numero_caso,
             Persona_Id: admin.data[0].Id, //admin.data[0].Id,
-            Tipo_cliente_Id: 3,
+            Tipo_cliente_Id: tipocliente,
           };
         }
 

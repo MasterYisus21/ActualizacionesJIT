@@ -117,8 +117,10 @@ try{
         res.sendStatus(401)
         return
     }
-        await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
+        const docentes =await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
+        await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=1")
         .then(async(result) => {
+            for await (let iterator of docentes.data) {result.data.push(iterator)}
            await datosPersonas.datosBasicosDocentes(result)
             .then(rest=>{
                 res.status(200).json(rest)

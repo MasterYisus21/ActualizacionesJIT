@@ -81,12 +81,16 @@ views.EncuestaEspecifica=async(req,res)=>{
        await axios.get(config.urlApiConciliacion+"/encuestas?Solicitud_Id="+req.params.id+"&Persona_Id="+req.params.id2)
         .then(async resp=>{
             
-            
-            if(resp.data===''){res.status(200).json(resp.data)}else{
-           
+            let data=[]
+            if(resp.data==''){res.status(200).json(resp.data)}else{ console.log("enre")
+            const medio  = await axios.get(config.urlApiConciliacion + "/medios_conocimiento/1")   
             await axios.get(config.urlApiConciliacion + "/respuestas?Encuesta_Id="+resp.data[0].Id)
+           
             .then(response=>{
-                res.status(200).json(response.data)
+                data[0]=medio.data
+                data[1]=response.data
+                                                                              
+                res.status(200).json(data)
             })  
         }
              

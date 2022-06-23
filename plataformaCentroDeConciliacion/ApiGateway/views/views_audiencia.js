@@ -186,8 +186,10 @@ const citaciones = async(rest,response)=>{ // rest es las citaciones de esa fech
     let lista=[]
     
 try{
+ 
 
-    if (rest.data.length>=1){
+    if (response.data ==''){return []}
+    
     for await (const citaciones_fechas of rest.data) {
        
     const buscar_coincidencia = await axios.get(config.urlApiConciliacion + "/relaciones_citacion_persona?Persona_Id="+ response.data[0].Persona_Id +"&Citacion_Id="+citaciones_fechas.Id)//+ response.data[0].Persona_Id) // me trae las citaciones del docente
@@ -197,7 +199,7 @@ try{
       }
   
    
-    }
+    
 
   
     const turno = await axios.get(config.urlApiConciliacion + "/turnos")
@@ -209,7 +211,7 @@ try{
 
 }catch(err){
 
-    console.log("No tiene para esa fecha");
+    console.log(err);
 
 }
 
