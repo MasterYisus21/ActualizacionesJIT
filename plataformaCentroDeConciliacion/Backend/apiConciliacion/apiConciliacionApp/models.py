@@ -21,16 +21,16 @@ class Pais(BaseModels):# Es una extencion del modelo BaseModels del archivo gene
 
     def __str__(self):
         return str(self.Nombre) # Devuelve el nombre en vez del Id)
-class Documentos_prueba(StateModel):
+# class Documentos_prueba(StateModel):
     
-    myFile = models.FileField(upload_to='pruebas/', max_length=100, blank=True,null=True)
+#     myFile = models.FileField(upload_to='pruebas/', max_length=100, blank=True,null=True)
 
-    class Meta:
-        verbose_name = ("documentos_pruebas")
-        verbose_name_plural = ("documentos_pruebass")
+#     class Meta:
+#         verbose_name = ("documentos_pruebas")
+#         verbose_name_plural = ("documentos_pruebass")
 
-    def __str__(self):
-         return str(self.id)
+#     def __str__(self):
+#          return str(self.id)
 
   
 

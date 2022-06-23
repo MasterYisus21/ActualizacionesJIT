@@ -198,12 +198,7 @@ datosPersonas.CrearPersona = async (req) => {
 datosPersonas.Solicitudes = async (response) => {
     let datos=[]
    
-<<<<<<< HEAD
-    console.log(response.data)
-
-=======
     
->>>>>>> c615445ce1348cf96ac97117d01d96a329579822
     try {
         if (response.data!=0){
             

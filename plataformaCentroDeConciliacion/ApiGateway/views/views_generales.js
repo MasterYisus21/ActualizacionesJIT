@@ -592,6 +592,7 @@ views.CrearPersonas=async(req,res)=>{
         
         .catch( err=>{
             res.status(404).json(err)
+            console.log(err)
         })  
    
     }catch(error){
