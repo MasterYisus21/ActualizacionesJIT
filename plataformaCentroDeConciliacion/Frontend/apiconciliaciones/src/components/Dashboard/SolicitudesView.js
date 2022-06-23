@@ -51,9 +51,9 @@ function SolicitudesView() {
                             <div>
                                 Asignadas a mí
                             </div>
-                            <div className='beautiful-icon-container-3'>
+                            {/* <div className='beautiful-icon-container-3'>
                                 Ver solicitudes
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className='div-table-rounded solicitudes-view-mis-solicitudes-div'>
@@ -159,8 +159,8 @@ function SolicitudesView() {
                                     <th scope="col">Descripcion</th>
                                     <th scope="col">Estado</th>
                                     <th scope="col">Solicitud</th>
-                                    <th scope="col">Documento requerido</th>
-                                    <th scope="col">Acciones</th>
+                                    {/* <th scope="col">Documento requerido</th> */}
+                                    {/* <th scope="col">Acciones</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -173,16 +173,16 @@ function SolicitudesView() {
                                             <td>{datos["Descripcion"]}</td>
                                             <td>{datos["Tipo_estado_Id"]}</td>
                                             <td>{datos["Solicitud_Id"]}</td>
-                                            <td>{datos["Flag_requiere_documento"] ? <div className='state action-required-state'>si</div> : <div className='state success-state'>no</div>}</td>
+                                            {/* <td>{datos["Flag_requiere_documento"] ? <div className='state action-required-state'>si</div> : <div className='state success-state'>no</div>}</td> */}
                                             {/* <td>{datos["Descripcion"]}</td> */}
                                             
-                                            <td className='display-flex'>
+                                            {/* <td className='display-flex'>
                                                 <a href="#">
                                                     <div className='beautiful-icon-container-1'>
                                                         <img className='icon' src='/icons/eye_icon_1.png' />
                                                     </div>
                                                 </a>
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     )
                                 })}

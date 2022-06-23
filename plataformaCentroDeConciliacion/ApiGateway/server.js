@@ -29,13 +29,15 @@ app.post("/auth/ingresar", async (req, res) => {
               config.urlApiConciliacion + "/roles/" + response.data[0].Rol_Id
             )
             .then(async (response) => {
-              console.log(response.data)
+             
               data.rol = response.data.Rol_permiso_Id;
               data.app = "CentroConciliaciones";
+             
               await axios
                 .post("http://127.0.0.1:4000/auth", data)
                 .then(async function (response) {
-                  // console.log(response);
+                  
+                 
                   // req.headers['Authorization'] = "Bearer " + response.data.token
                   //res.set({ "Authorization": "Bearer " + response.data.token })
 
@@ -46,8 +48,7 @@ app.post("/auth/ingresar", async (req, res) => {
                         data.username
                     )
                     .then((result) => {
-                      console.log(data.nombres =
-                         result.data[0].Nombres);
+                      
                       response.data.nombres = result.data[0].Nombres;
                       response.data.apellidos = result.data[0].Apellidos;
                       res.status(200).json(response.data );
@@ -153,8 +154,8 @@ async function verifier(req, res, next) {
           res.sendStatus(404);
         });
     } else {
-      req.idpermiso = 0
-      req.identificacion = 0
+      req.idpermiso = 1
+      req.identificacion = 1013689035
       next()
     }
   } catch (error) {

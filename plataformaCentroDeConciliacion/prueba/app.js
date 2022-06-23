@@ -4,10 +4,11 @@ const path = require("path");
 const multer = require("multer");
 const maxSize = 10 * 1000 * 1000 // 10Mb Max
 const app = express();
+var unirest = require('unirest');
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(`${__dirname}/public`));
-const FormData = require('form-data');
+
 const fs = require('fs');
 const axios = require("axios")
 const FormData = require('form-data');
@@ -39,45 +40,51 @@ const upload = multer({
   fileFilter: multerFilter,
   limits: { fileSize: maxSize },
 });
+app.use(express.static('public'))
+
 app.post("/api/uploadFile", upload.single("myFile"), async(req, res) => {
   try {
-  let datos = {}
-  datos=
-     {
 
-        "Ruta_directorio": req.file.filename,
-        "Tamanio": req.file.size,
-        "Solicitud_Id": 103,
-        "Tipo_estado_Id": 1
-  }
-  const form = new FormData();
-  formData.append('Tamanio', req.file.size);
-  formData.append('Solicitud_Id', 103);
-  formData.append('Tipo_estado_Id', 1);
-  formData.append(req.file.filename, fs.createReadStream('/public/files/'+ req.file.filename));
-  
-await  axios.post("http://localhost:8000/api/conciliaciones/v1/documentos/",formData,{
-  headers: formData.getHeaders()
-})
-  .then((result) => {
-    res.status(200).json(result.data)
-  })
-// Stuff to be added later
-// console.log(req.file)
+    const filename = "dowload.jpeg"; // existing local file on server
 
+unirest
+    .post('http://127.0.0.1:8000/api/conciliaciones/v1/documentos/')
+    .field('Tamanio', 123)
+    .field('Solicitud_Id', 102)
+    .field('Tipo_estado_Id', 1)
+    
+    .attach('Ruta_directorio', req.file.path) // reads directly from local file
+//.attach('myFile', fs.createReadStream(req.file.path)) // creates a read stream
+    //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+    .then(function (response) {
+        console.log(response.body) // 201
+        res.status(200).json(response.body)
+    })
+    .catch((error) => console.log(error.response.data));
+       
+      }
+    catch (err){
+      console.log(err)
+    }
+ 
+
+//  datos={
+
+//         "Ruta_directorio": req.file,
+//         "Tamanio": 12,
+
+//         "Solicitud_Id": 103,
+//         "Tipo_estado_Id": 1
+//  }
   
-} catch (error) {
-console.log(error)
-}
+
+
+
 });
 
 
 // Configurations for "body-parser"
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+
 
 
 
@@ -94,7 +101,7 @@ app.use("/", (req, res) => {
 // Routes will be added here later on
 
 //Express server
-const port = 3000;
+const port = 3002;
 
 const server = app.listen(port, () => {
   console.log("Server is up listening on port:" + port);

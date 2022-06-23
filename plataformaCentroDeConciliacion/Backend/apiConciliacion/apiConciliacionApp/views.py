@@ -54,6 +54,14 @@ class HechosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest
 class Tipo_estadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Tipo_estadoSerializer
 
+class Documentos_pruebaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+    serializer_class = Documentos_pruebaSerializer
+    filterset_fields = ['id']
+    
+    
+   
+    
+    
 class DocumentoViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
    
     

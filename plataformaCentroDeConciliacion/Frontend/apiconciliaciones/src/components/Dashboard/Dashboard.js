@@ -9,10 +9,16 @@ function Dashboard({ loggedIn, setLoggedIn }) {
 
   let navigate = useNavigate();
 
+  const [nombreUsuario, setNombreUsuario] = useState('')
+
   const logout = () => {
     localStorage.removeItem('conciliacionesToken')
     navigate('/', { replace: true} )
   }
+
+  useEffect(()=> {
+    setNombreUsuario(JSON.parse(localStorage.getItem('conciliacionesToken'))["nombres"] + ' ' + JSON.parse(localStorage.getItem('conciliacionesToken'))["apellidos"])
+  }, [])
 
 
   return (
@@ -26,7 +32,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
             <div className='beautiful-icon-container-1'>
               <img className='icon' src='/icons/teacher_icon_1.png' />
             </div>
-            | Hola, Felipe Villamizar
+            | Hola, {nombreUsuario}
           </div>
           <div className='dashboard-top-navbar-utilities'>
             Centro de conciliaciones

@@ -14,7 +14,7 @@ try{
    
     for await (const informacion_data of req.body) {
         const personas = await axios.get(config.urlApiConciliacion + "/personas?Identificacion="+informacion_data) 
-        console.log(personas.data) 
+      
         let data={
             "Citacion_Id": req.params.id2,
             "Persona_Id": personas.data[0].Id
@@ -105,7 +105,7 @@ try{
     }else{
         
         for await (const dat of resp.data) { 
-            console.log(dat)
+           
         const relacion_sol_per= await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud+"&Persona_Id="+dat.Persona_Id)
         
         const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data[0].Tipo_cliente_Id)
@@ -186,8 +186,10 @@ const citaciones = async(rest,response)=>{ // rest es las citaciones de esa fech
     let lista=[]
     
 try{
+ 
 
-    if (rest.data.length>=1){
+    if (response.data ==''){return []}
+    
     for await (const citaciones_fechas of rest.data) {
        
     const buscar_coincidencia = await axios.get(config.urlApiConciliacion + "/relaciones_citacion_persona?Persona_Id="+ response.data[0].Persona_Id +"&Citacion_Id="+citaciones_fechas.Id)//+ response.data[0].Persona_Id) // me trae las citaciones del docente
@@ -197,9 +199,9 @@ try{
       }
   
    
-    }
+    
 
-    console.log("lista es"+lista)
+  
     const turno = await axios.get(config.urlApiConciliacion + "/turnos")
     const resultado = await Turnos(turno,lista)
     
@@ -209,7 +211,7 @@ try{
 
 }catch(err){
 
-    console.log("No tiene para esa fecha");
+    console.log(err);
 
 }
 

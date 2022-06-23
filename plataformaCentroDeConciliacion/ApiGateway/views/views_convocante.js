@@ -144,8 +144,8 @@ views.CrearPersonasConvocante=async (req,res)=>{
            
              await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
             .then(res=>{
-              console.log(res.data)
-              //res.status(200).json(response.data)
+       
+              res.status(200).json(response.data)
             })
   
             

@@ -26,6 +26,7 @@ function ModuloSolicitudAudiencia_registro() {
     const obtenerTurnos = (event) => {
         axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/fechas/' + event.target.value)
             .then(response => {
+                
                 setTurnosDisponibles(response.data)
             })
     }
