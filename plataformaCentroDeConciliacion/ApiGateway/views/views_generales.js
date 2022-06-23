@@ -560,7 +560,10 @@ views.CrearPersonas=async(req,res)=>{
  
     let datos={}
     try{
-      await  datosPersonas.CrearPersona(req)
+    await axios.get(config.urlApiConciliacion+"/personas?Identificacion="+req.body.Identificacion)
+    .then(resp=>{if(resp.data!=''){return} })
+    
+      await datosPersonas.CrearPersona(req)
         .then(async resp=>{
             
         await axios.post(config.urlApiConciliacion + "/personas/",resp)
@@ -591,14 +594,14 @@ views.CrearPersonas=async(req,res)=>{
         
         
         .catch( err=>{
-            res.status(404).json(err)
-            console.log(err)
+            res.sendStatus(208)
         })  
-   
+    
+       
     }catch(error){
         console.log(error)
     }
     
+    
 }
-
 module.exports = views

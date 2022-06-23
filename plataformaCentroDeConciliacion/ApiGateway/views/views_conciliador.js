@@ -16,10 +16,13 @@ views.ListarConciliadores=async(req,res)=>{
             res.sendStatus(401)
             return
         }
-    await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
-   .then(response => { 
-   
-        datosPersonas.datosBasicos(response)
+   const docentes= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
+   await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=5&Solicitud_Id=" + req.params.id)
+   .then(async response => { 
+    for (const iterator of docentes.data) {response.data.push(iterator)}
+        
+    
+       await datosPersonas.datosBasicos(response)
          .then((result) => {
              
              res.status(200).json(result)
