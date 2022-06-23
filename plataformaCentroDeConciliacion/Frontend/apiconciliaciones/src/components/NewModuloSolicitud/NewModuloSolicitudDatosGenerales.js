@@ -1,12 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react'
-import './css/ModuloSolicitudDatosGenerales.css';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import './css/NewModuloSolicitudDatosGenerales.css';
 import config from '../../config.json'
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, useOutletContext } from 'react-router-dom';
 import ErrorPage from '../ErrorPage';
-import axiosApiInstance from '../Utilities/axiosApiInstance';
 
-function ModuloSolicitudDatosGenerales(props) {
+function NewModuloSolicitudDatosGenerales(){
+
     let navigate = useNavigate();
     const date = new Date()
     const today = date.getFullYear() + '-' + (date.getMonth().toString().length > 1 ? (1+date.getMonth()) : '0' + (1 + date.getMonth())) + '-' + (date.getDate().toString().length > 1 ? (date.getDate()) : '0' + (date.getDate()));
@@ -29,7 +29,7 @@ function ModuloSolicitudDatosGenerales(props) {
     let location = useLocation();
 
     useEffect(()=>{
-        if(location.pathname == "/dashboard/modulo-solicitudes/crear") {
+        if(location.pathname == "/nueva-solicitud/crear") {
             setNumeroCaso('')
             setSolicitante('')
             setInicioConflicto('')
@@ -44,9 +44,8 @@ function ModuloSolicitudDatosGenerales(props) {
 
     const UrlParams = useParams();
     const obtenerDatosGenerales = () => {
-        if(UrlParams.hasOwnProperty('Id_solicitud')) {
-            console.log(UrlParams["Id_solicitud"])
-            axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
+        if(Object.keys(UrlParams).length > 0) {
+            axios.get(config.apiGatewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
             .then(response => {
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])
@@ -68,7 +67,7 @@ function ModuloSolicitudDatosGenerales(props) {
     }
 
     const obtenerOpcionesGenerales = () => {
-        axiosApiInstance.get(config.apiGatewayURL + "/solicitud")
+        axios.get(config.apiGatewayURL + "/solicitud/")
         .then(response => {
             setSolicitanteServicioOpciones(response.data["Solicitante_servicio"])
             setTipoServicioOpciones(response.data["Tipo_servicio"])
@@ -82,7 +81,7 @@ function ModuloSolicitudDatosGenerales(props) {
     }
 
     const obtenerOpcionesSubtema = (value) => {
-        axiosApiInstance.get(config.apiGatewayURL + "/temas/" + value)
+        axios.get(config.apiGatewayURL + "/temas/" + value)
         .then(response => {
             setSubTemaOpciones(response.data)
         })
@@ -115,9 +114,9 @@ function ModuloSolicitudDatosGenerales(props) {
             "Solicitante_servicio_Id": e.target.solicitante.value
         }
         if(Object.keys(UrlParams).length > 0) {
-            axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"], datos)
+            axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"], datos)
             .then((response) => {
-                navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
+                navigate("/nueva-solicitud/" + response.data["Numero_caso"] + "/datos_generales")
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])
                 alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
@@ -126,10 +125,10 @@ function ModuloSolicitudDatosGenerales(props) {
                 alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"
             })
         } else {
-            axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/", datos)
+            axios.post(config.apiGatewayURL + "/solicitudes/", datos)
             .then((response) => {
                 alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
-                navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
+                navigate("/nueva-solicitud/" + response.data["Numero_caso"] + "/datos_generales")
                 setNumeroCaso(response.data["Numero_caso"])
                 
         })
@@ -156,7 +155,7 @@ function ModuloSolicitudDatosGenerales(props) {
             </select>
         </div>
         <div className="mb-3">
-            <label htmlFor="Inicio_conflicto_Id" className="form-label">Hace cuanto inicio el conflicto:</label>
+            <label htmlFor="Inicio_conflicto_Id" className="form-label">Hace cuanto incio el conflicto:</label>
             <select className="form-select form-select-sm" aria-label="Default select example" id="Inicio_conflicto_Id" name='Inicio_conflicto_Id' value={inicioConflicto} onChange={e => setInicioConflicto(e.target.value)} required>
                 <option value="" label={"Selecciona uno"} disabled></option>
                 {inicioConflictoOpciones.map(inicioConflictoOpciones => <option key={inicioConflictoOpciones["Id"]} value={inicioConflictoOpciones["Id"]} label={inicioConflictoOpciones["Nombre"]}>{inicioConflictoOpciones["Id"]} </option>)}
@@ -240,7 +239,10 @@ function ModuloSolicitudDatosGenerales(props) {
     
     </form>
     </>
-    )
+)
+
+
 }
 
-export default ModuloSolicitudDatosGenerales
+
+export default NewModuloSolicitudDatosGenerales
