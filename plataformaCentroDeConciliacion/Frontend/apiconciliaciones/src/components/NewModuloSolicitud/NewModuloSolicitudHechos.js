@@ -10,7 +10,7 @@ import axiosApiInstance from '../Utilities/axiosApiInstance';
 
 function NewModuloSolicitudHechos() {
 
-    const [estado, setEstado] = useOutletContext();
+    // const [estado, setEstado] = useOutletContext();
 
     const [departamentoOpciones, setDepartamentoOpciones] = useState([])
     const [ciudadesOpciones, setCiudadesOpciones] = useState([])
@@ -32,7 +32,7 @@ function NewModuloSolicitudHechos() {
     }, []);
 
     useEffect(() => {
-        axiosApiInstance.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos")
+        axios.get(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/hechos")
         .then((response) => {
             if(response.data[0].hasOwnProperty("Ciudad_Id")){
                 setDepartamento(response.data[0]["Ciudad_Id"]["Departamento_Id"]["Id"])
@@ -73,7 +73,7 @@ function NewModuloSolicitudHechos() {
                 axios.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
                 .then(response=>{
                     console.log("Estado cambiado")
-                    setEstado(response.data)
+                    // setEstado(response.data)
                 })
         })
             .catch(error => {

@@ -45,7 +45,7 @@ function NewModuloSolicitudDatosGenerales(){
     const UrlParams = useParams();
     const obtenerDatosGenerales = () => {
         if(Object.keys(UrlParams).length > 0) {
-            axios.get(config.apiGatlewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
+            axios.get(config.apiGatewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
             .then(response => {
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])

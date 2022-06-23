@@ -3,7 +3,7 @@ import { Routes, Route, Link, Navigate } from "react-router-dom"
 
 import axios from 'axios';
 import { ModuloInformacionConciliador, ModuloInformacionConvocado, ModuloInformacionConvocante, ModuloSolicitudEstudiantes, ModuloSolicitud, ModuloSolicitudAudiencia, ModuloSolicitudAudiencia_registro, ModuloSolicitudDatosGenerales, ModuloSolicitudHechos, ModuloSolicitudDocumentos, ModuloSolicitudManejoConflicto, ModuloSolicitudResultado, ModuloEncuesta } from './components/ModuloSolicitud';
-import {NewModuloSolicitudDatosGenerales, NewModuloInformacionConvocado, NewModuloInformacionConvocante, NewModuloSolicitudHechos, NewModuloSolicitudDocumentos} from './components/NewModuloSolicitud'
+import { NewModuloSolicitudDatosGenerales, NewModuloInformacionConvocado, NewModuloInformacionConvocante, NewModuloSolicitudHechos, NewModuloSolicitudDocumentos } from './components/NewModuloSolicitud'
 import InicioSesion from './components/InicioSesion';
 import './App.css'
 import { Dashboard } from './components/Dashboard';
@@ -66,7 +66,7 @@ function App() {
         </Route>
 
         <Route
-          path="/nueva-solicitud"
+          path="/nueva-solicitud/"
           // element={<Dashboard />}
           element={<FormularioSolicitud />}
         >

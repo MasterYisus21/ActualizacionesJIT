@@ -24,9 +24,13 @@ function Personas() {
     const [departamentoSeleccionado, setDepartamentoSeleccionado] = useState("")
     const [ciudadSeleccionada, setCiudadSeleccionada] = useState("")
 
+    // Refs
+    const alertContainer = useRef("");
+
 
     const crearPersona = (event) => {
         event.preventDefault()
+        // console.log(event.target.perfil.value === "")
         const data = {
             "Identificacion": parseInt(event.target.numeroDocumento.value),
             "Nombres": event.target.nombres.value,
@@ -40,20 +44,23 @@ function Personas() {
             "Tipo_persona_Id": parseInt(event.target.tipoPersona.value),
             "Estrato_socioeconomico_Id": parseInt(event.target.estratoSocioeconomico.value),
             "Tipo_estado_Id": 1,
-            "Perfil_Id": parseInt(event.target.perfil.value),
-            "Tipo_cargo_Id": parseInt(event.target.Tipo_cargo.value),
+            "Perfil_Id": event.target.perfil.value !== "" ? parseInt(event.target.perfil.value):null,
+            "Tipo_cargo_Id": event.target.perfil.value !== "" ? parseInt(event.target.Tipo_cargo.value):null,
             "Genero_Id": parseInt(event.target.sexo.value),
         }
 
-        axios.post(config.apiGatewayURL + '/personas/', data)
+        console.log(data)
+
+        axiosApiInstance.post(config.apiGatewayURL + '/personas/', data)
             .then(response => {
                 console.log(response)
+                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
                 // setIsOpen(false)
                 // setConvocantes([...convocantes])
             })
         // api/gateway/v1/solicitudes/:Id/convocados/crear_personas
 
-        console.log(data)
+        
     }
 
     const obtenerOpcionesCrearPersona = () => {
@@ -101,8 +108,6 @@ function Personas() {
         obtenerOpcionesCrearPersona()
     }, [])
 
-    const alertContainer = useRef("");
-
     return (
 
         <div className='contenedor-personas'>
@@ -125,7 +130,7 @@ function Personas() {
                     <div className='container d-grid gap-2 mb-2'>
                         <label className="h6 mt-2 col">Identificación</label>
                         <div className='row gap-3 ps-3 px-3'>
-                            <select className="form-select" aria-label="Default select example" defaultValue="" name='tipoDocumento'  required>
+                            <select className="form-select" aria-label="Default select example" defaultValue="" name='tipoDocumento' required>
                                 <option value="">Tipo de Documento</option>
                                 {opcionesTipoDocumento.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
                             </select>
@@ -180,11 +185,11 @@ function Personas() {
                                     {opcionesBarrios.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
                                 </select>
                             </div>
-                            <hr/>
+                            <hr />
                             <div className='row gap-3'>
                                 <select className="form-select col" aria-label="Default select example" defaultValue="" name="perfil">
-                                {OpcionesPerfil.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
-                                    <option value="">Perfil</option>    
+                                    <option value="">Perfil</option>
+                                    {OpcionesPerfil.map(dato => { return (<option key={dato["Id"]} value={dato["Id"]}>{dato["Nombre"]}</option>) })}
                                 </select>
                                 <select className="form-select col" aria-label="Default select example" defaultValue="" name="Tipo_cargo">
                                     <option value="">Tipo cargo</option>
@@ -194,6 +199,7 @@ function Personas() {
                         </div>
                     </div>
                     <button className="btn btn-primary p-1 me-3 mb-2" id='boton-aceptar-registro-personas'>Registrar</button>
+                    <div ref={alertContainer}></div>
                 </div>
             </form>
 
