@@ -127,7 +127,7 @@ function NewModuloSolicitudHechos() {
                 </div>
                 <div className={{display: "flex"}}>
                         <button className="modulo-solicitud-content-main-column2-save-button">
-                        <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
+                        <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img mt-5" />
                     <p>GUARDAR</p>
                 </button>
                 </div>
