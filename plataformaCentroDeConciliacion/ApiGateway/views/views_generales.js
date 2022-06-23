@@ -464,7 +464,8 @@ views.Actualizar= async (req,res)=>{
         res.sendStatus(401)
         return
     }
-   await axios.patch(config.urlApiConciliacion + "/"+req.params.nombre+"/" +req.params.id+"/",req.body)
+    const persona=await axios.get(config.urlApiConciliacion+"/personas?identificacion="+req.params.identificacion)
+   await axios.patch(config.urlApiConciliacion + "/personas/" +persona.data[0].Id+"/",req.body)
     .then(response => {
         res.status(200).json(response.data)
     })
