@@ -177,7 +177,40 @@ function Personas() {
                 setTipoCargo(response.data[0]["Tipo_cargo_Id"]["Id"])
 
                 setNuevo(false)
+                alertContainer.current.innerHTML = ""
             })
+    }
+
+    const vaciarFormulario = (event) => {
+        event.preventDefault()
+        setOpcionesCiudades([])
+        setOpcionesLocalidades([])
+        setOpcionesBarrios([])
+        // const [personaBuscada, setPersonaBuscada] = useState({})
+    
+        // Estado para conocer si es registro nuevo
+        setNuevo(true)
+    
+        // Estado para los formularios
+        setNombres("")
+        setApellidos("")
+        setFechaNacimiento("")
+        setTipoDocumento("")
+        setNumeroDocumento("")
+        setCorreo("")
+        setTelefono("")
+        setGenero("")
+        setTipoPersona("")
+        setTipoVivienda("")
+        setEstratoSocioeconomico("")
+        setLocalidad("")
+        setBarrio("")
+        setPerfil("")
+        setTipoCargo("")
+    
+    
+        setDepartamentoSeleccionado("")
+        setCiudadSeleccionada("")
     }
 
 
@@ -284,8 +317,8 @@ function Personas() {
                                 </div>
                             </div>
                         </div>
+                        <button className="btn btn-warning p-1 me-3 mb-2" id='boton-aceptar-registro-personas' onClick={vaciarFormulario}>Vaciar campos</button>
                         {nuevo ? <button className="btn btn-success p-1 me-3 mb-2" id='boton-aceptar-registro-personas'>Registrar</button> : <button className="btn btn-success p-1 me-3 mb-2" id='boton-aceptar-registro-personas'>Actualizar</button>}
-                        
                         <div ref={alertContainer}></div>
                     </div>
                 </form>
