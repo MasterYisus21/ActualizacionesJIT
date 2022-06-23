@@ -64,7 +64,7 @@ datosPersonas.datosBasicosDocentes = async(response) => {
     try {
         for await (const informacion_data of response.data) {
             
-            console.log(informacion_data)
+        
            
             const documento = await  axios.get(config.urlApiConciliacion + "/tipos_documento/"+informacion_data.Tipo_documento_Id);
             const tipo = await  axios.get(config.urlApiConciliacion + "/tipos_persona/"+informacion_data.Tipo_persona_Id);
@@ -160,11 +160,11 @@ datosPersonas.CrearPersona = async (req) => {
         else if (typeof req.body.Apellidos != 'string'& null&''){{res.sendStatus(404); }}
         else if (typeof req.body.Telefono != 'number' ){{res.sendStatus(404); }}
         else if (typeof req.body.Tipo_documento_Id != 'number' ){{res.sendStatus(404); }}
-        else if (typeof req.body.Tipo_vivienda_Id != 'number' ){{res.sendStatus(404); console.log("1")}}
-        else if (typeof req.body.Barrio_Id != 'number' ){{res.sendStatus(404); console.log("2")}}
-        else if (typeof req.body.Tipo_persona_Id != 'number' ){{res.sendStatus(404); console.log("3")}}
-        else if (typeof req.body.Estrato_socioeconomico_Id != 'number' ){{res.sendStatus(404); console.log("4")}}
-        else if (typeof req.body.Tipo_estado_Id != 'number' ){{res.sendStatus(404); console.log("5")}}
+        else if (typeof req.body.Tipo_vivienda_Id != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Barrio_Id != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Tipo_persona_Id != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Estrato_socioeconomico_Id != 'number' ){{res.sendStatus(404); }}
+        else if (typeof req.body.Tipo_estado_Id != 'number' ){{res.sendStatus(404);}}
        
         
         else{
@@ -198,8 +198,12 @@ datosPersonas.CrearPersona = async (req) => {
 datosPersonas.Solicitudes = async (response) => {
     let datos=[]
    
+<<<<<<< HEAD
     console.log(response.data)
 
+=======
+    
+>>>>>>> c615445ce1348cf96ac97117d01d96a329579822
     try {
         if (response.data!=0){
             
@@ -280,11 +284,13 @@ datosPersonas.Historial = async (response) => {
     try {
         if (response.data!=0){
         for await (const informacion_data of response.data) {
-            if(typeof(informacion_data.Solicitud_Id) !== 'number'){return datos}
+            
+            if(typeof(informacion_data.Solicitud_Id) !== 'number'){console.log("error");return datos}
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
+            //console.log(resp.data)
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);
-            console.log("Historicos")
-            console.log(historico.data[0])
+          
+           
             for await (const historial of historico.data) {
             historial.Fecha=historial.Fecha.substring(0,(historial.Fecha.indexOf("T")))
             const estado = (historial.Tipo_estado_Id === null | '') ? historial.Tipo_estado_Id='' :await axios.get(config.urlApiConciliacion + "/tipos_estado/"+historial.Tipo_estado_Id).then(result=>{ historial.Tipo_estado_Id=result.data.Nombre});;
@@ -399,6 +405,7 @@ datosPersonas.BuscarPersona = async (response,search) => {
             datos.push(result.data)
             
         }).catch((err) => {
+            console.log(err)
        
         }); 
           

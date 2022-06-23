@@ -99,7 +99,7 @@ router.get("/:id/documentos", views_documento.VerDocumentos);
 
 // estado 
 
-router.get("/:id/estados", views_solicitud.ListarEstados);
+
 router.get("/:id/estado_solicitud", views_solicitud.EstadoSolicitud);
 router.post("/:id/estado_solicitud", views_solicitud.CambiarEstadoSolicitud);
 

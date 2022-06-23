@@ -20,15 +20,18 @@ function ModuloSolicitud() {
     const UrlParams = useParams();
 
     const [estado, setEstado] = useState({})
-    
+
 
     const getStatus = () => {
-        axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud')
-            .then(response => {
-                // console.log(response.data)
-                console.log(response.data[0]["Tipo_estado_Id"])
-                setEstado(response.data[0])
-            })
+        if (UrlParams.hasOwnProperty('Id_solicitud')) {
+            axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud')
+                .then(response => {
+                    // console.log(response.data)
+                    console.log(response.data[0]["Tipo_estado_Id"])
+                    setEstado(response.data[0])
+                })
+        }
+
     }
 
     useEffect(() => {
@@ -97,14 +100,14 @@ function ModuloSolicitud() {
 
                     <div className="wrapper">
                         <ul className="StepProgress">
-                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 1 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Nueva</strong></li>
-                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] == 6 && estado["Tipo_estado_Id"] != 8 || estado["Tipo_estado_Id"] > 1 ? "is-done": "")}><strong>Se requiere informacion</strong></li>
-                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 2 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Asignada</strong></li>
-                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 3 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Audiencia pendiente</strong></li>
-                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 4 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Generacion de resultado</strong></li>
-                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 5 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Resuelta</strong></li>
-                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 7 && estado["Tipo_estado_Id"] != 8 ? "is-done": "")}><strong>Cerrado</strong></li>
-                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 8 ? "is-done": "")}><strong>Anulada</strong>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 1 && estado["Tipo_estado_Id"] != 8 ? "is-done" : "")}><strong>Nueva</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] == 6 && estado["Tipo_estado_Id"] != 8 || estado["Tipo_estado_Id"] > 1 ? "is-done" : "")}><strong>Se requiere informacion</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 2 && estado["Tipo_estado_Id"] != 8 ? "is-done" : "")}><strong>Asignada</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 3 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done" : "")}><strong>Audiencia pendiente</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 4 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done" : "")}><strong>Generacion de resultado</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 5 && estado["Tipo_estado_Id"] != 6 && estado["Tipo_estado_Id"] != 8 ? "is-done" : "")}><strong>Resuelta</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 7 && estado["Tipo_estado_Id"] != 8 ? "is-done" : "")}><strong>Cerrado</strong></li>
+                            <li className={"StepProgress-item " + (estado["Tipo_estado_Id"] >= 8 ? "is-done" : "")}><strong>Anulada</strong>
                                 {/* La solicitud ha sido anulada por */}
                             </li>
 

@@ -67,10 +67,10 @@ views.AgregarHechos=async (req,res)=>{
     .then(async response => { 
       
         if  (response.data.length<1){      
-                console.log(datos)
+                
                await axios.post(config.urlApiConciliacion + "/hechos/",datos)
                 .then((result) => {
-                    console.log("Creado")
+                   
                     res.status(200).json(result.data)
                     
                 })
@@ -83,13 +83,12 @@ views.AgregarHechos=async (req,res)=>{
 
         else{
          
-            console.log(response.data[0].Id)
     
             await axios.patch(config.urlApiConciliacion + "/hechos/" +response.data[0].Id +"/",datos)
           
             .then((result)=>{
                 
-                console.log("entre")
+                
                 res.status(200).json(result.data)
 
             })

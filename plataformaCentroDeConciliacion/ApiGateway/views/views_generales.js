@@ -15,7 +15,7 @@ const res = require('express/lib/response');
 views.GenerarDocumentos= async(req,res)=>{
     try{
 
-        console.log(req)
+        
 
     }
 catch(error){
@@ -96,7 +96,7 @@ try{
 
     .catch(function (error) {
         console.log(error);
-        res.sendStatus(404); console.log("1").json(error)
+        res.sendStatus(404); 
     })
 }catch(error){
     
@@ -117,8 +117,10 @@ try{
         res.sendStatus(401)
         return
     }
-        await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
+        const docentes =await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=2")
+        await axios.get(config.urlApiConciliacion + "/personas?Tipo_cargo_Id=1")
         .then(async(result) => {
+            for await (let iterator of docentes.data) {result.data.push(iterator)}
            await datosPersonas.datosBasicosDocentes(result)
             .then(rest=>{
                 res.status(200).json(rest)
@@ -169,7 +171,7 @@ views.Solicitudesview= async (req,res)=>{
     try{
         
         if(req.idpermiso==0){res.sendStatus(401);return }
-        console.log(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+       
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
         
         if(!response.data.Permiso_consulta){
@@ -230,7 +232,7 @@ views.SolicitudesviewHistorial= async(req,res)=>{
        
        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
         .then(async(result) => {
-            console.log(result.data)
+            
            await datosPersonas.Historial(result)
             .then((result) => {
             res.status(200).json(result)
@@ -468,7 +470,7 @@ views.Actualizar= async (req,res)=>{
     })
     .catch(function (error) {
         //console.log(error);
-        res.sendStatus(404); console.log("1")
+        res.sendStatus(404); 
     })
 }catch(err){
     console.log(err)
@@ -563,7 +565,7 @@ views.CrearPersonas=async(req,res)=>{
             
         await axios.post(config.urlApiConciliacion + "/personas/",resp)
          .then(async response=>{
-            console.log("entre")
+            
             if(response.data.Tipo_cargo_Id ===null | response.data.Tipo_cargo_Id ===''){res.status(200).json(response.data)}
             else{
                 datos = {
@@ -573,7 +575,7 @@ views.CrearPersonas=async(req,res)=>{
                     
                     
                 }
-                console.log(datos)
+              
                 await axios.post(config.urlApiConciliacion + "/usuarios/",datos)
                 .then(resp=>{
                     res.status(200).json(response.data)

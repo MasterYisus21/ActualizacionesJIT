@@ -8,7 +8,7 @@ const res = require('express/lib/response');
 const identificacion=1234
 
 axios.get(config.urlApiConciliacion+"/personas?Identificacion="+identificacion).then(resp=>{
-    console.log(resp.data[0].Id)
+   
     id_persona=resp.data[0].id
     }).catch(error=>{console.log(error)})
 
@@ -18,16 +18,16 @@ views.Respuestas=async(req,res)=>{
 data=[]
  try{
 const persona=  await axios.get(config.urlApiConciliacion+"/encuestas?Solicitud_Id="+req.params.id+"&Persona_Id="+req.body[1].idpersona)
- console.log(config.urlApiConciliacion+"/encuestas?Solicitud_Id="+req.params.id+"&Persona_Id="+req.body[1].idpersona)
- console.log(persona.data)
+
+
  if (req.body[1].idpersona ===null |req.body[1].idpersona === ''){res.sendStatus(404);}
  else if (req.body[2].idmedioConocimiento ===null |req.body[2].idmedioConocimiento === '' ){res.sendStatus(404);}
 
  else if (persona.data.length){res.sendStatus(208)}else{
    
 for await  (const iterator of req.body[0].preguntas) {
-    if (iterator.idpregunta ===null |iterator.idpregunta === ''){console.log("if 1");res.sendStatus(404);break;}
-    else if (iterator.idrespuesta ===null |iterator.idrespuesta === ''){console.log("if 2");res.sendStatus(404); break;}
+    if (iterator.idpregunta ===null |iterator.idpregunta === ''){console.log("error 1");res.sendStatus(404);break;}
+    else if (iterator.idrespuesta ===null |iterator.idrespuesta === ''){console.log("error 2");res.sendStatus(404); break;}
   
 }
     await axios.post(config.urlApiConciliacion + "/encuestas/",{"Solicitud_Id":req.params.id,
@@ -43,7 +43,7 @@ for await  (const iterator of req.body[0].preguntas) {
             "Calificacion": iterator.idrespuesta,
             "Encuesta_Id": resp.data.Id
         }
-        console.log(datos)
+       
        await axios.post(config.urlApiConciliacion + "/respuestas/",datos)
        
        
@@ -80,13 +80,17 @@ views.EncuestaEspecifica=async(req,res)=>{
         }
        await axios.get(config.urlApiConciliacion+"/encuestas?Solicitud_Id="+req.params.id+"&Persona_Id="+req.params.id2)
         .then(async resp=>{
-            console.log(resp.data)
             
-            if(resp.data===''){res.status(200).json(resp.data)}else{
-           
+            let data=[]
+            if(resp.data==''){res.status(200).json(resp.data)}else{ console.log("enre")
+            const medio  = await axios.get(config.urlApiConciliacion + "/medios_conocimiento/1")   
             await axios.get(config.urlApiConciliacion + "/respuestas?Encuesta_Id="+resp.data[0].Id)
+           
             .then(response=>{
-                res.status(200).json(response.data)
+                data[0]=medio.data
+                data[1]=response.data
+                                                                              
+                res.status(200).json(data)
             })  
         }
              
