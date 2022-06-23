@@ -204,11 +204,7 @@ datosPersonas.Solicitudes = async (response) => {
         if (response.data!=0){
             
         for await (const informacion_data of response.data) {
-<<<<<<< HEAD
-            if (informacion_data.Solicitud_Id === 'undefined' ||informacion_data.Solicitud_Id === null ) {datos = [];return}
-=======
             if(typeof(informacion_data.Solicitud_Id) !== 'number'){return datos}
->>>>>>> e430cb0cb623d703a7c3c81adc33142efe1c6b1e
             const resp = await axios.get(config.urlApiConciliacion + "/solicitudes/"+informacion_data.Solicitud_Id);
             
             const historico = await axios.get(config.urlApiConciliacion + "/historicos_solicitud?Solicitud_Id="+informacion_data.Solicitud_Id);

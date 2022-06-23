@@ -115,7 +115,12 @@ class DocumentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Documento     # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
-
+class Documentos_pruebaSerializer(serializers.ModelSerializer):
+    #Solicitud_Id = serializers.StringRelatedField()
+    #Tipo_estado_Id = serializers.StringRelatedField()
+    class Meta:
+        model = Documentos_prueba     # El modelo al que pertenece este serializador
+        fields = '__all__' 
 class Historico_solicitudSerializer(serializers.ModelSerializer):
     #Solicitud_Id = serializers.StringRelatedField()
     #Tipo_estado_Id = serializers.StringRelatedField()
