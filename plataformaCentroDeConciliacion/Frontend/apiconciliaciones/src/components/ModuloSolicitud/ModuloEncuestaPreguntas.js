@@ -9,6 +9,7 @@ function ModuloEncuestaPreguntas() {
 
     const [preguntas, setPreguntas] = useState([])
     const [respuestas, setRespuestas] = useState([])
+    const [medioConocimiento, setMedioConocimiento] = useState("")
     const UrlParams = useParams();
     const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ function ModuloEncuestaPreguntas() {
             idpersona: UrlParams["Id_persona"]
         },
         {
-            idmedioConocimiento: event.target.medioConocimiento.value
+            idmedioConocimiento: medioConocimiento
         }]
         console.log(data)
         axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + "/respuestas", data)
@@ -42,7 +43,8 @@ function ModuloEncuestaPreguntas() {
             axiosApiInstance.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/encuestas/' + UrlParams["Id_persona"])
                 .then(response => {
                     console.log(response.data)
-                    setRespuestas(response.data)
+                    setMedioConocimiento(response.data[0]["Id"])
+                    setRespuestas(response.data[1])
                 })
         }
     }, [])
@@ -116,7 +118,7 @@ function ModuloEncuestaPreguntas() {
             </div>
             <div className="d-flex justify-content-center gap-3">
                 <label>Medio por el que conocio el servicio: </label>
-                <select className="boton-medio-conocimiento" name="medioConocimiento" required>
+                <select className="boton-medio-conocimiento" name="medioConocimiento" required value={medioConocimiento} onChange={event => {setMedioConocimiento(event.target.value)}}>
                     <option value=""></option>
                     <option value="1">Radio</option>
                     <option value="2">Folletos</option>
