@@ -1,9 +1,9 @@
 const axios = require('axios');
-// const express = require("express"); //
-// const multer = require("multer");
-// const maxSize = 10 * 1000 * 1000 // 10Mb Max
-// var unirest = require('unirest');
-// const fs = require('fs');
+ const express = require("express"); //
+ const multer = require("multer");
+ const maxSize = 10 * 1000 * 1000 // 10Mb Max
+ var unirest = require('unirest');
+ const fs = require('fs');
 const views = {}
 const datosPersonas = require('../views/datos')
 const config = require('../config.json');
@@ -100,7 +100,7 @@ views.DocumentoEspecifico = async (req, res) => {
 views.CargarDocumentos = async (req, res) => {
 
     try {
-        console.log(req.file)
+       // console.log(req.file)
         if (typeof(req.file)==='undefined') {res.sendStatus(401); console.log("entre")}
       
         //console.log(req.file.size)
@@ -121,7 +121,7 @@ views.CargarDocumentos = async (req, res) => {
         .attach('Ruta_directorio', fs.createReadStream(req.file.path)) // creates a read stream
         //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
         .then(function (response) {
-            console.log(response.body) // 201
+         res.status(200).json(response.body) // 201
            
         })
     
@@ -129,6 +129,7 @@ views.CargarDocumentos = async (req, res) => {
           }
         catch (err){
           console.log(err)
+          
         }
      
     

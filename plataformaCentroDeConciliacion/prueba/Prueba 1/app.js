@@ -37,7 +37,7 @@ const upload = multer({
 
 app.use(express.static('public'))
 
-app.post("/api/uploadFile/:id", upload.single("myFile"), (req, res) => {
+app.post("/api/uploadFile", upload.single("myFile"), (req, res) => {
   try {
     console.log(req.file)
     if (typeof(req.file)==='undefined') {res.sendStatus(401); console.log("entre")}
@@ -47,24 +47,25 @@ app.post("/api/uploadFile/:id", upload.single("myFile"), (req, res) => {
   
      
 
-unirest
-    .post('http://127.0.0.1:8000/api/conciliaciones/v1/documentos/')
+// unirest
+//     .post('http://127.0.0.1:8000/api/conciliaciones/v1/documentos/')
    
-    .field('State', true)
-    .field('Nombre', req.file.originalname)
-     .field('Tamanio',  String((req.file.size)/1000 + "KB"))
-     .field('Solicitud_Id', req.params.id)
-     .field('Tipo_estado_Id', 1)
+//     .field('State', true)
+//     .field('Nombre', req.file.originalname)
+//      .field('Tamanio',  String((req.file.size)/1000 + "KB"))
+//      .field('Solicitud_Id', req.params.id)
+//      .field('Tipo_estado_Id', 1)
     
-    //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-    .attach('Ruta_directorio', fs.createReadStream(req.file.path)) // creates a read stream
-    //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-    .then(function (response) {
-        console.log(response.body) // 201
+//     //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+//     .attach('Ruta_directorio', fs.createReadStream(req.file.path)) // creates a read stream
+//     //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+//     .then(function (response) {
+//         console.log(response.body) // 201
        
-    })
+//     })
 
 
+    
       }
     catch (err){
       console.log(err)
