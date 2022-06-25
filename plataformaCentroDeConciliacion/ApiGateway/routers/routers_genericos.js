@@ -4,6 +4,7 @@ const app = express(); // aplicaicon express
 const router = express.Router()
 const views_generales = require('../views/views_generales')
 const views_solicitud = require('../views/views_solicitud')
+const views_documentos = require('../views/views_documentos')
 
 const config =require ('../config.json')
 
@@ -91,4 +92,6 @@ router.get('/generar/',views_generales.GenerarDocumentos)
 // ESTADOS
 router.get("/estados", views_solicitud.ListarEstados);
 
+// documentos
+router.get("/documentos/:id", views_documentos.DocumentoEspecifico);
 module.exports = router 
