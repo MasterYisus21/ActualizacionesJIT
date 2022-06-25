@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useOutletContext, useParams } from 'react-router-dom';
 import config from '../../config.json';
 import './css/ModuloEncuesta.css';
@@ -10,6 +10,7 @@ function ModuloEncuesta() {
     const [estado, setEstado] = useOutletContext();
 
     const UrlParams = useParams();
+    const alertContainer = useRef("");
 
     const [personas, setPersonas] = useState([])
 
@@ -21,10 +22,19 @@ function ModuloEncuesta() {
             "Tipo_estado_Id": 7
         }
         axiosApiInstance.post(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/estado_solicitud', dataEstado)
-        .then(response=>{
-            console.log("Estado cambiado")
-            setEstado(response.data)
-        })
+            .then(response => {
+                console.log("Estado cambiado")
+                setEstado(response.data)
+                alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible' role='alert'>Caso cerrado con exito</div>"
+
+            })
+            .catch(error => {
+                if (error.status == 408) {
+                    alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible' role='alert'>Caso cerrado con exito</div>"
+                } else {
+                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>No se ha podido cerrar por un error desconocido.</div>"
+                }
+            })
     }
 
     useEffect(() => {
@@ -79,15 +89,23 @@ function ModuloEncuesta() {
                     </tbody>
                 </table>
             </div>
-            <form onSubmit={cerrarCaso}>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="cerrarCasoCheckbox" required />
-                        <label class="form-check-label" for="cerrarCasoCheckbox" >
+            {estado["Tipo_estado_Id"] != 7 &&
+                <form onSubmit={cerrarCaso}>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" value="" id="cerrarCasoCheckbox" required />
+                        <label className="form-check-label" for="cerrarCasoCheckbox" >
                             Cerrar Caso
                         </label>
-                </div>
-                <button class="btn btn-danger">Cerrar caso</button>
-            </form>
+                    </div>
+                    <button className="btn btn-danger">Cerrar caso</button>
+                    <div ref={alertContainer}></div>
+                </form>
+            }
+
+            {estado["Tipo_estado_Id"] == 7 &&
+                <div className='alert alert-success alert-dismissible' role='alert'>Caso Cerrado.</div>
+            }
+
 
         </div>
     )
