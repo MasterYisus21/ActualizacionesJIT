@@ -202,19 +202,19 @@ views.ListarSolicitudes = async (req, res) => {
 
 views.InformacionSolicitud = async (req, res) => {
   try {
-    if (req.idpermiso == 0) {
-      res.sendStatus(401);
-      return;
-    }
-    const response = await axios.get(
-      config.urlApiConciliacion + "/rol_permisos/" + req.idpermiso
-    );
+  //   if (req.idpermiso == 0) {
+  //     res.sendStatus(401);
+  //     return;
+  //   }
+  //   const response = await axios.get(
+  //     config.urlApiConciliacion + "/rol_permisos/" + req.idpermiso
+  //   );
 
-    if(!response.data.Permiso_consulta){
-      console.log("error")
-      res.sendStatus(401)
-      return
-  }
+  //   if(!response.data.Permiso_consulta){
+  //     console.log("error")
+  //     res.sendStatus(401)
+  //     return
+  // }
   if(typeof(req.params.id) !== 'number' & typeof(req.params.id) !== 'string'){return res.sendStatus(400)}
  
   await axios

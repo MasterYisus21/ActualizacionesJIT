@@ -14,6 +14,8 @@ const views_manejo_conflicto = require("../views/views_manejo_conflicto");
 const views_audiencia = require("../views/views_audiencia");
 const views_encuesta = require("../views/views_encuesta");
 const views_documento = require("../views/views_documentos");
+const views_resultados = require("../views/views_resultados");
+
 
 const maxSize = 10 * 1000 * 1000 // 10Mb Max
 //Configuration for Multer
@@ -136,6 +138,8 @@ router.get("/:id/documentos", views_documento.VerDocumentos);
 router.get("/:id/estado_solicitud", views_solicitud.EstadoSolicitud);
 router.post("/:id/estado_solicitud", views_solicitud.CambiarEstadoSolicitud);
 
+//resultados 
+router.get("/:id/resultados/:id2", views_resultados.ResultadoEspecifico);
 app.use(express.static('public'))
 router.post("/:id/documentos", upload.single("myFile"), views_documento.CargarDocumentos) 
 

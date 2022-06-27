@@ -8,14 +8,15 @@ const datosPersonas = require('../views/datos')
 
 views.ListarConciliadores=async(req,res)=>{
     try{
-        if(req.idpermiso==0){res.sendStatus(401);return }
-        const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+       
+        // if(req.idpermiso==0){res.sendStatus(401);return }
+        // const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
         
-        if(!response.data.Permiso_consulta){
-            console.log("error")
-            res.sendStatus(401)
-            return
-        }
+        // if(!response.data.Permiso_consulta){
+        //     console.log("error")
+        //     res.sendStatus(401)
+        //     return
+        // }
    const docentes= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
    await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=5&Solicitud_Id=" + req.params.id)
    .then(async response => { 
