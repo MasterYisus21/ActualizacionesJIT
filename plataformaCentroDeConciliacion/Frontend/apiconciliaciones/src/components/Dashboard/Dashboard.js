@@ -35,7 +35,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
             | Hola, {nombreUsuario}
           </div>
           <div className='dashboard-top-navbar-utilities'>
-            Centro de conciliaciones
+            Centros de conciliacion
 
             <a href="#" className='beautiful-icon-container-1' onClick={e => {logout()}}>
               <img className='icon' src='/icons/sign_out_icon_1.jpg' />
