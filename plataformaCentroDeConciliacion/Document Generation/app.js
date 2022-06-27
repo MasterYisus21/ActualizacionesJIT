@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-const port = 3000
+const port = 3002
 const multer = require("multer");
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

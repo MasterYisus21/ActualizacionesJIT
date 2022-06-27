@@ -5,6 +5,7 @@ import './css/NewModuloSolicitudDocumentos.css'
 // import axiosApiInstance from '../Utilities'
 import axios from 'axios'
 import config from '../../config.json'
+import FileDownload from 'js-file-download'
 
 function NewModuloSolicitudDocumentos() {
   const [documentos, setDocumentos] = useState([])
@@ -50,18 +51,21 @@ function NewModuloSolicitudDocumentos() {
 
   }
 
+  const download = (event, id, nombre) => {
+    event.preventDefault()
+    console.log(id)
+    console.log(nombre)
+    axios.get(config.apiGatewayURL + '/documentos/' + id, {responseType:"blob"})
+    .then(response => {
+      console.log(response)
+      FileDownload(response.data, nombre)
+    })
+  }
+
 
 
   useEffect(() => {
-    // setDocumentos([
-    //   { Nombre: 1, Fecha_documento: "22/06/2022", estado: 11 },
-    //   { Nombre: 2, Fecha_documento: "22/06/2022", estado: 11 },
-    //   { Nombre: 3, Fecha_documento: "22/06/2022", estado: 11 },
-    //   { Nombre: 4, Fecha_documento: "22/06/2022", estado: 11 },
-    //   { Nombre: 5, Fecha_documento: "22/06/2022", estado: 11 },
-    //   { Nombre: 6, Fecha_documento: "22/06/2022", estado: 11 },
-    //   { Nombre: 7, Fecha_documento: "22/06/2022", estado: 11 },
-    // ])
+
     // http://localhost:3001/api/gateway/v1/solicitudes/idsolicitud/documentos
 
     axios.get(config.apiGatewayURL + '/solicitudes/' + UrlParams["Id_solicitud"] + '/documentos')
@@ -109,7 +113,7 @@ function NewModuloSolicitudDocumentos() {
           {documentos.map((dato) => {
             return (
               <tr>
-                <th className='text-center' scope="row">{dato["Nombre"]}</th>
+                <th className='text-center' style={{maxWidth: "35%"}} scope="row"><button className='btn' onClick={(event) => {download(event, dato["Id"], dato["Nombre"])}}>{dato["Nombre"]}</button></th>
                 <td className='text-center'>{dato["Fecha_documento"]}</td>
                 <td className='text-center'>{dato["Tamanio"]}</td>
                 {/* <td className='text-center'>{dato["estado"]}</td> */}

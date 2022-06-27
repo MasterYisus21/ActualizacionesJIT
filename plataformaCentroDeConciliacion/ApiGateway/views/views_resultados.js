@@ -32,7 +32,7 @@ views.ResultadoEspecifico = async (req, res) => {
                 datos.citacion= await datosPersonas.ExportarDatos(req,"citaciones")
                 datos.solicitud =  await datosPersonas.ExportarDatos(req," ")
 
-                axios.post("http://localhost:3000/",datos)
+                axios.post("http://localhost:3002/",datos)
                 .then(async(result) => {
                    // await axios.get(result.data.url, { responseType : 'arraybuffer' })//,
                    // .then(response => {
