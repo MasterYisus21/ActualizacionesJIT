@@ -365,13 +365,21 @@ try{
   
     .then(async rest=> {
        
+       
         
         // buscar a la persona
 
        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)// me trae el docente de la solicitud
         
-        .then(response=>{
+        .then(async response=>{
          
+            if(Object.keys(response.data).length==0){
+               
+                await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=5&Solicitud_Id=" + req.params.id)// me trae el administrador de la solicitud
+                .then((result) => {
+                    response=result
+                })
+            }   
            
     //         .then(turno=>{
         citaciones(rest,response)
