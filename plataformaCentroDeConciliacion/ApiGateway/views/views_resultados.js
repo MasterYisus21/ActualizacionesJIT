@@ -31,21 +31,22 @@ views.ResultadoEspecifico = async (req, res) => {
                 datos.hechos= await datosPersonas.ExportarDatos(req,"hechos")
                 datos.citacion= await datosPersonas.ExportarDatos(req,"citaciones")
                 datos.solicitud =  await datosPersonas.ExportarDatos(req," ")
-                res.json(datos)
-                // axios.post("http://localhost:8001/",datos)
-                // .then(async(result) => {
-                //     await axios.get(result.data.url,{ responseType : 'arraybuffer' })
-                //     .then((response) => {
-                //         res.end(response.data)
+                //res.json(datos)
+                axios.post("http://localhost:8001/",datos)
+                .then(async(result) => {
+                    // await axios.get(result.data.url,{ responseType : 'arraybuffer' })
+                    // .then((response) => {
+                    //     res.end(response.data)
                         
-                //     }).catch((err) => {
-                //     res.sendStatus(404)
-                //       console.log(err)
-                //     });
+                    // }).catch((err) => {
+                    // res.sendStatus(404)
+                    //   console.log(err)
+                    // });
+                    res.json(result.data)
 
-                // }).catch((err) => {
+                }).catch((err) => {
                     
-                // });
+                });
                 
 
             })
