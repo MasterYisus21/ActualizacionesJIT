@@ -57,6 +57,7 @@ function ModuloSolicitudDocumentos() {
     axios.get(config.apiGatewayURL + '/documentos/' + id, { responseType: "blob" })
       .then(response => {
         console.log(response)
+        // window.open("someLink", "_blank")
         FileDownload(response.data, nombre)
       })
   }
