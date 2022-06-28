@@ -10,7 +10,7 @@
 
 .modulo-solicitud-content-main-column2{
     width: 45%;
-    height: 100%;
+    height: fit-content;
     padding: 15px;
 }
 
@@ -53,8 +53,8 @@
 }
 
 .modulo-solicitud-content-main-column2-save-button > p{
-    
-    padding-bottom: 2vw;
+    margin-bottom: 0px;
+    /* padding-bottom: 20px; */
 }
 
 .modulo-solicitud-content-main-text-input {

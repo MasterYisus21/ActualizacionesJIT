@@ -218,6 +218,7 @@ class Tipo_estado(BaseModels):
 
 class Documento(StateModel):
     Id = models.AutoField(primary_key=True,auto_created = True)
+    Nombre=models.CharField( max_length=100, blank=True, null=True)
     Ruta_directorio = models.FileField(upload_to='documentos/', max_length=100, blank=True,null=True)
     Tamanio = models.CharField( max_length=50, blank=True, null=True)
     Fecha_documento = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) # Se crea automaticamente 
