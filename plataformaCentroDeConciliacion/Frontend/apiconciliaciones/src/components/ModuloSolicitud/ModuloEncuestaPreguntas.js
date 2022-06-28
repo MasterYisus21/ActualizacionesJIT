@@ -9,6 +9,7 @@ function ModuloEncuestaPreguntas() {
 
     const [preguntas, setPreguntas] = useState([])
     const [respuestas, setRespuestas] = useState([])
+    const [medioConocimientoOpciones, setMedioConocimientoOpciones] = useState([])
     const [medioConocimiento, setMedioConocimiento] = useState("")
     const UrlParams = useParams();
     const navigate = useNavigate();
@@ -55,6 +56,14 @@ function ModuloEncuestaPreguntas() {
                 console.log(response.data)
                 setPreguntas(response.data)
             })
+    }, [])
+
+    useEffect(()=> {
+        axiosApiInstance.get(config.apiGatewayURL + '/medios')
+        .then(response => {
+            console.log(response.data)
+            setMedioConocimientoOpciones(response.data)
+        })
     }, [])
 
     return (
@@ -118,14 +127,17 @@ function ModuloEncuestaPreguntas() {
             </div>
             <div className="d-flex justify-content-center gap-3">
                 <label>Medio por el que conocio el servicio: </label>
-                <select className="boton-medio-conocimiento" name="medioConocimiento" required value={medioConocimiento} onChange={event => {setMedioConocimiento(event.target.value)}}>
+                <select className="boton-medio-conocimiento" name="medioConocimiento" required value={medioConocimiento} onChange={event => { setMedioConocimiento(event.target.value) }}>
                     <option value=""></option>
-                    <option value="1">Radio</option>
+                    {medioConocimientoOpciones.map((dato) => {
+                        return <option value={dato["Id"]}>{dato["Nombre"]}</option>
+                    })}
+                    {/* <option value="1">Radio</option>
                     <option value="2">Folletos</option>
                     <option value="3">Televisión</option>
                     <option value="4">Un amigo</option>
                     <option value="5">Web</option>
-                    <option value="6">Otro</option>
+                    <option value="6">Otro</option> */}
                 </select>
             </div>
             <button type="submit">Enviar</button>

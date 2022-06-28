@@ -17,7 +17,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
   }
 
   useEffect(()=> {
-    setNombreUsuario(JSON.parse(localStorage.getItem('conciliacionesToken'))["nombres"] + ' ' + JSON.parse(localStorage.getItem('conciliacionesToken'))["apellidos"])
+    setNombreUsuario(JSON.parse(localStorage.getItem('nombreUsuario'))["nombres"] + ' ' + JSON.parse(localStorage.getItem('conciliacionesToken'))["apellidos"])
   }, [])
 
 

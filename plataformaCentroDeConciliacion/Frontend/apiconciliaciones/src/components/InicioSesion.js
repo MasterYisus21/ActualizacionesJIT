@@ -22,6 +22,7 @@ function InicioSesion({ loggedIn, setLoggedIn }) {
                 console.log(response.data)
                 setLoggedIn(true)
                 localStorage.setItem("conciliacionesToken", JSON.stringify({ access_token: response.data["access_token"], refresh_token: response.data["refresh_token"], nombres:  response.data["nombres"], apellidos:  response.data["apellidos"]}))
+                localStorage.setItem("nombreUsuario", JSON.stringify({ nombres:  response.data["nombres"], apellidos:  response.data["apellidos"]}))
                 navigate('/dashboard', { replace: true })
             })
             .catch(error => {
