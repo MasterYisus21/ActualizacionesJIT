@@ -8,13 +8,15 @@
 }
 
 .contedor-encapsulamiento-gris {
-    width: 98%;
-    height: 95%;
+    width: 50%;
+    height: 50%;
     background-color: #ebebeb;
     box-sizing: content-box;
     border-radius: 15px;
-    display: grid;
-    grid-template-rows: 1fr 2fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 
 }
 
@@ -46,7 +48,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items:inherit;
+    align-items: center;
+    justify-content: center;
     gap: 1%;
 }
 
@@ -59,7 +62,7 @@
 }
 
 .iconos-reportes {
-    width: 70px;
+    width: 50px;
 }
 
 .seleccionar-reporte>label {
@@ -69,9 +72,9 @@
 .input-fecha {
     text-align: center;
     width: 30%;
-    height: 40%;
+    height: 10%;
     border-radius: 25px;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 500 white;
     border: 1px solid black;
 }
@@ -86,7 +89,7 @@
     text-align: center;
 }
 
-.boton-busqueda{
+.boton-busqueda {
     width: 15%;
     height: 40%;
     border-radius: 15px;
@@ -98,9 +101,9 @@
     color: white;
 }
 
-.input-reportes{
+.input-reportes {
     text-align: center;
-    width: 40%;
+    width: 100%;
     height: 40%;
     border-radius: 25px;
     font-size: 30px;
@@ -108,7 +111,7 @@
     border: 1px solid black;
 }
 
-.input-busqueda{
+.input-busqueda {
     text-align: center;
     width: 40%;
     height: 40%;
