@@ -25,8 +25,13 @@
 	appearance: none;
 	font: inherit;
 	color: currentColor;
+<<<<<<< HEAD
+	width: 1.15em;
+	height: 1.38em;
+=======
 	width: 2em;
 	height: 100%;
+>>>>>>> 639b4996bcef3644f16293df7592199e3875e105
 	/* border: 0.15em solid currentColor; */
 	/* border-radius: 50%;	 */
 }

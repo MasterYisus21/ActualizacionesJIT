@@ -9,7 +9,11 @@ function Home() {
         <img className='' width={"200"} height={"200"} src='/icons/escudo_ugc_1.png' />
         {/* <div className='vertical-line'></div> */}
         <div className='home-navbar-login-button'><Link to="/login" className='btn btn-outline-success'> Ingresar </Link></div>
+<<<<<<< HEAD
+        <div className='home-navbar-title'>Centro de Conciliaciones</div>
+=======
         <div className='home-navbar-title'>Centros de Conciliacion</div>
+>>>>>>> 639b4996bcef3644f16293df7592199e3875e105
         <div className='home-navbar-link'><Link to="/nueva-solicitud/crear" className='btn btn-success'>Quiero hacer mi solicitud</Link></div>
       </nav>
       <div className='home-hero-section'>
