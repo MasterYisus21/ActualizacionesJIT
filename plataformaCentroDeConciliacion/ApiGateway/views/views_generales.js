@@ -507,14 +507,14 @@ views.ActualizarDocuementos= async (req,res)=>{
  }
  views.ActualizarSolicitudes= async (req,res)=>{
     try{
-    //  if(req.idpermiso==0){res.sendStatus(401);return }
-    //  const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+     if(req.idpermiso==0){res.sendStatus(401);return }
+     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
  
-    //  if(!response.data.Permiso_actualizar){
+     if(!response.data.Permiso_actualizar){
          
-    //      res.sendStatus(401)
-    //      return
-    //  }
+         res.sendStatus(401)
+         return
+     }
 
     await axios.patch(config.urlApiConciliacion + "/solicitudes/" +req.params.id + "/",req.body)
      .then(response => {

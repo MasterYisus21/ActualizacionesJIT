@@ -29,6 +29,7 @@ router.post('/personas',views_generales.CrearPersonas)
 // encuestas//
 router.get('/preguntas/',views_generales.Preguntas)
 router.get("/estados", views_solicitud.ListarEstados)
+router.get("/medios", views_solicitud.ListarMedios)
 
 
 

@@ -14,6 +14,7 @@ const path = require("path");
 
  
 function Generar(solicitud,convocante,convocado,conciliador,estudiante,hechos,citacion,tipo_resultado) {
+    let datos ={}
     const content = fs.readFileSync(
         path.resolve(__dirname, String(tipo_resultado)+".docx"),
         "binary"
@@ -25,39 +26,53 @@ function Generar(solicitud,convocante,convocado,conciliador,estudiante,hechos,ci
         paragraphLoop: true,
         linebreaks: true,
     });
+    if (solicitud != ''){
+        datos.numero_caso=solicitud.Numero_caso
+    }else{return datos = {}}
+    if (convocante != ''){
+        datos.nombre_apellidos_convocante=String(convocante.Nombres+ " " + convocante.Apellidos)
+        datos.numero_cedula_convocante=convocante.Identificacion
+        datos.telefono_convocante=convocante.Telefono
+        datos.email_convocante= convocante.Correo
+        datos.ciudad_convocante=convocante.Ciudad
+        datos.barrio_convocante=convocante.Barrio_Id
+        datos.localidad_convocante=convocante.Localidad
     
-    let datos = 
-    {
-        numero_caso:solicitud.Numero_caso,   
-        nombre_apellidos_convocante: String(convocante.Nombres+ " " + convocante.Apellidos), 
-        nombre_apellidos_convocados:String(convocado.Nombres+ " " + convocado.Apellidos),
-        numero_cedula_convocado:convocado.Identificacion,
-        numero_cedula_convocante:convocante.Identificacion,
-        telefono_convocante:convocante.Telefono,
-        email_convocante: convocante.Correo,
-        ciudad_convocante:convocante.Ciudad,
-        barrio_convocante:convocante.Barrio_Id,
-        localidad_convocante:convocante.Localidad,
-        ciudad_convocado:convocado.Ciudad,
-        barrio_convocado:convocado.Barrio_Id,
-        localidad_convocado:convocado.Localidad,
-        telefono_convocado:convocado.Telefono,
-        email_convocado:convocado.Correo,
-        nombre_apellidos_conciliador:String(conciliador.Nombres+ " " + conciliador.Apellidos),
-        email_docente_conciliador:conciliador.Correo, 
-        numero_identificacion_conciliador:conciliador.Identificacion,
-        nombre_apellidos_estudiante:String(estudiante.Nombres+ " " + estudiante.Apellidos),
-        fecha_hora_citacion:String(citacion.Fecha_sesion+ " a la hora " + citacion.Turno_Id),
-        hechos:hechos.Descripcion_hecho,
-        propuesta:hechos.Descripcion_pretension
-       
-    }
+    }else{return datos = {}}
+    if (convocado != ''){
+        datos.nombre_apellidos_convocados=String(convocado.Nombres+ " " + convocado.Apellidos)
+        datos.numero_cedula_convocado=convocado.Identificacion
+        datos.ciudad_convocado=convocado.Ciudad
+        datos.barrio_convocado=convocado.Barrio_Id
+        datos.localidad_convocado=convocado.Localidad
+        datos.telefono_convocado=convocado.Telefono
+        datos.email_convocado=convocado.Correo 
+    }else{return datos = {}}
+    if (conciliador != ''){
+        datos.nombre_apellidos_conciliador=String(conciliador.Nombres+ " " + conciliador.Apellidos)
+        datos.email_docente_conciliador=conciliador.Correo, 
+        datos.numero_identificacion_conciliador=conciliador.Identificacion
+    }else{return datos = {}}
+    if (hechos != ''){
+        datos.hechos=hechos.Descripcion_hecho
+        datos.propuesta=hechos.Descripcion_pretension
+        
+    }else{return datos = {}}
+  
+    if (estudiante != ''){
+        datos.nombre_apellidos_estudiante=String(estudiante.Nombres+ " " + estudiante.Apellidos)
+    }else{ datos.nombre_apellidos_estudiante = {}}
+    if (citacion != ''){
+        datos.fecha_hora_citacion=String(citacion.Fecha_sesion+ " a la hora " + citacion.Turno_Id)
+        
+    }else{return datos.fecha_hora_citacion={}}
+   
    
     // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
     
     // contancia de no acuerdo
     doc.render(datos);
-    let date = new Date().toDateString();
+    
 
     
     const buf = doc.getZip().generate({
@@ -99,6 +114,6 @@ app.post('/', async (req, res)=> {
 
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(` listening on port ${port}`)
   })
  

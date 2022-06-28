@@ -309,6 +309,19 @@ views.ListarEstados = async (req, res) => {
     console.log(err)
   }
 }
+views.ListarMedios = async (req, res) => {
+  try{
+    axios.get(config.urlApiConciliacion + "/medios_conocimiento")
+    .then(resp=>{
+      res.status(200).json(resp.data)
+  })
+  .catch(err=>{
+    res.sendStatus(400);
+  })
+  }catch(err){
+    console.log(err)
+  }
+}
 views.CrearSolicitud = async (req, res) => {
   try {
    
