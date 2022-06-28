@@ -117,7 +117,8 @@ function NewModuloSolicitudDocumentos() {
                 <td className='text-center'>{dato["Fecha_documento"]}</td>
                 <td className='text-center'>{dato["Tamanio"]}</td>
                 {/* <td className='text-center'>{dato["estado"]}</td> */}
-                <td className='d-flex justify-content-center'><ThreePositionSwitch key={dato["Id"]} initialValue={dato["Tipo_estado_Id"]["Id"]} id={3} /></td>
+                <td className='text-center'>{dato["Tipo_estado_Id"]["Nombre"]}</td>
+                {/* <td className='d-flex justify-content-center'><ThreePositionSwitch key={dato["Id"]} initialValue={dato["Tipo_estado_Id"]["Id"]} id={3} /></td> */}
                 {/* <td>{cloneElement(ThreePositionSwitch, {initialValue: dato["estado"], id: 3})}</td> */}
               </tr>
             )

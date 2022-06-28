@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import './css/ThreePositionSwitch.css'
+import axiosApiInstance from './axiosApiInstance'
 
 function ThreePositionSwitch({ initialValue, id }) {
     const [value, setValue] = useState(initialValue)
+
+    useEffect(()=> {
+        console.log(value)
+        console.log(id)        
+    }, [value])
 
 
     return (
