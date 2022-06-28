@@ -10,9 +10,9 @@ function ModuloSolicitudEstudiantes() {
 
 
 
-    const agregarestudiantes = (event) => {
-        event.preventDefault()
-        axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/estudiantes/" + event.target.identificacionPersona.value)
+    const agregarestudiantes = (value) => {
+        // event.preventDefault()
+        axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"] + "/estudiantes/" + value)
             .then((response) => {
                 setIsOpen(false)
                 if (response.status != 208) {
@@ -91,14 +91,20 @@ function ModuloSolicitudEstudiantes() {
                 <div className='contenedor-navbar-agregar-estudiantes'>
                     <nav className="navbar navbar-light ">
                         <div className="container-fluid">
-                            <form className="d-flex input-group w-autd-flex input-group w-auto align-items-sm-baseline gap-1">
+                            <form className="d-flex input-group w-auto align-items-sm-baseline gap-1" onSubmit={e => { e.preventDefault(); agregarestudiantes(e.target.cedula.value) }}>
                                 <input
-                                    type="search"
+                                    type="text"
                                     className="form-control form-control-sm rounded"
-                                    placeholder="Buscar"
+                                    name="cedula"
+                                    placeholder="Cédula"
                                     aria-label="Search"
                                     aria-describedby="search-addon"
                                 />
+                                <button className='border-0 bg-transparent '>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                    </svg>
+                                </button>
                                 <div ref={alertContainer}></div>
                             </form>
                             <div className="d-flex align-items-end">
@@ -111,7 +117,7 @@ function ModuloSolicitudEstudiantes() {
                     </nav>
                 </div>
                 {isOpen &&
-                    <form className='contenedor-tabla-seleccion-estudiantes mb-5 p-4 pb-3' onSubmit={agregarestudiantes}>
+                    <form className='contenedor-tabla-seleccion-estudiantes mb-5 p-4 pb-3' onSubmit={e => { e.preventDefault(); agregarestudiantes(e.target.identificacionPersona.value) }}>
                         <label className='pb-3 h5'>Seleccione el estudiantes que desea agregar</label>
                         <table className='table table-striped table-bordered table-responsive'>
                             <thead >
