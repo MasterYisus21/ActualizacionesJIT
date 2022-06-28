@@ -10,7 +10,7 @@ function Home() {
         {/* <div className='vertical-line'></div> */}
         <div className='home-navbar-login-button'><Link to="/login" className='btn btn-outline-success'> Ingresar </Link></div>
         <div className='home-navbar-title'>Centro de Conciliaciones</div>
-        <div className='home-navbar-link'><Link to="/nueva-solicitud/crear" className='btn btn-outline-success'>Quiero hacer mi solicitud</Link></div>
+        <div className='home-navbar-link'><Link to="/nueva-solicitud/crear" className='btn btn-success'>Quiero hacer mi solicitud</Link></div>
       </nav>
       <div className='home-hero-section'>
         <video className='background-video' autoPlay controls = '' loop muted={true}>
