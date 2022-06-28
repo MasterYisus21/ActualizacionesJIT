@@ -8,6 +8,7 @@ function reportes() {
 
     return (
         <div className="contenedor-principal-reportes">
+            <img src="/images/reportes.png" ></img>
             <div className="contedor-encapsulamiento-gris">
                 {/* <div className="contenedor-opciones-reporte"> */}
 
