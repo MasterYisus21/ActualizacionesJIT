@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './css/SolicitudesView.css'
 import config from '../../config.json';
 import { Link } from 'react-router-dom';
@@ -11,9 +11,25 @@ function SolicitudesView() {
     const [busqueda, setBusqueda] = useState("")
     const [casosEncontrados, setCasosEncontrados] = useState([])
 
+    const alertContainer = useRef("");
+
 
     const buscarCaso = () => {
-        // axiosApiInstance
+        axiosApiInstance.get(config.apiGatewayURL + "/solicitudes_view/" + busqueda)
+            .then(response => {
+                if (response.data.length > 0) {
+                    setCasosEncontrados(response.data)
+                    alertContainer.current.innerHTML = ""
+                }
+                else {
+                    setCasosEncontrados([])
+                    alertContainer.current.innerHTML = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>No se encontro ningun caso.</div>"
+                }
+            })
+            .catch(error => {
+                setCasosEncontrados([])
+                alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>No se pudo procesar la solicitud por un error desconocido.</div>"
+            })
     }
 
     useEffect(() => {
@@ -34,16 +50,16 @@ function SolicitudesView() {
 
 
         axiosApiInstance.get(config.apiGatewayURL + "/solicitudes_view/historico")
-        .then((response) => {
-            console.log(response.data)
-            if (response.data.length > 0) {
-                setHistorial(response.data)
-            }
+            .then((response) => {
+                console.log(response.data)
+                if (response.data.length > 0) {
+                    setHistorial(response.data)
+                }
 
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }, [])
 
     return (
@@ -149,11 +165,24 @@ function SolicitudesView() {
                     <input className='form-control' placeholder='Solicitud' value={busqueda} onChange={e => setBusqueda(e.target.value)} />
                     <button className='btn btn-success' onClick={buscarCaso}> Ir </button>
                 </div>
-                asdsad
-                asdsadsad
-                <p>asdsad</p>
-                sad
-                asdsad
+                <div>
+
+                    {casosEncontrados.map(dato => {
+                        // return (<Link to="">{'Caso: ' + dato["Solicitud_Id"] + ' Fecha: ' + dato["Fecha_registro"] + ' Estado: ' + dato["Tipo_Estado"]}</Link>)
+                        return (<div class="card w-75">
+                            <div class="card-body">
+                                <h5 class="card-title">{dato["Solicitud_Id"]}</h5>
+                                <p class="card-text">{'Fecha: ' + dato["Fecha_registro"] + ' Estado: ' + dato["Tipo_Estado"]}</p>
+                                <Link to={"/dashboard/modulo-solicitudes/" + dato["Solicitud_Id"] + "/datos_generales"}>
+                                    <div className='beautiful-icon-container-1'>
+                                        <img className='icon' src='/icons/eye_icon_1.png' />
+                                    </div>
+                                </Link>
+                            </div>
+                        </div>)
+                    })}
+                    <div ref={alertContainer}></div>
+                </div>
                 <div className='solicitudes-view-column-2-tabla-1'>
                     <div className='solicitudes-view-column-1-tabla-2-header position-sticky'>
                         <div className='div-green-table-header content100'>
@@ -187,7 +216,7 @@ function SolicitudesView() {
                                             <td>{datos["Solicitud_Id"]}</td>
                                             {/* <td>{datos["Flag_requiere_documento"] ? <div className='state action-required-state'>si</div> : <div className='state success-state'>no</div>}</td> */}
                                             {/* <td>{datos["Descripcion"]}</td> */}
-                                            
+
                                             {/* <td className='display-flex'>
                                                 <a href="#">
                                                     <div className='beautiful-icon-container-1'>
