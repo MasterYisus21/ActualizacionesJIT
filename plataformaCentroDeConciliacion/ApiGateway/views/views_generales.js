@@ -255,10 +255,11 @@ views.SolicitudesviewEspecificas= async(req,res)=>{
 
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
-        if(!response.data.Permiso_colsulta){
+        if(!response.data.Permiso_consulta){
             res.sendStatus(401)
             return
         }
+      
        let identificacion = req.identificacion
     
    // console.log(config.urlApiConciliacion + "/personas?Identificacion="+req.params.identificacion)

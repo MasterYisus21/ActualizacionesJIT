@@ -57,7 +57,7 @@ router.patch('/personas/:identificacion',views_generales.Actualizar)
 // Solicitudesviews//
 router.get('/solicitudes_view',views_generales.Solicitudesview) // trae las solicitudes de la persoas que ingrese
 router.get('/solicitudes_view/historico',views_generales.SolicitudesviewHistorial) // trae el historial de las solicitudes de la eprsona que ingrese
-//router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
+router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
 
 
 // Traer y agregar solicitudes 
