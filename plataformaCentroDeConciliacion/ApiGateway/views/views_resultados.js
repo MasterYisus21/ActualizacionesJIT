@@ -36,10 +36,10 @@ views.ResultadoEspecifico = async (req, res) => {
                 .then(async(result) => {
                     await axios.get(result.data.url,{ responseType : 'arraybuffer' })
                     .then((response) => {
-                        res.download(result.data.url)
+                        res.end(response.data)
                         
                     }).catch((err) => {
-                        console.log(err)
+                      console.log(err)
                     });
                 // await axios.get(result.data.url, { responseType : 'arraybuffer' })//,
                 // .then(response => {

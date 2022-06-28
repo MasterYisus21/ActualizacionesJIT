@@ -109,7 +109,7 @@ views.CargarDocumentos = async (req, res) => {
          
     
     unirest
-        .post('http://127.0.0.1:8000/api/conciliaciones/v1/documentos/')
+        .post( config.urlApiConciliacion+'/documentos/')
        
         .field('State', true)
         .field('Nombre', req.file.originalname)
