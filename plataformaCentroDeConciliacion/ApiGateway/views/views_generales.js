@@ -480,6 +480,31 @@ views.Actualizar= async (req,res)=>{
     
 }
 
+
+views.ActualizarDocuementos= async (req,res)=>{
+    try{
+    //  if(req.idpermiso==0){res.sendStatus(401);return }
+    //  const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+ 
+    //  if(!response.data.Permiso_actualizar){
+         
+    //      res.sendStatus(401)
+    //      return
+    //  }
+
+    await axios.patch(config.urlApiConciliacion + "/documentos/" +req.params.id+"/",req.body)
+     .then(response => {
+         res.status(200).json(response.data)
+     })
+     .catch(function (error) {
+         console.log(error);
+         res.sendStatus(404); 
+     })
+ }catch(err){
+     console.log(err)
+ }
+     
+ }
 views.EliminarCitacion=async(req,res)=>{
   
     try{
