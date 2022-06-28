@@ -70,7 +70,9 @@ router.post('/solicitudes/:id',views_solicitud.ActualizarSolicitud)// Acutaliza 
 
 
 // actualizar// 
-router.patch('/:documentos/:id',views_generales.ActualizarDocuementos)
+router.patch('/documentos/:id',views_generales.ActualizarDocuementos)
+
+router.patch('/solicitudes/:id',views_generales.ActualizarSolicitudes)
 
 // hechos //
 
