@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-const port = 3002
+const port = 8001
 const multer = require("multer");
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -89,7 +89,7 @@ app.post('/', async (req, res)=> {
   
   
    //console.log(req.body.convocante)
-   res.json({  url:"http://localhost:3000/resultado.docx" 
+   res.json({  url:"http://localhost:8001/resultado.docx" 
 
   });
   }catch(error){console.log(error)}
