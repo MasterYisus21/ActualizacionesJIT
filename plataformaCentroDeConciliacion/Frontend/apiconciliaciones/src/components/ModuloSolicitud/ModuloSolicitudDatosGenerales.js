@@ -125,7 +125,7 @@ function ModuloSolicitudDatosGenerales(props) {
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])
-                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
+                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado</div>"
                 
             })
             .catch((error) => {

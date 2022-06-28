@@ -8,6 +8,13 @@ function SolicitudesView() {
 
     const [misSolicitudes, setMisSolicitudes] = useState([]);
     const [historial, setHistorial] = useState([]);
+    const [busqueda, setBusqueda] = useState("")
+    const [casosEncontrados, setCasosEncontrados] = useState([])
+
+
+    const buscarCaso = () => {
+        // axiosApiInstance
+    }
 
     useEffect(() => {
         axiosApiInstance.get(config.apiGatewayURL + "/solicitudes_view")
@@ -139,9 +146,14 @@ function SolicitudesView() {
             </div>
             <div className='solicitudes-view-column-2'>
                 <div className='solicitudes-view-column-2-seccion-buscar'>
-                    <input className='form-control' placeholder='Solicitud' />
-                    <button className='btn btn-success'> Buscar </button>
+                    <input className='form-control' placeholder='Solicitud' value={busqueda} onChange={e => setBusqueda(e.target.value)} />
+                    <button className='btn btn-success' onClick={buscarCaso}> Ir </button>
                 </div>
+                asdsad
+                asdsadsad
+                <p>asdsad</p>
+                sad
+                asdsad
                 <div className='solicitudes-view-column-2-tabla-1'>
                     <div className='solicitudes-view-column-1-tabla-2-header position-sticky'>
                         <div className='div-green-table-header content100'>

@@ -33,6 +33,7 @@ function reportes() {
                 <div>
                     <button className="btn btn-success">Descargar</button>
                 </div>
+                <br />
                 {/* </div> */}
             </div>
         </div>
