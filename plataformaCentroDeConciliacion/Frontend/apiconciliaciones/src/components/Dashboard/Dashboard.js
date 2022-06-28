@@ -55,7 +55,6 @@ function Dashboard({ loggedIn, setLoggedIn }) {
             Mis Solicitudes
           </div>
         </Link>
-        <hr />
         <Link className='dashboard-sidebar-link' to='/dashboard/modulo-solicitudes/crear'>
           <div className='beautiful-icon-container-1'>
             <img className='icon' src='/icons/plus_icon_1.png' />
@@ -64,6 +63,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
             Agregar Solicitud
           </div>
         </Link>
+        <hr />
         <Link className='dashboard-sidebar-link' to='/dashboard/personas'>
           <div className='beautiful-icon-container-1'>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="bg-dark" className="bi bi-people-fill icon" viewBox="0 0 16 16">
