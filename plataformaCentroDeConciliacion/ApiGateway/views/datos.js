@@ -186,14 +186,10 @@ datosPersonas.ExportarDatos = async (req, response) => {
     try {
         let datos = {}
         const search = await axios.get(config.urlGateway + "solicitudes/" + req.params.id + "/" + response)
-        if(search.data == ''){
-            console.log("sin datos")
-            return  
-            
-        }
-        
+       
+        if(Object.keys(search.data).length==0){return datos = {}}
+
         if (response == "hechos") {
-            console.log("entre")
             search.data[0].Departamento = search.data[0].Ciudad_Id.Departamento_Id.Nombre
             search.data[0].Ciudad_Id = search.data[0].Ciudad_Id.Nombre
             datos = search.data[0]
