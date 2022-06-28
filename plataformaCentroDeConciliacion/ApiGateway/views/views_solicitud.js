@@ -316,7 +316,7 @@ views.ListarMedios = async (req, res) => {
       res.status(200).json(resp.data)
   })
   .catch(err=>{
-    res.sendStatus(400);
+    res.sendStatus(404);
   })
   }catch(err){
     console.log(err)
