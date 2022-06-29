@@ -138,6 +138,29 @@ app.post('/', async (req, res)=> {
   
 });
 
+app.post('/reportes', async (req, res)=> {
+    try{
+     const solicitud=(req.body.solicitud == '') ? "" : req.body.solicitud
+     const convocante=(req.body.convocante == '') ? "": req.body.convocante
+     const convocado=(req.body.convocado == '')? "" :req.body.convocado
+     const conciliador= (req.body.conciliador == '')? "":req.body.conciliador
+     const estudiante = (req.body.estudiante == '')? "":req.body.estudiante
+     const hechos = (req.body.hechos == '')? "":req.body.hechos
+     const citacion  = (req.body.citacion == '')? "":req.body.citacion
+     const tipo_resultado =(req.body.tipo_resultado == '')? "":req.body.tipo_resultado
+  //   await GenerarReporte(solicitud,convocante,convocado,conciliador,estudiante,hechos,citacion,tipo_resultado)
+  
+    
+    
+     //console.log(req.body.convocante)
+     res.json({  url:"http://localhost:8001/reporte.xlsx" 
+  
+    });
+    }catch(error){console.log(error)}
+      
+    
+  });
+
 
 app.listen(port, () => {
     console.log(` listening on port ${port}`)

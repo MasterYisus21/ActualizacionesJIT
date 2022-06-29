@@ -6,7 +6,7 @@ const views_generales = require('../views/views_generales')
 const views_solicitud = require('../views/views_solicitud')
 const views_documentos = require('../views/views_documentos')
 const views_resultados = require("../views/views_resultados");
-
+const views_reportes= require("../views/views_reportes");
 const config =require ('../config.json')
 
 
@@ -103,3 +103,6 @@ module.exports = router
 //resultados
 router.get("/resultados", views_resultados.ListarResultados);
 
+//reportes 
+
+router.post("/reportes", views_reportes.GenerarReporte);
