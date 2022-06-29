@@ -51,16 +51,16 @@ function NewModuloSolicitudDocumentos() {
 
   }
 
-  const download = (event, id, nombre) => {
-    event.preventDefault()
-    console.log(id)
-    console.log(nombre)
-    axios.get(config.apiGatewayURL + '/documentos/' + id, {responseType:"blob"})
-    .then(response => {
-      console.log(response)
-      FileDownload(response.data, nombre)
-    })
-  }
+  // const download = (event, id, nombre) => {
+  //   event.preventDefault()
+  //   console.log(id)
+  //   console.log(nombre)
+  //   axios.get(config.apiGatewayURL + '/documentos/' + id, {responseType:"blob"})
+  //   .then(response => {
+  //     console.log(response)
+  //     FileDownload(response.data, nombre)
+  //   })
+  // }
 
 
 
@@ -113,7 +113,7 @@ function NewModuloSolicitudDocumentos() {
           {documentos.map((dato) => {
             return (
               <tr>
-                <th className='text-center' style={{maxWidth: "35%"}} scope="row"><button className='btn' onClick={(event) => {download(event, dato["Id"], dato["Nombre"])}}>{dato["Nombre"]}</button></th>
+                <th className='text-center' style={{maxWidth: "35%"}} scope="row">{dato["Nombre"]}</th>
                 <td className='text-center'>{dato["Fecha_documento"]}</td>
                 <td className='text-center'>{dato["Tamanio"]}</td>
                 {/* <td className='text-center'>{dato["estado"]}</td> */}

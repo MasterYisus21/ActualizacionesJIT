@@ -10,7 +10,7 @@ import { Dashboard } from './components/Dashboard';
 import ErrorPage from './components/ErrorPage';
 import SolicitudesView from './components/Dashboard/SolicitudesView';
 import Personas from './components/Dashboard/Personas';
-import Reportes from './components/Dashboard/reportes';
+import Reportes from './components/Dashboard/Reportes';
 import ModuloEncuestas from './components/ModuloSolicitud/ModuloEncuesta';
 import ModuloEncuestaPreguntas from './components/ModuloSolicitud/ModuloEncuestaPreguntas';
 import FormularioSolicitud from './components/FormularioSolicitud';
