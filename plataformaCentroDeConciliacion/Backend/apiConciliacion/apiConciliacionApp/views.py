@@ -5,7 +5,10 @@ from django.shortcuts import render
 from .serializers import*
 from apiConciliacionApp.base.general_views import  GeneralViewSet
 from rest_framework import filters
-from django_filters import rest_framework as filters
+
+
+from django_filters import FilterSet, AllValuesFilter
+from django_filters import DateTimeFilter, NumberFilter
 
 
 
@@ -47,26 +50,10 @@ class Tipo_servicioViewSet(GeneralViewSet):  # Una sola clase para los metodos d
 class Tipo_resultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Tipo_resultadoSerializer
     filter_fields ='__all__'
-
-
-class MetricFilter(filters.FilterSet):
-    date = filters.DateFromToRangeFilter()
-
-    class Meta:
-        model = Solicitud
-        fields = ['Area_Id', 'Fecha_registro']
-
-
-class SolicitudViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
-    serializer_class = SolicitudSerializer
-
-    filter_backends = [filters.DjangoFilterBackend]
-    filterset_class = MetricFilter
- 
-
-
-   # filter_backends = [filters.SearchFilter]
-   # search_fields = ['=Numero_caso','Fecha_registro','Fecha_finalizacion']
+# class SolicitudViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+#     serializer_class = SolicitudSerializer
+#    # filter_backends = [filters.SearchFilter]
+#    # search_fields = ['=Numero_caso','Fecha_registro','Fecha_inicio']
 
 class HechosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = HechosSerializer
@@ -79,9 +66,33 @@ class Tipo_estadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de 
 #     filterset_fields = ['id']
     
     
-   
-    
-    
+class SolicitudFilter(FilterSet):
+	Fecha_inicio = DateTimeFilter(field_name='Fecha_registro',
+											lookup_expr='gte')
+	Fecha_fin = DateTimeFilter(field_name='Fecha_registro',
+										lookup_expr='lte')
+
+
+	class Meta:
+		model = Solicitud
+		fields = (
+			'Descripcion',
+			'Fecha_inicio',
+			'Fecha_fin',
+			)
+
+
+class  SolicitudViewSet(GeneralViewSet):
+    queryset = Solicitud.objects.all()
+    serializer_class = SolicitudSerializer
+    name = 'robot-list'
+    # customized filter class
+    filter_class = SolicitudFilter
+    search_fields = (
+        'Descripcion',
+    )
+  
+  
 class DocumentoViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
    
     
