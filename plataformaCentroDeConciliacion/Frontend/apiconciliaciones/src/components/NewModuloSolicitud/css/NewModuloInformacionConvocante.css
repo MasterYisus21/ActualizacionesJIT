@@ -1,5 +1,5 @@
 .container-convocante {
-    max-width: 85%;
+    max-width: 45em;
 }
 
 .titulo-informacion-convocante {
@@ -18,7 +18,7 @@
 }
 
 .contenedor-tabla-convocante {
-    font-size: small;
+    font-size: .7em;
     text-align: center;
     padding-bottom: 5px;
 }
@@ -36,10 +36,11 @@
 }
 
 #boton-aceptar-registro-convocante {
-    width: 12%;
+    width: 6em;
     background-color: rgb(56, 165, 42);
     border-color: rgb(56, 165, 42);
-    font-size: 1vw;
+    font-size: .8em;
+    padding: .2em;
 }
 
 .boton-tabla-eliminar {

@@ -1,5 +1,5 @@
 .container-convocado {
-    max-width: 85%;
+    max-width: 45em;
 }
 
 .titulo-informacion-convocado {
@@ -18,7 +18,7 @@
 }
 
 .contenedor-tabla-convocado {
-    font-size: small;
+    font-size: .7em;
     text-align: center;
     padding-bottom: 5px;
 }
@@ -35,10 +35,11 @@
     box-shadow: 0px 2px 4px rgb(0 0 0 / 10%), 0 4px 20px rgb(0 0 0 / 10%);
 }
 #boton-aceptar-registro-convocado {
-    width: 12%;
+    width: 6em;
     background-color: rgb(56, 165, 42);
     border-color: rgb(56, 165, 42);
-    font-size: 1vw;
+    font-size: .8em;
+    padding: .2em;
 }
 
 .boton-tabla-eliminar {

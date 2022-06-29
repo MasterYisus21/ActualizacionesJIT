@@ -13,7 +13,7 @@ function FormularioSolicitud() {
 
     <div className='contenedor-registros-nuevos-principal'>
       <Link  to="/">
-        <button className='btn btn-dark boton-volver' style={{ position: "absolute", left: "93%" }}>volver</button>
+        <button className='btn btn-dark boton-volver' style={{ position: "relative", left: "93%" }} >volver</button>
       </Link>
       <div className='main-content-formulario-solicitud'>
         <div className='modulo-solicitud-wrapper'>
