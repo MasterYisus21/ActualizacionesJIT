@@ -4,7 +4,9 @@ const app = express(); // aplicaicon express
 const router = express.Router()
 const views_generales = require('../views/views_generales')
 const views_solicitud = require('../views/views_solicitud')
-
+const views_documentos = require('../views/views_documentos')
+const views_resultados = require("../views/views_resultados");
+const views_reportes= require("../views/views_reportes");
 const config =require ('../config.json')
 
 
@@ -27,6 +29,7 @@ router.post('/personas',views_generales.CrearPersonas)
 // encuestas//
 router.get('/preguntas/',views_generales.Preguntas)
 router.get("/estados", views_solicitud.ListarEstados)
+router.get("/medios", views_solicitud.ListarMedios)
 
 
 
@@ -54,7 +57,7 @@ router.patch('/personas/:identificacion',views_generales.Actualizar)
 // Solicitudesviews//
 router.get('/solicitudes_view',views_generales.Solicitudesview) // trae las solicitudes de la persoas que ingrese
 router.get('/solicitudes_view/historico',views_generales.SolicitudesviewHistorial) // trae el historial de las solicitudes de la eprsona que ingrese
-//router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
+router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
 
 
 // Traer y agregar solicitudes 
@@ -68,7 +71,9 @@ router.post('/solicitudes/:id',views_solicitud.ActualizarSolicitud)// Acutaliza 
 
 
 // actualizar// 
-router.patch('/:nombre/:id',views_generales.Actualizar)
+router.patch('/documentos/:id',views_generales.ActualizarDocuementos)
+
+router.patch('/solicitudes/:id',views_generales.ActualizarSolicitudes)
 
 // hechos //
 
@@ -91,4 +96,13 @@ router.get('/generar/',views_generales.GenerarDocumentos)
 // ESTADOS
 router.get("/estados", views_solicitud.ListarEstados);
 
+// documentos
+router.get("/documentos/:id", views_documentos.DocumentoEspecifico);
 module.exports = router 
+
+//resultados
+router.get("/resultados", views_resultados.ListarResultados);
+
+//reportes 
+
+router.post("/reportes", views_reportes.GenerarReporte);

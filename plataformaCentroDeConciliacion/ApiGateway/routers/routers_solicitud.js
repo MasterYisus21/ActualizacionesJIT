@@ -1,6 +1,8 @@
 const express = require("express");
 const axios = require("axios");
 const app = express();
+const multer = require("multer");
+const fs = require('fs');
 const router = express.Router();
 const views_solicitud = require("../views/views_solicitud");
 const views_convocante = require("../views/views_convocante");
@@ -12,10 +14,42 @@ const views_manejo_conflicto = require("../views/views_manejo_conflicto");
 const views_audiencia = require("../views/views_audiencia");
 const views_encuesta = require("../views/views_encuesta");
 const views_documento = require("../views/views_documentos");
+const views_resultados = require("../views/views_resultados");
+
+
+const maxSize = 10 * 1000 * 1000 // 10Mb Max
+//Configuration for Multer
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public");
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `${file.fieldname}-${Date.now()}.${ext}`);
+  },
+});
+
+// Multer Filter
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.split("/")[1] === "jpeg"|file.mimetype.split("/")[1] ==="pdf"|file.mimetype.split("/")[1] ==="png") {
+    cb(null, true);
+  
+  } else {
+    cb(new Error("Formato no valido"), false);
+  }
+};
+
+//Calling the "multer" Function
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+  limits: { fileSize: maxSize },
+});
 
 
 
-////////////////////////////////////////////////////////// NO PROTEGIDAS ///////
+
+////////////////////////////////////////////////////////////// NO PROTEGIDAS ///////
 
 // solicitud
 
@@ -84,6 +118,7 @@ router.delete("/:id/citaciones/:id2/personas",views_audiencia.EliminarPersonas);
 router.get("/:id/fechas/:fecha", views_audiencia.FechasDisponibles);
 
 //router.delete('/:id/citaciones/:documento',views_solicitud.EliminarPersona)
+
 // audiencia
 
 // encuesta//
@@ -102,6 +137,13 @@ router.get("/:id/documentos", views_documento.VerDocumentos);
 
 router.get("/:id/estado_solicitud", views_solicitud.EstadoSolicitud);
 router.post("/:id/estado_solicitud", views_solicitud.CambiarEstadoSolicitud);
+
+//resultados 
+router.get("/:id/resultados/:id2", views_resultados.ResultadoEspecifico);
+app.use(express.static('public'))
+router.post("/:id/documentos", upload.single("myFile"), views_documento.CargarDocumentos) 
+
+
 
 
 module.exports = router;

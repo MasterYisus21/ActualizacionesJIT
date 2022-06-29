@@ -17,7 +17,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
   }
 
   useEffect(()=> {
-    setNombreUsuario(JSON.parse(localStorage.getItem('conciliacionesToken'))["nombres"] + ' ' + JSON.parse(localStorage.getItem('conciliacionesToken'))["apellidos"])
+    setNombreUsuario(JSON.parse(localStorage.getItem('nombreUsuario'))["nombres"] + ' ' + JSON.parse(localStorage.getItem('nombreUsuario'))["apellidos"])
   }, [])
 
 
@@ -35,7 +35,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
             | Hola, {nombreUsuario}
           </div>
           <div className='dashboard-top-navbar-utilities'>
-            Centro de conciliaciones
+            Centros de conciliacion
 
             <a href="#" className='beautiful-icon-container-1' onClick={e => {logout()}}>
               <img className='icon' src='/icons/sign_out_icon_1.jpg' />
@@ -55,7 +55,6 @@ function Dashboard({ loggedIn, setLoggedIn }) {
             Mis Solicitudes
           </div>
         </Link>
-        <hr />
         <Link className='dashboard-sidebar-link' to='/dashboard/modulo-solicitudes/crear'>
           <div className='beautiful-icon-container-1'>
             <img className='icon' src='/icons/plus_icon_1.png' />
@@ -64,6 +63,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
             Agregar Solicitud
           </div>
         </Link>
+        <hr />
         <Link className='dashboard-sidebar-link' to='/dashboard/personas'>
           <div className='beautiful-icon-container-1'>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="bg-dark" className="bi bi-people-fill icon" viewBox="0 0 16 16">

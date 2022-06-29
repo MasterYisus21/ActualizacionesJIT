@@ -185,8 +185,10 @@ function ModuloSolicitudAudiencia_registro() {
                             <label className="">Virtual </label>
                             <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' checked={tipoMedio == 1 ? true : false} onChange={() => { setTipoMedio(1) }} required></input>
                             <label className="">Presencial </label>
+                            <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' checked={tipoMedio == 3 ? true : false} onChange={() => { setTipoMedio(3) }} required></input>
+                            <label className="">Mixto </label>
                         </div>
-                        <input type="url" className="form-control col" placeholder="link" value={link} onChange={e => setLink(e.target.value)} required={tipoMedio == 2} disabled={tipoMedio != 2}></input>
+                        <input type="url" className="form-control col" placeholder="link" value={link} onChange={e => setLink(e.target.value)} required={tipoMedio == 2 || tipoMedio == 3} disabled={tipoMedio != 2 && tipoMedio != 3}></input>
                     </div>
                 </div>
                 <div className='pt-3 h5 d-flex align-items-center'>

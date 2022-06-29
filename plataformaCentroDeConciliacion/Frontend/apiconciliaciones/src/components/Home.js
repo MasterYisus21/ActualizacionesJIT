@@ -9,8 +9,8 @@ function Home() {
         <img className='' width={"200"} height={"200"} src='/icons/escudo_ugc_1.png' />
         {/* <div className='vertical-line'></div> */}
         <div className='home-navbar-login-button'><Link to="/login" className='btn btn-outline-success'> Ingresar </Link></div>
-        <div className='home-navbar-title'>Centro de Conciliaciones</div>
-        <div className='home-navbar-link'><Link to="/nueva-solicitud/crear" className='btn btn-outline-success'>Quiero hacer mi solicitud</Link></div>
+        <div className='home-navbar-title'>Centros de Conciliacion</div>
+        <div className='home-navbar-link'><Link to="/nueva-solicitud/crear" className='btn btn-success'>Quiero hacer mi solicitud</Link></div>
       </nav>
       <div className='home-hero-section'>
         <video className='background-video' autoPlay controls = '' loop muted={true}>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import './css/ModuloSolicitudDatosGenerales.css';
 import config from '../../config.json'
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, useOutletContext } from 'react-router-dom';
 import ErrorPage from '../ErrorPage';
 import axiosApiInstance from '../Utilities/axiosApiInstance';
 
@@ -26,6 +26,8 @@ function ModuloSolicitudDatosGenerales(props) {
     const [tema, setTema] = useState('')
     const [subtema, setSubtema] = useState('')
 
+    const [estado, setEstado] = useOutletContext();
+
     let location = useLocation();
 
     useEffect(()=>{
@@ -39,6 +41,9 @@ function ModuloSolicitudDatosGenerales(props) {
             setArea('')
             setTema('')
             setSubtema('')
+            setEstado(0)
+            alertContainer.current.innerHTML = ""
+
         }
     },[location])
 
@@ -120,7 +125,8 @@ function ModuloSolicitudDatosGenerales(props) {
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
                 console.log(response.data)
                 setNumeroCaso(response.data["Numero_caso"])
-                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
+                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado</div>"
+                
             })
             .catch((error) => {
                 alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"
@@ -129,9 +135,13 @@ function ModuloSolicitudDatosGenerales(props) {
             axiosApiInstance.post(config.apiGatewayURL + "/solicitudes/", datos)
             .then((response) => {
                 alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
+                console.log("Cambiar Estado")
+                setEstado({
+                    "Tipo_estado_Id": 1
+                })
                 navigate("/dashboard/modulo-solicitudes/" + response.data["Numero_caso"] + "/datos_generales")
                 setNumeroCaso(response.data["Numero_caso"])
-                
+                               
         })
         }
         
