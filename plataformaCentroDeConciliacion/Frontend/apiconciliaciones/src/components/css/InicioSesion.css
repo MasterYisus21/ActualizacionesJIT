@@ -37,30 +37,34 @@
     align-items: center;
     border-radius: 3vh;
     backdrop-filter: blur(0.4vh);
-    flex-wrap: wrap;
     gap: 7%;
+    padding: 1em;
+
 }
 
 .login {
-    width: 33%;
+    width: 23em;
     height: 80%;
     border-radius: 10%;
     background-color: rgba(255, 255, 255, 0.575);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
     backdrop-filter: blur(2px);
+    font-size: .8em;
+    padding: 1em;
 }
 
 .intro {
-    width: 45%;
+    width: 32em;
     height: 50%;
     border-radius: 0 2vh 2vh 0;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    font-size: .8em;
     
 }
 .boton-entrar-sin-registro{
@@ -78,6 +82,7 @@
     justify-content: center;
     align-items: center;
     gap: 3%;
+    font-size: 1em;
     font-weight:500;
 }
 
@@ -92,21 +97,20 @@
     background-color: var(--color-cuadro-texto);
     height: 100%;
     font-family: var(--letra-login);
-    content: initial;
-    padding: 3vh;
-   
+    
 }
 
 .intro-text>h2 {
     text-align: center;
-    font-size: 1.4vw;
     color: var(--color-boton);
+    font-size: 1.4em;
+    font-weight: 600;
 }
 
 .intro-text>p {
-    text-align: center;
-    font-size: 1vw;
-
+    text-align: justify;
+    font-size: .9em;
+    padding: 1em;
 }
 
 .intro-triangle {
@@ -118,7 +122,7 @@
 }
 
 .logo {
-    padding-top: 10%;
+    padding-top: 5%;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -129,15 +133,16 @@
 }
 
 .boton-login {
-    width: 30%;
-    height: 8%;
+    width: 16em;
+    height: 2.4em;
     background-color: var(--color-boton);
     border: var(--color-boton);
-    border-radius: 2vh;
-    font-size: 1vw;
+    border-radius: .5em;
+    font-size: 1.1em;
     font-family: var(--letra-login);
     color: white;
     cursor: pointer;
+    margin-top: -4em;
 }
 
 .boton-login:hover {
@@ -150,13 +155,12 @@
 }
 
 .user>input {
-    width: 70%;
+    width: 13em;
     height: 4vh;
     border: none;
     background-color: transparent;
     border-bottom: 0.4vh solid var(--color-linea-login);
     margin-bottom: 10%;
-    text-align: center;
     font-size: 2vh;
     outline: 0;
 }
@@ -189,12 +193,11 @@
 }
 
 .password>input {
-    width: 70%;
+    width: 13em;
     height: 4vh;
     border: none;
     background-color: transparent;
     border-bottom: 0.4vh solid var(--color-linea-login);
-    text-align: center;
     font-size: 2vh;
     outline: 0;
 }

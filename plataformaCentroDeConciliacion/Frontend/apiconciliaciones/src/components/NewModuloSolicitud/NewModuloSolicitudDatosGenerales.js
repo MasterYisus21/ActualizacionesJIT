@@ -5,11 +5,14 @@ import config from '../../config.json'
 import { useParams, useNavigate, useLocation, useOutletContext } from 'react-router-dom';
 import ErrorPage from '../ErrorPage';
 
-function NewModuloSolicitudDatosGenerales(){
+
+
+function NewModuloSolicitudDatosGenerales() {
+
 
     let navigate = useNavigate();
     const date = new Date()
-    const today = date.getFullYear() + '-' + (date.getMonth().toString().length > 1 ? (1+date.getMonth()) : '0' + (1 + date.getMonth())) + '-' + (date.getDate().toString().length > 1 ? (date.getDate()) : '0' + (date.getDate()));
+    const today = date.getFullYear() + '-' + (date.getMonth().toString().length > 1 ? (1 + date.getMonth()) : '0' + (1 + date.getMonth())) + '-' + (date.getDate().toString().length > 1 ? (date.getDate()) : '0' + (date.getDate()));
     const [solicitanteServicioOpciones, setSolicitanteServicioOpciones] = useState([])
     const [tipoServicioOpciones, setTipoServicioOpciones] = useState([])
     const [inicioConflictoOpciones, setInicioConflictoOpciones] = useState([])
@@ -28,8 +31,8 @@ function NewModuloSolicitudDatosGenerales(){
 
     let location = useLocation();
 
-    useEffect(()=>{
-        if(location.pathname == "/nueva-solicitud/crear") {
+    useEffect(() => {
+        if (location.pathname == "/nueva-solicitud/crear") {
             setNumeroCaso('')
             setSolicitante('')
             setInicioConflicto('')
@@ -40,54 +43,54 @@ function NewModuloSolicitudDatosGenerales(){
             setTema('')
             setSubtema('')
         }
-    },[location])
+    }, [location])
 
     const UrlParams = useParams();
     const obtenerDatosGenerales = () => {
-        if(Object.keys(UrlParams).length > 0) {
-            axios.get(config.apiGatewayURL + "/solicitudes/"+ (UrlParams["Id_solicitud"]))
-            .then(response => {
-                console.log(response.data)
-                setNumeroCaso(response.data["Numero_caso"])
-                setSolicitante(response.data["Solicitante_servicio_Id"]["Id"])
-                setInicioConflicto(response.data["Inicio_conflicto_Id"])
-                setFinalidadServicio(response.data["Tipo_servicio_Id"])
-                setCasoGratuito(response.data["Caso_gratuito"])
-                setAsuntoJuridicoDefinible(response.data["Asunto_juridico_definible"])
-                setArea(response.data["Area_Id"]["Id"])
-                setTema(response.data["Subtema_Id"]["Tema_Id"])
-                obtenerOpcionesSubtema(response.data["Subtema_Id"]["Tema_Id"])
-                setSubtema(response.data["Subtema_Id"]["Id"])
-            })
-            .catch((error)=> {
-                navigate('/page-not-found', { replace: true} )
-            })
+        if (Object.keys(UrlParams).length > 0) {
+            axios.get(config.apiGatewayURL + "/solicitudes/" + (UrlParams["Id_solicitud"]))
+                .then(response => {
+                    console.log(response.data)
+                    setNumeroCaso(response.data["Numero_caso"])
+                    setSolicitante(response.data["Solicitante_servicio_Id"]["Id"])
+                    setInicioConflicto(response.data["Inicio_conflicto_Id"])
+                    setFinalidadServicio(response.data["Tipo_servicio_Id"])
+                    setCasoGratuito(response.data["Caso_gratuito"])
+                    setAsuntoJuridicoDefinible(response.data["Asunto_juridico_definible"])
+                    setArea(response.data["Area_Id"]["Id"])
+                    setTema(response.data["Subtema_Id"]["Tema_Id"])
+                    obtenerOpcionesSubtema(response.data["Subtema_Id"]["Tema_Id"])
+                    setSubtema(response.data["Subtema_Id"]["Id"])
+                })
+                .catch((error) => {
+                    navigate('/page-not-found', { replace: true })
+                })
         }
-        
+
     }
 
     const obtenerOpcionesGenerales = () => {
         axios.get(config.apiGatewayURL + "/solicitud/")
-        .then(response => {
-            setSolicitanteServicioOpciones(response.data["Solicitante_servicio"])
-            setTipoServicioOpciones(response.data["Tipo_servicio"])
-            setInicioConflictoOpciones(response.data["Inicio_conflicto"])
-            setAreaOpciones(response.data["Area"])
-            setTemaOpciones(response.data["Tema"])
-        })
-        .catch((error)=> {
-            console.log(error)
-        })
+            .then(response => {
+                setSolicitanteServicioOpciones(response.data["Solicitante_servicio"])
+                setTipoServicioOpciones(response.data["Tipo_servicio"])
+                setInicioConflictoOpciones(response.data["Inicio_conflicto"])
+                setAreaOpciones(response.data["Area"])
+                setTemaOpciones(response.data["Tema"])
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     const obtenerOpcionesSubtema = (value) => {
         axios.get(config.apiGatewayURL + "/temas/" + value)
-        .then(response => {
-            setSubTemaOpciones(response.data)
-        })
-        .catch((error)=> {
-            console.log(error.message.body)
-        })
+            .then(response => {
+                setSubTemaOpciones(response.data)
+            })
+            .catch((error) => {
+                console.log(error.message.body)
+            })
     }
 
     useEffect(() => {
@@ -113,28 +116,28 @@ function NewModuloSolicitudDatosGenerales(){
             "Inicio_conflicto_Id": e.target.Inicio_conflicto_Id.value,
             "Solicitante_servicio_Id": e.target.solicitante.value
         }
-        if(Object.keys(UrlParams).length > 0) {
+        if (Object.keys(UrlParams).length > 0) {
             axios.post(config.apiGatewayURL + "/solicitudes/" + UrlParams["Id_solicitud"], datos)
-            .then((response) => {
-                navigate("/nueva-solicitud/" + response.data["Numero_caso"] + "/datos_generales")
-                console.log(response.data)
-                setNumeroCaso(response.data["Numero_caso"])
-                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
-            })
-            .catch((error) => {
-                alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"
-            })
+                .then((response) => {
+                    navigate("/nueva-solicitud/" + response.data["Numero_caso"] + "/datos_generales")
+                    console.log(response.data)
+                    setNumeroCaso(response.data["Numero_caso"])
+                    alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible fade show' role='alert'>Creado o actualizado correctamente</div>"
+                })
+                .catch((error) => {
+                    alertContainer.current.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>Error Intente nuevamente</div>"
+                })
         } else {
             axios.post(config.apiGatewayURL + "/solicitudes/", datos)
-            .then((response) => {
-                alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
-                navigate("/nueva-solicitud/" + response.data["Numero_caso"] + "/datos_generales")
-                setNumeroCaso(response.data["Numero_caso"])
-                
-        })
+                .then((response) => {
+                    alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Creado o actualizado correctamente</div>"
+                    navigate("/nueva-solicitud/" + response.data["Numero_caso"] + "/datos_generales")
+                    setNumeroCaso(response.data["Numero_caso"])
+
+                })
         }
-        
-        
+
+
     }
 
     const alertContainer = useRef("");

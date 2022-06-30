@@ -58,7 +58,7 @@ function ModuloEncuesta() {
                     <button className='btn btn-sm btn-success boton-audiencia btn btn-primary m3-3'>Crear audiencia</button>
                 </Link>
             </div> */}
-            <div className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
+            <div className='contenedor-tabla-audiencia d-flex align-items-center flex-column mt-4'>
                 <table className='table table-striped table-bordered '>
                     <thead>
                         <tr>
@@ -97,7 +97,9 @@ function ModuloEncuesta() {
                             Cerrar Caso
                         </label>
                     </div>
-                    <button className="btn btn-danger">Cerrar caso</button>
+                    <div className="btn-peligro">
+                        <button className="btn btn-danger">Cerrar caso</button>
+                    </div>
                     <div ref={alertContainer}></div>
                 </form>
             }
@@ -105,7 +107,6 @@ function ModuloEncuesta() {
             {estado["Tipo_estado_Id"] == 7 &&
                 <div className='alert alert-success alert-dismissible' role='alert'>Caso Cerrado.</div>
             }
-
 
         </div>
     )

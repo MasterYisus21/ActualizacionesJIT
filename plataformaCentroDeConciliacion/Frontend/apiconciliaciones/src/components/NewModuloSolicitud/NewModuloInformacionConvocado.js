@@ -253,7 +253,7 @@ function NewModuloInformacionConvocado() {
                 </div>
               </div>
             </div>
-            <button className="btn btn-primary me-3" id='boton-aceptar-registro-convocante'>Agregar</button>
+            <button className="btn btn-primary" id='boton-aceptar-registro-convocante'>Agregar</button>
           </form>}
 
         <form className='contenedor-tabla-convocado'>

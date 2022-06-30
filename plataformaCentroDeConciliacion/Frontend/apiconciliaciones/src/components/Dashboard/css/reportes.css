@@ -5,6 +5,7 @@
     box-sizing: content-box;
     justify-content: center;
     align-items: center;
+    gap: 3em;
 }
 
 .contenedor-principal-reportes > img {
@@ -13,8 +14,8 @@
 }
 
 .contedor-encapsulamiento-gris {
-    width: 75%;
-    height: 40%;
+    width: 35em;
+    height: 20em;
     /* background-color: #e7e6e6; */
     box-sizing: content-box;
     border-radius: 15px;
@@ -56,7 +57,9 @@
     justify-content: space-between;
     align-items: center;
     justify-content: center;
+    text-align: center;
     gap: 1%;
+    margin-top: 1em;
 }
 
 .fecha-inicio-finalizacion {
@@ -65,6 +68,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: -1.5em;
 }
 
 .iconos-reportes {
@@ -125,4 +129,9 @@
     font-size: 30px;
     font-weight: 500 white;
     border: 1px solid black;
+}
+
+.btn-success{
+    font-size: .9em;
+    font-weight: 500;
 }

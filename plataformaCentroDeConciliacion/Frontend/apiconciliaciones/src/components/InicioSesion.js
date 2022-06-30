@@ -58,7 +58,6 @@ function InicioSesion({ loggedIn, setLoggedIn }) {
                     </form>
                     <div ref={alertContainer}></div>
                     <button className="boton-login" form="form-inicio">Ingresar</button>
-
                 </div>
                 <div className="intro">
                     <div className="intro-triangle"></div>

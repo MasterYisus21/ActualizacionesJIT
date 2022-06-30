@@ -20,13 +20,13 @@ function Reportes() {
         // console.log(id)
         // console.log(nombre)
         const data = {
-            Fecha_Inicio: e.target.fechaInicio.value,
-            Fecha_Fin: e.target.fechaFinal.value
+            Fecha_inicio: e.target.fechaInicio.value,
+            Fecha_fin: e.target.fechaFinal.value
         }
         axiosApiInstance.post(config.apiGatewayURL + '/reportes/' + reporte, data, { responseType: "blob" })
             .then(response => {
                 console.log(response)
-                FileDownload(response.data, "reporte.docx")
+                FileDownload(response.data, "reporte.xlsx")
                 alertContainer.current.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>Descargado.</div>"
             })
             .catch(error => {
