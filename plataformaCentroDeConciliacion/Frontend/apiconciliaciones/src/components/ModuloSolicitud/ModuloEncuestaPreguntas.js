@@ -140,7 +140,10 @@ function ModuloEncuestaPreguntas() {
                     <option value="6">Otro</option> */}
                 </select>
             </div>
-            <button type="submit">Enviar</button>
+            <div className="contenedor-boton-enviar-encuentas p-3 pb-4 d-block">
+            <button className="boton-enviar-encuentas" type="submit">Enviar</button>
+            </div>
+            
         </form>
     )
 }

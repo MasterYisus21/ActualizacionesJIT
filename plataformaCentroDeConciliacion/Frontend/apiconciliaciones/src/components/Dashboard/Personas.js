@@ -227,7 +227,7 @@ function Personas() {
             <div className="imagen-personas">
                 <img src="/images/persona.jpg"></img>
             </div>
-            <div className="d-flex flex-column align-items-center">
+            <div className="d-flex flex-column align-items-center pb-4">
                 <form className='solicitudes-view-column-2-seccion-buscar' onSubmit={consultarPersona}>
                     <input className='form-control' name="identificación" placeholder='Identificación' />
                     <button className='btn btn-success'> Buscar </button>
