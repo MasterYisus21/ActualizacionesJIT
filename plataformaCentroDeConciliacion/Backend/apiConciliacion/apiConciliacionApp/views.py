@@ -187,6 +187,9 @@ class Inicio_conflictoViewSet(GeneralViewSet):  # Una sola clase para los metodo
     serializer_class = Inicio_conflictoSerializer
     filter_fields ='__all__'
 
+class Tipo_reporteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+    serializer_class = Tipo_reporteSerializer
+    filter_fields ='__all__'
 
 
 

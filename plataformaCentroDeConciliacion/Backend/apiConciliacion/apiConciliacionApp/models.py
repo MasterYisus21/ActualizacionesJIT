@@ -541,4 +541,16 @@ class Respuesta(StateModel):
      return str(self.Calificacion)
 
 
+class Tipo_reporte(BaseModels):
+
+    
+
+    class Meta:
+        verbose_name = ("Tipo_reporte")
+        verbose_name_plural = ("Tipo_reportes")
+
+    def __str__(self):
+        return self.Nombre
+
+
 

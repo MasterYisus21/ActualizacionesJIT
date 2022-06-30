@@ -287,3 +287,8 @@ class Inicio_conflictoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inicio_conflicto   # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
+class Tipo_reporteSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Tipo_reporte     # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 

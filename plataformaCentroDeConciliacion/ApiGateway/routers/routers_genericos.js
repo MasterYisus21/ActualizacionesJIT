@@ -105,4 +105,4 @@ router.get("/resultados", views_resultados.ListarResultados);
 
 //reportes 
 
-router.post("/reportes", views_reportes.GenerarReporte);
+router.post("/reportes/:id", views_reportes.GenerarReporte);

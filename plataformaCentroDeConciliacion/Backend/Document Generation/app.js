@@ -12,6 +12,9 @@ const Docxtemplater = require("docxtemplater");
 const fs = require("fs");
 const path = require("path");
 
+// excel 
+var XlsxTemplate = require('xlsx-template');
+
  
 function Generar(solicitud,convocante,convocado,conciliador,estudiante,hechos,citacion,tipo_resultado) {
    // let datos ={}
@@ -113,9 +116,111 @@ function Generar(solicitud,convocante,convocado,conciliador,estudiante,hechos,ci
     fs.writeFileSync(path.resolve(__dirname, "resultado/resultado.docx"), buf);
     return datos
 }
+
+async function  GenerarReporte(datos) {
+  try{
+  await fs.readFile(path.join(__dirname, 'reporte.xlsx'), async function(err, data) {
+
+    // Create a template
+    var template = await new XlsxTemplate(data);
+
+    // Replacements take place on first sheet
+    var sheetNumber = 1;
+
+    // Set up some placeholder values matching the placeholders in the template
+    
+    var values = {
+           
+            
+                jovenes:datos.ciclo_vital.jovenes,
+                adultos:datos.ciclo_vital.adultos,
+                adultos_mayores:datos.ciclo_vital.adultos_mayores,
+                familia:datos.condicion[2][1],
+                civil:datos.condicion[0][1],
+                penal:datos.condicion[3][1],
+                mujeres:datos.grupos[1][1],
+                hombres:datos.grupos[0][1],
+
+            
+        };
+      
+    // Perform substitution
+    await template.substitute(sheetNumber, values);
+
+    // Get binary data
+    var date =  await template.generate({ type: 'nodebuffer',compression: "DEFLATE"});
+
+
+    await fs.writeFile(path.join(__dirname, '/resultado/resultado.xlsx'), date, function(err) {
+        if(err) {
+          return console.log(err);
+        }
+        
+    })
+}
+  )
+
+  return
+
+  }catch(error){
+    console.log(error)
+  }
+
+}
+
+async function reporte(req,res,datos) {
+  try{
+  datos=req.body
+  await fs.readFile(path.join(__dirname, datos.tipo_reporte+'.xlsx'), async function respuesta(err, data) {
+    if(err) {
+      res.sendStatus(400)
+      return console.log(err); }
+    // Create a template
+    var template = new XlsxTemplate(data);
+
+    // Replacements take place on first sheet
+    var sheetNumber = 1;
+
+    // Set up some placeholder values matching the placeholders in the template
+    var values = {
+           
+            
+      jovenes:datos.ciclo_vital.jovenes,
+      adultos:datos.ciclo_vital.adultos,
+      adultos_mayores:datos.ciclo_vital.adultos_mayores,
+      civil:datos.condicion[0][1],
+      comercial:datos.condicion[1][1],
+      familia:datos.condicion[2][1],
+      penal:datos.condicion[3][1],
+      hombres:datos.grupos[0][1],
+      mujeres:datos.grupos[1][1],
+      no_binario:datos.grupos[2][1],
+      no_respondo : datos.grupos[3][1]
+      
+
+  
+};
+                
+            
+      
+
+    // Perform substitution
+    template.substitute(sheetNumber, values);
+
+    // Get binary data
+    var data = await template.generate({ type: 'nodebuffer',compression: "DEFLATE"});
+    
+    res.end(data)
+    // ...
+   
+    
+ 
+})
+  }catch(err){console.log(err); res.sendStatus(400)}
+}
   // Load the docx file as binary content
 app.use(express.static("./resultado"));
-app.post('/', async (req, res)=> {
+app.post('/api/documentos/v1/', async (req, res)=> {
   try{
    const solicitud=(req.body.solicitud == '') ? "" : req.body.solicitud
    const convocante=(req.body.convocante == '') ? "": req.body.convocante
@@ -138,28 +243,16 @@ app.post('/', async (req, res)=> {
   
 });
 
-app.post('/reportes', async (req, res)=> {
-    try{
-     const solicitud=(req.body.solicitud == '') ? "" : req.body.solicitud
-     const convocante=(req.body.convocante == '') ? "": req.body.convocante
-     const convocado=(req.body.convocado == '')? "" :req.body.convocado
-     const conciliador= (req.body.conciliador == '')? "":req.body.conciliador
-     const estudiante = (req.body.estudiante == '')? "":req.body.estudiante
-     const hechos = (req.body.hechos == '')? "":req.body.hechos
-     const citacion  = (req.body.citacion == '')? "":req.body.citacion
-     const tipo_resultado =(req.body.tipo_resultado == '')? "":req.body.tipo_resultado
-  //   await GenerarReporte(solicitud,convocante,convocado,conciliador,estudiante,hechos,citacion,tipo_resultado)
+
+app.post('/api/documentos/v1/reportes', async (req, res)=> {
+  try{
+
+  reporte(req,res)
+    
+  }catch(error){console.log(error)}
+    
   
-    
-    
-     //console.log(req.body.convocante)
-     res.json({  url:"http://localhost:8001/reporte.xlsx" 
-  
-    });
-    }catch(error){console.log(error)}
-      
-    
-  });
+});
 
 
 app.listen(port, () => {

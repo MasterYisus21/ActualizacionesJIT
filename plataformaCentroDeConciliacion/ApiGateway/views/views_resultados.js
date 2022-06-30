@@ -31,8 +31,8 @@ views.ResultadoEspecifico = async (req, res) => {
                 datos.hechos= await datosPersonas.ExportarDatos(req,"hechos")
                 datos.citacion= await datosPersonas.ExportarDatos(req,"citaciones")
                 datos.solicitud =  await datosPersonas.ExportarDatos(req," ")
-                //res.json(datos)
-                axios.post("http://localhost:8001/",datos)
+
+                axios.post(config.urlDocumentGeneration,datos)
                 .then(async(result) => {
                     await axios.get(result.data.url,{ responseType : 'arraybuffer' })
                     .then((response) => {
@@ -42,7 +42,6 @@ views.ResultadoEspecifico = async (req, res) => {
                     res.sendStatus(404)
                       console.log(err)
                     });
-                    
 
                 }).catch((err) => {
                     
