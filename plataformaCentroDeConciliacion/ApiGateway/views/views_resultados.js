@@ -21,9 +21,12 @@ views.ListarResultados = async (req, res) => {
 views.ResultadoEspecifico = async (req, res) => {
     try {
         let datos = {}
+        
         await axios.get(config.urlApiConciliacion + "/tipos_resultado/" + req.params.id2)
             .then(async (result) => {
                 datos.tipo_resultado= result.data.Nombre
+                await axios.post(config.urlDocumentGeneration + "validacion/",{tipo_resultado:result.data.Nombre})
+                .then(async result=>{
                 datos.convocante = await datosPersonas.ExportarDatosPersona(req, "convocantes")
                 datos.convocado = await datosPersonas.ExportarDatosPersona(req, "convocados")
                 datos.conciliador = await datosPersonas.ExportarDatosPersona(req, "conciliadores")
@@ -31,7 +34,6 @@ views.ResultadoEspecifico = async (req, res) => {
                 datos.hechos= await datosPersonas.ExportarDatos(req,"hechos")
                 datos.citacion= await datosPersonas.ExportarDatos(req,"citaciones")
                 datos.solicitud =  await datosPersonas.ExportarDatos(req," ")
-
                 axios.post(config.urlDocumentGeneration,datos)
                 .then(async(result) => {
                     await axios.get(result.data.url,{ responseType : 'arraybuffer' })
@@ -44,8 +46,16 @@ views.ResultadoEspecifico = async (req, res) => {
                     });
 
                 }).catch((err) => {
-                    
+                    console.log(err)
                 });
+                })
+                .catch((err) => {
+                    console.log("ARCHIVO NO ENCONTRADO")
+                    res.sendStatus(404)
+                });
+                
+
+               
                 
 
             })

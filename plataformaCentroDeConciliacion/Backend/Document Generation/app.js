@@ -14,14 +14,21 @@ const path = require("path");
 
 // excel 
 var XlsxTemplate = require('xlsx-template');
+const { Console } = require('console');
 
  
 function Generar(solicitud,convocante,convocado,conciliador,estudiante,hechos,citacion,tipo_resultado) {
    // let datos ={}
+   try{
+    if(!fs.existsSync(path.resolve(__dirname, String(tipo_resultado)+".docx"))) {
+      console.log("File not found")
+      return;
+  }
     const content = fs.readFileSync(
         path.resolve(__dirname, String(tipo_resultado)+".docx"),
         "binary"
     );
+    
     
     const zip = new PizZip(content);
     
@@ -115,6 +122,12 @@ function Generar(solicitud,convocante,convocado,conciliador,estudiante,hechos,ci
     // file or res.send it with express for example.
     fs.writeFileSync(path.resolve(__dirname, "resultado/resultado.docx"), buf);
     return datos
+  }catch(err){
+    
+    
+      console.log(err)
+   
+  }
 }
 
 async function  GenerarReporte(datos) {
@@ -180,7 +193,7 @@ async function reporte(req,res,datos) {
 
     // Replacements take place on first sheet
     var sheetNumber = 1;
-
+      
     // Set up some placeholder values matching the placeholders in the template
     var values = {
            
@@ -220,8 +233,21 @@ async function reporte(req,res,datos) {
 }
   // Load the docx file as binary content
 app.use(express.static("./resultado"));
+app.post('/api/documentos/v1/validacion', async (req, res)=> {
+  //console.log(req.body.tipo_resultado)
+  if(!fs.existsSync(path.resolve(__dirname, String(req.body.tipo_resultado)+".docx"))& !fs.existsSync(path.resolve(__dirname, String(req.body.tipo_resultado)+".xlsx"))) {
+    // console.log("File not found")
+    res.sendStatus(404)
+    return
+    } else {
+      res.sendStatus(200)
+    }
+
+})
 app.post('/api/documentos/v1/', async (req, res)=> {
   try{
+    
+
    const solicitud=(req.body.solicitud == '') ? "" : req.body.solicitud
    const convocante=(req.body.convocante == '') ? "": req.body.convocante
    const convocado=(req.body.convocado == '')? "" :req.body.convocado

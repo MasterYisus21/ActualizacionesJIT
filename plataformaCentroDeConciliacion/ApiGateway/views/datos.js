@@ -231,7 +231,7 @@ datosPersonas.datosCompletos = async (response) => {
   }
 };
 
-datosPersonas.ExportarDatosPersona = async (req, response) => {
+datosPersonas.ExportarDatosPersona = async (response) => {
   let datos = {};
   try {
     const personas = await axios.get(
@@ -311,6 +311,138 @@ const edad = (fecha) => {
   return edad
 
 };
+const informacion_persona= async(req,iterator)=>{
+  let data=[]
+    const barrio_persona = await axios.get(config.urlApiConciliacion +"/barrios/" +iterator.Barrio_Id);
+    const localidad_persona = await axios.get(config.urlApiConciliacion +"/localidades/" +barrio_persona.data.Localidad_Id);
+    const ciudad_persona = await axios.get(config.urlApiConciliacion +"/ciudades/" +localidad_persona.data.Ciudad_Id);
+    const departamento_persona = await axios.get(config.urlApiConciliacion +"/departamentos/" +ciudad_persona.data.Departamento_Id);
+    const pais_persona = await axios.get(config.urlApiConciliacion + "/paises/" + departamento_persona.data.Pais_Id);
+    const genero = await axios.get(config.urlApiConciliacion +"/generos/" +iterator.Genero_Id);
+    const estrato= await axios.get(config.urlApiConciliacion +"/estratos_socioeconomicos/" +iterator.Estrato_socioeconomico_Id);
+    if (iterator.Fecha_de_nacimiento == null) {
+      return (iterator.Fecha_de_nacimiento= '');
+    }
+    const encuesta=await axios.get(config.urlApiConciliacion + "/encuestas?Solicitud_Id=" + req.params.id + "&Persona_Id=" + iterator.Id)
+    if (Object.keys(encuesta.data).length != 0) {
+    const medio = await axios.get(config.urlApiConciliacion + "/medios_conocimiento/" + encuesta.data[0].Medio_conocimiento_Id)
+                    await axios.get(config.urlApiConciliacion + "/respuestas?Encuesta_Id=" + encuesta.data[0].Id)
+
+                        .then(response => {
+                            
+                            data[0] = medio.data
+                            data[1] = response.data
+                            iterator.respuestas=data[1]
+                            iterator.conocimiento=data[0].Nombre
+                            
+                            
+                        })}
+    let edades = await edad(iterator.Fecha_de_nacimiento);
+    if ((edades >= 12) & (edades <= 25)) {
+      iterator.poblacion = "JOVENES(12-25)"
+      
+    } else if ((edades >= 26) & (edades <= 60)) {
+      iterator.poblacion = "ADULTOS(26-60)"
+    } else if ((edades >60)) {
+      iterator.poblacion = "(ADULTO MAYOR DE 60)"
+    }
+    
+    iterator.Barrio_Id=barrio_persona.data.Nombre
+    iterator.localidad_persona=localidad_persona.data.Nombre
+    iterator.ciudad_persona=ciudad_persona.data.Nombre
+    iterator.departamento_persona=departamento_persona.data.Nombre
+    iterator.pais=pais_persona.data.Nombre
+    iterator.genero=genero.data.Nombre
+    iterator.Estrato_socioeconomico_Id=estrato.data.Numero
+    
+     
+return iterator
+}
+datosPersonas.ExportarDatosTodasLasPersonasReporte = async (id, response, data,req) => { // repsonse por cada solicitud encontrada
+  try {
+    let informacion=[]
+    
+    if (response === " ") {
+      
+        req.params.id=id
+        const solicitud = await datosPersonas.ExportarDatos(req,response);
+       
+        
+        //const area = await axios.get(config.urlApiConciliacion + "/solicitudes/" + id )
+        //data.solicitud = solicitud.data
+        
+        return solicitud
+      
+  }
+  if (response === "convocantes") {
+    req.params.id=id
+    const convocantes = await axios.get(config.urlGateway + "solicitudes/"+id + "/"+response)
+   
+    if (Object.keys(convocantes.data).length == 0) {console.log("entre")} 
+    for await (const iterator of convocantes.data) {
+      informacion[informacion.length] =await informacion_persona(req,iterator)
+   
+    }
+    //console.log(informacion)
+    return informacion
+  
+  
+}
+if (response === "convocados") {
+  req.params.id=id
+  const convocados = await axios.get(config.urlGateway + "solicitudes/"+id + "/"+response)
+ 
+  if (Object.keys(convocados.data).length == 0) {console.log("entre")} 
+  for await (const iterator of convocados.data) {
+    informacion[informacion.length] =await informacion_persona(req,iterator)
+    console.log(informacion )
+  }
+  
+  return informacion
+
+
+}
+
+if (response === "citaciones") {
+  req.params.id=id
+  const citaciones= await datosPersonas.ExportarDatos(req,"citaciones")
+  console.log(citaciones)
+
+  return citaciones
+  }
+  
+  
+
+
+
+
+    // if (personas.data[personas.data.length - 1].Genero_Id == '' | personas.data[personas.data.length - 1].Genero_Id == null) { personas.data[personas.data.length - 1].Genero_Id = 4 }
+
+    // const genero = await axios.get(config.urlApiConciliacion + "/generos/" + personas.data[personas.data.length - 1].Genero_Id);
+
+    // const barrio_persona = await axios.get(config.urlApiConciliacion + "/barrios/" + personas.data[personas.data.length - 1].Barrio_Id);
+    // const localidad_persona = await axios.get(config.urlApiConciliacion + "/localidades/" + barrio_persona.data.Localidad_Id);
+    // const ciudad_persona = await axios.get(config.urlApiConciliacion + "/ciudades/" + localidad_persona.data.Ciudad_Id);
+    // const departamento_persona = await axios.get(config.urlApiConciliacion + "/departamentos/" + ciudad_persona.data.Departamento_Id);
+    // const pais_persona = await axios.get(config.urlApiConciliacion + "/paises/" + departamento_persona.data.Pais_Id);
+
+    // personas.data[personas.data.length - 1].Tipo_documento_Id = personas.data[personas.data.length - 1].Tipo_documento_Id.Nombre
+    // personas.data[personas.data.length - 1].Barrio_Id = barrio_persona.data.Nombre
+    // personas.data[personas.data.length - 1].Localidad = localidad_persona.data.Nombre
+    // personas.data[personas.data.length - 1].Ciudad = ciudad_persona.data.Nombre
+    // personas.data[personas.data.length - 1].Departamento = departamento_persona.data.Nombre
+    // personas.data[personas.data.length - 1].Pais = pais_persona.data.Nombre
+    // personas.data[personas.data.length - 1].Genero_Id = genero.data.Nombre
+    // personas.data[personas.data.length - 1].Tipo_persona_Id = personas.data[personas.data.length - 1].Tipo_persona_Id.Nombre
+
+    // datos = personas.data[personas.data.length - 1]
+    //return datos;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 
 datosPersonas.ExportarDatosTodasLasPersonas = async (id, response, datos) => {
   try {
@@ -403,6 +535,16 @@ datosPersonas.ExportarDatos = async (req, response) => {
       if (search.data.Tipo_resultado_Id != "") {
         search.data.Tipo_resultado_Id = search.data.Tipo_resultado_Id.Nombre;
       }
+      const historico = await axios.get(config.urlApiConciliacion +"/historicos_solicitud?Solicitud_Id=" +req.params.id );
+    
+        if (historico.data.length > 0) {
+          const estado =(historico.data[0].Tipo_estado_Id === null) | ""? (historico.data.Tipo_estado_Id = ""): await axios.get(
+                    config.urlApiConciliacion +"/tipos_estado/" +historico.data[0].Tipo_estado_Id)
+                  .then((result) => {
+                    search.data.estado_tramite = result.data.Nombre;
+                  });
+        
+    };
       search.data.Tipo_servicio_Id = search.data.Tipo_servicio_Id.Nombre;
       search.data.Inicio_conflicto_Id = search.data.Inicio_conflicto_Id.Nombre;
       search.data.Area_Id = search.data.Area_Id.Nombre;

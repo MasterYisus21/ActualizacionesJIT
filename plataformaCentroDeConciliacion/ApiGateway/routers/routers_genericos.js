@@ -104,5 +104,6 @@ module.exports = router
 router.get("/resultados", views_resultados.ListarResultados);
 
 //reportes 
-
+router.get("/reportes", views_reportes.ListarReportes);
 router.post("/reportes/:id", views_reportes.GenerarReporte);
+

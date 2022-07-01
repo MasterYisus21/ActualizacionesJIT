@@ -35,11 +35,11 @@ views.Respuestas = async (req, res) => {
                 "Persona_Id": req.body[1].idpersona,
                 "Medio_conocimiento_Id": req.body[2].idmedioConocimiento
             }
-            console.log(datos)
+            
             await axios.post(config.urlApiConciliacion + "/encuestas/", datos)
 
                 .then(async resp => {
-                    console.log(resp)
+                    
                     for await (const iterator of req.body[0].preguntas) {
 
                         datos = {
@@ -87,7 +87,7 @@ views.EncuestaEspecifica = async (req, res) => {
 
                 let data = []
                 if (resp.data == '') { res.status(200).json(resp.data) } else {
-                    console.log("entre")
+                    
                     const medio = await axios.get(config.urlApiConciliacion + "/medios_conocimiento/" + resp.data[0].Medio_conocimiento_Id)
                     await axios.get(config.urlApiConciliacion + "/respuestas?Encuesta_Id=" + resp.data[0].Id)
 
