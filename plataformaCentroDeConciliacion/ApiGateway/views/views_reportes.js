@@ -100,7 +100,7 @@ views.GenerarReporte = async (req, res) => {
 
   let data ={}
   let convocante = []
-
+  console.log("entre")
   try {
     if (!req.body.Fecha_inicio | !req.body.Fecha_fin) {
       res.sendStatus(400);

@@ -36,8 +36,10 @@ function Generar(solicitud,convocante,convocado,conciliador,estudiante,hechos,ci
         paragraphLoop: true,
         linebreaks: true,
     });
+    console.log(convocante)
     let datos = 
-    {
+    { 
+        
         numero_caso:solicitud.Numero_caso,   
         nombre_apellidos_convocante: String(convocante.Nombres+ " " + convocante.Apellidos), 
         nombre_apellidos_convocados:String(convocado.Nombres+ " " + convocado.Apellidos),

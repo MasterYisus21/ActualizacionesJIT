@@ -231,7 +231,7 @@ datosPersonas.datosCompletos = async (response) => {
   }
 };
 
-datosPersonas.ExportarDatosPersona = async (response) => {
+datosPersonas.ExportarDatosPersona = async (req,response) => {
   let datos = {};
   try {
     const personas = await axios.get(
@@ -352,7 +352,7 @@ const informacion_persona= async(req,iterator)=>{
     iterator.ciudad_persona=ciudad_persona.data.Nombre
     iterator.departamento_persona=departamento_persona.data.Nombre
     iterator.pais=pais_persona.data.Nombre
-    iterator.genero=genero.data.Nombre
+    iterator.Genero_Id=genero.data.Nombre
     iterator.Estrato_socioeconomico_Id=estrato.data.Numero
     
      
