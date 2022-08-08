@@ -10,6 +10,7 @@ from rest_framework import filters
 from django_filters import FilterSet, AllValuesFilter
 from django_filters import DateTimeFilter, NumberFilter
 
+from rest_framework.pagination import PageNumberPagination
 
 
 class PaisViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
@@ -81,6 +82,11 @@ class SolicitudFilter(FilterSet):
 			'Fecha_fin',
 			)
 
+class StandardResultsSetPagination(PageNumberPagination):
+    ##GET https://api.example.org/accounts/?page=4?count=2
+    page_size = 20  # tamaño de la pagina
+    page_size_query_param = 'count' ## tamaño de la consulta , cuantos se quieren en cada pagina
+    max_page_size = 20  # numero maximo por pagina 
 
 class  SolicitudViewSet(GeneralViewSet):
     queryset = Solicitud.objects.all()
@@ -91,6 +97,9 @@ class  SolicitudViewSet(GeneralViewSet):
     search_fields = (
         'Descripcion',
     )
+
+    pagination_class= StandardResultsSetPagination
+    
   
   
 class DocumentoViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
