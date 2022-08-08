@@ -107,8 +107,9 @@ try{
         for await (const dat of resp.data) { 
            
         const relacion_sol_per= await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud+"&Persona_Id="+dat.Persona_Id)
+        relacion_sol_per.data=relacion_sol_per.data.results
         
-        const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data[0].Tipo_cliente_Id)
+        const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data.results[0].Tipo_cliente_Id)
         const persona= await axios.get( config.urlApiConciliacion + "/personas/"+dat.Persona_Id)
         data.push(persona.data.Id)
         persona.data={ 
@@ -124,13 +125,14 @@ try{
 
         await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud)
         .then(async resp=>{
+            resp.data=resp.data.results
             if(resp.data == ""){datos[0].personas_disponibles=[]}else{
             for await (const dat of resp.data){solicitantes.push(dat.Persona_Id) }
             personas_no_incluidas=solicitantes.filter(element => !data.includes(element))
             for await (const i of personas_no_incluidas){ 
 
                 const relacion_sol_per= await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud+"&Persona_Id="+i)
-                const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data[0].Tipo_cliente_Id)
+                const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data.results[0].Tipo_cliente_Id)
                 const person= await axios.get( config.urlApiConciliacion + "/personas/"+i)
                 person.data={ 
                         "Identificacion": person.data.Identificacion,
@@ -372,11 +374,13 @@ try{
        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)// me trae el docente de la solicitud
         
         .then(async response=>{
+            response.data=response.data.results
          
             if(Object.keys(response.data).length==0){
                
                 await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=5&Solicitud_Id=" + req.params.id)// me trae el administrador de la solicitud
                 .then((result) => {
+                    result.data=result.data.results
                     response=result
                 })
             }   

@@ -388,8 +388,7 @@ datosPersonas.ExportarDatosTodasLasPersonasReporte = async (id, response, data,r
     if (Object.keys(convocantes.data).length == 0) {console.log("sin convocantes");return informacion[informacion.length]={}} 
     
       informacion[informacion.length] =await informacion_persona(req,convocantes.data[convocantes.data.length-1])
-   
-  
+
     //console.log(informacion)
     return informacion
   
@@ -582,8 +581,9 @@ datosPersonas.ExportarDatos = async (req, response) => {
     };
      await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
     .then(async response => { 
-      if(Object.keys(response.data).length==0){ const persona=await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=5&Solicitud_Id=" + req.params.id); 
-
+      response.data=response.data.results
+      if(Object.keys(response.data).length==0){ let persona=await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=5&Solicitud_Id=" + req.params.id); 
+      persona.data=persona.data.results
       if(Object.keys(persona.data).length==0){search.data.conciliador = []; return}
       
       const conciliador =  await axios.get(config.urlApiConciliacion + "/personas/" + persona.data[0].Persona_Id) 

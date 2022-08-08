@@ -30,7 +30,7 @@ views.ResultadoEspecifico = async (req, res) => {
                 await axios.post(config.urlDocumentGeneration + "validacion/",{tipo_resultado:result.data.Nombre})
                 .then(async result=>{
                 
-                console.log("entreee")
+            
                 datos.convocante = await datosPersonas.ExportarDatosPersona(req, "convocantes")
                 datos.convocado = await datosPersonas.ExportarDatosPersona(req, "convocados")
                 datos.conciliador = await datosPersonas.ExportarDatosPersona(req, "conciliadores")

@@ -191,7 +191,7 @@ views.Solicitudesview= async (req,res)=>{
        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
         .then(async(result) => {
             
-           
+            result.data=result.data.results
           await datosPersonas.Solicitudes(result)
             .then((result) => {
                 
@@ -232,7 +232,12 @@ views.SolicitudesviewHistorial= async(req,res)=>{
        
        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
         .then(async(result) => {
-            
+            result.data=result.data.results
+            console.log("HISTORIAL")
+            console.log(result.data)
+            console.log("HISTORIAL")
+
+
            await datosPersonas.Historial(result)
             .then((result) => {
             res.status(200).json(result)
@@ -270,7 +275,7 @@ views.SolicitudesviewEspecificas= async(req,res)=>{
         
       await  axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
         .then(async(result) => {
-            
+            result.data=result.data.results
             await datosPersonas.SolicitudesSearch(result,req.params.search)
             .then((result) => {
             res.status(200).json(result)
@@ -519,6 +524,7 @@ views.ActualizarDocuementos= async (req,res)=>{
 
     await axios.patch(config.urlApiConciliacion + "/solicitudes/" +req.params.id + "/",req.body)
      .then(response => {
+
          res.status(200).json(response.data)
      })
      .catch(function (error) {

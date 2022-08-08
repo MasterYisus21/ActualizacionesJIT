@@ -82,11 +82,7 @@ class SolicitudFilter(FilterSet):
 			'Fecha_fin',
 			)
 
-class StandardResultsSetPagination(PageNumberPagination):
-    ##GET https://api.example.org/accounts/?page=4?count=2
-    page_size = 20  # tamaño de la pagina
-    page_size_query_param = 'count' ## tamaño de la consulta , cuantos se quieren en cada pagina
-    max_page_size = 20  # numero maximo por pagina 
+
 
 class  SolicitudViewSet(GeneralViewSet):
     queryset = Solicitud.objects.all()
@@ -98,7 +94,7 @@ class  SolicitudViewSet(GeneralViewSet):
         'Descripcion',
     )
 
-    pagination_class= StandardResultsSetPagination
+ 
     
   
   
@@ -170,9 +166,17 @@ class Relacion_citacion_personaViewSet(GeneralViewSet):  # Una sola clase para l
 class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Tipo_clienteSerializer
     filter_fields ='__all__'
+
+
+class StandardResultsSetPaginationRelacion(PageNumberPagination):
+    ##GET https://api.example.org/accounts/?page=4?count=2
+    page_size = 5  # tamaño de la pagina
+    page_size_query_param = 'count' ## tamaño de la consulta , cuantos se quieren en cada pagina
+    max_page_size = 5  # numero maximo por pagina 
 class Relacion_solicitud_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Relacion_solicitud_personaSerializer
     filter_fields ='__all__'
+    pagination_class= StandardResultsSetPaginationRelacion
 class Relacion_area_perfilViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = Relacion_area_perfilSerializer
     filter_fields ='__all__'

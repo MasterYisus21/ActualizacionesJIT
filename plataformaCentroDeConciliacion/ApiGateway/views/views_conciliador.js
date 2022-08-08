@@ -17,9 +17,11 @@ views.ListarConciliadores=async(req,res)=>{
         //     res.sendStatus(401)
         //     return
         // }
-   const docentes= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
+   let docentes= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
    await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=5&Solicitud_Id=" + req.params.id)
    .then(async response => { 
+    response.data=response.data.results
+    docentes.data=docentes.data.results
     for (const iterator of docentes.data) {response.data.push(iterator)}
         
     
@@ -66,7 +68,8 @@ views.AsignarConciliador=async(req,res)=>{
                    "Tipo_cliente_Id":3
                }
             
-               const validacion= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+req.params.id + "&Persona_Id="+resp.data[0].Id)
+               let validacion= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+req.params.id + "&Persona_Id="+resp.data[0].Id)
+               validacion.data=validacion.data.results
         
                if(validacion.data.length>0){res.sendStatus(208)}else{
                axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
@@ -115,7 +118,7 @@ views.BuscarConciliador= async(req,res)=>{
         }
         await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
        .then(response => { 
-       
+            response.data=response.data.result
             datosPersonas.BuscarPersona(response,req)
                 .then((result) => {
                     

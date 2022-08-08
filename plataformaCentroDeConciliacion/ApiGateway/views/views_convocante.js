@@ -9,7 +9,7 @@ views.ListarConvocantes=async(req,res)=>{
    try{ 
     await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=1&Solicitud_Id=" + req.params.id)
    .then(response => { 
-   
+    response.data=response.data.results
         datosPersonas.datosBasicos(response)
          .then((result) => {
              
@@ -45,8 +45,8 @@ try{
                "Persona_Id":resp.data[0].Id,
                "Tipo_cliente_Id":1
            }
-           const validacion= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+req.params.id + "&Persona_Id="+resp.data[0].Id)
-        
+           let validacion= await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+req.params.id + "&Persona_Id="+resp.data[0].Id)
+           validacion.data=validacion.data.results
            if(validacion.data.length>0){res.sendStatus(208)}else{
            axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
            .then( async response => {
@@ -89,7 +89,7 @@ views.BuscarConvocante= async(req,res)=>{
     try{
         await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=1&Solicitud_Id=" + req.params.id)
        .then(response => { 
-       
+        response.data=response.data.results
             datosPersonas.BuscarPersona(response,req)
                 .then((result) => {
                     
@@ -143,7 +143,7 @@ views.CrearPersonasConvocante=async (req,res)=>{
             }
            
              await axios.post(config.urlApiConciliacion + "/relaciones_solicitud_persona/",datos)
-            .then(res=>{
+            .then(resp=>{
        
               res.status(200).json(response.data)
             })

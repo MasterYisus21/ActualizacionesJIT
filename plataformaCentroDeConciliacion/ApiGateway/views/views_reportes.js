@@ -63,7 +63,7 @@ const reporte2 = async(res,req,data,result,convocante,convocado)=>{  // result o
         let json = []
        
         if (Object.keys(result.data).length != 0) {
-          console.log(result.data)
+   
         
         
        
@@ -87,10 +87,9 @@ const reporte2 = async(res,req,data,result,convocante,convocado)=>{  // result o
         let convocados = await datosPersonas.ExportarDatosTodasLasPersonasReporte(iterator.Numero_caso,"convocados",data,req);
         let citaciones = await datosPersonas.ExportarDatosTodasLasPersonasReporte(iterator.Numero_caso,"citaciones",data,req); 
 
-        
         if (Object.keys(convocantes).length>=1){
        
-        
+          
           solicitud.Convocante_nombre=convocantes[0].Nombres + " " +convocantes[0].Apellidos;
           solicitud.Convocante_identificacion=convocantes[0].Identificacion;
           solicitud.Convocante_genero=convocantes[0].Genero_Id;
@@ -188,9 +187,12 @@ views.GenerarReporte = async (req, res) => {
     // await axios.post(config.urlDocumentGeneration + "validacion/",{tipo_resultado:datos.tipo_reporte})
     // .then(async resu=>{
       await axios.get( config.urlApiConciliacion +"/solicitudes?Fecha_inicio=" +req.body.Fecha_inicio +"&Fecha_fin=" +req.body.Fecha_fin)
+     
       .then(async (result) => {
-       console.log(req.params.id)
+     
+
         if (req.params.id==1){await reporte1(res,datos,result)} else {
+          
           await reporte2(res,req,data,result)
         }       
        
