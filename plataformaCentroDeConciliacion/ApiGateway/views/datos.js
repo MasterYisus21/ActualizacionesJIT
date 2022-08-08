@@ -329,14 +329,21 @@ const informacion_persona= async(req,iterator)=>{
                     await axios.get(config.urlApiConciliacion + "/respuestas?Encuesta_Id=" + encuesta.data[0].Id)
 
                         .then(response => {
-                            
+                          
                             data[0] = medio.data
                             data[1] = response.data
+                            console.log("MEDIOPPPPPPPPPPPPPPPPPP" + req.params.id)
+                            
+                          iterator.conocimiento=data[0].Nombre
                             iterator.respuestas=data[1]
-                            iterator.conocimiento=data[0].Nombre
+                           
+
+                            
                             
                             
                         })}
+
+                        console.log(iterator)
     let edades = await edad(iterator.Fecha_de_nacimiento);
     if ((edades >= 12) & (edades <= 25)) {
       iterator.poblacion = "JOVENES(12-25)"
@@ -378,11 +385,11 @@ datosPersonas.ExportarDatosTodasLasPersonasReporte = async (id, response, data,r
     req.params.id=id
     const convocantes = await axios.get(config.urlGateway + "solicitudes/"+id + "/"+response)
    
-    if (Object.keys(convocantes.data).length == 0) {console.log("entre")} 
-    for await (const iterator of convocantes.data) {
-      informacion[informacion.length] =await informacion_persona(req,iterator)
+    if (Object.keys(convocantes.data).length == 0) {console.log("sin convocantes");return informacion[informacion.length]={}} 
+    
+      informacion[informacion.length] =await informacion_persona(req,convocantes.data[convocantes.data.length-1])
    
-    }
+  
     //console.log(informacion)
     return informacion
   
@@ -392,11 +399,11 @@ if (response === "convocados") {
   req.params.id=id
   const convocados = await axios.get(config.urlGateway + "solicitudes/"+id + "/"+response)
  
-  if (Object.keys(convocados.data).length == 0) {console.log("entre")} 
-  for await (const iterator of convocados.data) {
-    informacion[informacion.length] =await informacion_persona(req,iterator)
-    console.log(informacion )
-  }
+  if (Object.keys(convocados.data).length == 0) {console.log("sin convocados");return informacion[informacion.length]={}} 
+
+    informacion[informacion.length] =await informacion_persona(req,convocados.data[convocados.data.length-1])
+
+
   
   return informacion
 
@@ -406,7 +413,7 @@ if (response === "convocados") {
 if (response === "citaciones") {
   req.params.id=id
   const citaciones= await datosPersonas.ExportarDatos(req,"citaciones")
-  console.log(citaciones)
+
 
   return citaciones
   }
@@ -531,9 +538,37 @@ datosPersonas.ExportarDatos = async (req, response) => {
       search.data[0].Turno_Id = search.data[0].Turno_Id.Franja_horaria;
       search.data[0].Tipo_medio_Id = search.data[0].Tipo_medio_Id.Nombre;
       datos = search.data[0];
+
     } else if (response === " ") {
+
+
+     
+     await axios.get(config.urlApiConciliacion + "/subtemas/" + search.data.Subtema_Id.Id)
+      .then(async(result) => {
+        
+       
+        await axios.get(config.urlApiConciliacion + "/temas/" + result.data.Tema_Id)
+        .then(async(result) => {
+        
+        search.data.Tema = result.data.Nombre
+        
+        
+        }).catch((err) => {
+          return
+        });
+        
+
+      }).catch((err) => {
+        return
+      });
+
       if (search.data.Tipo_resultado_Id != "") {
+        
+
         search.data.Tipo_resultado_Id = search.data.Tipo_resultado_Id.Nombre;
+        
+
+
       }
       const historico = await axios.get(config.urlApiConciliacion +"/historicos_solicitud?Solicitud_Id=" +req.params.id );
     
@@ -541,16 +576,29 @@ datosPersonas.ExportarDatos = async (req, response) => {
           const estado =(historico.data[0].Tipo_estado_Id === null) | ""? (historico.data.Tipo_estado_Id = ""): await axios.get(
                     config.urlApiConciliacion +"/tipos_estado/" +historico.data[0].Tipo_estado_Id)
                   .then((result) => {
-                    search.data.estado_tramite = result.data.Nombre;
+                    search.data.Estado_tramite = result.data.Nombre;
                   });
         
     };
+     await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
+    .then(async response => { 
+      if(Object.keys(response.data).length==0){ const persona=await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=5&Solicitud_Id=" + req.params.id); 
+
+      if(Object.keys(persona.data).length==0){search.data.conciliador = []; return}
+      
+      const conciliador =  await axios.get(config.urlApiConciliacion + "/personas/" + persona.data[0].Persona_Id) 
+      search.data.Conciliador = conciliador.data.Nombres + " " +conciliador.data.Apellidos;
+      return
+    }
+      const conciliador =  await axios.get(config.urlApiConciliacion + "/personas/" + response.data[0].Persona_Id)
+      
+      search.data.conciliador = conciliador.data.Nombres + " " +conciliador.data.Apellidos;
+         })
       search.data.Tipo_servicio_Id = search.data.Tipo_servicio_Id.Nombre;
       search.data.Inicio_conflicto_Id = search.data.Inicio_conflicto_Id.Nombre;
       search.data.Area_Id = search.data.Area_Id.Nombre;
       search.data.Subtema_Id = search.data.Subtema_Id.Nombre;
-      search.data.Solicitante_servicio_Id =
-        search.data.Solicitante_servicio_Id.Nombre;
+      search.data.Solicitante_servicio_Id =search.data.Solicitante_servicio_Id.Nombre;
       datos = search.data;
     }
 
@@ -774,7 +822,7 @@ datosPersonas.Historial = async (response) => {
     if (response.data != 0) {
       for await (const informacion_data of response.data) {
         if (typeof informacion_data.Solicitud_Id !== "number") {
-          console.log("error");
+          
           return datos;
         }
         const resp = await axios.get(

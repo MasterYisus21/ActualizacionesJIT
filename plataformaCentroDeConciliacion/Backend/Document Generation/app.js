@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 const port = 8001
 const multer = require("multer");
+const funcion= require("./Reporteconsolidado")
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
@@ -186,6 +187,13 @@ async function  GenerarReporte(datos) {
 async function reporte(req,res,datos) {
   try{
   datos=req.body
+ 
+  if(!datos.tipo_reporte ){
+
+ await funcion.GenerarReporte(res,datos)
+return
+}
+
   await fs.readFile(path.join(__dirname, datos.tipo_reporte+'.xlsx'), async function respuesta(err, data) {
     if(err) {
       res.sendStatus(400)
