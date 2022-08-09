@@ -53,13 +53,13 @@ const upload = multer({
 
 // solicitud
 
-router.get("/:id/personas", views_solicitud.Personas_de_una_solicitud);
+router.get("/:id/personas", views_solicitud.Personas_de_una_solicitud); // trae todas las personas de una solicitud
 
 // convocante //
 
-router.get("/:id/convocantes", views_convocante.ListarConvocantes);
-router.post("/:id/convocantes/crear_personas",views_convocante.CrearPersonasConvocante);
-router.post("/:id/convocantes/:documento", views_convocante.AgregarConvocante);
+router.get("/:id/convocantes", views_convocante.ListarConvocantes); // lista los convocanes de una solicitud
+router.post("/:id/convocantes/crear_personas",views_convocante.CrearPersonasConvocante); //  crear a una persona
+router.post("/:id/convocantes/:documento", views_convocante.AgregarConvocante); // documentos 
 
 router.get("/:id/convocantes/:search", views_convocante.BuscarConvocante);
 

@@ -233,10 +233,7 @@ views.SolicitudesviewHistorial= async(req,res)=>{
        await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Persona_Id="+ result.data[0].Id)
         .then(async(result) => {
             result.data=result.data.results
-            console.log("HISTORIAL")
-            console.log(result.data)
-            console.log("HISTORIAL")
-
+      
 
            await datosPersonas.Historial(result)
             .then((result) => {

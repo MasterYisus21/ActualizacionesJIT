@@ -58,7 +58,7 @@ datosPersonas.datosBasicos = async (response) => {
         // resp.data.Barrio_Id=barrio.data
         resp.data.Tipo_documento_Id = documento.data;
         resp.data.Tipo_persona_Id = tipo.data;
-
+       
         datos.push(resp.data);
       }
     }
@@ -332,7 +332,7 @@ const informacion_persona= async(req,iterator)=>{
                           
                             data[0] = medio.data
                             data[1] = response.data
-                            console.log("MEDIOPPPPPPPPPPPPPPPPPP" + req.params.id)
+                        
                             
                           iterator.conocimiento=data[0].Nombre
                             iterator.respuestas=data[1]
@@ -343,15 +343,21 @@ const informacion_persona= async(req,iterator)=>{
                             
                         })}
 
-                        console.log(iterator)
+               
     let edades = await edad(iterator.Fecha_de_nacimiento);
-    if ((edades >= 12) & (edades <= 25)) {
+   if ((edades >= 12) & (edades <= 25)) {
+
       iterator.poblacion = "JOVENES(12-25)"
+
+
+
       
     } else if ((edades >= 26) & (edades <= 60)) {
       iterator.poblacion = "ADULTOS(26-60)"
+
     } else if ((edades >60)) {
       iterator.poblacion = "(ADULTO MAYOR DE 60)"
+
     }
     
     iterator.Barrio_Id=barrio_persona.data.Nombre
@@ -540,7 +546,7 @@ datosPersonas.ExportarDatos = async (req, response) => {
 
     } else if (response === " ") {
 
-
+      
      
      await axios.get(config.urlApiConciliacion + "/subtemas/" + search.data.Subtema_Id.Id)
       .then(async(result) => {
@@ -581,8 +587,13 @@ datosPersonas.ExportarDatos = async (req, response) => {
     };
      await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=3&Solicitud_Id=" + req.params.id)
     .then(async response => { 
+
+     
       response.data=response.data.results
+      
+      
       if(Object.keys(response.data).length==0){ let persona=await axios.get(config.urlApiConciliacion + "/relaciones_solicitud_persona?Tipo_cliente_Id=5&Solicitud_Id=" + req.params.id); 
+      console.log("no hay docente")
       persona.data=persona.data.results
       if(Object.keys(persona.data).length==0){search.data.conciliador = []; return}
       
@@ -590,9 +601,12 @@ datosPersonas.ExportarDatos = async (req, response) => {
       search.data.Conciliador = conciliador.data.Nombres + " " +conciliador.data.Apellidos;
       return
     }
+
+    console.log("SII hay docente")
       const conciliador =  await axios.get(config.urlApiConciliacion + "/personas/" + response.data[0].Persona_Id)
+
+      search.data.Conciliador = conciliador.data.Nombres + " " +conciliador.data.Apellidos;
       
-      search.data.conciliador = conciliador.data.Nombres + " " +conciliador.data.Apellidos;
          })
       search.data.Tipo_servicio_Id = search.data.Tipo_servicio_Id.Nombre;
       search.data.Inicio_conflicto_Id = search.data.Inicio_conflicto_Id.Nombre;

@@ -151,8 +151,26 @@ views.Personas_de_una_solicitud = async (req, res) => {
         "/relaciones_solicitud_persona?Solicitud_Id=" +
         req.params.id
       )
-      .then((response) => {
+      .then(async(response) => {
+
+        
+        let i =1
+        count = Math.ceil(response.data.count/5)
         response.data=response.data.results
+        while (i<count) {
+          i++
+          await axios
+      .get(
+        config.urlApiConciliacion +
+        "/relaciones_solicitud_persona?Solicitud_Id=" +
+        req.params.id +"&page="+i
+      )
+      .then((resp) => {
+        response.data=response.data.concat(resp.data.results)
+
+      })
+          
+        }
         datosPersonas
           .datosBasicos(response)
           .then((result) => {

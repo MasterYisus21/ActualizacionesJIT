@@ -57,7 +57,7 @@ router.patch('/personas/:identificacion',views_generales.Actualizar)
 // Solicitudesviews//
 router.get('/solicitudes_view',views_generales.Solicitudesview) // trae las solicitudes de la persoas que ingrese
 router.get('/solicitudes_view/historico',views_generales.SolicitudesviewHistorial) // trae el historial de las solicitudes de la eprsona que ingrese
-router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la eprsona que ingrese
+router.get('/solicitudes_view/:search',views_generales.SolicitudesviewEspecificas) // trae las solicitudes de la persona que ingrese
 
 
 // Traer y agregar solicitudes 
@@ -71,9 +71,9 @@ router.post('/solicitudes/:id',views_solicitud.ActualizarSolicitud)// Acutaliza 
 
 
 // actualizar// 
-router.patch('/documentos/:id',views_generales.ActualizarDocuementos)
+router.patch('/documentos/:id',views_generales.ActualizarDocuementos) // actualiza un documento 
 
-router.patch('/solicitudes/:id',views_generales.ActualizarSolicitudes)
+router.patch('/solicitudes/:id',views_generales.ActualizarSolicitudes) // actualiza una solicitud
 
 // hechos //
 
@@ -84,26 +84,26 @@ router.patch('/solicitudes/:id',views_generales.ActualizarSolicitudes)
 
 // citaciones//
 
-router.delete('/citaciones/:id',views_generales.EliminarCitacion)
+router.delete('/citaciones/:id',views_generales.EliminarCitacion) // elimina una Citacion
 
 
 
 
 // router.post('/documentos',views_generales.Documentos)
-router.get('/generar/',views_generales.GenerarDocumentos)
+router.get('/generar/',views_generales.GenerarDocumentos) // Genera documento 
 
 
 // ESTADOS
-router.get("/estados", views_solicitud.ListarEstados);
+router.get("/estados", views_solicitud.ListarEstados); // lista los estados de la solicitud
 
 // documentos
-router.get("/documentos/:id", views_documentos.DocumentoEspecifico);
+router.get("/documentos/:id", views_documentos.DocumentoEspecifico); // ve el documento especifico
 module.exports = router 
 
 //resultados
-router.get("/resultados", views_resultados.ListarResultados);
+router.get("/resultados", views_resultados.ListarResultados); // lista los resultados posibles
 
 //reportes 
-router.get("/reportes", views_reportes.ListarReportes);
-router.post("/reportes/:id", views_reportes.GenerarReporte);
+router.get("/reportes", views_reportes.ListarReportes); // lista los reportes
+router.post("/reportes/:id", views_reportes.GenerarReporte); // genera un reporte
 

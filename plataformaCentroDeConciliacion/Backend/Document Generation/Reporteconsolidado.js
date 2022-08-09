@@ -117,7 +117,7 @@ funcion.GenerarReporte=async (res,info)=> {
                 { header: 'RESULTADO DEL TRÁMITE ', key: 'Tipo_resultado_Id', width: 21.4 },
                 { header: 'No. RESULTAD', key: 'numero_resultado', width: 18 },
                 { header: 'CUMPLIO', key: 'cumplio', width: 11.7 },
-                { header: 'POBLACIÓN CICLO VITAL', key: 'Convocado_poblacion', width: 19.5 },
+                { header: 'POBLACIÓN CICLO VITAL', key: 'Convocante_poblacion', width: 19.5 },
                 { header: 'CONCILIADOR', key: 'Conciliador', width: 22.6 },
                 { header: 'RUG', key: 'rug', width: 15 },
                 { header: 'COMISARIA', key: 'comisaria', width: 15 },

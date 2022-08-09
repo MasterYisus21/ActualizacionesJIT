@@ -82,6 +82,7 @@ const reporte2 = async(res,req,data,result,convocante,convocado)=>{  // result o
           
         //console.log(iterator.Numero_caso)
        // datos[datos.length][0] 
+
         let solicitud = await datosPersonas.ExportarDatosTodasLasPersonasReporte(iterator.Numero_caso," ",data,req);
         let convocantes = await datosPersonas.ExportarDatosTodasLasPersonasReporte(iterator.Numero_caso,"convocantes",data,req);
         let convocados = await datosPersonas.ExportarDatosTodasLasPersonasReporte(iterator.Numero_caso,"convocados",data,req);
@@ -146,10 +147,10 @@ const reporte2 = async(res,req,data,result,convocante,convocado)=>{  // result o
          
         }}
         
-
+        
         datos.push(json)
   
-        
+
         
         await axios.post(config.urlDocumentGeneration + "reportes/",datos,{responseType : 'arraybuffer'})
         .then(async(result) => {
@@ -201,7 +202,7 @@ views.GenerarReporte = async (req, res) => {
       
     // })
     // .catch(error=>{
-    //   console.log("ARCHIVO NO ENCONTRADO")
+    //         ("ARCHIVO NO ENCONTRADO")
     //   res.sendStatus(404)
     //   return
     // })
