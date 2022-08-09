@@ -73,7 +73,7 @@ function Dashboard({ loggedIn, setLoggedIn }) {
             </svg>
           </div>
           <div className='dashboard-sidebar-link-label'>
-            Agregar Persona
+            Personas
           </div>
         </Link>
         <Link className='dashboard-sidebar-link' to='/dashboard/reportes'>
