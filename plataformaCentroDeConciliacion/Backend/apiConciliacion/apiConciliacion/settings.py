@@ -84,9 +84,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'conciliacion',
-        'USER': 'jairo',
-        'PASSWORD': 'jairo',
-        'HOST': 'localhost',
+        'USER': 'sisinfo',
+        'PASSWORD': 'Ugc2021BD$%',
+        'HOST': '172.20 100.124',
         'PORT': 3306,
     }
 }
