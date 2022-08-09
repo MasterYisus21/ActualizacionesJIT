@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'apiConciliacion.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'conciliacion',
+        'NAME': 'Centro_Conciliacion_Jose_Ignacion',
         'USER': 'sisinfo',
         'PASSWORD': 'Ugc2021BD$%',
-        'HOST': '172.20 100.124',
+        'HOST': '172.20.100.124',
         'PORT': 3306,
     }
 }
