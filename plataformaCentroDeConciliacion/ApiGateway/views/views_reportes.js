@@ -163,6 +163,16 @@ const reporte2 = async(res,req,data,result,convocante,convocado)=>{  // result o
         });
 }
 views.GenerarReporte = async (req, res) => {
+
+  if(req.idpermiso==0){res.sendStatus(401);return }
+
+  const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
+
+  if(!response.data.Permiso_reportes){
+      console.log("error no tiene permisos")
+      res.sendStatus(401)
+      return
+  }
   let datos = { ciclo_vital: {}, condicion:[], grupos: [] };
   datos.ciclo_vital.jovenes = 0;
   datos.ciclo_vital.adultos = 0;
