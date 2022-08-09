@@ -112,7 +112,7 @@ views.BuscarConciliador= async(req,res)=>{
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
-            console.log("error")
+            console.log("error no tiene permisos")
             res.sendStatus(401)
             return
         }

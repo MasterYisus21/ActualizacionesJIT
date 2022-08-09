@@ -97,7 +97,7 @@ views.EliminarPersona = async (req, res) => {
     );
 
     if (!response.data.Permiso_eliminar) {
-      console.log("error");
+      console.log("error no tiene permisos");
       res.sendStatus(401);
       return;
     }
@@ -201,7 +201,7 @@ views.ListarSolicitudes = async (req, res) => {
     );
 
     if (!response.data.Permiso_consulta) {
-      console.log("error")
+      console.log("error no tiene permisos")
       res.sendStatus(401)
       return
     }

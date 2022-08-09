@@ -113,7 +113,7 @@ try{
     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
     if(!response.data.Permiso_consulta){
-        console.log("error")
+        console.log("error no tiene permisos")
         res.sendStatus(401)
         return
     }
@@ -147,7 +147,7 @@ views.Estudiantes= async(req,res)=>{
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
-            console.log("error")
+            console.log("error no tiene permisos")
             res.sendStatus(401)
             return
         }
@@ -175,7 +175,7 @@ views.Solicitudesview= async (req,res)=>{
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
         
         if(!response.data.Permiso_consulta){
-            console.log("error")
+            console.log("error no tiene permisos")
             res.sendStatus(401)
             return
         }
@@ -219,7 +219,7 @@ views.SolicitudesviewHistorial= async(req,res)=>{
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
-            console.log("error")
+            console.log("error no tiene permisos")
             res.sendStatus(401)
             return
         }
@@ -297,7 +297,7 @@ views.InformacionPersona= async(req,res)=>{
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
-            console.log("error")
+            console.log("error no tiene permisos")
             res.sendStatus(401)
             return
         }
@@ -405,7 +405,7 @@ try{
     const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
     if(!response.data.Permiso_consulta){
-        console.log("error")
+        console.log("error no tiene permisos")
         res.sendStatus(401)
         return
     }

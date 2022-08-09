@@ -101,7 +101,8 @@ try{
     for await (const informacion_data of response.data) {
         
         const resp = await  axios.get( config.urlApiConciliacion + "/relaciones_citacion_persona?Citacion_Id="+informacion_data.Id)
-       if(resp.data == ""){ datos[1].personas_citadas=personas
+     
+       if(Object.keys(resp.data).length==0){ datos[1].personas_citadas=personas
     }else{
         
         for await (const dat of resp.data) { 
@@ -109,7 +110,7 @@ try{
         const relacion_sol_per= await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud+"&Persona_Id="+dat.Persona_Id)
         relacion_sol_per.data=relacion_sol_per.data.results
         
-        const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data.results[0].Tipo_cliente_Id)
+        const tipo_cliente= await axios.get( config.urlApiConciliacion + "/tipos_cliente/"+relacion_sol_per.data[0].Tipo_cliente_Id)
         const persona= await axios.get( config.urlApiConciliacion + "/personas/"+dat.Persona_Id)
         data.push(persona.data.Id)
         persona.data={ 
@@ -126,7 +127,7 @@ try{
         await axios(config.urlApiConciliacion + "/relaciones_solicitud_persona?Solicitud_Id="+solicitud)
         .then(async resp=>{
             resp.data=resp.data.results
-            if(resp.data == ""){datos[0].personas_disponibles=[]}else{
+            if(Object.keys(resp.data).length==0){datos[0].personas_disponibles=[]}else{
             for await (const dat of resp.data){solicitantes.push(dat.Persona_Id) }
             personas_no_incluidas=solicitantes.filter(element => !data.includes(element))
             for await (const i of personas_no_incluidas){ 
@@ -264,17 +265,20 @@ views.ListarCitaciones=async(req,res)=>{
 views.CitacionEspecifica=async(req,res)=>{
    
     try{
+  
         if(req.idpermiso==0){res.sendStatus(401);return }
         const response=await axios.get(config.urlApiConciliacion+"/rol_permisos/"+req.idpermiso)
     
         if(!response.data.Permiso_consulta){
-            console.log("error")
+            console.log("error no tiene permisos")
             res.sendStatus(401)
             return
         }
     await axios.get(config.urlApiConciliacion + "/citaciones/"+req.params.id2)
     .then(response => { 
+        
         response.data=[response.data]
+        
         CitacionEspecifica(response,req.params.id)
         .then((result) => {
             
