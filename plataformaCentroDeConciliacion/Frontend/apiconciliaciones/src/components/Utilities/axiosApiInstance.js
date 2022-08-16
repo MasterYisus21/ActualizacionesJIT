@@ -12,7 +12,7 @@ const refreshAccessToken = async() => {
   
   const refresh_token = JSON.parse(localStorage.getItem('conciliacionesToken'))["refresh_token"]
   console.log(refresh_token)
-  await axios.post("http://127.0.0.1:3001" + "/auth/refresh", {}, {
+  await axios.post(config.apiGatewayURL + "/auth/refresh", {}, {
     headers: {
       Authorization: "Bearer " + refresh_token
     }
