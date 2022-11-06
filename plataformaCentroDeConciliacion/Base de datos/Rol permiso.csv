@@ -1,3 +1,0 @@
-Id;Descripcion;Permiso_consulta;Permiso_crear;Permiso_actualizar;Permiso_eliminar;Permiso_reportes;State
-1;Permisos para los administradores;1;1;1;1;1;1
-2;Permisos para los docentes y estudiantes;1;0;0;0;0;1

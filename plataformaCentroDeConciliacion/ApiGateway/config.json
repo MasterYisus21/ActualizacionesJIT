@@ -1,6 +1,0 @@
-{
-    "urlApiConciliacion": "http://127.0.0.1:8000/api/conciliaciones/v1",
-    "urlGateway": "http://localhost:3001/api/gateway/v1/",
-    "urlDocumentGeneration": "http://localhost:8001/api/documentos/v1/"
-
-}
