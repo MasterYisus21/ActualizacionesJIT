@@ -15,7 +15,6 @@ import { NoMatch } from './pages/NoMatch'
 function App() {
   return (
     <div className="App">
-      Archivo principal
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<PaginaPrincipal />} />
