@@ -29,6 +29,7 @@
 
 .dashboard-container-bottom-left {
     grid-area: 2 / 1 / 5 / 2;
+    padding-top: 8px;
 }
 
 .dashboard-container-bottom-right {

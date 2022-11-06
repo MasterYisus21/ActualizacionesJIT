@@ -1,0 +1,23 @@
+.icon-button-beautiful-wrapper {
+    max-width: 100%;
+    padding: 6px;
+    overflow: hidden;
+}
+
+.icon-button-beautiful-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid rgba(113, 113, 113, 0.412);
+    padding: 8px;
+    /* margin: 10px; */
+    border-radius: 8px;
+    width: 100%;
+}
+
+
+.icon-button-beautiful-container:hover {
+    background-color: rgb(0, 70, 15, 0.3);
+}
+
