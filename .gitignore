@@ -1,6 +1,7 @@
-plataformaCentroDeConciliacion/Backend/apiConciliacion/env/
-plataformaCentroDeConciliacion/Backend/apiConciliacion/apiConciliacionApp/__pycache__
-plataformaCentroDeConciliacion/Backend/apiConciliacion/apiConciliacionApp/migrations
-plataformaCentroDeConciliacion/ApiGateway/node_modules
-plataformaCentroDeConciliacion/Frontend/apiconciliaciones/node_modules
-plataformaCentroDeConciliacion/Backend/apiReportes-Resultados/node_modules
+Backend/ApiExpedientes/env
+Backend/ApiEmail/env
+Backend/ApiSolicitudes/env
+Backend/ApiGeneraciónInformes/*
+Backend/ApiDocumentos/env
+ApiGateway/node_modules
+Frontend/webapp/node_modules
