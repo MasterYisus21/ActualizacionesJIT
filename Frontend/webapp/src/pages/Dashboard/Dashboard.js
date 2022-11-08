@@ -1,4 +1,5 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 import { IconButton } from '../../components/IconButton'
 
 // import { Link } from "react-router-dom";
@@ -27,7 +28,9 @@ function Dashboard() {
         />
       </div>
       <div className='dashboard-item dashboard-container-top-right'>top-right</div>
-      <div className='dashboard-item dashboard-container-bottom-right'>bottom-right</div>
+      <div className='dashboard-item dashboard-container-bottom-right'>
+        <Outlet />
+      </div>
     </div>
   )
 }
