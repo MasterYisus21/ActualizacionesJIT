@@ -15,8 +15,8 @@ function IconButton({ type, linkto, text, icon }) {
     return (
         <div className='icon-button-beautiful-wrapper'>
             <Container className="icon-button-beautiful-container">
-                {text}
                 <img src={"/icons/" + icon + ".svg"} alt="journal-icon" />
+                <div className='icon-button-beautiful-container-label'>{text}</div>
             </Container>
         </div>
     )
