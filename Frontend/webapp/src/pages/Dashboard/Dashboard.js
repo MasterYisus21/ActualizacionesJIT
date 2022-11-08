@@ -17,19 +17,22 @@ function Dashboard() {
         <IconButton
           type={"Link"}
           linkto={"/dashboard/expedientes"}
-          text={""}
+          text={"Expedientes"}
           icon={"journal"}
         />
         <IconButton
           type={"Link"}
           linkto={"/dashboard/solicitudes"}
-          text={""}
+          text={"Solicitudes"}
           icon={"file-diff"}
         />
       </div>
       <div className='dashboard-item dashboard-container-top-right'>top-right</div>
       <div className='dashboard-item dashboard-container-bottom-right'>
         <Outlet />
+      </div>
+      <div className='dashboard-container-footer'>
+        texto
       </div>
     </div>
   )
