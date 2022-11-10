@@ -30,7 +30,14 @@ function Dashboard() {
         <IconButton
           type={"Link"}
           linkto={"/dashboard/personas"}
-          text={"Solicitudes"}
+          text={"Personas"}
+          icon={"people-fill"}
+        />
+        <hr />
+        <IconButton
+          type={"Link"}
+          linkto={"/dashboard/reportes"}
+          text={"Reportes"}
           icon={"people-fill"}
         />
       </div>

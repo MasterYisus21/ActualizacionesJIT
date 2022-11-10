@@ -9,7 +9,7 @@ import { Layout } from './pages/Layout'
 import { PaginaPrincipal } from './pages/PaginaPrincipal'
 import { Consultar } from './pages/Consultar'
 import { Login } from './pages/Login'
-import { Dashboard, Expedientes, Solicitudes, Personas } from './pages/Dashboard'
+import { Dashboard, Expedientes, Solicitudes, Personas, Reportes } from './pages/Dashboard'
 import { NoMatch } from './pages/NoMatch'
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
             <Route path='expedientes' element={<Expedientes />} />
             <Route path='solicitudes' element={<Solicitudes />} />
             <Route path='personas' element={<Personas />} />
+            <Route path='reportes' element={<Reportes />} />
           </Route>
           <Route path="*" element={<NoMatch />} />
         </Route>
