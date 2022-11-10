@@ -1,0 +1,124 @@
+:root {
+    /* Inicio de Sesion*/
+    --color-principal: #d8ddd5;
+    --color-cuadro-texto: rgba(255, 255, 255, 0.575);
+    --color-contenedor-principal: #ffffff38;
+    --color-boton: #2da05f;
+    --color-linea-login: #8c8585;
+}
+
+.wrapper-main {
+    background-color: var(--color-principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("../../../public/images/imagen_fondo1.jpg");
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+}
+
+.main {
+    background-color: var(--color-contenedor-principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3vh;
+    backdrop-filter: blur(0.4vh);
+    padding: 100px;
+    gap: 2em;
+}
+
+.login {
+    width: 25em;
+    min-height: 30em;
+    border-radius: 2em;
+    background-color: rgba(255, 255, 255, 0.575);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    backdrop-filter: blur(2px);
+}
+
+.form-inicio-sesion{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 1em;
+}
+
+.intro {
+    position: relative;
+    border-radius: 0 20px 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-size: .8em;
+
+}
+
+.intro-text {
+    width: 25em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--color-cuadro-texto);
+    height: 35em;
+}
+
+.texto-guia{
+    padding: 10px;
+    width: 25em;
+    position: absolute;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.texto-titulo{
+    color: #00460F;
+    font-weight: 600;
+}
+
+.texto-parrafo{
+    text-align: justify;
+}
+
+.intro-triangle {
+    width: 7vh;
+    height: 0vh;
+    border-top: 17.5em solid transparent;
+    border-bottom: 17.5em solid transparent;
+    border-right: 10em solid var(--color-cuadro-texto);
+}
+
+.logo>img {
+    max-width: 13em;
+}
+
+.boton-login {
+    width: 80%;
+    height: 2.4em;
+    background-color: var(--color-boton);
+    border: 0;
+    border-radius: .8em;
+    font-size: 1.1em;
+    color: white;
+
+}
+.boton-login:hover {
+    background-color: #00460F;
+}
+
+@media (max-width: 1100px) {
+    .intro {
+        display: none;
+    }
+    .main{
+        padding: 0;
+    }
+}
