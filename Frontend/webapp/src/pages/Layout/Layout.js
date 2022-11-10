@@ -15,7 +15,9 @@ function Layout() {
       {/* An <Outlet> renders whatever child route is currently active,
           so you can think about this <Outlet> as a placeholder for
           the child routes we defined above. */}
-      <Outlet />
+      <div className='layout-content'>
+        <Outlet />
+      </div>
       <div className='layout-footer' >
         © Copyright 2022 | Vigilado MINEDUCACIÓN Y MINJUSTICIA
       </div>
