@@ -4,3 +4,12 @@
     width: 100vw;
     min-height: 100vh;
 }
+
+.layout-footer {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: black;
+    color: white;
+}

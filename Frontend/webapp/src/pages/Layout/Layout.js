@@ -8,7 +8,7 @@ function Layout() {
   return (
     <div className='layout'>
       {/* Layout */}
-      
+
 
       {/* <hr /> */}
 
@@ -16,6 +16,9 @@ function Layout() {
           so you can think about this <Outlet> as a placeholder for
           the child routes we defined above. */}
       <Outlet />
+      <div className='layout-footer' >
+        Copyright 2022 | Vigilado MINEDUCACIÓN Y MINJUSTICIA
+      </div>
     </div>
   )
 }

@@ -31,9 +31,6 @@ function Dashboard() {
       <div className='dashboard-item dashboard-container-bottom-right'>
         <Outlet />
       </div>
-      <div className='dashboard-container-footer'>
-        texto
-      </div>
     </div>
   )
 }
