@@ -38,7 +38,7 @@ function Dashboard() {
           type={"Link"}
           linkto={"/dashboard/reportes"}
           text={"Reportes"}
-          icon={"people-fill"}
+          icon={"file-bar-graph"}
         />
       </div>
       <div className='dashboard-item dashboard-container-top-right'>top-right</div>
