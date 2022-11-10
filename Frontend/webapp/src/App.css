@@ -1,3 +1,7 @@
+:root {
+  --font: 'Roboto Condensed', Roboto, sans-serif;
+}
+
 .App {
   text-align: center;
 }
