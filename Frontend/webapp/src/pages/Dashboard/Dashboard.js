@@ -26,6 +26,13 @@ function Dashboard() {
           text={"Solicitudes"}
           icon={"file-diff"}
         />
+        <hr />
+        <IconButton
+          type={"Link"}
+          linkto={"/dashboard/personas"}
+          text={"Solicitudes"}
+          icon={"people-fill"}
+        />
       </div>
       <div className='dashboard-item dashboard-container-top-right'>top-right</div>
       <div className='dashboard-item dashboard-container-bottom-right'>
