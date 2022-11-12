@@ -48,11 +48,16 @@ function Dashboard() {
             linkto={"/"}
             text={"Cerrar Sesión"}
             icon={"bi-box-arrow-in-left"}
-            onClick={()=>{console.log("function");}}
+            onClick={() => { console.log("function"); }}
           />
         </div>
       </div>
-      <div className='dashboard-item dashboard-container-top-right'>top-right</div>
+      <div className='dashboard-item dashboard-container-top-right'>
+        <div className="dashboard-container-top-right-title">
+          <img className="dashboard-container-top-right-title-image" src={"/icons/rectangulo.svg"} alt="journal-icon" />
+          <h3 className='dashboard-container-top-right-title-text'>Centros de conciliación</h3>
+        </div>
+      </div>
       <div className='dashboard-item dashboard-container-bottom-right'>
         <Outlet />
       </div>
