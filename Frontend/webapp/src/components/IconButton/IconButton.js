@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 // Importing css
 import './IconButton.css'
 
-function IconButton({ type, linkto, text, icon }) {
+function IconButton({ type, linkto, text, icon, onClick }) {
     let Container = ({ className, children }) => {
         if (type === "Link") {
-            return <Link className={className} to={linkto}>{children}</Link>
+            return <Link className={className} to={linkto} onClick={onClick}>{children}</Link>
         }
-        return <button className={className} type={type}>{children}</button>
+        return <button className={className} type={type} onClick={onClick}>{children}</button>
     }
     return (
         <div className='icon-button-beautiful-wrapper'>

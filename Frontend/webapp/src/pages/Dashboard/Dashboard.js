@@ -14,32 +14,43 @@ function Dashboard() {
         <img src='/images/escudo_ugc.png' alt='escudo' />
       </div>
       <div className='dashboard-item dashboard-container-bottom-left'>
-        <IconButton
-          type={"Link"}
-          linkto={"/dashboard/expedientes"}
-          text={"Expedientes"}
-          icon={"journal"}
-        />
-        <IconButton
-          type={"Link"}
-          linkto={"/dashboard/solicitudes"}
-          text={"Solicitudes"}
-          icon={"file-diff"}
-        />
-        <hr />
-        <IconButton
-          type={"Link"}
-          linkto={"/dashboard/personas"}
-          text={"Personas"}
-          icon={"people-fill"}
-        />
-        <hr />
-        <IconButton
-          type={"Link"}
-          linkto={"/dashboard/reportes"}
-          text={"Reportes"}
-          icon={"file-bar-graph"}
-        />
+        <div className='dashboard-item dashboard-container-bottom-left-top'>
+          <IconButton
+            type={"Link"}
+            linkto={"/dashboard/expedientes"}
+            text={"Expedientes"}
+            icon={"journal"}
+          />
+          <IconButton
+            type={"Link"}
+            linkto={"/dashboard/solicitudes"}
+            text={"Solicitudes"}
+            icon={"file-diff"}
+          />
+          <hr />
+          <IconButton
+            type={"Link"}
+            linkto={"/dashboard/personas"}
+            text={"Personas"}
+            icon={"people-fill"}
+          />
+          <hr />
+          <IconButton
+            type={"Link"}
+            linkto={"/dashboard/reportes"}
+            text={"Reportes"}
+            icon={"file-bar-graph"}
+          />
+        </div>
+        <div className='dashboard-item dashboard-container-bottom-left-bottom'>
+          <IconButton
+            type={"Link"}
+            linkto={"/"}
+            text={"Cerrar Sesión"}
+            icon={"bi-box-arrow-in-left"}
+            onClick={()=>{console.log("function");}}
+          />
+        </div>
       </div>
       <div className='dashboard-item dashboard-container-top-right'>top-right</div>
       <div className='dashboard-item dashboard-container-bottom-right'>

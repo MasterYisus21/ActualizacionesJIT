@@ -36,9 +36,9 @@
     padding-top: 8px;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
+    justify-content: space-between;
 }
-.dashboard-container-bottom-left > hr {
+.dashboard-container-bottom-left-top > hr {
     margin: 4px;
 }
 
