@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { BarRectangulo } from '../../components/BarRectangulo'
 
 
 import { Link } from "react-router-dom";
@@ -15,14 +16,7 @@ function Consultar() {
     <div>
       <div className=''>
         <div className='contenedor-rectangulo-verde'>
-          <section class="container">
-            <img
-              className="svg-rectangulo"
-              src={"./icons/rectangulo.svg"}
-              alt="journal-icon"
-            />
-            <p>Consulta tu solicitud</p>
-          </section>
+          <BarRectangulo text = "Consulta tu solicitud"/>
         </div>
         <div className='contenedor-consultar-documento'>
           <div className='rectangulo-pregunta-documento'>
