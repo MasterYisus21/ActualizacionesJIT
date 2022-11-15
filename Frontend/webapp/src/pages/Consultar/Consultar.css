@@ -20,14 +20,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: -2rem;
 }
 
 .seleccionable-cedula{
-    width: 20rem;
+    width: 80%;
+    margin-top: 1.5rem;
 }
 
 .seleccionable-cedula2{
-    width: 20rem;
+    width: 80%;
     margin-top: 1.5rem;
 }
 
