@@ -1,0 +1,43 @@
+
+.icono-rectangulo-movil{
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.texto-rectangulo{
+    position: absolute;
+    color: white;
+    font-weight: 600;
+    font-size: 1.7em;
+    padding-left: 1em;
+}
+
+.img-rectangulo{
+    width: 90%;
+}
+
+.icono-subtemarectangulo-movil{
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.texto-subtemarectangulo{
+    position: absolute;
+    color: white;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.img-subtemarectangulo{
+    width: 20em;
+}
+
+.icon-datos-solicitante{
+    position: absolute;
+    width: 32px;
+    margin-right: 15.6em;
+}

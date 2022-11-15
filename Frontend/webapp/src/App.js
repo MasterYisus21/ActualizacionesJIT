@@ -9,6 +9,7 @@ import { Layout } from './pages/Layout'
 import { PaginaPrincipal } from './pages/PaginaPrincipal'
 import { Consultar } from './pages/Consultar'
 import { Login } from './pages/Login'
+import {RegistrarSolicitud} from './pages/RegistrarSolicitud'
 import { Dashboard, Expedientes, Solicitudes, Personas, Reportes } from './pages/Dashboard'
 import { NoMatch } from './pages/NoMatch'
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<PaginaPrincipal />} />
           <Route path="login" element={<Login />} />
+          <Route path="registrarsolicitud" element={<RegistrarSolicitud />} />
           <Route path="consultar" element={<Consultar />} />
           <Route path="dashboard/" element={<Dashboard />} >
             <Route path='expedientes' element={<Expedientes />} />
