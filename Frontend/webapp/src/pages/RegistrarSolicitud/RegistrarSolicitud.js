@@ -171,6 +171,9 @@ function RegistrarSolicitud() {
             <Form.Label>Recibo Público</Form.Label>
             <Form.Control type="file" />
           </Form.Group>
+
+          <button className='boton-subir-anexos'>Subir más anexos</button>
+
         </div>
       </div>
     </div>

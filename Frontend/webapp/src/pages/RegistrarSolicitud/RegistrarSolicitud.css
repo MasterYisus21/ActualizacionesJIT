@@ -47,3 +47,12 @@
 .inputs-registrar-solicitud{
     width: 18em;
 }
+
+.boton-subir-anexos{
+    border: 0;
+    border-radius: 10px;
+    padding: .6em;
+    background-color: #00913D;
+    color: white;
+    font-weight: 600;
+}

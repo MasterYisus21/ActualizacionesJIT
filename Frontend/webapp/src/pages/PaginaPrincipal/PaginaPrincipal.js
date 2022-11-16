@@ -1,5 +1,6 @@
+import { Button } from "bootstrap";
 import React from "react";
-
+import { BarRectangulo } from '../../components/BarRectangulo'
 import { Link } from "react-router-dom";
 
 // Importing css
@@ -12,14 +13,7 @@ function PaginaPrincipal() {
         <div className="logo-universidad-movil">
           <img className="imagen-logo-principal" src={"./images/logo-ugc.png"} alt="" />
         </div>
-        <section class="container">
-          <img
-            className="svg-rectangulo"
-            src={"./icons/rectangulo.svg"}
-            alt="journal-icon"
-          />
-          <p>Centros de conciliación</p>
-        </section>
+        <BarRectangulo text = "Centros de conciliación"/>
         <div className="cuerpo-principal">
           <div className="carta-solicitud">
             <div className="contenedor-descripcion">
@@ -44,6 +38,7 @@ function PaginaPrincipal() {
               <img className="imagen_solicitud" src={"./images/imagen-consultar.jpg"} alt="" />
             </div>   
           </div>
+          <button className="boton-ingreso">Ingresar</button>
         </div>
       </div>
     </div>
