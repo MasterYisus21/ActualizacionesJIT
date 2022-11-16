@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { BarRectangulo, IconButton } from '../../components'
+import { IconButton } from '../../components'
 
 // import { Link } from "react-router-dom";
 
@@ -8,6 +8,9 @@ import { BarRectangulo, IconButton } from '../../components'
 import './Dashboard.css'
 
 function Dashboard() {
+
+  const [pagina, setPagina] = useState("Dashboard")
+
   return (
     <div className='dashboard-container'>
       <div className='dashboard-item dashboard-container-top-left'>
@@ -20,12 +23,14 @@ function Dashboard() {
             linkto={"/dashboard/expedientes"}
             text={"Expedientes"}
             icon={"journal"}
+            onClick={() => {setPagina("Expedientes")}}
           />
           <IconButton
             type={"Link"}
             linkto={"/dashboard/solicitudes"}
             text={"Solicitudes"}
             icon={"file-diff"}
+            onClick={() => {setPagina("Solicitudes")}}
           />
           <hr />
           <IconButton
@@ -33,6 +38,7 @@ function Dashboard() {
             linkto={"/dashboard/personas"}
             text={"Personas"}
             icon={"people-fill"}
+            onClick={() => {setPagina("Personas")}}
           />
           <hr />
           <IconButton
@@ -40,6 +46,7 @@ function Dashboard() {
             linkto={"/dashboard/reportes"}
             text={"Reportes"}
             icon={"file-bar-graph"}
+            onClick={() => {setPagina("Informes")}}
           />
         </div>
         <div className='dashboard-item dashboard-container-bottom-left-bottom'>
@@ -48,7 +55,6 @@ function Dashboard() {
             linkto={"/"}
             text={"Cerrar Sesión"}
             icon={"bi-box-arrow-in-left"}
-            onClick={() => { console.log("function"); }}
           />
         </div>
       </div>
@@ -56,8 +62,8 @@ function Dashboard() {
         <div className="dashboard-container-top-right-title">
           <img className="dashboard-container-top-right-title-image" src={"/icons/rectangulo.svg"} alt="journal-icon" />
           <h3 className='dashboard-container-top-right-title-text'>Centros de conciliación</h3>
+          <h3 className='dashboard-container-top-right-title-text-hint'>{pagina}</h3>
         </div>
-        <BarRectangulo text={"Centros de Conciliación"} />
       </div>
       <div className='dashboard-item dashboard-container-bottom-right'>
         <Outlet />
