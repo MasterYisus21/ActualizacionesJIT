@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { IconButton } from '../../components/IconButton'
+import { BarRectangulo, IconButton } from '../../components'
 
 // import { Link } from "react-router-dom";
 
@@ -57,6 +57,7 @@ function Dashboard() {
           <img className="dashboard-container-top-right-title-image" src={"/icons/rectangulo.svg"} alt="journal-icon" />
           <h3 className='dashboard-container-top-right-title-text'>Centros de conciliación</h3>
         </div>
+        <BarRectangulo text={"Centros de Conciliación"} />
       </div>
       <div className='dashboard-item dashboard-container-bottom-right'>
         <Outlet />
