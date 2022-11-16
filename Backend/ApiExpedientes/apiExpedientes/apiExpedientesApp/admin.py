@@ -4,3 +4,4 @@ from .models import *
 admin.site.register(Pais)
 admin.site.register(Apoderado)
 admin.site.register(Resultado)
+admin.site.register(Expediente)

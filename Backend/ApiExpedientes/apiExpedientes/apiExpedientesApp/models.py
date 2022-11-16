@@ -26,7 +26,7 @@ class Departamento(GeneralModel):
 
 class Ciudad(GeneralModel):
 
-    ciudad_id=models.ForeignKey(Pais, on_delete=models.SET_NULL,blank=False,null=True)
+    departamento_id=models.ForeignKey(Departamento, on_delete=models.SET_NULL,blank=False,null=True)
 
     class Meta:
         verbose_name = ("Ciudad")
@@ -37,7 +37,7 @@ class Ciudad(GeneralModel):
 
 class Localidad(GeneralModel):
 
-    ciudad_id=models.ForeignKey(Pais, on_delete=models.SET_NULL,blank=False,null=True)
+    ciudad_id=models.ForeignKey(Ciudad, on_delete=models.SET_NULL,blank=False,null=True)
 
     class Meta:
         verbose_name = ("Localidad")
@@ -47,8 +47,8 @@ class Localidad(GeneralModel):
         return self.nombre
 
 class Barrio(GeneralModel):
-
-    localidad_id=models.ForeignKey(Pais, on_delete=models.SET_NULL,blank=False,null=True)
+    nombre= models.CharField(max_length=80,blank=False, null=False)
+    localidad_id=models.ForeignKey(Localidad, on_delete=models.SET_NULL,blank=False,null=True)
 
     class Meta:
         verbose_name = ("Barrio")
@@ -202,7 +202,7 @@ class Datos_estudio(GeneralModel):
 
 class Apoderado(EstadoModel):
 
-    id = models.AutoField(primary_key=True, unique=True)
+ 
     nombres = models.CharField(max_length = 25,blank=False,null=False)
     apellidos = models.CharField(max_length= 25, blank=False, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False,unique=True)
@@ -222,7 +222,7 @@ class Apoderado(EstadoModel):
 
 class Persona(EstadoModel):
 
-    id = models.AutoField(primary_key=True, unique=True)
+  
     nombres = models.CharField(max_length = 25,blank=False,null=False)
     apellidos = models.CharField(max_length= 25, blank=False, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False,unique=True)
@@ -235,6 +235,8 @@ class Persona(EstadoModel):
     celular = models.CharField(max_length=15, blank=False, null=False)
     correo = models.EmailField(max_length=120,blank=False,null=False)
     tarjeta_profesional= models.CharField(max_length=25, blank=True, null=True)
+    barrio= models.ForeignKey(Barrio, on_delete=models.SET_NULL, blank=True, null=True)
+    ciudad_nacimiento= models.ForeignKey(Ciudad, on_delete=models.SET_NULL, blank=True, null=True)
     estado_civil_id = models.ForeignKey(Estado_civil, on_delete=models.SET_NULL, blank=True, null=True)
     estrato_socioeconomico_id = models.ForeignKey(Estrato_socioeconomico, on_delete=models.SET_NULL, blank=True, null=True)
     grupo_etnico_id = models.ForeignKey(Grupo_etnico, on_delete=models.SET_NULL, blank=True, null=True)
@@ -320,7 +322,7 @@ class Inicio_conflicto(GeneralModel):
 
 
 class Expediente(EstadoModel):
-    id = models.AutoField(primary_key=True) 
+
     numero_caso= models.PositiveIntegerField(null=False,blank=False )
     fecha_registro=models.DateField(blank=False , null=False) # Se crea automaticamente 
     caso_gratuito= models.BooleanField(default=True, blank=True,null=True)
@@ -380,10 +382,11 @@ class Historico(models.Model):
     expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
 
     class Meta:
+        ordering = ["-fecha"] 
         verbose_name = ('Historico')
         verbose_name_plural = ('Historicos')
     def __str__(self):
-        return str(self.fecha)
+         return '%s %s '% (self.fecha,self.expediente_id)
 
 class Tipo_resultado(GeneralModel):
     
@@ -396,13 +399,160 @@ class Tipo_resultado(GeneralModel):
         return self.nombre
 
 class Resultado(EstadoModel):
-    id = models.AutoField(primary_key=True, unique=True) 
+   
     acuerdo  = models.TextField(blank=True,null=True)
     documento = models.FileField(upload_to='resultados/', max_length=100, blank=True,null=True)
     fecha = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) 
+    tipo_resultado_id = models.ForeignKey(Tipo_resultado, on_delete=models.SET_NULL, blank=False, null=True)
+    expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
         verbose_name = ('Resultado')
         verbose_name_plural = ('Resultados')
     def __str__(self):
         return str(self.fecha)
+
+class Hechos(EstadoModel):
+    cuantia_indeterminada=models.BooleanField(default=False, blank=True,null=True)
+    flag_interviene_tercero=models.BooleanField(default=False, blank=True,null=True)
+    flag_violencia=models.BooleanField(default=False, blank=True,null=True)
+    cuantia= models.PositiveIntegerField(blank=True,null=True)
+    descripcion = models.TextField(blank=False,null=False)
+    Flag_conflicto_por_incapacidad=models.BooleanField(default=False, blank=True,null=True)
+    pretension = models.TextField(blank=True,null=True)
+    expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
+
+    
+    class Meta:
+        verbose_name = ('Hechos')
+        verbose_name_plural = ('Hechos')
+    def __str__(self):
+        return str(self.expediente_id)
+
+class Medio_seguimiento(GeneralModel):
+
+    class Meta:
+        verbose_name = ('Medio_seguimiento')
+        verbose_name_plural = ('Medios_seguimiento')
+    def __str__(self):
+        return self.nombre
+
+class Seguimiento(EstadoModel):
+    fecha = models.DateField(auto_now=False, auto_now_add=False,blank=False,null=False)    
+    expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True) 
+    medio_seguimiento_id = models.ForeignKey(Medio_seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
+
+    class Meta:
+        verbose_name = ('Seguimiento')
+        verbose_name_plural = ('Seguimientos')
+    def __str__(self):
+        return str(self.fecha)
+
+class Pregunta_seguimiento(GeneralModel):
+    nombre = models.TextField(blank=False, null=False)
+    
+    class Meta:
+        verbose_name = ('Pregunta_seguimiento')
+        verbose_name_plural = ('Preguntas_seguimiento')
+    def __str__(self):
+        return self.nombre
+
+class Respuesta_seguimiento(models.Model):
+
+    id = models.AutoField(primary_key=True, unique=True) 
+    si_o_no=models.BooleanField(blank=False,null=False)
+    porque = models.TextField(blank=True,null=True)
+    pregunta_seguimiento_id = models.ForeignKey(Pregunta_seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
+    seguimiento_id = models.ForeignKey(Seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
+
+    class Meta:
+        verbose_name = ('Respuesta_seguimiento')
+        verbose_name_plural = ('Respuestas_seguimiento')
+    def __str__(self):
+        return str(self.seguimiento_id)
+
+class Turno(GeneralModel):
+
+    class Meta:
+        verbose_name = ('Turno')
+        verbose_name_plural = ('Turnos')
+    def __str__(self):
+        return self.nombre
+
+class Tipo_medio(GeneralModel):
+
+    class Meta:
+        verbose_name = ('Tipo_medio')
+        verbose_name_plural = ('Tipos_medio')
+    def __str__(self):
+        return self.nombre
+
+class Citacion(EstadoModel):
+    enlace = models.CharField(max_length = 150,blank=True,null=True)
+    descripcion = models.TextField(blank=True,null=True)
+    fecha_sesion = models.DateField(auto_now=False, auto_now_add=False,blank=False,null=False)
+    turnos_id = models.ForeignKey(Turno, on_delete=models.SET_NULL,blank=False,null=True)
+    tipo_medio_id = models.ForeignKey(Tipo_medio, on_delete=models.SET_NULL,blank=False,null=True)
+    expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL,blank=False,null=True)
+
+       
+    class Meta:
+        verbose_name = ('Citacion')
+        verbose_name_plural = ('Citaciones')
+    def __str__(self):
+        return str(self.expediente_id)
+
+class Relacion_persona_citacion(GeneralModel):
+    citacion_id = models.ForeignKey(Citacion, on_delete=models.SET_NULL,blank=False,null=True)
+    persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL,blank=False,null=True)
+    class Meta:
+        verbose_name = ('Relacion_persona_citacion')
+        verbose_name_plural = ('Relaciones_persona_citacion')
+    def __str__(self):
+        return self.nombre
+class Medio_conocimiento(GeneralModel):
+
+    class Meta:
+        verbose_name = ('Medio_conocimiento')
+        verbose_name_plural = ('Medios_conocimiento')
+    def __str__(self):
+        return self.nombre
+
+class Encuesta(EstadoModel):
+    fecha = models.DateField(auto_now=True, auto_now_add=False,null=False)
+    medio_conocimiento_id = models.ForeignKey(Medio_conocimiento, on_delete=models.SET_NULL,blank=False,null=True)
+    persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL,blank=False,null=True)
+    expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
+    class Meta:
+        verbose_name = ('Encuesta')
+        verbose_name_plural = ('Encuestas')
+    def __str__(self):
+        return  '%s %s' % (self.fecha,self.expediente_id)
+
+class Pregunta_encuesta(GeneralModel):
+
+    class Meta:
+        verbose_name = ('Pregunta_encuesta')
+        verbose_name_plural = ('Preguntas_encuesta')
+    def __str__(self):
+        return self.nombre
+
+class Respuesta_encuesta(EstadoModel):
+    calificacion=models.PositiveSmallIntegerField(null=False,blank=False)
+    pregunta_encuesta_id = models.ForeignKey(Pregunta_encuesta, on_delete=models.SET_NULL,blank=False,null=True)
+    encuesta_id = models.ForeignKey(Encuesta, on_delete=models.SET_NULL,blank=True,null=True)
+    
+    
+    class Meta:
+        verbose_name = ('Respuesta_encuesta')
+        verbose_name_plural = ('Respuestas_encuesta')
+    def __str__(self):
+        return '%s %s' % (self.encuesta_id, self.pregunta_encuesta_id)
+
+class Tipo_reporte(GeneralModel):
+
+    class Meta:
+        verbose_name = ('Tipo_reporte')
+        verbose_name_plural = ('Tipos_reporte')
+    def __str__(self):
+        return self.nombre
