@@ -386,7 +386,7 @@ class Historico(models.Model):
         verbose_name = ('Historico')
         verbose_name_plural = ('Historicos')
     def __str__(self):
-         return '%s %s '% (self.fecha,self.expediente_id)
+         return '%s '% (self.id)
 
 class Tipo_resultado(GeneralModel):
     
