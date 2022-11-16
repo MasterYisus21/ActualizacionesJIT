@@ -4,7 +4,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { BarRectangulo } from '../../components/BarRectangulo'
-
+import { BarRectanguloPequeño } from '../../components/BarRectanguloPequeño'
 
 import { Link } from "react-router-dom";
 
@@ -44,6 +44,70 @@ function Consultar() {
               </Col>
 
             </Row>
+          </div>
+        </div>
+        <div className='cuerpo-consulta'>
+          <div className='contenedor-casos-consulta'>
+            <div className='carta-caso-consulta'>
+              <div className='contenedor-rectangulo-tarjeta-consultar'>
+                <BarRectanguloPequeño text = "Número de Radicado 12345"/>
+              </div>
+              <div className='contenedor-caso-consulta'>
+                <div className='lado-izquierdo'>
+                  <div className='orden-lado-izquierdo'>
+                    <label className='estado-consulta'>Estado:</label>
+                    <label className='fecha-consulta'>Fecha:</label>
+                  </div>
+                </div>
+                <div className='lado-derecho'>
+                  <div className='orden-lado-izquierdo'>
+                    <label className='estado-consulta'>Asignada</label>
+                    <label className='fecha-consulta'>25/10/2022</label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div className='carta-caso-consulta'>
+              <div className='contenedor-rectangulo-tarjeta-consultar'>
+                <BarRectanguloPequeño text = "Número de Radicado 12345"/>
+              </div>
+              <div className='contenedor-caso-consulta'>
+                <div className='lado-izquierdo'>
+                  <div className='orden-lado-izquierdo'>
+                    <label className='estado-consulta'>Estado:</label>
+                    <label className='fecha-consulta'>Fecha:</label>
+                  </div>
+                </div>
+                <div className='lado-derecho'>
+                  <div className='orden-lado-izquierdo'>
+                    <label className='estado-consulta'>Asignada</label>
+                    <label className='fecha-consulta'>25/10/2022</label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div className='carta-caso-consulta'>
+              <div className='contenedor-rectangulo-tarjeta-consultar'>
+                <BarRectanguloPequeño text = "Número de Radicado 12345"/>
+              </div>
+              <div className='contenedor-caso-consulta'>
+                <div className='lado-izquierdo'>
+                  <div className='orden-lado-izquierdo'>
+                    <label className='estado-consulta'>Estado:</label>
+                    <label className='fecha-consulta'>Fecha:</label>
+                  </div>
+                </div>
+                <div className='lado-derecho'>
+                  <div className='orden-lado-izquierdo'>
+                    <label className='estado-consulta'>Asignada</label>
+                    <label className='fecha-consulta'>25/10/2022</label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
       </div>
