@@ -427,7 +427,7 @@ class Hechos(EstadoModel):
         verbose_name = ('Hechos')
         verbose_name_plural = ('Hechos')
     def __str__(self):
-        return str(self.expediente_id)
+        return str(self.id)
 
 class Medio_seguimiento(GeneralModel):
 
@@ -469,7 +469,7 @@ class Respuesta_seguimiento(models.Model):
         verbose_name = ('Respuesta_seguimiento')
         verbose_name_plural = ('Respuestas_seguimiento')
     def __str__(self):
-        return str(self.seguimiento_id)
+        return str(self.id)
 
 class Turno(GeneralModel):
 
@@ -500,7 +500,7 @@ class Citacion(EstadoModel):
         verbose_name = ('Citacion')
         verbose_name_plural = ('Citaciones')
     def __str__(self):
-        return str(self.expediente_id)
+        return str(self.id)
 
 class Relacion_persona_citacion(GeneralModel):
     citacion_id = models.ForeignKey(Citacion, on_delete=models.SET_NULL,blank=False,null=True)
@@ -527,7 +527,7 @@ class Encuesta(EstadoModel):
         verbose_name = ('Encuesta')
         verbose_name_plural = ('Encuestas')
     def __str__(self):
-        return  '%s %s' % (self.fecha,self.expediente_id)
+        return  '%s %s' % (self.fecha)
 
 class Pregunta_encuesta(GeneralModel):
 
@@ -547,7 +547,7 @@ class Respuesta_encuesta(EstadoModel):
         verbose_name = ('Respuesta_encuesta')
         verbose_name_plural = ('Respuestas_encuesta')
     def __str__(self):
-        return '%s %s' % (self.encuesta_id, self.pregunta_encuesta_id)
+        return '%s %s' % (self.id)
 
 class Tipo_reporte(GeneralModel):
 

@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import *
 
 
-
 class SearchAdminGeneral(admin.ModelAdmin):
   
     search_fields = ['id','nombre'] #atributo por el cual se filtrará
