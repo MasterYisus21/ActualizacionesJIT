@@ -46,7 +46,7 @@ function Dashboard() {
             linkto={"/dashboard/reportes"}
             text={"Reportes"}
             icon={"file-bar-graph"}
-            onClick={() => {setPagina("Informes")}}
+            onClick={() => {setPagina("Reportes")}}
           />
         </div>
         <div className='dashboard-item dashboard-container-bottom-left-bottom'>
