@@ -331,13 +331,14 @@ class Expediente(EstadoModel):
     class Meta:
         verbose_name = ("Expediente")
         verbose_name_plural = ("Expedientes")
+        constraints =[models.UniqueConstraint(fields=['numero_caso', 'fecha_registro'], name='caso_por_fecha')]
         # models.UniqueConstraint( fields=['numero_caso','fecha_registro'])
 
      
      
 
     def __str__(self):
-        return self.nombre
+        return str(self.numero_caso)
 class Tipo_cliente(GeneralModel):
 
     class Meta:
