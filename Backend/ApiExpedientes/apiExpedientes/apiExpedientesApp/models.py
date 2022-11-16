@@ -395,3 +395,14 @@ class Tipo_resultado(GeneralModel):
     def __str__(self):
         return self.nombre
 
+class Resultado(EstadoModel):
+    id = models.AutoField(primary_key=True, unique=True) 
+    acuerdo  = models.TextField(blank=True,null=True)
+    documento = models.FileField(upload_to='resultados/', max_length=100, blank=True,null=True)
+    fecha = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) 
+    
+    class Meta:
+        verbose_name = ('Resultado')
+        verbose_name_plural = ('Resultados')
+    def __str__(self):
+        return str(self.fecha)
