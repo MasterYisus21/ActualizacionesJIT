@@ -59,19 +59,28 @@
 
 .dashboard-container-top-right-title {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .dashboard-container-top-right-title-image {
-    position: absolute;
+    /* position: absolute; */
     height: 100%;
-    width: 400px;
+    width: 17rem;
 }
 
 .dashboard-container-top-right-title-text {
     position: absolute;
+    margin-left: 1.6rem;
+    /* width: 400px; */
     /* top: 9px; */
     /* display: inline-block; */
     word-break: keep-all;
     font-size: 24px;
     color: white;
+}
+
+.dashboard-container-top-right-title-text-hint {
+    margin-top: 1rem;
+    margin-left: 1rem;
 }

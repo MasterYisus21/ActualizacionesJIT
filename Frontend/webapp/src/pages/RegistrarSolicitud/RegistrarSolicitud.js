@@ -1,6 +1,5 @@
 import React from 'react'
-import { BarRectangulo } from '../../components/BarRectangulo'
-import SubtemaRectangulo from '../../components/BarRectangulo/SubtemaRectangulo'
+import { BarRectangulo, SubtemaRectangulo } from '../../components'
 
 
 // Importing css
