@@ -1,3 +1,49 @@
-.heading-registrar-solicitud{
+
+.wrapp-main-registrar-solicitud{
+    display: grid;
+    height: 100%;
+}
+
+.heading-registrar-solicitud {
     padding-top: 15%;
+}
+
+.wrapp-introduccion{
+    padding-top: 1em;
+}
+.introduccion-texto-solicitud {
+    background-color: #c5c5c570;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: bolder;
+    width: 17em;
+    padding: 1em;
+}
+
+.secciones-temas {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding-top: 1em;
+    padding-bottom: 2em;
+    text-align: left;
+}
+
+.subtitles-secciones{
+    margin: 0;
+    width: 18em;
+    font-weight: 600;
+}
+.form-datos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 1em;
+}
+
+.inputs-registrar-solicitud{
+    width: 18em;
 }
