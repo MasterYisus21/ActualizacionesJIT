@@ -40,6 +40,10 @@ class SearchRespuestasEncuesta(admin.ModelAdmin):
   
     search_fields = ['encuesta_id__expediente_id__numero_caso']
 
+class SearchResultado(admin.ModelAdmin):
+  
+    search_fields = ['expediente_id__numero_caso','fecha','tipo_resultado_id__nombre']
+
 # Register your models here.
 admin.site.register(Pais)
 admin.site.register(Departamento,SearchAdminGeneral)
@@ -73,7 +77,7 @@ admin.site.register(Relacion_persona_expediente)
 admin.site.register(Estado,SearchAdminGeneral)
 admin.site.register(Historico,SearchHistorico)
 admin.site.register(Tipo_resultado,SearchAdminGeneral)
-admin.site.register(Resultado,SearchAdminGeneral)
+admin.site.register(Resultado,SearchResultado)
 admin.site.register(Hechos,SearchHechos)
 admin.site.register(Medio_seguimiento,SearchAdminGeneral)
 admin.site.register(Seguimiento,SearchSeguimiento)
