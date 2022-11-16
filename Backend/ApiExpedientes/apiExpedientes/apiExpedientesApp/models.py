@@ -328,14 +328,19 @@ class Expediente(EstadoModel):
     fecha_finalizacion= models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     expediente_pre_cerrado=models.BooleanField(default=False, blank=True,null=True)
     expediente_cerrado=models.BooleanField(default=False, blank=True,null=True)
+    tipo_servicio_id = models.ForeignKey(Tipo_servicio, on_delete=models.SET_NULL, blank=True, null=True)
+    subtema_id = models.ForeignKey(Subtema, on_delete=models.SET_NULL, blank=True, null=True)
+    area_id = models.ForeignKey(Area, on_delete=models.SET_NULL, blank=True, null=True)
+    solicitante_servicio_id = models.ForeignKey(Solicitante_servicio, on_delete=models.SET_NULL, blank=True, null=True)
+    inicio_conflicto_id = models.ForeignKey(Inicio_conflicto, on_delete=models.SET_NULL, blank=True, null=True)
+
+
+
     class Meta:
         verbose_name = ("Expediente")
         verbose_name_plural = ("Expedientes")
         constraints =[models.UniqueConstraint(fields=['numero_caso', 'fecha_registro'], name='caso_por_fecha')]
         # models.UniqueConstraint( fields=['numero_caso','fecha_registro'])
-
-     
-     
 
     def __str__(self):
         return str(self.numero_caso)
@@ -349,10 +354,55 @@ class Tipo_cliente(GeneralModel):
         return self.nombre
 
 class Relacion_persona_expediente(GeneralModel):
-
+    
+    expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
+    persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
+    tipo_cliente_id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
-        verbose_name = ("Tipo_cliente")
-        verbose_name_plural = ("Tipos_cliente")
+        verbose_name = ("Relacion_persona_expediente")
+        verbose_name_plural = ("Relaciones_persona_expediente")
 
     def __str__(self):
         return self.nombre
+class Estado(GeneralModel):
+
+     class Meta:
+        verbose_name = ('Estado')
+        verbose_name_plural = ('Estados')
+     def __str__(self):
+        return self.nombre
+
+class Historico(models.Model):
+
+    id = models.AutoField(primary_key=True, unique=True) 
+    fecha =  models.DateTimeField( auto_now=True,blank=False,null=False)
+    estado_id = models.ForeignKey(Estado, on_delete=models.SET_NULL, blank=False, null=True)
+    expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
+
+    class Meta:
+        verbose_name = ('Historico')
+        verbose_name_plural = ('Historicos')
+    def __str__(self):
+        return str(self.fecha)
+
+class Tipo_resultado(GeneralModel):
+    
+    consecutivo_actual=models.PositiveIntegerField(null=False,blank=False)
+
+    class Meta:
+        verbose_name = ('Tipo_resultado')
+        verbose_name_plural = ('Tipos_resultado')
+    def __str__(self):
+        return self.nombre
+
+class Resultado(EstadoModel):
+    id = models.AutoField(primary_key=True, unique=True) 
+    acuerdo  = models.TextField(blank=True,null=True)
+    documento = models.FileField(upload_to='resultados/', max_length=100, blank=True,null=True)
+    fecha = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) 
+    
+    class Meta:
+        verbose_name = ('Resultado')
+        verbose_name_plural = ('Resultados')
+    def __str__(self):
+        return str(self.fecha)
