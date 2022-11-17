@@ -8,6 +8,7 @@ class Pais(GeneralModel):
 
     
     class Meta:
+        ordering = ['-id']
         verbose_name = ("Pais")
         verbose_name_plural = ("Paises")
 
@@ -18,6 +19,7 @@ class Departamento(GeneralModel):
 
     pais_id=models.ForeignKey(Pais, on_delete=models.SET_NULL,blank=False,null=True)
     class Meta:
+        ordering = ['-id']
         verbose_name = ("Departamento")
         verbose_name_plural = ("Departamentos")
 
@@ -29,6 +31,7 @@ class Ciudad(GeneralModel):
     departamento_id=models.ForeignKey(Departamento, on_delete=models.SET_NULL,blank=False,null=True)
 
     class Meta:
+        ordering = ['-id']
         verbose_name = ("Ciudad")
         verbose_name_plural = ("Ciudades")
 
@@ -40,6 +43,7 @@ class Localidad(GeneralModel):
     ciudad_id=models.ForeignKey(Ciudad, on_delete=models.SET_NULL,blank=False,null=True)
 
     class Meta:
+        ordering = ['-id']
         verbose_name = ("Localidad")
         verbose_name_plural = ("Localidades")
 
@@ -51,6 +55,7 @@ class Barrio(GeneralModel):
     localidad_id=models.ForeignKey(Localidad, on_delete=models.SET_NULL,blank=False,null=True)
 
     class Meta:
+        ordering = ['-id']
         verbose_name = ("Barrio")
         verbose_name_plural = ("Barrios")
 
@@ -182,11 +187,11 @@ class Tipo_cargo(GeneralModel):
         return self.nombre
 
 
-class Datos_estudio(GeneralModel):
+class Escolaridad(GeneralModel):
 
     class Meta:
-        verbose_name = ("Datos_estudio")
-        verbose_name_plural = ("Datos_estudio")
+        verbose_name = ("Escolaridad")
+        verbose_name_plural = ("Escolaridades")
 
     def __str__(self):
         return self.nombre
@@ -240,7 +245,7 @@ class Persona(EstadoModel):
     tipo_vivienda_id = models.ForeignKey(Tipo_vivienda, on_delete=models.SET_NULL, blank=True, null=True)
     perfil_id = models.ForeignKey(Perfil, on_delete=models.SET_NULL, blank=True, null=True)
     tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=True, null=True)
-    datos_estudio_id = models.ForeignKey(Datos_estudio, on_delete=models.SET_NULL, blank=True, null=True)
+    escolaridad_id = models.ForeignKey(Escolaridad, on_delete=models.SET_NULL, blank=True, null=True)
     apoderado_id = models.ForeignKey(Apoderado, on_delete=models.SET_NULL, blank=True, null=True)
     usuarioId= models.OneToOneField(User, on_delete=models.SET_NULL, null=True,blank=True)
     

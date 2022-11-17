@@ -81,9 +81,9 @@ class Tipo_cargoViewSet(GeneralViewSet):  # Una sola clase para los metodos de r
 
     serializer_class = Tipo_cargoSerializer
 
-class Datos_estudioViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class EscolaridadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
-    serializer_class = Datos_estudioSerializer
+    serializer_class = Escolaridad
 
 class ApoderadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
