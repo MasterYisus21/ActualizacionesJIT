@@ -103,7 +103,7 @@ class Datos_estudioSerializer(serializers.ModelSerializer):
         model = Datos_estudio          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class ApoderadoSerializer(serializers.ModelSerializer):
-    # tipo_documento  =  serializers.CharField(source='tipo_documento_id.nombre', read_only=True)
+    tipo_documento  =  serializers.CharField(source='tipo_documento_id.nombre', read_only=True)
     class Meta:
         model = Apoderado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
