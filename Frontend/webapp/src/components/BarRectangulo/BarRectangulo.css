@@ -8,13 +8,14 @@
 .texto-rectangulo{
     position: absolute;
     color: white;
-    font-weight: 600;
     font-size: 1.7em;
     padding-left: 1em;
 }
 
 .img-rectangulo{
-    width: 90%;
+    width: 90vw;
+    max-width: 60em;
+    max-height: 7em;
 }
 
 .icono-subtemarectangulo-movil{
@@ -28,7 +29,6 @@
 .texto-subtemarectangulo{
     position: absolute;
     color: white;
-    font-weight: 600;
     font-size: 1.2em;
     text-align: left;
     width: 9em;

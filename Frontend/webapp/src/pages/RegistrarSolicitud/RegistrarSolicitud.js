@@ -1,7 +1,6 @@
 import React from 'react'
 import { BarRectangulo, SubtemaRectangulo } from '../../components'
 
-
 // Importing css
 import './RegistrarSolicitud.css'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -9,13 +8,15 @@ import Form from 'react-bootstrap/Form';
 
 
 function RegistrarSolicitud() {
+  
   return (
     <div className='wrapp-main-registrar-solicitud'>
 
       <div className='heading-registrar-solicitud'>
+        
         <BarRectangulo text = "Registrar Solicitud"/>
       </div>
-
+      
       <div className='wrapp-introduccion'>
         <label className='introduccion-texto-solicitud'>Aquí  podrás consultar y hacer seguimiento de tu caso.</label>
       </div>
@@ -174,6 +175,7 @@ function RegistrarSolicitud() {
           <button className='boton-subir-anexos'>Subir más anexos</button>
 
         </div>
+
       </div>
     </div>
   )

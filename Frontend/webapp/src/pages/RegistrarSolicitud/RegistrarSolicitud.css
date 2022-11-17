@@ -2,14 +2,16 @@
 .wrapp-main-registrar-solicitud{
     display: grid;
     height: 100%;
+    padding-bottom: 2em;
 }
 
 .heading-registrar-solicitud {
-    padding-top: 15%;
+    padding-top: 3em;
 }
 
 .wrapp-introduccion{
-    padding-top: 1em;
+    padding-top: 3em;
+    padding-bottom: 1em;
 }
 .introduccion-texto-solicitud {
     background-color: #c5c5c570;
@@ -17,7 +19,6 @@
     justify-content: center;
     align-items: center;
     font-size: 1.2em;
-    font-weight: bolder;
     width: 17em;
     padding: 1em;
 }
@@ -26,16 +27,16 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
-    padding-top: 1em;
-    padding-bottom: 2em;
-    text-align: left;
 }
 
 .subtitles-secciones{
     margin: 0;
-    width: 18em;
-    font-weight: 600;
+    font-weight: bold;
+    text-align: left;
+    width: 80vw;
+    max-width: 50em;
 }
+
 .form-datos{
     display: flex;
     flex-direction: column;
@@ -45,7 +46,8 @@
 }
 
 .inputs-registrar-solicitud{
-    width: 18em;
+    width: 80vw;
+    max-width: 50em;
 }
 
 .boton-subir-anexos{
@@ -54,5 +56,17 @@
     padding: .6em;
     background-color: #00913D;
     color: white;
-    font-weight: 600;
+}
+
+/* Versión < 700px Tablets y Escritorios*/
+
+@media (min-width: 700px) {
+
+    .wrapp-introduccion {
+      display: none;
+    }
+
+    .heading-registrar-solicitud{
+        padding-bottom: 3em;
+    }
 }
