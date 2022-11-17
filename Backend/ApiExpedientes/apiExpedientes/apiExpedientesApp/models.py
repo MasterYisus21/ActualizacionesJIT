@@ -99,14 +99,6 @@ class Tipo_persona(GeneralModel):
         return self.nombre
 
 
-class Escolaridad(GeneralModel):
-
-    class Meta:
-        verbose_name = ("Escolaridad")
-        verbose_name_plural = ("Escolaridades")
-
-    def __str__(self):
-        return self.nombre
 
 
 class Sexo(GeneralModel):
@@ -241,7 +233,6 @@ class Persona(EstadoModel):
     estrato_socioeconomico_id = models.ForeignKey(Estrato_socioeconomico, on_delete=models.SET_NULL, blank=True, null=True)
     grupo_etnico_id = models.ForeignKey(Grupo_etnico, on_delete=models.SET_NULL, blank=True, null=True)
     tipo_persona_id = models.ForeignKey(Tipo_persona, on_delete=models.SET_NULL, blank=True, null=True)
-    escolaridad_id = models.ForeignKey(Escolaridad, on_delete=models.SET_NULL, blank=True, null=True)
     sexo_id = models.ForeignKey(Sexo, on_delete=models.SET_NULL, blank=True, null=True)
     tipo_discapacidad_id = models.ForeignKey(Tipo_discapacidad, on_delete=models.SET_NULL, blank=True, null=True)
     genero_id = models.ForeignKey(Genero, on_delete=models.SET_NULL, blank=True, null=True)

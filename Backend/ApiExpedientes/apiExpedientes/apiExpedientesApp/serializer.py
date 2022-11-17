@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import *
-
+from django.contrib.auth.models import User,Group
 class PaisSerializer(serializers.ModelSerializer):
    
     class Meta:
@@ -52,11 +52,7 @@ class Tipo_personaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tipo_persona          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
-class EscolaridadSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Escolaridad          # El modelo al que pertenece este serializador
-        fields = '__all__'  # Coje todos los campos del modelo 
 class SexoSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -108,8 +104,10 @@ class ApoderadoSerializer(serializers.ModelSerializer):
         model = Apoderado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class PersonaSerializer(serializers.ModelSerializer):
-    # localidad_id  =  serializers.CharField(source='barrio_id.localidad_id', read_only=True)
-
+    localidad_id  =  serializers.CharField(source='barrio_id.localidad_id.id', read_only=True)
+    ciudad_id  =  serializers.CharField(source='barrio_id.localidad_id.ciudad_id.id', read_only=True)
+    departamento_id  =  serializers.CharField(source='barrio_id.localidad_id.ciudad_id.departamento_id.id', read_only=True)
+    pais_id  =  serializers.CharField(source='barrio_id.localidad_id.ciudad_id.departamento_id.pais_id.id', read_only=True)
     class Meta:
         model = Persona          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
@@ -251,3 +249,17 @@ class Tipo_reporteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tipo_reporte          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
+
+
+class ListaUsuarioSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User    # El modelo al que pertenece este serializador
+        fields = ('id','username','password','is_staff','groups','is_active') # Coje todos los campos del modelo 
+        extra_kwargs = {'password':{'write_only':True}}
+
+class ListaGrupoSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Group     # El modelo al que pertenece este serializador
+        fields = ('id','name')  # Coje todos los campos del modelo 

@@ -13,7 +13,6 @@ router.register(r'estados_civiles',Estado_civilViewSet,basename='estados_civiles
 router.register(r'estratos_socioeconomicos',Estrato_socioeconomicoViewSet,basename='estratos_socioeconomicos'),
 router.register(r'grupos_etnicos',Grupo_etnicoViewSet,basename='grupos_etnicos'),
 router.register(r'tipos_persona',Tipo_personaViewSet,basename='tipos_persona'),
-router.register(r'escolaridades',EscolaridadViewSet,basename='escolaridades'),
 router.register(r'sexos',SexoViewSet,basename='sexos'),
 router.register(r'tipos_discapacidad',Tipo_discapacidadViewSet,basename='tipos_discapacidad'),
 router.register(r'generos',GeneroViewSet,basename='generos'),
@@ -52,6 +51,9 @@ router.register(r'encuestas',EncuestaViewSet,basename='encuestas'),
 router.register(r'preguntas_encuesta',Pregunta_encuestaViewSet,basename='preguntas_encuesta'),
 router.register(r'respuestas_encuesta',Respuesta_encuestaViewSet,basename='respuestas_encuesta'),
 router.register(r'tipos_reporte',Tipo_reporteViewSet,basename='tipos_reporte'),
+router.register(r'usuarios',UsuariosViewSet,basename='usuarios'),
+router.register(r'grupos',GruposViewSet,basename='grupos'),
+
 
 
 
