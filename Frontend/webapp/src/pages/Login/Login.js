@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 // Importing css
 import "./Login.css";
@@ -13,7 +13,7 @@ function Login() {
                 <div className="login">
 
                     <div className="logo">
-                        <img src="images/logo_universidad_texto.png" />
+                        <img src="images/logo_universidad_texto.png" alt="logo_universidad_texto" />
                     </div>
                     <form className="form-inicio-sesion">
                       <input className="form-control rounded col btn-login" placeholder="Usuario" name='nombres' required></input>                    
