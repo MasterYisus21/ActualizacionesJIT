@@ -10,6 +10,7 @@ import './Dashboard.css'
 function Dashboard() {
 
   const [pagina, setPagina] = useState("Dashboard")
+  const [nombre, setNombre] = useState("Andres Felipe Villamizar Palacio")
 
   return (
     <div className='dashboard-container'>
@@ -63,6 +64,9 @@ function Dashboard() {
           <img className="dashboard-container-top-right-title-image" src={"/icons/rectangulo.svg"} alt="journal-icon" />
           <h3 className='dashboard-container-top-right-title-text'>Centros de conciliación</h3>
           <h3 className='dashboard-container-top-right-title-text-hint'>{pagina}</h3>
+        </div>
+        <div className='dashboard-container-top-right-title-text-hint'>
+          <h3>Hola, {nombre}</h3>
         </div>
       </div>
       <div className='dashboard-item dashboard-container-bottom-right'>
