@@ -11,5 +11,5 @@ from apiExpedientesApp.general.general_views import  *
 # Create your views here.
 class PaisViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PaisSerializer
-    search_fields = ['nombre']
+   
     

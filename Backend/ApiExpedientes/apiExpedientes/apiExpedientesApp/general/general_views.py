@@ -21,7 +21,7 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
-    search_fields = ['id']
+    search_fields = ['nombre']
     ordering_fields = '__all__'
    
    
