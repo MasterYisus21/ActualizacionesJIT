@@ -13,7 +13,7 @@ function Login() {
                 <div className="login">
 
                     <div className="logo">
-                        <img src="images/logo_universidad_texto.png" />
+                        <img src="images/logo_universidad_texto.png" alt="logo_universidad_texto" />
                     </div>
                     <form className="form-inicio-sesion">
                       <input className="form-control rounded col btn-login" placeholder="Usuario" name='nombres' required></input>                    
