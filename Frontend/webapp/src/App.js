@@ -12,7 +12,7 @@ import { Login } from './pages/Login'
 import { RegistrarSolicitud } from './pages/RegistrarSolicitud'
 import { Dashboard, Expedientes, Solicitudes, Personas, Reportes } from './pages/Dashboard'
 import { NoMatch } from './pages/NoMatch'
-import { Convocantes, DatosGenerales, ExpedientesDetalle } from './pages/Dashboard/ExpedientesDetalle';
+import { Audiencia, Conciliador, Convocados, Convocantes, DatosGenerales, Documentos, Estudiantes, EvaluacionServicio, ExpedientesDetalle, Hechos, Liquidacion, ManejoConflicto, Resultado, Seguimientos } from './pages/Dashboard/ExpedientesDetalle';
 
 function App() {
   return (
@@ -28,6 +28,17 @@ function App() {
             <Route path='expedientes/detalle/' element={<ExpedientesDetalle />} >
               <Route path=':id/datosgenerales' element={<DatosGenerales />} />
               <Route path=':id/convocantes' element={<Convocantes />} />
+              <Route path=':id/convocados' element={<Convocados />} />
+              <Route path=':id/hechos' element={<Hechos />} />
+              <Route path=':id/documentos' element={<Documentos />} />
+              <Route path=':id/conciliador' element={<Conciliador />} />ManejoConflicto
+              <Route path=':id/estudiantes' element={<Estudiantes />} />
+              <Route path=':id/manejoconflicto' element={<ManejoConflicto />} />
+              <Route path=':id/liquidacion' element={<Liquidacion />} />
+              <Route path=':id/audiencia' element={<Audiencia />} />
+              <Route path=':id/resultado' element={<Resultado />} />
+              <Route path=':id/evaluacionservicio' element={<EvaluacionServicio />} />
+              <Route path=':id/seguimientos' element={<Seguimientos />} />
             </Route>
             <Route path='solicitudes' element={<Solicitudes />} />
             <Route path='personas' element={<Personas />} />
