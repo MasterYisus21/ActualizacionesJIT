@@ -39,3 +39,86 @@
     align-items: center;
 }
 
+.cuerpo-consulta{
+    width: 100%;
+    height: 100%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-rectangulo-tarjeta-consultar{
+    width: 100%;
+    height: 20%;
+    border-top-right-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+}
+
+
+.carta-caso-consulta{
+    width: 19rem;
+    height: 10rem;
+    background-color: #d9d9d9;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+}
+
+.carta-caso-consulta:hover{
+    opacity: 0.5;
+    background-color: #00460F;
+    color: white;
+}
+
+.contenedor-caso-consulta{
+    width: 100%;
+    height: 80%;
+    display: flex;
+}
+
+.lado-izquierdo{
+    height: 100%;
+    width: 50%;
+    border-bottom-left-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lado-derecho{
+    height: 100%;
+    width: 50%;
+    border-bottom-right-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-boton-consultar{
+    height: 25%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boton-ingreso2{
+    height: 2rem;
+    width: 6rem;
+    border-radius: 0.6rem;
+    border: 0;
+}
+
+.boton-ingreso2:hover{
+    background-color: #00460F;
+    color: white;
+}
+
+.orden-lado-izquierdo{
+    display: flex;
+    flex-direction: column;
+}
+
+.estado-consulta{
+    margin-bottom: 1rem;
+}
