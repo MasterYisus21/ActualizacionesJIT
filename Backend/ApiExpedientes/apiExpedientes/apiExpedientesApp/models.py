@@ -1,6 +1,6 @@
 from django.db import models
 from apiExpedientesApp.general.general_models import GeneralModel, EstadoModel
-
+from django.contrib.auth.models import User,Group
 
 # Create your models here.
 
@@ -251,7 +251,7 @@ class Persona(EstadoModel):
     tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=True, null=True)
     datos_estudio_id = models.ForeignKey(Datos_estudio, on_delete=models.SET_NULL, blank=True, null=True)
     apoderado_id = models.ForeignKey(Apoderado, on_delete=models.SET_NULL, blank=True, null=True)
-    
+    usuarioId= models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True)
     
     
     class Meta:
