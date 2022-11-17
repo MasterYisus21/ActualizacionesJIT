@@ -14,13 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.conf import settings
 from django.urls import re_path
 from django.views.static import serve
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/conciliacion_jit/v1/', include('apiExpedientesApp.routers')), # Todas las url   deberan empezar por 'api/'
+    
 ]
+
+
 
 urlpatterns += [
     re_path(r'^media/(?P<path>.*)$', serve, {

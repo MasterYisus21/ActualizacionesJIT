@@ -12,7 +12,7 @@ class EstadoModel(models.Model):
 class GeneralModel(EstadoModel):  # Crea un modelo base para los demas modelos
 
     
-    nombre= models.CharField(max_length=50,blank=False, null=False)
+    nombre= models.CharField(max_length=50,blank=False, null=False,unique=True)
     
     class Meta:
         abstract = True # Este modelo no creara una tabla en la Base de datos de este modelo 
