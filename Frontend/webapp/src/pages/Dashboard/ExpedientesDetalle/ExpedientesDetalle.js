@@ -40,10 +40,12 @@ function ExpedientesDetalle() {
                                 <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/documentos"} className='modulo-solicitud-content-navbar-link'>Documentos</Link>
                                 <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/conciliador"} className='modulo-solicitud-content-navbar-link'>Conciliador</Link>
                                 <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/estudiantes"} className='modulo-solicitud-content-navbar-link'>Estudiantes</Link>
-                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/manejo_conflicto"} className='modulo-solicitud-content-navbar-link'>Manejo Conflicto</Link>
-                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/audiencias"} className='modulo-solicitud-content-navbar-link'>Audiencia</Link>
+                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/manejoconflicto"} className='modulo-solicitud-content-navbar-link'>Manejo Conflicto</Link>
+                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/liquidacion"} className='modulo-solicitud-content-navbar-link'>Liquidación</Link>
+                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/audiencia"} className='modulo-solicitud-content-navbar-link'>Audiencia</Link>
                                 <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/resultado"} className='modulo-solicitud-content-navbar-link'>Resultado</Link>
-                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/encuestas"} className='modulo-solicitud-content-navbar-link'>Encuesta</Link>
+                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/evaluacionservicio"} className='modulo-solicitud-content-navbar-link'>Evaluacion del servicio</Link>
+                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/seguimientos"} className='modulo-solicitud-content-navbar-link'>Seguimientos</Link>
 
                             </>
                         }
