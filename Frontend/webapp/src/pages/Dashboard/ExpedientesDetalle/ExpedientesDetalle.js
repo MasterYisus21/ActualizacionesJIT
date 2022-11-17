@@ -18,8 +18,8 @@ function ExpedientesDetalle() {
                         {Object.keys({urlparams: 1, prop2: 2}).length === 0 &&
                             <>
                                 <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Datos Generales</Link>
-                                <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Convocante</Link>
-                                <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Convocado</Link>
+                                <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Convocantes</Link>
+                                <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Convocados</Link>
                                 <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Hechos</Link>
                                 <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Documentos</Link>
                                 <Link to="/dashboard/modulo-solicitudes/crear" className='modulo-solicitud-content-navbar-link'>Conciliador</Link>
@@ -34,8 +34,8 @@ function ExpedientesDetalle() {
                         {Object.keys({urlparams: 1, prop2: 2}).length > 0 &&
                             <>
                                 <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/datosgenerales"} className='modulo-solicitud-content-navbar-link'>Datos Generales</Link>
-                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/convocantes"} className='modulo-solicitud-content-navbar-link'>Convocante</Link>
-                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/convocados"} className='modulo-solicitud-content-navbar-link'>Convocado</Link>
+                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/convocantes"} className='modulo-solicitud-content-navbar-link'>Convocantes</Link>
+                                <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/convocados"} className='modulo-solicitud-content-navbar-link'>Convocados</Link>
                                 <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/hechos"} className='modulo-solicitud-content-navbar-link'>Hechos</Link>
                                 <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/documentos"} className='modulo-solicitud-content-navbar-link'>Documentos</Link>
                                 <Link to={"/dashboard/expedientes/detalle/" + idCaso + "/conciliador"} className='modulo-solicitud-content-navbar-link'>Conciliador</Link>
