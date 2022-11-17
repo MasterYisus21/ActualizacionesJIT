@@ -37,7 +37,7 @@ function Consultar() {
                   </Form.Select>
                 </FloatingLabel>
               </Col>
-              <Col md className='seleccionable-cedula2'>
+              <Col md className='seleccionable-cedula'>
                 <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
                   <Form.Control type="email" placeholder="name@example.com" />
                 </FloatingLabel>

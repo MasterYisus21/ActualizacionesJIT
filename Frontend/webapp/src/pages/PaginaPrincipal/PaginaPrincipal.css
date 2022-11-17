@@ -1,27 +1,10 @@
 
-
-.container{
-    position: relative;
-    height: 3rem;
-    padding-left: 0;
-    padding-right: 0;
-}
-
 .svg-rectangulo{
     position: absolute;
     left: 0;
     padding-left: 0;
     height: 90%;
     width: 96%;
-}
-
-.container p{
-    font-size: 1rem;
-    font-weight: bold;
-    position: absolute;
-    color: white;
-    top: 0.5rem;
-    left: 2.5rem;
 }
 
 
@@ -99,6 +82,16 @@
     border-radius: 1.5rem;
 }
 
+.contenedor-label{
+    width: 20rem;
+    height: 14vh;
+    background-color: #C4C4C4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.8rem;
+}
+
 .titulo{
     font-size: 1.2rem;
     margin-bottom: 1rem;
@@ -106,6 +99,10 @@
 }
 
 .contenido{
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+}
+.contenido2{
     margin-left: 0.8rem;
     margin-right: 0.8rem;
 }
@@ -121,4 +118,108 @@
 .boton-ingreso:hover{
     background-color: #00460F;
     color: white;
+}
+
+.logo-pagina-escritorio{
+    margin-top: 3rem;
+
+}
+
+.imagen-logo-principal2{
+    height: 4em;
+}
+
+@media (min-width: 1000px) {
+    .imagen-logo-principal{
+        display: none;
+    }
+
+    .contenedor-rectangulo-grande{
+        padding-top: 6em;
+    }
+    .cuerpo-principal{
+        height: 60vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 7rem;
+        margin-top: 0;
+    }
+
+    .carta-consulta{
+        margin: 0;
+        height: 80%;
+        width: 25rem;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+       
+    }
+    .carta-solicitud{
+        margin: 0;
+        height: 80%;
+        width: 25rem;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .boton-ingreso{
+        display: none;
+    }
+
+    .contenedor-imagen{
+        height: 50%;
+        width: 100%;
+        border-radius: 1.5rem;
+    }
+    .contenido{
+        display: none;
+    }
+}
+
+@media (max-width: 1000px) {
+    .imagen-logo-principal2{
+        display: none;
+    }
+
+    .logo-pagina-escritorio{
+        display: none;
+    }
+    .contenedor-label{
+        display: none;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .carta-consulta{
+        margin: 0;
+        height: 80%;
+        width: 30rem;
+       
+    }
+    .carta-solicitud{
+        margin: 0;
+        height: 80%;
+        width: 30rem;
+    }
+    .contenedor-label{
+        width: 25rem;
+    }
+}
+
+@media(min-width: 1400px){
+    .cuerpo-principal{
+        height: 60vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 15rem;
+        margin-top: 0;
+    }
 }
