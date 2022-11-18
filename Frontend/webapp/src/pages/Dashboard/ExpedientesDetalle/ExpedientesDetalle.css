@@ -93,11 +93,6 @@
 .modulo-solicitud-content-main {
     grid-area: 1 / 2 / 2 / 3;
     border: 1px solid #CCC;
-    /* width: 75%; */
-    display: flex;
-    justify-content: space-evenly;
-    padding: 15px;
-    /* padding-top: 80px; */
     height: 100%;
 }
 
