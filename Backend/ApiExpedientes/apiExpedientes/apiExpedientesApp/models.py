@@ -3,7 +3,30 @@ from apiExpedientesApp.general.general_models import GeneralModel, EstadoModel
 from django.contrib.auth.models import User,Group
 
 # Create your models here.
+from datetime import date
+from datetime import datetime
 
+
+def increment_numero_caso_number():
+    date = datetime.now()
+    year = date.year 
+    ultima_solicitud = Expediente.objects.all().last()
+    
+    if not ultima_solicitud:
+        return str(year)+"-" +'001'
+    
+    año_registro = ultima_solicitud.fecha_registro.year
+    
+    if año_registro!=year:
+        return str(year)+"-" +'001'
+    
+    solicitud_id = ultima_solicitud.numero_caso
+    position_int=str(solicitud_id).index('-')
+    solicitud_int = int(solicitud_id[position_int+1:])
+    new_solicitud_int = solicitud_int + 1
+
+    new_solicitud_id = str(year)+"-" + str(new_solicitud_int).zfill(3)
+    return new_solicitud_id
 class Pais(GeneralModel):
 
     
@@ -316,11 +339,10 @@ class Inicio_conflicto(GeneralModel):
     def __str__(self):
         return self.nombre
 
-
 class Expediente(EstadoModel):
 
-    numero_caso= models.PositiveIntegerField(null=False,blank=False )
-    fecha_registro=models.DateField(blank=False , null=False) # Se crea automaticamente 
+    numero_caso = models.CharField(max_length =10,null=False,blank=False,default=increment_numero_caso_number,unique=True,editable=False)
+    fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     caso_gratuito= models.BooleanField(default=True, blank=True,null=True)
     asunto_juridico_definible= models.BooleanField(default=False, blank=False,null=False)
     fecha_finalizacion= models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
@@ -331,14 +353,16 @@ class Expediente(EstadoModel):
     area_id = models.ForeignKey(Area, on_delete=models.SET_NULL, blank=True, null=True)
     solicitante_servicio_id = models.ForeignKey(Solicitante_servicio, on_delete=models.SET_NULL, blank=True, null=True)
     inicio_conflicto_id = models.ForeignKey(Inicio_conflicto, on_delete=models.SET_NULL, blank=True, null=True)
-
-
+    
+    
 
     class Meta:
+        
+          
         verbose_name = ("Expediente")
         verbose_name_plural = ("Expedientes")
-        constraints =[models.UniqueConstraint(fields=['numero_caso', 'fecha_registro'], name='caso_por_fecha')]
-        # models.UniqueConstraint( fields=['numero_caso','fecha_registro'])
+        
+    
 
     def __str__(self):
         return str(self.numero_caso)
@@ -417,7 +441,7 @@ class Hechos(EstadoModel):
     Flag_conflicto_por_incapacidad=models.BooleanField(default=False, blank=True,null=True)
     pretension = models.TextField(blank=True,null=True)
     expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
-
+    ciudad_id = models.ForeignKey(Tipo_resultado, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
         verbose_name = ('Hechos')
