@@ -10,3 +10,12 @@
   width: 20px;
   height: 20px;
 }
+
+.center-text {
+  text-align: center;
+}
+
+.form-switch .form-check-input {
+  width: 3rem;
+  height: 1.5rem;
+}
