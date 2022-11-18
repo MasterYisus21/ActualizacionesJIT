@@ -13,14 +13,21 @@ function PaginaPrincipal() {
         <div className="logo-universidad-movil">
           <img className="imagen-logo-principal" src={"./images/logo-ugc.png"} alt="" />
         </div>
-        <BarRectangulo text = "Centros de conciliación"/>
+        <div className="contenedor-rectangulo-grande">
+          <BarRectangulo text = "Centros de conciliación"/>
+        </div>
+        <div className="logo-pagina-escritorio">
+          <img className="imagen-logo-principal2" src={"./images/logo_universidad_texto.png"} alt="" />
+        </div>
         <div className="cuerpo-principal">
           <div className="carta-solicitud">
             <div className="contenedor-descripcion">
               <div className="contenido-descripcion">
-                
                 <label className="titulo">Haz tu solicitud</label>
-                <label className="contenido">Aquí podrás realizar una solicitud sin ningún registro previo</label>
+                <label className="contenido">Aquí podrás consultar y hacer seguimiento de tu caso</label>
+                <div className="contenedor-label">
+                  <label className="contenido2">Aquí podrás realizar una solicitud sin ningún registro previo</label>
+                </div>
               </div>
             </div>
             <div className="contenedor-imagen">
@@ -30,8 +37,11 @@ function PaginaPrincipal() {
           <div className="carta-consulta">
             <div className="contenedor-descripcion">
               <div className="contenido-descripcion">
-                <label className="titulo">Haz tu solicitud</label>
-                <label className="contenido">Aquí podrás consultar y hacer seguimiento de tu caso</label>
+                  <label className="titulo">Haz tu solicitud</label>
+                  <label className="contenido">Aquí podrás consultar y hacer seguimiento de tu caso</label>
+                <div className="contenedor-label">
+                  <label className="contenido2">Aquí podrás consultar y hacer seguimiento de tu caso</label>
+                </div>
               </div>
             </div>
             <div className="contenedor-imagen">
