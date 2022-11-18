@@ -3,16 +3,16 @@ from rest_framework import generics, status, viewsets
 from apiSolicitudesApp.models import *
 from rest_framework.response import Response
 from apiSolicitudesApp.pagination import * 
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import DjangoModelPermissions,DjangoModelPermissionsOrAnonReadOnly
 from copy import deepcopy
 from rest_framework import filters
 
 from django_filters.rest_framework import DjangoFilterBackend
 
-class CustomDjangoModelPermission(DjangoModelPermissions):
+class CustomDjangoModelPermission(DjangoModelPermissionsOrAnonReadOnly):
     def __init__(self):
         self.perms_map= deepcopy(self.perms_map)
-        self.perms_map['GET']=['%(app_label)s.view_%(model_name)s']
+        self.perms_map['POST']=[]
 class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     
     serializer_class = None

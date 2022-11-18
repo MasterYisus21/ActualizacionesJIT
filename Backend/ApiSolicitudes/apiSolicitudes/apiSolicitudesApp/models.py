@@ -1,16 +1,29 @@
 from django.db import models
 from apiSolicitudesApp.general.general_models import GeneralModel, EstadoModel
+from datetime import date
+from datetime import datetime
 # Create your models here.
 
 def increment_entrada_number():
-  last_booking = Solicitud.objects.all().order_by('numero_radicado').last()
-  if not last_booking:
-    return 'E' +'00001'
-  booking_id = last_booking.id
-  booking_int = int(booking_id[1:])
-  new_booking_int = booking_int + 1
-  new_booking_id = 'E' +str(new_booking_int).zfill(5)
-  return new_booking_id
+  date = datetime.now()
+  year = date.year 
+  ultima_solicitud = Solicitud.objects.all().last()
+  if not ultima_solicitud:
+    return 'S'+str(date.year)+str(date.month)+'CCJIT' +'1'
+  
+  año_registro = ultima_solicitud.fecha_registro.year
+  print(ultima_solicitud)
+  print("ultima solicitud"+str(año_registro))
+  if año_registro!=year:
+    return 'S'+str(date.year)+str(date.month)+'CCJIT' +'1'
+  
+  solicitud_id = ultima_solicitud.numero_radicado
+  position_int=str(solicitud_id).index('T')
+  solicitud_int = int(solicitud_id[position_int+1:])
+  new_solicitud_int = solicitud_int + 1
+
+  new_solicitud_id = 'S'+str(date.year)+str(date.month)+'CCJIT' +str(new_solicitud_int).zfill(3)
+  return new_solicitud_id
 class Pais(GeneralModel):
 
     class Meta:
@@ -133,9 +146,10 @@ class Persona(EstadoModel):
        return '%s %s' % (self.nombres, self.apellidos)
 
 class Solicitud(models.Model):
-    numero_radicado= models.CharField(max_length=10,primary_key=True, unique=True,default = increment_entrada_number) # los modelos que apliquen baseModels tendran estos dos campos
-    fecha_registro=models.DateField(blank=False , null=False) # Se crea automaticamente 
+    numero_radicado= models.CharField(max_length=25,primary_key=True,default = increment_entrada_number) # los modelos que apliquen baseModels tendran estos dos campos
+    fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     estado_solicitud= models.BooleanField(blank=True,null=True)
+    estado = models.BooleanField(default=True,blank=True,null=False)
     class Meta:
         verbose_name = ('Solicitud')
         verbose_name_plural = ('Solicitudes')
@@ -164,7 +178,7 @@ class Relacion_persona_solicitud(GeneralModel):
 
 class Documento(GeneralModel):
 
-    fecha_registro=models.DateField(blank=False , null=False) # Se crea automaticamente 
+    fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     documento = models.FileField(upload_to='resultados/', max_length=100, blank=True,null=True)
     solicitud_id = models.OneToOneField(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     

@@ -26,14 +26,14 @@ class Tipo_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de
 
     serializer_class = Tipo_personaSerializer
 
-class SolicitudViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class SolicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = SolicitudSerializer
-class DocumentoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class DocumentoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = DocumentoSerializer
 
-class Relacion_persona_solicitudViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class Relacion_persona_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Relacion_persona_solicitudSerializer
 
@@ -51,39 +51,23 @@ class Tipo_documentoViewSet(GeneralViewSet):  # Una sola clase para los metodos 
     serializer_class = Tipo_documentoSerializer
 
 
-class ApoderadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class ApoderadoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = ApoderadoSerializer
 
-class PersonaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class PersonaViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = PersonaSerializer
-
+    
 
 class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_clienteSerializer
 
-class HechosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class HechosViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = HechosSerializer
 
 
 
     
-class UsuariosViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
-   queryset = User.objects.all()
-   serializer_class=ListaUsuarioSerializer
-   
-   filter_backends = [DjangoFilterBackend]
-   filterset_fields = '__all__'
-#    permission_classes = [DjangoModelPermissions]
-   
-   def perform_create(self, serializer):
-        usuario=serializer.save()
-        usuario.set_password(usuario.password)
-        usuario.save()
-        
-class GruposViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
-   queryset = Group.objects.all()
-   serializer_class= ListaGrupoSerializer  

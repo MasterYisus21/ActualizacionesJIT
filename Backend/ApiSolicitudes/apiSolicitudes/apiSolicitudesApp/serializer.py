@@ -91,16 +91,3 @@ class DocumentoSerializer(serializers.ModelSerializer):
         fields = '__all__'  # Coje todos los campos del modelo 
 
 
-class ListaUsuarioSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = User    # El modelo al que pertenece este serializador
-        fields = ('id','username','password','is_staff','groups','is_active') # Coje todos los campos del modelo 
-        extra_kwargs = {'password':{'write_only':True}}
-
-class ListaGrupoSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Group     # El modelo al que pertenece este serializador
-        fields = ('id','name')  # Coje todos los campos del modelo 
-
