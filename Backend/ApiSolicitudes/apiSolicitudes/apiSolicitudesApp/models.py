@@ -146,7 +146,7 @@ class Persona(EstadoModel):
        return '%s %s' % (self.nombres, self.apellidos)
 
 class Solicitud(models.Model):
-    numero_radicado= models.CharField(max_length=25,primary_key=True,default = increment_entrada_number) # los modelos que apliquen baseModels tendran estos dos campos
+    numero_radicado= models.CharField(max_length=25,primary_key=True,default = increment_entrada_number,unique=True) # los modelos que apliquen baseModels tendran estos dos campos
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     estado_solicitud= models.BooleanField(blank=True,null=True)
     estado = models.BooleanField(default=True,blank=True,null=False)
