@@ -9,7 +9,7 @@ class SearchAdminGeneral(admin.ModelAdmin):
 
 class SearchExpediente(admin.ModelAdmin):
   
-    search_fields = ['id','numero_caso','fecha'] #atributo por el cual se filtrará
+    search_fields = ['id','numero_caso','fecha_registro'] #atributo por el cual se filtrará
 
 class SearchPersona(admin.ModelAdmin):
   
@@ -46,7 +46,7 @@ class SearchResultado(admin.ModelAdmin):
     search_fields = ['expediente_id__numero_caso','fecha','tipo_resultado_id__nombre']
 
 # Register your models here.
-admin.site.register(Pais)
+admin.site.register(Pais,SearchAdminGeneral)
 admin.site.register(Departamento,SearchAdminGeneral)
 admin.site.register(Ciudad,SearchAdminGeneral)
 admin.site.register(Localidad,SearchAdminGeneral)

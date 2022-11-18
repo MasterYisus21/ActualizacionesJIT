@@ -20,7 +20,7 @@ from django.urls import re_path
 from django.views.static import serve
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/conciliacion_jit/v1/', include('apiExpedientesApp.routers')), # Todas las url   deberan empezar por 'api/'
+    path('api/jit_expedientes/v1/', include('apiExpedientesApp.routers')), # Todas las url   deberan empezar por 'api/'
     
 ]
 

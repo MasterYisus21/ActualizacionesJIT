@@ -3,8 +3,8 @@ from rest_framework.response import Response
 #from apiConciliacionApp.base.general_views import GeneralListAPIView
 from apiExpedientesApp.general.general_views import  *
 from django.contrib.auth.models import User, Group
-# from django_filters import FilterSet, AllValuesFilter
-# from django_filters import DateTimeFilter, NumberFilter
+from django_filters import FilterSet, AllValuesFilter
+from django_filters import DateTimeFilter, NumberFilter
 # from apiInventarioApp.pagination import StandardResultsSetPagination
 
 
@@ -88,11 +88,12 @@ class EscolaridadViewSet(GeneralViewSet):  # Una sola clase para los metodos de 
 class ApoderadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = ApoderadoSerializer
+    search_fields=['nombres','apellidos','identificacion','tarjeta_profesional']
 
 class PersonaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
-
+    
     serializer_class = PersonaSerializer
-
+    search_fields=['nombres','apellidos','identificacion','tarjeta_profesional','tipo_cargo_id__nombre']
 class Solicitante_servicioViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Solicitante_servicioSerializer
@@ -117,10 +118,22 @@ class Inicio_conflictoViewSet(GeneralViewSet):  # Una sola clase para los metodo
 
     serializer_class = Inicio_conflictoSerializer
 
+class ExpedienteFilter(FilterSet):
+    fecha_inicio = DateTimeFilter(field_name='fecha_registro',
+                                                lookup_expr='gte')
+    fecha_fin = DateTimeFilter(field_name='fecha_registro',
+                                            lookup_expr='lte')
+
+
+    class Meta:
+        model = Expediente
+        fields ='__all__' 
+
 class ExpedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
-
+    
     serializer_class = ExpedienteSerializer
-
+    search_fields=['numero_caso','fecha_registro','tipo_servicio_id__nombre','subtema_id__nombre']
+    filter_class = ExpedienteFilter
 class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_clienteSerializer
