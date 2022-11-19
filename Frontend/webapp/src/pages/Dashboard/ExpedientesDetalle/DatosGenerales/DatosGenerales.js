@@ -69,7 +69,7 @@ function DatosGenerales() {
         </div>
 
         <div className='modulo-solicitud-content-main-column2-form2'>
-        <div><h2>Area y Tema</h2></div>
+          <div><h2>Area y Tema</h2></div>
           <div className="mb-3">
             <label htmlFor="Area_Id" className="form-label h4">Area:</label>
             <select className="form-select form-select-lg" aria-label="Default select example" id="Area_Id" name='Area_Id' required>

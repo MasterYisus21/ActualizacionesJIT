@@ -76,6 +76,18 @@
     }
 }
 
+@media (max-height: 760px) {
+    .modulo-solicitud-content-navbar {
+        padding: 10px;
+    }
+
+    .modulo-solicitud-content-navbar-link {
+        margin: 0px;
+        /* padding: 0px; */
+        height: 3rem;
+    }
+}
+
 .modulo-solicitud-content-navbar-link:hover {
     background-color: #5c9e31;
     width: 100%;
@@ -93,7 +105,10 @@
 .modulo-solicitud-content-main {
     grid-area: 1 / 2 / 2 / 3;
     border: 1px solid #CCC;
-    height: 100%;
+    /* max-height: inherit; */
+    overflow: auto;
+    overflow-x: hidden;
+
 }
 
 

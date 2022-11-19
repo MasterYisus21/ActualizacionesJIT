@@ -46,7 +46,10 @@
     border-bottom: 0px;
     border-right: 0px;
     grid-area: 2 / 2 / 3 / 3;
-    
+    /* max-height: 20%; */
+    overflow: auto;
+    overflow-x: hidden;
+
 }
 
 .dashboard-container-top-right {
