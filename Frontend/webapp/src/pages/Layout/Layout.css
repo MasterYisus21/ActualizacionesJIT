@@ -2,7 +2,7 @@
 .layout {
     /* background-color: rgb(210, 237, 209); */
     /* width: 100vw; */
-    min-height: 100vh;
+    height: 100vh;
     margin: 0;
     padding: 0;
     font-family: var(--font);
@@ -16,6 +16,9 @@
 
 .layout-content {
     grid-area: 1 / 1 / 2 / 2;
+    /* height: 1px; */
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .layout-footer {

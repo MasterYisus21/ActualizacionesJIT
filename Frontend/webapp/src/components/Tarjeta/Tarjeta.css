@@ -1,0 +1,28 @@
+.tarjeta{
+    width: 50em;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-evenly;
+    background-color: #D8D8D8;
+    border-radius: 15px;
+}
+
+.heading-tarjeta{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+}
+
+.body-tarjeta{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: .5em 3em;
+    text-align: left;
+}
+
+.subtitle-tarjeta{
+    color: #838383;
+    margin: 0;
+}

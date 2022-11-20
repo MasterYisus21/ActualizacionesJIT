@@ -9,16 +9,16 @@
 .texto-rectangulo2{
     position: absolute;
     color: white;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     padding-left: 1em;
 
 }
 
 .img-rectangulo2{
     width: 90%;
-    height: 2rem;
+    height: 3rem;
 
-    border-top-left-radius: 0.5rem;
+    border-top-left-radius: 15px;
 }
 
 
