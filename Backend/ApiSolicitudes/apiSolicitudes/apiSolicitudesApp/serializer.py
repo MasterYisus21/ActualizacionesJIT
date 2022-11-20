@@ -28,6 +28,11 @@ class Tipo_personaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tipo_persona          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
+class Estrato_socioeconomicoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Estrato_socioeconomico          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
 
 class SexoSerializer(serializers.ModelSerializer):
 

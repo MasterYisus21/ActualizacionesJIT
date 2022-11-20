@@ -12,70 +12,74 @@ from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 # Create your views here.
 class PaisViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PaisSerializer
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
 class DepartamentoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = DepartamentoSerializer
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
-
+    #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    search_fields=['nombre','pais_id__nombre']
 class CiudadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = CiudadSerializer
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
 
 class Tipo_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_personaSerializer
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
 class SolicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
     search_fields=['numero_radicado','fecha_registro']
     serializer_class = SolicitudSerializer
-    permission_classes = [CustomDjangoModelPermission]
+    #permission_classes = [CustomDjangoModelPermission]
 class DocumentoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = DocumentoSerializer
-    permission_classes = [CustomDjangoModelPermission]
+    #permission_classes = [CustomDjangoModelPermission]
 
 class Relacion_persona_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Relacion_persona_solicitudSerializer
-    permission_classes = [CustomDjangoModelPermission]
+    #permission_classes = [CustomDjangoModelPermission]
 
 class SexoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = SexoSerializer
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
 class GeneroViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = GeneroSerializer
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 class Tipo_documentoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_documentoSerializer
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+class Estrato_socioeconomicoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = Estrato_socioeconomicoSerializer
+    #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
 class ApoderadoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = ApoderadoSerializer
-    permission_classes = [CustomUpdateDjangoModelPermission]
+    #permission_classes = [CustomUpdateDjangoModelPermission]
     search_fields=['nombres','apellidos','identificacion','tarjeta_profesional']
 class PersonaViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
-    search_fields=['nombres','apellidos','identificacion','tarjeta_profesional']
+    search_fields=['nombres','apellidos','identificacion']
     serializer_class = PersonaSerializer
-    permission_classes = [CustomDjangoModelPermission]
+    #permission_classes = [CustomDjangoModelPermission]
 
 class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_clienteSerializer
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 class HechosViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = HechosSerializer
-    permission_classes = [CustomDjangoModelPermission]
+    #permission_classes = [CustomDjangoModelPermission]
     
     
         
@@ -86,7 +90,7 @@ class UsuariosViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos
    
    filter_backends = [DjangoFilterBackend]
    filterset_fields = '__all__'
-#    permission_classes = [DjangoModelPermissions]
+#    #permission_classes = [DjangoModelPermissions]
    
    def perform_create(self, serializer):
         usuario=serializer.save()
@@ -98,7 +102,7 @@ class GruposViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos d
    serializer_class= ListaGrupoSerializer  
 #    filter_backends = [DjangoFilterBackend]
 #    filterset_fields = '__all__'
-#    permission_classes = [DjangoModelPermissions]
+#    #permission_classes = [DjangoModelPermissions]
    
 
 

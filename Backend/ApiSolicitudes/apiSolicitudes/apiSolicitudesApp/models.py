@@ -94,6 +94,14 @@ class Genero(GeneralModel):
     def __str__(self):
         return self.nombre
 
+class Estrato_socioeconomico(GeneralModel):
+
+    class Meta:
+        verbose_name = ("estratos_socioeconomicos")
+        verbose_name_plural = ("estratos_socioeconomicos")
+
+    def __str__(self):
+        return self.nombre
 
 
 
@@ -123,18 +131,19 @@ class Persona(EstadoModel):
   
     nombres = models.CharField(max_length = 25,blank=False,null=False)
     apellidos = models.CharField(max_length= 25, blank=False, null=False)
-    identificacion = models.CharField(max_length=25, blank=False, null=False,unique=True)
+    identificacion = models.CharField(max_length=25, blank=False, null=False,unique=False)
     fecha_expedicion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     lugar_expedicion = models.CharField(max_length=20, blank=True, null=True)
     fecha_nacimiento = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     telefono = models.CharField(max_length=10, blank=True, null=True)
     direccion = models.CharField(max_length= 40, blank=True, null=True)
-    celular = models.CharField(max_length=15, blank=False, null=False)
+    celular = models.CharField(max_length=15, blank=True, null=False)
     correo = models.EmailField(max_length=120,blank=False,null=False)  
     ciudad_nacimiento_id= models.ForeignKey(Ciudad, on_delete=models.SET_NULL, blank=True, null=True)
     tipo_persona_id = models.ForeignKey(Tipo_persona, on_delete=models.SET_NULL, blank=True, null=True)
     sexo_id = models.ForeignKey(Sexo, on_delete=models.SET_NULL, blank=True, null=True)
     genero_id = models.ForeignKey(Genero, on_delete=models.SET_NULL, blank=True, null=True)
+    estrato_socioeconomico_id = models.ForeignKey(Estrato_socioeconomico, on_delete=models.SET_NULL, blank=True, null=True)      
     tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=True, null=True)
     apoderado_id = models.ForeignKey(Apoderado, on_delete=models.SET_NULL, blank=True, null=True)
               
@@ -146,7 +155,7 @@ class Persona(EstadoModel):
        return '%s %s' % (self.nombres, self.apellidos)
 
 class Solicitud(models.Model):
-    numero_radicado= models.CharField(max_length=25,primary_key=True,default = increment_entrada_number,unique=True) # los modelos que apliquen baseModels tendran estos dos campos
+    numero_radicado= models.CharField(max_length=25,primary_key=True,default = increment_entrada_number,unique=True,editable=False) # los modelos que apliquen baseModels tendran estos dos campos
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     estado_solicitud= models.BooleanField(blank=True,null=True)
     estado = models.BooleanField(default=True,blank=True,null=False)
