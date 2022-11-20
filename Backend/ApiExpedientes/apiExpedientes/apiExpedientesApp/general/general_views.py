@@ -9,6 +9,8 @@ from rest_framework import filters
 
 from django_filters.rest_framework import DjangoFilterBackend
 
+# api key
+# from rest_framework_api_key.permissions import HasAPIKey
 class CustomDjangoModelPermission(DjangoModelPermissions):
     def __init__(self):
         self.perms_map= deepcopy(self.perms_map)
@@ -17,8 +19,8 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    permission_classes = [CustomDjangoModelPermission]
-
+    # permission_classes = [CustomDjangoModelPermission]
+    # permission_classes = [HasAPIKey]
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
     search_fields = ['nombre']

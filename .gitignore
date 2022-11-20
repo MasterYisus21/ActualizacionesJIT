@@ -3,5 +3,4 @@ Backend/ApiEmail/env
 Backend/ApiSolicitudes/env
 Backend/ApiGeneraciónInformes/*
 Backend/ApiDocumentos/env
-ApiGateway/node_modules
 Frontend/webapp/node_modules
