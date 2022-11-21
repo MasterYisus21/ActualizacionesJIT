@@ -105,7 +105,7 @@
 .modulo-solicitud-content-main {
     grid-area: 1 / 2 / 2 / 3;
     border: 1px solid #CCC;
-    /* max-height: inherit; */
+    /* min-height: 82vh; */
     overflow: auto;
     overflow-x: hidden;
 

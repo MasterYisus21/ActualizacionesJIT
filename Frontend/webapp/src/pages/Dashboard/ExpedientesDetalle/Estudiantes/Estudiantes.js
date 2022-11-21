@@ -28,12 +28,12 @@ function Estudiantes() {
                 </button>
               </form>
               <div className="d-flex align-items-end">
-                <button type="button" className="btn btn-primary btn-lg me-3" id='boton-agregar-estudiantes'
-                  onClick={() => { }}>
-                  Agregar estudiantes
-                </button>
                 <Button
-                  className={"btn btn-lg me-3"}
+                  className={""}
+                  text={"Crear Estudiante"}
+                />
+                <Button
+                  className={""}
                   text={"Agregar Estudiantes"}
                 />
               </div>
