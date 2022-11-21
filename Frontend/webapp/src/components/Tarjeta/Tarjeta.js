@@ -5,11 +5,11 @@ import { BarRectanguloPequeño } from "../BarRectanguloPequeño";
 // Importing css
 import "./Tarjeta.css";
 
-export default function Tarjeta({ text }) {
+export default function Tarjeta({ titulo }) {
   return (
       <div className="tarjeta">
         <div className="heading-tarjeta">
-            <BarRectanguloPequeño text="Caso #119"/>
+            <BarRectanguloPequeño text={titulo}/>
         </div>
         <div className="body-tarjeta">
           

@@ -1,0 +1,15 @@
+.wrapp-solicitudes{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: 5em;
+    gap: 2em;
+}
+
+.wrapp-tarjetas{
+    display: grid;
+    padding: 0em 2em;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: center;
+    gap: 2em;
+}
