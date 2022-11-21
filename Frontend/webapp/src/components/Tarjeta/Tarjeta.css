@@ -1,5 +1,4 @@
 .tarjeta{
-    /* width: fit-content; */
     display: flex;
     flex-direction: column;
     align-items:center;
@@ -31,4 +30,36 @@
 .subtitle-tarjeta{
     color: #838383;
     margin: 0;
+}
+
+/* Tarjetas Personas */
+
+.tarjeta-personas{
+    width:fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    text-align: left;
+    background-color: #D8D8D8;
+    border-radius: 15px;
+}
+
+.body-tarjeta-personas{
+    padding: 1.5em 3em;
+}
+
+.indicador-persona{
+    width: 8em;
+    text-align: right;
+    background-color: #5C9E31;
+    padding: .4em;
+    border-radius: 1em 0em 0em 1em;
+    text-align: center;
+}
+
+.wrapp-indicador-persona{
+    width: 100%;
+    display: flex;
+    justify-content:flex-end;
+    padding-bottom: 1em;
 }
