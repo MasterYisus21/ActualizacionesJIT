@@ -15,6 +15,7 @@
 
 .icon-personas{
     width: 2.5em;
+    cursor: pointer;
 }
 
 .wrapp-tarjetas-personas{
