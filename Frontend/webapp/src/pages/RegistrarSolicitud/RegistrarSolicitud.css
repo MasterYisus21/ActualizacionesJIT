@@ -2,7 +2,6 @@
 .wrapp-main-registrar-solicitud{
     display: grid;
     height: 100%;
-    padding-bottom: 4em;
 }
 
 .heading-registrar-solicitud {
@@ -43,6 +42,7 @@
     align-items: center;
     width: 100%;
     gap: 1em;
+    padding-bottom: 3em;
 }
 
 .inputs-registrar-solicitud{
@@ -70,3 +70,4 @@
         padding-bottom: 3em;
     }
 }
+

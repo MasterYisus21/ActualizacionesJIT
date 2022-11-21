@@ -1,0 +1,22 @@
+
+.wrapp-personas{
+    display: flex;
+    flex-direction: column;
+    padding: 5em 4em 0em 4em;
+    gap: 2em;
+}
+
+.search-load-bar{
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon-personas{
+    width: 2.5em;
+}
+
+.wrapp-tarjetas-personas{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 1em;
+}
