@@ -8,6 +8,11 @@
     border-radius: 15px;
 }
 
+.tarjeta:hover{
+    background-color: rgba(0, 51, 19, 0.534);
+    cursor: pointer;
+}
+
 .heading-tarjeta{
     width: 100%;
     display: flex;
