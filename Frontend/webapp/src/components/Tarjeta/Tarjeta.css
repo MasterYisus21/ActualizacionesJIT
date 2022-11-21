@@ -35,6 +35,7 @@
 /* Tarjetas Personas */
 
 .tarjeta-personas{
+    max-width: 30em;
     display: flex;
     flex-direction: column;
     align-items:flex-start;

@@ -2,11 +2,13 @@
 .wrapp-personas{
     display: flex;
     flex-direction: column;
-    padding: 5em 4em 0em 4em;
+    align-items: center;
+    padding: 5em 0em 0em 0em;
     gap: 2em;
 }
 
 .search-load-bar{
+    width: 80%;
     display: flex;
     justify-content: space-between;
 }
@@ -16,7 +18,18 @@
 }
 
 .wrapp-tarjetas-personas{
+    width: 80%;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 1em;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+    align-items: center;
+    gap: 2em;
+}
+
+.boton-cargar-personas{
+    border: 0;
+    background-color: #00460e;
+    color: white;
+    padding: .5em 1em;
+    border-radius: 10px;
 }
