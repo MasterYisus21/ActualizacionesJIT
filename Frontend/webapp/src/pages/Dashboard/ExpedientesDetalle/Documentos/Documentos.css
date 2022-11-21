@@ -1,0 +1,17 @@
+.modulo-solicitudes-documentos-container {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.modulo-solicitudes-documentos-buscar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modulo-solicitudes-documentos-buscar-form {
+    display: flex;
+    align-items: center;
+    gap: 15px
+}
