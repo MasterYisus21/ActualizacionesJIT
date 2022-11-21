@@ -61,7 +61,10 @@ function Estudiantes() {
             </tbody>
           </table>
           <div className=''>
-            <button type="submit" className="btn btn-primary me-3 " id='boton-agregar-estudiantes'> Agregar</button>
+            <Button
+              className={""}
+              text={"Agregar"}
+            />
           </div>
         </form>
         <form className='contenedor-tabla-convocado'>
