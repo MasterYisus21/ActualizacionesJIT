@@ -67,7 +67,10 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
 class EspecificViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    permission_classes = [CustomDjangoModelPermission]
+    # filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    # filterset_fields = '__all__'
+    # ordering_fields = '__all__'
+    # permission_classes = [CustomDjangoModelPermission]
     
    
     def get_queryset(self,pk=None):
@@ -79,7 +82,7 @@ class EspecificViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIE
     def create(self, request, *args, **kwargs): 
         is_many = isinstance(request.data,list)
         if not is_many:
-            return super(GeneralViewSet,self).create(request, *args, **kwargs)
+            return super(EspecificViewSet,self).create(request, *args, **kwargs)
            
         else:
             serializer = self.get_serializer(data=request.data, many=True)

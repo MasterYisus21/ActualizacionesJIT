@@ -31,17 +31,23 @@ class Tipo_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
 class SolicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = '__all__'
+    ordering_fields = '__all__'
     search_fields=['numero_radicado','fecha_registro']
     serializer_class = SolicitudSerializer
     #permission_classes = [CustomDjangoModelPermission]
 class DocumentoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
-
+  
     serializer_class = DocumentoSerializer
     #permission_classes = [CustomDjangoModelPermission]
 
 class Relacion_persona_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
-
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = '__all__'
+    ordering_fields = '__all__'
     serializer_class = Relacion_persona_solicitudSerializer
+    search_fields=['solicitud_id__numero_radicado']
     #permission_classes = [CustomDjangoModelPermission]
 
 class SexoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
@@ -63,11 +69,17 @@ class Estrato_socioeconomicoViewSet(GeneralViewSet):  # Una sola clase para los 
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
 class ApoderadoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
-
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = '__all__'
+    ordering_fields = '__all__'
     serializer_class = ApoderadoSerializer
     #permission_classes = [CustomUpdateDjangoModelPermission]
     search_fields=['nombres','apellidos','identificacion','tarjeta_profesional']
+ 
 class PersonaViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = '__all__'
+    ordering_fields = '__all__'
     search_fields=['nombres','apellidos','identificacion']
     serializer_class = PersonaSerializer
     #permission_classes = [CustomDjangoModelPermission]
@@ -77,7 +89,9 @@ class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de
     serializer_class = Tipo_clienteSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 class HechosViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
-
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = '__all__'
+    ordering_fields = '__all__'
     serializer_class = HechosSerializer
     #permission_classes = [CustomDjangoModelPermission]
     
