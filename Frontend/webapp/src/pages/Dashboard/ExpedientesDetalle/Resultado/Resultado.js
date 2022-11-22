@@ -35,14 +35,17 @@ function Resultado() {
             <button className="resultado-button">
               <img src='/icons/filetype-docx.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>DESCARGAR</p>
+              <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />
             </button>
             <button className="resultado-button">
               <img src='/icons/upload.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>CARGAR</p>
+              <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />
             </button>
             <button className="resultado-button">
               <img src='/icons/download.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>DESCARGAR</p>
+              <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />
             </button>
           </div>
         </div>

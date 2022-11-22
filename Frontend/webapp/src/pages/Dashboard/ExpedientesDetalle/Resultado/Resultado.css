@@ -9,7 +9,6 @@
     align-items: flex-end;
     justify-content: space-between;
     gap: 6rem;
-    position: relative;
 }
 
 .resultado-button-container-actions {
@@ -23,6 +22,8 @@
     position: absolute;
     width: 24px;
     height: 24px;
+    right: 0px;
+    top: -6px;
 }
 
 .resultado-button {
@@ -34,4 +35,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
