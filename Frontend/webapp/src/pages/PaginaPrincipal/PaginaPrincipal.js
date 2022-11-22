@@ -14,13 +14,13 @@ function PaginaPrincipal() {
           <img className="imagen-logo-principal" src={"./images/logo-ugc.png"} alt="" />
         </div>
         <div className="contenedor-rectangulo-grande">
-          <BarRectangulo text = "Centros de conciliación"/>
+          <BarRectangulo text="Centros de conciliación" />
         </div>
         <div className="logo-pagina-escritorio">
           <img className="imagen-logo-principal2" src={"./images/logo_universidad_texto.png"} alt="" />
         </div>
         <div className="cuerpo-principal">
-          <div className="carta-solicitud">
+          <Link to="/registrarsolicitud" className="text-decoration-none carta-solicitud">
             <div className="contenedor-descripcion">
               <div className="contenido-descripcion">
                 <label className="titulo">Haz tu solicitud</label>
@@ -32,13 +32,13 @@ function PaginaPrincipal() {
             </div>
             <div className="contenedor-imagen">
               <img className="imagen_solicitud" src={"./images/imagen-solicitud.jpg"} alt="" />
-            </div>    
-          </div>
-          <div className="carta-consulta">
+            </div>
+          </Link>
+          <Link to="/consultar" className="text-decoration-none carta-solicitud">
             <div className="contenedor-descripcion">
               <div className="contenido-descripcion">
-                  <label className="titulo">Haz tu solicitud</label>
-                  <label className="contenido">Aquí podrás consultar y hacer seguimiento de tu caso</label>
+                <label className="titulo">Consulta tu solicitud</label>
+                <label className="contenido">Aquí podrás consultar y hacer seguimiento de tu caso</label>
                 <div className="contenedor-label">
                   <label className="contenido2">Aquí podrás consultar y hacer seguimiento de tu caso</label>
                 </div>
@@ -46,8 +46,8 @@ function PaginaPrincipal() {
             </div>
             <div className="contenedor-imagen">
               <img className="imagen_solicitud" src={"./images/imagen-consultar.jpg"} alt="" />
-            </div>   
-          </div>
+            </div>
+          </Link>
           <button className="boton-ingreso">Ingresar</button>
         </div>
       </div>

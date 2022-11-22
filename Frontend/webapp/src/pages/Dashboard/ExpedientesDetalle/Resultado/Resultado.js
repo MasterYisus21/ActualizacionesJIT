@@ -19,7 +19,7 @@ function Resultado() {
       <br />
       <div className="form-floating">
         <textarea type="text" className="form-control form-control-lg" id="floatingTextarea2" name='floatingTextarea2' style={{ height: "20rem" }} placeholder="Detalla el resultado del caso" />
-        <label htmlFor="floatingTextarea2" className="form-label h4">Detalle resultado</label>
+        <label htmlFor="floatingTextarea2" className="form-label h4">Acuerdos</label>
       </div>
       <br />
       <div>

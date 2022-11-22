@@ -7,12 +7,12 @@ import { Routes, Route, } from 'react-router-dom';
 // Importing pages
 import { Layout } from './pages/Layout'
 import { PaginaPrincipal } from './pages/PaginaPrincipal'
-import { Consultar } from './pages/Consultar'
 import { Login } from './pages/Login'
 import { RegistrarSolicitud } from './pages/RegistrarSolicitud'
 import { Dashboard, Expedientes, Solicitudes, Personas, Reportes } from './pages/Dashboard'
 import { NoMatch } from './pages/NoMatch'
 import { Audiencia, Conciliador, Convocados, Convocantes, DatosGenerales, Documentos, Estudiantes, EvaluacionServicio, ExpedientesDetalle, Hechos, Liquidacion, ManejoConflicto, Resultado, Seguimientos } from './pages/Dashboard/ExpedientesDetalle';
+import Consultar from './pages/Consultar/Consultar';
 
 function App() {
   return (
@@ -22,7 +22,10 @@ function App() {
           <Route index element={<PaginaPrincipal />} />
           <Route path="login" element={<Login />} />
           <Route path="registrarsolicitud" element={<RegistrarSolicitud />} />
-          <Route path="consultar" element={<Consultar />} />
+          <Route path="consultar/" element={<Consultar />}>
+            <Route path='expedientes/:id' element={<DatosGenerales />} />
+            <Route path='solicitudes/:id' element={<DatosGenerales />} />
+          </Route>
           <Route path="dashboard/" element={<Dashboard />} >
             <Route path='expedientes' element={<Expedientes />} />
             <Route path='expedientes/detalle/' element={<ExpedientesDetalle />} >

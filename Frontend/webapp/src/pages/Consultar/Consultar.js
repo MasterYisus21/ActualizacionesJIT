@@ -56,7 +56,39 @@ function Consultar() {
                 <div className='lado-izquierdo'>
                   <div className='orden-lado-izquierdo'>
                     <label className='estado-consulta'>Estado:</label>
+                    <label className='fecha-consulta'>Asignada</label>
+                  </div>
+                </div>
+                <div className='centro'>
+                  <div className='orden-centro'>
+                    <label className='estado-consulta'>Radicado:</label>
+                    <label className='fecha-consulta'>R2022102436546</label>
+                  </div>
+                </div>
+                <div className='lado-derecho'>
+                  <div className='orden-lado-izquierdo'>
+                    <label className='estado-consulta'>Fecha:</label>
+                    <label className='fecha-consulta'>25/10/2022</label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div className='carta-caso-consulta'>
+              <div className='contenedor-rectangulo-tarjeta-consultar'>
+                <BarRectanguloPequeño text = "Número de Radicado 12345"/>
+              </div>
+              <div className='contenedor-caso-consulta'>
+                <div className='lado-izquierdo'>
+                  <div className='orden-lado-izquierdo'>
+                    <label className='estado-consulta'>Estado:</label>
                     <label className='fecha-consulta'>Fecha:</label>
+                  </div>
+                </div>
+                <div className='centro'>
+                  <div className='orden-centro'>
+                    <label className='estado-consulta'>Radicado:</label>
+                    <label className='fecha-consulta'>R2022102436546</label>
                   </div>
                 </div>
                 <div className='lado-derecho'>
@@ -79,24 +111,10 @@ function Consultar() {
                     <label className='fecha-consulta'>Fecha:</label>
                   </div>
                 </div>
-                <div className='lado-derecho'>
-                  <div className='orden-lado-izquierdo'>
-                    <label className='estado-consulta'>Asignada</label>
-                    <label className='fecha-consulta'>25/10/2022</label>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div className='carta-caso-consulta'>
-              <div className='contenedor-rectangulo-tarjeta-consultar'>
-                <BarRectanguloPequeño text = "Número de Radicado 12345"/>
-              </div>
-              <div className='contenedor-caso-consulta'>
-                <div className='lado-izquierdo'>
-                  <div className='orden-lado-izquierdo'>
-                    <label className='estado-consulta'>Estado:</label>
-                    <label className='fecha-consulta'>Fecha:</label>
+                <div className='centro'>
+                  <div className='orden-centro'>
+                    <label className='estado-consulta'>Radicado:</label>
+                    <label className='fecha-consulta'>R2022102436546</label>
                   </div>
                 </div>
                 <div className='lado-derecho'>
