@@ -179,6 +179,10 @@
     .contenido{
         display: none;
     }
+    .imagen_solicitud{
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 }
 
 @media (max-width: 1000px) {

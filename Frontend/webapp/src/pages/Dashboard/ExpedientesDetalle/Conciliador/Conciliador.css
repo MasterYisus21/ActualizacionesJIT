@@ -1,0 +1,38 @@
+
+.container-conciliador {
+    width: 100%;
+    height: 100%;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 2em;
+}
+
+.navbar-conciliador {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-buscar{
+    width: 15em;
+}
+
+.boton-crear-conciliador{
+    background-color: #00460e;
+    color: white;
+    padding: 0em .7em;
+    border-radius: 8px;
+    border: 0;
+    height: 2em;
+}
+
+.contenedor-tabla-seleccion-conciliador {
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+    text-align: center;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 10%), 0 4px 20px rgb(0 0 0 / 10%);
+    align-items: center;
+}
