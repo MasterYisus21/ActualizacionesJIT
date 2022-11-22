@@ -24,9 +24,11 @@ class SearchHechos(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Pais,SearchAdminGeneral)
 admin.site.register(Departamento,SearchAdminGeneral)
+admin.site.register(Estado_solicitud,SearchAdminGeneral)
 admin.site.register(Ciudad,SearchAdminGeneral)
 admin.site.register(Tipo_persona,SearchAdminGeneral)
 admin.site.register(Sexo,SearchAdminGeneral)
+admin.site.register(Centro_conciliacion,SearchAdminGeneral)
 admin.site.register(Estrato_socioeconomico,SearchAdminGeneral)
 admin.site.register(Genero,SearchAdminGeneral)
 admin.site.register(Tipo_documento,SearchAdminGeneral)

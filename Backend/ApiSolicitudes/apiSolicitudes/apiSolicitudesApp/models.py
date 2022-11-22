@@ -103,6 +103,21 @@ class Estrato_socioeconomico(GeneralModel):
     def __str__(self):
         return self.nombre
 
+class Estado_solicitud(GeneralModel):
+
+    class Meta:
+        verbose_name = ('Estado_solicitud')
+        verbose_name_plural = ('Estados_solicitud')
+    def __str__(self):
+        return self.nombre
+
+class Centro_conciliacion(GeneralModel):
+
+    class Meta:
+        verbose_name = ('Centro_conciliacion')
+        verbose_name_plural = ('Centros_conciliacion')
+    def __str__(self):
+        return self.nombre
 
 
 class Apoderado(models.Model):
@@ -160,7 +175,7 @@ class Solicitud(models.Model):
     id = models.AutoField(primary_key=True) # los modelos que apliquen baseModels tendran estos dos campos
     numero_radicado= models.CharField(max_length=25,default = increment_entrada_number,editable=False,unique=True) # los modelos que apliquen baseModels tendran estos dos campos
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
-    estado_solicitud= models.BooleanField(blank=True,null=True)
+    estado_solicitud= models.ForeignKey(Estado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)
     estado = models.BooleanField(default=True,blank=True,null=False)
     class Meta:
         
@@ -187,7 +202,7 @@ class Relacion_persona_solicitud(EstadoModel):
         verbose_name_plural = ("Relaciones_persona_solicitud")
 
     def __str__(self):
-        return '%s %s' % (self.solicitud_id.numero_radicado,self.tipo_cliente_id.nombre)
+        return '%s %s' % (self.solicitud_id,self.tipo_cliente_id.nombre)
 
 class Documento(GeneralModel):
     nombre= models.CharField(max_length=50,blank=True, null=False)
@@ -198,8 +213,8 @@ class Documento(GeneralModel):
     class Meta:
         verbose_name = ('Documento')
         verbose_name_plural = ('Documentos')
-    def __str__(self):
-        return self.nombre
+    def __str__(self):  
+        return  '%s %s'%(self.solicitud_id,self.nombre)
 
 
 class Hechos(EstadoModel):
@@ -213,4 +228,4 @@ class Hechos(EstadoModel):
         verbose_name = ('Hechos')
         verbose_name_plural = ('Hechos')
     def __str__(self):
-        return str(self.id)
+        return  '%s'%(self.solicitud_id)
