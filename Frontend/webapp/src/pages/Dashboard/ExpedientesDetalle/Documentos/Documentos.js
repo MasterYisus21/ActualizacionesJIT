@@ -9,16 +9,19 @@ function Documentos() {
 
   const documentos = [
     {
+      id: 1,
       Nombre: "Documento1",
       Fecha_documento: "12/05/2022",
       Tamanio: "55Kb"
     },
     {
+      id: 2,
       Nombre: "Documento1",
       Fecha_documento: "12/05/2022",
       Tamanio: "55Kb"
     },
     {
+      id: 3,
       Nombre: "Documento1",
       Fecha_documento: "12/05/2022",
       Tamanio: "55Kb"
@@ -56,7 +59,7 @@ function Documentos() {
         <tbody>
           {documentos.map((dato) => {
             return (
-              <tr>
+              <tr key={dato["id"]}>
                 <th className='text-center' style={{ maxWidth: "35%" }} scope="row"><button className='btn' onClick={(event) => { }}>{dato["Nombre"]}</button></th>
                 <td className='text-center'>{dato["Fecha_documento"]}</td>
                 <td className='text-center'>{dato["Tamanio"]}</td>

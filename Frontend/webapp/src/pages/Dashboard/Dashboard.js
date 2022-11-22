@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { IconButton } from '../../components'
 
@@ -12,6 +12,7 @@ function Dashboard() {
   const [pagina, setPagina] = useState("Dashboard")
   const [nombre, setNombre] = useState("Andres Felipe Villamizar Palacio")
 
+
   return (
     <div className='dashboard-container'>
       <div className='dashboard-item dashboard-container-top-left'>
@@ -24,14 +25,14 @@ function Dashboard() {
             linkto={"/dashboard/expedientes"}
             text={"Expedientes"}
             icon={"journal"}
-            onClick={() => {setPagina("Expedientes")}}
+            onClick={() => { setPagina("Expedientes") }}
           />
           <IconButton
             type={"Link"}
             linkto={"/dashboard/solicitudes"}
             text={"Solicitudes"}
             icon={"file-diff"}
-            onClick={() => {setPagina("Solicitudes")}}
+            onClick={() => { setPagina("Solicitudes") }}
           />
           <hr />
           <IconButton
@@ -39,7 +40,7 @@ function Dashboard() {
             linkto={"/dashboard/personas"}
             text={"Personas"}
             icon={"people-fill"}
-            onClick={() => {setPagina("Personas")}}
+            onClick={() => { setPagina("Personas") }}
           />
           <hr />
           <IconButton
@@ -47,7 +48,7 @@ function Dashboard() {
             linkto={"/dashboard/reportes"}
             text={"Reportes"}
             icon={"file-bar-graph"}
-            onClick={() => {setPagina("Reportes")}}
+            onClick={() => { setPagina("Reportes") }}
           />
         </div>
         <div className='dashboard-item dashboard-container-bottom-left-bottom'>
@@ -70,7 +71,7 @@ function Dashboard() {
         </div>
       </div>
       <div className='dashboard-item dashboard-container-bottom-right'>
-        <Outlet />
+        <Outlet context={{ setPagina }} />
       </div>
     </div>
   )
