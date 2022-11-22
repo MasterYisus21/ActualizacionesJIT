@@ -55,11 +55,12 @@
 
 
 .carta-caso-consulta{
-    width: 19rem;
-    height: 10rem;
+    width: 80vw;
+    height: 8rem;
     background-color: #d9d9d9;
     margin-bottom: 2rem;
     border-radius: 0.5rem;
+    cursor: pointer;
 }
 
 .carta-caso-consulta:hover{
@@ -77,16 +78,18 @@
 .lado-izquierdo{
     height: 100%;
     width: 50%;
-    border-bottom-left-radius: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.centro{
+    display: none;
+}
+
 .lado-derecho{
     height: 100%;
     width: 50%;
-    border-bottom-right-radius: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,8 +121,15 @@
 }
 
 .estado-consulta{
-    margin-bottom: 1rem;
+ display: flex;
+ justify-content: start;
+ font-weight:bold;
+
 }
+.fecha-consulta{
+
+}
+
 
 @media (min-width: 768px) {
 
@@ -134,4 +144,34 @@
     .g-2{
         gap:4em;
     }
+    .centro {
+        height: 100%;
+        width: 33.3%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .lado-derecho{
+        height: 100%;
+        width: 33.3%;
+    }
+    .lado-izquierdo{
+        height: 100%;
+        width: 33.3%;
+    }
+    .orden-centro{
+        display: flex;
+        flex-direction: column;
+    }
+    .estado-consulta{
+        font-size: 1.2rem;
+    }
+    .fecha-consulta{
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 858px) {
+
+
 }
