@@ -1,6 +1,6 @@
 import React from 'react'
 
-// import css
+// Import css
 import './Popup.css'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';

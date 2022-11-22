@@ -1,0 +1,54 @@
+.container-convocado {
+    width: 100%;
+    height: 100%;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 2em;
+}
+
+.navbar-convocado {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-buscar{
+    width: 15em;
+}
+
+.boton-crear-convocado{
+    background-color: #00460e;
+    color: white;
+    padding: 0em .7em;
+    border-radius: 8px;
+    border: 0;
+    height: 2em;
+}
+
+.contenedor-tabla-convocado {
+    font-size: small;
+    text-align: center;
+}
+
+.registro-convocado {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 5%;
+    margin-bottom: 50px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 10%), 0 4px 20px rgb(0 0 0 / 10%);
+}
+
+.boton-tabla-eliminar {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.boton-tabla-eliminar:hover {
+    color: red;
+}

@@ -14,12 +14,9 @@ function Convocantes() {
        
         <h2>Informacion del convocante</h2>
         <div className='navbar-convocante'>
-          <input type="search" className="form-control rounded input-buscar" placeholder="Buscar Convocado" aria-label="Search" aria-describedby="search-addon" />
+          <input type="search" className="form-control rounded input-buscar" placeholder="Buscar Convocante" aria-label="Search" aria-describedby="search-addon" />
           <button className='boton-crear-convocante' onClick={()=> setEstado(!estado)}>Crear Convocante</button>
         </div>
-
-        
-  
 
         {estado &&
           <form className='registro-convocante mb-5'>
@@ -86,7 +83,7 @@ function Convocantes() {
                 </div>
               </div>
             </div>
-            <button className="btn btn-primary me-3" id='boton-aceptar-registro-convocante'>Registrar</button>
+            <button className="boton-crear-convocante" id='boton-aceptar-registro-convocante'>Registrar</button>
           </form>}
 
         <form className='contenedor-tabla-convocante'>
@@ -101,6 +98,13 @@ function Convocantes() {
               </tr>
             </thead>
             <tbody>
+            <tr>
+              <td>Natural</td>
+              <td>Cedula</td>
+              <td>1023123123</td>
+              <td>Juan Diego Benavidez</td>
+              <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
+            </tr>
               {/* {convocantes.map((dato) => {
                 return (
                   <tr key={dato["Id"]}>
