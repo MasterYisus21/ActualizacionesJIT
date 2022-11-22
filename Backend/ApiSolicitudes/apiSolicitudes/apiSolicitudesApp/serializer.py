@@ -52,7 +52,7 @@ class Tipo_documentoSerializer(serializers.ModelSerializer):
         fields = '__all__'  # Coje todos los campos del modelo 
 
 class ApoderadoSerializer(serializers.ModelSerializer):
- 
+
     class Meta:
         model = Apoderado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 

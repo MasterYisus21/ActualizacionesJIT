@@ -9,19 +9,19 @@ def increment_entrada_number():
   year = date.year 
   ultima_solicitud = Solicitud.objects.all().last()
   if not ultima_solicitud:
-    return 'S'+str(date.year)+str(date.month)+'CCJIT' +'1'
+    return 'S'+str(date.year)+str(date.month)+'CCJIT' +'001'
   
   año_registro = ultima_solicitud.fecha_registro.year
   print(ultima_solicitud)
   print("ultima solicitud"+str(año_registro))
   if año_registro!=year:
-    return 'S'+str(date.year)+str(date.month)+'CCJIT' +'1'
+    return 'S'+str(date.year)+str(date.month)+'CCJIT' +'001'
   
   solicitud_id = ultima_solicitud.numero_radicado
   position_int=str(solicitud_id).index('T')
   solicitud_int = int(solicitud_id[position_int+1:])
   new_solicitud_int = solicitud_int + 1
-
+  print("nueva solicitud"+ str(new_solicitud_int))
   new_solicitud_id = 'S'+str(date.year)+str(date.month)+'CCJIT' +str(new_solicitud_int).zfill(3)
   return new_solicitud_id
 class Pais(GeneralModel):
@@ -109,15 +109,16 @@ class Apoderado(models.Model):
 
  
     nombres = models.CharField(max_length = 25,blank=False,null=False)
-    apellidos = models.CharField(max_length= 25, blank=False, null=False)
+    apellidos = models.CharField(max_length= 25, blank=True, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False,primary_key=True)
-    lugar_expedicion = models.CharField(max_length=20, blank=False, null=False)
+    lugar_expedicion = models.CharField(max_length=20, blank=True, null=False)
     telefono = models.CharField(max_length=10, blank=True, null=True)
-    celular = models.CharField(max_length=15, blank=False, null=False)
-    correo = models.EmailField(max_length=120,blank=False,null=False)
-    tarjeta_profesional= models.CharField(max_length=25, blank=False, null=False)
-    tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=False, null=True)
+    celular = models.CharField(max_length=15, blank=True, null=False)
+    correo = models.EmailField(max_length=120,blank=True,null=False)
+    tarjeta_profesional= models.CharField(max_length=25, blank=True, null=False)
+    tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=True, null=True)
     estado = models.BooleanField(default=True,blank=True,null=False)
+
     
     class Meta:
         verbose_name = ("Apoderado")
@@ -156,11 +157,13 @@ class Persona(EstadoModel):
        return '%s %s' % (self.nombres, self.apellidos)
 
 class Solicitud(models.Model):
-    numero_radicado= models.CharField(max_length=25,primary_key=True,default = increment_entrada_number,unique=True,editable=False) # los modelos que apliquen baseModels tendran estos dos campos
+    id = models.AutoField(primary_key=True) # los modelos que apliquen baseModels tendran estos dos campos
+    numero_radicado= models.CharField(max_length=25,default = increment_entrada_number,editable=False,unique=True) # los modelos que apliquen baseModels tendran estos dos campos
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     estado_solicitud= models.BooleanField(blank=True,null=True)
     estado = models.BooleanField(default=True,blank=True,null=False)
     class Meta:
+        
         verbose_name = ('Solicitud')
         verbose_name_plural = ('Solicitudes')
     def __str__(self):
@@ -174,7 +177,7 @@ class Tipo_cliente(GeneralModel):
 
     def __str__(self):
         return self.nombre
-class Relacion_persona_solicitud(GeneralModel):
+class Relacion_persona_solicitud(EstadoModel):
     
     solicitud_id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
@@ -184,13 +187,13 @@ class Relacion_persona_solicitud(GeneralModel):
         verbose_name_plural = ("Relaciones_persona_solicitud")
 
     def __str__(self):
-        return self.nombre
+        return '%s %s' % (self.solicitud_id.numero_radicado,self.tipo_cliente_id.nombre)
 
 class Documento(GeneralModel):
-
+    nombre= models.CharField(max_length=50,blank=True, null=False)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     documento = models.FileField(upload_to='resultados/', max_length=100, blank=True,null=True)
-    solicitud_id = models.OneToOneField(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
+    solicitud_id= models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
         verbose_name = ('Documento')
