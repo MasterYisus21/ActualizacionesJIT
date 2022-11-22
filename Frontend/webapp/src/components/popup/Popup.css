@@ -1,5 +1,6 @@
 
 .wrapp-popup{
+    padding: 5em;
     align-items: center;
     background-color: #00460f4b;
     display: flex;
@@ -18,7 +19,7 @@
     display: grid;
     grid-template-columns: 2fr 3fr;
     height: fit-content;
-    min-height: 30em;
+    min-height: 80%;
     width: fit-content;
 }
 
@@ -35,6 +36,10 @@
 
 .form-popup{
     position: relative;
+    padding: 0em;
+    display: flex;
+    flex-direction: column;
+    gap: .7em;
 }
 
 .boton-cerrar-popup{
@@ -49,4 +54,20 @@
 
 .boton-cerrar-popup:hover {
     color: red;
+}
+
+.columnas-inputs{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}
+
+.inputs-personas{
+    display: flex;
+    width: 20em;
+}
+
+.input-fecha-nacimiento{
+    width: 10em;
 }

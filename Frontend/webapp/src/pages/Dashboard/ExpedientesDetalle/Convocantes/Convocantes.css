@@ -1,0 +1,61 @@
+.container-convocante {
+    width: 100%;
+    height: 100%;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 2em;
+}
+
+.navbar-convocante {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-buscar{
+    width: 15em;
+}
+
+.boton-crear-convocante{
+    background-color: #00460e;
+    color: white;
+    padding: 0em .7em;
+    border-radius: 8px;
+    border: 0;
+    height: 2em;
+}
+
+.contenedor-tabla-convocante {
+    font-size: small;
+    text-align: center;
+}
+
+.registro-convocante {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 5%;
+    margin-bottom: 50px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 10%), 0 4px 20px rgb(0 0 0 / 10%);
+}
+
+#boton-aceptar-registro-convocante {
+    width: 12%;
+    background-color: rgb(56, 165, 42);
+    border-color: rgb(56, 165, 42);
+    font-size: 1vw;
+}
+
+.boton-tabla-eliminar {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.boton-tabla-eliminar:hover {
+    color: red;
+}
