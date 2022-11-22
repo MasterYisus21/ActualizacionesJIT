@@ -1,5 +1,5 @@
 import React from 'react'
-import { BarRectanguloPequeño, Buscador, Tarjeta } from '../../../components'
+import { Buscador, Tarjeta } from '../../../components'
 
 // Importing css
 import './Expedientes.css'
@@ -9,9 +9,9 @@ function Expedientes() {
     <div className='wrapp-expedientes'>
       <Buscador/>
       <div className='wrapp-tarjetas'>
-        <Tarjeta/>  
-        <Tarjeta/> 
-        <Tarjeta/> 
+        <Tarjeta titulo="Caso #119"/>  
+        <Tarjeta titulo="Caso #119"/> 
+        <Tarjeta titulo="Caso #117"/> 
       </div>
     </div>
   )

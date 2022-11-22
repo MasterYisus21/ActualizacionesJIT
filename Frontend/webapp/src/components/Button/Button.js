@@ -15,7 +15,7 @@ function Button({ className, type, linkto, text, icon, onClick }) {
     }
 
     return (
-        <Container className={"button-beautiful-container " + className}>
+        <Container className={"btn button-beautiful-container " + className}>
             {icon &&
                 <img src={"/icons/" + icon + ".svg"} alt="journal-icon" />
             }

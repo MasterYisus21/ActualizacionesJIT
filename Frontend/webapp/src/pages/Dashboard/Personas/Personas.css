@@ -1,0 +1,36 @@
+
+.wrapp-personas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5em 0em 0em 0em;
+    gap: 2em;
+}
+
+.search-load-bar{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon-personas{
+    width: 2.5em;
+    cursor: pointer;
+}
+
+.wrapp-tarjetas-personas{
+    width: 80%;
+    display: grid;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+    align-items: center;
+    gap: 2em;
+}
+
+.boton-cargar-personas{
+    border: 0;
+    background-color: #00460e;
+    color: white;
+    padding: .5em 1em;
+    border-radius: 10px;
+}

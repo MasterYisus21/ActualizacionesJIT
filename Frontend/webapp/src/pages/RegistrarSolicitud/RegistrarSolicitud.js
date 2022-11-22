@@ -163,14 +163,11 @@ function RegistrarSolicitud() {
 
           <SubtemaRectangulo text = "Documentos" icon ="documentos"/>
           
-          <Form.Group controlId="formFile" className='inputs-registrar-solicitud'>
-            <Form.Label>Documento de Identidad</Form.Label>
-            <Form.Control type="file" />
-          </Form.Group>
-          <Form.Group controlId="formFile" className='inputs-registrar-solicitud'>
-            <Form.Label>Recibo Público</Form.Label>
-            <Form.Control type="file" />
-          </Form.Group>
+          <label className='subtitles-secciones'>Identificación</label>
+          <Form.Control className='inputs-registrar-solicitud' type="file" />
+         
+          <label className='subtitles-secciones'>Recibo Público</label>
+          <Form.Control className='inputs-registrar-solicitud' type="file" />
 
           <button className='boton-subir-anexos'>Subir más anexos</button>
 
