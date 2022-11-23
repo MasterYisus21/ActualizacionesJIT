@@ -48,7 +48,9 @@ class SolicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de 
     serializer_class = SolicitudSerializer
     #permission_classes = [CustomDjangoModelPermission]
 class DocumentoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
-  
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = ['solicitud_id']
+    ordering_fields = '__all__'
     serializer_class = DocumentoSerializer
     #permission_classes = [CustomDjangoModelPermission]
 
