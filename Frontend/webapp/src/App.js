@@ -13,6 +13,7 @@ import { Dashboard, Expedientes, Solicitudes, Personas, Reportes } from './pages
 import { NoMatch } from './pages/NoMatch'
 import { Audiencia, Conciliador, Convocados, Convocantes, DatosGenerales, Documentos, Estudiantes, EvaluacionServicio, ExpedientesDetalle, Hechos, Liquidacion, ManejoConflicto, Resultado, Seguimientos } from './pages/Dashboard/ExpedientesDetalle';
 import Consultar from './pages/Consultar/Consultar';
+import { SolicitudesDetalle } from './pages/Dashboard/SolicitudesDetalle';
 
 function App() {
   return (
@@ -43,7 +44,8 @@ function App() {
               <Route path=':id/evaluacionservicio' element={<EvaluacionServicio />} />
               <Route path=':id/seguimientos' element={<Seguimientos />} />
             </Route>
-            <Route path='solicitudes' element={<Solicitudes />} />
+            <Route path='solicitudes/' element={<Solicitudes />} />
+            <Route path='solicitudes/detalle/:id' element={<SolicitudesDetalle />} />
             <Route path='personas' element={<Personas />} />
             <Route path='reportes' element={<Reportes />} />
           </Route>

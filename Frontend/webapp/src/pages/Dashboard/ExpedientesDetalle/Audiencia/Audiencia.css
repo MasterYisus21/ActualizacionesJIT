@@ -1,8 +1,7 @@
 
 .contenedor-principal-modulo-audiencia {
-    width: 85%;
+    width: 100%;
     height: 100%;
-    
 }
 
 .titulo-modulo-audiencia {
@@ -10,15 +9,173 @@
     align-items: center;
 }
 
+.titulo-informacion-audiencia{
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+
+}
+
+.contenedor-icono-descarga{
+    margin-left: 14vw;
+    display: flex;
+    align-items: center;
+}
+
+.titulo-audiencia{
+    font-size: 1.6vw;
+    margin-left: 27vw;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.icono-descarga-documento{
+    width: 4vw;
+}
+
 .contenedor-boton-audiencia{
     display: flex;
-    justify-content: end;
+    justify-content: start;
+    margin-left: 6vw;
+    margin-top: 5rem;
 }
 .boton-audiencia{
+
     background-color: rgb(56, 165, 42);
     border-color: rgb(56, 165, 42);
 }
+
+.boton-audiencia:hover{
+    background-color: #00460F;
+}
+
 .contenedor-tabla-audiencia {
     font-size: small;
     text-align: center;
 }
+
+.contenedor-subtitulo{
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subtitulo-audiencia{
+    font-size: 1.3vw;
+}
+
+.contenedor-fecha-hora-descripcion{
+    width: 100%;
+    height: 25vw;
+
+}
+.fecha-y-hora{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+}
+
+.contenedor-fecha{
+    width: 49%;
+    height: 100%;
+
+}
+
+.contenedor-hora{
+    width: 49%;
+    height: 100%;
+
+}
+
+
+.label-virtual{
+    margin-left: 1.5rem;
+    margin-right: 1rem;
+}
+
+.label-presencial{
+    margin-left: 1.5rem;
+    margin-right: 1rem;
+}
+
+.label-mixto{
+    margin-left: 1.5rem;
+
+}
+
+.input-disabled{
+    height: 2rem;
+    width: 80%;
+
+}
+
+.contenedor-disabled{
+    width: 100%;
+    height: 3rem;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-hora-seleccionable{
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+
+}
+
+.icono-guardar{
+    width: 4vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-imagen-guardar{
+    width: 100%;
+    height: 12rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+
+}
+
+.contenedor-tabla-audiencia{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 6vw;
+}
+
+.nombre-guardar{
+    font-size: 1.2vw;
+}
+
+.contenedor-boton-notificar-via-correo{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boton-notificar{
+    width: 15vw;
+    height: 3rem;
+    border-radius: 3rem;
+    background-color: #00460F;
+    color: white;
+    font-size: 1.2vw;
+    cursor: pointer;
+}
+
