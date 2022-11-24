@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 2rem;
 }
 
 .seguimientos-card {
@@ -14,10 +15,19 @@
     background-color: #CECECE;
     padding: 2rem;
     border-radius: 0.7rem;
+    border: 0px solid black;
 }
 
 .seguimientos-card:hover {
     background-color: #00460f59;
+}
+
+.seguimientos-card-content{
+    border-radius: 0%;
+    border: 1px solid #CECECE;
+    border-top: none;
+    width: 90%;
+    padding: 2rem;
 }
 
 .seguimientos-card-state {
