@@ -200,6 +200,9 @@ function EvaluacionServicio() {
           <option value="3">Three</option>
         </Form.Select>
       </div>
+      <div className='contenedor-boton-enviar-encuesta'>
+        <button className='boton-enviar-encuesta'>Enviar</button>
+      </div>
     </div>
     )
 }

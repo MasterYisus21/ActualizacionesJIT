@@ -1,11 +1,11 @@
 import React from 'react'
-
+import './Audiencia.css'
 import { Link } from "react-router-dom";
 
 
 function Audiencia() {
   return (
-    <div className='contenedor-principal-modulo-audiencia mt-3'>
+    <div className='contenedor-principal-modulo-audiencia'>
       <div className='contenedor-boton-audiencia'>
         <Link to={'../' + '/audiencias/'}> {/* Modifica la ruta al ID */}
           <button className='boton-audiencia btn btn-primary'>regresar  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-return-left" viewBox="0 0 16 16">
@@ -13,44 +13,50 @@ function Audiencia() {
           </svg></button>
         </Link>
       </div>
-      <div className='titulo-informacion-audiencia mb-3'>
-        <h5>Sesion de Audiencia</h5>
+      <div className='titulo-informacion-audiencia'>
+        <label className='titulo-audiencia'>Sesion de Audiencia</label>
+        <div className='contenedor-icono-descarga'>
+          <img src='/icons/descarga-documento.svg' className='icono-descarga-documento' />
+        </div>
+      </div>
+      <div className='contenedor-subtitulo'>
+        <label className='subtitulo-audiencia'>Ingrese los datos de la audiencia</label>
       </div>
 
-      <form className='contenedor-asignacion-turnos p-1' onSubmit={() => { }}>
-        <h6 className='pt-1 d-flex align-items-center'>Ingrese los datos de la audiencia</h6>
-        <div className='contenedor-citacion-descripcion'>
-
-          <div className="row m-0 p-4 pt-3">
-            <label className="">Fecha de la Sesión: </label>
-            <input type="date" className="form-control form-control-sm col mb-3" id="exampleFormControlInput1" required></input>
-
-            <label className="">Descripcion: </label>
-            <textarea className="form-control form-control-sm" rows="2" required></textarea>
-          </div>
-
-          <div className="row m-0 p-4 pt-3">
-            <label className="">Hora: </label>
-            <select className="form-select form-select-sm mb-3" required>
-              <option key={""} value="">Seleccione</option>
-            </select>
-            <label className="">Tipo de medio: </label><br></br>
-            <div className='separador-virtual-presencial'>
-              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-              <label className="">Virtual </label>
-              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-              <label className="">Presencial </label>
-              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-              <label className="">Mixto </label>
+      <form>
+        <div className='contenedor-fecha-hora-descripcion'>
+          <div className='fecha-y-hora'>
+            <div className='contenedor-fecha'>
+              <label>Fecha de la sesión:</label>
+              <input type="date" className="form-control form-control-sm col mb-3 "  id="exampleFormControlInput1" required></input>
+              <label>Descripción:</label>
+              <textarea className="form-control form-control-sm" rows="2" required></textarea>
             </div>
-            <input type="url" className="form-control col" placeholder="link"></input>
+            <div className='contenedor-hora'>
+              <label>Hora:</label>
+              <div className='contenedor-hora-seleccionable'>
+                <select className="form-select form-select-sm mb-3" required>
+                  <option key={""} value="">Seleccione</option>
+                </select>
+              </div>
+              <label>Tipo de medio</label>
+              <div className='separador-virtual-presencial'>
+                <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
+                <label className="label-virtual">Virtual </label>
+                <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
+                <label className="label-presencial">Presencial </label>
+                <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
+                <label className="label-mixto">Mixto </label>
+              </div>
+              <div className='contenedor-disabled'>
+                <input type="url" className="input-disabled " placeholder="link" disabled></input>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className='pt-3 h5 d-flex align-items-center'>
-          <button className="modulo-solicitud-content-main-column2-save-button">
-            <img src='/images/guardarIcon.png' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
-            <p>GUARDAR</p>
-          </button>
+          <div className='contenedor-imagen-guardar'>
+            <img src='/icons/save.svg' className='icono-guardar' />
+            <label className='nombre-guardar'>Guardar</label>
+          </div>
         </div>
       </form>
       <div className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
@@ -111,6 +117,9 @@ function Audiencia() {
 
           </tbody>
         </table>
+      </div>
+      <div className='contenedor-boton-notificar-via-correo'>
+        <button className='boton-notificar'>Notificar vía correo</button>
       </div>
     </div >
   )
