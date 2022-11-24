@@ -71,10 +71,10 @@ class ApoderadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Apoderado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
-class PersonaSerializer(serializers.ModelSerializer):
+class Persona_solicitudSerializer(serializers.ModelSerializer):
    
     class Meta:
-        model = Persona          # El modelo al que pertenece este serializador
+        model = Persona_solicitud          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
 class Tipo_clienteSerializer(serializers.ModelSerializer):
