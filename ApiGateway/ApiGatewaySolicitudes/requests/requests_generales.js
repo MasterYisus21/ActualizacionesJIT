@@ -1,5 +1,5 @@
 
-const error = require("./error.js")
+const error = require("./requests_error.js")
 const axios = require("axios");
 requests={}
 requests.get =async (req,res,url,simbolo) => {
