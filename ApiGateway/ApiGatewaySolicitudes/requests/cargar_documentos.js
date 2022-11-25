@@ -1,70 +1,61 @@
+const error = require("../requests/requests_error.js")
 const multer = require("multer");
-const maxSize = 10 * 1000 * 1000 // 10Mb Max
-var unirest = require('unirest');
 const fs = require('fs');
-const views = {}
-const config = require('../config.json');
-const error = require("./requests_errores.js")
-requests={}
-requests.CargarDocumentos = async (req, res) =>{
+// seleccionables Principales
+const maxSize = 10 * 1000 * 1000 // 10Mb Max
+const archivo = {};
+
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "public");
+    },
+    filename: (req, file, cb) => {
+      const ext = file.mimetype.split("/")[1];
+      cb(null, `${file.originalname}-${(new Date(Date.now())).toISOString().split("T")[0]}.${ext}`);
+    },
+  });
 
   
-
-    try {
-      let datos= []
-//Configuration for Multer
-
-
-       // console.log(req.file)
-       console.log(req.files)
-       console.log(req.files.length)
-        if (Object.keys(req.files).length==0) {res.sendStatus(error({ message: " No ha seleccionado ningun documento" })); return;}
-        if (Object.keys(req.files).length<2) {res.sendStatus(error({ message: "Ha cargado un solo documento" })); return;}
-        //console.log(req.file.size)
-        //console.log(req.file.originalname)
-      
-        for await (const iterator of req.files) {
-         
-         await unirest
-        .post( config.urlApiSolicitudes+"documentos/")
-       
-        .field('estado', true)
-        .field('nombre', iterator.originalname.split(".")[0])
-         .field('solicitud_id', 13)
-      
-        
-        //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-        .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
-        //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-        .then(function (response) {
-          console.log(iterator.path)
-          datos.push(response.body)
-          // 201
-        //  try {
-        //   fs.unlinkSync(iterator.path)
-        //   //file removed
-        // } catch(err) {
-        //   console.error(err)
-        // }
-        })
-          
-        }
+  // Multer Filter
+  const multerFilter = (req, file, cb) => {
+    if (file.mimetype.split("/")[1] === "jpeg"|file.mimetype.split("/")[1] ==="pdf"|file.mimetype.split("/")[1] ==="png") {
+      cb(null, true);
     
-        res.status(200).json(datos)
-    
-    
-          }
-        catch (err){
-          console.log(err)
-          
-        }
-     
-    
-    
-       
-    
+    } else {
+      cb(new Error("Formato no valido"), false);
     }
+  };
+  
+  //Calling the "multer" Function
+  const upload = multer({
+    storage: multerStorage,
+    fileFilter: multerFilter,
+    limits: { fileSize: maxSize },
+  }).array("files")
 
 
+archivo.uploadMiddleware = (req,res,next)=>{
 
-module.exports = requests
+  
+    // Here call the upload middleware of multer
+    upload(req, res, function (err) {
+       if (err instanceof multer.MulterError) {
+         // A Multer error occurred when uploading.
+         res.sendStatus( error({message:"Error cargando documentos, verificar el tamaño del archivo"},413)); return
+       ;
+         next(err)
+         } else if (err) {
+         // An unknown error occurred when uploading.
+         res.sendStatus( error({message:"Formato no valido"},415))
+         return
+         
+       }
+  
+      // Everything went fine.
+      next()
+    })
+  
+  }
+
+
+module.exports = archivo

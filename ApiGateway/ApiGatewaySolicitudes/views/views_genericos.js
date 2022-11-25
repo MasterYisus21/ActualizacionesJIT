@@ -8,6 +8,7 @@ const config = require("../config.json");
 const requests = require("../requests/requests_generales.js");
 const { json } = require("express");
 
+
 //listar Seleccionables Principales
 views.SeleccionablesPricipales = async (req, res) => {
   try {
@@ -19,6 +20,7 @@ views.SeleccionablesPricipales = async (req, res) => {
     res.sendStatus(500);
   }
 }
+
 // listar
 views.ListarDepartamentos = async (req, res) => {
   try {
@@ -209,7 +211,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
   }
 }
 
-views.Estados_solicitud = async (req, res) => {
+views.Listar_Estados_solicitud = async (req, res) => {
   try {
     axios.get(config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion)
       .then(result => {
@@ -274,7 +276,7 @@ views.AprobarSolicitud = async (req, res) => {
 
 views.VerSolicitud = async (req, res) => {
   try {
-    datos = []
+    let datos = {}
     const solicitud = config.urlApiSolicitudes + "solicitudes/" + req.params.id
     const hechos = config.urlApiSolicitudes + "hechos?solicitud_id=" + req.params.id
     const documentos = config.urlApiSolicitudes + "documentos?solicitud_id=" + req.params.id
@@ -284,18 +286,21 @@ views.VerSolicitud = async (req, res) => {
       solicitud, hechos, documentos, relacion_persona_solicitud
     ];
 
-    Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
       .then(axios.spread(async (data1, data2, data3, data4) => {
         datos.solicitud = data1.data
         datos.hechos = data2.data.results
     
 
         for await (const iterator of data4.data.results) {
+       
           if (iterator.tipo_cliente_id == 1) {
+            
            await  axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
             .then(async result => {
+            
               datos.convocante = result.data
-              if (result.data.apoderado_id != null | result.data.apoderado_id != "") { return }
+              if (!(result.data.apoderado_id != null | result.data.apoderado_id != "")) { return }
               await axios.get(config.urlApiSolicitudes + "apoderados/"+result.data.apoderado_id)
                 .then(result => {
                   datos.apoderado = result.data
@@ -313,6 +318,7 @@ views.VerSolicitud = async (req, res) => {
 
           await axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
             .then(result => {
+            
               datos.convocado = result.data
             })
             .catch(err => {
@@ -320,12 +326,14 @@ views.VerSolicitud = async (req, res) => {
             })
         }
         datos.documentos=data3.data
+
+
         res.status(201).json(datos)
 
       }))
       .catch(err => {
 
-        error(err)
+        res.sendStatus(error(err))
         return
 
       })
@@ -335,6 +343,16 @@ views.VerSolicitud = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
+  }
+}
+views.ListarSolicitudes = async (req, res) => {
+  try {
+    const url = config.urlApiSolicitudes + req.route.path.slice(1)
+    requests.get(req, res, url, "?")
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
   }
 }
 module.exports = views;
