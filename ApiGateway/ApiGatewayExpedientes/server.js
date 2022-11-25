@@ -17,7 +17,10 @@ const Genericos = require("./routers/routers_genericos");
 //app.use("/api/gateway/v1/solicitudes", Solicitud);
 app.use("/api/gateway/v1/", Genericos);
 
+
+
 const port = 3001;
+
 
 app.listen(port, () => {
   console.log("El servidor esta corriendo en el puerto " + port);

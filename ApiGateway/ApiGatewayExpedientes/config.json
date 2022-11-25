@@ -1,5 +1,4 @@
 {
-    "urlExpedientes": "http://localhost:8000/api/jit_expedientes/v1/",
-    "urlGateway": "http://localhost:3001/api/gateway/v1/"
-    
+    "urlExpedientes": "http://localhost:8000/api/jit_expedientes/v1",
+    "urlGateway": "http://localhost:3001/api/gateway/v1"
 }
