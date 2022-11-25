@@ -1,3 +1,241 @@
-.tooltip-detalle{
-    gap: 2rem;
+.contenedor-botones-detalle-solicitud{
+    width: 100%;
+    height: 40rem;
+}
+
+.boton-remitir{
+    margin-right: 2rem;
+    height: 2.5rem;
+    width: 12vw;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: black;
+    border-color: blue;
+    font-size: 0.8vw;
+
+}
+
+.boton-remitir:hover{
+    border-color: white;
+    background-color: blue;
+    color: white;
+}
+
+.boton-rechazar{
+    margin-right: 2rem;
+    height: 2.5rem;
+    width: 12vw;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: black;
+    border-color: red;
+    font-size: 0.8vw;
+
+}
+
+.boton-rechazar:hover{
+    border-color: white;
+    background-color: #D33B3B;
+    color: white;
+}
+
+.boton-incompleto{
+    margin-right: 2rem;
+    height: 2.5rem;
+    width: 12vw;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: black;
+    border-color: yellow;
+    font-size: 0.8vw;
+}
+
+.boton-incompleto:hover{
+    border-color: white;
+    background-color: yellow;
+    color: black;
+}
+
+.boton-aceptar{
+    height: 2.5rem;
+    width: 12vw;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: black;
+    border-color: green;
+    font-size: 0.8vw;
+
+}
+
+.boton-aceptar:hover{
+    border-color: white;
+    background-color: green;
+    color: white;
+}
+
+.colapse-general{
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor-remitir{
+    width: 55vw;
+    height: 30rem;
+    background-color: #d8e1fc;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+
+}
+
+.contenedor-rechazar{
+    width: 55vw;
+    height: 30rem;
+    background-color: #ffdbdb;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+}
+
+.contenedor-incompleto{
+    width: 55vw;
+    height: 30rem;
+    background-color: #fcfdc6;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+}
+
+.contenedor-aceptar{
+    width: 55vw;
+    height: 30rem;
+    background-color: #bfd4c6;
+
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+}
+
+.titulo-remitir{
+    display: flex;
+    justify-content: start;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    margin-left: 3rem;
+}
+
+.seleccionable-centro-conciliacion{
+    width: 23vw;
+    margin-left: 3rem;
+}
+
+.label-explicacion-remitir{
+    display: flex;
+    justify-content: start;
+    margin-left: 3rem;
+    font-size: 1.2rem;
+    margin-right: 3rem;
+    margin-top: 1.3rem;
+    
+}
+
+.campo-explicacion{
+    width: 90%;
+    height: 12rem;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: start;
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+
+.boton-remitir1-solicitud{
+    height: 2.7rem;
+    width: 15rem;
+    background-color: blue;
+    color: white;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    margin-right: 4vw;
+}
+
+.boton-remitir-solicitud{
+    height: 2.7rem;
+    width: 15rem;
+    background-color: #00460F;
+    color: white;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    margin-right: 4vw;
+}
+
+.contenedor-boton-remitir{
+    width: 100%;
+    height: 20%;
+
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.label-explicacion-rechazar{
+    display: flex;
+    justify-content: start;
+    margin-left: 3rem;
+    font-size: 1.2rem;
+    margin-right: 3rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.boton-rechazar-solicitud{
+    height: 2.7rem;
+    width: 15rem;
+    background-color: #D33B3B;
+    color: white;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    margin-top: 2rem;
+    margin-right: 4vw;
+    border: 0;
+}
+
+.boton-devolver-solicitud{
+    height: 2.7rem;
+    width: 15rem;
+    background-color: #E4E900;
+    color: black;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    margin-top: 2rem;
+    margin-right: 4vw;
+    border: 0;
+}
+
+.contenedor-campos-aceptar-caso{
+    width: 100%;
+    height: 7rem;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.izquierda-aceptar-caso{
+    width: 50%;
+    height: 100%;
+
+}
+
+.derecha-aceptar-caso{
+    width: 50%;
+    height: 100%;
+
+}
+
+.seleccionable-centro-conciliacion-aceptar{
+    width: 21.5vw;
+    margin-left: 3rem;
+}
+
+.input-aceptar-valor{
+    width: 21.5vw;
+    border-radius: 0.3rem;
+    height: 2.3rem;
+    border: 0;
 }
