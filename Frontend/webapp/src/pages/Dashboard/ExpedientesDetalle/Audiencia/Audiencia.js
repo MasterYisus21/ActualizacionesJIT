@@ -1,6 +1,7 @@
 import React from 'react'
 import './Audiencia.css'
 import { Link } from "react-router-dom";
+import Form from 'react-bootstrap/Form';
 
 
 function Audiencia() {
@@ -24,39 +25,77 @@ function Audiencia() {
       </div>
 
       <form>
-        <div className='contenedor-fecha-hora-descripcion'>
-          <div className='fecha-y-hora'>
-            <div className='contenedor-fecha'>
-              <label>Fecha de la sesión:</label>
-              <input type="date" className="form-control form-control-sm col mb-3 "  id="exampleFormControlInput1" required></input>
-              <label>Descripción:</label>
-              <textarea className="form-control form-control-sm" rows="2" required></textarea>
+
+        <div className='fecha-y-hora'>
+          <div className='izquierda-fecha-descripcion'>
+            <label className='titulo-fecha-sesion'>Fecha de la sesión:</label>
+            <div className='contenedor-campos-de-llenado'>
+              <input type="date" className='input-fecha-sesion'></input>
             </div>
-            <div className='contenedor-hora'>
-              <label>Hora:</label>
-              <div className='contenedor-hora-seleccionable'>
-                <select className="form-select form-select-sm mb-3" required>
-                  <option key={""} value="">Seleccione</option>
-                </select>
-              </div>
-              <label>Tipo de medio</label>
-              <div className='separador-virtual-presencial'>
-                <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-                <label className="label-virtual">Virtual </label>
-                <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-                <label className="label-presencial">Presencial </label>
-                <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-                <label className="label-mixto">Mixto </label>
-              </div>
-              <div className='contenedor-disabled'>
-                <input type="url" className="input-disabled " placeholder="link" disabled></input>
-              </div>
+            <label className='titulo-descripcion'>Descripción:</label>
+            <div className='contenedor-campos-de-llenado'>
+              <textarea className='campo-descripcion'></textarea>
             </div>
           </div>
-          <div className='contenedor-imagen-guardar'>
-            <img src='/icons/save.svg' className='icono-guardar' />
-            <label className='nombre-guardar'>Guardar</label>
+          <div className='derecha-hora-tipo'>
+            <label className='titulo-fecha-sesion'>Hora:</label>
+            <div className='contenedor-campos-de-llenado-derecha'>
+              <Form.Select aria-label="Default select example" className='input-seleccionable-hora'>
+                <option>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </Form.Select>
+            </div>
+            <label className='titulo-descripcion'>Tipo de medio:</label>
+            <div className='separador-virtual-presencial'>
+              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
+              <label className="label-virtual">Virtual </label>
+              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
+              <label className="label-presencial">Presencial </label>
+              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
+              <label className="label-mixto">Mixto </label>
+            </div>
+            <div className='contenedor-campos-de-llenado-derecha'>
+              <Form.Control
+                type="text"
+                placeholder="Link"
+                aria-label="Disabled input example"
+                readOnly
+                className='disabled-link'
+              />
+            </div>
           </div>
+          {/* <div className='contenedor-fecha'>
+            <label>Fecha de la sesión:</label>
+            <input type="date" className="form-control form-control-sm col mb-3 "  id="exampleFormControlInput1" required></input>
+            <label>Descripción:</label>
+            <textarea className="form-control form-control-sm" rows="2" required></textarea>
+          </div>
+          <div className='contenedor-hora'>
+            <label>Hora:</label>
+            <div className='contenedor-hora-seleccionable'>
+              <select className="form-select form-select-sm mb-3" required>
+                <option key={""} value="">Seleccione</option>
+              </select>
+            </div>
+            <label>Tipo de medio</label>
+            <div className='separador-virtual-presencial'>
+              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
+              <label className="label-virtual">Virtual </label>
+              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
+              <label className="label-presencial">Presencial </label>
+              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
+              <label className="label-mixto">Mixto </label>
+            </div>
+            <div className='contenedor-disabled'>
+              <input type="url" className="input-disabled " placeholder="link" disabled></input>
+            </div>
+          </div> */}
+        </div>
+        <div className='contenedor-imagen-guardar'>
+          <img src='/icons/save.svg' className='icono-guardar' />
+          <label className='nombre-guardar'>Guardar</label>
         </div>
       </form>
       <div className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>

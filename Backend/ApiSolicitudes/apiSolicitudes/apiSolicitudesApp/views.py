@@ -88,12 +88,12 @@ class ApoderadoViewSet(EspecificViewSet):  # Una sola clase para los metodos de 
     #permission_classes = [CustomUpdateDjangoModelPermission]
     search_fields=['nombres','apellidos','identificacion','tarjeta_profesional']
  
-class PersonaViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
+class Persona_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
     ordering_fields = '__all__'
     search_fields=['nombres','apellidos','identificacion']
-    serializer_class = PersonaSerializer
+    serializer_class = Persona_solicitudSerializer
     #permission_classes = [CustomDjangoModelPermission]
 
 class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 

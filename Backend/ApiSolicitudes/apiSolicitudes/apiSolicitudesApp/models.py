@@ -143,7 +143,7 @@ class Apoderado(models.Model):
        return '%s %s' % (self.nombres, self.apellidos)
 
 
-class Persona(EstadoModel):
+class Persona_solicitud(EstadoModel):
 
   
     nombres = models.CharField(max_length = 25,blank=False,null=False)
@@ -175,7 +175,7 @@ class Solicitud(models.Model):
     id = models.AutoField(primary_key=True) # los modelos que apliquen baseModels tendran estos dos campos
     numero_radicado= models.CharField(max_length=25,default = increment_entrada_number,editable=False,unique=True) # los modelos que apliquen baseModels tendran estos dos campos
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
-    estado_solicitud= models.ForeignKey(Estado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)
+    estado_solicitud_id= models.ForeignKey(Estado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)
     estado = models.BooleanField(default=True,blank=True,null=False)
     class Meta:
         
@@ -195,7 +195,7 @@ class Tipo_cliente(GeneralModel):
 class Relacion_persona_solicitud(EstadoModel):
     
     solicitud_id = models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
-    persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
+    persona_id = models.ForeignKey(Persona_solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     tipo_cliente_id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
         verbose_name = ("Relacion_persona_solicitud")
