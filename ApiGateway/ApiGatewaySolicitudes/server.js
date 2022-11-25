@@ -3,8 +3,7 @@ const axios = require("axios");
 const app = express(); // aplicaicon express
 const config = require("./config.json");
 
-// app.use(express.static("public"))
-// app.use(express.urlencoded({ extended: true }))
+
 
 app.use(express.json()); // para usar json
 
@@ -12,10 +11,10 @@ var cors = require("cors");
 
 app.use(cors()); // Use this after the variable declaration
 
-const Genericos = require("./routers/routers_genericos");
+const routers = require("./routers/routers");
 
 //app.use("/api/gateway/v1/solicitudes", Solicitud);
-app.use("/api/gateway/v1/", Genericos);
+app.use("/api/gateway/v1/", routers);
 
 const port = 3001;
 

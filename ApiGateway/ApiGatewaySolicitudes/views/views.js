@@ -6,7 +6,6 @@ const views = {};
 const error = require("../requests/requests_error.js")
 const config = require("../config.json");
 const requests = require("../requests/requests_generales.js");
-const { json } = require("express");
 
 
 //listar Seleccionables Principales

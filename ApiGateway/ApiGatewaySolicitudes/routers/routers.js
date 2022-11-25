@@ -2,8 +2,8 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 const router = express.Router();
-const views_genericos = require("../views/views_genericos");
-const archivo = require("../requests/cargar_documentos.js")
+const views_genericos = require("../views/views");
+const archivo = require("../views/cargar_documentos.js")
 
 //Listar
 router.get("/tipos_documento", views_genericos.SeleccionablesPricipales);

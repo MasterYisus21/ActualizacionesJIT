@@ -8,7 +8,7 @@ errores =(error,code=0) => {
       }
       else if (error.request) {
         //response not received though the request was sent
-        console.log("Error al enviar la solicitud al servidor \n"+error.request._options.agent);
+        console.log("Error al conectar con el servidor ");
         return 500
       }
       else {
