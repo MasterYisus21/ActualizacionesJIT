@@ -13,7 +13,7 @@ function RegistrarSolicitud() {
   const [seccion3, setSeccion3] = useState(false);
   const [seccion4, setSeccion4] = useState(false);
   const [formulario, setFormulario] = useState(new FormData());
-  const [filelength, setFilelength] = useState(["Hola"]);
+  const [filelength, setFilelength] = useState([]);
 
   function Crear_anexo() {
     const oldElement = document.getElementById("subir-anexo");
@@ -346,14 +346,16 @@ function RegistrarSolicitud() {
             <Form.Control className="inputs-registrar-solicitud" type="file" />
             <label className="subtitles-secciones">Recibo Público</label>
             <Form.Control className="inputs-registrar-solicitud" type="file" />
-
+            <label className="subtitles-secciones">Anexos</label>
             {filelength.map((valor) => {
               return (<div>{valor}</div>)
             })}
 
-            <form onSubmit={handleFile}>
-              <input type="file" name="file" />
-
+            <form className="form-datos" onSubmit={handleFile}>
+              <div className="wrapp-input-load">
+                <input className="inputs-subir-archivos" type="file" name="file"/>
+                <h1>Arrastra el archivo que deseeas subir</h1>
+              </div>
               <input type="submit" />
             </form>
             <div id="subir-anexo"></div>

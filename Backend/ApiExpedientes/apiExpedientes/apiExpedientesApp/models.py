@@ -340,7 +340,7 @@ class Inicio_conflicto(GeneralModel):
         return self.nombre
 
 class Expediente(EstadoModel):
-
+    numero_radicado = models.CharField(max_length =20,null=False,blank=False,unique=True,editable=False)
     numero_caso = models.CharField(max_length =10,null=False,blank=False,default=increment_numero_caso_number,unique=True,editable=False)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     caso_gratuito= models.BooleanField(default=True, blank=True,null=True)

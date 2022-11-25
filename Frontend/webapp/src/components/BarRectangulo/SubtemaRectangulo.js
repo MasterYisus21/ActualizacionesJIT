@@ -7,6 +7,7 @@ export default function SubtemaRectangulo({ text, icon, seccion, setSeccion }) {
     return (
       <div className="icono-subtemarectangulo-movil" onClick={()=>setSeccion(!seccion)}>
         <img className="img-subtemarectangulo" src={"/images/subtema.png"} alt="journal-icon" />
+        <img className="img-subtemarectangulo-desktop" src={"/images/subtema_Desktop.png"} alt="journal-icon" />
         <div className="texto-subtemarectangulo">
           <label>{text}</label>
         </div>
