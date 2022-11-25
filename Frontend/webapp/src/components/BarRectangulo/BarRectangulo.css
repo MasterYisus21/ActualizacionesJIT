@@ -3,6 +3,7 @@
     display: flex;
     position: relative;
     align-items: center;
+    width: 100%;
 }
 
 .texto-rectangulo{
@@ -31,7 +32,6 @@
     color: white;
     font-size: 1.2em;
     text-align: left;
-    width: 9em;
 }
 
 .img-subtemarectangulo{
@@ -44,5 +44,35 @@
     margin-right: 15.6em;
 }
 
+.img-subtemarectangulo-desktop{
+    display: none;
+}
+
+
+@media (min-width: 700px) {
+
+    .img-subtemarectangulo{
+        width: 50vw;
+        max-width: 80%;
+        height: 4em;
+    }
+
+    .texto-rectangulo{
+        font-size: 2em;
+    }
+
+    .texto-subtemarectangulo{
+        font-size: 2em;
+    }
+
+    .img-subtemarectangulo{
+        display: none;
+    }
+
+    .img-subtemarectangulo-desktop{
+        display: block;
+    }
+    
+}
 
 
