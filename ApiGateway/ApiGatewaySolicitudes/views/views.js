@@ -24,6 +24,7 @@ views.SeleccionablesPricipales = async (req, res) => {
 views.ListarDepartamentos = async (req, res) => {
   try {
     const url = config.urlApiSolicitudes + "departamentos?pais_id=" + req.params.id
+  
     requests.get(req, res, url, "&")
   } catch (error) {
     console.log(error);

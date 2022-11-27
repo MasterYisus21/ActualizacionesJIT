@@ -10,13 +10,15 @@ requests.get =async (req,res,url,simbolo) => {
         
         
     }
-   
+    console.log(url)
     axios.get(url)
 
         .then(result=>{
+            
             res.status(200).json(result.data)
     })
         .catch(err => {
+           
             res.sendStatus(error(err))
         })
 }
