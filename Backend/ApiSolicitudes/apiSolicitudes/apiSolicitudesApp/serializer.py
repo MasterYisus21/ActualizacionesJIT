@@ -69,7 +69,7 @@ class Centro_conciliacionSerializer(serializers.ModelSerializer):
 class ApoderadoSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Apoderado          # El modelo al que pertenece este serializador
+        model = Apoderado_solicitud          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class Persona_solicitudSerializer(serializers.ModelSerializer):
    
@@ -87,7 +87,7 @@ class Tipo_clienteSerializer(serializers.ModelSerializer):
 class HechosSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Hechos          # El modelo al que pertenece este serializador
+        model = Hechos_solicitud          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
 
@@ -108,7 +108,7 @@ class Relacion_persona_solicitudSerializer(serializers.ModelSerializer):
 class DocumentoSerializer(serializers.ModelSerializer):
     numero_radicado = serializers.CharField(source='solicitud_id', read_only=True)
     class Meta:
-        model = Documento          # El modelo al que pertenece este serializador
+        model = Documento_solicitud          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
 

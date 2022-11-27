@@ -27,6 +27,7 @@ def increment_entrada_number():
 class Pais(GeneralModel):
 
     class Meta:
+        db_table='Pais'
         ordering = ['-id']
         verbose_name = ("Pais")
         verbose_name_plural = ("Paises")
@@ -35,9 +36,10 @@ class Pais(GeneralModel):
         return self.nombre
 
 class Departamento(GeneralModel):
-
+    
     pais_id=models.ForeignKey(Pais, on_delete=models.SET_NULL,blank=False,null=True)
     class Meta:
+        db_table='Departamento'
         ordering = ['-id']
         verbose_name = ("Departamento")
         verbose_name_plural = ("Departamentos")
@@ -46,10 +48,11 @@ class Departamento(GeneralModel):
         return self.nombre
 
 class Ciudad(GeneralModel):
-
+    
     departamento_id=models.ForeignKey(Departamento, on_delete=models.SET_NULL,blank=False,null=True)
 
     class Meta:
+        db_table='Ciudad'
         ordering = ['-id']
         verbose_name = ("Ciudad")
         verbose_name_plural = ("Ciudades")
@@ -58,8 +61,9 @@ class Ciudad(GeneralModel):
         return self.nombre
 
 class Tipo_documento(GeneralModel):
-
+    
     class Meta:
+        db_table='Tipo_documento'
         verbose_name = ("Tipo_documento")
         verbose_name_plural = ("Tipos_documento")
 
@@ -67,8 +71,9 @@ class Tipo_documento(GeneralModel):
         return self.nombre
 
 class Tipo_persona(GeneralModel):
-
+    
     class Meta:
+        db_table='Tipo_persona'
         verbose_name = ("Tipo_persona")
         verbose_name_plural = ("Tipos_persona")
 
@@ -76,8 +81,9 @@ class Tipo_persona(GeneralModel):
         return self.nombre
 
 class Sexo(GeneralModel):
-
+    
     class Meta:
+        db_table='Sexo'
         verbose_name = ("Sexo")
         verbose_name_plural = ("Sexos")
 
@@ -86,8 +92,9 @@ class Sexo(GeneralModel):
 
 
 class Genero(GeneralModel):
-
+    
     class Meta:
+        db_table='Genero'
         verbose_name = ("Genero")
         verbose_name_plural = ("Generos")
 
@@ -97,6 +104,7 @@ class Genero(GeneralModel):
 class Estrato_socioeconomico(GeneralModel):
 
     class Meta:
+        db_table='Estrato_socioeconomico'
         verbose_name = ("estratos_socioeconomicos")
         verbose_name_plural = ("estratos_socioeconomicos")
 
@@ -106,6 +114,7 @@ class Estrato_socioeconomico(GeneralModel):
 class Estado_solicitud(GeneralModel):
 
     class Meta:
+        db_table='Estado_solicitud'
         verbose_name = ('Estado_solicitud')
         verbose_name_plural = ('Estados_solicitud')
     def __str__(self):
@@ -114,13 +123,14 @@ class Estado_solicitud(GeneralModel):
 class Centro_conciliacion(GeneralModel):
 
     class Meta:
+        db_table='Centro_conciliacion'
         verbose_name = ('Centro_conciliacion')
         verbose_name_plural = ('Centros_conciliacion')
     def __str__(self):
         return self.nombre
 
 
-class Apoderado(models.Model):
+class Apoderado_solicitud(models.Model):
 
  
     nombres = models.CharField(max_length = 25,blank=False,null=False)
@@ -136,6 +146,7 @@ class Apoderado(models.Model):
 
     
     class Meta:
+        db_table='Apoderado_solicitud'
         verbose_name = ("Apoderado")
         verbose_name_plural = ("Apoderados")
 
@@ -162,9 +173,11 @@ class Persona_solicitud(EstadoModel):
     genero_id = models.ForeignKey(Genero, on_delete=models.SET_NULL, blank=False, null=True)
     estrato_socioeconomico_id = models.ForeignKey(Estrato_socioeconomico, on_delete=models.SET_NULL, blank=False, null=True)      
     tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=False, null=True)
-    apoderado_id = models.ForeignKey(Apoderado, on_delete=models.SET_NULL, blank=True, null=True)
+    apoderado_id = models.ForeignKey(Apoderado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)
+              
               
     class Meta:
+        db_table='Persona_solicitud'
         verbose_name = ("Persona")
         verbose_name_plural = ("Personas")
 
@@ -178,7 +191,7 @@ class Solicitud(models.Model):
     estado_solicitud_id= models.ForeignKey(Estado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)
     estado = models.BooleanField(default=True,blank=True,null=False)
     class Meta:
-        
+        db_table='Solicitud'
         verbose_name = ('Solicitud')
         verbose_name_plural = ('Solicitudes')
     def __str__(self):
@@ -187,6 +200,7 @@ class Solicitud(models.Model):
 class Tipo_cliente(GeneralModel):
 
     class Meta:
+        db_table='Tipo_cliente'
         verbose_name = ("Tipo_cliente")
         verbose_name_plural = ("Tipos_cliente")
 
@@ -198,26 +212,28 @@ class Relacion_persona_solicitud(EstadoModel):
     persona_id = models.ForeignKey(Persona_solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     tipo_cliente_id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
+        db_table='Relacion_persona_solicitud'
         verbose_name = ("Relacion_persona_solicitud")
         verbose_name_plural = ("Relaciones_persona_solicitud")
 
     def __str__(self):
         return '%s %s' % (self.solicitud_id,self.tipo_cliente_id.nombre)
 
-class Documento(GeneralModel):
+class Documento_solicitud(GeneralModel):
     nombre= models.CharField(max_length=50,blank=True, null=False)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     documento = models.FileField(upload_to='resultados/', max_length=100, blank=True,null=True)
     solicitud_id= models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
+        db_table='Documento_solicitud'
         verbose_name = ('Documento')
         verbose_name_plural = ('Documentos')
     def __str__(self):  
         return  '%s %s'%(self.solicitud_id,self.nombre)
 
 
-class Hechos(EstadoModel):
+class Hechos_solicitud(EstadoModel):
     
     descripcion = models.TextField(blank=False,null=False)
     solicitud_id = models.OneToOneField(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
@@ -225,7 +241,12 @@ class Hechos(EstadoModel):
     
     
     class Meta:
+        db_table='Hechos_solicitud'
         verbose_name = ('Hechos')
         verbose_name_plural = ('Hechos')
     def __str__(self):
         return  '%s'%(self.solicitud_id)
+
+
+# api expedientes
+

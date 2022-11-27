@@ -47,7 +47,7 @@ class SolicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de 
     search_fields=['numero_radicado','fecha_registro']
     serializer_class = SolicitudSerializer
     #permission_classes = [CustomDjangoModelPermission]
-class DocumentoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
+class Documento_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = ['solicitud_id']
     ordering_fields = '__all__'
@@ -80,7 +80,7 @@ class Estrato_socioeconomicoViewSet(GeneralViewSet):  # Una sola clase para los 
     serializer_class = Estrato_socioeconomicoSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
-class ApoderadoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
+class Apoderado_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
     ordering_fields = '__all__'
@@ -100,7 +100,7 @@ class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de
 
     serializer_class = Tipo_clienteSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
-class HechosViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
+class Hechos_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
     ordering_fields = '__all__'
