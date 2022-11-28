@@ -12,9 +12,9 @@ from apiExpedientesApp.general.general_models import GeneralModel, EstadoModel
 from django.contrib.auth.models import User,Group
 
 # Create your models here.
-from datetime import date
-from datetime import datetime
 
+
+from datetime import datetime
   
 class Pais(GeneralModel):
 
@@ -263,7 +263,7 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-# modelos expedientes
+############################################ modelos expedientes#########################################################
 
 def increment_numero_caso_number():
     date = datetime.now()
@@ -339,7 +339,7 @@ class Grupo_etnico(GeneralModel):
 class Tipo_discapacidad(GeneralModel):
 
     class Meta:
-        
+        db_table='Tipo_discapacidad'
         verbose_name = ("Tipo_Discapacidad")
         verbose_name_plural = ("Tipos_Discapacidad")
 
@@ -415,7 +415,7 @@ class Apoderado(EstadoModel):
     tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
-        db_table='Apoderado'
+        db_table='Apoderado_expediente'
         verbose_name = ("Apoderado")
         verbose_name_plural = ("Apoderados")
 
@@ -574,9 +574,9 @@ class Relacion_persona_expediente(GeneralModel):
 class Estado(GeneralModel):
 
      class Meta:
-        db_table='Estado'
+        db_table='Estado_expediente'
         verbose_name = ('Estado')
-        verbose_name_plural = ('Estados')
+        verbose_name_plural = ('Estados_expediente')
      def __str__(self):
         return self.nombre
 
@@ -634,7 +634,7 @@ class Hechos(EstadoModel):
     ciudad_id = models.ForeignKey(Tipo_resultado, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
-        db_table='Hechos'
+        db_table='Hechos_expediente'
         verbose_name = ('Hechos')
         verbose_name_plural = ('Hechos')
     def __str__(self):

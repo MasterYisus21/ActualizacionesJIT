@@ -10,7 +10,7 @@ requests.get =async (req,res,url,simbolo) => {
         
         
     }
-    console.log(url)
+  
     axios.get(url)
 
         .then(result=>{

@@ -38,5 +38,6 @@ admin.site.register(Tipo_cliente,SearchAdminGeneral)
 admin.site.register(Relacion_persona_solicitud)
 admin.site.register(Hechos_solicitud,SearchHechos)
 admin.site.register(Documento_solicitud,SearchHechos)
+
 admin.site.register(Solicitud,SearchSolicitud)
 

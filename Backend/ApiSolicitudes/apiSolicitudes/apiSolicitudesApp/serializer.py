@@ -126,4 +126,3 @@ class ListaGrupoSerializer(serializers.ModelSerializer):
         model = Group     # El modelo al que pertenece este serializador
         fields = ('id','name')  # Coje todos los campos del modelo 
 
-

@@ -248,5 +248,4 @@ class Hechos_solicitud(EstadoModel):
         return  '%s'%(self.solicitud_id)
 
 
-# api expedientes
-
+# api expedientesv
