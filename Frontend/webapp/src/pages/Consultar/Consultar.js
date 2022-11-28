@@ -4,7 +4,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { BarRectangulo } from '../../components/BarRectangulo'
-import { BarRectanguloPequeño } from '../../components/BarRectanguloPequeño'
+import { RectanguloCelular } from '../../components/RectanguloCelular'
 
 import { Link } from "react-router-dom";
 
@@ -49,8 +49,9 @@ function Consultar() {
         <div className='cuerpo-consulta'>
           <div className='contenedor-casos-consulta'>
             <div className='carta-caso-consulta'>
+              
               <div className='contenedor-rectangulo-tarjeta-consultar'>
-                <BarRectanguloPequeño text = "Número de Radicado 12345"/>
+                <RectanguloCelular text = "Número de Radicado 12345"/>
               </div>
               <div className='contenedor-caso-consulta'>
                 <div className='lado-izquierdo'>
@@ -74,9 +75,10 @@ function Consultar() {
 
               </div>
             </div>
+
             <div className='carta-caso-consulta'>
               <div className='contenedor-rectangulo-tarjeta-consultar'>
-                <BarRectanguloPequeño text = "Número de Radicado 12345"/>
+                <RectanguloCelular text = "Número de Radicado 12345"/>
               </div>
               <div className='contenedor-caso-consulta'>
                 <div className='lado-izquierdo'>
@@ -102,7 +104,7 @@ function Consultar() {
             </div>
             <div className='carta-caso-consulta'>
               <div className='contenedor-rectangulo-tarjeta-consultar'>
-                <BarRectanguloPequeño text = "Número de Radicado 12345"/>
+                <RectanguloCelular text = "Número de Radicado 12345"/>
               </div>
               <div className='contenedor-caso-consulta'>
                 <div className='lado-izquierdo'>
