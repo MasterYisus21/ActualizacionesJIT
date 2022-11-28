@@ -142,9 +142,9 @@ class Relacion_persona_expedienteViewSet(GeneralViewSet):  # Una sola clase para
 
     serializer_class = Relacion_persona_expedienteSerializer
 
-class EstadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class Estado_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
-    serializer_class = EstadoSerializer
+    serializer_class = Estado_expedienteSerializer
 
 class HistoricoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 

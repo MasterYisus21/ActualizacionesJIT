@@ -130,6 +130,3 @@ class GruposViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos d
 #    filterset_fields = '__all__'
 #    #permission_classes = [DjangoModelPermissions]
    
-
-
-    
