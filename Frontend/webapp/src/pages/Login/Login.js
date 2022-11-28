@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 // Importing css
@@ -19,7 +19,9 @@ function Login() {
                       <input className="form-control rounded col btn-login" placeholder="Usuario" name='nombres' required></input>                    
                       <input className="form-control rounded col btn-login" placeholder="Contraseña" name='contraseña' type="password" required></input>                
                     </form>
-                    <button className="boton-login" form="form-inicio">Ingresar</button>
+                    <Link to="../../Dashboard" className="link-boton-login">
+                        <button className="boton-login" form="form-inicio">Ingresar</button>
+                    </Link>
                 </div>
                 <div className="intro">
                     <div className="intro-triangle"></div>
