@@ -120,11 +120,29 @@
     background-color: #00460F;
 }
 
+.link-boton-login{
+    text-decoration: none;
+    width: 15em;
+}
+
 @media (max-width: 1100px) {
     .intro {
         display: none;
     }
     .main{
         padding: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .intro {
+        display: none;
+    }
+    .main{
+        padding: 0;
+    }
+
+    .login{
+       width: fit-content;
     }
 }

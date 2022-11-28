@@ -32,6 +32,7 @@
     color: white;
     font-size: 1.2em;
     text-align: left;
+    width: 10em;
 }
 
 .img-subtemarectangulo{
@@ -71,6 +72,8 @@
 
     .img-subtemarectangulo-desktop{
         display: block;
+        width: 80vw;
+        max-width: 70em;
     }
     
 }

@@ -9,7 +9,7 @@ import "./PaginaPrincipal.css";
 function PaginaPrincipal() {
   return (
     <div>
-      <div className="">
+      <div className="warpp-main-pantalla-principal">
         <div className="logo-universidad-movil">
           <img className="imagen-logo-principal" src={"./images/logo-ugc.png"} alt="" />
         </div>
@@ -48,7 +48,9 @@ function PaginaPrincipal() {
               <img className="imagen_solicitud" src={"./images/imagen-consultar.jpg"} alt="" />
             </div>
           </Link>
-          <button className="boton-ingreso">Ingresar</button>
+          <Link to="login">
+            <button className="boton-ingreso">Ingresar</button>
+          </Link>
         </div>
       </div>
     </div>

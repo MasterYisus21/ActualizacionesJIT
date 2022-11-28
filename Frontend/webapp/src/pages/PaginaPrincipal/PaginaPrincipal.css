@@ -7,7 +7,6 @@
     width: 96%;
 }
 
-
 .logo-universidad-movil{
     display: flex;
     width: 100%;
@@ -18,10 +17,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 13rem;
-    height: 13rem;
-    margin-top: 3rem;
-    margin-bottom: 2rem;
+    width: 11rem;
+    height: 11rem;
 }
 
 .cuerpo-principal{
