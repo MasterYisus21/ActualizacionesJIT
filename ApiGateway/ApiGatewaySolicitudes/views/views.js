@@ -96,12 +96,12 @@ views.CrearSolicitud = async (req, res) => {
 
       if (!(req.body.apoderado[0].identificacion & req.body.apoderado[0].identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
       req.body.convocante[0].apoderado_id = req.body.apoderado[0].identificacion
-      axios.post(config.urlApiSolicitudes + "apoderados/", req.body.apoderado[0])
+      await axios.post(config.urlApiSolicitudes + "apoderados/", req.body.apoderado[0])
 
-        .catch(err => {
+        .catch(async err => {
 
           if (err.response.data.identificacion) {
-            axios.patch(config.urlApiSolicitudes + "apoderados/" + req.body.apoderado[0].identificacion + "/", req.body.apoderado[0])
+            await axios.patch(config.urlApiSolicitudes + "apoderados/" + req.body.apoderado[0].identificacion + "/", req.body.apoderado[0])
 
               .catch(err => {
                 error(err)
@@ -125,7 +125,7 @@ views.CrearSolicitud = async (req, res) => {
 
     let endpoints = [personas, solicitud]
     // const hechos=config.urlApiSolicitudes+"hechos/"+","+
-    Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
+    await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
       .then(axios.spread(async (data1, data2) => {
 
         req.params.id = data2.data.id
