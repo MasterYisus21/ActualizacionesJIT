@@ -62,7 +62,7 @@ function Dashboard() {
       </div>
       <div className='dashboard-item dashboard-container-top-right'>
         <div className="dashboard-container-top-right-title">
-          <img className="dashboard-container-top-right-title-image" src={"/icons/rectangulo.svg"} alt="journal-icon" />
+          <img className="dashboard-container-top-right-title-image" src={"/icons/rectangulo_movil.svg"} alt="journal-icon" />
           <h3 className='dashboard-container-top-right-title-text'>Centros de conciliación</h3>
           <h3 className='dashboard-container-top-right-title-text-hint'>{pagina}</h3>
         </div>

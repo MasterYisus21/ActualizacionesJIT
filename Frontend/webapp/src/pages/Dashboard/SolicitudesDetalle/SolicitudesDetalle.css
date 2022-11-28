@@ -1,3 +1,11 @@
+.wrapp-main-detalle-solicitud{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 4em;
+    gap: 3em;
+}
+
 .contenedor-botones-detalle-solicitud{
     width: 100%;
     height: 40rem;
@@ -76,6 +84,7 @@
 .colapse-general{
     display: flex;
     justify-content: center;
+    padding-bottom: 2em;
 }
 
 .contenedor-remitir{
@@ -132,7 +141,7 @@
     font-size: 1.2rem;
     margin-right: 3rem;
     margin-top: 1.3rem;
-    
+    padding-bottom: 1em;
 }
 
 .campo-explicacion{

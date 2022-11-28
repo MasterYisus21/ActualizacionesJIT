@@ -17,7 +17,7 @@
 .layout-content {
     grid-area: 1 / 1 / 2 / 2;
     /* height: 1px; */
-    overflow: scroll;
+    /* overflow: scroll; */
     overflow-x: hidden;
 }
 

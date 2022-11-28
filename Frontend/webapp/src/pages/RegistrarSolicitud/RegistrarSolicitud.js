@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Collapse from "react-bootstrap/Collapse";
 
 function RegistrarSolicitud() {
+  
   const [seccion1, setSeccion1] = useState(false);
   const [seccion2, setSeccion2] = useState(false);
   const [seccion3, setSeccion3] = useState(false);

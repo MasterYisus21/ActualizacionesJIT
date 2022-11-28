@@ -159,10 +159,10 @@ class Relacion_persona_expedienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Relacion_persona_expediente          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
-class EstadoSerializer(serializers.ModelSerializer):
+class Estado_expedienteSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Estado          # El modelo al que pertenece este serializador
+        model = Estado_expediente          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class HistoricoSerializer(serializers.ModelSerializer):
 
