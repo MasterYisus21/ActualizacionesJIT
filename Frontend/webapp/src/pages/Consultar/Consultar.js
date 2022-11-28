@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Col from 'react-bootstrap/Col';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { BarRectangulo } from '../../components/BarRectangulo'
 import { RectanguloCelular } from '../../components/RectanguloCelular'
+import { axiosBasicInstanceApiSolicitudes } from '../../helpers/axiosInstances'
 
 import { Link } from "react-router-dom";
 
@@ -12,15 +13,38 @@ import { Link } from "react-router-dom";
 import './Consultar.css'
 
 function Consultar() {
+
+  const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
+
+  const currentPage = 1;
+
+  const search = (e) => {
+    e.preventDefault()
+    axiosBasicInstanceApiSolicitudes({
+      method: 'get',
+      url: "/estados_solicitudes/" + "120423098",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log("respuesta");
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }
+
   return (
     <div>
       <div className=''>
         <div className='contenedor-rectangulo-verde'>
-          <BarRectangulo text = "Consulta tu solicitud"/>
+          <BarRectangulo text="Consulta tu solicitud" />
         </div>
         <div className='contenedor-consultar-documento'>
           <div className='rectangulo-pregunta-documento'>
-            <Row className="g-2">
+            <Form className="g-2"
+              onSubmit={e=>{search(e)}}
+            >
               <Col md className='seleccionable-cedula'>
                 <FloatingLabel
                   controlId="floatingSelectGrid"
@@ -42,16 +66,15 @@ function Consultar() {
                   <Form.Control type="email" placeholder="name@example.com" />
                 </FloatingLabel>
               </Col>
-
-            </Row>
+            </Form>
           </div>
         </div>
         <div className='cuerpo-consulta'>
           <div className='contenedor-casos-consulta'>
             <div className='carta-caso-consulta'>
-              
+
               <div className='contenedor-rectangulo-tarjeta-consultar'>
-                <RectanguloCelular text = "Número de Radicado 12345"/>
+                <RectanguloCelular text="Número de Radicado 12345" />
               </div>
               <div className='contenedor-caso-consulta'>
                 <div className='lado-izquierdo'>
@@ -78,7 +101,7 @@ function Consultar() {
 
             <div className='carta-caso-consulta'>
               <div className='contenedor-rectangulo-tarjeta-consultar'>
-                <RectanguloCelular text = "Número de Radicado 12345"/>
+                <RectanguloCelular text="Número de Radicado 12345" />
               </div>
               <div className='contenedor-caso-consulta'>
                 <div className='lado-izquierdo'>
@@ -104,7 +127,7 @@ function Consultar() {
             </div>
             <div className='carta-caso-consulta'>
               <div className='contenedor-rectangulo-tarjeta-consultar'>
-                <RectanguloCelular text = "Número de Radicado 12345"/>
+                <RectanguloCelular text="Número de Radicado 12345" />
               </div>
               <div className='contenedor-caso-consulta'>
                 <div className='lado-izquierdo'>
