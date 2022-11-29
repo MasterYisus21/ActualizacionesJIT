@@ -42,7 +42,7 @@ function Consultar() {
         </div>
         <div className='contenedor-consultar-documento'>
           <div className='rectangulo-pregunta-documento'>
-            <Form className="g-2"
+            <Row className="g-2"
               onSubmit={e=>{search(e)}}
             >
               <Col md className='seleccionable-cedula'>
@@ -70,7 +70,7 @@ function Consultar() {
                 </FloatingLabel>
               </Col>
 
-            </Form>
+            </Row>
             <div className='contenedor-boton-buscar'>
               <button className='boton-buscar-consultar'>Buscar<img className="icono-buscar-consultar" src={"./images/buscar.svg"} alt="" /></button>
             </div>
