@@ -26,6 +26,7 @@ router.get("/objetivos_servicio", views_genericos.GenericList)
 router.get("/estados_expediente", views_genericos.GenericList)
 
 
+
 router.get("/paises/:id", views_genericos.ListarDepartamentos);
 router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
 

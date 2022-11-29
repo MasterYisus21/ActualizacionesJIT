@@ -6,6 +6,7 @@ const views = {};
 const error = require("../requests/requests_error.js")
 const config = require("../config.json");
 const requests = require("../requests/requests_generales.js");
+const { query } = require("express");
 
 
 //listar Seleccionables Principales
@@ -213,13 +214,11 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
 
 views.Listar_Estados_solicitud = async (req, res) => {
   try {
-    axios.get(config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion)
-      .then(result => {
-        res.status(200).json(result.data)
-      })
-      .catch(err => {
-        res.sendStatus(error(err))
-      })
+    if(!req.query.count){req.query.count=10}
+    const url = config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion 
+    requests.get(req, res, url, "&")
+   
+
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
