@@ -8,17 +8,20 @@ import "./PaginaPrincipal.css";
 
 function PaginaPrincipal() {
   return (
-    <div>
-      <div className="warpp-main-pantalla-principal">
-        <div className="logo-universidad-movil">
-          <img className="imagen-logo-principal" src={"./images/logo-ugc.png"} alt="" />
+      <div className="wrapp-main-pantalla-principal">
+        <div className="uno">
+          <div className="logo-universidad-movil">
+            <img className="imagen-logo-principal" src={"./images/logo-ugc.png"} alt="" />
+          </div>
+          <div className="contenedor-rectangulo-grande">
+            <BarRectangulo text="Centros de conciliación" />
+          </div>
+          <div className="logo-pagina-escritorio">
+            <img className="imagen-logo-principal2" src={"./images/logo_universidad_texto.png"} alt="" />
+          </div>
         </div>
-        <div className="contenedor-rectangulo-grande">
-          <BarRectangulo text="Centros de conciliación" />
-        </div>
-        <div className="logo-pagina-escritorio">
-          <img className="imagen-logo-principal2" src={"./images/logo_universidad_texto.png"} alt="" />
-        </div>
+
+        <div className="dos">
         <div className="cuerpo-principal">
           <Link to="/registrarsolicitud" className="text-decoration-none carta-solicitud">
             <div className="contenedor-descripcion">
@@ -48,12 +51,12 @@ function PaginaPrincipal() {
               <img className="imagen_solicitud" src={"./images/imagen-consultar.jpg"} alt="" />
             </div>
           </Link>
-          <Link to="login">
-            <button className="boton-ingreso">Ingresar</button>
+          <Link to="login" className="boton-ingreso">
+            Ingresar
           </Link>
         </div>
       </div>
-    </div>
+        </div>
   );
 }
 
