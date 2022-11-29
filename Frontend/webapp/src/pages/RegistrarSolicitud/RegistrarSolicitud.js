@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react"
 import { BarRectangulo, SubtemaRectangulo } from "../../components";
+import { useDropzone } from "react-dropzone"
+
 
 // Importing css
 import "./RegistrarSolicitud.css";
@@ -16,29 +18,56 @@ function RegistrarSolicitud() {
   const [formulario, setFormulario] = useState(new FormData());
   const [filelength, setFilelength] = useState([]);
 
-  function Crear_anexo() {
-    const oldElement = document.getElementById("subir-anexo");
-    const newElement = document.createElement("input");
-    // const texto = document.createTextNode('Hola Mundo')
-    newElement.classList.add("input");
-    newElement.setAttribute("type", "file");
-    newElement.setAttribute("className", "inputs-registrar-solicitud");
-    // newElement.appendChild(texto);
-    oldElement.appendChild(newElement);
+  // function Crear_anexo() {
+  //   const oldElement = document.getElementById("subir-anexo");
+  //   const newElement = document.createElement("input");
+
+  //   newElement.classList.add("input");
+  //   newElement.setAttribute("type", "file");
+  //   newElement.setAttribute("className", "inputs-registrar-solicitud");
+  //   // newElement.appendChild(texto);
+  //   oldElement.appendChild(newElement);
+  // }
+
+  // const handleFile = (e) => {
+  //   e.preventDefault();
+  //   console.log(e.target.file.files[0]);
+  //   let form = new FormData();
+  //   for (const pair of formulario.entries()) {
+  //     console.log(`${pair[0]}, ${pair[1]}`);
+  //     form.append(pair[0], pair[1]);
+  //   }
+  //   form.append("files", e.target.file.files[0]);
+  //   setFormulario(form);
+  //   setFilelength([...filelength, e.target.file.files[0].name]);
+  // };
+
+  const [myFiles, setMyFiles] = useState([])
+
+  const onDrop = useCallback(acceptedFiles => {
+    setMyFiles([...myFiles, ...acceptedFiles])
+  }, [myFiles])
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+  })
+
+  const removeFile = file => () => {
+    const newFiles = [...myFiles]
+    newFiles.splice(newFiles.indexOf(file), 1)
+    setMyFiles(newFiles)
   }
 
-  const handleFile = (e) => {
-    e.preventDefault();
-    console.log(e.target.file.files[0]);
-    let form = new FormData();
-    for (const pair of formulario.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`);
-      form.append(pair[0], pair[1]);
-    }
-    form.append("files", e.target.file.files[0]);
-    setFormulario(form);
-    setFilelength([...filelength, e.target.file.files[0].name]);
-  };
+  const removeAll = () => {
+    setMyFiles([])
+  }
+
+  const files = myFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes{" "}
+      <button onClick={removeFile(file)}>Remove File</button>
+    </li>
+  ))
 
   return (
     <div className="wrapp-main-registrar-solicitud">
@@ -348,7 +377,8 @@ function RegistrarSolicitud() {
             <label className="subtitles-secciones">Recibo Público</label>
             <Form.Control className="inputs-registrar-solicitud" type="file" />
             <label className="subtitles-secciones">Anexos</label>
-            {filelength.map((valor) => {
+            
+            {/* {filelength.map((valor) => {
               return (<div>{valor}</div>)
             })}
 
@@ -359,14 +389,27 @@ function RegistrarSolicitud() {
               </div>
               <input type="submit" />
             </form>
-            <div id="subir-anexo"></div>
-            <button
+            <div id="subir-anexo"></div> */}
+            {/* <button
               id="btn"
               onClick={() => Crear_anexo()}
               className="boton-subir-anexos"
             >
               Subir más anexos
-            </button>
+            </button> */}
+
+            <section className="container">
+              <div {...getRootProps({className: 'dropzone'})}>
+                <input {...getInputProps()} />
+                <p>Seleciona los archivos que deseas subir</p>
+              </div>
+              <aside>
+                <h4>Archivos</h4>
+                <ul>{files}</ul>
+              </aside>
+              { files.length > 0 && <button onClick={removeAll}>Remove All</button> }
+            </section>
+
           </div>
         </Collapse>
       </div>

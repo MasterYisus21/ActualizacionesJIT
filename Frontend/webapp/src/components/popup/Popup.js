@@ -148,8 +148,8 @@ export default function Popup({text, setEstado, estado}){
                     </div>
                     
                     <div className="wrapp-botones">
-                        <button>Modificar</button>
-                        <button>Cancelar</button>
+                        <button className='botones-popup'>Modificar</button>
+                        <button className='botones-popup'>Cancelar</button>
                     </div>
                 </div>
             </div>

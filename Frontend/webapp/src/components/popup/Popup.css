@@ -34,11 +34,12 @@
 
 .form-popup{
     position: relative;
-    padding: 3em;
+    padding-left: 3em;
+    padding-right: 3em;
+    padding-bottom: 1em;
     display: flex;
     flex-direction: column;
     gap: .3em;
-    overflow-x: auto;
 }
 
 .boton-cerrar-popup{
@@ -68,4 +69,23 @@
 
 .input-fecha-nacimiento{
     display: flex;
+}
+
+.wrapp-botones{
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}
+
+.botones-popup{
+    width: 10em;
+    border: 0;
+    border-radius: 0.5em;
+    padding: .5em;
+}
+
+.botones-popup:hover{
+    background-color: #00913D;
+    color: white;
 }
