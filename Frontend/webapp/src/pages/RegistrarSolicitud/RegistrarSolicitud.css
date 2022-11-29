@@ -79,6 +79,21 @@
     padding: .6em;
     background-color: #00913D;
     color: white;
+    margin: 0;
+}
+
+.wrapp-visualizacion-anexos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    align-items: center;
+}
+
+.lista-anexos{
+    gap: 2em;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Versión < 700px Tablets y Escritorios*/

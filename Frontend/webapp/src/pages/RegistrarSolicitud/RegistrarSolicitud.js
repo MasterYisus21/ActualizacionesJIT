@@ -58,15 +58,11 @@ function RegistrarSolicitud() {
     setMyFiles(newFiles)
   }
 
-  const removeAll = () => {
-    setMyFiles([])
-  }
-
   const files = myFiles.map(file => (
-    <li key={file.path}>
+    <div className="wrapp-visualizacion-anexos" key={file.path}>
       {file.path} - {file.size} bytes{" "}
-      <button onClick={removeFile(file)}>Remove File</button>
-    </li>
+      <button className="boton-subir-anexos" onClick={removeFile(file)}>Eliminar</button>
+    </div>
   ))
 
   return (
@@ -398,16 +394,15 @@ function RegistrarSolicitud() {
               Subir más anexos
             </button> */}
 
-            <section className="container">
+            <section className="form-datos">
               <div {...getRootProps({className: 'dropzone'})}>
                 <input {...getInputProps()} />
-                <p>Seleciona los archivos que deseas subir</p>
+                <h6 className="boton-subir-anexos">Subir anexos</h6>
               </div>
-              <aside>
-                <h4>Archivos</h4>
-                <ul>{files}</ul>
+              <aside className="lista-anexos">
+                {files}
               </aside>
-              { files.length > 0 && <button onClick={removeAll}>Remove All</button> }
+              { files.length > 0}
             </section>
 
           </div>
