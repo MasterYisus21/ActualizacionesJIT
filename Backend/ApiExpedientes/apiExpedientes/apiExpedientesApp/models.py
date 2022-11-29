@@ -277,12 +277,13 @@ def increment_numero_caso_number():
     
     if año_registro!=year:
         return str(year)+"-" +'001'
-    
+    print("entreeeeeeeeeeeeeeeeeeeeeeee")
     solicitud_id = ultima_solicitud.numero_caso
     position_int=str(solicitud_id).index('-')
     solicitud_int = int(solicitud_id[position_int+1:])
     new_solicitud_int = solicitud_int + 1
-
+    new_solicitud_id = str(year)+"-"+ str(new_solicitud_int).zfill(3)
+    return new_solicitud_id
 
 
 class Localidad(GeneralModel):
@@ -428,7 +429,7 @@ class Persona(EstadoModel):
   
     nombres = models.CharField(max_length = 25,blank=False,null=False)
     apellidos = models.CharField(max_length= 25, blank=False, null=False)
-    identificacion = models.CharField(max_length=25, blank=False, null=False,unique=True)
+    identificacion = models.CharField(max_length=25, blank=False, null=False)
     fecha_expedicion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     lugar_expedicion = models.CharField(max_length=20, blank=True, null=True)
     fecha_nacimiento = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
@@ -538,8 +539,8 @@ class Estado_expediente(GeneralModel):
         return self.nombre
 class Expediente(EstadoModel):
 
-    numero_radicado = models.CharField(max_length =20,null=False,blank=False,unique=True,editable=False)
-    numero_caso = models.CharField(max_length =10,null=False,blank=False,default=increment_numero_caso_number,unique=True,editable=False)
+    numero_radicado = models.CharField(max_length =20,editable=False,null=False,blank=True)
+    numero_caso = models.CharField(max_length=25,default = increment_numero_caso_number,editable=False,unique=True)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     caso_gratuito= models.BooleanField(default=True, blank=True,null=True)
     asunto_juridico_definible= models.BooleanField(default=False, blank=False,null=False)
@@ -566,7 +567,7 @@ class Expediente(EstadoModel):
         return str(self.numero_caso)
 
 
-class Relacion_persona_expediente(GeneralModel):
+class Relacion_persona_expediente(EstadoModel):
     
     expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
     persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
@@ -577,7 +578,7 @@ class Relacion_persona_expediente(GeneralModel):
         verbose_name_plural = ("Relaciones_persona_expediente")
 
     def __str__(self):
-        return self.nombre
+        return '%s %s' % (self.expediente_id, self.tipo_cliente_id)
 
 
 class Historico(models.Model):
@@ -638,7 +639,7 @@ class Hechos(EstadoModel):
         verbose_name = ('Hechos')
         verbose_name_plural = ('Hechos')
     def __str__(self):
-        return str(self.id)
+        return '%s' % (self.expediente_id)
 
 class Medio_seguimiento(GeneralModel):
 

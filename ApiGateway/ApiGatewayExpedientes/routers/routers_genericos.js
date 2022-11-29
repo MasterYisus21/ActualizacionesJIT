@@ -32,5 +32,6 @@ router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
 
 
 router.post("/expedientes",archivo.uploadMiddleware, views_genericos.CrearExpediente)
+router.post("/documentos/:id",archivo.uploadMiddleware, views_genericos.CargarDocumentos)
 
 module.exports = router;
