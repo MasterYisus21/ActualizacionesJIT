@@ -124,6 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CORS_ALLOWED_ORIGINS = [
 'http://localhost',
+'http://0.0.0.0'
 ]
 
 
