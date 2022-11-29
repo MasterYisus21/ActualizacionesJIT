@@ -44,7 +44,7 @@ views.CrearExpediente = async (req, res) => {
       axios.post(config.urlExpedientes + "apoderados/", req.body.apoderado)
 
         .catch(err => {
-
+          console.log(config.urlExpedientes + "apoderados/")
           if (err.response.data.identificacion) {
             axios.patch(config.urlExpedientes + "apoderados/" + req.body.apoderado.identificacion + "/", req.body.apoderado)
 
@@ -54,6 +54,7 @@ views.CrearExpediente = async (req, res) => {
               })
             return
           }
+          
           error(err)
           return
         })
@@ -64,39 +65,41 @@ views.CrearExpediente = async (req, res) => {
     datos=[]
     datos.push(req.body.convocante)
     datos.push(req.body.convocado)
-    const personas = [config.urlExpedientes + "personas/", datos]
-    const expediente = [config.urlExpedientes + "expedientes/", req.body.solicitud]
-    let endpoints = [personas, expediente]
-    
-    Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
-    .then(axios.spread(async (data1, data2) => {
+    console.log(req.body.convocado)
 
-      req.params.id = data2.data.id
-      req.body.hechos[0].expediente_id = data2.data.id
-      const relacion_convocante_expediente = [config.urlExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
-      const relacion_convocado_expediente = [config.urlExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
-      const hechos = [config.urlExpedientes + "hechos/", req.body.hechos[0]]
-      const documentos = views.CargarDocumentos(req, res)
-      endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, hechos]
-      await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
-        .then(axios.spread((data3, data4, data5) => {
-          res.status(201).json(data2.data)
-          // res.status(201).json(data2.data[0])
+  //   const personas = [config.urlExpedientes + "personas/", datos]
+  //   const expediente = [config.urlExpedientes + "expedientes/", req.body.solicitud]
+  //   let endpoints = [personas, expediente]
+  //   console.log(config.urlExpedientes + "personas/")
+  //  await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
+  //   .then(axios.spread(async (data1, data2) => {
 
-        }))
-        .catch(err => {
+  //     req.params.id = data2.data.id
+  //     req.body.hechos[0].expediente_id = data2.data.id
+  //     const relacion_convocante_expediente = [config.urlExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
+  //     const relacion_convocado_expediente = [config.urlExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
+  //     const hechos = [config.urlExpedientes + "hechos/", req.body.hechos[0]]
+  //     // const documentos = views.CargarDocumentos(req, res)
+  //     endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, hechos]
+  //     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
+  //       .then(axios.spread((data3, data4, data5) => {
+  //         res.status(201).json(data2.data)
+  //         // res.status(201).json(data2.data[0])
 
-          res.sendStatus(error(err))
-          return
+  //       }))
+  //       .catch(err => {
 
-        })
+  //         res.sendStatus(error(err))
+  //         return
 
-    }))
-    .catch(err => {
+  //       })
 
-      res.sendStatus(error(err))
-      return
-    })
+  //   }))
+  //   .catch(err => {
+
+  //     res.sendStatus(error(err))
+  //     return
+  //   })
   }catch (error) {
     console.log(error);
     res.sendStatus(500);
