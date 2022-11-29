@@ -15,11 +15,9 @@
 
 .popup{
     background-color: #fff;
-    border-radius: 15px;
+    border-radius: 1.5em;
     display: grid;
     grid-template-columns: 2fr 3fr;
-    height: fit-content;
-    min-height: 80%;
     width: fit-content;
 }
 
@@ -30,22 +28,23 @@
     padding: 3em;
     background-color: #00460F;
     color: white;
-    border-bottom-left-radius: 15px;
-    border-top-left-radius: 15px;
+    border-bottom-left-radius: 1.5em;
+    border-top-left-radius: 1.5em;
 }
 
 .form-popup{
     position: relative;
-    padding: 0em;
+    padding: 3em;
     display: flex;
     flex-direction: column;
-    gap: .7em;
+    gap: .3em;
+    overflow-x: auto;
 }
 
 .boton-cerrar-popup{
     position: absolute;
-    top: .3em;
-    right: .3em;
+    top: 1em;
+    right: 1em;
     width: 1.7em;
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
@@ -60,14 +59,13 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    gap: 2em;
+    gap: 1em;
 }
 
 .inputs-personas{
-    display: flex;
-    width: 20em;
+    width: 25em;
 }
 
 .input-fecha-nacimiento{
-    width: 10em;
+    display: flex;
 }

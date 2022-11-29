@@ -9,6 +9,7 @@ import "./PaginaPrincipal.css";
 function PaginaPrincipal() {
   return (
       <div className="wrapp-main-pantalla-principal">
+
         <div className="uno">
           <div className="logo-universidad-movil">
             <img className="imagen-logo-principal" src={"./images/logo-ugc.png"} alt="" />
@@ -23,37 +24,25 @@ function PaginaPrincipal() {
 
         <div className="dos">
         <div className="cuerpo-principal">
-          <Link to="/registrarsolicitud" className="text-decoration-none carta-solicitud">
+          <Link to="/registrarsolicitud" className="carta-consulta-solicitud">
             <div className="contenedor-descripcion">
-              <div className="contenido-descripcion">
                 <label className="titulo">Haz tu solicitud</label>
-                <label className="contenido">Aquí podrás consultar y hacer seguimiento de tu caso</label>
-                <div className="contenedor-label">
-                  <label className="contenido2">Aquí podrás realizar una solicitud sin ningún registro previo</label>
-                </div>
-              </div>
+                <label className="contenido contenindo2">Aquí podrás consultar y hacer seguimiento de tu caso</label>
             </div>
             <div className="contenedor-imagen">
               <img className="imagen_solicitud" src={"./images/imagen-solicitud.jpg"} alt="" />
             </div>
           </Link>
-          <Link to="/consultar" className="text-decoration-none carta-solicitud">
+          <Link to="/consultar" className="carta-consulta-solicitud">
             <div className="contenedor-descripcion">
-              <div className="contenido-descripcion">
                 <label className="titulo">Consulta tu solicitud</label>
-                <label className="contenido">Aquí podrás consultar y hacer seguimiento de tu caso</label>
-                <div className="contenedor-label">
-                  <label className="contenido2">Aquí podrás consultar y hacer seguimiento de tu caso</label>
-                </div>
-              </div>
+                <label className="contenido contenido2">Aquí podrás consultar y hacer seguimiento de tu caso</label>
             </div>
             <div className="contenedor-imagen">
               <img className="imagen_solicitud" src={"./images/imagen-consultar.jpg"} alt="" />
             </div>
           </Link>
-          <Link to="login" className="boton-ingreso">
-            Ingresar
-          </Link>
+          <Link to="login" className="boton-ingreso">Ingresar</Link>
         </div>
       </div>
         </div>
