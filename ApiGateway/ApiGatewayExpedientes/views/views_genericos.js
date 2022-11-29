@@ -34,26 +34,21 @@ views.GenericList = async (req, res) => {
 
 views.CrearExpediente = async (req, res) => {
   try {
-    req.body = JSON.parse(req.body.datos)
 
+    req.body = JSON.parse(req.body.datos)
+    console.log(req.body.apoderado)
     if (req.body.apoderado) {
 
 
       if (!(req.body.apoderado.identificacion & req.body.apoderado.identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
-      req.body.convocante.apoderado_id = req.body.apoderado.identificacion
+     
       axios.post(config.urlExpedientes + "apoderados/", req.body.apoderado)
-
+      .then((result) => {
+        req.body.convocante.apoderado_id = result.data.result.id
+        res.status(200).json(result.data)
+      })
         .catch(err => {
-          console.log(config.urlExpedientes + "apoderados/")
-          if (err.response.data.identificacion) {
-            axios.patch(config.urlExpedientes + "apoderados/" + req.body.apoderado.identificacion + "/", req.body.apoderado)
-
-              .catch(err => {
-                error(err)
-                return
-              })
-            return
-          }
+         
           
           error(err)
           return
@@ -62,10 +57,10 @@ views.CrearExpediente = async (req, res) => {
 
     }
 
-    datos=[]
-    datos.push(req.body.convocante)
-    datos.push(req.body.convocado)
-    console.log(req.body.convocado)
+    // datos=[]
+    // datos.push(req.body.convocante)
+    // datos.push(req.body.convocado)
+    // console.log(req.body.convocado)
 
   //   const personas = [config.urlExpedientes + "personas/", datos]
   //   const expediente = [config.urlExpedientes + "expedientes/", req.body.solicitud]
