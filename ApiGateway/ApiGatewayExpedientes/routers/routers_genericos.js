@@ -24,6 +24,8 @@ router.get("/tipos_cliente", views_genericos.GenericList)
 router.get("/temas", views_genericos.GenericList)
 router.get("/objetivos_servicio", views_genericos.GenericList)
 router.get("/estados_expediente", views_genericos.GenericList)
+router.get("/expedientes", views_genericos.GenericList)
+router.get("/personas", views_genericos.GenericList)
 
 
 

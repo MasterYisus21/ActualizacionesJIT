@@ -8,6 +8,7 @@ const multer = require("multer");
 const fs = require('fs');
 const unirest = require('unirest');
 const FormData = require('form-data');
+const path = require("path");
 
 
 views.GenericList = async (req, res) => {
@@ -84,8 +85,11 @@ views.CrearExpediente = async (req, res) => {
           
           //get res.status(201).json(data2.data[0])
           axios.get(req.body.documentos.results[0].documento,{ responseType: 'arraybuffer' })
-            .then(result=>{
-              
+            .then(async result=>{
+              fs.writeFile("./public/"+req.body.documentos.results[0].nombre,result.data,()=>{})
+             console.log( result.data.constructor.name)
+              res.json(result.data)
+              // res.end(result.data)
           })
             .catch(err => {
               res.sendStatus(error(err))
