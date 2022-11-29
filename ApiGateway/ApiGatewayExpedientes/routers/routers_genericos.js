@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 const router = express.Router();
-
+const archivo = require("../views/cargar_documentos.js")
 const config = require("../config.json");
 
 const views_genericos = require("../views/views_genericos");
@@ -26,8 +26,11 @@ router.get("/objetivos_servicio", views_genericos.GenericList)
 router.get("/estados_expediente", views_genericos.GenericList)
 
 
+
 router.get("/paises/:id", views_genericos.ListarDepartamentos);
 router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
 
+
+router.post("/expedientes",archivo.uploadMiddleware, views_genericos.CrearExpediente)
 
 module.exports = router;

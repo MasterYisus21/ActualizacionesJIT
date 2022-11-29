@@ -51,24 +51,4 @@ function PaginaPrincipal() {
 
 export default PaginaPrincipal;
 
-{
-  /* <nav>
-  <ul>
-    <li style={{listStyle: "none"}}>
-      <Link to="/">PaginaPrincipal</Link>
-    </li>
-    <li style={{listStyle: "none"}}>
-      <Link to="/login">Login</Link>
-    </li>
-    <li style={{listStyle: "none"}}>
-      <Link to="/consultar">Consultar</Link>
-    </li>
-    <li style={{listStyle: "none"}}>
-      <Link to="/dashboard/expedientes">Dashboard</Link>
-    </li>
-    <li style={{listStyle: "none"}}>
-      <Link to="/nothing-here">Nothing Here</Link>
-    </li>
-  </ul>
-</nav> */
-}
+

@@ -406,7 +406,7 @@ class Apoderado(EstadoModel):
  
     nombres = models.CharField(max_length = 25,blank=False,null=False)
     apellidos = models.CharField(max_length= 25, blank=False, null=False)
-    identificacion = models.CharField(max_length=25, blank=False, null=False,unique=True)
+    identificacion = models.CharField(max_length=25, blank=False, null=False)
     lugar_expedicion = models.CharField(max_length=20, blank=False, null=False)
     telefono = models.CharField(max_length=10, blank=True, null=True)
     celular = models.CharField(max_length=15, blank=False, null=False)

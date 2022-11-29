@@ -9,6 +9,7 @@ const archivo = require("../views/cargar_documentos.js")
 router.get("/tipos_documento", views_genericos.SeleccionablesPricipales);
 router.get("/tipos_persona", views_genericos.SeleccionablesPricipales);
 router.get("/generos", views_genericos.SeleccionablesPricipales);
+router.get("/paises", views_genericos.SeleccionablesPricipales);
 router.get("/sexos", views_genericos.SeleccionablesPricipales);
 router.get("/estratos_socioeconomicos", views_genericos.SeleccionablesPricipales);
 router.get("/solicitudes",views_genericos.ListarSolicitudes);

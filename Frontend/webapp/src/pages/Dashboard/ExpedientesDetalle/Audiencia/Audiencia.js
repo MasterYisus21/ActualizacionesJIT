@@ -66,32 +66,6 @@ function Audiencia() {
               />
             </div>
           </div>
-          {/* <div className='contenedor-fecha'>
-            <label>Fecha de la sesión:</label>
-            <input type="date" className="form-control form-control-sm col mb-3 "  id="exampleFormControlInput1" required></input>
-            <label>Descripción:</label>
-            <textarea className="form-control form-control-sm" rows="2" required></textarea>
-          </div>
-          <div className='contenedor-hora'>
-            <label>Hora:</label>
-            <div className='contenedor-hora-seleccionable'>
-              <select className="form-select form-select-sm mb-3" required>
-                <option key={""} value="">Seleccione</option>
-              </select>
-            </div>
-            <label>Tipo de medio</label>
-            <div className='separador-virtual-presencial'>
-              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-              <label className="label-virtual">Virtual </label>
-              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-              <label className="label-presencial">Presencial </label>
-              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-              <label className="label-mixto">Mixto </label>
-            </div>
-            <div className='contenedor-disabled'>
-              <input type="url" className="input-disabled " placeholder="link" disabled></input>
-            </div>
-          </div> */}
         </div>
         <div className='contenedor-imagen-guardar'>
           <img src='/icons/save.svg' className='icono-guardar' />
@@ -118,7 +92,7 @@ function Audiencia() {
               <td>
                 <form onSubmit={event => { }}>
                   <button className='btn btn-outline btn-sm' name="identificacion">
-                    <img className='mini-image' src="/icons/down_icon_1.png"></img>
+                    <img className='mini-image' src="/images/arrow-down.svg"></img>
                   </button>
                 </form>
               </td>
@@ -148,7 +122,7 @@ function Audiencia() {
               <td>
                 <form onSubmit={event => { }}>
                   <button className='btn btn-outline btn-sm' name="identificacion">
-                    <img className='mini-image' src="/icons/up_icon_1.png"></img>
+                    <img className='mini-image' src="/images/arrow-up.svg"></img>
                   </button>
                 </form>
               </td>

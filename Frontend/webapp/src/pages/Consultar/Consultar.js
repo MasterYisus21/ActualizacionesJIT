@@ -42,7 +42,7 @@ function Consultar() {
         </div>
         <div className='contenedor-consultar-documento'>
           <div className='rectangulo-pregunta-documento'>
-            <Form className="g-2"
+            <Row className="g-2"
               onSubmit={e=>{search(e)}}
             >
               <Col md className='seleccionable-cedula'>
@@ -50,6 +50,9 @@ function Consultar() {
                   controlId="floatingSelectGrid"
                   label="Tipo de documento"
                 >
+
+{/* seleccionable tipo de cedula */}
+
                   <Form.Select className='opciones-cedula' aria-label="Floating label select example">
                     <option>Abre el menú para ver las opciones</option>
                     <option value="1">Cédula de ciudadanía</option>
@@ -66,7 +69,12 @@ function Consultar() {
                   <Form.Control type="email" placeholder="name@example.com" />
                 </FloatingLabel>
               </Col>
-            </Form>
+
+            </Row>
+            <div className='contenedor-boton-buscar'>
+              <button className='boton-buscar-consultar'>Buscar<img className="icono-buscar-consultar" src={"./images/buscar.svg"} alt="" /></button>
+            </div>
+
           </div>
         </div>
         <div className='cuerpo-consulta'>
