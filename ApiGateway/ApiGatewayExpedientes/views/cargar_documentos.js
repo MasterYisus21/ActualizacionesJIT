@@ -46,7 +46,8 @@ archivo.uploadMiddleware = (req,res,next)=>{
          next(err)
          } else if (err) {
          // An unknown error occurred when uploading.
-         res.sendStatus( error({message:"Formato no valido"},415))
+         console.log(err)
+         res.sendStatus( error({message:"Formato no valido o falta carpeta public en el servidor"},415))
          return
          
        }
