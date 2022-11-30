@@ -132,16 +132,20 @@ class ExpedienteFilter(FilterSet):
 class ExpedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
     serializer_class = ExpedienteSerializer
-    search_fields=['numero_caso','fecha_registro','tipo_servicio_id__nombre','subtema_id__nombre']
+    search_fields=['numero_caso','fecha_registro','tipo_servicio_id__nombre','subtema_id__nombre','numero_radicado']
     filter_class = ExpedienteFilter
 class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_clienteSerializer
 
 class Relacion_persona_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
-
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = '__all__'
+    ordering_fields = '__all__'
+    
+    search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro']
     serializer_class = Relacion_persona_expedienteSerializer
-
+    
 class Estado_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Estado_expedienteSerializer

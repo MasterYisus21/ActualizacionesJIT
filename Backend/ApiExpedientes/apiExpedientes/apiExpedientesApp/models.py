@@ -277,7 +277,7 @@ def increment_numero_caso_number():
     
     if año_registro!=year:
         return str(year)+"-" +'001'
-    print("entreeeeeeeeeeeeeeeeeeeeeeee")
+
     solicitud_id = ultima_solicitud.numero_caso
     position_int=str(solicitud_id).index('-')
     solicitud_int = int(solicitud_id[position_int+1:])
