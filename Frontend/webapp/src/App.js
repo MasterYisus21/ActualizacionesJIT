@@ -26,8 +26,8 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="registrarsolicitud" element={<RegistrarSolicitud />} />
           <Route path="consultar/" element={<Consultar />}/>
-          <Route path='consultar/expediente/:id' element={<Expediente />} />
-          <Route path='consultar/solicitud/:id' element={<Solicitud />} />
+          <Route path='consultar/expedientes/:id' element={<Expediente />} />
+          <Route path='consultar/solicitudes/:id' element={<Solicitud />} />
           <Route path="dashboard/" element={<Dashboard />} >
             <Route path='expedientes' element={<Expedientes />} />
             <Route path='expedientes/detalle/' element={<ExpedientesDetalle />} >
