@@ -260,9 +260,26 @@ views.DescargarDocumentos = async (req, res) => {
 
 views.AprobarSolicitud = async (req, res) => {
   try {
-    axios.patch(config.urlApiSolicitudes + "solicitudes/" + req.params.id + "/", { estado_solicitud_id: req.body.estado_solicitud_id })
-      .then(result => {
+    axios.patch(config.urlApiSolicitudes + "solicitudes/" + req.params.id + "/", req.body)
+      .then(async result => {
         res.status(200).json(result.data)
+        // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
+        if(req.body.estado_solicitud_id==2){
+          await axios.get(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
+            .then(async result=>{
+              
+             await axios.post(config.urlGatewayExpedientes+"expedientes/",result.data)
+             .catch(err => {
+              error(err)
+              return
+            })
+          })
+            .catch(err => {
+              error(err)
+              return
+            })
+        }
+        
       })
       .catch(err => {
         res.sendStatus(error(err))
