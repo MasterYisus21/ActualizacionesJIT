@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Col from 'react-bootstrap/Col';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
@@ -15,26 +15,42 @@ import './Consultar.css'
 function Consultar() {
 
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
+  const [documento, setDocumento] = useState(0)
+  const [page, setPage] = useState(1)
 
-  const currentPage = 1;
+  let currentPage = 1;
 
-  const search = (e) => {
-    e.preventDefault()
+  const search = () => {
+
     // console.log(e.target.documento.value)
     axiosBasicInstanceApiSolicitudes({
       method: 'get',
-      url: "/estados_solicitudes/" + e.target.documento.value + "/?ordering=-id&count=3",
+      url: "/estados_solicitudes/" + documento + "/?ordering=-id&count=3&page=" + page,
       // headers: req.headers,
       data: {}
     })
       .then(result => {
-        // console.log(result.data);
-        setResultadosBusqueda(result.data.results)
+        console.log(result.data);
+        setResultadosBusqueda([...resultadosBusqueda, ...result.data.results])
       })
       .catch(err => {
         console.log("error");
       });
   }
+
+  useEffect(() => {
+    setResultadosBusqueda([]);
+    search()
+  }, [documento])
+
+  useEffect(() => {
+    if (page != 1) {
+      search()
+    }
+  }, [page])
+
+
+
 
   return (
     <div>
@@ -45,7 +61,7 @@ function Consultar() {
         <div className='contenedor-consultar-documento'>
           <div className='rectangulo-pregunta-documento'>
             <Row className="g-2">
-              <Form onSubmit={e => { search(e) }}>
+              <Form onSubmit={e => { e.preventDefault(); setPage(1); setDocumento(e.target.documento.value); }}>
                 <Col md className='seleccionable-cedula'>
                   <FloatingLabel
                     controlId="floatingSelectGrid"
@@ -85,19 +101,19 @@ function Consultar() {
               return (
                 <div className='carta-caso-consulta'>
                   <div className='contenedor-rectangulo-tarjeta-consultar'>
-                    <RectanguloCelular text="Número de Radicado 12345" />
+                    <RectanguloCelular text={resultado["numero_radicado"]} />
                   </div>
                   <div className='contenedor-caso-consulta'>
                     <div className='lado-izquierdo'>
                       <div className='orden-lado-izquierdo'>
                         <label className='estado-consulta'>Estado:</label>
-                        <label className='fecha-consulta'>Asignada</label>
+                        <label className='fecha-consulta'>{resultado["estado_solicitud"]}</label>
                       </div>
                     </div>
                     <div className='centro'>
                       <div className='orden-centro'>
                         <label className='estado-consulta'>Radicado:</label>
-                        <label className='fecha-consulta'>R2022102436546</label>
+                        <label className='fecha-consulta'>{resultado["numero_radicado"]}</label>
                       </div>
                     </div>
                     <div className='lado-derecho'>
@@ -107,10 +123,11 @@ function Consultar() {
                       </div>
                     </div>
                   </div>
+                  <Link to={""} >entrar</Link>
                 </div>
               )
             })}
-
+            <button onClick={e => { setPage(page + 1) }} >Cargar mas</button>
           </div>
         </div>
       </div>
