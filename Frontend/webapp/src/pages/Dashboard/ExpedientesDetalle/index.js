@@ -10,9 +10,8 @@ import { ManejoConflicto } from "./ManejoConflicto"
 import { Audiencia } from "./Audiencia"
 import { Resultado } from "./Resultado"
 import { EvaluacionServicio } from "./EvaluacionServicio"
-import { Liquidacion } from "./Liquidacion"
 import { Seguimientos } from "./Seguimientos"
 
 export {
-    ExpedientesDetalle, DatosGenerales, Convocantes, Convocados, Hechos, Documentos, Conciliador, Estudiantes, ManejoConflicto, Audiencia, Resultado, EvaluacionServicio, Liquidacion, Seguimientos
+    ExpedientesDetalle, DatosGenerales, Convocantes, Convocados, Hechos, Documentos, Conciliador, Estudiantes, ManejoConflicto, Audiencia, Resultado, EvaluacionServicio, Seguimientos
 }

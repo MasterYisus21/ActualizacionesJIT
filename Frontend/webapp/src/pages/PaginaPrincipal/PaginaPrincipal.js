@@ -27,7 +27,7 @@ function PaginaPrincipal() {
           <Link to="/registrarsolicitud" className="carta-consulta-solicitud">
             <div className="contenedor-descripcion">
                 <label className="titulo">Haz tu solicitud</label>
-                <label className="contenido contenindo2">Aquí podrás consultar y hacer seguimiento de tu caso</label>
+                <label className="contenido">Aquí podrás consultar y hacer seguimiento de tu caso</label>
             </div>
             <div className="contenedor-imagen">
               <img className="imagen_solicitud" src={"./images/imagen-solicitud.jpg"} alt="" />
@@ -36,7 +36,7 @@ function PaginaPrincipal() {
           <Link to="/consultar" className="carta-consulta-solicitud">
             <div className="contenedor-descripcion">
                 <label className="titulo">Consulta tu solicitud</label>
-                <label className="contenido contenido2">Aquí podrás consultar y hacer seguimiento de tu caso</label>
+                <label className="contenido">Aquí podrás consultar y hacer seguimiento de tu caso</label>
             </div>
             <div className="contenedor-imagen">
               <img className="imagen_solicitud" src={"./images/imagen-consultar.jpg"} alt="" />

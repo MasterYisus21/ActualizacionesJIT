@@ -275,3 +275,28 @@
     background-color: #00913D;
     color: white;
 }   
+
+.icon-drag-drop{
+    width: 10em;
+}
+
+.dropzone{
+    padding: 2em;
+    border-radius: 1.5em;
+    color:#00913D;
+    border: 5px solid #00913D;
+    border-style: dashed;
+}
+
+.dropzone:hover {
+    background-color: #bfd4c6;
+    color: white;
+    cursor: pointer;
+}
+
+.icon-close{
+    width: 1.5em;
+}
+.icon-close:hover {
+    color:#00913D;
+}
