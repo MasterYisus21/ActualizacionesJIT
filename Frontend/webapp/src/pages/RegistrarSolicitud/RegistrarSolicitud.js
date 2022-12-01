@@ -407,6 +407,7 @@ function RegistrarSolicitud() {
 
           </div>
         </Collapse>
+        <button id="btn" className="boton-subir-anexos mb-5">Enviar solicitud</button> 
       </div>
     </div>
   );
