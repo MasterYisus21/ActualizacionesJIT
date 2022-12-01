@@ -538,7 +538,7 @@ class Estado_expediente(GeneralModel):
      def __str__(self):
         return self.nombre
 class Expediente(EstadoModel):
-
+    
     numero_radicado = models.CharField(max_length =20,editable=True,null=False,blank=True)
     numero_caso = models.CharField(max_length=25,default = increment_numero_caso_number,editable=False,unique=True)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
@@ -573,6 +573,7 @@ class Relacion_persona_expediente(EstadoModel):
     persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL, blank=False, null=True)
     tipo_cliente_id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
+        ordering = ["-expediente_id"] 
         db_table='Relacion_persona_expediente'
         verbose_name = ("Relacion_persona_expediente")
         verbose_name_plural = ("Relaciones_persona_expediente")

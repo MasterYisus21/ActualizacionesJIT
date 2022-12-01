@@ -54,7 +54,7 @@ class Tipo_documentoSerializer(serializers.ModelSerializer):
 class Estado_solicitudSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Tipo_documento          # El modelo al que pertenece este serializador
+        model = Estado_solicitud        # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
 
