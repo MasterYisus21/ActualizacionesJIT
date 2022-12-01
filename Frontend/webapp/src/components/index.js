@@ -6,7 +6,8 @@ import {BarRectanguloPequeño} from  "./BarRectanguloPequeño"
 import {RectanguloCelular} from  "./RectanguloCelular"
 import TarjetaPersonas from './Tarjeta/TarjetaPersonas';
 import { Popup } from "./popup"
+import { SearchableSelect } from "./SearchableSelect"
 
 export {
-    BarRectangulo, SubtemaRectangulo, IconButton, Buscador, Tarjeta, BarRectanguloPequeño, RectanguloCelular, TarjetaPersonas, Popup,
+    BarRectangulo, SubtemaRectangulo, IconButton, Buscador, Tarjeta, BarRectanguloPequeño, RectanguloCelular, TarjetaPersonas, Popup, SearchableSelect
 }

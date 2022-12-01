@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from "react"
-import { BarRectangulo, SubtemaRectangulo } from "../../components";
+import React, { useState, useCallback, useEffect } from "react"
+import { BarRectangulo, SearchableSelect, SubtemaRectangulo } from "../../components";
 import { useDropzone } from "react-dropzone"
 
 
@@ -8,15 +8,19 @@ import "./RegistrarSolicitud.css";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Collapse from "react-bootstrap/Collapse";
+import { axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
+import { Button } from "../../components/Button";
 
 function RegistrarSolicitud() {
-  
+
   const [seccion1, setSeccion1] = useState(false);
   const [seccion2, setSeccion2] = useState(false);
   const [seccion3, setSeccion3] = useState(false);
   const [seccion4, setSeccion4] = useState(false);
   const [formulario, setFormulario] = useState(new FormData());
   const [filelength, setFilelength] = useState([]);
+  const [sexos, setSexos] = useState([])
+  const [generos, setGeneros] = useState([])
 
   // function Crear_anexo() {
   //   const oldElement = document.getElementById("subir-anexo");
@@ -65,6 +69,47 @@ function RegistrarSolicitud() {
     </div>
   ))
 
+  const submitForm = (event) => {
+    event.preventDefault()
+    console.log("sexo " + event.target.sexo.value);
+    console.log("genero " + event.target.genero.value);
+  }
+
+  // fetch sexos options
+  useEffect(() => {
+    axiosBasicInstanceApiSolicitudes({
+      method: 'get',
+      url: "/sexos/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setSexos(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+  // fetch generos options
+  useEffect(() => {
+    axiosBasicInstanceApiSolicitudes({
+      method: 'get',
+      url: "/generos/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setGeneros(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+
   return (
     <div className="wrapp-main-registrar-solicitud">
       <div className="heading-registrar-solicitud">
@@ -77,7 +122,7 @@ function RegistrarSolicitud() {
         </label>
       </div>
 
-      <div className="secciones-temas">
+      <Form className="secciones-temas" onSubmit={e => submitForm(e)}>
         {/* Parte 1 - DATOS SOLICITANTE ---------------------------------> */}
 
         <SubtemaRectangulo
@@ -183,16 +228,26 @@ function RegistrarSolicitud() {
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
+                name="sexo"
+                required
               >
-                <option>Abre el menú para ver las opciones</option>
+                <option value={""}>Abre el menú para ver las opciones</option>
+                {sexos.map(sexo => {
+                  return (<option key={"sexos" + sexo["id"]} value={sexo["id"]}>{sexo["nombre"]}</option>)
+                })}
               </Form.Select>
             </FloatingLabel>
             <FloatingLabel controlId="floatingSelectGrid" label="Género">
-              <Form.Select
+            <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
+                name="genero"
+                required
               >
-                <option>Abre el menú para ver las opciones</option>
+                <option value={""}>Abre el menú para ver las opciones</option>
+                {generos.map(genero => {
+                  return (<option key={"generos" + genero["id"]} value={genero["id"]}>{genero["nombre"]}</option>)
+                })}
               </Form.Select>
             </FloatingLabel>
 
@@ -373,7 +428,7 @@ function RegistrarSolicitud() {
             <label className="subtitles-secciones">Recibo Público</label>
             <Form.Control className="inputs-registrar-solicitud" type="file" />
             <label className="subtitles-secciones">Anexos</label>
-            
+
             {/* {filelength.map((valor) => {
               return (<div>{valor}</div>)
             })}
@@ -395,19 +450,27 @@ function RegistrarSolicitud() {
             </button> */}
 
             <section className="form-datos">
-              <div {...getRootProps({className: 'dropzone'})}>
+              <div {...getRootProps({ className: 'dropzone' })}>
                 <input {...getInputProps()} />
                 <h6 className="boton-subir-anexos">Subir anexos</h6>
               </div>
               <aside className="lista-anexos">
                 {files}
               </aside>
-              { files.length > 0}
+              {files.length > 0}
             </section>
 
           </div>
         </Collapse>
-      </div>
+        <Button
+          className={""}
+          type={"submit"}
+          linkto={""}
+          text={"Enviar"}
+          icon={""}
+          onClick={() => { }}
+        />
+      </Form>
     </div>
   );
 }
