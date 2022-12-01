@@ -8,7 +8,7 @@ const axiosBasicInstanceApiSolicitudes = axios.create({
 });
 
 const axiosBasicInstanceApiExpedientes = axios.create({
-    baseURL: config.ApiSolicitudes,
+    baseURL: config.ApiExpedientes,
     timeout: 1000,
     headers: { 'X-Custom-Header': 'foobar' }
 });
