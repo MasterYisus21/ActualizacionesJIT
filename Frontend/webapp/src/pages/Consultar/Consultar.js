@@ -31,7 +31,7 @@ function Consultar() {
     })
       .then(result => {
         console.log(result.data);
-        setResultadosBusqueda([...resultadosBusqueda, ...result.data.results])
+        setResultadosBusqueda([...resultadosBusqueda, ...result.data.solicitudes.results])
       })
       .catch(err => {
         console.log("error");
