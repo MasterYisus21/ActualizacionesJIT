@@ -21,6 +21,9 @@ function RegistrarSolicitud() {
   const [filelength, setFilelength] = useState([]);
   const [sexos, setSexos] = useState([])
   const [generos, setGeneros] = useState([])
+  const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([])
+  const [tiposPersona, setTiposPersona] = useState([])
+  const [tiposDocumento, setTiposDocumento] = useState([])
 
   // function Crear_anexo() {
   //   const oldElement = document.getElementById("subir-anexo");
@@ -109,6 +112,58 @@ function RegistrarSolicitud() {
       });
   }, [])
 
+  // fetch estratosSocieconomicos options
+  useEffect(() => {
+    axiosBasicInstanceApiSolicitudes({
+      method: 'get',
+      url: "/estratos_socioeconomicos/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setEstratosSocieconomicos(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+
+  // fetch tiposPersona options
+  useEffect(() => {
+    axiosBasicInstanceApiSolicitudes({
+      method: 'get',
+      url: "/tipos_persona/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setTiposPersona(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+  // fetch tiposDocumento options
+  useEffect(() => {
+    axiosBasicInstanceApiSolicitudes({
+      method: 'get',
+      url: "/tipos_documento/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        setTiposDocumento(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
 
   return (
     <div className="wrapp-main-registrar-solicitud">
@@ -135,15 +190,17 @@ function RegistrarSolicitud() {
         <Collapse in={seccion1}>
           <div className="form-datos">
             <label className="subtitles-secciones">Identificación</label>
-            <FloatingLabel
-              controlId="floatingSelectGrid"
-              label="Tipo de documento"
-            >
+            <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
+                name="genero"
+                required
               >
-                <option>Abre el menú para ver las opciones</option>
+                <option value={""}>Abre el menú para ver las opciones</option>
+                {tiposDocumento.map(tipoDocumento => {
+                  return (<option key={"tipoDocumento" + tipoDocumento["id"]} value={tipoDocumento["id"]}>{tipoDocumento["nombre"]}</option>)
+                })}
               </Form.Select>
             </FloatingLabel>
             <FloatingLabel
@@ -199,28 +256,21 @@ function RegistrarSolicitud() {
 
             <label className="subtitles-secciones">Tipo de Persona</label>
             <div className="d-flex gap-5">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault1"
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                  Natural
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault2"
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                  Jurídica
-                </label>
-              </div>
+              {tiposPersona.map(tipoPersona => {
+                return (
+                  <div key={"tipoPersona" + tipoPersona["id"]} className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                      {tipoPersona["nombre"]}
+                    </label>
+                  </div>
+                )
+              })}
             </div>
 
             <label className="subtitles-secciones">Sexo y Género</label>
@@ -238,7 +288,7 @@ function RegistrarSolicitud() {
               </Form.Select>
             </FloatingLabel>
             <FloatingLabel controlId="floatingSelectGrid" label="Género">
-            <Form.Select
+              <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
                 name="genero"
@@ -258,8 +308,13 @@ function RegistrarSolicitud() {
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
+                name="genero"
+                required
               >
-                <option>Abre el menú para ver las opciones</option>
+                <option value={""}>Abre el menú para ver las opciones</option>
+                {estratosSocieconomicos.map(estrato => {
+                  return (<option key={"estratos" + estrato["id"]} value={estrato["id"]}>{estrato["nombre"]}</option>)
+                })}
               </Form.Select>
             </FloatingLabel>
             <FloatingLabel controlId="floatingInputGrid" label="Dirección">
@@ -284,15 +339,17 @@ function RegistrarSolicitud() {
         <Collapse in={seccion2}>
           <div className="form-datos">
             <label className="subtitles-secciones">Identificación</label>
-            <FloatingLabel
-              controlId="floatingSelectGrid"
-              label="Tipo de documento"
-            >
+            <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
+                name="genero"
+                required
               >
-                <option>Abre el menú para ver las opciones</option>
+                <option value={""}>Abre el menú para ver las opciones</option>
+                {tiposDocumento.map(tipoDocumento => {
+                  return (<option key={"tipoDocumento" + tipoDocumento["id"]} value={tipoDocumento["id"]}>{tipoDocumento["nombre"]}</option>)
+                })}
               </Form.Select>
             </FloatingLabel>
             <FloatingLabel
@@ -324,28 +381,21 @@ function RegistrarSolicitud() {
 
             <label className="subtitles-secciones">Tipo de Persona</label>
             <div className="d-flex gap-5">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault1"
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                  Natural
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault2"
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                  Jurídica
-                </label>
-              </div>
+              {tiposPersona.map(tipoPersona => {
+                return (
+                  <div key={"tipoPersona" + tipoPersona["id"]} className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                      {tipoPersona["nombre"]}
+                    </label>
+                  </div>
+                )
+              })}
             </div>
 
             <label className="subtitles-secciones">Datos Adicionales</label>
