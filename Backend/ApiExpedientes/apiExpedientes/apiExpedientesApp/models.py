@@ -277,7 +277,7 @@ def increment_numero_caso_number():
     
     if año_registro!=year:
         return str(year)+"-" +'001'
-    print("entreeeeeeeeeeeeeeeeeeeeeeee")
+
     solicitud_id = ultima_solicitud.numero_caso
     position_int=str(solicitud_id).index('-')
     solicitud_int = int(solicitud_id[position_int+1:])
@@ -539,7 +539,7 @@ class Estado_expediente(GeneralModel):
         return self.nombre
 class Expediente(EstadoModel):
 
-    numero_radicado = models.CharField(max_length =20,editable=False,null=False,blank=True)
+    numero_radicado = models.CharField(max_length =20,editable=True,null=False,blank=True)
     numero_caso = models.CharField(max_length=25,default = increment_numero_caso_number,editable=False,unique=True)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     caso_gratuito= models.BooleanField(default=True, blank=True,null=True)

@@ -9,7 +9,7 @@ class SearchAdminGeneral(admin.ModelAdmin):
 
 class SearchExpediente(admin.ModelAdmin):
   
-    search_fields = ['id','numero_caso','fecha_registro'] #atributo por el cual se filtrará
+    search_fields = ['id','numero_caso','fecha_registro','numero_radicado'] #atributo por el cual se filtrará
 
 class SearchPersona(admin.ModelAdmin):
   

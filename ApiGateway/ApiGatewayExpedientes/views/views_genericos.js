@@ -1,3 +1,4 @@
+
 const axios = require("axios");
 const { response } = require("express");
 const views = {};
@@ -9,13 +10,14 @@ const fs = require('fs');
 const unirest = require('unirest');
 const FormData = require('form-data');
 const path = require("path");
+const { Console } = require("console");
 
 
 views.GenericList = async (req, res) => {
   try {
     axios({
       method: req.method.toLowerCase(),
-      url: config.urlExpedientes + req.url.slice(1),
+      url: config.urlApiExpedientes + req.url.slice(1),
       // headers: req.headers,
       data: req.body
     })
@@ -38,22 +40,22 @@ views.GenericList = async (req, res) => {
 
 views.CrearExpediente = async (req, res) => {
   try {
-    console.log(req.files)
-    req.body = JSON.parse(req.body.datos)
+    
+   
 
     if (req.body.apoderado) {
 
 
       if (!(req.body.apoderado.identificacion & req.body.apoderado.identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
-     
-      await axios.post(config.urlExpedientes + "apoderados/", req.body.apoderado)
-      .then((result) => {
-        req.body.convocante.apoderado_id = result.data.id
- 
-      })
+
+      await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
+        .then((result) => {
+          req.body.convocante.apoderado_id = result.data.id
+
+        })
         .catch(err => {
-         
-          
+
+
           error(err)
           return
         })
@@ -61,55 +63,93 @@ views.CrearExpediente = async (req, res) => {
 
     }
 
-    datos=[]
+    datos = []
     datos.push(req.body.convocante)
     datos.push(req.body.convocado)
 
-
-    const personas = [config.urlExpedientes + "personas/", datos]
-    const expediente = [config.urlExpedientes + "expedientes/", req.body.solicitud]
+    req.body.solicitud.estado_expediente_id=1
+    const personas = [config.urlApiExpedientes + "personas/", datos]
+    const expediente = [config.urlApiExpedientes + "expedientes/", req.body.solicitud]
     let endpoints = [personas, expediente]
 
-   await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
-    .then(axios.spread(async (data1, data2) => {
-      req.body.hechos[0].expediente_id = data2.data.id
-      const relacion_convocante_expediente = [config.urlExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
-      const relacion_convocado_expediente = [config.urlExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
-      const hechos = [config.urlExpedientes + "hechos/", req.body.hechos[0]]
+    await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
+      .then(axios.spread(async (data1, data2) => {
+        req.body.hechos[0].expediente_id = data2.data.id
+        const relacion_convocante_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
+        const relacion_convocado_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
+        const hechos = [config.urlApiExpedientes + "hechos/", req.body.hechos[0]]
 
-      // const documentos = views.CargarDocumentos(req, res)
-      endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, hechos]
-      await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
-        .then(axios.spread((data3, data4, data5) => {
-          // res.status(201).json(data2.data)
-          
-          //get res.status(201).json(data2.data[0])
-          axios.get(req.body.documentos.results[0].documento,{ responseType: 'arraybuffer' })
-            .then(async result=>{
-              fs.writeFile("./public/"+req.body.documentos.results[0].nombre,result.data,()=>{})
-             console.log( result.data.constructor.name)
-              res.json(result.data)
-              // res.end(result.data)
+        // const documentos = views.CargarDocumentos(req, res)
+        endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, hechos]
+        await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
+          .then(axios.spread(async (data3, data4, data5) => {
+            // res.status(201).json(data2.data)
+
+            //get res.status(201).json(data2.data[0])
+            req.params.id = data2.data.numero_caso
+        
+            for await (const iterator of req.body.documentos.results) {
+              await axios.get(iterator.documento, { responseType: 'arraybuffer' })
+                .then(async result => {
+                 
+                  await fs.writeFile("./public/" + iterator.nombre, result.data,(err) => {
+                    if (err)
+                      console.log(err);
+                    else {
+                      console.log("Archivos escritos en apigateway corrrectamente");
+                     
+                     
+                    }
+                  })
+
+                  let bodyFormData = new FormData();
+                  const file= fs.createReadStream("./public/" + iterator.nombre)
+                  bodyFormData.append('files',file); 
+                  
+
+                 
+                  await axios({
+                    method: "post",
+                    url:config.urlGatewayExpedientes+"documentos/"+req.params.id+"/",
+                    data: bodyFormData,
+                    headers: { "Content-Type": "multipart/form-data" },
+                  })
+                  .then((result) => {
+                    try {
+                      fs.unlinkSync("./public/" + iterator.nombre)
+                    } catch (err) {
+                      error(err)
+                  return
+                    }
+                  }).catch((err) => {
+                    error(err)
+                  return
+                  });
+                    
+         
+                })
+                .catch(err => {
+                error(err)
+                  return
+                })
+            }
+            
+            res.status(200).json(data3.data)
+          }))
+          .catch(err => {
+
+            res.sendStatus(error(err))
+            return
+
           })
-            .catch(err => {
-              res.sendStatus(error(err))
-            })
 
-        }))
-        .catch(err => {
+      }))
+      .catch(err => {
 
-          res.sendStatus(error(err))
-          return
-
-        })
-
-    }))
-    .catch(err => {
-
-      res.sendStatus(error(err))
-      return
-    })
-  }catch (error) {
+        res.sendStatus(error(err))
+        return
+      })
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -128,11 +168,11 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     for await (const iterator of req.files) {
 
       await unirest
-        .post("http://localhost:8002/api/documentos/v1/documentos/")
+        .post(config.urlDocumentos+"documentos/")
 
 
         .field('estado', "null")
-        .field('expediente',  req.params.id)
+        .field('expediente', req.params.id)
         .field('nombre', iterator.originalname)
 
 
@@ -165,8 +205,8 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
 }
 views.ListarDepartamentos = async (req, res) => {
   try {
-    const url = config.urlExpedientes + "departamentos?pais_id=" + req.params.id
-  
+    const url = config.urlApiExpedientes + "departamentos?pais_id=" + req.params.id
+
     requests.get(req, res, url, "&")
   } catch (error) {
     console.log(error);
@@ -177,7 +217,7 @@ views.ListarDepartamentos = async (req, res) => {
 }
 views.ListarCiudades = async (req, res) => {
   try {
-    const url = config.urlExpedientes + "ciudades?departamento_id=" + req.params.id2
+    const url = config.urlApiExpedientes + "ciudades?departamento_id=" + req.params.id2
     requests.get(req, res, url, "&")
 
   } catch (error) {
