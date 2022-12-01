@@ -19,7 +19,13 @@ const axiosBasicInstanceApiExpedientes = axios.create({
     headers: { 'X-Custom-Header': 'foobar' }
 });
 
+const axiosTokenInstanceApiExpedientes = axios.create({
+    baseURL: config.ApiExpedientes,
+    timeout: 1000,
+    headers: { 'X-Custom-Header': 'foobar' }
+});
+
 
 export {
-    axiosBasicInstanceApiSolicitudes, axiosBasicInstanceApiExpedientes
+    axiosBasicInstanceApiSolicitudes, axiosBasicInstanceApiExpedientes, axiosTokenInstanceApiSolicitudes, axiosTokenInstanceApiExpedientes
 }
