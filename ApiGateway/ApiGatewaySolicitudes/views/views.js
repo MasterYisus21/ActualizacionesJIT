@@ -20,7 +20,6 @@ views.SeleccionablesPricipales = async (req, res) => {
     res.sendStatus(500);
   }
 }
-
 // listar
 views.ListarDepartamentos = async (req, res) => {
   try {
@@ -212,9 +211,9 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
   }
 }
 
-views.Listar_Estados_solicitud = async (req, res) => {
+views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
   try {
-    console.log("entreeeeeeeeeeeeeeeeee")
+  
     datos={}
     if (!req.query.count) { req.query.count = 10 }
     let endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion ,
@@ -222,7 +221,7 @@ views.Listar_Estados_solicitud = async (req, res) => {
   
        
     if ((req.url.indexOf('?')) > 0) {
-      const query = simbolo + req.url.slice(req.url.indexOf('?') + 1)
+      const query = '?' + req.url.slice(req.url.indexOf('?') + 1)
       let endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion+query ,
       config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion+query ]
       
@@ -303,9 +302,11 @@ views.AprobarSolicitud = async (req, res) => {
         res.status(200).json(result.data)
         // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
         if (req.body.estado_solicitud_id == 2) {
+          
           await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id)
             .then(async result => {
-
+              result.data.conciliador=req.body.conciliador_id
+              result.data.hechos[0].cuantia=req.body.valor_caso
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
                 .catch(err => {
                   error(err)

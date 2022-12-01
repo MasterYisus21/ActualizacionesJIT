@@ -10,7 +10,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 
 
-export default function Buscador({ text, valoresBuscados, setValoresBuscados }) {
+export default function Buscador({ text, valoresBuscados, setValoresBuscados, setPage }) {
 
   const agregar_busqueda=(e)=>{
     e.preventDefault()

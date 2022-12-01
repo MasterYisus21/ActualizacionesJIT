@@ -87,6 +87,11 @@
     justify-content: space-between;
     gap: 1em;
     align-items: center;
+    width: 30em;
+    border-radius: 0.5em;
+    border: .2em solid #000000;
+    padding: 1em;
+    color:#000000;
 }
 
 .lista-anexos{
