@@ -221,7 +221,7 @@ views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
   
        
     if ((req.url.indexOf('?')) > 0) {
-      const query = simbolo + req.url.slice(req.url.indexOf('?') + 1)
+      const query = '?' + req.url.slice(req.url.indexOf('?') + 1)
       let endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion+query ,
       config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion+query ]
       
