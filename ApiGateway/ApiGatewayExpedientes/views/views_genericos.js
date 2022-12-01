@@ -71,16 +71,17 @@ views.CrearExpediente = async (req, res) => {
     const personas = [config.urlApiExpedientes + "personas/", datos]
     const expediente = [config.urlApiExpedientes + "expedientes/", req.body.solicitud]
     let endpoints = [personas, expediente]
-
+ 
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
       .then(axios.spread(async (data1, data2) => {
         req.body.hechos[0].expediente_id = data2.data.id
         const relacion_convocante_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
         const relacion_convocado_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
+        const relacion_conciliador_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: req.body.conciliador, tipo_cliente_id: 3 }]
         const hechos = [config.urlApiExpedientes + "hechos/", req.body.hechos[0]]
 
         // const documentos = views.CargarDocumentos(req, res)
-        endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, hechos]
+        endpoints = [relacion_convocante_expediente, relacion_convocado_expediente,relacion_conciliador_expediente, hechos]
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           .then(axios.spread(async (data3, data4, data5) => {
             // res.status(201).json(data2.data)
@@ -215,6 +216,18 @@ views.ListarDepartamentos = async (req, res) => {
 
 
 }
+views.ListarSubtemas = async (req, res) => {
+  try {
+    const url = config.urlApiExpedientes + "subtemas?tema_id=" + req.params.id
+
+    requests.get(req, res, url, "&")
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+
+
+}
 views.ListarCiudades = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "ciudades?departamento_id=" + req.params.id2
@@ -223,6 +236,139 @@ views.ListarCiudades = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
+  }
+}
+views.ListarConciliadores = async (req, res) => {
+  try {
+
+    const url = config.urlApiExpedientes + "personas?tipo_cargo_id=2"
+    requests.get(req, res, url, "&")
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+}
+views.ActualizarExpediente = async (req, res) => {
+  try {
+    if (req.body.fecha_registro) {delete req.body["fecha_registro"];}
+    if (req.body.numero_radicado) {delete req.body["numero_radicado"];}
+    if (req.body.numero_caso) {delete req.body["numero_caso"];}
+
+    axios.patch(config.urlApiExpedientes+"expedientes/"+req.params.id+"/",req.body)
+      .then(result=>{
+        res.status(200).json(result.data)
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+        return
+      })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+
+views.CrearConvocantes = async (req, res) => {
+  try {
+
+   await axios.post(config.urlApiExpedientes+"personas/",req.body)
+      .then(async result=>{
+        const datos={persona_id:result.data.id,expediente_id:req.params.id,tipo_cliente_id:1}
+      await  axios.post(config.urlApiExpedientes+"relaciones_persona_expediente/",datos)
+          .then(result=>{
+            res.status(200).json(result.data)
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.CrearConvocados = async (req, res) => {
+  try {
+
+   await axios.post(config.urlApiExpedientes+"personas/",req.body)
+      .then(async result=>{
+        let datos={persona_id:result.data.id,expediente_id:req.params.id,tipo_cliente_id:2}
+      await  axios.post(config.urlApiExpedientes+"relaciones_persona_expediente/",datos)
+          .then(result=>{
+            res.status(200).json(result.data)
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.AgregarConvocantes = async (req, res) => {
+  try {
+  
+    axios.get(config.urlApiExpedientes+"personas?search="+req.params.identificacion)
+      .then(async result=>{
+
+        const datos={persona_id:result.data.results[0].id,expediente_id:req.params.id,tipo_cliente_id:1}
+       await axios.post(config.urlApiExpedientes+"relaciones_persona_expediente/",datos)
+          .then(result=>{
+            res.status(200).json(result.data)
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+    
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.AgregarConvocados = async (req, res) => {
+  try {
+  
+    axios.get(config.urlApiExpedientes+"personas?search="+req.params.identificacion)
+      .then(async result=>{
+        // await axios.get(config.urlApiExpedientes+"relaciones_persona_expediente=persona_id="+result.data.results[0].id)
+        // .then((result) => {
+        //   if(Object.keys(result.data).length>0){res.sendStatus(208); return}
+        // })
+        
+        const datos={persona_id:result.data.results[0].id,expediente_id:req.params.id,tipo_cliente_id:2}
+       await axios.post(config.urlApiExpedientes+"relaciones_persona_expediente/",datos)
+          .then(result=>{
+            res.status(200).json(result.data)
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+    
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
   }
 }
 module.exports = views;

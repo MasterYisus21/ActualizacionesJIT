@@ -30,7 +30,7 @@ class Tipo_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de
     serializer_class = Tipo_personaSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
-class Estado_solicitud(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class Estado_solicitudViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Estado_solicitudSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]

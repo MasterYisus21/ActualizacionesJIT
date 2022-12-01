@@ -13,9 +13,10 @@ router.get("/paises", views_genericos.SeleccionablesPricipales);
 router.get("/sexos", views_genericos.SeleccionablesPricipales);
 router.get("/estratos_socioeconomicos", views_genericos.SeleccionablesPricipales);
 router.get("/solicitudes",views_genericos.ListarSolicitudes);
+router.get("/estados_solicitud",views_genericos.SeleccionablesPricipales);
 router.get("/paises/:id", views_genericos.ListarDepartamentos);
 router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
-router.get("/estados_solicitudes/:identificacion",views_genericos.Listar_Estados_solicitud);
+router.get("/estados_solicitudes/:identificacion",views_genericos.Listar_Estados_solicitud_y_expediente);
 
 //Obtener datos 
 

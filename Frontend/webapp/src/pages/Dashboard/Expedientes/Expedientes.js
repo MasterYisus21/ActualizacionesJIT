@@ -51,6 +51,7 @@ function Expedientes() {
   return (
     <div className='wrapp-expedientes'>
       <Buscador valoresBuscados={valoresBuscados} setValoresBuscados={setValoresBuscados} required/>
+      
       <div className='wrapp-tarjetas'>
         <Link to="detalle/119/datosgenerales" className='text-decoration-none ' onClick={() => { setPagina("Caso #119") }}>
           <Tarjeta titulo="Caso #119" />  
