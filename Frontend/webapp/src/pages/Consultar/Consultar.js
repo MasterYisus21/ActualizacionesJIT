@@ -61,8 +61,8 @@ function Consultar() {
         <div className='contenedor-consultar-documento'>
           <div className='rectangulo-pregunta-documento'>
             <Row className="g-2">
-              <Form onSubmit={e => { e.preventDefault(); setPage(1); setDocumento(e.target.documento.value); }}>
-                <Col md className='seleccionable-cedula'>
+              <Form className='form-consulta-solicitud'onSubmit={e => { e.preventDefault(); setPage(1); setDocumento(e.target.documento.value); }}>
+                <Col className='seleccionable-cedula'>
                   <FloatingLabel
                     controlId="floatingSelectGrid"
                     label="Tipo de documento"
