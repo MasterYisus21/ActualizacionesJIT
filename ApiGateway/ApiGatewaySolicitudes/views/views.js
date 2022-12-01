@@ -213,16 +213,18 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
 
 views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
   try {
-  
+    
+    let endpoints=[]
     datos={}
-    if (!req.query.count) { req.query.count = 10 }
-    let endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion ,
+    if (!req.query.count) { req.query.count = 20 }
+     endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion ,
                     config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion ]
   
        
     if ((req.url.indexOf('?')) > 0) {
-      const query = '?' + req.url.slice(req.url.indexOf('?') + 1)
-      let endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion+query ,
+      console.log("entre")
+      const query = '&' + req.url.slice(req.url.indexOf('?') + 1)
+       endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion+query ,
       config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion+query ]
       
     }

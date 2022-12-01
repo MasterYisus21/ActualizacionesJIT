@@ -37,6 +37,7 @@ router.post("/expedientes/:id/convocantes", views_genericos.CrearConvocantes)
 router.post("/expedientes/:id/convocantes/:identificacion", views_genericos.AgregarConvocantes)
 router.post("/expedientes/:id/convocados", views_genericos.CrearConvocados)
 router.post("/expedientes/:id/convocados/:identificacion", views_genericos.AgregarConvocados)
+router.post("/expedientes/:id/conciliadores/:id2", views_genericos.AgregarConciliadores)
 router.patch("/expedientes/:id",views_genericos.ActualizarExpediente)
 router.get("/paises/:id", views_genericos.ListarDepartamentos);
 router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);

@@ -40,8 +40,8 @@ views.GenericList = async (req, res) => {
 
 views.CrearExpediente = async (req, res) => {
   try {
-    
-   
+
+
 
     if (req.body.apoderado) {
 
@@ -67,11 +67,11 @@ views.CrearExpediente = async (req, res) => {
     datos.push(req.body.convocante)
     datos.push(req.body.convocado)
 
-    req.body.solicitud.estado_expediente_id=1
+    req.body.solicitud.estado_expediente_id = 1
     const personas = [config.urlApiExpedientes + "personas/", datos]
     const expediente = [config.urlApiExpedientes + "expedientes/", req.body.solicitud]
     let endpoints = [personas, expediente]
- 
+
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
       .then(axios.spread(async (data1, data2) => {
         req.body.hechos[0].expediente_id = data2.data.id
@@ -81,60 +81,60 @@ views.CrearExpediente = async (req, res) => {
         const hechos = [config.urlApiExpedientes + "hechos/", req.body.hechos[0]]
 
         // const documentos = views.CargarDocumentos(req, res)
-        endpoints = [relacion_convocante_expediente, relacion_convocado_expediente,relacion_conciliador_expediente, hechos]
+        endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, relacion_conciliador_expediente, hechos]
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           .then(axios.spread(async (data3, data4, data5) => {
             // res.status(201).json(data2.data)
 
             //get res.status(201).json(data2.data[0])
             req.params.id = data2.data.numero_caso
-        
+
             for await (const iterator of req.body.documentos.results) {
               await axios.get(iterator.documento, { responseType: 'arraybuffer' })
                 .then(async result => {
-                 
-                  await fs.writeFile("./public/" + iterator.nombre, result.data,(err) => {
+
+                  await fs.writeFile("./public/" + iterator.nombre, result.data, (err) => {
                     if (err)
                       console.log(err);
                     else {
                       console.log("Archivos escritos en apigateway corrrectamente");
-                     
-                     
+
+
                     }
                   })
 
                   let bodyFormData = new FormData();
-                  const file= fs.createReadStream("./public/" + iterator.nombre)
-                  bodyFormData.append('files',file); 
-                  
+                  const file = fs.createReadStream("./public/" + iterator.nombre)
+                  bodyFormData.append('files', file);
 
-                 
+
+
                   await axios({
                     method: "post",
-                    url:config.urlGatewayExpedientes+"documentos/"+req.params.id+"/",
+                    url: config.urlGatewayExpedientes + "documentos/" + req.params.id + "/",
                     data: bodyFormData,
                     headers: { "Content-Type": "multipart/form-data" },
                   })
-                  .then((result) => {
-                    try {
-                      fs.unlinkSync("./public/" + iterator.nombre)
-                    } catch (err) {
+                    .then((result) => {
+                      try {
+                        fs.unlinkSync("./public/" + iterator.nombre)
+                      } catch (err) {
+                        error(err)
+                        return
+                      }
+                    }).catch((err) => {
                       error(err)
-                  return
-                    }
-                  }).catch((err) => {
-                    error(err)
-                  return
-                  });
-                    
-         
+                      return
+                    });
+
+
                 })
                 .catch(err => {
-                error(err)
+                  error(err)
                   return
                 })
             }
-            
+
             res.status(200).json(data3.data)
           }))
           .catch(err => {
@@ -169,7 +169,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     for await (const iterator of req.files) {
 
       await unirest
-        .post(config.urlDocumentos+"documentos/")
+        .post(config.urlDocumentos + "documentos/")
 
 
         .field('estado', "null")
@@ -251,19 +251,19 @@ views.ListarConciliadores = async (req, res) => {
 }
 views.ActualizarExpediente = async (req, res) => {
   try {
-    if (req.body.fecha_registro) {delete req.body["fecha_registro"];}
-    if (req.body.numero_radicado) {delete req.body["numero_radicado"];}
-    if (req.body.numero_caso) {delete req.body["numero_caso"];}
+    if (req.body.fecha_registro) { delete req.body["fecha_registro"]; }
+    if (req.body.numero_radicado) { delete req.body["numero_radicado"]; }
+    if (req.body.numero_caso) { delete req.body["numero_caso"]; }
 
-    axios.patch(config.urlApiExpedientes+"expedientes/"+req.params.id+"/",req.body)
-      .then(result=>{
+    axios.patch(config.urlApiExpedientes + "expedientes/" + req.params.id + "/", req.body)
+      .then(result => {
         res.status(200).json(result.data)
-    })
+      })
       .catch(err => {
         res.sendStatus(error(err))
         return
       })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -274,21 +274,21 @@ views.ActualizarExpediente = async (req, res) => {
 views.CrearConvocantes = async (req, res) => {
   try {
 
-   await axios.post(config.urlApiExpedientes+"personas/",req.body)
-      .then(async result=>{
-        const datos={persona_id:result.data.id,expediente_id:req.params.id,tipo_cliente_id:1}
-      await  axios.post(config.urlApiExpedientes+"relaciones_persona_expediente/",datos)
-          .then(result=>{
+    await axios.post(config.urlApiExpedientes + "personas/", req.body)
+      .then(async result => {
+        const datos = { persona_id: result.data.id, expediente_id: req.params.id, tipo_cliente_id: 1 }
+        await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
+          .then(result => {
             res.status(200).json(result.data)
-        })
+          })
           .catch(err => {
             res.sendStatus(error(err))
           })
-    })
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -297,21 +297,24 @@ views.CrearConvocantes = async (req, res) => {
 views.CrearConvocados = async (req, res) => {
   try {
 
-   await axios.post(config.urlApiExpedientes+"personas/",req.body)
-      .then(async result=>{
-        let datos={persona_id:result.data.id,expediente_id:req.params.id,tipo_cliente_id:2}
-      await  axios.post(config.urlApiExpedientes+"relaciones_persona_expediente/",datos)
-          .then(result=>{
+    
+    await axios.post(config.urlApiExpedientes + "personas/", req.body)
+      .then(async result => {
+        let datos = { persona_id: result.data.id, expediente_id: req.params.id, tipo_cliente_id: 2 }
+        await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
+          .then(result => {
             res.status(200).json(result.data)
-        })
+          })
           .catch(err => {
             res.sendStatus(error(err))
+            return
           })
-    })
+      })
       .catch(err => {
         res.sendStatus(error(err))
+        return
       })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -319,24 +322,33 @@ views.CrearConvocados = async (req, res) => {
 }
 views.AgregarConvocantes = async (req, res) => {
   try {
-  
-    axios.get(config.urlApiExpedientes+"personas?search="+req.params.identificacion)
-      .then(async result=>{
 
-        const datos={persona_id:result.data.results[0].id,expediente_id:req.params.id,tipo_cliente_id:1}
-       await axios.post(config.urlApiExpedientes+"relaciones_persona_expediente/",datos)
-          .then(result=>{
-            res.status(200).json(result.data)
-        })
-          .catch(err => {
+    axios.get(config.urlApiExpedientes + "personas?search=" + req.params.identificacion)
+      .then(async result => {
+        await axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + result.data.results[0].id + "&expediente_id=" + req.params.id)
+          .then(async (resul) => {
+          
+            if (Object.keys(resul.data.results).length > 0) { res.sendStatus(208); return }
+            let datos = { persona_id: result.data.results[0].id, expediente_id: req.params.id, tipo_cliente_id: 1 }
+            await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
+              .then(result => {
+                res.status(200).json(result.data)
+              })
+              .catch(err => {
+                res.sendStatus(error(err))
+                return
+              })
+          }).catch((err) => {
             res.sendStatus(error(err))
-          })
-    })
+            return
+          });
+
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-    
-  }catch (error) {
+
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -344,28 +356,64 @@ views.AgregarConvocantes = async (req, res) => {
 }
 views.AgregarConvocados = async (req, res) => {
   try {
-  
-    axios.get(config.urlApiExpedientes+"personas?search="+req.params.identificacion)
-      .then(async result=>{
+
+    axios.get(config.urlApiExpedientes + "personas?search=" + req.params.identificacion)
+      .then(async result => {
+
+        await axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + result.data.results[0].id + "&expediente_id=" + req.params.id)
+          .then(async (resul) => {
+            if (Object.keys(resul.data.results).length > 0) { res.sendStatus(208); return }
+            let datos = { persona_id: result.data.results[0].id, expediente_id: req.params.id, tipo_cliente_id: 2 }
+            await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
+              .then(result => {
+                res.status(200).json(result.data)
+              })
+              .catch(err => {
+                res.sendStatus(error(err))
+                return
+              })
+          }).catch((err) => {
+            res.sendStatus(error(err))
+            return
+          });
         // await axios.get(config.urlApiExpedientes+"relaciones_persona_expediente=persona_id="+result.data.results[0].id)
         // .then((result) => {
         //   if(Object.keys(result.data).length>0){res.sendStatus(208); return}
         // })
-        
-        const datos={persona_id:result.data.results[0].id,expediente_id:req.params.id,tipo_cliente_id:2}
-       await axios.post(config.urlApiExpedientes+"relaciones_persona_expediente/",datos)
-          .then(result=>{
-            res.status(200).json(result.data)
-        })
-          .catch(err => {
-            res.sendStatus(error(err))
-          })
-    })
+
+
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-    
-  }catch (error) {
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.AgregarConciliadores = async (req, res) => {
+  try {
+    axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
+      .then(async result => {
+        console.log(result.data.results)
+        if (Object.keys(result.data.results).length > 0) { res.sendStatus(208); return }
+        const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
+        await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
+          .then(result => {
+            res.status(200).json(result.data)
+          })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+
+      })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
