@@ -99,7 +99,7 @@ function Consultar() {
           <div className='contenedor-casos-consulta'>
             {resultadosBusqueda.map(resultado => {
               return (
-                <div className='carta-caso-consulta'>
+                <div className='carta-caso-consulta' key={resultado["id"]}>
                   <div className='contenedor-rectangulo-tarjeta-consultar'>
                     <RectanguloCelular text={resultado["numero_radicado"]} />
                   </div>
