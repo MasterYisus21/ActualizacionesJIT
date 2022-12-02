@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, useOutletContext } from 'react-router-dom'
-import { Buscador, Tarjeta } from '../../../components'
-import {useState, useEffect} from 'react'
-import { axiosBasicInstanceApiExpedientes } from '../../../helpers/axiosInstances'
+import { Buscador, Button, Tarjeta } from '../../../components'
+import { useState, useEffect } from 'react'
+import { axiosBasicInstanceApiExpedientes, axiosTokenInstanceApiExpedientes } from '../../../helpers/axiosInstances'
 // Importing css
 import './Expedientes.css'
 
@@ -21,14 +21,14 @@ function Expedientes() {
   const search = () => {
 
     // console.log(e.target.documento.value)
-    axiosBasicInstanceApiExpedientes({
+    axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/personas/?"  + valoresBuscados.map(valor => { return '&search=' + valor }),
+      url: "/expedientes/?ordering=-numero_caso&count=10&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
       // headers: req.headers,
       data: {}
     })
       .then(result => {
-      //console.log(result.data);
+        console.log(result.data);
         setResultadosBusqueda(result.data.results)
       })
       .catch(err => {
@@ -41,7 +41,7 @@ function Expedientes() {
     setResultadosBusqueda([]);
     search()
   }, [valoresBuscados])
-  
+
   useEffect(() => {
     if (page != 1) {
       search()
@@ -50,13 +50,22 @@ function Expedientes() {
 
   return (
     <div className='wrapp-expedientes'>
-      <Buscador valoresBuscados={valoresBuscados} setValoresBuscados={setValoresBuscados} required/>
-      
+      <Buscador valoresBuscados={valoresBuscados} setValoresBuscados={setValoresBuscados} required />
+
       <div className='wrapp-tarjetas'>
-        <Link to="detalle/119/datosgenerales" className='text-decoration-none ' onClick={() => { setPagina("Caso #119") }}>
-          <Tarjeta titulo="Caso #119" />  
-        </Link>
+        {resultadosBusqueda.map(resultadoBusqueda => {
+          return (
+            <Link to={"detalle/" + resultadoBusqueda["id"] + "/datosgenerales"} className='text-decoration-none ' onClick={() => { setPagina("Caso #" + resultadoBusqueda["id"]) }}>
+              <Tarjeta
+                titulo={"Caso #" + resultadoBusqueda["numero_caso"]}
+                radicado={resultadoBusqueda["numero_radicado"]}
+                fecha={resultadoBusqueda["fecha_registro"]}
+                estado={resultadoBusqueda["estado_expediente"]} />
+            </Link>
+          )
+        })}
       </div>
+      <Button />
     </div>
   )
 }
