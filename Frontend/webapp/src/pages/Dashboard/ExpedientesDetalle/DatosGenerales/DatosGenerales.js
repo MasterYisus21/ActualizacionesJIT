@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import FloatingLabel from 'react-bootstrap/esm/FloatingLabel'
 
 //importing axios instance
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances'
@@ -10,12 +9,14 @@ import './DatosGenerales.css'
 function DatosGenerales() {
 
   const [solicitantesServicio, setSolicitantesServicio] = useState([])
+  const [solicitanteServicio, setSolicitanteServicio] = useState([])
   const [iniciosConflicto, setIniciosConflicto] = useState([])
   const [areas, setAreas] = useState([])
   const [temas, setTemas] = useState([])
+  
 
 
-  // Fetch solicitanteServicioOptions
+  //Fetch solicitanteServicioOptions
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
       method: 'get',
@@ -26,6 +27,7 @@ function DatosGenerales() {
       .then(result => {
         // console.log(result.data);
         setSolicitantesServicio(result.data.results)
+        // console.log(result)
       })
       .catch(err => {
         console.log("error");
@@ -75,13 +77,32 @@ function DatosGenerales() {
       data: {}
     })
       .then(result => {
-        // console.log(result.data);
+        //console.log(result.data);
         setTemas(result.data.results)
       })
       .catch(err => {
         console.log("error");
       });
   }, [])
+
+    //Fetch temas
+    useEffect(() => {
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: "/expedientes/210",
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          console.log(result.data);
+          document.getElementById("solicitante").value = result.data["solicitante_servicio_id"]
+          document.getElementById("Inicio_conflicto_Id").value = result.data["inicio_conflicto_id"]
+          // setIniciosConflicto(result.data.inicio_conflicto)
+        })
+        .catch(err => {
+          console.log("error");
+        });
+    }, [])
 
   return (
     <>
