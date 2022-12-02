@@ -23,7 +23,7 @@ function Expedientes() {
     // console.log(e.target.documento.value)
     axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/expedientes/?ordering=-numero_caso&count=10&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
+      url: "/expedientes/?ordering=-numero_caso&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
       // headers: req.headers,
       data: {}
     })
@@ -35,6 +35,15 @@ function Expedientes() {
         console.log("error");
       });
 
+  }
+
+  const handleScroll = (e) => {
+    console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
+    console.log('clientHeight: ', e.target.clientHeight );
+   if(e.target.scrollHeight - e.target.scrollTop - 200 < e.target.clientHeight) {
+    console.log("almost bottom");
+    setPage(page + 1)
+   } 
   }
 
   useEffect(() => {
@@ -51,8 +60,8 @@ function Expedientes() {
   return (
     <div className='wrapp-expedientes'>
       <Buscador valoresBuscados={valoresBuscados} setValoresBuscados={setValoresBuscados} required />
-
-      <div className='wrapp-tarjetas'>
+      
+      <div className='wrapp-tarjetas' onScroll={e => handleScroll(e)}>
         {resultadosBusqueda.map(resultadoBusqueda => {
           return (
             <Link to={"detalle/" + resultadoBusqueda["id"] + "/datosgenerales"} className='text-decoration-none ' onClick={() => { setPagina("Caso #" + resultadoBusqueda["numero_caso"]) }}>
@@ -64,11 +73,13 @@ function Expedientes() {
             </Link>
           )
         })}
+        <Button
+          onClick={e => { setPage(page + 1) }}
+          className= "span2"
+          text="Cargar más"
+        />
       </div>
-      <Button
-        onClick={e => { setPage(page + 1) }}
-        text="Cargar más"
-      />
+
 
     </div>
   )
