@@ -29,7 +29,7 @@ function Expedientes() {
     })
       .then(result => {
         console.log(result.data);
-        setResultadosBusqueda(result.data.results)
+        setResultadosBusqueda([...resultadosBusqueda, ...result.data.results])
       })
       .catch(err => {
         console.log("error");
@@ -55,7 +55,7 @@ function Expedientes() {
       <div className='wrapp-tarjetas'>
         {resultadosBusqueda.map(resultadoBusqueda => {
           return (
-            <Link to={"detalle/" + resultadoBusqueda["id"] + "/datosgenerales"} className='text-decoration-none ' onClick={() => { setPagina("Caso #" + resultadoBusqueda["id"]) }}>
+            <Link to={"detalle/" + resultadoBusqueda["id"] + "/datosgenerales"} className='text-decoration-none ' onClick={() => { setPagina("Caso #" + resultadoBusqueda["numero_caso"]) }}>
               <Tarjeta
                 titulo={"Caso #" + resultadoBusqueda["numero_caso"]}
                 radicado={resultadoBusqueda["numero_radicado"]}
@@ -65,7 +65,11 @@ function Expedientes() {
           )
         })}
       </div>
-      <Button />
+      <Button
+        onClick={e => { setPage(page + 1) }}
+        text="Cargar más"
+      />
+
     </div>
   )
 }
