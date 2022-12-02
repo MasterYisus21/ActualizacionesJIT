@@ -310,7 +310,10 @@ views.AprobarSolicitud = async (req, res) => {
               result.data.conciliador=req.body.conciliador_id
               result.data.hechos[0].cuantia=req.body.valor_caso
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
-                .catch(err => {
+              .then(result =>{
+                // res.status(200).json(result.data)
+              })  
+              .catch(err => {
                   error(err)
                   return
                 })

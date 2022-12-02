@@ -23,7 +23,7 @@ class SearchHistorico(admin.ModelAdmin):
     search_fields = ['expediente_id__numero_caso']
 class SearchHechos(admin.ModelAdmin):
   
-    search_fields = ['expediente_id']
+    search_fields = ['expediente_id__numero_caso']
 
 class SearchSeguimiento(admin.ModelAdmin):
   
@@ -73,6 +73,7 @@ admin.site.register(Persona,SearchPersona)
 admin.site.register(Tema,SearchAdminGeneral)
 admin.site.register(Subtema,SearchAdminGeneral)
 admin.site.register(Objetivo_servicio,SearchAdminGeneral)
+admin.site.register(Finalidad_servicio,SearchAdminGeneral)
 admin.site.register(Tipo_servicio,SearchAdminGeneral)
 admin.site.register(Inicio_conflicto,SearchAdminGeneral)
 admin.site.register(Expediente,SearchExpediente)
