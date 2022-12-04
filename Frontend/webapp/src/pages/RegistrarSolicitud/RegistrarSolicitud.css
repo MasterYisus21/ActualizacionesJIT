@@ -27,6 +27,7 @@
     flex-direction: column;
     gap: 2em;
     align-items: center;
+    padding-bottom: 2em;
 }
 
 .subtitles-secciones{
@@ -43,7 +44,6 @@
     align-items: center;
     width: 100%;
     gap: 1em;
-    padding-bottom: 3em;
 }
 
 .inputs-registrar-solicitud{
@@ -79,6 +79,26 @@
     padding: .6em;
     background-color: #00913D;
     color: white;
+    margin: 0;
+}
+
+.wrapp-visualizacion-anexos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    align-items: center;
+    width: 30em;
+    border-radius: 0.5em;
+    border: .2em solid #000000;
+    padding: 1em;
+    color:#000000;
+}
+
+.lista-anexos{
+    gap: 2em;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Versión < 700px Tablets y Escritorios*/

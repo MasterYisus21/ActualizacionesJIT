@@ -13,5 +13,10 @@
     display: grid;
     gap: 1.1rem;
     grid-template-columns: repeat(auto-fill,minmax(50em,1fr));
+    max-height: 100%;
+    overflow-y: auto;
+}
 
+.span2{
+    grid-column: span 2;
 }

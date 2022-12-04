@@ -9,7 +9,11 @@ class SearchAdminGeneral(admin.ModelAdmin):
 
 class SearchExpediente(admin.ModelAdmin):
   
-    search_fields = ['id','numero_caso','fecha_registro'] #atributo por el cual se filtrará
+    search_fields = ['id','numero_caso','fecha_registro','numero_radicado'] #atributo por el cual se filtrará
+
+class SearchRelacionpersonaExpediente(admin.ModelAdmin):
+  
+    search_fields = ['expediente_id__numero_caso','expediente_id__fecha_registro'] #atributo por el cual se filtrará
 
 class SearchPersona(admin.ModelAdmin):
   
@@ -19,7 +23,7 @@ class SearchHistorico(admin.ModelAdmin):
     search_fields = ['expediente_id__numero_caso']
 class SearchHechos(admin.ModelAdmin):
   
-    search_fields = ['expediente_id']
+    search_fields = ['expediente_id__numero_caso']
 
 class SearchSeguimiento(admin.ModelAdmin):
   
@@ -69,11 +73,12 @@ admin.site.register(Persona,SearchPersona)
 admin.site.register(Tema,SearchAdminGeneral)
 admin.site.register(Subtema,SearchAdminGeneral)
 admin.site.register(Objetivo_servicio,SearchAdminGeneral)
+admin.site.register(Finalidad_servicio,SearchAdminGeneral)
 admin.site.register(Tipo_servicio,SearchAdminGeneral)
 admin.site.register(Inicio_conflicto,SearchAdminGeneral)
 admin.site.register(Expediente,SearchExpediente)
 admin.site.register(Tipo_cliente,SearchAdminGeneral)
-admin.site.register(Relacion_persona_expediente)
+admin.site.register(Relacion_persona_expediente,SearchRelacionpersonaExpediente)
 admin.site.register(Estado_expediente,SearchAdminGeneral)
 admin.site.register(Historico,SearchHistorico)
 admin.site.register(Tipo_resultado,SearchAdminGeneral)

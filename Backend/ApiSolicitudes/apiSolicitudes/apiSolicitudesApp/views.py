@@ -30,7 +30,7 @@ class Tipo_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de
     serializer_class = Tipo_personaSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
-class Estado_solicitud(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class Estado_solicitudViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Estado_solicitudSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
@@ -59,7 +59,7 @@ class Relacion_persona_solicitudViewSet(EspecificViewSet):  # Una sola clase par
     filterset_fields = '__all__'
     ordering_fields = '__all__'
     serializer_class = Relacion_persona_solicitudSerializer
-    search_fields=['=solicitud_id__numero_radicado','=persona_id__identificacion']
+    search_fields=['=solicitud_id__numero_radicado','=persona_id__identificacion','solicitud_id__fecha_registro']
     #permission_classes = [CustomDjangoModelPermission]
 
 class SexoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 

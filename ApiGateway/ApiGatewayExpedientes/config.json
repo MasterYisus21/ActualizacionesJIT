@@ -1,5 +1,8 @@
 {
-    "urlExpedientes": "http://localhost:8000/api/jit_expedientes/v1/",
-    "urlSolicitudes": "http://localhost:8001/api/jit_solicitudes/v1/",
-    "urlGateway": "http://localhost:3001/api/gateway/v1/"
+    "urlApiExpedientes": "http://0.0.0.0:8000/api/jit_expedientes/v1/",
+    "urlApiSolicitudes": "http://0.0.0.0:8001/api/jit_solicitudes/v1/",
+    "urlDocumentos": "http://0.0.0.0:8002/api/documentos/v1/",
+    "urlGatewaySolicitudes": "http://localhost:3001/api/gateway/v1/",
+    "urlGatewayExpedientes": "http://localhost:3002/api/gateway/v1/"
+    
 }

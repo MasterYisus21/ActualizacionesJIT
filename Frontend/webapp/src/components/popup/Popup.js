@@ -20,16 +20,14 @@ export default function Popup({text, setEstado, estado}){
                     </div>
 
                     <label className='subtitles-secciones'>Nombre</label>
-                    <div className='columnas-inputs'>
-
-                    <FloatingLabel controlId="floatingInputGrid" label="Nombres">
-                        <Form.Control className='inputs-personas' type="text" placeholder="name@example.com" />
-                    </FloatingLabel>
-                    <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
-                        <Form.Control className='inputs-personas' type="text" placeholder="name@example.com" />
-                    </FloatingLabel>
+                    <div className='columnas-inputs'> 
+                        <FloatingLabel controlId="floatingInputGrid" label="Nombres">
+                            <Form.Control className='inputs-personas' type="text" placeholder="name@example.com" />
+                        </FloatingLabel>
+                        <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
+                            <Form.Control className='inputs-personas' type="text" placeholder="name@example.com" />
+                        </FloatingLabel>
                     </div>
-
                     <label className='subtitles-secciones'>Fecha de Nacimiento</label>
                     <FloatingLabel controlId="floatingInputGrid" label="Fecha de nacimiento">
                         <Form.Control className='input-fecha-nacimiento' type="date" placeholder="name@example.com" />
@@ -149,7 +147,10 @@ export default function Popup({text, setEstado, estado}){
                         </FloatingLabel>
                     </div>
                     
-                    <h2>Mundo</h2>
+                    <div className="wrapp-botones">
+                        <button className='botones-popup'>Modificar</button>
+                        <button className='botones-popup'>Cancelar</button>
+                    </div>
                 </div>
             </div>
         </div>

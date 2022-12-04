@@ -3,6 +3,7 @@ errores =(error,code=0) => {
     if (error.response) {
         //response status is an error code
         console.log("El error ocurrio en la peticion: \n"+error.response.request.path);
+        console.log(error.response.data)
         return error.response.status
         
       }

@@ -1,9 +1,109 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
+//importing axios instance
+import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances'
 
 //Importing css
 import './DatosGenerales.css'
 
 function DatosGenerales() {
+
+  const [solicitantesServicio, setSolicitantesServicio] = useState([])
+  const [solicitanteServicio, setSolicitanteServicio] = useState([])
+  const [iniciosConflicto, setIniciosConflicto] = useState([])
+  const [areas, setAreas] = useState([])
+  const [temas, setTemas] = useState([])
+  
+
+
+  //Fetch solicitanteServicioOptions
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/solicitantes_servicio" + "/?ordering=id&count=20&page=" + 1,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setSolicitantesServicio(result.data.results)
+        // console.log(result)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+  // Fetch iniciosConflictoOptions
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/inicios_conflicto" + "/?ordering=id&count=20&page=" + 1,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setIniciosConflicto(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+  // Fetch areas
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/areas" + "/?ordering=id&count=20&page=" + 1,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setAreas(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+  // Fetch temas
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/temas" + "/?ordering=id&count=20&page=" + 1,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        //console.log(result.data);
+        setTemas(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+    //Fetch temas
+    useEffect(() => {
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: "/expedientes/210",
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          console.log(result.data);
+          document.getElementById("solicitante").value = result.data["solicitante_servicio_id"]
+          document.getElementById("Inicio_conflicto_Id").value = result.data["inicio_conflicto_id"]
+          // setIniciosConflicto(result.data.inicio_conflicto)
+        })
+        .catch(err => {
+          console.log("error");
+        });
+    }, [])
+
   return (
     <>
       <form className='modulo-solicitud-datos-generales-container' onSubmit={() => { }}>
@@ -18,14 +118,20 @@ function DatosGenerales() {
           <div className="mb-3">
             <label htmlFor="solicitante" className="form-label h4">Solicitante del Servicio:</label>
             <select className="form-select form-select-lg" aria-label="Default select example" id="solicitante" name='solicitante' required>
-              <option value="" label={"Selecciona uno"} disabled></option>
+              <option value={""}>Abre el menú para ver las opciones</option>
+              {solicitantesServicio.map(solicitanteServicio => {
+                return (<option key={"solicitanteServicio" + solicitanteServicio["id"]} value={solicitanteServicio["id"]}>{solicitanteServicio["nombre"]}</option>)
+              })}
             </select>
           </div>
           <br />
           <div className="mb-3">
             <label htmlFor="Inicio_conflicto_Id" className="form-label h4">Hace cuánto inicio el conflicto:</label>
             <select className="form-select form-select-lg" aria-label="Default select example" id="Inicio_conflicto_Id" name='Inicio_conflicto_Id' required>
-              <option value="" label={"Selecciona uno"} disabled></option>
+              <option value={""}>Abre el menú para ver las opciones</option>
+              {iniciosConflicto.map(inicioConflicto => {
+                return (<option key={"inicioConflicto" + inicioConflicto["id"]} value={inicioConflicto["id"]}>{inicioConflicto["nombre"]}</option>)
+              })}
             </select>
           </div>
           <br />
@@ -73,13 +179,19 @@ function DatosGenerales() {
           <div className="mb-3">
             <label htmlFor="Area_Id" className="form-label h4">Area:</label>
             <select className="form-select form-select-lg" aria-label="Default select example" id="Area_Id" name='Area_Id' required>
-              <option value="" label={"Selecciona uno"} disabled></option>
+              <option value={""}>Abre el menú para ver las opciones</option>
+              {areas.map(area => {
+                return (<option key={"area" + area["id"]} value={area["id"]}>{area["nombre"]}</option>)
+              })}
             </select>
           </div>
           <div className="mb-3">
             <label htmlFor="Tema" className="form-label h4">Tema:</label>
             <select className="form-select form-select-lg" aria-label="Default select example" id="Tema" name='Tema' required>
-              <option value="" label={"Selecciona uno"} disabled></option>
+              <option value={""}>Abre el menú para ver las opciones</option>
+              {temas.map(area => {
+                return (<option key={"area" + area["id"]} value={area["id"]}>{area["nombre"]}</option>)
+              })}
             </select>
           </div>
           <div className="mb-3">

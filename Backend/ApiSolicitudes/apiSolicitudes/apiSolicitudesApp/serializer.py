@@ -54,7 +54,7 @@ class Tipo_documentoSerializer(serializers.ModelSerializer):
 class Estado_solicitudSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Tipo_documento          # El modelo al que pertenece este serializador
+        model = Estado_solicitud        # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
 
@@ -99,8 +99,9 @@ class SolicitudSerializer(serializers.ModelSerializer):
 
 
 class Relacion_persona_solicitudSerializer(serializers.ModelSerializer):
-    estado_solicitud = serializers.CharField(source='solicitud_id.estado_solicitud', read_only=True)
+    estado_solicitud = serializers.CharField(source='solicitud_id.estado_solicitud_id.nombre', read_only=True)
     fecha_registro = serializers.CharField(source='solicitud_id.fecha_registro', read_only=True)
+    numero_radicado= serializers.CharField(source='solicitud_id', read_only=True)
     class Meta:
         model = Relacion_persona_solicitud          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 

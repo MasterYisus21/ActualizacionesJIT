@@ -11,7 +11,7 @@ import { Login } from './pages/Login'
 import { RegistrarSolicitud } from './pages/RegistrarSolicitud'
 import { Dashboard, Expedientes, Solicitudes, Personas, Reportes } from './pages/Dashboard'
 import { NoMatch } from './pages/NoMatch'
-import { Audiencia, Conciliador, Convocados, Convocantes, DatosGenerales, Documentos, Estudiantes, EvaluacionServicio, ExpedientesDetalle, Hechos, Liquidacion, ManejoConflicto, Resultado, Seguimientos } from './pages/Dashboard/ExpedientesDetalle';
+import { Audiencia, Conciliador, Convocados, Convocantes, DatosGenerales, Documentos, Estudiantes, EvaluacionServicio, ExpedientesDetalle, Hechos, ManejoConflicto, Resultado, Seguimientos } from './pages/Dashboard/ExpedientesDetalle';
 import Consultar from './pages/Consultar/Consultar';
 import  {Expediente}  from './pages/Consultar/Expediente';
 import  {Solicitud}  from './pages/Consultar/Solicitud';
@@ -26,8 +26,8 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="registrarsolicitud" element={<RegistrarSolicitud />} />
           <Route path="consultar/" element={<Consultar />}/>
-          <Route path='consultar/expediente/:id' element={<Expediente />} />
-          <Route path='consultar/solicitud/:id' element={<Solicitud />} />
+          <Route path='consultar/expedientes/:id' element={<Expediente />} />
+          <Route path='consultar/solicitudes/:id' element={<Solicitud />} />
           <Route path="dashboard/" element={<Dashboard />} >
             <Route path='expedientes' element={<Expedientes />} />
             <Route path='expedientes/detalle/' element={<ExpedientesDetalle />} >
@@ -39,7 +39,6 @@ function App() {
               <Route path=':id/conciliador' element={<Conciliador />} />ManejoConflicto
               <Route path=':id/estudiantes' element={<Estudiantes />} />
               <Route path=':id/manejoconflicto' element={<ManejoConflicto />} />
-              <Route path=':id/liquidacion' element={<Liquidacion />} />
               <Route path=':id/audiencia' element={<Audiencia />} />
               <Route path=':id/resultado' element={<Resultado />} />
               <Route path=':id/evaluacionservicio' element={<EvaluacionServicio />} />

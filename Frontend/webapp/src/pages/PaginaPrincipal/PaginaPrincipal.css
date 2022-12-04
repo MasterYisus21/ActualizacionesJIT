@@ -2,26 +2,18 @@
 .wrapp-main-pantalla-principal{
     width: 100%;
     height: 100%;
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-}
-
-.uno{
-    grid-area: 1 / 1 / 3 / 6;
+    grid-template-rows: repeat(8, 1fr); */
+    display: flex;
+    flex-direction: column;
 }
 
 .dos{
-    grid-area: 3 / 1 / 9 / 6;
+    height: 100%;
     display: flex;
-    padding: 1em;
-}
-
-.svg-rectangulo{
-    height: 90%;
-    width: 96%;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo-universidad-movil{
@@ -31,81 +23,54 @@
 }
 
 .imagen-logo-principal{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 11rem;
-    height: 11rem;
 }
 
 .cuerpo-principal{
-    margin-top: 3em;
-    width: 100%;
-    height: 30rem;
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: 2.5vh;
     align-items: center;
-
 }
 
-.carta-solicitud{
+.carta-consulta-solicitud{
     display: flex;
     width: 80%;
-    height: 35%;
+    height: 10em;
     background-color: #d9d9d9;
-    border-radius: 1.5rem;
+    border-radius: .5rem;
+    text-decoration: none;
+    color: black;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.carta-solicitud:hover{
+.carta-consulta-solicitud:hover{
     opacity: 0.5;
     background-color: #00460F;
     color: white;
-}
-.carta-consulta:hover{
-    opacity: 0.5;
-    background-color: #00460F;
-    color: white;
-}
-
-.carta-consulta{
-    display: flex;
-    width: 80%;
-    height: 35%;
-    background-color: #d9d9d9;
-    border-radius: 1.5rem;
-    margin-left: 2.6rem;
-    margin-top: 2.6rem;
 }
 
 .contenedor-descripcion{
     height: 100%;
-    width: 60%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .contenedor-imagen{
     height: 100%;
-    width: 40%;
-    border-radius: 1.5rem;
+    width: 60%;
+    border-radius: .5rem;
 }
 
 .imagen_solicitud{
     width: 100%;
     height: 100%;
-    border-radius: 1.5rem;
-}
-
-.contenedor-label{
-    width: 20rem;
-    height: 14vh;
-    background-color: #C4C4C4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.8rem;
+    border-bottom-right-radius: .5em;
+    border-top-right-radius: .5em;
 }
 
 .titulo{
@@ -115,10 +80,6 @@
 }
 
 .contenido{
-    margin-left: 0.8rem;
-    margin-right: 0.8rem;
-}
-.contenido2{
     margin-left: 0.8rem;
     margin-right: 0.8rem;
 }
@@ -139,110 +100,118 @@
 }
 
 .logo-pagina-escritorio{
-    margin-top: 3rem;
+    display: none;
 }
 
-.imagen-logo-principal2{
-    height: 4em;
+@media (min-width: 600px) {
+
+    .dos{
+        padding: 1em;
+    }
+
+    .carta-consulta-solicitud{
+        height: 25vh;
+    }
 }
 
 @media (min-width: 1000px) {
-    .imagen-logo-principal{
+
+    .logo-universidad-movil{
         display: none;
     }
 
-    .contenedor-rectangulo-grande{
-        padding-top: 6em;
-    }
-    .cuerpo-principal{
-        height: 45em;
+    .uno{
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 7rem;
-        margin-top: 0;
+        flex-direction: column;
     }
 
-    .carta-consulta{
-        margin: 0;
-        height: 80%;
-        width: 25rem;
+    .logo-pagina-escritorio{
+        display: block;
         display: flex;
-        flex-direction: column-reverse;
         justify-content: center;
         align-items: center;
-       
     }
-    .carta-solicitud{
-        margin: 0;
-        height: 80%;
-        width: 25rem;
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: center;
-        align-items: center;
+
+    .imagen-logo-principal2{
+        width: 13em;
+        margin-top: 2em;
+    }
+
+    .contenedor-rectangulo-grande{
+        padding-top: 3em;
+    }
+
+    .cuerpo-principal{
+        flex-direction: row;
+        gap: 5em;
     }
 
     .boton-ingreso{
         position: absolute;
         top: 6em;
-        right: 4em;
+        right: 3%;
+    }
+
+    .carta-consulta-solicitud{
+        height: 55vh;
+        max-height: 550px;
+        width: 30em;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+        align-items: center;
+        border-radius: 1.5em;
+    }
+
+    .contenedor-descripcion {
+        padding: 1em;
     }
 
     .contenedor-imagen{
-        height: 50%;
         width: 100%;
-        border-radius: 1.5rem;
+        border-radius: 1.5em;
     }
-    .contenido{
-        display: none;
-    }
+
     .imagen_solicitud{
+        height: 17em;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+        border-top-left-radius: 1.5em;
+        border-top-right-radius: 1.5em;
+    }
+
+    .contenido{
+        background-color: rgba(117, 116, 116, 0.169);
+        padding: 2em;
+        border-radius: .8em;
+        font-size: 1.4em;
+    }
+
+    .titulo{
+        font-size: 1.7em;
+        font-weight: 500;
+        border: .1em solid rgb(96, 96, 96);
+        border-radius: .4em;
+        width: 10em;
+        height: 1.7em;
     }
 }
 
-@media (max-width: 1000px) {
-    .imagen-logo-principal2{
-        display: none;
-    }
+@media (min-width: 1400px) {
 
-    .logo-pagina-escritorio{
-        display: none;
-    }
-    .contenedor-label{
-        display: none;
-    }
-}
-
-@media (min-width: 1200px) {
-
-    .carta-consulta{
-        margin: 0;
-        height: 80%;
-        width: 30rem;
-       
-    }
-    .carta-solicitud{
-        margin: 0;
-        height: 80%;
-        width: 30rem;
-    }
-    .contenedor-label{
-        width: 25rem;
-    }
-}
-
-@media(min-width: 1400px){
     .cuerpo-principal{
-        height: 60vh;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 15rem;
-        margin-top: 0;
+        gap: 13em;
+    }
+
+    .imagen-logo-principal2{
+        width: 17em;
+        margin-top: 6em;
     }
 }
+
+@media (min-height: 850px) {
+
+    .imagen-logo-principal2{
+        margin-top: 6em;
+    }
+}
+

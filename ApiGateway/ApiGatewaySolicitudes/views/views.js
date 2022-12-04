@@ -20,12 +20,11 @@ views.SeleccionablesPricipales = async (req, res) => {
     res.sendStatus(500);
   }
 }
-
 // listar
 views.ListarDepartamentos = async (req, res) => {
   try {
     const url = config.urlApiSolicitudes + "departamentos?pais_id=" + req.params.id
-  
+
     requests.get(req, res, url, "&")
   } catch (error) {
     console.log(error);
@@ -212,12 +211,52 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
   }
 }
 
-views.Listar_Estados_solicitud = async (req, res) => {
+views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
   try {
-    if(!req.query.count){req.query.count=10}
-    const url = config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion 
-    requests.get(req, res, url, "&")
+    
+    let endpoints=[]
+    datos={}
+    if (!req.query.count) { req.query.count = 20 }
+     endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion ,
+                    config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion ]
+  
+       
+    if ((req.url.indexOf('?')) > 0) {
+      console.log("entre")
+      const query = '&' + req.url.slice(req.url.indexOf('?') + 1)
+       endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion+query ,
+      config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion+query ]
+      
+    }
+  
+    // console.log(config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion)
+    
+    // axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion)
+    //   .then(result=>{
+    //     res.status(200).json(result.data)
+    // })
+    //   .catch(err => {
+    //     res.sendStatus(error(err))
+    //   })
+    
+                    
+    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+      .then(axios.spread((data1, data2) => {
+      datos.solicitudes=data1.data
+      datos.expedientes=data2.data
+
+        res.status(201).json(datos)
+
+      }))
+      .catch(err => {
+
+        res.sendStatus(error(err))
+
+      })
+
+
    
+
 
   } catch (error) {
     console.log(error);
@@ -260,9 +299,31 @@ views.DescargarDocumentos = async (req, res) => {
 
 views.AprobarSolicitud = async (req, res) => {
   try {
-    axios.patch(config.urlApiSolicitudes + "solicitudes/" + req.params.id + "/", { estado_solicitud_id: req.body.estado_solicitud_id })
-      .then(result => {
+    axios.patch(config.urlApiSolicitudes + "solicitudes/" + req.params.id + "/", req.body)
+      .then(async result => {
         res.status(200).json(result.data)
+        // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
+        if (req.body.estado_solicitud_id == 2) {
+          
+          await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id)
+            .then(async result => {
+              result.data.conciliador=req.body.conciliador_id
+              result.data.hechos[0].cuantia=req.body.valor_caso
+              await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
+              .then(result =>{
+                // res.status(200).json(result.data)
+              })  
+              .catch(err => {
+                  error(err)
+                  return
+                })
+            })
+            .catch(err => {
+              error(err)
+              return
+            })
+        }
+
       })
       .catch(err => {
         res.sendStatus(error(err))
@@ -289,42 +350,42 @@ views.VerSolicitud = async (req, res) => {
       .then(axios.spread(async (data1, data2, data3, data4) => {
         datos.solicitud = data1.data
         datos.hechos = data2.data.results
-    
+
 
         for await (const iterator of data4.data.results) {
-       
+
           if (iterator.tipo_cliente_id == 1) {
-            
-           await  axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
-            .then(async result => {
-            
-              datos.convocante = result.data
-              if (!(result.data.apoderado_id != null | result.data.apoderado_id != "")) { return }
-              await axios.get(config.urlApiSolicitudes + "apoderados/"+result.data.apoderado_id)
-                .then(result => {
-                  datos.apoderado = result.data
-                })
-                .catch(err => {
-                  error(err)
-                })
-              return
-            })
-            .catch(err => {
-              error(err)
-              return
-            })
+
+            await axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
+              .then(async result => {
+
+                datos.convocante = result.data
+                if (!(result.data.apoderado_id != null | result.data.apoderado_id != "")) { return }
+                await axios.get(config.urlApiSolicitudes + "apoderados/" + result.data.apoderado_id)
+                  .then(result => {
+                    datos.apoderado = result.data
+                  })
+                  .catch(err => {
+                    error(err)
+                  })
+                return
+              })
+              .catch(err => {
+                error(err)
+                return
+              })
           }
 
           await axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
             .then(result => {
-            
+
               datos.convocado = result.data
             })
             .catch(err => {
               error(err)
             })
         }
-        datos.documentos=data3.data
+        datos.documentos = data3.data
 
 
         res.status(201).json(datos)
@@ -348,7 +409,7 @@ views.ListarSolicitudes = async (req, res) => {
   try {
     const url = config.urlApiSolicitudes + req.route.path.slice(1)
     requests.get(req, res, url, "?")
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;

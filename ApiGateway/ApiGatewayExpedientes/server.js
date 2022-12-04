@@ -19,7 +19,7 @@ app.use("/api/gateway/v1/", Genericos);
 
 
 
-const port = 3000;
+const port = 3002;
 
 
 app.listen(port, () => {

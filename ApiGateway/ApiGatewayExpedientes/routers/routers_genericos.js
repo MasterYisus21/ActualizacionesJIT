@@ -24,13 +24,57 @@ router.get("/tipos_cliente", views_genericos.GenericList)
 router.get("/temas", views_genericos.GenericList)
 router.get("/objetivos_servicio", views_genericos.GenericList)
 router.get("/estados_expediente", views_genericos.GenericList)
+router.get("/tipos_servicio", views_genericos.GenericList)
+router.get("/solicitantes_servicio", views_genericos.GenericList)
+router.get("/areas", views_genericos.GenericList)
+router.get("/tipos_medio", views_genericos.GenericList)
+router.get("/inicios_conflicto", views_genericos.GenericList)
+router.get("/expedientes", views_genericos.GenericList)
+router.get("/expedientes/:id", views_genericos.GenericList)
+router.get("/personas", views_genericos.GenericList)
+router.get("/personas/:id", views_genericos.GenericList)
+
+
+router.post("/expedientes/:id/convocantes", views_genericos.CrearConvocantes)
+router.post("/expedientes/:id/convocantes/:identificacion", views_genericos.AgregarConvocantes)
+router.post("/expedientes/:id/convocados", views_genericos.CrearConvocados)
+router.post("/expedientes/:id/convocados/:identificacion", views_genericos.AgregarConvocados)
+router.post("/expedientes/:id/conciliadores/:id2", views_genericos.AgregarConciliadores)
+router.post("/expedientes/:id/citaciones", views_genericos.CrearCitaciones);
+router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
+router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPersonaDeCitacion);
+
+router.get("/conciliadores", views_genericos.ListarConciliadores);
+router.get("/estudiantes", views_genericos.ListarEstudiantes);
+router.get("/expedientes/:id/convocados", views_genericos.ListarConvocadosCaso);
+router.get("/expedientes/:id/convocantes", views_genericos.ListarConvocantesCaso);
+router.get("/expedientes/:id/estudiantes", views_genericos.ListarEstudiantesCaso);
+router.get("/expedientes/:id/conciliadores", views_genericos.ListarConciliadoresCaso);
+router.get("/expedientes/:id/hechos", views_genericos.ListarHechosCaso);
+router.get("/expedientes/:id/hechos", views_genericos.ListarHechosCaso);
+router.get("/expedientes/:id/documentos", views_genericos.ListarDocumentosCaso);
+router.get("/expedientes/:id/citaciones", views_genericos.ListarCitacionesCaso);
+router.get("/expedientes/:id/citaciones/:id_citacion/personas", views_genericos.ListarPersonasCitadasyPorCitar)
 
 
 
 router.get("/paises/:id", views_genericos.ListarDepartamentos);
 router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
+router.get("/temas/:id", views_genericos.ListarSubtemas);
 
 
-router.post("/expedientes",archivo.uploadMiddleware, views_genericos.CrearExpediente)
+router.post("/expedientes", views_genericos.CrearExpediente)
+router.post("/documentos/:id",archivo.uploadMiddleware, views_genericos.CargarDocumentos)// id expediente
+router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware, views_genericos.CambiarDocumentoCaso);
 
+
+
+router.patch("/expedientes/:id",views_genericos.ActualizarExpediente)
+router.patch("/hechos/:id",views_genericos.ActualizarHechos)
+router.patch("/documentos/:id",views_genericos.AprobarDocumentosCaso)
+
+
+// turnos fecha
+
+router.get("/expedientes/:id/turnos/:fecha", views_genericos.TurnosFecha);
 module.exports = router;
