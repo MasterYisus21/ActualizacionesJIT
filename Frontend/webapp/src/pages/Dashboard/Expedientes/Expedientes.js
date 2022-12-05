@@ -15,8 +15,8 @@ function Expedientes() {
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [valoresBuscados, setValoresBuscados] = useState([])
   const [page, setPage] = useState(1)
+  const [numPages, setNumPages] = useState(1)
 
-  let currentPage = 1;
 
   const search = () => {
 
@@ -29,7 +29,13 @@ function Expedientes() {
     })
       .then(result => {
         console.log(result.data);
-        setResultadosBusqueda([...resultadosBusqueda, ...result.data.results])
+        if (page != 1) {
+          setResultadosBusqueda([...resultadosBusqueda, ...result.data.results])
+        } else {
+          setResultadosBusqueda(result.data.results)
+        }
+
+        setNumPages(Math.ceil(result.data.count / 14))
       })
       .catch(err => {
         console.log("error");
@@ -37,13 +43,19 @@ function Expedientes() {
 
   }
 
+  const handlePageChange = (page) => {
+    if (page <= numPages) {
+      setPage(page)
+    }
+  }
+
   const handleScroll = (e) => {
-    console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
-    console.log('clientHeight: ', e.target.clientHeight );
-   if(e.target.scrollHeight - e.target.scrollTop - 200 < e.target.clientHeight) {
-    console.log("almost bottom");
-    setPage(page + 1)
-   } 
+    // console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
+    // console.log('clientHeight: ', e.target.clientHeight);
+    if (e.target.scrollHeight - e.target.scrollTop - 200 < e.target.clientHeight) {
+      // console.log("almost bottom");
+      handlePageChange(page + 1)
+    }
   }
 
   useEffect(() => {
@@ -59,12 +71,17 @@ function Expedientes() {
 
   return (
     <div className='wrapp-expedientes'>
-      <Buscador valoresBuscados={valoresBuscados} setValoresBuscados={setValoresBuscados} required />
-      
+      <Buscador
+        valoresBuscados={valoresBuscados}
+        setValoresBuscados={setValoresBuscados}
+        setPage={handlePageChange}
+        required
+      />
+
       <div className='wrapp-tarjetas' onScroll={e => handleScroll(e)}>
         {resultadosBusqueda.map(resultadoBusqueda => {
           return (
-            <Link to={"detalle/" + resultadoBusqueda["id"] + "/datosgenerales"} className='text-decoration-none ' onClick={() => { setPagina("Caso #" + resultadoBusqueda["numero_caso"]) }}>
+            <Link key={"expediente" + resultadoBusqueda["id"]} to={"detalle/" + resultadoBusqueda["id"] + "/datosgenerales"} className='text-decoration-none ' onClick={() => { setPagina("Caso #" + resultadoBusqueda["numero_caso"]) }}>
               <Tarjeta
                 titulo={"Caso #" + resultadoBusqueda["numero_caso"]}
                 radicado={resultadoBusqueda["numero_radicado"]}
@@ -74,8 +91,8 @@ function Expedientes() {
           )
         })}
         <Button
-          onClick={e => { setPage(page + 1) }}
-          className= "span2"
+          onClick={e => { handlePageChange(page + 1) }}
+          className="span2"
           text="Cargar más"
         />
       </div>
