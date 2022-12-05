@@ -40,6 +40,7 @@ router.post("/expedientes/:id/convocantes/:identificacion", views_genericos.Agre
 router.post("/expedientes/:id/convocados", views_genericos.CrearConvocados)
 router.post("/expedientes/:id/convocados/:identificacion", views_genericos.AgregarConvocados)
 router.post("/expedientes/:id/conciliadores/:id2", views_genericos.AgregarConciliadores)
+router.post("/expedientes/:id/estudiantes/:id2", views_genericos.AgregarEstudiantes)
 router.post("/expedientes/:id/citaciones", views_genericos.CrearCitaciones);
 router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
 router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPersonaDeCitacion);
@@ -72,6 +73,7 @@ router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware
 
 router.patch("/expedientes/:id",views_genericos.ActualizarExpediente)
 router.patch("/hechos/:id",views_genericos.ActualizarHechos)
+router.patch("/personas/:id",views_genericos.ActualizarPersonas)
 router.patch("/documentos/:id",views_genericos.AprobarDocumentosCaso)
 
 

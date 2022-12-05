@@ -686,9 +686,36 @@ views.AgregarConciliadores = async (req, res) => {
   try {
     axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
       .then(async result => {
-        console.log(result.data.results)
+    
         if (Object.keys(result.data.results).length > 0) { res.sendStatus(208); return }
         const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
+        await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
+          .then(result => {
+            res.status(200).json(result.data)
+          })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+
+      })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+views.AgregarEstudiantes = async (req, res) => {
+  try {
+    axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
+      .then(async result => {
+       
+        if (Object.keys(result.data.results).length > 0) { res.sendStatus(208); return }
+        const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 4 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
           .then(result => {
             res.status(200).json(result.data)
@@ -736,6 +763,17 @@ views.ActualizarHechos = async (req, res) => {
   }
 }
 
+views.ActualizarPersonas = async (req, res) => {
+  try {
+    if (req.body.identificacion) { delete req.body["identificacion"]; }
+    const url = config.urlApiExpedientes + "personas/" + req.params.id + "/"
+    requests.patch(req, res, url, req.body)
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 //turnos para una fecha 
 views.TurnosFecha = async (req, res) => {
   try {
