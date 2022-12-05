@@ -14,6 +14,7 @@ export default function Buscador({ text, valoresBuscados, setValoresBuscados, se
 
   const agregar_busqueda=(e)=>{
     e.preventDefault()
+    setPage(1)
     console.log( e.target.campobuscar.value );
     setValoresBuscados([...valoresBuscados, e.target.campobuscar.value ])
   }
