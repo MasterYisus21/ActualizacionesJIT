@@ -19,13 +19,18 @@ class CustomDjangoModelPermission(DjangoModelPermissions):
 class DocumentosViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     serializer_class = DocumentoSerializer
     pagination_class= StandardResultsSetPagination
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = ['expediente','estado']
+
+    ordering_fields = '__all__'
+ 
     # permission_classes = [CustomDjangoModelPermission]
     
    
     def get_queryset(self,pk=None):
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
         if pk is None:
-            return model.filter(estado=True)
+            return model.filter()
  
-        return model.filter(estado=True, id=pk).first() # retorna todos los valores con estado = true
+        return model.filter(id=pk).first() # retorna todos los valores con estado = true
     

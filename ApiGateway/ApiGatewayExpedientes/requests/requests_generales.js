@@ -1,6 +1,7 @@
 
 const error = require("./requests_error.js")
 const axios = require("axios");
+
 requests = {}
 requests.get = async (req, res, url, simbolo) => {
     try {
@@ -14,6 +15,7 @@ requests.get = async (req, res, url, simbolo) => {
             .then(result => {
 
                 res.status(200).json(result.data)
+
             })
             .catch(err => {
 
@@ -24,6 +26,45 @@ requests.get = async (req, res, url, simbolo) => {
         console.log(error);
         res.sendStatus(500);
     }
+
+}
+requests.patch = async (req, res, url, datos) => {
+
+    try {
+        axios.patch(url, datos)
+            .then(result => {
+                res.status(200).json(result.data)
+            })
+            .catch(err => {
+                res.sendStatus(error(err))
+                return
+            })
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+
+}
+
+requests.delete = async (req, res, url) => {
+
+    try {
+        axios.delete(url)
+            .then(result => {
+                res.status(200).json(result.data)
+            })
+            .catch(err => {
+                res.sendStatus(error(err))
+                return
+            })
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
 
 }
 

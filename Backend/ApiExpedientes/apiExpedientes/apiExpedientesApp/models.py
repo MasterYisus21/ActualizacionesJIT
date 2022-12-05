@@ -537,6 +537,15 @@ class Estado_expediente(GeneralModel):
         verbose_name_plural = ('Estados_expediente')
      def __str__(self):
         return self.nombre
+
+class Finalidad_servicio(GeneralModel):
+
+     class Meta:
+        db_table='finalidad_servicio'
+        verbose_name = ('finalidad_servicio')
+        verbose_name_plural = ('finalidades_servicio')
+     def __str__(self):
+        return self.nombre
 class Expediente(EstadoModel):
     
     numero_radicado = models.CharField(max_length =20,editable=True,null=False,blank=True)
@@ -553,6 +562,7 @@ class Expediente(EstadoModel):
     solicitante_servicio_id = models.ForeignKey(Solicitante_servicio, on_delete=models.SET_NULL, blank=True, null=True)
     inicio_conflicto_id = models.ForeignKey(Inicio_conflicto, on_delete=models.SET_NULL, blank=True, null=True)
     estado_expediente_id = models.ForeignKey(Estado_expediente, on_delete=models.SET_NULL, blank=True, null=True)
+    Finalidad_servicio_id = models.ForeignKey(Finalidad_servicio, on_delete=models.SET_NULL, blank=True, null=True)
     
 
     class Meta:
@@ -710,7 +720,7 @@ class Citacion(EstadoModel):
     enlace = models.CharField(max_length = 150,blank=True,null=True)
     descripcion = models.TextField(blank=True,null=True)
     fecha_sesion = models.DateField(auto_now=False, auto_now_add=False,blank=False,null=False)
-    turnos_id = models.ForeignKey(Turno, on_delete=models.SET_NULL,blank=False,null=True)
+    turno_id = models.ForeignKey(Turno, on_delete=models.SET_NULL,blank=False,null=True)
     tipo_medio_id = models.ForeignKey(Tipo_medio, on_delete=models.SET_NULL,blank=False,null=True)
     expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL,blank=False,null=True)
 
@@ -720,9 +730,9 @@ class Citacion(EstadoModel):
         verbose_name = ('Citacion')
         verbose_name_plural = ('Citaciones')
     def __str__(self):
-        return str(self.id)
+        return str(self.expediente_id)
 
-class Relacion_persona_citacion(GeneralModel):
+class Relacion_persona_citacion(EstadoModel):
     citacion_id = models.ForeignKey(Citacion, on_delete=models.SET_NULL,blank=False,null=True)
     persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL,blank=False,null=True)
     class Meta:
@@ -730,7 +740,8 @@ class Relacion_persona_citacion(GeneralModel):
         verbose_name = ('Relacion_persona_citacion')
         verbose_name_plural = ('Relaciones_persona_citacion')
     def __str__(self):
-        return self.nombre
+        return str(self.citacion_id)
+
 class Medio_conocimiento(GeneralModel):
 
     class Meta:

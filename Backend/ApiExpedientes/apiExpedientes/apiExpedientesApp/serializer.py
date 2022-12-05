@@ -157,6 +157,11 @@ class Tipo_servicioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tipo_servicio          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
+class Finalidad_servicioSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Finalidad_servicio         # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
 
 class Inicio_conflictoSerializer(serializers.ModelSerializer):
 
@@ -170,6 +175,7 @@ class ExpedienteSerializer(serializers.ModelSerializer):
     solicitante_servicio = serializers.CharField(source='solicitante_servicio_id', read_only=True)
     inicio_conflicto = serializers.CharField(source='inicio_conflicto_id', read_only=True)
     estado_expediente = serializers.CharField(source='estado_expediente_id', read_only=True)
+    finalidad_servicio = serializers.CharField(source='Finalidad_servicio_id', read_only=True)
 
     class Meta:
         model = Expediente          # El modelo al que pertenece este serializador
@@ -184,6 +190,12 @@ class Relacion_persona_expedienteSerializer(serializers.ModelSerializer):
     estado_expediente = serializers.CharField(source='expediente_id.estado_expediente_id', read_only=True)
     fecha_registro = serializers.CharField(source='expediente_id.fecha_registro', read_only=True)
     numero_caso= serializers.CharField(source='expediente_id', read_only=True)
+    nombres_persona = serializers.CharField(source='persona_id', read_only=True)
+    identificacion_persona= serializers.CharField(source='persona_id.identificacion', read_only=True)
+    tipo_documento_persona= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    tipo_cliente= serializers.CharField(source='tipo_cliente_id', read_only=True)
+    
+    
     class Meta:
         model = Relacion_persona_expediente          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
@@ -243,12 +255,18 @@ class Tipo_medioSerializer(serializers.ModelSerializer):
         model = Tipo_medio          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class CitacionSerializer(serializers.ModelSerializer):
-
+    turno= serializers.CharField(source='turno_id', read_only=True)
+    numero_caso= serializers.CharField(source='expediente_id', read_only=True)
+    medio= serializers.CharField(source='tipo_medio_id', read_only=True)
     class Meta:
         model = Citacion          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class Relacion_persona_citacionSerializer(serializers.ModelSerializer):
-
+    fecha_sesion= serializers.CharField(source='citacion_id.fecha_sesion', read_only=True)
+    turno_id= serializers.CharField(source='citacion_id.turno_id.id', read_only=True)
+    nombres_persona = serializers.CharField(source='persona_id', read_only=True)
+    identificacion_persona= serializers.CharField(source='persona_id.identificacion', read_only=True)
+    tipo_documento_persona= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
     class Meta:
         model = Relacion_persona_citacion          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
