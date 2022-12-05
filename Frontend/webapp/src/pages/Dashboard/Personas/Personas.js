@@ -1,5 +1,5 @@
 import React from 'react'
-import { Buscador, Popup } from '../../../components'
+import { Buscador, Button, Popup } from '../../../components'
 import TarjetaPersonas from '../../../components/Tarjeta/TarjetaPersonas'
 import { useState, useEffect } from 'react'
 // import css
@@ -99,6 +99,11 @@ function Personas() {
             />
           )
         })}
+        <Button
+          onClick={e => { handlePageChange(page + 1) }}
+          className="span2"
+          text="Cargar más"
+        />
       </div>
 
     </div>
