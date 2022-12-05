@@ -418,6 +418,7 @@ views.EliminarPersonaDeCitacion = async (req, res) => {
     return;
   }
 }
+
 views.CitarPersonas = async (req, res) => {
   try {
     let datos= {
@@ -551,6 +552,7 @@ views.CrearConvocantes = async (req, res) => {
     await axios.post(config.urlApiExpedientes + "personas/", req.body)
       .then(async result => {
         const datos = { persona_id: result.data.id, expediente_id: req.params.id, tipo_cliente_id: 1 }
+        
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
           .then(result => {
             res.status(200).json(result.data)
@@ -663,6 +665,17 @@ views.AgregarConvocados = async (req, res) => {
         res.sendStatus(error(err))
       })
 
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+views.EliminarPersonaCaso = async (req, res) => {
+  try {
+    const url = config.urlApiExpedientes + "relaciones_persona_expediente/" + req.params.id_relacion+"/"
+    requests.delete(req, res, url)
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
