@@ -43,6 +43,7 @@ router.post("/expedientes/:id/conciliadores/:id2", views_genericos.AgregarConcil
 router.post("/expedientes/:id/citaciones", views_genericos.CrearCitaciones);
 router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
 router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPersonaDeCitacion);
+router.delete("/expedientes/:id/personas/:id_relacion",views_genericos.EliminarPersonaCaso);
 
 router.get("/conciliadores", views_genericos.ListarConciliadores);
 router.get("/estudiantes", views_genericos.ListarEstudiantes);
