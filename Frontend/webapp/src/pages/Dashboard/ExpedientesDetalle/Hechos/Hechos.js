@@ -1,25 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import { SearchableSelect } from '../../../../components';
+import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 
 //Importing css
 
 import './Hechos.css'
 
 function Hechos() {
-  return (
-    <form className='modulo-solicitud-content-main-hechos'>
+
+    const [departamento, setDepartamento] = useState("")
+    const [ciudad, setCiudad] = useState("")
+
+    // Getting solicitud id from urlParams
+    let { id } = useParams();
+
+    useEffect(() => {
+        console.log(document.querySelector('[name="ciudad"]').value);
+
+    }, [departamento])
+
+
+
+    return (
+        <form className='modulo-solicitud-content-main-hechos'>
             <div className='modulo-solicitud-content-main-hechos-lugar'>
                 <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h6>Lugar de los hechos</h6></div>
-                <div className="mb-3">
+                <div>
                     <label htmlFor="Departamento" className="form-label">Departamento:</label>
-                    <select className="form-select form-select-sm" aria-label="Default select example" id="Departamento" name='Departamento' required>
-                        <option value="" label={"Selecciona uno"} disabled></option>
-                    </select>
+                    <SearchableSelect
+                        axiosInstance={axiosTokenInstanceApiExpedientes}
+                        url={"/paises/1"}
+                        name={"departamento"}
+                        identifier={"id"}
+                        initialValue={""}
+                        onChange={(val) => { setDepartamento(val); setCiudad("") }}
+                    />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="Ciudad" className="form-label">Ciudad:</label>
-                    <select className="form-select form-select-sm" aria-label="Default select example" id="Ciudad" name='Ciudad' required>
-                        <option value="" label={"Selecciona uno"} disabled></option>
-                    </select>
+                <div>
+                    <label htmlFor="ciudad" className="form-label">Ciudad:</label>
+                    <SearchableSelect
+                        axiosInstance={axiosTokenInstanceApiExpedientes}
+                        url={"/paises/1/departamentos/" + departamento}
+                        name={"ciudad"}
+                        identifier={"id"}
+                        initialValue={""}
+                        onChange={(val) => {setCiudad(val) }}
+                    />
                 </div>
             </div>
             <div className='modulo-solicitud-content-main-hechos-resumen'>
@@ -34,7 +61,7 @@ function Hechos() {
             </div>
             <div className='modulo-solicitud-content-main-hechos-determinacion-cuantia'>
                 <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h6>Determinacion De la cuantia</h6></div>
-                <div className="mb-3" style={{display: "flex", width: "35%", justifyContent: "space-evenly"}}>
+                <div className="mb-3" style={{ display: "flex", width: "35%", justifyContent: "space-evenly" }}>
                     <label htmlFor="cuantia" className="form-label">Cuantía:</label>
                     <input type="text" className="form-control form-control-sm" id="cuantia" name='cuantia' placeholder="" required />
                 </div>
@@ -44,15 +71,15 @@ function Hechos() {
                         Cuantía indeterminada
                     </label>
                 </div>
-                <div className={{display: "flex"}}>
-                        <button className="modulo-solicitud-content-main-column2-save-button">
+                <div className={{ display: "flex" }}>
+                    <button className="modulo-solicitud-content-main-column2-save-button">
                         <img src='/icons/save.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
-                    <p>GUARDAR</p>
-                </button>
+                        <p>GUARDAR</p>
+                    </button>
                 </div>
             </div>
         </form>
-  )
+    )
 }
 
 export default Hechos

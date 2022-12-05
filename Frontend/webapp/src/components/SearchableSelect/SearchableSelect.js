@@ -6,7 +6,7 @@ import "./SearchableSelect.css"
 
 let cancelToken = ""
 
-function SearchableSelect({ axiosInstance, url, name, identifier, initialValue }) {
+function SearchableSelect({ axiosInstance, url, name, identifier, initialValue, onChange }) {
     const [texto, setTexto] = useState("")
     const [opened, setOpened] = useState(false)
     const auxId = useId()
@@ -21,7 +21,7 @@ function SearchableSelect({ axiosInstance, url, name, identifier, initialValue }
         cancelToken = axios.CancelToken.source()
 
         if (textoABuscar != null) {
-            await axiosInstance.get(url + '?count=5&search=' + textoABuscar, {cancelToken: cancelToken.token})
+            await axiosInstance.get(url + '?count=8&search=' + textoABuscar, { cancelToken: cancelToken.token })
                 .then(response => {
                     console.log(response.data)
                     console.log(response.data.results[0][identifier])
@@ -39,13 +39,19 @@ function SearchableSelect({ axiosInstance, url, name, identifier, initialValue }
     }, [])
 
     useEffect(() => {
-      getData(initialValue)
+        getData(initialValue)
     }, [])
-    
+
+    useEffect(() => {
+        getData(initialValue);
+        setTexto("");
+    }, [url])
     
 
+
+
     return (
-        <div className="select-box" onFocus={e => setOpened(true)}>
+        <div className="select-box" onFocus={e => {setOpened(true); getData(initialValue)}}>
             <div className={"options-container" + (opened ? " active" : "")}>
                 <div className="option">
                     <input type="radio" className="radio" id={"b" + auxId} name={name} value={texto} onClick={e => setOpened(false)} />
@@ -54,7 +60,7 @@ function SearchableSelect({ axiosInstance, url, name, identifier, initialValue }
                 {options?.map((object) => {
                     return (
                         <div key={object.id} className="option">
-                            <input type="radio" id={"a" + auxId + object[identifier]} className="radio" name={name} value={object["id"]} onClick={e => { setTexto(object.nombre + " - " + object[identifier]); setOpened(false); }} />
+                            <input type="radio" id={"a" + auxId + object[identifier]} className="radio" name={name} value={object["id"]} onClick={e => { setTexto(object.nombre + " - " + object[identifier]); setOpened(false); onChange(e.target.value) }} />
                             <label htmlFor={"a" + auxId + object[identifier]} className="radio-label">{object.nombre} - {object[identifier]}</label>
                         </div>
                     )
