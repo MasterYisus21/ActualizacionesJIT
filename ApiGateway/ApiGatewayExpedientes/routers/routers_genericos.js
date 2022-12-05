@@ -46,6 +46,7 @@ router.post("/expedientes/:id/citaciones", views_genericos.CrearCitaciones);
 router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
 router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPersonaDeCitacion);
 router.delete("/expedientes/:id/personas/:id_relacion",views_genericos.EliminarPersonaCaso);
+router.delete("/personas/:id",views_genericos.EliminarPersonas);
 
 router.get("/conciliadores", views_genericos.ListarConciliadores);
 router.get("/estudiantes", views_genericos.ListarEstudiantes);
@@ -59,6 +60,7 @@ router.get("/expedientes/:id/documentos", views_genericos.ListarDocumentosCaso);
 router.get("/expedientes/:id/citaciones", views_genericos.ListarCitacionesCaso);
 router.get("/expedientes/:id/citaciones/:id_citacion/personas", views_genericos.ListarPersonasCitadasyPorCitar)
 router.get("/crear_admin", views_genericos.DatosCrearPersonasAdministrativas)
+
 
 
 router.get("/paises/:id", views_genericos.ListarDepartamentos);

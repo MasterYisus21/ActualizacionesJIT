@@ -34,11 +34,12 @@ views.CrearPersonas = async (req, res) => {
     if (req.body.tipo_cargo_id==""|req.body.tipo_cargo_id==null) {res.sendStatus(error({message:"No ha ingresado el cargo"}));return}
 
     axios.post(config.urlApiExpedientes+"personas/",req.body)
-      .then(async result=>{
+      .then(async resul=>{
         
         let datos ={username:req.body.identificacion,password:config.clave_usuarios_nuevos,is_staff:false,is_active:true,groups:[req.body.grupo_id]}
         await axios.post(config.urlApiExpedientes+"usuarios/",datos)
           .then(result=>{
+            result.data.persona_id=resul.data.id
             res.status(201).json(result.data)
         })
           .catch(err => {
@@ -48,6 +49,42 @@ views.CrearPersonas = async (req, res) => {
     })
       .catch(err => {
         res.sendStatus(error(err))
+      })
+
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+views.EliminarPersonas = async (req, res) => {
+  try {
+   
+    axios.delete(config.urlApiExpedientes+"personas/"+req.params.id+"/")
+      .then(async result=>{
+
+        await axios.get(config.urlApiExpedientes+"usuarios?username="+req.body.identificacion)
+          .then(async result=>{
+            
+            await axios.patch(config.urlApiExpedientes+"usuarios/"+result.data.results[0].id+"/",{is_active:false})
+              .then(result=>{
+                res.status(200).json(result.data)
+            })
+              .catch(err => {
+                res.sendStatus(error(err))
+                return
+              })
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+            return
+          })
+                 
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+        return
       })
 
   }catch (error) {
