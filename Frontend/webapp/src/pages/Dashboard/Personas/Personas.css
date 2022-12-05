@@ -1,33 +1,35 @@
-
-.wrapp-personas{
+.wrapp-personas {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
     padding: 5em 0em 0em 0em;
     gap: 2em;
 }
 
-.search-load-bar{
+.search-load-bar {
     width: 80%;
     display: flex;
     justify-content: space-between;
 }
 
-.icon-personas{
+.icon-personas {
     width: 2.5em;
     cursor: pointer;
 }
 
-.wrapp-tarjetas-personas{
+.wrapp-tarjetas-personas {
     width: 80%;
     display: grid;
     grid-auto-flow: dense;
     grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
     align-items: center;
     gap: 2em;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
-.boton-cargar-personas{
+.boton-cargar-personas {
     border: 0;
     background-color: #00460e;
     color: white;

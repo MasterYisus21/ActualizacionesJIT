@@ -17,7 +17,6 @@ function Expedientes() {
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
 
-  let currentPage = 1;
 
   const search = () => {
 
