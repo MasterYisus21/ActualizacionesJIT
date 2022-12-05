@@ -30,6 +30,8 @@
 .contenedor-tabla-convocante {
     font-size: small;
     text-align: center;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .registro-convocante {

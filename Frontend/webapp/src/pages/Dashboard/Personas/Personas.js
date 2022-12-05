@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Buscador, Button, Popup } from '../../../components'
 import TarjetaPersonas from '../../../components/Tarjeta/TarjetaPersonas'
 import { useState, useEffect } from 'react'
@@ -14,6 +14,7 @@ function Personas() {
   const [valoresBuscados, setValoresBuscados] = useState([])
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
+  let resultados = useRef([])
 
   const search = () => {
 
@@ -27,11 +28,11 @@ function Personas() {
       .then(result => {
         console.log(result.data);
         if (page != 1) {
-          setResultadosBusqueda([...resultadosBusqueda, ...result.data.results])
+          resultados.current = [...resultados.current, ...result.data.results]
         } else {
-          setResultadosBusqueda(result.data.results)
+          resultados.current = result.data.results
         }
-
+        setResultadosBusqueda(resultados.current)
         setNumPages(Math.ceil(result.data.count / 14))
       })
       .catch(err => {

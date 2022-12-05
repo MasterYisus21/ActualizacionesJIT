@@ -1,22 +1,89 @@
-import React from 'react'
-import {useState} from 'react'
+import React, { useEffect, useRef } from 'react'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom';
+import { Buscador, Button } from '../../../../components';
+import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 
 // Importing css
 import './Convocantes.css'
 
 function Convocantes() {
 
-  const [estado, setEstado] = useState(false);  
+  const [estado, setEstado] = useState(false);
+
+  const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
+  const [valoresBuscados, setValoresBuscados] = useState([])
+  const [page, setPage] = useState(1)
+  const [numPages, setNumPages] = useState(1)
+
+  let { id } = useParams();
+  let resultados = useRef([])
+
+  const search = () => {
+
+    // console.log(e.target.documento.value)
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/expedientes/" + id + "/convocantes/?ordering=-numero_caso&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        if (page != 1) {
+          resultados.current = [...resultados.current, ...result.data.results]
+        } else {
+          resultados.current = result.data.results
+        }
+        setResultadosBusqueda(resultados.current)
+        setNumPages(Math.ceil(result.data.count / 14))
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }
+
+  const handlePageChange = (page) => {
+    if (page <= numPages) {
+      setPage(page)
+    }
+  }
+
+  const handleScroll = (e) => {
+    // console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
+    // console.log('clientHeight: ', e.target.clientHeight);
+    if (e.target.scrollHeight - e.target.scrollTop - 200 < e.target.clientHeight) {
+      // console.log("almost bottom");
+      handlePageChange(page + 1)
+    }
+  }
+
+  useEffect(() => {
+    setResultadosBusqueda([]);
+    search()
+  }, [valoresBuscados])
+
+  useEffect(() => {
+    if (page != 1) {
+      search()
+    }
+  }, [page])
 
   return (
     <>
       <div className='container-convocante'>
-       
+
         <h2>Informacion del convocante</h2>
         <div className='navbar-convocante'>
-          <input type="search" className="form-control rounded input-buscar" placeholder="Buscar Convocante" aria-label="Search" aria-describedby="search-addon" />
-          <button className='boton-crear-convocante' onClick={()=> setEstado(!estado)}>Crear Convocante</button>
+          <Buscador
+            valoresBuscados={valoresBuscados}
+            setValoresBuscados={setValoresBuscados}
+            setPage={handlePageChange}
+            required
+          />
+          <button className='boton-crear-convocante' onClick={() => setEstado(!estado)}>Crear Convocante</button>
         </div>
+
 
         {estado &&
           <form className='registro-convocante mb-5'>
@@ -48,7 +115,7 @@ function Convocantes() {
                 <div className='row gap-3'>
                   <select className="form-select col" aria-label="Default select example" defaultValue="" name="sexo" required>
                     <option value="">Sexo</option>
-                    
+
                     opcionesSexo
                   </select>
                   <select className="form-select col" aria-label="Default select example" defaultValue="" name="tipoPersona" required>
@@ -86,7 +153,7 @@ function Convocantes() {
             <button className="boton-crear-convocante" id='boton-aceptar-registro-convocante'>Registrar</button>
           </form>}
 
-        <form className='contenedor-tabla-convocante'>
+        <div className='contenedor-tabla-convocante' onScroll={e => handleScroll(e)}>
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
               <tr>
@@ -98,27 +165,25 @@ function Convocantes() {
               </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>Natural</td>
-              <td>Cedula</td>
-              <td>1023123123</td>
-              <td>Juan Diego Benavidez</td>
-              <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
-            </tr>
-              {/* {convocantes.map((dato) => {
+              {resultadosBusqueda.map((resultadoBusqueda) => {
                 return (
-                  <tr key={dato["Id"]}>
-                    <td key={dato["Tipo_persona_Id"]}>{dato["Tipo_persona_Id"]["Nombre"]}</td>
-                    <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
-                    <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
-                    <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
-                    <td><button className='boton-tabla-eliminar' value={dato["Identificacion"]} onClick={eliminarConvocante}>Eliminar</button></td>
+                  <tr key={resultadoBusqueda["id"]}>
+                    <td>{resultadoBusqueda["nombres_persona"]}</td> {/* Clase del convocado natural, juridica */}
+                    <td>{resultadoBusqueda["tipo_documento_persona"]}</td>
+                    <td>{resultadoBusqueda["identificacion_persona"]}</td>
+                    <td>{resultadoBusqueda["nombres_persona"]}</td>
+                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={() => { }}>Eliminar</button></td>
                   </tr>
                 )
-              })} */}
+              })}
             </tbody>
+            <Button
+              onClick={e => { handlePageChange(page + 1) }}
+              className="span2"
+              text="Cargar más"
+            />
           </table>
-        </form>
+        </div>
       </div>
     </>
   )
