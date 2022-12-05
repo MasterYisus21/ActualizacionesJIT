@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Link, useOutletContext } from 'react-router-dom'
 import { Buscador, Button, Tarjeta } from '../../../components'
 import { useState, useEffect } from 'react'
@@ -17,6 +17,7 @@ function Expedientes() {
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
 
+  let resultados = useRef([])
 
   const search = () => {
 
@@ -30,11 +31,11 @@ function Expedientes() {
       .then(result => {
         console.log(result.data);
         if (page != 1) {
-          setResultadosBusqueda([...resultadosBusqueda, ...result.data.results])
+          resultados.current = [...resultados.current, ...result.data.results]
         } else {
-          setResultadosBusqueda(result.data.results)
+          resultados.current = result.data.results
         }
-
+        setResultadosBusqueda(resultados.current)
         setNumPages(Math.ceil(result.data.count / 14))
       })
       .catch(err => {
