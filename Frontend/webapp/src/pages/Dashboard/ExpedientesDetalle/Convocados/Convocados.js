@@ -158,10 +158,10 @@ function Convocados() {
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
               <tr>
-                <th>Clase del convocado</th>
+                <th>Nombre</th>
                 <th>Tipo de documento</th>
                 <th>Identificación</th>
-                <th>Nombre</th>
+                <th>Apoderado</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -172,7 +172,7 @@ function Convocados() {
                     <td>{resultadoBusqueda["nombres_persona"]}</td> {/* Clase del convocado natural, juridica */}
                     <td>{resultadoBusqueda["tipo_documento_persona"]}</td>
                     <td>{resultadoBusqueda["identificacion_persona"]}</td>
-                    <td>{resultadoBusqueda["nombres_persona"]}</td>
+                    <td>{resultadoBusqueda["nombre_apoderado"]}</td>
                     <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={() => { }}>Eliminar</button></td>
                   </tr>
                 )
