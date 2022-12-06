@@ -10,6 +10,7 @@ const views_genericos = require("../views/views_genericos");
 // listas genericas
 router.get("/estados_civiles", views_genericos.GenericList)
 router.get("/estratos_socioeconomicos", views_genericos.GenericList)
+router.get("/grupos", views_genericos.GenericList) 
 router.get("/grupos_etnicos", views_genericos.GenericList)
 router.get("/tipos_persona", views_genericos.GenericList)
 router.get("/escolaridades", views_genericos.GenericList)
@@ -45,6 +46,7 @@ router.post("/expedientes/:id/citaciones", views_genericos.CrearCitaciones);
 router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
 router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPersonaDeCitacion);
 router.delete("/expedientes/:id/personas/:id_relacion",views_genericos.EliminarPersonaCaso);
+router.delete("/personas/:id",views_genericos.EliminarPersonas);
 
 router.get("/conciliadores", views_genericos.ListarConciliadores);
 router.get("/estudiantes", views_genericos.ListarEstudiantes);
@@ -57,6 +59,7 @@ router.get("/expedientes/:id/hechos", views_genericos.ListarHechosCaso);
 router.get("/expedientes/:id/documentos", views_genericos.ListarDocumentosCaso);
 router.get("/expedientes/:id/citaciones", views_genericos.ListarCitacionesCaso);
 router.get("/expedientes/:id/citaciones/:id_citacion/personas", views_genericos.ListarPersonasCitadasyPorCitar)
+router.get("/crear_admin", views_genericos.DatosCrearPersonasAdministrativas)
 
 
 
@@ -66,6 +69,7 @@ router.get("/temas/:id", views_genericos.ListarSubtemas);
 
 
 router.post("/expedientes", views_genericos.CrearExpediente)
+router.post("/personas", views_genericos.CrearPersonas)
 router.post("/documentos/:id",archivo.uploadMiddleware, views_genericos.CargarDocumentos)// id expediente
 router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware, views_genericos.CambiarDocumentoCaso);
 

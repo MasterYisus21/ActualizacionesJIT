@@ -11,8 +11,88 @@ const unirest = require('unirest');
 const FormData = require('form-data');
 const path = require("path");
 
+// datos generales
+//convocantes
+//convocados
+//conciliadores
+//estudiantes
+//hechos
+//documentos
+// liquidacion
+//citacion
+//resultados
+//encuenstas
+//seguimientos
+//informes
 
+views.CrearPersonas = async (req, res) => {
+  try {
+    if (req.body.nombres==""|req.body.nombres==null) {res.sendStatus(error({message:"No ha ingresado el nombre de la persona"}));return}
+    if (req.body.identificacion==""|req.body.identificacion==null) {res.sendStatus(error({message:"No ha ingresado la identificacion"}));return}
+    if (req.body.celular==""|req.body.celular==null) {res.sendStatus(error({message:"No ha ingresado el telefono celular"}));return}
+    if (req.body.correo==""|req.body.correo==null) {res.sendStatus(error({message:"No ha ingresado el correo electronico"}));return}
+    if (req.body.tipo_cargo_id==""|req.body.tipo_cargo_id==null) {res.sendStatus(error({message:"No ha ingresado el cargo"}));return}
 
+    axios.post(config.urlApiExpedientes+"personas/",req.body)
+      .then(async resul=>{
+        
+        let datos ={username:req.body.identificacion,password:config.clave_usuarios_nuevos,is_staff:false,is_active:true,groups:[req.body.grupo_id]}
+        await axios.post(config.urlApiExpedientes+"usuarios/",datos)
+          .then(result=>{
+            result.data.persona_id=resul.data.id
+            res.status(201).json(result.data)
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+        
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+views.EliminarPersonas = async (req, res) => {
+  try {
+   
+    axios.delete(config.urlApiExpedientes+"personas/"+req.params.id+"/")
+      .then(async result=>{
+
+        await axios.get(config.urlApiExpedientes+"usuarios?username="+req.body.identificacion)
+          .then(async result=>{
+            
+            await axios.patch(config.urlApiExpedientes+"usuarios/"+result.data.results[0].id+"/",{is_active:false})
+              .then(result=>{
+                res.status(200).json(result.data)
+            })
+              .catch(err => {
+                res.sendStatus(error(err))
+                return
+              })
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+            return
+          })
+                 
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+        return
+      })
+
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.GenericList = async (req, res) => {
   try {
     axios({
@@ -155,20 +235,34 @@ views.CrearExpediente = async (req, res) => {
     return;
   }
 }
-// datos generales
-//convocantes
-//convocados
-//conciliadores
-//estudiantes
-//hechos
-//documentos
-// liquidacion
-//citacion
-//resultados
-// encuenstas
-//seguimientos
-//informes
 
+views.DatosCrearPersonasAdministrativas = async (req, res) => {
+  try {
+
+    let endpoints =[
+      config.urlApiExpedientes+"grupos",
+      config.urlApiExpedientes+"tipos_cargo"
+    ]
+
+    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+    .then(axios.spread(async (data1,data2) => {
+      let datos = {}
+      datos.grupos=data1.data.results
+      datos.tipos_cargo=data2.data.results
+      res.status(200).json(datos)
+    }))
+    .catch(err => {
+
+      res.sendStatus(error(err))
+      return
+
+    })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.ListarDepartamentos = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "departamentos?pais_id=" + req.params.id
@@ -775,6 +869,7 @@ views.ActualizarPersonas = async (req, res) => {
   }
 }
 //turnos para una fecha 
+
 views.TurnosFecha = async (req, res) => {
   try {
     let turnos_ocupados = []
