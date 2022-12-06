@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 
 // Importing css
@@ -10,7 +10,9 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 
 
-export default function Buscador({ text, valoresBuscados, setValoresBuscados, setPage }) {
+export default function Buscador({ valoresBuscados, setValoresBuscados, filtros, setFiltros, setPage }) {
+
+  const [title, setTitle] = useState("All items")
 
   const agregar_busqueda=(e)=>{
     e.preventDefault()
@@ -19,19 +21,31 @@ export default function Buscador({ text, valoresBuscados, setValoresBuscados, se
     setValoresBuscados([...valoresBuscados, e.target.campobuscar.value ])
   }
 
+  const filtrar=(value)=>{
+    setPage(1)
+    setTitle(value)
+    console.log(value);
+    setValoresBuscados([value ])
+  }
+
   return (
     <form onSubmit={e => agregar_busqueda(e)} className="wrapp-buscador">
       <InputGroup className="buscador">
         <DropdownButton
           variant="outline-secondary"
-          title="All items"
+          title={title}
           id="input-group-dropdown-3"
         >
-          <Dropdown.Item href="#">Action</Dropdown.Item>
+          {filtros?.map(filtro => {
+            return(
+              <Dropdown.Item key={"filtro" + filtro["id"]} onClick={e => filtrar(filtro["nombre"])}>{filtro["nombre"]}</Dropdown.Item>
+            )
+          })}
+          {/* <Dropdown.Item href="#">Action</Dropdown.Item>
           <Dropdown.Item href="#">Another action</Dropdown.Item>
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item href="#">Separated link</Dropdown.Item>
+          <Dropdown.Item href="#">Separated link</Dropdown.Item> */}
         </DropdownButton>
         
         <Form.Control name="campobuscar" aria-label="Text input with 2 dropdown buttons" />
