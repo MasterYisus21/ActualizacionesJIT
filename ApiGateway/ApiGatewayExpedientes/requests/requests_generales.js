@@ -68,4 +68,24 @@ requests.delete = async (req, res, url) => {
 
 }
 
+requests.post = async (req, res, url,datos) => {
+
+    try {
+        axios.post(url,datos)
+            .then(result => {
+                res.status(200).json(result.data)
+            })
+            .catch(err => {
+                res.sendStatus(error(err))
+                return
+            })
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+
+}
+
 module.exports = requests

@@ -607,9 +607,18 @@ class Historico(models.Model):
     def __str__(self):
          return '%s '% (self.id)
 
-class Tipo_resultado(GeneralModel):
+class Consecutivo_resultado(GeneralModel):
     
     consecutivo_actual=models.PositiveIntegerField(null=False,blank=False)
+
+    class Meta:
+        db_table='Consecutivo_resultado'
+        verbose_name = ('Consecutivo_resultado')
+        verbose_name_plural = ('Consecutivos _resultado')
+    def __str__(self):
+        return self.nombre
+class Tipo_resultado(GeneralModel):
+    
 
     class Meta:
         db_table='Tipo_resultado'
@@ -619,7 +628,7 @@ class Tipo_resultado(GeneralModel):
         return self.nombre
 
 class Resultado(EstadoModel):
-   
+    consecutivo= models.PositiveIntegerField(null=False,blank=False)
     acuerdo  = models.TextField(blank=True,null=True)
     documento = models.FileField(upload_to='resultados/', max_length=100, blank=True,null=True)
     fecha = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) 
@@ -631,7 +640,7 @@ class Resultado(EstadoModel):
         verbose_name = ('Resultado')
         verbose_name_plural = ('Resultados')
     def __str__(self):
-        return str(self.fecha)
+        return str(self.expediente_id.numero_caso)
 
 
 class Hechos(EstadoModel):
