@@ -10,13 +10,19 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 
 
-export default function Buscador({ text, valoresBuscados, setValoresBuscados, setPage }) {
+export default function Buscador({ valoresBuscados, setValoresBuscados, filtros, setFiltros, setPage }) {
 
   const agregar_busqueda=(e)=>{
     e.preventDefault()
     setPage(1)
     console.log( e.target.campobuscar.value );
     setValoresBuscados([...valoresBuscados, e.target.campobuscar.value ])
+  }
+
+  const filtrar=(value)=>{
+    setPage(1)
+    console.log(value);
+    setValoresBuscados([...valoresBuscados, value ])
   }
 
   return (
@@ -27,11 +33,16 @@ export default function Buscador({ text, valoresBuscados, setValoresBuscados, se
           title="All items"
           id="input-group-dropdown-3"
         >
-          <Dropdown.Item href="#">Action</Dropdown.Item>
+          {filtros.map(filtro => {
+            return(
+              <Dropdown.Item key={"filtro" + filtro["id"]} onClick={e => filtrar(filtro["nombre"])}>{filtro["nombre"]}</Dropdown.Item>
+            )
+          })}
+          {/* <Dropdown.Item href="#">Action</Dropdown.Item>
           <Dropdown.Item href="#">Another action</Dropdown.Item>
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item href="#">Separated link</Dropdown.Item>
+          <Dropdown.Item href="#">Separated link</Dropdown.Item> */}
         </DropdownButton>
         
         <Form.Control name="campobuscar" aria-label="Text input with 2 dropdown buttons" />
