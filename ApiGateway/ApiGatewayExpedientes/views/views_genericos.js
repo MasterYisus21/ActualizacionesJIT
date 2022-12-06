@@ -57,7 +57,36 @@ views.CrearPersonas = async (req, res) => {
     return;
   }
 }
+views.CrearApoderado = async (req, res) => {
+  try {
+    if (req.body.nombres==""|req.body.nombres==null) {res.sendStatus(error({message:"No ha ingresado el nombre de la persona"}));return}
+    if (req.body.identificacion==""|req.body.identificacion==null) {res.sendStatus(error({message:"No ha ingresado la identificacion"}));return}
+    if (req.body.celular==""|req.body.celular==null) {res.sendStatus(error({message:"No ha ingresado el telefono celular"}));return}
+    if (req.body.correo==""|req.body.correo==null) {res.sendStatus(error({message:"No ha ingresado el correo electronico"}));return}
+    if (req.body.tarjeta_profesional==""|req.body.tarjeta_profesional==null) {res.sendStatus(error({message:"No ha ingresado la tarjeta profesional"}));return}
 
+    axios.post(config.urlApiExpedientes+"apoderados/",req.body)
+      .then(async resul=>{
+        
+        
+        await axios.patch(config.urlApiExpedientes+"personas/"+req.params.id+"/",{apoderado_id:resul.data.id})
+          .then(result=>{
+          res.status(201).json(resul.data)
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+        
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.EliminarPersonas = async (req, res) => {
   try {
    
@@ -87,6 +116,17 @@ views.EliminarPersonas = async (req, res) => {
         return
       })
 
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.EliminarApoderados = async (req, res) => {
+  try {
+   
+    const url = config.urlApiExpedientes + "apoderados/" + req.params.id_relacion+"/"
+    requests.delete(req, res, url)
   }catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -329,6 +369,19 @@ views.ListarConvocantesCaso = async (req, res) => {
     return;
   }
 }
+views.VerApoderado = async (req, res) => {
+  try {
+    const url = config.urlApiExpedientes + "apoderados/" + req.params.id
+    requests.get(req, res, url, "&")
+     
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+
 views.ListarConvocadosCaso = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "relaciones_persona_expediente?tipo_cliente_id=2&expediente_id=" + req.params.id
@@ -861,6 +914,18 @@ views.ActualizarPersonas = async (req, res) => {
   try {
     if (req.body.identificacion) { delete req.body["identificacion"]; }
     const url = config.urlApiExpedientes + "personas/" + req.params.id + "/"
+    requests.patch(req, res, url, req.body)
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+
+views.ActualizarApoderado = async (req, res) => {
+  try {
+    const url = config.urlApiExpedientes + "apoderados/" + req.params.id + "/"
     requests.patch(req, res, url, req.body)
   }catch (error) {
     console.log(error);

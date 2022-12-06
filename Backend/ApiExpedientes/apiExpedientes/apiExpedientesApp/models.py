@@ -645,6 +645,7 @@ class Hechos(EstadoModel):
     expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
     ciudad_id = models.ForeignKey(Tipo_resultado, on_delete=models.SET_NULL, blank=False, null=True)
     
+    
     class Meta:
         db_table='Hechos_expediente'
         verbose_name = ('Hechos')
