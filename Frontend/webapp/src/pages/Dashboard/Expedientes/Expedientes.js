@@ -15,6 +15,7 @@ function Expedientes() {
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [valoresBuscados, setValoresBuscados] = useState([])
   const [filtros, setFiltros] = useState([])
+  const [filtrosAplicados, setFiltrosAplicados] = useState([])
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
 
@@ -25,7 +26,7 @@ function Expedientes() {
     // console.log(e.target.documento.value)
     axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/expedientes/?ordering=-numero_caso&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
+      url: "/expedientes/?ordering=-numero_caso&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }) + filtrosAplicados.map(valor => { return '&search=' + valor }),
       // headers: req.headers,
       data: {}
     })
@@ -86,6 +87,10 @@ function Expedientes() {
   }, [valoresBuscados])
 
   useEffect(() => {
+    search()
+  }, [filtrosAplicados])
+
+  useEffect(() => {
     if (page != 1) {
       search()
     }
@@ -97,7 +102,7 @@ function Expedientes() {
         valoresBuscados={valoresBuscados}
         setValoresBuscados={setValoresBuscados}
         filtros = {filtros}
-        setFiltros = {setFiltros}
+        setFiltros = {setFiltrosAplicados}
         setPage={handlePageChange}
         required
       />
