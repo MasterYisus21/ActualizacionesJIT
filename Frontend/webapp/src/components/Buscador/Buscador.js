@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 
 // Importing css
@@ -12,6 +12,8 @@ import Button from 'react-bootstrap/Button';
 
 export default function Buscador({ valoresBuscados, setValoresBuscados, filtros, setFiltros, setPage }) {
 
+  const [title, setTitle] = useState("All items")
+
   const agregar_busqueda=(e)=>{
     e.preventDefault()
     setPage(1)
@@ -21,8 +23,9 @@ export default function Buscador({ valoresBuscados, setValoresBuscados, filtros,
 
   const filtrar=(value)=>{
     setPage(1)
+    setTitle(value)
     console.log(value);
-    setValoresBuscados([...valoresBuscados, value ])
+    setValoresBuscados([value ])
   }
 
   return (
@@ -30,10 +33,10 @@ export default function Buscador({ valoresBuscados, setValoresBuscados, filtros,
       <InputGroup className="buscador">
         <DropdownButton
           variant="outline-secondary"
-          title="All items"
+          title={title}
           id="input-group-dropdown-3"
         >
-          {filtros.map(filtro => {
+          {filtros?.map(filtro => {
             return(
               <Dropdown.Item key={"filtro" + filtro["id"]} onClick={e => filtrar(filtro["nombre"])}>{filtro["nombre"]}</Dropdown.Item>
             )
