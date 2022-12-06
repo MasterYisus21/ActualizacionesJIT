@@ -12,6 +12,8 @@ function Personas() {
 
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [valoresBuscados, setValoresBuscados] = useState([])
+  const [filtros, setFiltros] = useState([])
+  const [filtrosAplicados, setFiltrosAplicados] = useState([])
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
   let resultados = useRef([])
@@ -21,7 +23,7 @@ function Personas() {
     // console.log(e.target.documento.value)
     axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/personas/?ordering=-id&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
+      url: "/personas/?ordering=-id&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }) + filtrosAplicados.map(valor => { return '&search=' + valor }),
       // headers: req.headers,
       data: {}
     })
@@ -40,6 +42,24 @@ function Personas() {
       });
 
   }
+
+  //fetching filters
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/tipos_cargo/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data.results);
+        setFiltros(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+
+  }, [])
 
   const handlePageChange = (page) => {
     if (page <= numPages) {
@@ -62,6 +82,10 @@ function Personas() {
   }, [valoresBuscados])
 
   useEffect(() => {
+    search()
+  }, [filtrosAplicados])
+
+  useEffect(() => {
     if (page != 1) {
       search()
     }
@@ -76,6 +100,8 @@ function Personas() {
         <Buscador
           valoresBuscados={valoresBuscados}
           setValoresBuscados={setValoresBuscados}
+          filtros = {filtros}
+          setFiltros = {setFiltrosAplicados}
           setPage={handlePageChange}
           required
         />
