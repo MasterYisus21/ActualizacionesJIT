@@ -547,7 +547,7 @@ class Finalidad_servicio(GeneralModel):
      def __str__(self):
         return self.nombre
 class Expediente(EstadoModel):
-    
+    identificador_sicaac= models.CharField(max_length=15)
     numero_radicado = models.CharField(max_length =20,editable=True,null=False,blank=True)
     numero_caso = models.CharField(max_length=25,default = increment_numero_caso_number,editable=False,unique=True)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
