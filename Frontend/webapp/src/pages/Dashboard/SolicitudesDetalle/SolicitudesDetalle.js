@@ -906,6 +906,7 @@ function SolicitudesDetalle() {
 
           </div>
         </Collapse>
+        <button className="">Guardar cambios</button>
       </div>
 
       <hr></hr>
