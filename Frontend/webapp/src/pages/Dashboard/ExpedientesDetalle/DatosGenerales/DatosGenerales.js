@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 
 //importing axios instance
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances'
@@ -15,6 +16,7 @@ function DatosGenerales() {
   const [temas, setTemas] = useState([])
   const [subtemas, setSubtemas] = useState([])
 
+  let { id } = useParams()
 
 
   //Fetch solicitanteServicioOptions
@@ -124,7 +126,7 @@ function DatosGenerales() {
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/expedientes/210",
+      url: "/expedientes/" + id,
       // headers: req.headers,
       data: {}
     })
@@ -132,7 +134,14 @@ function DatosGenerales() {
         console.log(result.data);
         document.getElementById("solicitante").value = result.data["solicitante_servicio_id"]
         document.getElementById("Inicio_conflicto_Id").value = result.data["inicio_conflicto_id"]
-        // setIniciosConflicto(result.data.inicio_conflicto)
+        document.getElementById("Tipo_servicio_Id").value = result.data["tipo_servicio_id"]
+        document.getElementById("Caso_gratuito").checked = result.data["caso_gratuito"]
+        document.getElementById("asunto_definible1").checked = result.data["asunto_juridico_definible"]
+        document.getElementById("asunto_definible2").checked = !result.data["asunto_juridico_definible"]
+        document.getElementById("Tema_Id").value = result.data["subtema_id"]
+        // Falta arreglar la precarga del teme y subtema
+        document.getElementById("Subtema_Id").value = result.data["subtema_id"]
+
       })
       .catch(err => {
         console.log("error");
@@ -147,7 +156,7 @@ function DatosGenerales() {
           <br />
           <div className="mb-3">
             <label htmlFor="Numero_caso" className="form-label h4">ID del caso</label>
-            <input type="text" className="form-control form-control-lg" id="Numero_caso" name='Numero_caso' placeholder={"Se generara automaticamente"} disabled />
+            <input type="text" className="form-control form-control-lg" id="Numero_caso" name='Numero_caso' placeholder={"Se generara automaticamente"} value={id} disabled />
           </div>
           <br />
           <div className="mb-3">
@@ -225,7 +234,7 @@ function DatosGenerales() {
           </div>
           <div className="mb-3">
             <label htmlFor="Tema" className="form-label h4">Tema:</label>
-            <select className="form-select form-select-lg" aria-label="Default select example" id="Tema" name='Tema' required onChange={e => { fetchSubtemas(e.target.value) }}>
+            <select className="form-select form-select-lg" aria-label="Default select example" id="Tema_Id" name='Tema' required onChange={e => { fetchSubtemas(e.target.value) }}>
               <option value={""}>Abre el menú para ver las opciones</option>
               {temas.map(area => {
                 return (<option key={"area" + area["id"]} value={area["id"]}>{area["nombre"]}</option>)
