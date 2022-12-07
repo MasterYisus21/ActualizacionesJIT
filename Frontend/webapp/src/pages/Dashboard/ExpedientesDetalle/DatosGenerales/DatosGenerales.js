@@ -132,6 +132,7 @@ function DatosGenerales() {
     })
       .then(result => {
         console.log(result.data);
+        document.getElementById("Numero_caso").value = result.data["numero_caso"]
         document.getElementById("solicitante").value = result.data["solicitante_servicio_id"]
         document.getElementById("Inicio_conflicto_Id").value = result.data["inicio_conflicto_id"]
         document.getElementById("Tipo_servicio_Id").value = result.data["tipo_servicio_id"]
@@ -141,7 +142,6 @@ function DatosGenerales() {
         document.getElementById("Tema_Id").value = result.data["subtema_id"]
         // Falta arreglar la precarga del teme y subtema
         document.getElementById("Subtema_Id").value = result.data["subtema_id"]
-
       })
       .catch(err => {
         console.log("error");
