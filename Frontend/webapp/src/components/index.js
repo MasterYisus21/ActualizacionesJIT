@@ -8,7 +8,8 @@ import TarjetaPersonas from './Tarjeta/TarjetaPersonas';
 import { Popup } from "./popup"
 import { SearchableSelect } from "./SearchableSelect"
 import {Button} from './Button'
+import {ThreePositionSwitch} from './ThreePositionSwitch'
 
 export {
-    BarRectangulo, SubtemaRectangulo, IconButton, Buscador, Tarjeta, BarRectanguloPequeño, RectanguloCelular, TarjetaPersonas, Popup, SearchableSelect, Button
+    BarRectangulo, SubtemaRectangulo, IconButton, Buscador, Tarjeta, BarRectanguloPequeño, RectanguloCelular, TarjetaPersonas, Popup, SearchableSelect, Button, ThreePositionSwitch
 }

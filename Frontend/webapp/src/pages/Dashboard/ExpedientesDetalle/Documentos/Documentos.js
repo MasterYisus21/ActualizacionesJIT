@@ -1,32 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { ThreePositionSwitch } from '../../../../components'
 import { Button } from '../../../../components/Button'
+import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances'
 
 //Importing css
 import "./Documentos.css"
 
 function Documentos() {
 
+  const [documentos, setDocumentos] = useState([])
 
-  const documentos = [
-    {
-      id: 1,
-      Nombre: "Documento1",
-      Fecha_documento: "12/05/2022",
-      Tamanio: "55Kb"
-    },
-    {
-      id: 2,
-      Nombre: "Documento1",
-      Fecha_documento: "12/05/2022",
-      Tamanio: "55Kb"
-    },
-    {
-      id: 3,
-      Nombre: "Documento1",
-      Fecha_documento: "12/05/2022",
-      Tamanio: "55Kb"
-    },
-  ]
+
+  let { id } = useParams();
+
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/expedientes/" + id + "/documentos",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data.results);
+        setDocumentos(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
 
   return (
     <div className='modulo-solicitudes-documentos-container'>
@@ -51,7 +54,6 @@ function Documentos() {
           <tr>
             <th scope="col" className='text-center'>Documento</th>
             <th scope="col" className='text-center'>Fecha</th>
-            <th scope="col" className='text-center'>Tamaño</th>
             {/* <th scope="col" className='text-center'>Estado</th> */}
             <th scope="col" className='text-center'><div>Aprobado</div><div>No/Si</div></th>
           </tr>
@@ -60,14 +62,12 @@ function Documentos() {
           {documentos.map((dato) => {
             return (
               <tr key={dato["id"]}>
-                <th className='text-center' style={{ maxWidth: "35%" }} scope="row"><button className='btn' onClick={(event) => { }}>{dato["Nombre"]}</button></th>
-                <td className='text-center'>{dato["Fecha_documento"]}</td>
-                <td className='text-center'>{dato["Tamanio"]}</td>
+                <th className='text-center' style={{ maxWidth: "35%" }} scope="row"><button className='btn' onClick={(event) => { }}>{dato["nombre"]}</button></th>
+                <td className='text-center'>{dato["fecha"]}</td>
                 {/* <td className='text-center'>{dato["estado"]}</td> */}
-                <td className='d-flex justify-content-center'>
-                  {/* <ThreePositionSwitch key={dato["Id"]} initialValue={dato["Tipo_estado_Id"]["Id"]} id={dato["Id"]} /> */}
+                <td className=''>
+                  <ThreePositionSwitch name={`documento${dato["id"]}`} className={'approved'} />
                 </td>
-                {/* <td>{cloneElement(ThreePositionSwitch, {initialValue: dato["estado"], id: 3})}</td> */}
               </tr>
             )
           })}
