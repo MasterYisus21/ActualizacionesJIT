@@ -33,7 +33,10 @@ router.get("/inicios_conflicto", views_genericos.GenericList)
 router.get("/expedientes", views_genericos.GenericList)
 router.get("/expedientes/:id", views_genericos.GenericList)
 router.get("/personas", views_genericos.GenericList)
+router.get("/apoderados", views_genericos.GenericList)
 router.get("/personas/:id", views_genericos.GenericList)
+router.get("/tipos_resultado", views_genericos.GenericList)
+
 
 
 router.post("/expedientes/:id/convocantes", views_genericos.CrearConvocantes)
@@ -44,10 +47,12 @@ router.post("/expedientes/:id/conciliadores/:id2", views_genericos.AgregarConcil
 router.post("/expedientes/:id/estudiantes/:id2", views_genericos.AgregarEstudiantes)
 router.post("/expedientes/:id/citaciones", views_genericos.CrearCitaciones);
 router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
+router.post("/expedientes/:id/resultados", views_genericos.CrearResultado)
 router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPersonaDeCitacion);
 router.delete("/expedientes/:id/personas/:id_relacion",views_genericos.EliminarPersonaCaso);
+router.get("/expedientes/:id/resultados", views_genericos.VerResultadoCaso)
 router.delete("/personas/:id",views_genericos.EliminarPersonas);
-router.delete("/personas/:id",views_genericos.EliminarPersonas);
+router.delete("/apoderados/:id",views_genericos.EliminarApoderados);
 
 router.get("/conciliadores", views_genericos.ListarConciliadores);
 router.get("/estudiantes", views_genericos.ListarEstudiantes);
@@ -64,6 +69,7 @@ router.get("/expedientes/:id/documentos", views_genericos.ListarDocumentosCaso);
 router.get("/expedientes/:id/citaciones", views_genericos.ListarCitacionesCaso);
 router.get("/expedientes/:id/citaciones/:id_citacion/personas", views_genericos.ListarPersonasCitadasyPorCitar)
 router.get("/crear_admin", views_genericos.DatosCrearPersonasAdministrativas)
+router.get("/crear_personas", views_genericos.DatosCrearPersonas)
 
 
 
@@ -77,6 +83,7 @@ router.post("/personas", views_genericos.CrearPersonas)
 router.post("/personas/:id/apoderados", views_genericos.CrearApoderado)
 router.post("/documentos/:id",archivo.uploadMiddleware, views_genericos.CargarDocumentos)// id expediente
 router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware, views_genericos.CambiarDocumentoCaso);
+router.patch("/expedientes/:id/resultados/:id_resultado",archivo.uploadMiddleware, views_genericos.CargarResultadoCaso);
 
 
 

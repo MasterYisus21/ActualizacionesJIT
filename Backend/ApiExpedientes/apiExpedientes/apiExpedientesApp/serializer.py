@@ -211,13 +211,24 @@ class HistoricoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Historico          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
-class Tipo_resultadoSerializer(serializers.ModelSerializer):
+class Categoria_resultadoSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Categoria_resultado       # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+
+class Tipo_resultadoSerializer(serializers.ModelSerializer):
+    categoria= serializers.CharField(source='categoria_id', read_only=True)
+
+    consecutivo= serializers.CharField(source='categoria_id.consecutivo_actual', read_only=True)
+    
     class Meta:
         model = Tipo_resultado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class ResultadoSerializer(serializers.ModelSerializer):
-
+    tipo_resultado= serializers.CharField(source='tipo_resultado_id', read_only=True)
+    consecutivo_resultado= serializers.CharField(source='tipo_resultado_id.consecutivo', read_only=True)
+    
     class Meta:
         model = Resultado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 

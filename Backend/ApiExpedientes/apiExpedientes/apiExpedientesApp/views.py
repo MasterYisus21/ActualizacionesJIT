@@ -162,8 +162,16 @@ class Tipo_resultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos 
 
     serializer_class = Tipo_resultadoSerializer
 
-class ResultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class Categoria_resultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
+    serializer_class = Categoria_resultadoSerializer
+
+class ResultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+    filter_backends = [DjangoFilterBackend,filters.OrderingFilter]
+    filterset_fields = ['tipo_resultado_id__nombre','expediente_id']
+    ordering_fields = '__all__'
+    
+    search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre']
     serializer_class = ResultadoSerializer
 
 class HechosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
