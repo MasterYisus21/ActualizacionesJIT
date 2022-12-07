@@ -17,38 +17,13 @@ function RegistrarSolicitud() {
   const [seccion2, setSeccion2] = useState(false);
   const [seccion3, setSeccion3] = useState(false);
   const [seccion4, setSeccion4] = useState(false);
-  const [formulario, setFormulario] = useState(new FormData());
-  const [filelength, setFilelength] = useState([]);
+
   const [sexos, setSexos] = useState([])
   const [generos, setGeneros] = useState([])
   const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([])
   const [tiposPersona, setTiposPersona] = useState([])
   const [tiposDocumento, setTiposDocumento] = useState([])
   const [openbutton, setOpenbutton] = useState(false)
-
-  // function Crear_anexo() {
-  //   const oldElement = document.getElementById("subir-anexo");
-  //   const newElement = document.createElement("input");
-
-  //   newElement.classList.add("input");
-  //   newElement.setAttribute("type", "file");
-  //   newElement.setAttribute("className", "inputs-registrar-solicitud");
-  //   // newElement.appendChild(texto);
-  //   oldElement.appendChild(newElement);
-  // }
-
-  // const handleFile = (e) => {
-  //   e.preventDefault();
-  //   console.log(e.target.file.files[0]);
-  //   let form = new FormData();
-  //   for (const pair of formulario.entries()) {
-  //     console.log(`${pair[0]}, ${pair[1]}`);
-  //     form.append(pair[0], pair[1]);
-  //   }
-  //   form.append("files", e.target.file.files[0]);
-  //   setFormulario(form);
-  //   setFilelength([...filelength, e.target.file.files[0].name]);
-  // };
 
   const [myFiles, setMyFiles] = useState([])
 
@@ -74,6 +49,7 @@ function RegistrarSolicitud() {
       </svg>
     </div>
   ))
+
 
   const submitForm = (event) => {
     event.preventDefault()
@@ -441,116 +417,11 @@ function RegistrarSolicitud() {
               </button>
             </div>
 
-            {openbutton &&
-
-              <>
-                <label className="subtitles-secciones">Nombre</label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
-
-                <label className="subtitles-secciones">
-                  Identificación
-                </label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel
-                    controlId="floatingSelectGrid"
-                    label="Tipo de documento"
-                  >
-                    <Form.Select
-                      className="col-inputs"
-                      aria-label="Floating label select example"
-                    >
-                      <option>Abre el menú para ver las opciones</option>
-                    </Form.Select>
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
-
-                <label className="subtitles-secciones">
-                  Fecha y lugar de expedición de documento
-                </label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel
-                    controlId="floatingInputGrid"
-                    label="Fecha de expedición de documento"
-                  >
-                    <Form.Control
-                      className="col-inputs"
-                      type="date"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel
-                    controlId="floatingInputGrid"
-                    label="Lugar de expedición"
-                  >
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
-
-                <label className="subtitles-secciones">Datos adicionales</label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Tarjeta profesional ">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="correo">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
-
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Teléfono">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Celular">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
-
-              </>
-            }
+            
 
           </div>
+
+          
         </Collapse>
 
         {/* Parte 3 - DATOS DE LOS HECHOS ---------------------------------> */}
@@ -605,26 +476,6 @@ function RegistrarSolicitud() {
             <label className="subtitles-secciones">Recibo Público</label>
             <Form.Control className="inputs-registrar-solicitud" type="file" />
             <label className="subtitles-secciones">Anexos</label>
-
-            {/* {filelength.map((valor) => {
-              return (<div>{valor}</div>)
-            })}
-
-            <form className="form-datos" onSubmit={handleFile}>
-              <div className="wrapp-input-load">
-                <input className="inputs-subir-archivos" type="file" name="file"/>
-                <h1>Arrastra el archivo que deseeas subir</h1>
-              </div>
-              <input type="submit" />
-            </form>
-            <div id="subir-anexo"></div> */}
-            {/* <button
-              id="btn"
-              onClick={() => Crear_anexo()}
-              className="boton-subir-anexos"
-            >
-              Subir más anexos
-            </button> */}
 
           <section className="form-datos">
               <div className="dropzone" {...getRootProps({ className: 'dropzone' })}>
