@@ -20,6 +20,27 @@ function Hechos() {
 
     }, [departamento])
 
+    useEffect(() => {
+        axiosTokenInstanceApiExpedientes({
+            method: 'get',
+            url: "/expedientes/" + id + "/hechos",
+            // headers: req.headers,
+            data: {}
+        })
+            .then(result => {
+                console.log(result.data.results[0]);
+                document.getElementById("resumen_hechos").value = result.data.results[0]["descripcion"]
+                document.getElementById("pretensiones_hechos").value = result.data.results[0]["pretension"]
+                result.data.results[0]["cuantia_indeterminada"] ? document.getElementById("cuantia_hechos").disabled = true : document.getElementById("cuantia_hechos").disabled = false
+                if (result.data.results[0]["cuantia_indeterminada"] !== "true") { console.log("true"); document.getElementById("cuantia_hechos").value = result.data.results[0]["cuantia"] };
+                document.getElementById("cuantia_hechos_indeterminada").checked = result.data.results[0]["cuantia_indeterminada"]
+            })
+            .catch(err => {
+                console.log("error");
+            });
+    }, [])
+
+
 
 
     return (
@@ -45,28 +66,28 @@ function Hechos() {
                         name={"ciudad"}
                         identifier={"id"}
                         initialValue={""}
-                        onChange={(val) => {setCiudad(val) }}
+                        onChange={(val) => { setCiudad(val) }}
                     />
                 </div>
             </div>
             <div className='modulo-solicitud-content-main-hechos-resumen'>
                 <div>
-                    <label htmlFor="resumen">Resumen de los hechos:</label>
-                    <textarea className="form-control form-control-sm text-area-hechos" id="resumen" name="resumen" required></textarea>
+                    <label htmlFor="resumen_hechos">Resumen de los hechos:</label>
+                    <textarea className="form-control form-control-sm text-area-hechos" id="resumen_hechos" name="resumen_hechos" required></textarea>
                 </div>
                 <div>
-                    <label htmlFor="pretensiones">Pretensiones iniciales:</label>
-                    <textarea className="form-control form-control-sm text-area-hechos" id="pretensiones" name='pretensiones' required></textarea>
+                    <label htmlFor="pretensiones_hechos">Pretensiones iniciales:</label>
+                    <textarea className="form-control form-control-sm text-area-hechos" id="pretensiones_hechos" name='pretensiones_hechos' required></textarea>
                 </div>
             </div>
             <div className='modulo-solicitud-content-main-hechos-determinacion-cuantia'>
                 <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h6>Determinacion De la cuantia</h6></div>
                 <div className="mb-3" style={{ display: "flex", width: "35%", justifyContent: "space-evenly" }}>
-                    <label htmlFor="cuantia" className="form-label">Cuantía:</label>
-                    <input type="text" className="form-control form-control-sm" id="cuantia" name='cuantia' placeholder="" required />
+                    <label htmlFor="cuantia_hechos" className="form-label">Cuantía:</label>
+                    <input type="text" className="form-control form-control-sm" id="cuantia_hechos" name='cuantia_hechos' placeholder="" required />
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="flexCheckDefault" />
+                    <input className="form-check-input" type="checkbox" id="cuantia_hechos_indeterminada" onChange={e => { if (e.target.checked) { document.getElementById("cuantia_hechos").disabled = true; document.getElementById("cuantia_hechos").value = "" } else { document.getElementById("cuantia_hechos").disabled = false } }} />
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         Cuantía indeterminada
                     </label>
