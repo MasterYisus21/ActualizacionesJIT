@@ -37,6 +37,7 @@ router.register(r'relaciones_persona_expediente',Relacion_persona_expedienteView
 router.register(r'estados_expediente',Estado_expedienteViewSet,basename='estados_expediente'),
 router.register(r'historicos',HistoricoViewSet,basename='historicos'),
 router.register(r'tipos_resultado',Tipo_resultadoViewSet,basename='tipos_resultado'),
+router.register(r'categorias_resultado',Categoria_resultadoViewSet,basename='consecutivos_resultado'),
 router.register(r'resultados',ResultadoViewSet,basename='resultados'),
 router.register(r'hechos',HechosViewSet,basename='hechos'),
 router.register(r'medios_seguimiento',Medio_seguimientoViewSet,basename='medios_seguimiento'),
