@@ -142,6 +142,7 @@ function DatosGenerales() {
         document.getElementById("Tema_Id").value = result.data["subtema_id"]
         // Falta arreglar la precarga del teme y subtema
         document.getElementById("Subtema_Id").value = result.data["subtema_id"]
+        document.getElementById("identificador_sicaac").value = result.data["identificador_sicaac"]
       })
       .catch(err => {
         console.log("error");
@@ -157,6 +158,10 @@ function DatosGenerales() {
           <div className="mb-3">
             <label htmlFor="Numero_caso" className="form-label h4">ID del caso</label>
             <input type="text" className="form-control form-control-lg" id="Numero_caso" name='Numero_caso' placeholder={"Se generara automaticamente"} disabled />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="Numero_caso" className="form-label h4">Identificador Nacional SICAAC</label>
+            <input type="text" className="form-control form-control-lg" id="identificador_sicaac" name='Numero_caso' />
           </div>
           <br />
           <div className="mb-3">
