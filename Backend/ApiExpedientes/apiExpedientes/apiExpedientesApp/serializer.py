@@ -170,6 +170,8 @@ class Inicio_conflictoSerializer(serializers.ModelSerializer):
         fields = '__all__'  # Coje todos los campos del modelo 
 class ExpedienteSerializer(serializers.ModelSerializer):
     tipo_servicio = serializers.CharField(source='tipo_servicio_id', read_only=True)
+    tema = serializers.CharField(source='subtema_id.tema_id', read_only=True)
+    tema_id = serializers.CharField(source='subtema_id.tema_id.id', read_only=True)
     subtema = serializers.CharField(source='subtema_id', read_only=True)
     area = serializers.CharField(source='area_id', read_only=True)
     solicitante_servicio = serializers.CharField(source='solicitante_servicio_id', read_only=True)
