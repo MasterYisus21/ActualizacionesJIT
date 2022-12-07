@@ -162,9 +162,9 @@ class Tipo_resultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos 
 
     serializer_class = Tipo_resultadoSerializer
 
-class Consecutivo_resultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class Categoria_resultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
-    serializer_class = Consecutivo_resultadoSerializer
+    serializer_class = Categoria_resultadoSerializer
 
 class ResultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter]

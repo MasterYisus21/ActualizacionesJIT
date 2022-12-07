@@ -766,10 +766,35 @@ views.CrearResultado = async (req, res) => {
   try {
 
     req.body.expediente_id=req.params.id
-    
-    const url = config.urlApiExpedientes + "resultados/"
+    let endpoints =[config.urlApiExpedientes+"tipos_resultado/"+req.body.tipo_resultado_id,
+                config.urlApiExpedientes+"resultados?expediente_id="+req.params.id]
+    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+    .then(axios.spread(async(result,data2) => {
+     
+      if(Object.keys(data2.data.results).length>0){res.sendStatus(error({message:"El resultado para este expediente ya existe"},208));return}
+      if(Object.keys(result.data).length<1){res.sendStatus(error({message:"no existe ese tipo de resultado"},404));return}
+      result.data.consecutivo=parseInt(result.data.consecutivo)+1
+      req.body.consecutivo=result.data.consecutivo
+      
+     
+      const resultado=axios.post(config.urlApiExpedientes+"resultados/",req.body)
+      const categoria=axios.patch(config.urlApiExpedientes+"categorias_resultado/"+result.data.categoria_id+"/",{consecutivo_actual:result.data.consecutivo})
+       
+      await Promise.all([resultado, categoria]).then(axios.spread(async(result,data2) => {
+     
+        res.status(200).json(result.data)
+      }))
+    }))
+    .catch(err => {
 
-    requests.post(req, res, url,req.body)
+      res.sendStatus(error(err))
+      return
+
+    })
+
+   
+    
+   
   }catch (error) {
     console.log(error);
     res.sendStatus(500);
