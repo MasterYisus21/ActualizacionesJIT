@@ -163,7 +163,6 @@ views.CrearExpediente = async (req, res) => {
   try {
 
 
-
     if (req.body.apoderado) {
 
 
@@ -187,7 +186,7 @@ views.CrearExpediente = async (req, res) => {
     datos = []
     datos.push(req.body.convocante)
     datos.push(req.body.convocado)
-
+    // req.body.solicitud.identificador_sicaac=""
     req.body.solicitud.estado_expediente_id = 1
     const personas = [config.urlApiExpedientes + "personas/", datos]
     const expediente = [config.urlApiExpedientes + "expedientes/", req.body.solicitud]
@@ -772,7 +771,34 @@ views.VerResultadoCaso = async (req, res) => {
     return;
   }
 }
-
+views.VerRespuestasEncuesta = async (req, res) => {
+  try {
+    axios.get(config.urlApiExpedientes+"encuestas?expediente_id="+req.params.id)
+      .then(async result=>{
+        let datos = {}
+        if(Object.keys(result.data.results).length<1){res.sendStatus(error({message:"El expediente no tiene encuestas resueltas"},204));return}
+        
+        
+     
+        await axios.get(config.urlApiExpedientes+"respuestas_encuesta?encuesta_id="+result.data.results[0].id)
+          .then(resul=>{
+            result.data.results[0].respuestas=resul.data.results
+            res.status(200).json(result.data.results[0])
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+        
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.CrearResultado = async (req, res) => {
   try {
 
@@ -874,6 +900,32 @@ views.CrearConvocantes = async (req, res) => {
         res.sendStatus(error(err))
       })
   } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.CrearRespuestas = async (req, res) => {
+  try {
+   
+    let datos={observacion:req.body.observacion,medio_conocimiento_id:req.body.medio_conocimiento_id,expediente_id:req.params.id}
+    axios.post(config.urlApiExpedientes+"encuestas/",datos)
+      .then(async result=>{
+       for (const iterator of req.body.respuestas) {
+        iterator.encuesta_id= result.data.id
+       }
+
+       await  axios.post(config.urlApiExpedientes+"respuestas_encuesta/",req.body.respuestas)
+         
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+        res.status(200).json(result.data)
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;

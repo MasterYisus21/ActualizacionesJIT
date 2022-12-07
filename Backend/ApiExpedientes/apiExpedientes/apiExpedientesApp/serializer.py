@@ -291,6 +291,7 @@ class Medio_conocimientoSerializer(serializers.ModelSerializer):
         model = Medio_conocimiento          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class EncuestaSerializer(serializers.ModelSerializer):
+    medio_conocimiento= serializers.CharField(source='medio_conocimiento_id', read_only=True)
 
     class Meta:
         model = Encuesta          # El modelo al que pertenece este serializador
@@ -301,10 +302,10 @@ class Pregunta_encuestaSerializer(serializers.ModelSerializer):
         model = Pregunta_encuesta          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class Respuesta_encuestaSerializer(serializers.ModelSerializer):
-
+   
     class Meta:
         model = Respuesta_encuesta          # El modelo al que pertenece este serializador
-        fields = '__all__'  # Coje todos los campos del modelo 
+        fields = ('calificacion','pregunta_encuesta_id','encuesta_id')  # Coje todos los campos del modelo   # Coje todos los campos del modelo 
 class Tipo_reporteSerializer(serializers.ModelSerializer):
 
     class Meta:

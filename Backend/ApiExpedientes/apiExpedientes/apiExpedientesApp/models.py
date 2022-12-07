@@ -547,7 +547,7 @@ class Finalidad_servicio(GeneralModel):
      def __str__(self):
         return self.nombre
 class Expediente(EstadoModel):
-    identificador_sicaac= models.CharField(max_length=15)
+    identificador_sicaac= models.CharField(max_length=15,blank=True,null=True)
     numero_radicado = models.CharField(max_length =20,editable=True,null=False,blank=True)
     numero_caso = models.CharField(max_length=25,default = increment_numero_caso_number,editable=False,unique=True)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
@@ -765,14 +765,16 @@ class Medio_conocimiento(GeneralModel):
 class Encuesta(EstadoModel):
     fecha = models.DateField(auto_now=True, auto_now_add=False,null=False)
     medio_conocimiento_id = models.ForeignKey(Medio_conocimiento, on_delete=models.SET_NULL,blank=False,null=True)
-    persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL,blank=False,null=True)
+    observacion = models.TextField(blank=True,null=True)
+    
+    
     expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
         db_table='Encuesta'
         verbose_name = ('Encuesta')
         verbose_name_plural = ('Encuestas')
     def __str__(self):
-        return  '%s %s' % (self.fecha)
+        return  '%s' % (self.expediente_id)
 
 class Pregunta_encuesta(GeneralModel):
 
@@ -794,7 +796,7 @@ class Respuesta_encuesta(EstadoModel):
         verbose_name = ('Respuesta_encuesta')
         verbose_name_plural = ('Respuestas_encuesta')
     def __str__(self):
-        return '%s %s' % (self.id)
+        return '%s %s' % (self.encuesta_id,self.pregunta_encuesta_id)
 
 class Tipo_reporte(GeneralModel):
 

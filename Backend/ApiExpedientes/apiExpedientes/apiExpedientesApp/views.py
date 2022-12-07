@@ -230,6 +230,9 @@ class Respuesta_encuestaViewSet(GeneralViewSet):  # Una sola clase para los meto
 
     serializer_class = Respuesta_encuestaSerializer
 
+    search_fields = ['=encuesta_id__expediente_id__id']
+    ordering_fields = '__all__'
+
 class Tipo_reporteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_reporteSerializer
