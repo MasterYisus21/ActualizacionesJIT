@@ -36,6 +36,7 @@ router.get("/personas", views_genericos.GenericList)
 router.get("/apoderados", views_genericos.GenericList)
 router.get("/personas/:id", views_genericos.GenericList)
 router.get("/tipos_resultado", views_genericos.GenericList)
+router.get("/preguntas_encuesta", views_genericos.GenericList)
 
 
 

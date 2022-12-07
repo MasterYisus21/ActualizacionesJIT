@@ -420,6 +420,17 @@ views.ListarConvocantesCaso = async (req, res) => {
     return;
   }
 }
+views.ListarPreguntasEncuesta = async (req, res) => {
+  try {
+    const url = config.urlApiExpedientes + "preguntas_encuesta=" + req.params.id
+
+    requests.get(req, res, url, "&")
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.VerApoderado = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "apoderados/" + req.params.id
@@ -842,6 +853,7 @@ views.CargarResultadoCaso = async (req, res) => {
     return;
   }
 }
+
 
 views.CrearConvocantes = async (req, res) => {
   try {
