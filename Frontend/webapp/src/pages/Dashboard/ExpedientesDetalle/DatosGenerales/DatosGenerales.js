@@ -156,7 +156,7 @@ function DatosGenerales() {
           <br />
           <div className="mb-3">
             <label htmlFor="Numero_caso" className="form-label h4">ID del caso</label>
-            <input type="text" className="form-control form-control-lg" id="Numero_caso" name='Numero_caso' placeholder={"Se generara automaticamente"} value={id} disabled />
+            <input type="text" className="form-control form-control-lg" id="Numero_caso" name='Numero_caso' placeholder={"Se generara automaticamente"} disabled />
           </div>
           <br />
           <div className="mb-3">
