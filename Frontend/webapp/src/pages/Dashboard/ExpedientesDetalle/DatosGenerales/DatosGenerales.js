@@ -9,11 +9,12 @@ import './DatosGenerales.css'
 function DatosGenerales() {
 
   const [solicitantesServicio, setSolicitantesServicio] = useState([])
-  const [solicitanteServicio, setSolicitanteServicio] = useState([])
   const [iniciosConflicto, setIniciosConflicto] = useState([])
+  const [finalidadesServicio, setFinalidadesServicio] = useState([])
   const [areas, setAreas] = useState([])
   const [temas, setTemas] = useState([])
-  
+  const [subtemas, setSubtemas] = useState([])
+
 
 
   //Fetch solicitanteServicioOptions
@@ -28,6 +29,23 @@ function DatosGenerales() {
         // console.log(result.data);
         setSolicitantesServicio(result.data.results)
         // console.log(result)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+  // Fetch iniciosConflictoOptions
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/objetivos_servicio" + "/?ordering=id&count=20&page=" + 1,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setFinalidadesServicio(result.data.results)
       })
       .catch(err => {
         console.log("error");
@@ -85,24 +103,41 @@ function DatosGenerales() {
       });
   }, [])
 
-    //Fetch temas
-    useEffect(() => {
-      axiosTokenInstanceApiExpedientes({
-        method: 'get',
-        url: "/expedientes/210",
-        // headers: req.headers,
-        data: {}
+  // Fetch subtemas
+  const fetchSubtemas = (tema) => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/temas/" + tema + "/?ordering=id&count=20&page=" + 1,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        //console.log(result.data);
+        setSubtemas(result.data.results)
       })
-        .then(result => {
-          console.log(result.data);
-          document.getElementById("solicitante").value = result.data["solicitante_servicio_id"]
-          document.getElementById("Inicio_conflicto_Id").value = result.data["inicio_conflicto_id"]
-          // setIniciosConflicto(result.data.inicio_conflicto)
-        })
-        .catch(err => {
-          console.log("error");
-        });
-    }, [])
+      .catch(err => {
+        console.log("error");
+      });
+  }
+
+  //Fetch Database for initial Data
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/expedientes/210",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        document.getElementById("solicitante").value = result.data["solicitante_servicio_id"]
+        document.getElementById("Inicio_conflicto_Id").value = result.data["inicio_conflicto_id"]
+        // setIniciosConflicto(result.data.inicio_conflicto)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
 
   return (
     <>
@@ -143,7 +178,10 @@ function DatosGenerales() {
           <div className="mb-3">
             <label htmlFor="Tipo_servicio_Id" className="form-label h4">Finalidad de adquisición del servicio:</label>
             <select className="form-select form-select-lg" aria-label="Default select example" id="Tipo_servicio_Id" name='Tipo_servicio_Id' required>
-              <option value="" label={"Selecciona uno"} disabled></option>
+              <option value={""}>Abre el menú para ver las opciones</option>
+              {finalidadesServicio.map(finalidadServicio => {
+                return (<option key={"finalidadServicio" + finalidadServicio["id"]} value={finalidadServicio["id"]}>{finalidadServicio["nombre"]}</option>)
+              })}
             </select>
           </div>
           <br />
@@ -187,7 +225,7 @@ function DatosGenerales() {
           </div>
           <div className="mb-3">
             <label htmlFor="Tema" className="form-label h4">Tema:</label>
-            <select className="form-select form-select-lg" aria-label="Default select example" id="Tema" name='Tema' required>
+            <select className="form-select form-select-lg" aria-label="Default select example" id="Tema" name='Tema' required onChange={e => { fetchSubtemas(e.target.value) }}>
               <option value={""}>Abre el menú para ver las opciones</option>
               {temas.map(area => {
                 return (<option key={"area" + area["id"]} value={area["id"]}>{area["nombre"]}</option>)
@@ -197,7 +235,10 @@ function DatosGenerales() {
           <div className="mb-3">
             <label htmlFor="Subtema_Id" className="form-label h4">Subtema:</label>
             <select className="form-select form-select-lg" aria-label="Default select example" id="Subtema_Id" name='Subtema_Id' required>
-              <option value="" label={"Selecciona uno"} disabled></option>
+              <option value={""}>Abre el menú para ver las opciones</option>
+              {subtemas.map(area => {
+                return (<option key={"area" + area["id"]} value={area["id"]}>{area["nombre"]}</option>)
+              })}
             </select>
           </div>
           <br />
