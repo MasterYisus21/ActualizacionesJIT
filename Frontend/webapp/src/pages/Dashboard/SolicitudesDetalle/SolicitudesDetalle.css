@@ -4,6 +4,7 @@
     flex-direction: column;
     padding-top: 4em;
     gap: 3em;
+    align-items: center;
 }
 
 .contenedor-botones-detalle-solicitud{
@@ -299,4 +300,20 @@
 }
 .icon-close:hover {
     color:#00913D;
+}
+
+@media (max-width: 700px) {
+
+    .dropzone{
+        width: 80%;
+    }
+
+    .lista-anexos{
+        display: flex;
+        align-items: center;
+    }
+
+    .wrapp-visualizacion-anexos{
+        width: 90%;
+    }
 }

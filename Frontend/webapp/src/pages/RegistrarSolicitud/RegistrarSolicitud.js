@@ -498,7 +498,7 @@ function RegistrarSolicitud() {
           className={""}
           type={"submit"}
           linkto={""}
-          text={"Enviar"}
+          text={"Enviar Solicitud"}
           icon={""}
           onClick={() => { }}
         />
