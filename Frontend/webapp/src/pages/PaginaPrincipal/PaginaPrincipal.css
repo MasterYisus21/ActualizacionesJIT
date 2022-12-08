@@ -114,7 +114,7 @@
     }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1000px)  {
 
     .logo-universidad-movil{
         display: none;
@@ -225,6 +225,10 @@
 
     .imagen-logo-principal2{
         margin-top: 6em;
+    }
+
+    .imagen_solicitud{
+        height: 18em;
     }
 }
 

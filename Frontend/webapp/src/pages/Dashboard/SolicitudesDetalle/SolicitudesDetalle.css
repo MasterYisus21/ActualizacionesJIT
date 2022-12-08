@@ -316,4 +316,8 @@
     .wrapp-visualizacion-anexos{
         width: 90%;
     }
+
+    .col-detalle-solicitud{
+        width: 20em;
+    }
 }

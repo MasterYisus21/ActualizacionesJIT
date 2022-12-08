@@ -5,7 +5,6 @@
 }
 
 .heading-registrar-solicitud {
-    padding-top: 3em;
 }
 
 .wrapp-introduccion{
@@ -116,8 +115,17 @@
     .secciones-temas{
         gap: 4em;
     }
-
-
     
 }
 
+@media (min-width: 1000px) {
+
+    .img-rectangulo{
+        max-height: 5em;
+    }
+
+    .secciones-temas{
+        gap: 2.3em;
+    }
+    
+}

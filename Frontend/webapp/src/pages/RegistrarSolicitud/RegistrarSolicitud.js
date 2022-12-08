@@ -416,9 +416,116 @@ function RegistrarSolicitud() {
                 No
               </button>
             </div>
-
             
+            {openbutton &&
 
+              <>
+                <label className="subtitles-secciones">Nombre</label>
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+                <label className="subtitles-secciones">
+                  Identificación
+                </label>
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel
+                    controlId="floatingSelectGrid"
+                    label="Tipo de documento"
+                  >
+                    <Form.Select
+                      className="col-inputs"
+                      aria-label="Floating label select example"
+                    >
+                      <option>Abre el menú para ver las opciones</option>
+                    </Form.Select>
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+                <label className="subtitles-secciones">
+                  Fecha y lugar de expedición de documento
+                </label>
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel
+                    controlId="floatingInputGrid"
+                    label="Fecha de expedición de documento"
+                  >
+                    <Form.Control
+                      className="col-inputs"
+                      type="date"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel
+                    controlId="floatingInputGrid"
+                    label="Lugar de expedición"
+                  >
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+                <label className="subtitles-secciones">Datos adicionales</label>
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel controlId="floatingSelectGrid" label="Tarjeta profesional ">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingInputGrid" label="correo">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel controlId="floatingSelectGrid" label="Teléfono">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingInputGrid" label="Celular">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+              </>
+              }
+              
           </div>
 
           
