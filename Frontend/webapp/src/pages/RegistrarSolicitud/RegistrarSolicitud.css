@@ -5,6 +5,7 @@
 }
 
 .heading-registrar-solicitud {
+    padding-top: 1em;
 }
 
 .wrapp-introduccion{
@@ -100,6 +101,11 @@
     flex-direction: column;
 }
 
+/* .colum-detalle-solicitud{
+    width: 100%;
+    display: flex;
+} */
+
 /* Versión < 700px Tablets y Escritorios*/
 
 @media (min-width: 700px) {
@@ -113,7 +119,7 @@
     }
 
     .secciones-temas{
-        gap: 4em;
+        gap: 2.3em;
     }
     
 }
@@ -124,8 +130,19 @@
         max-height: 5em;
     }
 
-    .secciones-temas{
-        gap: 2.3em;
+    .heading-registrar-solicitud{
+        padding-top: 5em;
+        height: 40%;
+        padding-bottom: 2em;
     }
     
 }
+
+@media (min-height: 1000px) {
+
+    .secciones-temas{
+        gap: 5em;
+    }
+    
+}
+

@@ -13,7 +13,7 @@ import { Button } from "../../components/Button";
 
 function RegistrarSolicitud() {
 
-  const [seccion1, setSeccion1] = useState(false);
+  const [seccion1, setSeccion1] = useState(true);
   const [seccion2, setSeccion2] = useState(false);
   const [seccion3, setSeccion3] = useState(false);
   const [seccion4, setSeccion4] = useState(false);
@@ -23,7 +23,8 @@ function RegistrarSolicitud() {
   const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([])
   const [tiposPersona, setTiposPersona] = useState([])
   const [tiposDocumento, setTiposDocumento] = useState([])
-  const [openbutton, setOpenbutton] = useState(false)
+
+  const [conv2, setConv2] = useState(false)
 
   const [myFiles, setMyFiles] = useState([])
 
@@ -168,6 +169,47 @@ function RegistrarSolicitud() {
 
         <Collapse in={seccion1}>
           <div className="form-datos">
+            
+            <label className="subtitles-secciones">Nombre</label>
+            <FloatingLabel controlId="floatingInputGrid" label="Nombres">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+
+            <label className="subtitles-secciones">
+              Fecha y lugar de nacimiento
+            </label>
+            <FloatingLabel
+              controlId="floatingInputGrid"
+              label="Fecha de nacimiento"
+            >
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="date"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+            <FloatingLabel
+              controlId="floatingInputGrid"
+              label="Lugar de nacimiento"
+            >
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+
             <label className="subtitles-secciones">Identificación</label>
             <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
               <Form.Select
@@ -217,21 +259,6 @@ function RegistrarSolicitud() {
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="floatingInputGrid" label="Nombres">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
 
             <label className="subtitles-secciones">Tipo de Persona</label>
             <div className="d-flex gap-5">
@@ -281,143 +308,72 @@ function RegistrarSolicitud() {
             </FloatingLabel>
 
             <label className="subtitles-secciones">
-              Estrato y dirección de residencia
+              Datos adicionales
             </label>
-            <FloatingLabel controlId="floatingSelectGrid" label="Estrato">
-              <Form.Select
-                className="inputs-registrar-solicitud"
-                aria-label="Floating label select example"
-                name="genero"
-                required
-              >
-                <option value={""}>Abre el menú para ver las opciones</option>
-                {estratosSocieconomicos.map(estrato => {
-                  return (<option key={"estratos" + estrato["id"]} value={estrato["id"]}>{estrato["nombre"]}</option>)
-                })}
-              </Form.Select>
-            </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Dirección">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-          </div>
-        </Collapse>
 
-        {/* Parte 2 - DATOS DEL CONVOCADO --------------------------------->*/}
-
-        <SubtemaRectangulo
-          text="Datos del convocado"
-          icon="datos-convocados"
-          seccion={seccion2}
-          setSeccion={setSeccion2}
-        />
-
-        <Collapse in={seccion2}>
-          <div className="form-datos">
-            <label className="subtitles-secciones">Identificación</label>
-            <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
-              <Form.Select
-                className="inputs-registrar-solicitud"
-                aria-label="Floating label select example"
-                name="genero"
-                required
-              >
-                <option value={""}>Abre el menú para ver las opciones</option>
-                {tiposDocumento.map(tipoDocumento => {
-                  return (<option key={"tipoDocumento" + tipoDocumento["id"]} value={tipoDocumento["id"]}>{tipoDocumento["nombre"]}</option>)
-                })}
-              </Form.Select>
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="floatingInputGrid"
-              label="Número de documento"
-            >
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="email"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-
-            <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="floatingInputGrid" label="Nombres">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-
-            <label className="subtitles-secciones">Tipo de Persona</label>
-            <div className="d-flex gap-5">
-              {tiposPersona.map(tipoPersona => {
-                return (
-                  <div key={"tipoPersona" + tipoPersona["id"]} className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
-                    />
-                    <label className="form-check-label" htmlFor="flexRadioDefault1">
-                      {tipoPersona["nombre"]}
-                    </label>
-                  </div>
-                )
-              })}
+            <div className='col-detalle-solicitud'>
+              <FloatingLabel controlId="floatingSelectGrid" label="Estrato">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="genero"
+                  required
+                >
+                  <option value={""}>Abre el menú para ver las opciones</option>
+                  {estratosSocieconomicos.map(estrato => {
+                    return (<option key={"estratos" + estrato["id"]} value={estrato["id"]}>{estrato["nombre"]}</option>)
+                  })}
+                </Form.Select>
+              </FloatingLabel>
+                <FloatingLabel controlId="floatingInputGrid" label="Teléfono">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+              </FloatingLabel>
             </div>
 
-            <label className="subtitles-secciones">Datos Adicionales</label>
+            <div className='col-detalle-solicitud'>
+              <FloatingLabel controlId="floatingInputGrid" label="Celular">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+              </FloatingLabel>
+              <FloatingLabel controlId="floatingInputGrid" label="Correo">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+              </FloatingLabel>
+            </div>
+
             <FloatingLabel controlId="floatingInputGrid" label="Dirección">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Telefono">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="floatingInputGrid"
-              label="Correo electrónico"
-            >
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
+                <Form.Control
+                  className="inputs-registrar-solicitud"
+                  type="text"
+                  placeholder="name@example.com"
+                />
             </FloatingLabel>
 
             <label className="subtitles-secciones">Posee apoderado</label>
             <div className='col-detalle-solicitud'>
               <button
-                onClick={() => setOpenbutton(true)}
-                className={openbutton ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
+                onClick={() => setConv2(true)}
+                className={conv2 ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
                 Si
               </button>
               <button
-                onClick={() => setOpenbutton(false)}
-                className={openbutton ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
+                onClick={() => setConv2(false)}
+                className={conv2 ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
                 No
               </button>
             </div>
             
-            {openbutton &&
+            {conv2 &&
 
               <>
                 <label className="subtitles-secciones">Nombre</label>
@@ -525,9 +481,133 @@ function RegistrarSolicitud() {
 
               </>
               }
+
+          </div>
+        </Collapse>
+
+        {/* Parte 2 - DATOS DEL CONVOCADO --------------------------------->*/}
+
+        <SubtemaRectangulo
+          text="Datos del convocado"
+          icon="datos-convocados"
+          seccion={seccion2}
+          setSeccion={setSeccion2}
+        />
+
+        <Collapse in={seccion2}>
+          <div className="form-datos">
+            <label className="subtitles-secciones">Nombre</label>
+            <FloatingLabel controlId="floatingInputGrid" label="Nombres">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+            <label className="subtitles-secciones">Identificación</label>
+            <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
+              <Form.Select
+                className="inputs-registrar-solicitud"
+                aria-label="Floating label select example"
+                name="genero"
+                required
+              >
+                <option value={""}>Abre el menú para ver las opciones</option>
+                {tiposDocumento.map(tipoDocumento => {
+                  return (<option key={"tipoDocumento" + tipoDocumento["id"]} value={tipoDocumento["id"]}>{tipoDocumento["nombre"]}</option>)
+                })}
+              </Form.Select>
+            </FloatingLabel>
+            <FloatingLabel
+              controlId="floatingInputGrid"
+              label="Número de documento"
+            >
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="email"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+
+            <label className="subtitles-secciones">
+                  Fecha y lugar de expedición de documento
+                </label>
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel
+                    controlId="floatingInputGrid"
+                    label="Fecha de expedición de documento"
+                  >
+                    <Form.Control
+                      className="col-inputs"
+                      type="date"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel
+                    controlId="floatingInputGrid"
+                    label="Lugar de expedición"
+                  >
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+            <label className="subtitles-secciones">Tipo de Persona</label>
+            <div className="d-flex gap-5">
+              {tiposPersona.map(tipoPersona => {
+                return (
+                  <div key={"tipoPersona" + tipoPersona["id"]} className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                      {tipoPersona["nombre"]}
+                    </label>
+                  </div>
+                )
+              })}
+            </div>
+
+            <label className="subtitles-secciones">Datos Adicionales</label>
+            <div className='col-detalle-solicitud'>
+              <FloatingLabel controlId="floatingInputGrid" label="Teléfono">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+              </FloatingLabel>
+              <FloatingLabel controlId="floatingInputGrid" label="Correo">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+              </FloatingLabel>
+            </div>
+
+            <FloatingLabel controlId="floatingInputGrid" label="Dirección">
+                <Form.Control
+                  className="inputs-registrar-solicitud"
+                  type="text"
+                  placeholder="name@example.com"
+                />
+            </FloatingLabel>
               
           </div>
-
           
         </Collapse>
 
@@ -542,17 +622,36 @@ function RegistrarSolicitud() {
 
         <Collapse in={seccion3}>
           <div className="form-datos">
+
             <label className="subtitles-secciones">Lugar de los hechos</label>
-            <FloatingLabel
-              controlId="floatingInputGrid"
-              label="Lugar de los hechos"
-            >
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
+            <div className='col-detalle-solicitud'>
+              <FloatingLabel controlId="floatingSelectGrid" label="Departamento">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="sexo"
+                  required
+                >
+                  <option value={""}>Abre el menú para ver las opciones</option>
+                  {sexos.map(sexo => {
+                    return (<option key={"sexos" + sexo["id"]} value={sexo["id"]}>{sexo["nombre"]}</option>)
+                  })}
+                </Form.Select>
+              </FloatingLabel>
+              <FloatingLabel controlId="floatingSelectGrid" label="Ciudad">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="sexo"
+                  required
+                >
+                  <option value={""}>Abre el menú para ver las opciones</option>
+                  {sexos.map(sexo => {
+                    return (<option key={"sexos" + sexo["id"]} value={sexo["id"]}>{sexo["nombre"]}</option>)
+                  })}
+                </Form.Select>
+              </FloatingLabel>
+            </div>
             <FloatingLabel
               controlId="floatingTextarea2"
               label="Describa los hechos ocurridos"
