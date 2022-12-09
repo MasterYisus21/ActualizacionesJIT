@@ -99,7 +99,7 @@ function Convocantes() {
       message: `¿Estas seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
       buttons: [
         {
-          label: 'Yes',
+          label: 'Si',
           onClick: () => deletePerson(idPersona)
         },
         {
