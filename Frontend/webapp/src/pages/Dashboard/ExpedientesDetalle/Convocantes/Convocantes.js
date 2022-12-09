@@ -40,7 +40,7 @@ function Convocantes() {
           resultados.current = [...resultados.current, ...result.data.results]
         } else {
           resultados.current = result.data.results
-        }s
+        }
         setResultadosBusqueda(resultados.current)
         setNumPages(Math.ceil(result.data.count / 14))
       })
@@ -99,7 +99,7 @@ function Convocantes() {
       message: `¿Estas seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
       buttons: [
         {
-          label: 'Yes',
+          label: 'Si',
           onClick: () => deletePerson(idPersona)
         },
         {
