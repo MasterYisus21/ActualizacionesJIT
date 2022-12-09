@@ -66,7 +66,7 @@ function Documentos() {
                 <td className='text-center'>{dato["fecha"]}</td>
                 {/* <td className='text-center'>{dato["estado"]}</td> */}
                 <td className=''>
-                  <ThreePositionSwitch name={`documento${dato["id"]}`} className={''} state={dato["estado"]} />
+                  <ThreePositionSwitch documentoId={dato["id"]} name={`documento${dato["id"]}`} className={''} state={dato["estado"]} />
                 </td>
               </tr>
             )
