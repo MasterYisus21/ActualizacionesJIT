@@ -30,7 +30,7 @@ function RegistrarSolicitud() {
 
   const onDrop = useCallback(acceptedFiles => {
     setMyFiles([...myFiles, ...acceptedFiles])
-  }, [myFiles])
+  }, [myFiles], console.log(myFiles))
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -56,6 +56,24 @@ function RegistrarSolicitud() {
     event.preventDefault()
     console.log("sexo " + event.target.sexo.value);
     console.log("genero " + event.target.genero.value);
+    const data = {
+      "Sexo": parseInt(event.target.genero.value),
+      "Genero_Id": parseInt(event.target.sexo.value),
+    }
+    JSON.stringify(data)
+    axiosBasicInstanceApiSolicitudes({
+      method: 'post',
+      url: "/solicitud/",
+      // headers: req.headers,
+      data: data,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log("error");
+      });
   }
 
   // fetch sexos options
@@ -215,7 +233,7 @@ function RegistrarSolicitud() {
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
-                name="genero"
+                name="tipo_documento"
                 required
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
@@ -316,7 +334,7 @@ function RegistrarSolicitud() {
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
-                  name="genero"
+                  name="estrato"
                   required
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
@@ -518,7 +536,7 @@ function RegistrarSolicitud() {
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
-                name="genero"
+                name="tipo_documento"
                 required
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
@@ -631,7 +649,7 @@ function RegistrarSolicitud() {
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
-                  name="sexo"
+                  name="departamento"
                   required
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
@@ -644,7 +662,7 @@ function RegistrarSolicitud() {
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
-                  name="sexo"
+                  name="ciudad"
                   required
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
