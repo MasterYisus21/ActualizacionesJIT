@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 import { Button } from '../../../../components';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+
+
 // Import css
 import './Conciliador.css'
 
@@ -70,6 +73,41 @@ function Conciliador() {
     }
   }, [page])
 
+  const handleDeletePerson = (idPersona, nombre) => {
+    function deletePerson(idPersona) {
+      // alert(`deleted person ${idPersona}`)
+      axiosTokenInstanceApiExpedientes({
+        method: 'delete',
+        url: "/expedientes/" + id + "/personas/" + idPersona,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          setResultadosBusqueda(resultadosBusqueda.filter((resultadosBusqueda) => {
+            return resultadosBusqueda["id"] != idPersona
+          }))
+        })
+        .catch(err => {
+          console.log("error");
+        });
+
+    }
+    confirmAlert({
+      title: `Confirmación para eliminar`,
+      message: `¿Estas seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
+      buttons: [
+        {
+          label: 'Si',
+          onClick: () => deletePerson(idPersona)
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  }
+
   return (
     <>
       <div className='container-conciliador'>
@@ -115,7 +153,7 @@ function Conciliador() {
             </div>
           </form>
         }
-        <form className='contenedor-tabla-convocado' onScroll={e => handleScroll(e)}>
+        <div className='contenedor-tabla-convocado' onScroll={e => handleScroll(e)}>
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
               <tr>
@@ -132,7 +170,7 @@ function Conciliador() {
                     <td>{resultadoBusqueda["tipo_documento_persona"]}</td> {/* Clase del convocado natural, juridica */}
                     <td>{resultadoBusqueda["identificacion_persona"]}</td>
                     <td>{resultadoBusqueda["nombres_persona"]}</td>
-                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={() => { }}>Eliminar</button></td>
+                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={(e) => { handleDeletePerson(resultadoBusqueda["id"], resultadoBusqueda["nombres_persona"]) }}>Eliminar</button></td>
                   </tr>
                 )
               })}
@@ -143,7 +181,7 @@ function Conciliador() {
               text="Cargar más"
             />
           </table>
-        </form>
+        </div>
       </div>
     </>
   )

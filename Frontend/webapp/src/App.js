@@ -1,5 +1,7 @@
 
 import './App.css';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
 
 // Importing react router components
 import { Routes, Route, } from 'react-router-dom';

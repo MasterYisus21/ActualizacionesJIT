@@ -27,6 +27,10 @@
     height: 2em;
 }
 
+.datos-crear-convocante{
+    width: 10em;
+}
+
 .contenedor-tabla-convocante {
     font-size: small;
     text-align: center;
