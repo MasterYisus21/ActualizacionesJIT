@@ -245,7 +245,7 @@ class Medio_seguimientoSerializer(serializers.ModelSerializer):
         model = Medio_seguimiento          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class SeguimientoSerializer(serializers.ModelSerializer):
-
+    medio_seguimiento = serializers.CharField(source='medio_seguimiento_id', read_only=True)
     class Meta:
         model = Seguimiento          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 

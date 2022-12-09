@@ -673,10 +673,11 @@ class Medio_seguimiento(GeneralModel):
         return self.nombre
 
 class Seguimiento(EstadoModel):
-    fecha = models.DateField(auto_now=False, auto_now_add=False,blank=False,null=False)    
+    fecha = models.DateField(auto_now=True,blank=False,null=False)    
     expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True) 
     medio_seguimiento_id = models.ForeignKey(Medio_seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
-
+    recomendacion_al_usuario = models.TextField(blank=True,null=True)
+    
     class Meta:
         db_table='Seguimiento'
         verbose_name = ('Seguimiento')
@@ -694,7 +695,7 @@ class Pregunta_seguimiento(GeneralModel):
     def __str__(self):
         return self.nombre
 
-class Respuesta_seguimiento(models.Model):
+class Respuesta_seguimiento(EstadoModel):
 
     id = models.AutoField(primary_key=True, unique=True) 
     si_o_no=models.BooleanField(blank=False,null=False)

@@ -38,6 +38,10 @@ router.get("/personas/:id", views_genericos.GenericList)
 router.get("/tipos_resultado", views_genericos.GenericList)
 router.get("/preguntas_encuesta", views_genericos.GenericList)
 router.get("/medios_conocimiento", views_genericos.GenericList)
+router.get("/medios_seguimiento", views_genericos.GenericList)
+router.get("/preguntas_seguimiento", views_genericos.GenericList)
+router.get("/seguimientos", views_genericos.GenericList)
+
 
 
 
@@ -54,12 +58,14 @@ router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPer
 router.delete("/expedientes/:id/personas/:id_relacion",views_genericos.EliminarPersonaCaso);
 router.get("/expedientes/:id/resultados", views_genericos.VerResultadoCaso)
 router.get("/expedientes/:id/encuestas", views_genericos.VerRespuestasEncuesta)
+router.get("/expedientes/:id/seguimientos", views_genericos.ListarSeguimientosCaso);
 router.delete("/personas/:id",views_genericos.EliminarPersonas);
 router.delete("/apoderados/:id",views_genericos.EliminarApoderados);
 
 router.get("/conciliadores", views_genericos.ListarConciliadores);
 router.get("/estudiantes", views_genericos.ListarEstudiantes);
 router.get("/apoderados/:id", views_genericos.VerApoderado);
+router.get("/seguimientos/:id", views_genericos.VerSeguimiento);
 
 
 router.get("/expedientes/:id/convocados", views_genericos.ListarConvocadosCaso);
@@ -70,6 +76,8 @@ router.get("/expedientes/:id/hechos", views_genericos.ListarHechosCaso);
 router.get("/expedientes/:id/hechos", views_genericos.ListarHechosCaso);
 router.get("/expedientes/:id/documentos", views_genericos.ListarDocumentosCaso);
 router.get("/expedientes/:id/citaciones", views_genericos.ListarCitacionesCaso);
+
+
 router.get("/expedientes/:id/citaciones/:id_citacion/personas", views_genericos.ListarPersonasCitadasyPorCitar)
 router.get("/crear_admin", views_genericos.DatosCrearPersonasAdministrativas)
 router.get("/crear_personas", views_genericos.DatosCrearPersonas)
@@ -88,6 +96,7 @@ router.post("/documentos/:id",archivo.uploadMiddleware, views_genericos.CargarDo
 router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware, views_genericos.CambiarDocumentoCaso);
 router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware, views_genericos.CambiarDocumentoCaso);
 router.post("/expedientes/:id/respuestas", views_genericos.CrearRespuestas);
+router.post("/expedientes/:id/seguimientos", views_genericos.CrearSeguimientoCaso);
 
 router.patch("/expedientes/:id/resultados/:id_resultado",archivo.uploadMiddleware, views_genericos.CargarResultadoCaso);
 

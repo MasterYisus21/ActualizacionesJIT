@@ -771,6 +771,7 @@ views.VerResultadoCaso = async (req, res) => {
     return;
   }
 }
+
 views.VerRespuestasEncuesta = async (req, res) => {
   try {
     axios.get(config.urlApiExpedientes+"encuestas?expediente_id="+req.params.id)
@@ -880,7 +881,73 @@ views.CargarResultadoCaso = async (req, res) => {
   }
 }
 
+views.ListarSeguimientosCaso = async (req, res) => {
+  try {
+    const url = config.urlApiExpedientes+"seguimientos?expediente_id="+req.params.id
+    requests.get(req, res, url, "&")
+    
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 
+views.CrearSeguimientoCaso = async (req, res) => {
+  try {
+
+    req.body.expediente_id=req.params.id
+
+    axios.post(config.urlApiExpedientes+"seguimientos/",req.body)
+      .then(async result=>{
+        for (const iterator of req.body.respuestas) {
+          iterator.seguimiento_id=result.data.id
+        }
+        await axios.post(config.urlApiExpedientes+"respuestas_seguimiento/",req.body.respuestas)
+          .then(resul=>{
+            res.status(200).json(result.data)
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+    
+  
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+views.VerSeguimiento = async (req, res) => {
+  try {
+    let endpoints =[
+      config.urlApiExpedientes+"seguimientos/"+req.params.id,
+      config.urlApiExpedientes+"respuestas_seguimiento?seguimiento_id="+req.params.id
+    ]
+    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+    .then(axios.spread(async (data1,data2) => {
+      
+      data1.data.respuestas=data2.data.results
+
+      res.status(200).json(data1.data)
+    }))
+    .catch(err => {
+
+      res.sendStatus(error(err))
+      return
+
+    })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.CrearConvocantes = async (req, res) => {
   try {
 
