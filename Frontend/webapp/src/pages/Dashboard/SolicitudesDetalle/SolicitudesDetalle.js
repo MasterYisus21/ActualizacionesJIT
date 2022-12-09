@@ -471,11 +471,13 @@ function SolicitudesDetalle() {
             <div className='col-detalle-solicitud'>
               <button
                 onClick={() => setConv1(true)}
+                type = "button"
                 className={conv1 ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
                 Si
               </button>
               <button
                 onClick={() => setConv1(false)}
+                type = "button"
                 className={conv1 ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
                 No
               </button>
@@ -808,11 +810,13 @@ function SolicitudesDetalle() {
             <div className='col-detalle-solicitud'>
               <button
                 onClick={() => setOpenbutton(true)}
+                type = "button"
                 className={openbutton ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
                 Si
               </button>
               <button
                 onClick={() => setOpenbutton(false)}
+                type = "button"
                 className={openbutton ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
                 No
               </button>

@@ -363,11 +363,13 @@ function RegistrarSolicitud() {
             <div className='col-detalle-solicitud'>
               <button
                 onClick={() => setConv2(true)}
+                type = "button"
                 className={conv2 ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
                 Si
               </button>
               <button
                 onClick={() => setConv2(false)}
+                type = "button"
                 className={conv2 ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
                 No
               </button>
