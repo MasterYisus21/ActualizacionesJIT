@@ -38,7 +38,7 @@ function Documentos() {
         <form className='display-flex modulo-solicitudes-documentos-buscar-form'>
           <div className="mb-3">
             <input className="form-control" type="file" id="formFile" onChange={(event) => { }} />
-            <div>Formatos aceptados: pdf, jpg, png, gif </div>
+            <div>Formatos aceptados: pdf, jpg </div>
             <div>Tamaño maximo del archivo: 10 Mb </div>
           </div>
           <div className="mb-3">
@@ -66,7 +66,7 @@ function Documentos() {
                 <td className='text-center'>{dato["fecha"]}</td>
                 {/* <td className='text-center'>{dato["estado"]}</td> */}
                 <td className=''>
-                  <ThreePositionSwitch name={`documento${dato["id"]}`} className={'approved'} />
+                  <ThreePositionSwitch name={`documento${dato["id"]}`} className={''} state={dato["estado"]} />
                 </td>
               </tr>
             )
