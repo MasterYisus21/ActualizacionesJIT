@@ -413,7 +413,7 @@ class Apoderado(EstadoModel):
     celular = models.CharField(max_length=15, blank=False, null=False)
     correo = models.EmailField(max_length=120,blank=False,null=False)
     tarjeta_profesional= models.CharField(max_length=25, blank=False, null=False)
-    tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=False, null=True)
+    tipo_documento_id = models.ForeignKey('Tipo_documento', on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
         db_table='Apoderado_expediente'
@@ -451,7 +451,7 @@ class Persona(EstadoModel):
     tipo_cargo_id = models.ForeignKey(Tipo_cargo, on_delete=models.SET_NULL, blank=True, null=True)
     tipo_vivienda_id = models.ForeignKey(Tipo_vivienda, on_delete=models.SET_NULL, blank=True, null=True)
     perfil_id = models.ForeignKey(Perfil, on_delete=models.SET_NULL, blank=True, null=True)
-    tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=True, null=True)
+    tipo_documento_id = models.ForeignKey('Tipo_documento', on_delete=models.SET_NULL, blank=True, null=True)
     escolaridad_id = models.ForeignKey(Escolaridad, on_delete=models.SET_NULL, blank=True, null=True)
     apoderado_id = models.ForeignKey(Apoderado, on_delete=models.SET_NULL, blank=True, null=True)
     usuarioId= models.OneToOneField(User, on_delete=models.SET_NULL, null=True,blank=True)
