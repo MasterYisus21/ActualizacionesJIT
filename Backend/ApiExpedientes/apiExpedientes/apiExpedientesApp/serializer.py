@@ -198,6 +198,7 @@ class Relacion_persona_expedienteSerializer(serializers.ModelSerializer):
     apoderado_id= serializers.CharField(source='persona_id.apoderado_id.id', read_only=True)
     nombre_apoderado= serializers.CharField(source='persona_id.apoderado_id', read_only=True)
     tipo_cliente= serializers.CharField(source='tipo_cliente_id', read_only=True)
+    numero_radicado= serializers.CharField(source='expediente_id.numero_radicado', read_only=True)
     
     
     class Meta:
