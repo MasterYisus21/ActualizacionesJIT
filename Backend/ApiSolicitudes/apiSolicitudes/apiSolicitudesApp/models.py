@@ -248,6 +248,6 @@ class Hechos_solicitud(EstadoModel):
         verbose_name_plural = ('Hechos')
     def __str__(self):
         return  '%s'%(self.solicitud_id)
-
+ 
 
 # api expedientesv
