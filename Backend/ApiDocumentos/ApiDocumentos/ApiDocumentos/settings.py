@@ -93,10 +93,10 @@ WSGI_APPLICATION = 'ApiDocumentos.wsgi.application'
 DATABASES = {
  'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_conciliacion_jit_documentos',
-        'USER': 'jit_documentos',
-        'PASSWORD': 'Ugc$%jit2022',
-        'HOST': '172.20.100.5',
+        'NAME': 'documentos',
+        'USER': 'ugc',
+        'PASSWORD': 'ugc',
+        'HOST': 'localhost',
         'PORT': '5436',
     }
 }
