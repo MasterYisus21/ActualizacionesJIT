@@ -578,7 +578,9 @@ views.InformacionCaso= async (req, res) => {
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/estudiantes",
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/hechos",
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/citaciones",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/resultados"
+                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/resultados",
+                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/seguimientos",
+              
               ]
               console.log(endpoints)
 
