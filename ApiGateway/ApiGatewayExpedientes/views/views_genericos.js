@@ -502,6 +502,110 @@ views.ListarDocumentosCaso = async (req, res) => {
     return;
   }
 }
+views.DescargarDocumentos = async (req, res) => {
+  try {
+    await axios.get(config.urlDocumentos+ "documentos/" + req.params.id)
+      .then(async resp => {
+
+
+        // res.status(200).json(resp.data)
+        await axios.get(resp.data.documento, { responseType: 'arraybuffer' })//,
+          .then(response => {
+
+            //res.status(200).json(response.data)
+            //console.log(typeof response.data)
+
+            res.end(response.data);
+          })
+          .catch(err => {
+
+            res.sendStatus(error(err))
+            return
+
+          })
+      })
+      .catch(err => {
+
+        res.sendStatus(error(err))
+        return
+
+      })
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+}
+views.DescargarResultados = async (req, res) => {
+  try {
+    await axios.get(config.urlApiExpedientes+ "resultados/" + req.params.id)
+      .then(async resp => {
+
+
+        // res.status(200).json(resp.data)
+        await axios.get(resp.data.documento, { responseType: 'arraybuffer' })//,
+          .then(response => {
+
+            //res.status(200).json(response.data)
+            //console.log(typeof response.data)
+
+            res.end(response.data);
+          })
+          .catch(err => {
+
+            res.sendStatus(error(err))
+            return
+
+          })
+      })
+      .catch(err => {
+
+        res.sendStatus(error(err))
+        return
+
+      })
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+}
+
+views.InformacionCaso= async (req, res) => {
+  try {
+    endpoints=[config.urlApiExpedientes+"expedientes/"+req.params.id,
+                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocantes",
+                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocados",
+                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/conciliadores",
+                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/estudiantes",
+                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/hechos",
+                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/citaciones",
+                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/resultados"
+              ]
+              console.log(endpoints)
+
+                await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+                .then(axios.spread(async (...allData) => {
+                  datos = []
+                  for (const iterator of allData) {
+                    datos.push(iterator.data)
+                  }
+  
+                  res.status(200).json(datos)
+                }))
+                .catch(err => {
+  
+                  res.sendStatus(error(err))
+                  return
+  
+                })
+  
+
+
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.ListarCitacionesCaso = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "citaciones?expediente_id=" + req.params.id
@@ -841,6 +945,7 @@ views.CrearResultado = async (req, res) => {
 }
 views.CargarResultadoCaso = async (req, res) => {
   try {
+    console.log(req.files)
     if (Object.keys(req.files).length > 1) {
       res.sendStatus(error({ message: "Solo puede subir un documento" }));
       for (const iterator of req.files) {
