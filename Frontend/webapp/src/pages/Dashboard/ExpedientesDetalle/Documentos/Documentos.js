@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import FileDownload from 'js-file-download'
 import { confirmAlert } from 'react-confirm-alert'
 import { useParams } from 'react-router-dom'
 import { ThreePositionSwitch } from '../../../../components'
@@ -61,7 +62,7 @@ function Documentos() {
   useEffect(() => {
     search()
   }, [])
-  
+
 
   useEffect(() => {
     if (page != 1) {
@@ -89,6 +90,29 @@ function Documentos() {
       })
       .catch(err => {
         console.log("error");
+      });
+  }
+
+  const downloadDocument = (event, idDocumento, nombre) => {
+    event.preventDefault()
+    console.log(idDocumento)
+    console.log(nombre)
+
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: `/documentos/${idDocumento}`,
+      // url: `/documentos/2022-452`,
+      responseType: "blob",
+      data: {}
+    })
+      .then(response => {
+        console.log(response)
+        // window.open("someLink", "_blank")
+        console.log(response.data);
+        FileDownload(response.data, nombre)
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
@@ -160,7 +184,7 @@ function Documentos() {
             {documentos.map((dato) => {
               return (
                 <tr key={dato["id"]}>
-                  <th className='text-center' style={{ maxWidth: "35%" }} scope="row"><button className='btn' onClick={(event) => { }}>{dato["nombre"]}</button></th>
+                  <th className='text-center' style={{ maxWidth: "35%" }} scope="row"><button className='btn' onClick={(event) => { downloadDocument(event, dato["id"], dato["nombre"]) }}>{dato["nombre"]}</button></th>
                   <td className='text-center'>{dato["fecha"]}</td>
                   {/* <td className='text-center'>{dato["estado"]}</td> */}
                   <td className=''>
@@ -184,10 +208,10 @@ function Documentos() {
             })}
           </tbody>
           <Button
-              onClick={e => { handlePageChange(page + 1) }}
-              className="span2"
-              text="Cargar más"
-            />
+            onClick={e => { handlePageChange(page + 1) }}
+            className="span2"
+            text="Cargar más"
+          />
         </table>
       </div>
     </div >
