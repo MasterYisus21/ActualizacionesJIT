@@ -7,6 +7,9 @@ import { IconButton } from '../../components'
 // Importing css
 import './Dashboard.css'
 
+
+
+
 function Dashboard() {
 
   const [pagina, setPagina] = useState("Dashboard")
@@ -73,6 +76,8 @@ function Dashboard() {
       <div className='dashboard-item dashboard-container-bottom-right'>
         <Outlet context={{ setPagina }} />
       </div>
+
+
     </div>
   )
 }

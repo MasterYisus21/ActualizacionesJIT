@@ -44,7 +44,7 @@ class SolicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
     ordering_fields = '__all__'
-    search_fields=['numero_radicado','fecha_registro']
+    search_fields=['numero_radicado','fecha_registro','estado_solicitud_id__nombre']
     serializer_class = SolicitudSerializer
     #permission_classes = [CustomDjangoModelPermission]
 class Documento_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 

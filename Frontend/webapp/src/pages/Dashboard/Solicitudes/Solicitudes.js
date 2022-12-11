@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useOutletContext } from 'react-router-dom'
 import { Buscador, Button, Tarjeta } from '../../../components'
-import { axiosTokenInstanceApiSolicitudes } from '../../../helpers/axiosInstances';
+import { axiosBasicInstanceApiSolicitudes, axiosTokenInstanceApiSolicitudes } from '../../../helpers/axiosInstances';
 
 /* import css */
 import './Solicitudes.css'
@@ -15,26 +15,29 @@ function Solicitudes() {
 
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [valoresBuscados, setValoresBuscados] = useState([])
+  const [filtros, setFiltros] = useState([])
+  const [filtrosAplicados, setFiltrosAplicados] = useState([])
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
+  let resultados = useRef([])
 
   const search = () => {
 
     // console.log(e.target.documento.value)
     axiosTokenInstanceApiSolicitudes({
       method: 'get',
-      url: "/solicitudes/?ordering=-numero_radicado&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
+      url: "/solicitudes/?ordering=-numero_radicado&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }) + filtrosAplicados.map(valor => { return '&search=' + valor }),
       // headers: req.headers,
       data: {}
     })
       .then(result => {
         console.log(result.data);
         if (page != 1) {
-          setResultadosBusqueda([...resultadosBusqueda, ...result.data.results])
+          resultados.current = [...resultados.current, ...result.data.results]
         } else {
-          setResultadosBusqueda(result.data.results)
+          resultados.current = result.data.results
         }
-
+        setResultadosBusqueda(resultados.current)
         setNumPages(Math.ceil(result.data.count / 14))
       })
       .catch(err => {
@@ -42,6 +45,24 @@ function Solicitudes() {
       });
 
   }
+
+  //fetching filters
+  useEffect(() => {
+    axiosBasicInstanceApiSolicitudes({
+      method: 'get',
+      url: "/estados_solicitud/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data.results);
+        setFiltros(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+
+  }, [])
 
   const handlePageChange = (page) => {
     if (page <= numPages) {
@@ -64,6 +85,10 @@ function Solicitudes() {
   }, [valoresBuscados])
 
   useEffect(() => {
+    search()
+  }, [filtrosAplicados])
+
+  useEffect(() => {
     if (page != 1) {
       search()
     }
@@ -76,6 +101,8 @@ function Solicitudes() {
       <Buscador
         valoresBuscados={valoresBuscados}
         setValoresBuscados={setValoresBuscados}
+        filtros = {filtros}
+        setFiltros = {setFiltrosAplicados}
         setPage={handlePageChange}
         required
       />
@@ -87,7 +114,7 @@ function Solicitudes() {
                 titulo={"Radicado #" + resultadoBusqueda["numero_radicado"]}
                 radicado={resultadoBusqueda["numero_radicado"]}
                 fecha={resultadoBusqueda["fecha_registro"]}
-                estado={resultadoBusqueda["estado_expediente"]} />
+                estado={resultadoBusqueda["estado_solicitud"]} />
             </Link>
           )
         })}

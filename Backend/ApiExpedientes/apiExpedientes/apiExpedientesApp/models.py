@@ -413,7 +413,7 @@ class Apoderado(EstadoModel):
     celular = models.CharField(max_length=15, blank=False, null=False)
     correo = models.EmailField(max_length=120,blank=False,null=False)
     tarjeta_profesional= models.CharField(max_length=25, blank=False, null=False)
-    tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=False, null=True)
+    tipo_documento_id = models.ForeignKey('Tipo_documento', on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:
         db_table='Apoderado_expediente'
@@ -451,7 +451,7 @@ class Persona(EstadoModel):
     tipo_cargo_id = models.ForeignKey(Tipo_cargo, on_delete=models.SET_NULL, blank=True, null=True)
     tipo_vivienda_id = models.ForeignKey(Tipo_vivienda, on_delete=models.SET_NULL, blank=True, null=True)
     perfil_id = models.ForeignKey(Perfil, on_delete=models.SET_NULL, blank=True, null=True)
-    tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=True, null=True)
+    tipo_documento_id = models.ForeignKey('Tipo_documento', on_delete=models.SET_NULL, blank=True, null=True)
     escolaridad_id = models.ForeignKey(Escolaridad, on_delete=models.SET_NULL, blank=True, null=True)
     apoderado_id = models.ForeignKey(Apoderado, on_delete=models.SET_NULL, blank=True, null=True)
     usuarioId= models.OneToOneField(User, on_delete=models.SET_NULL, null=True,blank=True)
@@ -547,8 +547,8 @@ class Finalidad_servicio(GeneralModel):
      def __str__(self):
         return self.nombre
 class Expediente(EstadoModel):
-    
-    numero_radicado = models.CharField(max_length =20,editable=True,null=False,blank=True)
+    identificador_sicaac= models.CharField(max_length=15,blank=True,null=True)
+    numero_radicado = models.CharField(max_length =20,editable=True,null=True,blank=True)
     numero_caso = models.CharField(max_length=25,default = increment_numero_caso_number,editable=False,unique=True)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
     caso_gratuito= models.BooleanField(default=True, blank=True,null=True)
@@ -607,19 +607,29 @@ class Historico(models.Model):
     def __str__(self):
          return '%s '% (self.id)
 
-class Tipo_resultado(GeneralModel):
+
+class Categoria_resultado(GeneralModel):
     
     consecutivo_actual=models.PositiveIntegerField(null=False,blank=False)
-
+    
+    class Meta:
+        db_table='Categoria_resultado'
+        verbose_name = ('Categoria_resultado')
+        verbose_name_plural = ('Categorias _resultado')
+    def __str__(self):
+        return self.nombre
+        
+class Tipo_resultado(GeneralModel):
+    
+    categoria_id = models.ForeignKey(Categoria_resultado, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
         db_table='Tipo_resultado'
         verbose_name = ('Tipo_resultado')
         verbose_name_plural = ('Tipos_resultado')
     def __str__(self):
         return self.nombre
-
 class Resultado(EstadoModel):
-   
+    consecutivo= models.PositiveIntegerField(null=False,blank=False)
     acuerdo  = models.TextField(blank=True,null=True)
     documento = models.FileField(upload_to='resultados/', max_length=100, blank=True,null=True)
     fecha = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) 
@@ -631,7 +641,7 @@ class Resultado(EstadoModel):
         verbose_name = ('Resultado')
         verbose_name_plural = ('Resultados')
     def __str__(self):
-        return str(self.fecha)
+        return str(self.expediente_id.numero_caso)
 
 
 class Hechos(EstadoModel):
@@ -644,6 +654,7 @@ class Hechos(EstadoModel):
     pretension = models.TextField(blank=True,null=True)
     expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
     ciudad_id = models.ForeignKey(Tipo_resultado, on_delete=models.SET_NULL, blank=False, null=True)
+    
     
     class Meta:
         db_table='Hechos_expediente'
@@ -662,10 +673,11 @@ class Medio_seguimiento(GeneralModel):
         return self.nombre
 
 class Seguimiento(EstadoModel):
-    fecha = models.DateField(auto_now=False, auto_now_add=False,blank=False,null=False)    
+    fecha = models.DateField(auto_now=True,blank=False,null=False)    
     expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True) 
     medio_seguimiento_id = models.ForeignKey(Medio_seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
-
+    recomendacion_al_usuario = models.TextField(blank=True,null=True)
+    
     class Meta:
         db_table='Seguimiento'
         verbose_name = ('Seguimiento')
@@ -683,7 +695,7 @@ class Pregunta_seguimiento(GeneralModel):
     def __str__(self):
         return self.nombre
 
-class Respuesta_seguimiento(models.Model):
+class Respuesta_seguimiento(EstadoModel):
 
     id = models.AutoField(primary_key=True, unique=True) 
     si_o_no=models.BooleanField(blank=False,null=False)
@@ -754,14 +766,16 @@ class Medio_conocimiento(GeneralModel):
 class Encuesta(EstadoModel):
     fecha = models.DateField(auto_now=True, auto_now_add=False,null=False)
     medio_conocimiento_id = models.ForeignKey(Medio_conocimiento, on_delete=models.SET_NULL,blank=False,null=True)
-    persona_id = models.ForeignKey(Persona, on_delete=models.SET_NULL,blank=False,null=True)
+    observacion = models.TextField(blank=True,null=True)
+    
+    
     expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
         db_table='Encuesta'
         verbose_name = ('Encuesta')
         verbose_name_plural = ('Encuestas')
     def __str__(self):
-        return  '%s %s' % (self.fecha)
+        return  '%s' % (self.expediente_id)
 
 class Pregunta_encuesta(GeneralModel):
 
@@ -783,7 +797,7 @@ class Respuesta_encuesta(EstadoModel):
         verbose_name = ('Respuesta_encuesta')
         verbose_name_plural = ('Respuestas_encuesta')
     def __str__(self):
-        return '%s %s' % (self.id)
+        return '%s %s' % (self.encuesta_id,self.pregunta_encuesta_id)
 
 class Tipo_reporte(GeneralModel):
 

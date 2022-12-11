@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Buscador, Button, Popup } from '../../../components'
 import TarjetaPersonas from '../../../components/Tarjeta/TarjetaPersonas'
 import { useState, useEffect } from 'react'
@@ -12,26 +12,29 @@ function Personas() {
 
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [valoresBuscados, setValoresBuscados] = useState([])
+  const [filtros, setFiltros] = useState([])
+  const [filtrosAplicados, setFiltrosAplicados] = useState([])
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
+  let resultados = useRef([])
 
   const search = () => {
 
     // console.log(e.target.documento.value)
     axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/personas/?ordering=-id&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
+      url: "/personas/?ordering=-id&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }) + filtrosAplicados.map(valor => { return '&search=' + valor }),
       // headers: req.headers,
       data: {}
     })
       .then(result => {
         console.log(result.data);
         if (page != 1) {
-          setResultadosBusqueda([...resultadosBusqueda, ...result.data.results])
+          resultados.current = [...resultados.current, ...result.data.results]
         } else {
-          setResultadosBusqueda(result.data.results)
+          resultados.current = result.data.results
         }
-
+        setResultadosBusqueda(resultados.current)
         setNumPages(Math.ceil(result.data.count / 14))
       })
       .catch(err => {
@@ -39,6 +42,24 @@ function Personas() {
       });
 
   }
+
+  //fetching filters
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/tipos_cargo/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data.results);
+        setFiltros(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+
+  }, [])
 
   const handlePageChange = (page) => {
     if (page <= numPages) {
@@ -61,6 +82,10 @@ function Personas() {
   }, [valoresBuscados])
 
   useEffect(() => {
+    search()
+  }, [filtrosAplicados])
+
+  useEffect(() => {
     if (page != 1) {
       search()
     }
@@ -75,6 +100,8 @@ function Personas() {
         <Buscador
           valoresBuscados={valoresBuscados}
           setValoresBuscados={setValoresBuscados}
+          filtros = {filtros}
+          setFiltros = {setFiltrosAplicados}
           setPage={handlePageChange}
           required
         />

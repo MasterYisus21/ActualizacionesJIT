@@ -23,6 +23,7 @@ function SolicitudesDetalle() {
   const [seccion3, setSeccion3] = useState(false);
   const [seccion4, setSeccion4] = useState(false);
 
+  const [conv1, setConv1] = useState(false)
   const [openbutton, setOpenbutton] = useState(false)
 
   // forms options 
@@ -466,7 +467,130 @@ function SolicitudesDetalle() {
                 </label>
               </div>
             </div>
+            <label className="subtitles-secciones">Posee apoderado</label>
+            <div className='col-detalle-solicitud'>
+              <button
+                onClick={() => setConv1(true)}
+                type = "button"
+                className={conv1 ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
+                Si
+              </button>
+              <button
+                onClick={() => setConv1(false)}
+                type = "button"
+                className={conv1 ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
+                No
+              </button>
+            </div>
+            
+            {conv1 &&
 
+              <>
+                <label className="subtitles-secciones">Nombre</label>
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+                <label className="subtitles-secciones">
+                  Identificación
+                </label>
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel
+                    controlId="floatingSelectGrid"
+                    label="Tipo de documento"
+                  >
+                    <Form.Select
+                      className="col-inputs"
+                      aria-label="Floating label select example"
+                    >
+                      <option>Abre el menú para ver las opciones</option>
+                    </Form.Select>
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+                <label className="subtitles-secciones">
+                  Fecha y lugar de expedición de documento
+                </label>
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel
+                    controlId="floatingInputGrid"
+                    label="Fecha de expedición de documento"
+                  >
+                    <Form.Control
+                      className="col-inputs"
+                      type="date"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel
+                    controlId="floatingInputGrid"
+                    label="Lugar de expedición"
+                  >
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+                <label className="subtitles-secciones">Datos adicionales</label>
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel controlId="floatingSelectGrid" label="Tarjeta profesional ">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingInputGrid" label="correo">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+                <div className='col-detalle-solicitud'>
+                  <FloatingLabel controlId="floatingSelectGrid" label="Teléfono">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingInputGrid" label="Celular">
+                    <Form.Control
+                      className="col-inputs"
+                      type="text"
+                      placeholder="name@example.com"
+                    />
+                  </FloatingLabel>
+                </div>
+
+              </>
+              }
 
           </div>
         </Collapse>
@@ -686,11 +810,13 @@ function SolicitudesDetalle() {
             <div className='col-detalle-solicitud'>
               <button
                 onClick={() => setOpenbutton(true)}
+                type = "button"
                 className={openbutton ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
                 Si
               </button>
               <button
                 onClick={() => setOpenbutton(false)}
+                type = "button"
                 className={openbutton ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
                 No
               </button>
@@ -906,6 +1032,7 @@ function SolicitudesDetalle() {
 
           </div>
         </Collapse>
+        <button className="">Guardar cambios</button>
       </div>
 
       <hr></hr>

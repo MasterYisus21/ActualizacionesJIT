@@ -82,26 +82,26 @@ WSGI_APPLICATION = 'apiExpedientes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Centro_Conciliacion_Jose_Ignacion',
-        'USER': 'sisinfo',
-        'PASSWORD': 'Ugc2021BD$%',
-        'HOST': '172.20.100.124',
-        'PORT': 3306,
-    }
-}
 # DATABASES = {
-#  'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'solicitudes',
-#         'USER': 'jairo',
-#         'PASSWORD': 'jairo',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'Centro_Conciliacion_Jose_Ignacion',
+#         'USER': 'sisinfo',
+#         'PASSWORD': 'Ugc2021BD$%',
+#         'HOST': '172.20.100.124',
+#         'PORT': 3306,
 #     }
 # }
+DATABASES = {
+ 'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'expedientes_solicitudes',
+        'USER': 'ugc',
+        'PASSWORD': 'ugc',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
@@ -152,7 +152,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 20,
     # 'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.DjangoModelPermissions']
 }
 

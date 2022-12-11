@@ -415,4 +415,21 @@ views.ListarSolicitudes = async (req, res) => {
     return;
   }
 }
+views.AutenticacionUsuario = async (req, res) => {
+  try {
+    
+    
+    axios.get(config.urlApiExpedientes+"relaciones_persona_solicitud?solicitud_id=")
+      .then(result=>{
+        
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 module.exports = views;

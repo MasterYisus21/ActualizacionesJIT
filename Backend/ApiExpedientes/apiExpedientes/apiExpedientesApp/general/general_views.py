@@ -6,7 +6,6 @@ from apiExpedientesApp.pagination import *
 from rest_framework.permissions import DjangoModelPermissions
 from copy import deepcopy
 from rest_framework import filters
-
 from django_filters.rest_framework import DjangoFilterBackend
 
 # api key

@@ -28,10 +28,6 @@ export default function Popup({text, setEstado, estado}){
                             <Form.Control className='inputs-personas' type="text" placeholder="name@example.com" />
                         </FloatingLabel>
                     </div>
-                    <label className='subtitles-secciones'>Fecha de Nacimiento</label>
-                    <FloatingLabel controlId="floatingInputGrid" label="Fecha de nacimiento">
-                        <Form.Control className='input-fecha-nacimiento' type="date" placeholder="name@example.com" />
-                    </FloatingLabel>
 
                     <label className='subtitles-secciones'>Identificación</label>
                     <div className='columnas-inputs'>
@@ -39,11 +35,6 @@ export default function Popup({text, setEstado, estado}){
                         <Form.Select className='inputs-personas' aria-label="Floating label select example">
                         <option>Abre el menú para ver las opciones</option>
                         <option value="1">Cédula de ciudadanía</option>
-                        <option value="2">Cédula extranjera</option>
-                        <option value="3">Tarjeta de Identidad</option>
-                        <option value="1">Registro civil</option>
-                        <option value="2">Pasaporte</option>
-                        <option value="3">NIT</option>
                         </Form.Select>
                     </FloatingLabel>
                     <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
@@ -51,94 +42,31 @@ export default function Popup({text, setEstado, estado}){
                     </FloatingLabel>
                     </div>
 
+                    <label className='subtitles-secciones'>Tarjeta profesional</label>
+                    <FloatingLabel controlId="floatingInputGrid" label="Número">
+                        <Form.Control className=''type="email" placeholder="name@example.com" />
+                    </FloatingLabel>
+
                     <label className='subtitles-secciones'>Datos Adicionales</label>
 
                     <div className='columnas-inputs'>
                         <FloatingLabel controlId="floatingInputGrid" label="Correo Electrónico">
                             <Form.Control className='inputs-personas' type="email" placeholder="name@example.com" />
                         </FloatingLabel>
-                        <FloatingLabel controlId="floatingInputGrid" label="Telefono">
+                        <FloatingLabel controlId="floatingInputGrid" label="Celular">
                             <Form.Control className='inputs-personas' type="number" placeholder="name@example.com" />
                         </FloatingLabel>
                     </div>
 
                     <div className='columnas-inputs'>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Sexo">
+                        <FloatingLabel controlId="floatingSelectGrid" label="Cargo">
                             <Form.Select className='inputs-personas' aria-label="Floating label select example">
                             <option>Elige una</option>
                             <option value="1">Cédula de ciudadanía</option>
                             <option value="2">Cédula extranjera</option>
                             </Form.Select>
                         </FloatingLabel>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Tipo Persona">
-                            <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                    </div>
-                    
-                    <div className='columnas-inputs'>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Tipo Vivienda">
-                            <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Estrato Socioeconómico">
-                            <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                    </div>
-
-                    <div className='columnas-inputs'>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Departamento">
-                            <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Ciudad">
-                            <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                    </div>
-
-                    <div className='columnas-inputs'>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Localidad">
-                            <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Barrio">
-                            <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                    </div>
-
-                    <div className='columnas-inputs'>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Perfil">
-                            <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                        <FloatingLabel controlId="floatingSelectGrid" label="Tipo Cargo">
+                        <FloatingLabel controlId="floatingSelectGrid" label="Permiso">
                             <Form.Select className='inputs-personas' aria-label="Floating label select example">
                             <option>Elige una</option>
                             <option value="1">Cédula de ciudadanía</option>

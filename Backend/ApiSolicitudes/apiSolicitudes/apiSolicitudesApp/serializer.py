@@ -92,7 +92,7 @@ class HechosSerializer(serializers.ModelSerializer):
 
 
 class SolicitudSerializer(serializers.ModelSerializer):
-
+    estado_solicitud= serializers.CharField(source='estado_solicitud_id', read_only=True)
     class Meta:
         model = Solicitud          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 

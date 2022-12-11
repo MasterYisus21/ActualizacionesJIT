@@ -170,6 +170,8 @@ class Inicio_conflictoSerializer(serializers.ModelSerializer):
         fields = '__all__'  # Coje todos los campos del modelo 
 class ExpedienteSerializer(serializers.ModelSerializer):
     tipo_servicio = serializers.CharField(source='tipo_servicio_id', read_only=True)
+    tema = serializers.CharField(source='subtema_id.tema_id', read_only=True)
+    tema_id = serializers.CharField(source='subtema_id.tema_id.id', read_only=True)
     subtema = serializers.CharField(source='subtema_id', read_only=True)
     area = serializers.CharField(source='area_id', read_only=True)
     solicitante_servicio = serializers.CharField(source='solicitante_servicio_id', read_only=True)
@@ -193,7 +195,10 @@ class Relacion_persona_expedienteSerializer(serializers.ModelSerializer):
     nombres_persona = serializers.CharField(source='persona_id', read_only=True)
     identificacion_persona= serializers.CharField(source='persona_id.identificacion', read_only=True)
     tipo_documento_persona= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    apoderado_id= serializers.CharField(source='persona_id.apoderado_id.id', read_only=True)
+    nombre_apoderado= serializers.CharField(source='persona_id.apoderado_id', read_only=True)
     tipo_cliente= serializers.CharField(source='tipo_cliente_id', read_only=True)
+    numero_radicado= serializers.CharField(source='expediente_id.numero_radicado', read_only=True)
     
     
     class Meta:
@@ -209,13 +214,24 @@ class HistoricoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Historico          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
-class Tipo_resultadoSerializer(serializers.ModelSerializer):
+class Categoria_resultadoSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Categoria_resultado       # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+
+class Tipo_resultadoSerializer(serializers.ModelSerializer):
+    categoria= serializers.CharField(source='categoria_id', read_only=True)
+
+    consecutivo= serializers.CharField(source='categoria_id.consecutivo_actual', read_only=True)
+    
     class Meta:
         model = Tipo_resultado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class ResultadoSerializer(serializers.ModelSerializer):
-
+    tipo_resultado= serializers.CharField(source='tipo_resultado_id', read_only=True)
+    consecutivo_resultado= serializers.CharField(source='tipo_resultado_id.consecutivo', read_only=True)
+    
     class Meta:
         model = Resultado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
@@ -230,7 +246,7 @@ class Medio_seguimientoSerializer(serializers.ModelSerializer):
         model = Medio_seguimiento          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class SeguimientoSerializer(serializers.ModelSerializer):
-
+    medio_seguimiento = serializers.CharField(source='medio_seguimiento_id', read_only=True)
     class Meta:
         model = Seguimiento          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
@@ -276,6 +292,7 @@ class Medio_conocimientoSerializer(serializers.ModelSerializer):
         model = Medio_conocimiento          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class EncuestaSerializer(serializers.ModelSerializer):
+    medio_conocimiento= serializers.CharField(source='medio_conocimiento_id', read_only=True)
 
     class Meta:
         model = Encuesta          # El modelo al que pertenece este serializador
@@ -286,10 +303,10 @@ class Pregunta_encuestaSerializer(serializers.ModelSerializer):
         model = Pregunta_encuesta          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class Respuesta_encuestaSerializer(serializers.ModelSerializer):
-
+   
     class Meta:
         model = Respuesta_encuesta          # El modelo al que pertenece este serializador
-        fields = '__all__'  # Coje todos los campos del modelo 
+        fields = ('calificacion','pregunta_encuesta_id','encuesta_id')  # Coje todos los campos del modelo   # Coje todos los campos del modelo 
 class Tipo_reporteSerializer(serializers.ModelSerializer):
 
     class Meta:

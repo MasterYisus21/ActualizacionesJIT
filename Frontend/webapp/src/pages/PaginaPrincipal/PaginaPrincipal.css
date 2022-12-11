@@ -114,7 +114,7 @@
     }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1000px)  {
 
     .logo-universidad-movil{
         display: none;
@@ -143,7 +143,7 @@
 
     .cuerpo-principal{
         flex-direction: row;
-        gap: 5em;
+        gap: 10em;
     }
 
     .boton-ingreso{
@@ -155,7 +155,7 @@
     .carta-consulta-solicitud{
         height: 55vh;
         max-height: 550px;
-        width: 30em;
+        width: 23em;
         flex-direction: column-reverse;
         justify-content: flex-end;
         align-items: center;
@@ -164,6 +164,7 @@
 
     .contenedor-descripcion {
         padding: 1em;
+        font-size: smaller;
     }
 
     .contenedor-imagen{
@@ -172,7 +173,7 @@
     }
 
     .imagen_solicitud{
-        height: 17em;
+        height: 12em;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         border-top-left-radius: 1.5em;
@@ -181,7 +182,7 @@
 
     .contenido{
         background-color: rgba(117, 116, 116, 0.169);
-        padding: 2em;
+        padding: .8em;
         border-radius: .8em;
         font-size: 1.4em;
     }
@@ -206,12 +207,28 @@
         width: 17em;
         margin-top: 6em;
     }
+
+    .imagen_solicitud{
+        height: 18em;
+    }
+
+    .contenedor-descripcion{
+        font-size: large;
+    }
+
+    .carta-consulta-solicitud{
+        width: 30em;
+    }
 }
 
 @media (min-height: 850px) {
 
     .imagen-logo-principal2{
         margin-top: 6em;
+    }
+
+    .imagen_solicitud{
+        height: 18em;
     }
 }
 

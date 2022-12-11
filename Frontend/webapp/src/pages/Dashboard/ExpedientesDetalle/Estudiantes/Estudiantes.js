@@ -1,10 +1,110 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import { Button } from '../../../../components/Button'
+import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
+
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 // Importing css
 import "./Estudiantes.css"
 
 function Estudiantes() {
+
+  const [estado, setEstado] = useState(false);
+
+  const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
+  const [valoresBuscados, setValoresBuscados] = useState([])
+  const [page, setPage] = useState(1)
+  const [numPages, setNumPages] = useState(1)
+
+  let { id } = useParams();
+  let resultados = useRef([])
+
+  const search = () => {
+
+    // console.log(e.target.documento.value)
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/expedientes/" + id + "/estudiantes/?ordering=-numero_caso&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        if (page != 1) {
+          resultados.current = [...resultados.current, ...result.data.results]
+        } else {
+          resultados.current = result.data.results
+        }
+        setResultadosBusqueda(resultados.current)
+        setNumPages(Math.ceil(result.data.count / 14))
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }
+
+  const handlePageChange = (page) => {
+    if (page <= numPages) {
+      setPage(page)
+    }
+  }
+
+  const handleScroll = (e) => {
+    // console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
+    // console.log('clientHeight: ', e.target.clientHeight);
+    if (e.target.scrollHeight - e.target.scrollTop - 200 < e.target.clientHeight) {
+      // console.log("almost bottom");
+      handlePageChange(page + 1)
+    }
+  }
+
+  useEffect(() => {
+    setResultadosBusqueda([]);
+    search()
+  }, [valoresBuscados])
+
+  useEffect(() => {
+    if (page != 1) {
+      search()
+    }
+  }, [page])
+
+  const handleDeletePerson = (idPersona, nombre) => {
+    function deletePerson(idPersona) {
+      // alert(`deleted person ${idPersona}`)
+      axiosTokenInstanceApiExpedientes({
+        method: 'delete',
+        url: "/expedientes/" + id + "/personas/" + idPersona,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          setResultadosBusqueda(resultadosBusqueda.filter((resultadosBusqueda) => {
+            return resultadosBusqueda["id"] != idPersona
+          }))
+        })
+        .catch(err => {
+          console.log("error");
+        });
+
+    }
+    confirmAlert({
+      title: `Confirmación para eliminar`,
+      message: `¿Estas seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
+      buttons: [
+        {
+          label: 'Si',
+          onClick: () => deletePerson(idPersona)
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  }
+
   return (
     <>
       <div className='container container-estudiantes pt-3'>
@@ -67,7 +167,7 @@ function Estudiantes() {
             />
           </div>
         </form>
-        <form className='contenedor-tabla-convocado'>
+        <div className='contenedor-tabla-estudiantes' onScroll={e => handleScroll(e)}>
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
               <tr>
@@ -79,16 +179,25 @@ function Estudiantes() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button className='boton-tabla-eliminar'>Eliminar</button></td>
-              </tr>
+              {resultadosBusqueda.map((resultadoBusqueda) => {
+                return (
+                  <tr key={resultadoBusqueda["id"]}>
+                    <td>{resultadoBusqueda["nombres_persona"]}</td> {/* Clase del convocado natural, juridica */}
+                    <td>{resultadoBusqueda["tipo_documento_persona"]}</td>
+                    <td>{resultadoBusqueda["identificacion_persona"]}</td>
+                    <td>{resultadoBusqueda["nombres_persona"]}</td>
+                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={(e) => { handleDeletePerson(resultadoBusqueda["id"], resultadoBusqueda["nombres_persona"]) }}>Eliminar</button></td>
+                  </tr>
+                )
+              })}
             </tbody>
+            <Button
+              onClick={e => { handlePageChange(page + 1) }}
+              className="span2"
+              text="Cargar más"
+            />
           </table>
-        </form>
+        </div>
       </div>
     </>
   )

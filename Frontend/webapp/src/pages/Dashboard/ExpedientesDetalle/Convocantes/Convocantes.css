@@ -27,9 +27,15 @@
     height: 2em;
 }
 
+.datos-crear-convocante{
+    width: 10em;
+}
+
 .contenedor-tabla-convocante {
     font-size: small;
     text-align: center;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .registro-convocante {
