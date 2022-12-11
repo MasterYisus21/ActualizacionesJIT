@@ -194,7 +194,7 @@ class Relacion_persona_expedienteSerializer(serializers.ModelSerializer):
     numero_caso= serializers.CharField(source='expediente_id', read_only=True)
     nombres = serializers.CharField(source='persona_id', read_only=True)
     identificacion= serializers.CharField(source='persona_id.identificacion', read_only=True)
-    tipo_document= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    tipo_documento= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
     tarjeta_profesional= serializers.CharField(source='persona_id.tarjeta_profesional', read_only=True)
     apoderado_id= serializers.CharField(source='persona_id.apoderado_id.id', read_only=True)
     nombre_apoderado= serializers.CharField(source='persona_id.apoderado_id', read_only=True)

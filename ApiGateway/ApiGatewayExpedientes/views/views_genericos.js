@@ -590,20 +590,30 @@ views.InformacionCaso= async (req, res) => {
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/hechos",
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/citaciones",
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/resultados",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/seguimientos",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/encuestas",
+                // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/seguimientos",
+                // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/encuestas",
               
               ]
               // console.log(endpoints)
 
                 await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-                .then(axios.spread(async (expediente,convocante,convocado,conciliador,estudiante,hechos,citacion,resultado,seguimiento,encuesta) => {
-                  console.log("1")
-                   let datos={}
-                  for (const iterator in convocante.data.results[0]) {
-                    datos["convocante_"+iterator]=convocante['data']['results'][0][iterator]
+                .then(axios.spread(async (expediente,convocante,convocado,conciliador,estudiante,hechos,citacion,resultado) => {
+                  if (Object.keys(expediente.data).length<0) { datos.expediente=[]}else{for (const iterator in expediente.data.results[0]) {
+                    datos["expediente_"+iterator]=convocante['data']['results'][0][iterator]
                     // console.log(iterator)
-                  }
+                  }}
+                  if (Object.keys(convocante.data.results).length<0) { datos.convocante=[]}
+                  if (Object.keys(convocado.data.results).length<0) { datos.convocado=[]}
+                  if (Object.keys(conciliador.data.results).length<0) { datos.conciliador=[]}
+                  if (Object.keys(estudiante.data.results).length<0) { datos.estudiante=[]}
+                  if (Object.keys(hechos.data.results).length<0) { datos.hechos=[]}
+                  if (Object.keys(citacion.data.results).length<0) { datos.citacion=[]}
+                  if (Object.keys(resultado.data).length<0) { datos.resultado=[]}
+                  
+                    
+                  
+                   let datos={}
+                  
                   // datos["convocante"+convocante.data.results[0].nombres]="nombre"
                   res.status(200).json(expediente.data)
                 }))
