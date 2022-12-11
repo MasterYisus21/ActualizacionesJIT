@@ -133,6 +133,17 @@ views.EliminarApoderados = async (req, res) => {
     return;
   }
 }
+views.EliminarDocumentos = async (req, res) => {
+  try {
+
+    const url = config.urlDocumentos + "documentos/" + req.params.id + "/"
+    requests.delete(req, res, url)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 
 views.GenericList = async (req, res) => {
   try {
@@ -583,16 +594,18 @@ views.InformacionCaso= async (req, res) => {
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/encuestas",
               
               ]
-              console.log(endpoints)
+              // console.log(endpoints)
 
                 await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-                .then(axios.spread(async (...allData) => {
-                  datos = []
-                  for (const iterator of allData) {
-                    datos.push(iterator.data)
+                .then(axios.spread(async (expediente,convocante,convocado,conciliador,estudiante,hechos,citacion,resultado,seguimiento,encuesta) => {
+                  console.log("1")
+                   let datos={}
+                  for (const iterator in convocante.data.results[0]) {
+                    datos["convocante_"+iterator]=convocante['data']['results'][0][iterator]
+                    // console.log(iterator)
                   }
-  
-                  res.status(200).json(datos)
+                  // datos["convocante"+convocante.data.results[0].nombres]="nombre"
+                  res.status(200).json(expediente.data)
                 }))
                 .catch(err => {
   
@@ -865,7 +878,7 @@ views.VerResultadoCaso = async (req, res) => {
   try {
     axios.get(config.urlApiExpedientes+"resultados?expediente_id="+req.params.id)
       .then(result=>{
-        if(Object.keys(result.data.results).length<1){res.sendStatus(error({message:"El expediente aun no tiene resultado"},204));return}
+        if(Object.keys(result.data.results).length<1){res.status(error({message:"El expediente aun no tiene resultado"},204)).json([]);return}
         res.status(200).json(result.data.results[0])
         
     })
@@ -884,7 +897,7 @@ views.VerRespuestasEncuesta = async (req, res) => {
     axios.get(config.urlApiExpedientes+"encuestas?expediente_id="+req.params.id)
       .then(async result=>{
         let datos = {}
-        if(Object.keys(result.data.results).length<1){res.sendStatus(error({message:"El expediente no tiene encuestas resueltas"},204));return}
+        if(Object.keys(result.data.results).length<1){res.status(error({message:"El expediente no tiene encuestas resueltas"},204)).json([]);return}
         
         
      
@@ -1280,6 +1293,32 @@ views.ActualizarExpediente = async (req, res) => {
     if (req.body.numero_caso) { delete req.body["numero_caso"]; }
     const url = config.urlApiExpedientes + "expedientes/" + req.params.id + "/"
     requests.patch(req, res, url, req.body)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.CambiarEstadoExpediente = async (req, res) => {
+  try {
+    
+    axios.patch(config.urlApiExpedientes+"expedientes/"+req.params.id+"/", {estado_expediente_id:req.body.estado_expediente_id})
+    .then(result => {
+
+      axios.post(config.urlApiExpedientes+"historicos/", {estado_id:req.body.estado_expediente_id,expediente_id:req.params.id})
+      .then(resul => {
+  
+          res.status(200).json(result.data)
+      })
+      .catch(err => {
+          res.sendStatus(error(err))
+          return
+      })
+    })
+    .catch(err => {
+        res.sendStatus(error(err))
+        return
+    })
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

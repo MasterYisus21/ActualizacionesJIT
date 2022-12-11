@@ -60,13 +60,13 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
 class EspecificViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    permission_classes = [CustomDjangoModelPermission]
+    # permission_classes = [CustomDjangoModelPermission]
     
    
     def get_queryset(self,pk=None):
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
         if pk is None:
-            return model.filter(estado=True)
+            return model.filter()
  
-        return model.filter(estado=True, id=pk).first() # retorna todos los valores con estado = true
+        return model.filter(id=pk).first() # retorna todos los valores con estado = true
     
