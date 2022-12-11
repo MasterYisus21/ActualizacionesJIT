@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { confirmAlert } from 'react-confirm-alert'
 import { useParams } from 'react-router-dom'
 import { ThreePositionSwitch } from '../../../../components'
@@ -11,25 +11,63 @@ import "./Documentos.css"
 function Documentos() {
 
   const [documentos, setDocumentos] = useState([])
-
+  const [page, setPage] = useState(1)
+  const [numPages, setNumPages] = useState(1)
 
   let { id } = useParams();
 
-  useEffect(() => {
-    axiosTokenInstanceApiExpedientes({
+  let resultados = useRef([])
+
+  const search = async () => {
+
+    // console.log(e.target.documento.value)
+    await axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/expedientes/" + id + "/documentos",
+      url: "/expedientes/" + id + "/documentos/?ordering=-id&count=20&page=" + page,
       // headers: req.headers,
       data: {}
     })
       .then(result => {
-        console.log(result.data.results);
-        setDocumentos(result.data.results)
+        console.log(result.data);
+        console.log(resultados.current);
+        if (page != 1) {
+          resultados.current = [...resultados.current, ...result.data.results]
+        } else {
+          resultados.current = result.data.results
+        }
+        setDocumentos(resultados.current)
+        setNumPages(Math.ceil(result.data.count / 14))
       })
       .catch(err => {
         console.log("error");
       });
+  }
+
+  const handlePageChange = (page) => {
+    if (page <= numPages) {
+      setPage(page)
+    }
+  }
+
+  const handleScroll = (e) => {
+    // console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
+    // console.log('clientHeight: ', e.target.clientHeight);
+    if (e.target.scrollHeight - e.target.scrollTop - 200 < e.target.clientHeight) {
+      // console.log("almost bottom");
+      handlePageChange(page + 1)
+    }
+  }
+
+  useEffect(() => {
+    search()
   }, [])
+  
+
+  useEffect(() => {
+    if (page != 1) {
+      search()
+    }
+  }, [page])
 
   const uploadDocument = (e) => {
     e.preventDefault()
@@ -59,14 +97,14 @@ function Documentos() {
       // alert(`deleted person ${idPersona}`)
       axiosTokenInstanceApiExpedientes({
         method: 'delete',
-        url: "/expedientes/" + id + "/documentos/" + idDocumento,
+        url: "/documentos/" + idDocumento,
         // headers: req.headers,
         data: {}
       })
         .then(result => {
-          // setResultadosBusqueda(resultadosBusqueda.filter((resultadosBusqueda) => {
-          //   return resultadosBusqueda["id"] != idPersona
-          // }))
+          setDocumentos(documentos.filter((documento) => {
+            return documento["id"] != idDocumento
+          }))
         })
         .catch(err => {
           console.log(err);
@@ -108,7 +146,7 @@ function Documentos() {
           </div>
         </form>
       </div>
-      <div className='contenedor-tabla-convocado'>
+      <div className='contenedor-tabla-convocado' onScroll={e => handleScroll(e)}>
         <table className="table table-striped table-hover table-sm">
           <thead>
             <tr>
@@ -145,6 +183,11 @@ function Documentos() {
               )
             })}
           </tbody>
+          <Button
+              onClick={e => { handlePageChange(page + 1) }}
+              className="span2"
+              text="Cargar más"
+            />
         </table>
       </div>
     </div >
