@@ -155,7 +155,7 @@ class Estado_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metod
 
     serializer_class = Estado_expedienteSerializer
 
-class HistoricoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class HistoricoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = HistoricoSerializer
 
