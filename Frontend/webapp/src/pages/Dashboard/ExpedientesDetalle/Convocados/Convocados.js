@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { Buscador, Button, Popup } from '../../../../components';
+import { Buscador, Button, Popup,PopupConv  } from '../../../../components';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
+
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 // Importing css
 import './Convocados.css'
@@ -11,6 +13,7 @@ function Convocados() {
 
   const [estado, setEstado] = useState(false);
   const [popup, setPopup] = useState(false);
+  const [popupconv, setPopupconv] = useState(false);
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [valoresBuscados, setValoresBuscados] = useState([])
   const [page, setPage] = useState(1)
@@ -71,11 +74,49 @@ function Convocados() {
     }
   }, [page])
 
+  const handleDeletePerson = (idPersona, nombre) => {
+    function deletePerson(idPersona) {
+      // alert(`deleted person ${idPersona}`)
+      axiosTokenInstanceApiExpedientes({
+        method: 'delete',
+        url: "/expedientes/" + id + "/personas/" + idPersona,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          setResultadosBusqueda(resultadosBusqueda.filter((resultadosBusqueda) => {
+            return resultadosBusqueda["id"] != idPersona
+          }))
+        })
+        .catch(err => {
+          console.log("error");
+        });
+
+    }
+    confirmAlert({
+      title: `Confirmación para eliminar`,
+      message: `¿Estas seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
+      buttons: [
+        {
+          label: 'Si',
+          onClick: () => deletePerson(idPersona)
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  }
+
   return (
     <>
       <div className='container-convocado'>
         {popup &&
           <Popup setEstado={setPopup} estado={popup}></Popup>
+        }
+        {popupconv &&
+          <PopupConv setEstado={setPopupconv} estado={popupconv}></PopupConv>
         }
         <h2>Informacion del convocado</h2>
         <div className='navbar-convocado'>
@@ -85,77 +126,8 @@ function Convocados() {
             setPage={handlePageChange}
             required
           />
-          <button className='boton-crear-convocado' onClick={() => setEstado(!estado)}>Crear Convocado</button>
+          <button className='boton-crear-convocado' onClick={() => setPopupconv(!popupconv)}>Crear Convocado</button>
         </div>
-
-        {estado &&
-          <form className='registro-convocado mb-5'>
-            <div className='container d-grid gap-3'>
-              <label>Nombre</label>
-              <div className='row gap-3 ps-3 px-3'>
-                <input className="form-control rounded col" placeholder="Nombre(s)" name='nombres' required></input>
-                <input className="form-control rounded col" placeholder="Apellidos" name='apellidos' required></input>
-              </div>
-            </div>
-            <div className='container d-grid gap-3'>
-              <label>Fecha de Nacimiento</label>
-              <input type="date" className="form-control" placeholder="fecha de Nacimiento" name='fechaNacimiento' required></input>
-            </div>
-            <div className='container d-grid gap-3'>
-              <label>Identificación</label>
-              <select className="form-select" aria-label="Default select example" defaultValue="" name='tipoDocumento' required>
-                <option value="">Tipo de Documento</option>
-              </select>
-              <input className="form-control rounded" type="number" min="0" placeholder="Número de documento" name='numeroDocumento' required></input>
-            </div>
-            <div className='container d-grid gap-3'>
-              <label>Datos adicionales</label>
-              <div className=' d-grid gap-3 ps-3 px-3'>
-                <div className='row gap-3'>
-                  <input type="email" className="form-control rounded col" placeholder="Correo" name="email" required></input>
-                  <input type="text" className="form-control rounded col" placeholder="Teléfono" name='telefono' required></input>
-                </div>
-                <div className='row gap-3'>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name="sexo" required>
-                    <option value="">Sexo</option>
-
-                    opcionesSexo
-                  </select>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name="tipoPersona" required>
-                  </select>
-                </div>
-                <div className='row gap-3'>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name='tipoVivienda' required>
-                    <option value="">Tipo de Vivienda</option>
-
-                  </select>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name='estratoSocioeconomico' required>
-                    <option value="">Estrato Socieconómico</option>
-
-                  </select>
-                </div>
-                <div className='row gap-3'>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" required>
-                    <option value="">Departamento</option>
-
-                  </select>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" required>
-                    <option value="">Ciudad</option>
-                  </select>
-                </div>
-                <div className='row gap-3'>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" required>
-                    <option value="">Localidad</option>
-                  </select>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name='barrio' required>
-                    <option value="">Barrio</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <button className="boton-crear-convocado" id='boton-aceptar-registro-convocado'>Registrar</button>
-          </form>}
-
         <div className='contenedor-tabla-convocado' onScroll={e => handleScroll(e)}>
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
@@ -171,20 +143,20 @@ function Convocados() {
               {resultadosBusqueda.map((resultadoBusqueda) => {
                 return (
                   <tr key={resultadoBusqueda["id"]}>
-                    <td>{resultadoBusqueda["nombres_persona"]}</td> {/* Clase del convocado natural, juridica */}
-                    <td>{resultadoBusqueda["tipo_documento_persona"]}</td>
-                    <td>{resultadoBusqueda["identificacion_persona"]}</td>
+                    <td>{resultadoBusqueda["nombres"]}</td> {/* Clase del convocado natural, juridica */}
+                    <td>{resultadoBusqueda["tipo_documento"]}</td>
+                    <td>{resultadoBusqueda["identificacion"]}</td>
                     <td><button onClick={() => setPopup(!popup)} className='boton-tabla-eliminar'>{resultadoBusqueda["nombre_apoderado"]}</button></td>
                     <td>
                       <button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={() => setPopup(!popup)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
-                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                         </svg>
                       </button>
-                      <button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={() => { }}>
+                      <button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={(e) => { handleDeletePerson(resultadoBusqueda["id"], resultadoBusqueda["nombres"]) }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
-                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                         </svg>
                       </button>
                     </td>

@@ -1,0 +1,6 @@
+id,estado,nombre
+1,1,En espera de revisión
+2,1,Aprobada
+3,1,Rechazada
+4,1,Falta de informacion
+5,1,Remitida

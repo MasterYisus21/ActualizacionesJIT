@@ -79,6 +79,17 @@ WSGI_APPLICATION = 'ApiDocumentos.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#  'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'db_conciliacion_jit_documentos',
+#         'USER': 'jit_documentos',
+#         'PASSWORD': 'Ugc$%jit2022',
+#         'HOST': '172.20.100.5',
+#         'PORT': '5436',
+#     }
+# }
+
 DATABASES = {
  'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -89,7 +100,6 @@ DATABASES = {
         'PORT': '5436',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

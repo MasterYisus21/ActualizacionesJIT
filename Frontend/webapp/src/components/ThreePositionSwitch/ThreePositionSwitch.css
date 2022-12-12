@@ -5,7 +5,7 @@
 
 .three-position-container {
     display: flex;
-    background-color: gray;
+    background-color: rgb(255, 230, 0);
     border-radius: 10px;
     padding: 2px;
 }

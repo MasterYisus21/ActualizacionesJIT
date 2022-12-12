@@ -1,6 +1,7 @@
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response 
 #from apiConciliacionApp.base.general_views import GeneralListAPIView
+from django_filters.rest_framework import DjangoFilterBackend
 from apiExpedientesApp.general.general_views import  *
 from django.contrib.auth.models import User, Group
 from django_filters import FilterSet, AllValuesFilter
@@ -154,7 +155,7 @@ class Estado_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metod
 
     serializer_class = Estado_expedienteSerializer
 
-class HistoricoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class HistoricoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = HistoricoSerializer
 

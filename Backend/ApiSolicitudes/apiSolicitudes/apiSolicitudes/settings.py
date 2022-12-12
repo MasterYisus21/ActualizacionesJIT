@@ -80,11 +80,12 @@ WSGI_APPLICATION = 'apiSolicitudes.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 # DATABASES = {
+
 #  'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'solicitudes',
-#         'USER': 'jairo',
-#         'PASSWORD': 'jairo',
+#       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'expedientes_solicitudes',
+#         'USER': 'ugc',
+#         'PASSWORD': 'ugc',
 #         'HOST': 'localhost',
 #         'PORT': '5432',
 #     }

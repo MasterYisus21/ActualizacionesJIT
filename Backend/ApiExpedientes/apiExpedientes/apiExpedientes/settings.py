@@ -94,12 +94,13 @@ DATABASES = {
 }
 # DATABASES = {
 #  'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'solicitudes',
-#         'USER': 'jairo',
-#         'PASSWORD': 'jairo',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
+#        'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'Centro_Conciliacion_Jose_Ignacion',
+#         'USER': 'sisinfo',
+#         'PASSWORD': 'Ugc2021BD$%',
+#         'HOST': '172.20.100.124',
+#         'PORT': '3306',
+
 #     }
 # }
 
@@ -152,7 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 20,
     # 'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.DjangoModelPermissions']
 }
 

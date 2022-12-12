@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Button } from '../../../../components/Button'
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+
 // Importing css
 import "./Estudiantes.css"
 
@@ -67,6 +69,41 @@ function Estudiantes() {
       search()
     }
   }, [page])
+
+  const handleDeletePerson = (idPersona, nombre) => {
+    function deletePerson(idPersona) {
+      // alert(`deleted person ${idPersona}`)
+      axiosTokenInstanceApiExpedientes({
+        method: 'delete',
+        url: "/expedientes/" + id + "/personas/" + idPersona,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          setResultadosBusqueda(resultadosBusqueda.filter((resultadosBusqueda) => {
+            return resultadosBusqueda["id"] != idPersona
+          }))
+        })
+        .catch(err => {
+          console.log("error");
+        });
+
+    }
+    confirmAlert({
+      title: `Confirmación para eliminar`,
+      message: `¿Estas seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
+      buttons: [
+        {
+          label: 'Si',
+          onClick: () => deletePerson(idPersona)
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  }
 
   return (
     <>
@@ -145,11 +182,11 @@ function Estudiantes() {
               {resultadosBusqueda.map((resultadoBusqueda) => {
                 return (
                   <tr key={resultadoBusqueda["id"]}>
-                    <td>{resultadoBusqueda["nombres_persona"]}</td> {/* Clase del convocado natural, juridica */}
-                    <td>{resultadoBusqueda["tipo_documento_persona"]}</td>
-                    <td>{resultadoBusqueda["identificacion_persona"]}</td>
-                    <td>{resultadoBusqueda["nombres_persona"]}</td>
-                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={() => { }}>Eliminar</button></td>
+                    <td>{resultadoBusqueda["nombres"]}</td> {/* Clase del convocado natural, juridica */}
+                    <td>{resultadoBusqueda["tipo_documento"]}</td>
+                    <td>{resultadoBusqueda["identificacion"]}</td>
+                    <td>{resultadoBusqueda["nombres"]}</td>
+                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={(e) => { handleDeletePerson(resultadoBusqueda["id"], resultadoBusqueda["nombres"]) }}>Eliminar</button></td>
                   </tr>
                 )
               })}
