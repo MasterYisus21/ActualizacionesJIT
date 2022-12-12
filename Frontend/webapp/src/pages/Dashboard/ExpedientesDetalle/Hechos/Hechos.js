@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { SearchableSelect } from '../../../../components';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
@@ -10,16 +10,21 @@ import './Hechos.css'
 function Hechos() {
 
     const [departamento, setDepartamento] = useState("")
+    const [departamentoInitial, setDepartamentoInitial] = useState("")
     const [ciudad, setCiudad] = useState("")
+    const [ciudadInitial, setCiudadInitial] = useState("")
 
     // Getting solicitud id from urlParams
     let { id } = useParams();
+
+    const hechoId = useRef()
 
     useEffect(() => {
         console.log(document.querySelector('[name="ciudad"]').value);
 
     }, [departamento])
 
+    // Fetch Database for initial Data
     useEffect(() => {
         axiosTokenInstanceApiExpedientes({
             method: 'get',
@@ -29,6 +34,10 @@ function Hechos() {
         })
             .then(result => {
                 console.log(result.data.results[0]);
+                hechoId.current = result.data.results[0]["id"]
+                setDepartamentoInitial({id: result.data.results[0]["departamento_id"], nombre: result.data.results[0]["departamento"]})
+                // setDepartamentoInitial({id: result.data.results[0]["departamento_id"], nombre: result.data.results[0]["departamento"]})
+                setCiudadInitial({id: result.data.results[0]["ciudad_id"], nombre: result.data.results[0]["ciudad"]})
                 document.getElementById("resumen_hechos").value = result.data.results[0]["descripcion"]
                 document.getElementById("pretensiones_hechos").value = result.data.results[0]["pretension"]
                 result.data.results[0]["cuantia_indeterminada"] ? document.getElementById("cuantia_hechos").disabled = true : document.getElementById("cuantia_hechos").disabled = false
@@ -40,11 +49,35 @@ function Hechos() {
             });
     }, [])
 
+    // Save Data
+    const saveInfo = (event) => {
+        event.preventDefault()
+        const data = {
+            "ciudad_id": event.target.ciudad.value,
+            "descripcion": event.target.resumen_hechos.value,
+            "pretension": event.target.pretensiones_hechos.value,
+            "cuantia": event.target.cuantia_hechos.value,
+            "cuantia_indeterminada": event.target.cuantia_hechos_indeterminada.checked,
+        }
+        axiosTokenInstanceApiExpedientes({
+            method: 'patch',
+            url: `/hechos/${hechoId.current}`,
+            // headers: req.headers,
+            data: data
+        })
+            .then(result => {
+                console.log(result.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
 
 
 
     return (
-        <form className='modulo-solicitud-content-main-hechos'>
+        <form className='modulo-solicitud-content-main-hechos' onSubmit={(e) => { saveInfo(e) }}>
             <div className='modulo-solicitud-content-main-hechos-lugar'>
                 <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h6>Lugar de los hechos</h6></div>
                 <div>
@@ -54,7 +87,7 @@ function Hechos() {
                         url={"/paises/1"}
                         name={"departamento"}
                         identifier={"id"}
-                        initialValue={""}
+                        initialValue={departamentoInitial}
                         onChange={(val) => { setDepartamento(val); setCiudad("") }}
                     />
                 </div>
@@ -65,7 +98,7 @@ function Hechos() {
                         url={"/paises/1/departamentos/" + departamento}
                         name={"ciudad"}
                         identifier={"id"}
-                        initialValue={""}
+                        initialValue={ciudadInitial}
                         onChange={(val) => { setCiudad(val) }}
                     />
                 </div>
