@@ -167,10 +167,10 @@ function Conciliador() {
               {resultadosBusqueda.map((resultadoBusqueda) => {
                 return (
                   <tr key={resultadoBusqueda["id"]}>
-                    <td>{resultadoBusqueda["tipo_documento_persona"]}</td> {/* Clase del convocado natural, juridica */}
-                    <td>{resultadoBusqueda["identificacion_persona"]}</td>
-                    <td>{resultadoBusqueda["nombres_persona"]}</td>
-                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={(e) => { handleDeletePerson(resultadoBusqueda["id"], resultadoBusqueda["nombres_persona"]) }}>Eliminar</button></td>
+                    <td>{resultadoBusqueda["tipo_documento"]}</td> {/* Clase del convocado natural, juridica */}
+                    <td>{resultadoBusqueda["identificacion"]}</td>
+                    <td>{resultadoBusqueda["nombres"]}</td>
+                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={(e) => { handleDeletePerson(resultadoBusqueda["id"], resultadoBusqueda["nombres"]) }}>Eliminar</button></td>
                   </tr>
                 )
               })}

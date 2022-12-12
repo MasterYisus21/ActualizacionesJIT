@@ -41,8 +41,8 @@ archivo.uploadMiddleware = (req,res,next)=>{
     upload(req, res, function (err) {
        if (err instanceof multer.MulterError) {
          // A Multer error occurred when uploading.
-         res.sendStatus( error({message:"Error cargando documentos, verificar el tamaño del archivo"},413)); return
-       ;
+         res.sendStatus( error({message:"Error cargando documentos, verificar el tamaño del archivo"},413)); return;
+       
          next(err)
          } else if (err) {
          // An unknown error occurred when uploading.

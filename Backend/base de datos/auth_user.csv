@@ -1,0 +1,7 @@
+id,password,last_login,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined
+1,pbkdf2_sha256$390000$aCRRoEzLzh8jtXiuE1l8ML$wgRF0JlwUvcR8dyl4joSb78MJzMna1uJ2BKMhxFTih0=,2022-12-07 21:21:01.235487,1,jairo,,,,1,1,2022-11-28 14:36:37.000000
+2,pbkdf2_sha256$390000$IrSprI9TGL9qNJlhB8ZjVp$QU5yqGt4MxSmLMTgIjWYxxb+sUWcBsUSe0GmnYOZ5mw=,2022-12-05 13:11:42.303064,1,admin,,,,1,1,2022-12-05 13:11:32.973000
+9,pbkdf2_sha256$390000$GIOAetRdocvTpRuQ4yaTZk$mY4rAz05xkmTL2T3pi1PlKbQLuw2Yk4ZjthFKYbmTOs=,,0,12042309875,,,,0,0,2022-12-05 17:18:51.941339
+10,pbkdf2_sha256$390000$PxOc1NmXrDlg8R75mFeuxK$z6uTKfcfp8FSGMjXHwUfzgwKselsdd+jrWpW+DaHp9o=,,0,12042309871,,,,0,1,2022-12-05 17:24:14.042920
+11,pbkdf2_sha256$390000$x5Z813a28zfdmdAZaMwavv$ys4oSGnOZ22P2+HoZPQ+jrKxawe6NzyONeUEcRXUons=,,0,1204230981,,,,0,1,2022-12-05 17:28:29.872690
+12,pbkdf2_sha256$390000$ebO02Ele4BCFXvjz6VTq42$yFuFF9DWudf12gjfn0jLDsWnM5mUS1xIgZwEoD0AXYk=,,0,1013689035,,,,0,0,2022-12-05 17:33:47.000000

@@ -21,7 +21,7 @@ class DocumentosViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVI
     pagination_class= StandardResultsSetPagination
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = ['expediente','estado']
-
+    search_fields = ['expediente','estado','fecha','nombre']
     ordering_fields = '__all__'
  
     # permission_classes = [CustomDjangoModelPermission]
