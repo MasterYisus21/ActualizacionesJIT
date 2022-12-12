@@ -582,6 +582,7 @@ views.DescargarResultados = async (req, res) => {
 
 views.InformacionCaso= async (req, res) => {
   try {
+    let datos={}
     endpoints=[config.urlApiExpedientes+"expedientes/"+req.params.id,
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocantes",
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocados",
@@ -598,24 +599,37 @@ views.InformacionCaso= async (req, res) => {
 
                 await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
                 .then(axios.spread(async (expediente,convocante,convocado,conciliador,estudiante,hechos,citacion,resultado) => {
-                  if (Object.keys(expediente.data).length<0) { datos.expediente=[]}else{for (const iterator in expediente.data.results[0]) {
-                    datos["expediente_"+iterator]=convocante['data']['results'][0][iterator]
-                    // console.log(iterator)
+                  if (Object.keys(expediente.data).length<0) { datos.expediente=[]}else{for (const iterator in expediente.data) {
+                    datos["expediente_"+iterator]=expediente['data'][iterator]
                   }}
-                  if (Object.keys(convocante.data.results).length<0) { datos.convocante=[]}
-                  if (Object.keys(convocado.data.results).length<0) { datos.convocado=[]}
-                  if (Object.keys(conciliador.data.results).length<0) { datos.conciliador=[]}
-                  if (Object.keys(estudiante.data.results).length<0) { datos.estudiante=[]}
-                  if (Object.keys(hechos.data.results).length<0) { datos.hechos=[]}
-                  if (Object.keys(citacion.data.results).length<0) { datos.citacion=[]}
-                  if (Object.keys(resultado.data).length<0) { datos.resultado=[]}
+                  if (Object.keys(convocante.data.results).length<0) { datos.convocante=[]}else{for (const iterator in convocante.data.results[0]) {
+                    datos["convocante_"+iterator]=convocante.data.results[0][iterator]
+                  }}
+                  if (Object.keys(convocado.data.results).length<0) { datos.convocado=[]}else{for (const iterator in convocado.data.results[0]) {
+                    datos["convocado_"+iterator]=convocado.data.results[0][iterator]
+                  }}
+                  if (Object.keys(conciliador.data.results).length<0) { datos.conciliador=[]}else{for (const iterator in conciliador.data.results[0]) {
+                    datos["conciliador_"+iterator]=conciliador.data.results[0][iterator]
+                  }}
+                  if (Object.keys(estudiante.data.results).length<0) { datos.estudiante=[]}else{for (const iterator in estudiante.data.results[0]) {
+                    datos["estudiante_"+iterator]=estudiante.data.results[0][iterator]
+                  }}
+                  if (Object.keys(hechos.data.results).length<0) { datos.hechos=[]}else{for (const iterator in hechos.data.results[0]) {
+                    datos["hechos_"+iterator]=hechos.data.results[0][iterator]
+                  }}
+                  if (Object.keys(citacion.data.results).length<0) { datos.citacion=[]}else{for (const iterator in citacion.data.results[0]) {
+                    datos["citacion_"+iterator]=citacion.data.results[0][iterator]
+                  }}
+                  if (Object.keys(resultado.data).length<0) { datos.resultado=[]}else{for (const iterator in resultado.data) {
+                    datos["resultado_"+iterator]=resultado.data[iterator]
+                  }}
                   
                     
                   
-                   let datos={}
+                   
                   
                   // datos["convocante"+convocante.data.results[0].nombres]="nombre"
-                  res.status(200).json(expediente.data)
+                  res.status(200).json(datos)
                 }))
                 .catch(err => {
   
@@ -785,40 +799,53 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     // console.log(req.file)
     if (Object.keys(req.files).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
 
+    
+    axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
 
+            .then(async result => {
 
-    for await (const iterator of req.files) {
+                
 
-      await unirest
-        .post(config.urlDocumentos + "documentos/")
+                for await (const iterator of req.files) {
 
+                  await unirest
+                    .post(config.urlDocumentos + "documentos/")
+            
+            
+                    .field('estado', "null")
+                    .field('expediente', result.data.numero_caso)
+                    .field('nombre', iterator.originalname)
+            
+            
+            
+                    //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+                    .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
+                    //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+                    .then(function (response) {
+                      try {
+                        fs.unlinkSync(iterator.path)
+                      } catch (err) {
+                        error(err)
+                      }
+            
+                      datos.push(response.body)
+            
+                    })
+            
+            
+                }
+                if (intento < 2) { return; }
+                res.status(201).json(datos)
+            
+            
 
-        .field('estado', "null")
-        .field('expediente', req.params.id)
-        .field('nombre', iterator.originalname)
+            })
+            .catch(err => {
 
+                res.sendStatus(error(err))
+            })
 
-
-        //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-        .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
-        //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-        .then(function (response) {
-          try {
-            fs.unlinkSync(iterator.path)
-          } catch (err) {
-            error(err)
-          }
-
-          datos.push(response.body)
-
-        })
-
-
-    }
-    if (intento < 2) { return; }
-    res.status(201).json(datos)
-
-
+  
 
   } catch (error) {
     console.log(error);
