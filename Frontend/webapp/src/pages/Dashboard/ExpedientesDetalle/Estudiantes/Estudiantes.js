@@ -182,11 +182,11 @@ function Estudiantes() {
               {resultadosBusqueda.map((resultadoBusqueda) => {
                 return (
                   <tr key={resultadoBusqueda["id"]}>
-                    <td>{resultadoBusqueda["nombres_persona"]}</td> {/* Clase del convocado natural, juridica */}
-                    <td>{resultadoBusqueda["tipo_documento_persona"]}</td>
-                    <td>{resultadoBusqueda["identificacion_persona"]}</td>
-                    <td>{resultadoBusqueda["nombres_persona"]}</td>
-                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={(e) => { handleDeletePerson(resultadoBusqueda["id"], resultadoBusqueda["nombres_persona"]) }}>Eliminar</button></td>
+                    <td>{resultadoBusqueda["nombres"]}</td> {/* Clase del convocado natural, juridica */}
+                    <td>{resultadoBusqueda["tipo_documento"]}</td>
+                    <td>{resultadoBusqueda["identificacion"]}</td>
+                    <td>{resultadoBusqueda["nombres"]}</td>
+                    <td><button className='boton-tabla-eliminar' value={resultadoBusqueda["id"]} onClick={(e) => { handleDeletePerson(resultadoBusqueda["id"], resultadoBusqueda["nombres"]) }}>Eliminar</button></td>
                   </tr>
                 )
               })}

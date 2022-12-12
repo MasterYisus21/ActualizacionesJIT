@@ -133,6 +133,17 @@ views.EliminarApoderados = async (req, res) => {
     return;
   }
 }
+views.EliminarDocumentos = async (req, res) => {
+  try {
+
+    const url = config.urlDocumentos + "documentos/" + req.params.id + "/"
+    requests.delete(req, res, url)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 
 views.GenericList = async (req, res) => {
   try {
@@ -571,6 +582,7 @@ views.DescargarResultados = async (req, res) => {
 
 views.InformacionCaso= async (req, res) => {
   try {
+    let datos={}
     endpoints=[config.urlApiExpedientes+"expedientes/"+req.params.id,
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocantes",
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocados",
@@ -579,19 +591,44 @@ views.InformacionCaso= async (req, res) => {
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/hechos",
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/citaciones",
                 config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/resultados",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/seguimientos",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/encuestas",
+                // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/seguimientos",
+                // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/encuestas",
               
               ]
-              console.log(endpoints)
+              // console.log(endpoints)
 
                 await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-                .then(axios.spread(async (...allData) => {
-                  datos = []
-                  for (const iterator of allData) {
-                    datos.push(iterator.data)
-                  }
-  
+                .then(axios.spread(async (expediente,convocante,convocado,conciliador,estudiante,hechos,citacion,resultado) => {
+                  if (Object.keys(expediente.data).length<0) { datos.expediente=[]}else{for (const iterator in expediente.data) {
+                    datos["expediente_"+iterator]=expediente['data'][iterator]
+                  }}
+                  if (Object.keys(convocante.data.results).length<0) { datos.convocante=[]}else{for (const iterator in convocante.data.results[0]) {
+                    datos["convocante_"+iterator]=convocante.data.results[0][iterator]
+                  }}
+                  if (Object.keys(convocado.data.results).length<0) { datos.convocado=[]}else{for (const iterator in convocado.data.results[0]) {
+                    datos["convocado_"+iterator]=convocado.data.results[0][iterator]
+                  }}
+                  if (Object.keys(conciliador.data.results).length<0) { datos.conciliador=[]}else{for (const iterator in conciliador.data.results[0]) {
+                    datos["conciliador_"+iterator]=conciliador.data.results[0][iterator]
+                  }}
+                  if (Object.keys(estudiante.data.results).length<0) { datos.estudiante=[]}else{for (const iterator in estudiante.data.results[0]) {
+                    datos["estudiante_"+iterator]=estudiante.data.results[0][iterator]
+                  }}
+                  if (Object.keys(hechos.data.results).length<0) { datos.hechos=[]}else{for (const iterator in hechos.data.results[0]) {
+                    datos["hechos_"+iterator]=hechos.data.results[0][iterator]
+                  }}
+                  if (Object.keys(citacion.data.results).length<0) { datos.citacion=[]}else{for (const iterator in citacion.data.results[0]) {
+                    datos["citacion_"+iterator]=citacion.data.results[0][iterator]
+                  }}
+                  if (Object.keys(resultado.data).length<0) { datos.resultado=[]}else{for (const iterator in resultado.data) {
+                    datos["resultado_"+iterator]=resultado.data[iterator]
+                  }}
+                  
+                    
+                  
+                   
+                  
+                  // datos["convocante"+convocante.data.results[0].nombres]="nombre"
                   res.status(200).json(datos)
                 }))
                 .catch(err => {
@@ -762,40 +799,53 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     // console.log(req.file)
     if (Object.keys(req.files).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
 
+    
+    axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
 
+            .then(async result => {
 
-    for await (const iterator of req.files) {
+                
 
-      await unirest
-        .post(config.urlDocumentos + "documentos/")
+                for await (const iterator of req.files) {
 
+                  await unirest
+                    .post(config.urlDocumentos + "documentos/")
+            
+            
+                    .field('estado', "null")
+                    .field('expediente', result.data.numero_caso)
+                    .field('nombre', iterator.originalname)
+            
+            
+            
+                    //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+                    .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
+                    //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+                    .then(function (response) {
+                      try {
+                        fs.unlinkSync(iterator.path)
+                      } catch (err) {
+                        error(err)
+                      }
+            
+                      datos.push(response.body)
+            
+                    })
+            
+            
+                }
+                if (intento < 2) { return; }
+                res.status(201).json(datos)
+            
+            
 
-        .field('estado', "null")
-        .field('expediente', req.params.id)
-        .field('nombre', iterator.originalname)
+            })
+            .catch(err => {
 
+                res.sendStatus(error(err))
+            })
 
-
-        //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-        .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
-        //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-        .then(function (response) {
-          try {
-            fs.unlinkSync(iterator.path)
-          } catch (err) {
-            error(err)
-          }
-
-          datos.push(response.body)
-
-        })
-
-
-    }
-    if (intento < 2) { return; }
-    res.status(201).json(datos)
-
-
+  
 
   } catch (error) {
     console.log(error);
@@ -865,7 +915,7 @@ views.VerResultadoCaso = async (req, res) => {
   try {
     axios.get(config.urlApiExpedientes+"resultados?expediente_id="+req.params.id)
       .then(result=>{
-        if(Object.keys(result.data.results).length<1){res.sendStatus(error({message:"El expediente aun no tiene resultado"},204));return}
+        if(Object.keys(result.data.results).length<1){res.status(error({message:"El expediente aun no tiene resultado"},204)).json([]);return}
         res.status(200).json(result.data.results[0])
         
     })
@@ -884,7 +934,7 @@ views.VerRespuestasEncuesta = async (req, res) => {
     axios.get(config.urlApiExpedientes+"encuestas?expediente_id="+req.params.id)
       .then(async result=>{
         let datos = {}
-        if(Object.keys(result.data.results).length<1){res.sendStatus(error({message:"El expediente no tiene encuestas resueltas"},204));return}
+        if(Object.keys(result.data.results).length<1){res.status(error({message:"El expediente no tiene encuestas resueltas"},204)).json([]);return}
         
         
      
@@ -1280,6 +1330,32 @@ views.ActualizarExpediente = async (req, res) => {
     if (req.body.numero_caso) { delete req.body["numero_caso"]; }
     const url = config.urlApiExpedientes + "expedientes/" + req.params.id + "/"
     requests.patch(req, res, url, req.body)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.CambiarEstadoExpediente = async (req, res) => {
+  try {
+    
+    axios.patch(config.urlApiExpedientes+"expedientes/"+req.params.id+"/", {estado_expediente_id:req.body.estado_expediente_id})
+    .then(result => {
+
+      axios.post(config.urlApiExpedientes+"historicos/", {estado_id:req.body.estado_expediente_id,expediente_id:req.params.id})
+      .then(resul => {
+  
+          res.status(200).json(result.data)
+      })
+      .catch(err => {
+          res.sendStatus(error(err))
+          return
+      })
+    })
+    .catch(err => {
+        res.sendStatus(error(err))
+        return
+    })
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

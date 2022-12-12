@@ -192,9 +192,10 @@ class Relacion_persona_expedienteSerializer(serializers.ModelSerializer):
     estado_expediente = serializers.CharField(source='expediente_id.estado_expediente_id', read_only=True)
     fecha_registro = serializers.CharField(source='expediente_id.fecha_registro', read_only=True)
     numero_caso= serializers.CharField(source='expediente_id', read_only=True)
-    nombres_persona = serializers.CharField(source='persona_id', read_only=True)
-    identificacion_persona= serializers.CharField(source='persona_id.identificacion', read_only=True)
-    tipo_documento_persona= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    nombres = serializers.CharField(source='persona_id', read_only=True)
+    identificacion= serializers.CharField(source='persona_id.identificacion', read_only=True)
+    tipo_documento= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    tarjeta_profesional= serializers.CharField(source='persona_id.tarjeta_profesional', read_only=True)
     apoderado_id= serializers.CharField(source='persona_id.apoderado_id.id', read_only=True)
     nombre_apoderado= serializers.CharField(source='persona_id.apoderado_id', read_only=True)
     tipo_cliente= serializers.CharField(source='tipo_cliente_id', read_only=True)
@@ -210,6 +211,7 @@ class Estado_expedienteSerializer(serializers.ModelSerializer):
         model = Estado_expediente          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class HistoricoSerializer(serializers.ModelSerializer):
+    estado = serializers.CharField(source='estado_id', read_only=True)
 
     class Meta:
         model = Historico          # El modelo al que pertenece este serializador

@@ -62,6 +62,7 @@ router.get("/expedientes/:id/seguimientos", views_genericos.ListarSeguimientosCa
 router.get("/documentos/:id", views_genericos.DescargarDocumentos);
 router.delete("/personas/:id",views_genericos.EliminarPersonas);
 router.delete("/apoderados/:id",views_genericos.EliminarApoderados);
+router.delete("/documentos/:id",views_genericos.EliminarDocumentos);
 
 router.get("/conciliadores", views_genericos.ListarConciliadores);
 router.get("/estudiantes", views_genericos.ListarEstudiantes);
@@ -73,7 +74,6 @@ router.get("/expedientes/:id/convocados", views_genericos.ListarConvocadosCaso);
 router.get("/expedientes/:id/convocantes", views_genericos.ListarConvocantesCaso);
 router.get("/expedientes/:id/estudiantes", views_genericos.ListarEstudiantesCaso);
 router.get("/expedientes/:id/conciliadores", views_genericos.ListarConciliadoresCaso);
-router.get("/expedientes/:id/hechos", views_genericos.ListarHechosCaso);
 router.get("/expedientes/:id/hechos", views_genericos.ListarHechosCaso);
 router.get("/expedientes/:id/documentos", views_genericos.ListarDocumentosCaso);
 router.get("/expedientes/:id/citaciones", views_genericos.ListarCitacionesCaso);
@@ -99,6 +99,7 @@ router.get("/resultados/:id",archivo.uploadMiddleware, views_genericos.Descargar
 
 router.post("/expedientes/:id/respuestas", views_genericos.CrearRespuestas);
 router.post("/expedientes/:id/seguimientos", views_genericos.CrearSeguimientoCaso);
+router.post("/expedientes/:id/estado",views_genericos.CambiarEstadoExpediente)
 
 router.patch("/expedientes/:id/resultados/:id_resultado",archivo.uploadMiddleware, views_genericos.CargarResultadoCaso);
 
