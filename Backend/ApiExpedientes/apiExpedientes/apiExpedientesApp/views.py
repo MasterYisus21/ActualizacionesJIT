@@ -12,12 +12,11 @@ from django_filters import DateTimeFilter, NumberFilter
 # Create your views here.
 class PaisViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PaisSerializer
-
-
+    
 class DepartamentoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = DepartamentoSerializer
-
+    search_fields = ['id','nombre']
 class CiudadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = CiudadSerializer

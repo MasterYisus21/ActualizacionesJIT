@@ -579,65 +579,73 @@ views.DescargarResultados = async (req, res) => {
     res.sendStatus(500);
   }
 }
+const informacionCaso= async(req)=>{
+  
+  let datos={}
+  endpoints=[ config.urlApiExpedientes+"expedientes/"+req.params.id,
+              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocantes",
+              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocados",
+              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/conciliadores",
+              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/estudiantes",
+              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/hechos",
+              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/citaciones",
+              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/resultados",
+              // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/seguimientos",
+              // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/encuestas",
+            
+            ]
+            // console.log(endpoints)
 
+              await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+              .then(axios.spread(async (expediente,convocante,convocado,conciliador,estudiante,hechos,citacion,resultado) => {
+                
+                if (Object.keys(expediente.data).length<0) { datos.expediente=[]}else{for (const iterator in expediente.data) {
+                  datos["expediente_"+iterator]=expediente['data'][iterator]
+                }}
+                if (Object.keys(convocante.data.results).length<0) { datos.convocante=[]}else{for (const iterator in convocante.data.results[0]) {
+                  datos["convocante_"+iterator]=convocante.data.results[0][iterator]
+                }}
+                if (Object.keys(convocado.data.results).length<0) { datos.convocado=[]}else{for (const iterator in convocado.data.results[0]) {
+                  datos["convocado_"+iterator]=convocado.data.results[0][iterator]
+                }}
+                if (Object.keys(conciliador.data.results).length<0) { datos.conciliador=[]}else{for (const iterator in conciliador.data.results[0]) {
+                  datos["conciliador_"+iterator]=conciliador.data.results[0][iterator]
+                }}
+                if (Object.keys(estudiante.data.results).length<0) { datos.estudiante=[]}else{for (const iterator in estudiante.data.results[0]) {
+                  datos["estudiante_"+iterator]=estudiante.data.results[0][iterator]
+                }}
+                if (Object.keys(hechos.data.results).length<0) { datos.hechos=[]}else{for (const iterator in hechos.data.results[0]) {
+                  datos["hechos_"+iterator]=hechos.data.results[0][iterator]
+                }}
+                if (Object.keys(citacion.data.results).length<0) { datos.citacion=[]}else{for (const iterator in citacion.data.results[0]) {
+                  datos["citacion_"+iterator]=citacion.data.results[0][iterator]
+                }}
+                if (Object.keys(resultado.data).length<0) { datos.resultado=[]}else{for (const iterator in resultado.data) {
+                  datos["resultado_"+iterator]=resultado.data[iterator]
+                }}
+                
+                
+                // datos["convocante"+convocante.data.results[0].nombres]="nombre"
+                
+              }))
+        return datos;
+
+}
 views.InformacionCaso= async (req, res) => {
   try {
-    let datos={}
-    endpoints=[config.urlApiExpedientes+"expedientes/"+req.params.id,
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocantes",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocados",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/conciliadores",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/estudiantes",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/hechos",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/citaciones",
-                config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/resultados",
-                // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/seguimientos",
-                // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/encuestas",
-              
-              ]
-              // console.log(endpoints)
-
-                await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-                .then(axios.spread(async (expediente,convocante,convocado,conciliador,estudiante,hechos,citacion,resultado) => {
-                  if (Object.keys(expediente.data).length<0) { datos.expediente=[]}else{for (const iterator in expediente.data) {
-                    datos["expediente_"+iterator]=expediente['data'][iterator]
-                  }}
-                  if (Object.keys(convocante.data.results).length<0) { datos.convocante=[]}else{for (const iterator in convocante.data.results[0]) {
-                    datos["convocante_"+iterator]=convocante.data.results[0][iterator]
-                  }}
-                  if (Object.keys(convocado.data.results).length<0) { datos.convocado=[]}else{for (const iterator in convocado.data.results[0]) {
-                    datos["convocado_"+iterator]=convocado.data.results[0][iterator]
-                  }}
-                  if (Object.keys(conciliador.data.results).length<0) { datos.conciliador=[]}else{for (const iterator in conciliador.data.results[0]) {
-                    datos["conciliador_"+iterator]=conciliador.data.results[0][iterator]
-                  }}
-                  if (Object.keys(estudiante.data.results).length<0) { datos.estudiante=[]}else{for (const iterator in estudiante.data.results[0]) {
-                    datos["estudiante_"+iterator]=estudiante.data.results[0][iterator]
-                  }}
-                  if (Object.keys(hechos.data.results).length<0) { datos.hechos=[]}else{for (const iterator in hechos.data.results[0]) {
-                    datos["hechos_"+iterator]=hechos.data.results[0][iterator]
-                  }}
-                  if (Object.keys(citacion.data.results).length<0) { datos.citacion=[]}else{for (const iterator in citacion.data.results[0]) {
-                    datos["citacion_"+iterator]=citacion.data.results[0][iterator]
-                  }}
-                  if (Object.keys(resultado.data).length<0) { datos.resultado=[]}else{for (const iterator in resultado.data) {
-                    datos["resultado_"+iterator]=resultado.data[iterator]
-                  }}
-                  
-                    
-                  
-                   
-                  
-                  // datos["convocante"+convocante.data.results[0].nombres]="nombre"
-                  res.status(200).json(datos)
-                }))
-                .catch(err => {
-  
-                  res.sendStatus(error(err))
-                  return
-  
-                })
-  
+    axios.get(config.urlApiExpedientes+"resultados?expediente_id="+req.params.id)
+      .then(async result=>{
+        if(Object.keys(result.data.results).length<1){res.sendStatus(error({message:"El expediente aun no tiene resultado"},204));return}
+        await informacionCaso(req).then((result) => {
+          res.status(200).json(result)
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+   
+   }).catch((err) => {
+    
+   });
 
 
   }catch (error) {
