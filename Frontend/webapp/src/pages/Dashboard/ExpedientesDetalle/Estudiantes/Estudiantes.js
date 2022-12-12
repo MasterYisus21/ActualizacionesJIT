@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { Button } from '../../../../components/Button'
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
-
+import { Popup } from '../../../../components';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 
 // Importing css
@@ -11,7 +11,7 @@ import "./Estudiantes.css"
 function Estudiantes() {
 
   const [estado, setEstado] = useState(false);
-
+  const [popup, setPopup] = useState(false);
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [valoresBuscados, setValoresBuscados] = useState([])
   const [page, setPage] = useState(1)
@@ -108,6 +108,9 @@ function Estudiantes() {
   return (
     <>
       <div className='container container-estudiantes pt-3'>
+      {popup &&
+          <Popup setEstado={setPopup} estado={popup}></Popup>
+        }
         <div className='center-text'><h2>Informacion de estudiantes</h2></div>
         <div className='contenedor-navbar-agregar-estudiantes'>
           <nav className="navbar navbar-light ">
@@ -131,6 +134,7 @@ function Estudiantes() {
                 <Button
                   className={""}
                   text={"Crear Estudiante"}
+                  onClick={() => setPopup(!popup)}
                 />
                 <Button
                   className={""}
