@@ -23,6 +23,7 @@ function RegistrarSolicitud() {
   const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([])
   const [tiposPersona, setTiposPersona] = useState([])
   const [tiposDocumento, setTiposDocumento] = useState([])
+  const [departamentos, setDepartamentos] = useState([])
 
   const [conv2, setConv2] = useState(false)
 
@@ -57,8 +58,23 @@ function RegistrarSolicitud() {
     console.log("sexo " + event.target.sexo.value);
     console.log("genero " + event.target.genero.value);
     const data = {
-      "Sexo": parseInt(event.target.genero.value),
-      "Genero_Id": parseInt(event.target.sexo.value),
+      "Nombres" : event.target.nombres.value,
+      "Apellidos": event.target.genero.value,
+      "Identificacion": event.target.sexo.value,
+      "Telefono" : event.target.nombres.value,
+      "Direccion": event.target.genero.value,
+      "Correo": event.target.sexo.value,
+      "Tipo_persona_id" : event.target.nombres.value,
+      "Sexo_id": event.target.genero.value,
+      "Genero_Id": event.target.sexo.value,
+      "Estrato_socioeconomico_id" : event.target.nombres.value,
+      "Tipo_documento_id": event.target.genero.value,
+      "Apoderado_id": event.target.sexo.value,
+      "apoderado": event.target.sexo.value,
+      // "Apoderado_id": event.target.sexo.value,
+      // "Apoderado_id": event.target.sexo.value,
+      // "Apoderado_id": event.target.sexo.value,
+      // "Apoderado_id": event.target.sexo.value,
     }
     JSON.stringify(data)
     axiosBasicInstanceApiSolicitudes({
@@ -162,6 +178,22 @@ function RegistrarSolicitud() {
       });
   }, [])
 
+  useEffect(() => {
+    axiosBasicInstanceApiSolicitudes({
+      method: 'get',
+      url: "/paises/1?ordering=id&search=ca",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        setDepartamentos(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
 
   return (
     <div className="wrapp-main-registrar-solicitud">
@@ -193,6 +225,7 @@ function RegistrarSolicitud() {
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
+                name='nombres'
                 placeholder="name@example.com"
               />
             </FloatingLabel>
@@ -201,15 +234,17 @@ function RegistrarSolicitud() {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                name='apellidos'
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">
+            {/* <label className="subtitles-secciones">
               Fecha y lugar de nacimiento
             </label>
             <FloatingLabel
               controlId="floatingInputGrid"
               label="Fecha de nacimiento"
+              name='nombres'
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
@@ -226,7 +261,7 @@ function RegistrarSolicitud() {
                 type="text"
                 placeholder="name@example.com"
               />
-            </FloatingLabel>
+            </FloatingLabel> */}
 
             <label className="subtitles-secciones">Identificación</label>
             <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
@@ -245,15 +280,16 @@ function RegistrarSolicitud() {
             <FloatingLabel
               controlId="floatingInputGrid"
               label="Número de documento"
+              name='identificacion'
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
-                type="email"
+                type="text"
                 placeholder="name@example.com"
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">
+            {/* <label className="subtitles-secciones">
               Fecha y lugar de expedición de documento
             </label>
             <FloatingLabel
@@ -275,7 +311,7 @@ function RegistrarSolicitud() {
                 type="text"
                 placeholder="name@example.com"
               />
-            </FloatingLabel>
+            </FloatingLabel> */}
 
 
             <label className="subtitles-secciones">Tipo de Persona</label>
@@ -334,7 +370,7 @@ function RegistrarSolicitud() {
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
-                  name="estrato"
+                  name="Estrato_socioeconomico_id"
                   required
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
@@ -551,7 +587,7 @@ function RegistrarSolicitud() {
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
-                type="email"
+                type="text"
                 placeholder="name@example.com"
               />
             </FloatingLabel>
@@ -649,12 +685,12 @@ function RegistrarSolicitud() {
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
-                  name="departamento"
+                  name="departamentos"
                   required
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
-                  {sexos.map(sexo => {
-                    return (<option key={"sexos" + sexo["id"]} value={sexo["id"]}>{sexo["nombre"]}</option>)
+                  {departamentos.map(departamentos => {
+                    return (<option key={"departamentos" + departamentos["id"]} value={departamentos["id"]}>{departamentos["nombre"]}</option>)
                   })}
                 </Form.Select>
               </FloatingLabel>
@@ -662,7 +698,7 @@ function RegistrarSolicitud() {
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
-                  name="ciudad"
+                  name="ciudades"
                   required
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
