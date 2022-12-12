@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { Buscador, Button, Popup } from '../../../../components';
+import { Buscador, Button, Popup,PopupConv  } from '../../../../components';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
@@ -13,6 +13,7 @@ function Convocados() {
 
   const [estado, setEstado] = useState(false);
   const [popup, setPopup] = useState(false);
+  const [popupconv, setPopupconv] = useState(false);
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [valoresBuscados, setValoresBuscados] = useState([])
   const [page, setPage] = useState(1)
@@ -114,6 +115,9 @@ function Convocados() {
         {popup &&
           <Popup setEstado={setPopup} estado={popup}></Popup>
         }
+        {popupconv &&
+          <PopupConv setEstado={setPopupconv} estado={popupconv}></PopupConv>
+        }
         <h2>Informacion del convocado</h2>
         <div className='navbar-convocado'>
           <Buscador
@@ -122,77 +126,8 @@ function Convocados() {
             setPage={handlePageChange}
             required
           />
-          <button className='boton-crear-convocado' onClick={() => setEstado(!estado)}>Crear Convocado</button>
+          <button className='boton-crear-convocado' onClick={() => setPopupconv(!popupconv)}>Crear Convocado</button>
         </div>
-
-        {estado &&
-          <form className='registro-convocado mb-5'>
-            <div className='container d-grid gap-3'>
-              <label>Nombre</label>
-              <div className='row gap-3 ps-3 px-3'>
-                <input className="form-control rounded col" placeholder="Nombre(s)" name='nombres' required></input>
-                <input className="form-control rounded col" placeholder="Apellidos" name='apellidos' required></input>
-              </div>
-            </div>
-            <div className='container d-grid gap-3'>
-              <label>Fecha de Nacimiento</label>
-              <input type="date" className="form-control" placeholder="fecha de Nacimiento" name='fechaNacimiento' required></input>
-            </div>
-            <div className='container d-grid gap-3'>
-              <label>Identificación</label>
-              <select className="form-select" aria-label="Default select example" defaultValue="" name='tipoDocumento' required>
-                <option value="">Tipo de Documento</option>
-              </select>
-              <input className="form-control rounded" type="number" min="0" placeholder="Número de documento" name='numeroDocumento' required></input>
-            </div>
-            <div className='container d-grid gap-3'>
-              <label>Datos adicionales</label>
-              <div className=' d-grid gap-3 ps-3 px-3'>
-                <div className='row gap-3'>
-                  <input type="email" className="form-control rounded col" placeholder="Correo" name="email" required></input>
-                  <input type="text" className="form-control rounded col" placeholder="Teléfono" name='telefono' required></input>
-                </div>
-                <div className='row gap-3'>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name="sexo" required>
-                    <option value="">Sexo</option>
-
-                    opcionesSexo
-                  </select>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name="tipoPersona" required>
-                  </select>
-                </div>
-                <div className='row gap-3'>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name='tipoVivienda' required>
-                    <option value="">Tipo de Vivienda</option>
-
-                  </select>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name='estratoSocioeconomico' required>
-                    <option value="">Estrato Socieconómico</option>
-
-                  </select>
-                </div>
-                <div className='row gap-3'>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" required>
-                    <option value="">Departamento</option>
-
-                  </select>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" required>
-                    <option value="">Ciudad</option>
-                  </select>
-                </div>
-                <div className='row gap-3'>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" required>
-                    <option value="">Localidad</option>
-                  </select>
-                  <select className="form-select col" aria-label="Default select example" defaultValue="" name='barrio' required>
-                    <option value="">Barrio</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <button className="boton-crear-convocado" id='boton-aceptar-registro-convocado'>Registrar</button>
-          </form>}
-
         <div className='contenedor-tabla-convocado' onScroll={e => handleScroll(e)}>
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
