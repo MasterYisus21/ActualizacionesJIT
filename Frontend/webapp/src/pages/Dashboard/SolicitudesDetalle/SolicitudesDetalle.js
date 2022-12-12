@@ -1090,11 +1090,11 @@ function SolicitudesDetalle() {
             <div className='contenedor-aceptar' >
               <div className='contenedor-campos-aceptar-caso'>
                 <div className='izquierda-aceptar-caso'>
-                  <label className='titulo-remitir'>Centro de conciliación</label>
+                  <label className='titulo-remitir'>Valor estimado del caso</label>
                   <input className='input-aceptar-valor'></input>
                 </div>
                 <div className='derecha-aceptar-caso'>
-                  <label className='titulo-remitir'>Centro de conciliación</label>
+                  <label className='titulo-remitir'>Conciliador</label>
                   <Form.Select className='seleccionable-centro-conciliacion-aceptar' aria-label="Default select example">
                     <option></option>
                     <option value="1">JIT</option>
