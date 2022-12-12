@@ -79,8 +79,8 @@ function Documentos() {
 
     axiosTokenInstanceApiExpedientes({
       method: 'post',
-      // url: `/documentos/${id}`,
-      url: `/documentos/2022-452`,
+      url: `/documentos/${id}`,
+      // url: `/documentos/2022-452`,
       headers: { "Content-Type": "multipart/form-data" },
       data: data
     })
@@ -106,9 +106,9 @@ function Documentos() {
       data: {}
     })
       .then(response => {
-        console.log(response)
+        // console.log(response)
         // window.open("someLink", "_blank")
-        console.log(response.data);
+        // console.log(response.data);
         FileDownload(response.data, nombre)
       })
       .catch(err => {

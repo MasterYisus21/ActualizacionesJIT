@@ -94,12 +94,12 @@ WSGI_APPLICATION = 'apiExpedientes.wsgi.application'
 # }
 DATABASES = {
  'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'expedientes_solicitudes',
-        'USER': 'ugc',
-        'PASSWORD': 'ugc',
-        'HOST': 'localhost',
-        'PORT': '5432',
+       'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Centro_Conciliacion_Jose_Ignacion',
+        'USER': 'sisinfo',
+        'PASSWORD': 'Ugc2021BD$%',
+        'HOST': '172.20.100.124',
+        'PORT': '3306',
 
     }
 }
