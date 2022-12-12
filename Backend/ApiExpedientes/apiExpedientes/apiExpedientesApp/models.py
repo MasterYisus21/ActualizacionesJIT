@@ -653,7 +653,7 @@ class Hechos(EstadoModel):
     Flag_conflicto_por_incapacidad=models.BooleanField(default=False, blank=True,null=True)
     pretension = models.TextField(blank=True,null=True)
     expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
-    ciudad_id = models.ForeignKey(Tipo_resultado, on_delete=models.SET_NULL, blank=False, null=True)
+    ciudad_id = models.ForeignKey(Ciudad, on_delete=models.SET_NULL, blank=False, null=True)
     
     
     class Meta:

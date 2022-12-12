@@ -195,6 +195,7 @@ class Relacion_persona_expedienteSerializer(serializers.ModelSerializer):
     nombres = serializers.CharField(source='persona_id', read_only=True)
     identificacion= serializers.CharField(source='persona_id.identificacion', read_only=True)
     tipo_documento= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    lugar_expedicion= serializers.CharField(source='persona_id.lugar_expedicion', read_only=True)
     tarjeta_profesional= serializers.CharField(source='persona_id.tarjeta_profesional', read_only=True)
     apoderado_id= serializers.CharField(source='persona_id.apoderado_id.id', read_only=True)
     nombre_apoderado= serializers.CharField(source='persona_id.apoderado_id', read_only=True)
@@ -238,7 +239,9 @@ class ResultadoSerializer(serializers.ModelSerializer):
         model = Resultado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class HechosSerializer(serializers.ModelSerializer):
-
+    ciudad= serializers.CharField(source='ciudad_id', read_only=True)
+    departamento_id= serializers.CharField(source='ciudad_id.departamento_id.id', read_only=True)
+    departamento= serializers.CharField(source='ciudad_id.departamento_id', read_only=True)
     class Meta:
         model = Hechos          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
