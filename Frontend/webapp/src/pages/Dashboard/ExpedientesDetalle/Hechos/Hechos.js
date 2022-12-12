@@ -10,9 +10,9 @@ import './Hechos.css'
 function Hechos() {
 
     const [departamento, setDepartamento] = useState("")
-    const [departamentoInitial, setDepartamentoInitial] = useState("")
+    const [departamentoInitial, setDepartamentoInitial] = useState(null)
     const [ciudad, setCiudad] = useState("")
-    const [ciudadInitial, setCiudadInitial] = useState("")
+    const [ciudadInitial, setCiudadInitial] = useState(null)
 
     // Getting solicitud id from urlParams
     let { id } = useParams();
@@ -35,9 +35,10 @@ function Hechos() {
             .then(result => {
                 console.log(result.data.results[0]);
                 hechoId.current = result.data.results[0]["id"]
-                setDepartamentoInitial({id: result.data.results[0]["departamento_id"], nombre: result.data.results[0]["departamento"]})
-                // setDepartamentoInitial({id: result.data.results[0]["departamento_id"], nombre: result.data.results[0]["departamento"]})
-                setCiudadInitial({id: result.data.results[0]["ciudad_id"], nombre: result.data.results[0]["ciudad"]})
+                if (result.data.results[0]["ciudad_id"]) {
+                    setDepartamentoInitial({ id: result.data.results[0]["departamento_id"], nombre: result.data.results[0]["departamento"] })
+                    setCiudadInitial({ id: result.data.results[0]["ciudad_id"], nombre: result.data.results[0]["ciudad"] })
+                }
                 document.getElementById("resumen_hechos").value = result.data.results[0]["descripcion"]
                 document.getElementById("pretensiones_hechos").value = result.data.results[0]["pretension"]
                 result.data.results[0]["cuantia_indeterminada"] ? document.getElementById("cuantia_hechos").disabled = true : document.getElementById("cuantia_hechos").disabled = false
