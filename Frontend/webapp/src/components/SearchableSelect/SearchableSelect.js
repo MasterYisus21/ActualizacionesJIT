@@ -15,7 +15,7 @@ function SearchableSelect({ axiosInstance, url, name, identifier, initialValue, 
 
     const getData = async (textoABuscar) => {
         if (cancelToken) {
-            console.log(cancelToken)
+            // console.log(cancelToken)
             cancelToken.cancel()
         }
         cancelToken = axios.CancelToken.source()
@@ -23,9 +23,13 @@ function SearchableSelect({ axiosInstance, url, name, identifier, initialValue, 
         if (textoABuscar != null) {
             await axiosInstance.get(url + '?count=8&search=' + textoABuscar, { cancelToken: cancelToken.token })
                 .then(response => {
-                    console.log(response.data)
-                    console.log(response.data.results[0][identifier])
-                    setOptions(response.data.results)
+                    // console.log(response.data)
+                    // console.log(response.data.results[0][identifier])
+                    if (initialValue) {
+                        setOptions([initialValue, ...response.data.results])
+                    } else {
+                        setOptions(response.data.results)
+                    }
                 })
                 .catch(error => {
                     console.log(error)
@@ -35,26 +39,26 @@ function SearchableSelect({ axiosInstance, url, name, identifier, initialValue, 
     }
 
     useEffect(() => {
-        setTexto(initialValue ? initialValue : "");
-    }, [])
+        if (initialValue) {
+            setTexto(initialValue.nombre + " - " + initialValue[identifier]);
+        }
+    }, [initialValue])
+
 
     useEffect(() => {
-        getData(initialValue)
-    }, [])
-
-    useEffect(() => {
-        getData(initialValue);
-        setTexto("");
+        if (initialValue) {
+            getData(initialValue[identifier]);
+        }
     }, [url])
-    
+
 
 
 
     return (
-        <div className="select-box" onFocus={e => {setOpened(true); getData(initialValue)}}>
+        <div className="select-box" onFocus={e => { setOpened(true); getData(initialValue ? initialValue["identifier"] : "") }}>
             <div className={"options-container" + (opened ? " active" : "")}>
                 <div className="option">
-                    <input type="radio" className="radio" id={"b" + auxId} name={name} value={texto} onClick={e => setOpened(false)} />
+                    <input type="radio" className="radio" id={"b" + auxId} name={name} value={initialValue ? initialValue[identifier] : ""} onClick={e => setOpened(false)} />
                     <label htmlFor={"b" + auxId} className="radio-label">Estas buscando: {texto}</label>
                 </div>
                 {options?.map((object) => {
