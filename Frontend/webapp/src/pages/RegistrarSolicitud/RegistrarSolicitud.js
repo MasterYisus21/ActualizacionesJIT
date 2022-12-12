@@ -25,7 +25,8 @@ function RegistrarSolicitud() {
   const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([]);
   const [tiposPersona, setTiposPersona] = useState([]);
   const [tiposDocumento, setTiposDocumento] = useState([]);
-  const [departamentos, setDepartamentos] = useState([]);
+  const [departamento, setDepartamento] = useState("")
+  const [ciudad, setCiudad] = useState("")
 
   const [conv2, setConv2] = useState(false);
 
@@ -263,21 +264,7 @@ function RegistrarSolicitud() {
       });
   }, []);
 
-  useEffect(() => {
-    axiosBasicInstanceApiSolicitudes({
-      method: "get",
-      url: "/paises/1?ordering=id&search=ca",
-      // headers: req.headers,
-      data: {},
-    })
-      .then((result) => {
-        console.log(result.data);
-        setDepartamentos(result.data.results);
-      })
-      .catch((err) => {
-        console.log("error");
-      });
-  }, []);
+
 
   return (
     <div className="wrapp-main-registrar-solicitud">
@@ -831,44 +818,28 @@ function RegistrarSolicitud() {
           <div className="form-datos">
             <label className="subtitles-secciones">Lugar de los hechos</label>
             <div className="col-detalle-solicitud">
-              <FloatingLabel
-                controlId="floatingSelectGrid"
-                label="Departamento"
-              >
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                  name="departamentos"
-                >
-                  <option value={""}>Abre el menú para ver las opciones</option>
-                  {departamentos.map((departamentos) => {
-                    return (
-                      <option
-                        key={"departamentos" + departamentos["id"]}
-                        value={departamentos["id"]}
-                      >
-                        {departamentos["nombre"]}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </FloatingLabel>
-              <FloatingLabel controlId="floatingSelectGrid" label="Ciudad">
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                  name="ciudades"
-                >
-                  <option value={""}>Abre el menú para ver las opciones</option>
-                  {sexos.map((sexo) => {
-                    return (
-                      <option key={"sexos" + sexo["id"]} value={sexo["id"]}>
-                        {sexo["nombre"]}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </FloatingLabel>
+            <div>
+                    <label htmlFor="Departamento" className="form-label">Departamento:</label>
+                    <SearchableSelect
+                        axiosInstance={axiosBasicInstanceApiSolicitudes}
+                        url={"/paises/1"}
+                        name={"departamento"}
+                        identifier={"id"}
+                        initialValue={""}
+                        onChange={(val) => { setDepartamento(val); setCiudad("") }}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="ciudad" className="form-label">Ciudad:</label>
+                    <SearchableSelect
+                        axiosInstance={axiosBasicInstanceApiSolicitudes}
+                        url={"/paises/1/departamentos/" + departamento}
+                        name={"ciudad"}
+                        identifier={"id"}
+                        initialValue={""}
+                        onChange={(val) => { setCiudad(val) }}
+                    />
+                </div>
             </div>
             <FloatingLabel
               controlId="floatingTextarea2"
