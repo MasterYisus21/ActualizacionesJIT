@@ -579,6 +579,111 @@ views.DescargarResultados = async (req, res) => {
     res.sendStatus(500);
   }
 }
+const informacionCitacion = async (req) => {
+
+  let datos = {}
+  endpoints=[
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/convocantes",
+  config.urlApiExpedientes + "relaciones_persona_citacion"+req.params.id_relacion,
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/conciliadores",
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/estudiantes",
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/hechos",
+  config.urlGatewayExpedientes + "citaciones/"+req.params.id_citacion,
+
+
+  ]
+  // console.log(endpoints)
+
+  await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+    .then(axios.spread(async (expediente, convocante, convocado, conciliador, estudiante, hechos, citacion, resultado) => {
+
+      if (Object.keys(expediente.data).length < 0) { datos.expediente = [] } else {
+        for (const iterator in expediente.data) {
+          if (typeof (expediente['data'][iterator]) == 'string') { expediente['data'][iterator] = expediente['data'][iterator].toUpperCase() }
+          if (expediente['data'][iterator] == null) { expediente['data'][iterator] = "___" }
+          datos["expediente_" + iterator] = expediente['data'][iterator]
+         
+
+        }
+        const fecha_expediente = new Date(expediente['data'].fecha_registro)
+        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('default', { month: 'long' }).toUpperCase()
+        datos.expediente_fecha_registro_año = fecha_expediente.getFullYear()
+        datos.expediente_fecha_registro_dia = fecha_expediente.getUTCDate()
+      }
+      if (Object.keys(convocante.data.results).length < 0) { datos.convocante = [] } else {
+        for (const iterator in convocante.data.results[0]) {
+          if (typeof (convocante.data.results[0][iterator]) == 'string') { convocante.data.results[0][iterator] = convocante.data.results[0][iterator].toUpperCase() }
+          if (convocante.data.results[0][iterator] == null) { convocante.data.results[0][iterator] = "___" }
+          datos["convocante_" + iterator] = convocante.data.results[0][iterator]
+        }
+      }
+      if (Object.keys(convocado.data.results).length < 0) { datos.convocado = [] } else {
+        for (const iterator in convocado.data.results[0]) {
+          if (typeof (convocado.data.results[0][iterator]) == 'string') { convocado.data.results[0][iterator] = convocado.data.results[0][iterator].toUpperCase() }
+          if (convocado.data.results[0][iterator] == null) { convocado.data.results[0][iterator] = "___" }
+          datos["convocado_" + iterator] = convocado.data.results[0][iterator]
+        }
+      }
+      if (Object.keys(conciliador.data.results).length < 0) { datos.conciliador = [] } else {
+        for (const iterator in conciliador.data.results[0]) {
+          if (typeof (conciliador.data.results[0][iterator]) == 'string') { conciliador.data.results[0][iterator] = conciliador.data.results[0][iterator].toUpperCase() }
+          if (conciliador.data.results[0][iterator] == null) { conciliador.data.results[0][iterator] = "___" }
+          datos["conciliador_" + iterator] = conciliador.data.results[0][iterator]
+        }
+      }
+      if (Object.keys(estudiante.data.results).length < 0) { datos.estudiante = [] } else {
+        let contador = 1
+        for (const iterator of estudiante.data.results) {
+
+          for (const item in iterator) {
+            if (typeof (estudiante.data.results[0][item]) == 'string') { estudiante.data.results[0][item] = estudiante.data.results[0][item].toUpperCase() }
+            if (estudiante.data.results[0][item]== null) { estudiante.data.results[0][item] = "___" }
+            datos["estudiante" + contador + "_" + item] = estudiante.data.results[0][item]
+          }
+          contador++
+        }
+      }
+      if (Object.keys(hechos.data.results).length < 0) { datos.hechos = [] } else {
+        for (const iterator in hechos.data.results[0]) {
+          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator]= hechos.data.results[0][iterator].toUpperCase() }
+          if (hechos.data.results[0][iterator]== null) { hechos.data.results[0][iterator] = "___" }
+          datos["hechos_" + iterator] = hechos.data.results[0][iterator]
+        }
+      }
+      if (Object.keys(citacion.data.results).length < 0) { datos.citacion = [] } else {
+        for (const iterator in citacion.data.results[0]) {
+          if (typeof (citacion.data.results[0][iterator]) == 'string') { citacion.data.results[0][iterator]= citacion.data.results[0][iterator].toUpperCase() }
+          if (citacion.data.results[0][iterator]== null) { citacion.data.results[0][iterator] = "___" }
+          datos["citacion_" + iterator] = citacion.data.results[0][iterator]
+        }
+        const fecha = new Date(citacion.data.results[0].fecha_sesion)
+        datos.citacion_mes = fecha.toLocaleString('default', { month: 'long' }).toUpperCase()
+        datos.citacion_año = fecha.getFullYear()
+        datos.citacion_dia = fecha.getUTCDate()
+      }
+      if (Object.keys(resultado.data).length < 0) { datos.resultado = [] } else {
+        for (const iterator in resultado.data) {
+          if (typeof (resultado.data[iterator]) == 'string') { resultado.data[iterator]= resultado.data[iterator].toUpperCase() }
+          if (resultado.data[iterator]== null) { resultado.data[iterator]= "___" }
+          datos["resultado_" + iterator] = resultado.data[iterator]
+        }
+      }
+
+
+      // datos["convocante"+convocante.data.results[0].nombres]="nombre"
+
+    }))
+  const hoy = new Date()
+  datos.fecha_actual_dia = hoy.getUTCDate()
+  datos.fecha_actual_mes = hoy.toLocaleString('default', { month: 'long' }).toUpperCase()
+  datos.fecha_actual_año = hoy.getFullYear()
+  datos.fecha_actual_hora = hoy.toLocaleTimeString()
+
+
+
+  return datos;
+
+}
 const informacionCaso = async (req) => {
 
   let datos = {}
@@ -686,6 +791,7 @@ const informacionCaso = async (req) => {
   return datos;
 
 }
+
 views.DescargarFormatoResultado = async (req, res) => {
   try {
     axios.get(config.urlApiExpedientes + "resultados/" + req.params.id_resultado)
@@ -719,6 +825,16 @@ views.DescargarFormatoResultado = async (req, res) => {
     return;
   }
 }
+views.DescargarFormatoCitacion = async (req, res) => {
+  try {
+    
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
 views.ListarCitacionesCaso = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "citaciones?expediente_id=" + req.params.id
@@ -759,12 +875,14 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
 
     await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
       .then(axios.spread(async (datos1, datos2) => {
+        
         if (datos1.data.results.length < 1) { res.sendStatus(error({ message: "No se encuentra ninguna persona en este caso" })); return; }
+        
         for (const iterator of datos1.data.results) {
           personas_disponibles[personas_disponibles.length] = iterator.persona_id
 
         }
-        personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
+        // personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
         if (datos2.data.results.length < 1) { personas_citadas = [] } else {
           for (const iterator of datos2.data.results) {
             personas_citadas[personas_citadas.length] = iterator.persona_id
@@ -772,7 +890,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
           }
 
 
-          personas_citadas = personas_citadas.sort((a, b) => { return a - b });
+          // personas_citadas = personas_citadas.sort((a, b) => { return a - b });
         }
         datos.personas_citadas = datos2.data.results
         personas_no_citadas = personas_disponibles.filter(element => !personas_citadas.includes(element))
@@ -784,7 +902,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
             endpoints[endpoints.length] = config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id + "&persona_id=" + iterator
           }
           personas_no_citadas = []
-          await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+          await  Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
             .then(axios.spread(async (...allData) => {
 
               for (const iterator of allData) {
@@ -792,6 +910,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
               }
 
               datos.personas_no_citadas = personas_no_citadas
+              
             }))
             .catch(err => {
 
@@ -952,13 +1071,15 @@ views.CambiarDocumentoCaso = async (req, res) => {
       }
       return
     }
-    await unirest
+    axios.get(config,urlApiExpedientes+"expedientes/"+req.params.id)
+      .then(async result=>{
+        await unirest
 
       .patch(config.urlDocumentos + "documentos/" + req.params.id_documento + "/")
 
 
       .field('estado', "null")
-      .field('expediente', req.params.id)
+      .field('expediente', result.data.numero_caso)
       .field('nombre', req.files[0].originalname)
 
 
@@ -976,6 +1097,11 @@ views.CambiarDocumentoCaso = async (req, res) => {
         res.status(200).json(response.body)
 
       })
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+    
 
   } catch (error) {
     console.log(error);
