@@ -110,7 +110,7 @@ function Conciliador() {
     }
     confirmAlert({
       title: `Confirmación para agregar persona`,
-      message: `¿Estas seguro de agregar a ${nombre.toUpperCase()} del caso?.`,
+      message: `¿Estas seguro de agregar a ${nombre.toUpperCase()} al caso?.`,
       buttons: [
         {
           label: 'Si',

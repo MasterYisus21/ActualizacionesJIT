@@ -1,9 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 
 // Importing css
 import "./Resultado.css"
 
 function Resultado() {
+
+  const [tiposResultado, setTiposResultado] = useState([])
+
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/tipos_resultado/",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+          setTiposResultado(result.data.results)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [])
+
+
   return (
     <div className='resultado-container'>
       <h2 className='center-text'>Resultado</h2>
@@ -11,9 +31,9 @@ function Resultado() {
         <label htmlFor="floatingTextarea2" className="form-label h4">Resultado del caso</label>
         <select type="text" className="form-select" id="Numero_caso" name='Numero_caso' placeholder={"Se generara automaticamente"}>
           <option selected>Selecciona una opción</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          {tiposResultado.map(tipoResultado => {
+            return(<option value={tipoResultado["id"]}>{tipoResultado["nombre"]}</option>)
+          })}
         </select>
       </div>
       <br />
