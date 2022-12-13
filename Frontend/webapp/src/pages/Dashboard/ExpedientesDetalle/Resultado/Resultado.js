@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { confirmAlert } from 'react-confirm-alert';
 import { useParams } from 'react-router-dom';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
+import FileDownload from 'js-file-download'
+
 
 // Importing css
 import "./Resultado.css"
@@ -10,8 +12,11 @@ function Resultado() {
 
   const [tiposResultado, setTiposResultado] = useState([])
   const [previousData, setPreviousData] = useState(false)
+  const [documentUploaded, setDocumentUploaded] = useState(false)
 
   let { id } = useParams();
+  let uploadDocumentField = useRef()
+  let resultadoId = useRef(null)
 
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
@@ -39,7 +44,9 @@ function Resultado() {
         data: data
       })
         .then(result => {
-          console.log(result);
+          console.log(result.data.id);
+          resultadoId.current = result.data.id
+          setPreviousData(true)
         })
         .catch(err => {
           console.log(err);
@@ -66,6 +73,47 @@ function Resultado() {
     });
   }
 
+  const uploadDocument = (e) => {
+    uploadDocumentField.current.click()
+  }
+
+  const handleDocumentChange = (e) => {
+    console.log("document changed");
+    console.log(resultadoId.current);
+    const data = new FormData()
+    data.append('files', e.target.files[0])
+    axiosTokenInstanceApiExpedientes({
+      method: 'patch',
+      url: `/expedientes/${id}/resultados/${resultadoId.current}`,
+      data: data,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then(result => {
+        console.log(result.data.id);
+        setDocumentUploaded(true)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const downloadFormat = (e) => {
+    console.log(resultadoId.current);
+    axiosTokenInstanceApiExpedientes({
+      method: 'post',
+      url: `/expedientes/${id}/resultados/${resultadoId.current}/formato`,
+      responseType: "blob",
+      data: {},
+    })
+      .then(result => {
+        console.log(result.data);
+        FileDownload(result.data, 'resultado.docx')
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   // Get initialData
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
@@ -80,6 +128,10 @@ function Resultado() {
           document.getElementById('acuerdos_resultado_expediente').value = result.data.acuerdo
           document.getElementById('tipo_resultado_expediente').value = result.data.tipo_resultado_id
           setPreviousData(true)
+          resultadoId.current = result.data.id
+          if (result.data.documento) {
+            setDocumentUploaded(true)
+          }
         }
       })
       .catch(err => {
@@ -104,7 +156,7 @@ function Resultado() {
       </div>
       <br />
       <div className="form-floating">
-        <textarea type="text" className="form-control form-control-lg" id="acuerdos_resultado_expediente" name='acuerdos_resultado_expediente' style={{ height: "20rem" }} placeholder="Detalla el resultado del caso" required disabled={previousData}/>
+        <textarea type="text" className="form-control form-control-lg" id="acuerdos_resultado_expediente" name='acuerdos_resultado_expediente' style={{ height: "20rem" }} placeholder="Detalla el resultado del caso" required disabled={previousData} />
         <label htmlFor="floatingTextarea2" className="form-label h4">Acuerdos o comentarios</label>
       </div>
       <br />
@@ -117,21 +169,22 @@ function Resultado() {
               {previousData && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
             </button>
           </div>
-          <div className='resultado-button-container-actions'>
-            <button className="resultado-button" type='button' disabled={previousData}>
+          <div className='resultado-button-container-actions' onClick={e => { downloadFormat(e) }}>
+            <button className="resultado-button" type='button'>
               <img src='/icons/filetype-docx.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>DESCARGAR</p>
               {previousData && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
             </button>
-            <button className="resultado-button" type='button'>
+            <button className="resultado-button" type='button' onClick={e => uploadDocument(e)}>
               <img src='/icons/upload.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>CARGAR</p>
-              <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />
+              {documentUploaded && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
+              <input ref={uploadDocumentField} type='file' style={{ display: "none" }} onChange={e => handleDocumentChange(e)}></input>
             </button>
             <button className="resultado-button" type='button'>
               <img src='/icons/download.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>DESCARGAR</p>
-              <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />
+              {documentUploaded && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
             </button>
           </div>
         </div>
