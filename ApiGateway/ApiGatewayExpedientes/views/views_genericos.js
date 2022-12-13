@@ -686,13 +686,23 @@ const informacionCaso = async (req) => {
   return datos;
 
 }
-views.InformacionCaso = async (req, res) => {
+views.DescargarFormatoResultado = async (req, res) => {
   try {
-    axios.get(config.urlApiExpedientes + "resultados?expediente_id=" + req.params.id)
+    axios.get(config.urlApiExpedientes + "resultados/" + req.params.id_resultado)
       .then(async result => {
-        if (Object.keys(result.data.results).length < 1) { res.sendStatus(error({ message: "El expediente aun no tiene resultado" }, 204)); return }
-        await informacionCaso(req).then((result) => {
-          res.status(200).json(result)
+        if (Object.keys(result.data).length < 1) { res.sendStatus(error({ message: "El expediente aun no tiene resultado" }, 204)); return }
+        await informacionCaso(req).then(async (resul) => {
+          // console.log(resul.data.results[0])
+          resul.nombre_documento=result.data.tipo_resultado
+          
+          await axios.post(config.urlGeneradorDocumentos+"generar/",resul,{responseType : 'arraybuffer'})
+            .then(async result=>{
+              
+              res.end(result.data)
+          })
+            .catch(err => {
+              res.sendStatus(error(err))
+            })
         })
           .catch(err => {
             res.sendStatus(error(err))

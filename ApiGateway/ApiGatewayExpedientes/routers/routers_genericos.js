@@ -112,7 +112,7 @@ router.patch("/apoderados/:id",views_genericos.ActualizarApoderado)
 router.patch("/documentos/:id",views_genericos.AprobarDocumentosCaso)
 
 
-router.get("/informacion_expedientes/:id", views_genericos.InformacionCaso);
+router.post("/expedientes/:id/resultados/:id_resultado/formato", views_genericos.DescargarFormatoResultado);
 // turnos fecha
 
 router.get("/expedientes/:id/turnos/:fecha", views_genericos.TurnosFecha);

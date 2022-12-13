@@ -167,7 +167,8 @@ class Persona_solicitud(EstadoModel):
     direccion = models.CharField(max_length= 40, blank=False, null=True)
     celular = models.CharField(max_length=15, blank=False, null=False)
     correo = models.EmailField(max_length=120,blank=False,null=False)  
-    ciudad_nacimiento_id= models.ForeignKey(Ciudad, on_delete=models.SET_NULL, blank=False, null=True)
+    lugar_nacimiento=  models.CharField(max_length = 50,blank=True,null=True)
+    
     tipo_persona_id = models.ForeignKey(Tipo_persona, on_delete=models.SET_NULL, blank=False, null=True)
     sexo_id = models.ForeignKey(Sexo, on_delete=models.SET_NULL, blank=False, null=True)
     genero_id = models.ForeignKey(Genero, on_delete=models.SET_NULL, blank=False, null=True)

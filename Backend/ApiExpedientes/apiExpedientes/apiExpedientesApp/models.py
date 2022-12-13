@@ -440,7 +440,7 @@ class Persona(EstadoModel):
     correo = models.EmailField(max_length=120,blank=False,null=False)
     tarjeta_profesional= models.CharField(max_length=25, blank=True, null=True)
     barrio_id= models.ForeignKey(Barrio, on_delete=models.SET_NULL, blank=True, null=True)
-    ciudad_nacimiento_id= models.ForeignKey(Ciudad, on_delete=models.SET_NULL, blank=True, null=True)
+    lugar_nacimiento=  models.CharField(max_length = 50,blank=True,null=True)
     estado_civil_id = models.ForeignKey(Estado_civil, on_delete=models.SET_NULL, blank=True, null=True)
     estrato_socioeconomico_id = models.ForeignKey(Estrato_socioeconomico, on_delete=models.SET_NULL, blank=True, null=True)
     grupo_etnico_id = models.ForeignKey(Grupo_etnico, on_delete=models.SET_NULL, blank=True, null=True)
