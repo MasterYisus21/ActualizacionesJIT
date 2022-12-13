@@ -54,6 +54,8 @@ function SolicitudesDetalle() {
         console.log(result.data);
         setData(result.data)
 
+        //Convocante
+
         document.getElementById("identificacion").value = result.data.convocante["identificacion"]
         document.getElementById("tipoDocumento").value = result.data.convocante["tipo_documento_id"]
         document.getElementById("fechaExpedicion").value = result.data.convocante["fecha_expedicion"]
@@ -62,7 +64,47 @@ function SolicitudesDetalle() {
         document.getElementById("nombres").value = result.data.convocante["nombres"]
         document.getElementById("apellidos").value = result.data.convocante["apellidos"]
         document.getElementById("fechaNacimiento").value = result.data.convocante["fecha_nacimiento"]
-        console.log(document.getElementById("tipoPersona").value = result.data.convocante["tipo_persona_id"])
+        document.getElementById("tipoPersona").value = result.data.convocante["tipo_persona_id"]
+        document.getElementById("tipoPersona").value = result.data.convocante["tipo_persona_id"]
+        document.getElementById("sexo").value = result.data.convocante["sexo_id"]
+        document.getElementById("genero").value = result.data.convocante["genero_id"]
+        document.getElementById("estratoSocioeconomico").value = result.data.convocante["estrato_socioeconomico_id"]
+        document.getElementById("direccion").value = result.data.convocante["direccion"]
+        document.getElementById("telefono").value = result.data.convocante["telefono"]
+        document.getElementById("celular").value = result.data.convocante["celular"]
+
+        //Convocado
+
+        document.getElementById("identificacion_Convocado").value = result.data.convocado["identificacion"]
+        document.getElementById("tipoDocumento_Convocado").value = result.data.convocado["tipo_documento_id"]
+        document.getElementById("fechaExpedicion_Convocado").value = result.data.convocado["fecha_expedicion"]
+        document.getElementById("lugarExpedicion_Convocado").value = result.data.convocado["lugar_expedicion"]
+        document.getElementById("nombres_Convocado").value = result.data.convocado["nombres"]
+        document.getElementById("apellidos_Convocado").value = result.data.convocado["apellidos"]
+        //document.getElementById("tipoPersona_Convocado").value = result.data.convocado["tipo_persona"]
+        document.getElementById("sexo_Convocado").value = result.data.convocado["sexo_id"]
+        document.getElementById("genero_Convocado").value = result.data.convocado["genero_id"]
+        document.getElementById("estratoSocioeconomico_Convocado").value = result.data.convocado["estrato_socioeconomico_id"]
+        document.getElementById("direccion_Convocado").value = result.data.convocado["direccion"]
+        document.getElementById("telefono_Convocado").value = result.data.convocado["telefono"]
+        document.getElementById("celular_Convocado").value = result.data.convocado["celular"]
+        document.getElementById("correo_Convocado").value = result.data.convocado["correo"]
+
+        //Convocado
+
+        document.getElementById("identificacion_Apoderado").value = result.data.apoderado["identificacion"]
+        document.getElementById("tipoDocumento_Apoderado").value = result.data.apoderado["tipo_documento_id"]
+        // document.getElementById("fechaExpedicion_Apoderado").value = result.data.apoderado["fecha_expedicion"]
+        document.getElementById("lugarExpedicion_Apoderado").value = result.data.apoderado["lugar_expedicion"]
+        document.getElementById("nombres_Apoderado").value = result.data.apoderado["nombres"]
+        document.getElementById("apellidos_Apoderado").value = result.data.apoderado["apellidos"]
+        document.getElementById("telefono_Apoderado").value = result.data.apoderado["telefono"]
+        document.getElementById("celular_Apoderado").value = result.data.apoderado["celular"]
+        document.getElementById("correo_Apoderado").value = result.data.apoderado["correo"]
+        document.getElementById("tarjetaProfesional_Apoderado").value = result.data.apoderado["tarjeta_profesional"]
+
+
+
       })
       .catch(err => {
         console.log("error");
@@ -220,12 +262,11 @@ function SolicitudesDetalle() {
         <Collapse in={seccion1}>
           <div className="form-datos">
             <label className="subtitles-secciones">Identificación</label>
-            <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
+            <FloatingLabel controlId="tipoDocumento" label="Tipo de documento">
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
                 name="tipoDocumento"
-                id ="tipoDocumento"
                 required
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
@@ -376,7 +417,7 @@ function SolicitudesDetalle() {
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
-                  name="genero"
+                  name="estrato"
                   required
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
@@ -410,7 +451,7 @@ function SolicitudesDetalle() {
                   placeholder="name@example.com"
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Ocupación">
+              <FloatingLabel controlId="celular" label="Celular">
                 <Form.Control
                   className="col-inputs"
                   type="text"
@@ -418,6 +459,14 @@ function SolicitudesDetalle() {
                 />
               </FloatingLabel>
             </div>
+
+            <FloatingLabel controlId="floatingInputGrid" label="Ocupación">
+                <Form.Control
+                  className="inputs-registrar-solicitud"
+                  type="text"
+                  placeholder="name@example.com"
+                />
+              </FloatingLabel>
 
             <div className='col-detalle-solicitud'>
               <FloatingLabel controlId="floatingInputGrid" label="Estado civil">
@@ -427,7 +476,7 @@ function SolicitudesDetalle() {
                   placeholder="name@example.com"
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Teléfono">
+              <FloatingLabel controlId="telefono" label="Teléfono">
                 <Form.Control
                   className="col-inputs"
                   type="text"
@@ -619,7 +668,7 @@ function SolicitudesDetalle() {
         <Collapse in={seccion2}>
           <div className="form-datos">
             <label className="subtitles-secciones">Identificación</label>
-            <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
+            <FloatingLabel controlId="tipoDocumento_Convocado" label="Tipo de documento">
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
@@ -633,12 +682,12 @@ function SolicitudesDetalle() {
               </Form.Select>
             </FloatingLabel>
             <FloatingLabel
-              controlId="floatingInputGrid"
+              controlId="identificacion_Convocado"
               label="Número de documento"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
-                type="email"
+                type="text"
                 placeholder="name@example.com"
               />
             </FloatingLabel>
@@ -647,7 +696,7 @@ function SolicitudesDetalle() {
               Fecha y lugar de expedición de documento
             </label>
             <FloatingLabel
-              controlId="floatingInputGrid"
+              controlId="fechaExpedicion_Convocado"
               label="Fecha de expedición de documento"
             >
               <Form.Control
@@ -657,7 +706,7 @@ function SolicitudesDetalle() {
               />
             </FloatingLabel>
             <FloatingLabel
-              controlId="floatingInputGrid"
+              controlId="lugarExpedicion_Convocado"
               label="Lugar de expedición"
             >
               <Form.Control
@@ -668,14 +717,14 @@ function SolicitudesDetalle() {
             </FloatingLabel>
 
             <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="floatingInputGrid" label="Nombres">
+            <FloatingLabel controlId="nombres_Convocado" label="Nombres">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
               />
             </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
+            <FloatingLabel controlId="apellidos_Convocado" label="Apellidos">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
@@ -704,7 +753,7 @@ function SolicitudesDetalle() {
 
             <label className="subtitles-secciones">Sexo y Género</label>
             <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingSelectGrid" label="Sexo">
+              <FloatingLabel controlId="sexo_Convocado" label="Sexo">
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
@@ -717,7 +766,7 @@ function SolicitudesDetalle() {
                   })}
                 </Form.Select>
               </FloatingLabel>
-              <FloatingLabel controlId="floatingSelectGrid" label="Género">
+              <FloatingLabel controlId="genero_Convocado" label="Género">
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
@@ -736,7 +785,7 @@ function SolicitudesDetalle() {
               Estrato y dirección de residencia
             </label>
             <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingSelectGrid" label="Estrato">
+              <FloatingLabel controlId="estratoSocioeconomico_Convocado" label="Estrato">
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
@@ -749,7 +798,7 @@ function SolicitudesDetalle() {
                   })}
                 </Form.Select>
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Dirección">
+              <FloatingLabel controlId="direccion_Convocado" label="Dirección">
                 <Form.Control
                   className="col-inputs"
                   type="text"
@@ -792,7 +841,7 @@ function SolicitudesDetalle() {
                   <option>Abre el menú para ver las opciones</option>
                 </Form.Select>
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Ocupación">
+              <FloatingLabel controlId="celular_Convocado" label="Celular">
                 <Form.Control
                   className="col-inputs"
                   type="text"
@@ -802,14 +851,14 @@ function SolicitudesDetalle() {
             </div>
 
             <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingSelectGrid" label="Teléfono ">
+              <FloatingLabel controlId="telefono_Convocado" label="Teléfono ">
                 <Form.Control
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
+              <FloatingLabel controlId="correo_Convocado" label="Correo electrónico">
                 <Form.Control
                   className="col-inputs"
                   type="text"
@@ -817,6 +866,14 @@ function SolicitudesDetalle() {
                 />
               </FloatingLabel>
             </div>
+
+            <FloatingLabel controlId="" label="Ocupacion">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
 
             <label className="subtitles-secciones">Posee apoderado</label>
             <div className='col-detalle-solicitud'>
@@ -834,19 +891,21 @@ function SolicitudesDetalle() {
               </button>
             </div>
 
+            {/* Información del Apoderado ------------------------------------------> */}
+
             {openbutton &&
 
               <>
                 <label className="subtitles-secciones">Nombre</label>
                 <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
+                  <FloatingLabel controlId="nombres_Apoderado" label="Nombres">
                     <Form.Control
                       className="col-inputs"
                       type="text"
                       placeholder="name@example.com"
                     />
                   </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
+                  <FloatingLabel controlId="apellidos_Apoderado" label="Apellidos">
                     <Form.Control
                       className="col-inputs"
                       type="text"
@@ -859,18 +918,20 @@ function SolicitudesDetalle() {
                   Identificación
                 </label>
                 <div className='col-detalle-solicitud'>
-                  <FloatingLabel
-                    controlId="floatingSelectGrid"
-                    label="Tipo de documento"
+                <FloatingLabel controlId="tipoDocumento_Apoderado" label="Tipo de documento">
+                  <Form.Select
+                    className="col-inputs"
+                    aria-label="Floating label select example"
+                    name="tipoDocumento"
+                    required
                   >
-                    <Form.Select
-                      className="col-inputs"
-                      aria-label="Floating label select example"
-                    >
-                      <option>Abre el menú para ver las opciones</option>
-                    </Form.Select>
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
+                    <option value={""}>Abre el menú para ver las opciones</option>
+                    {tiposDocumento.map(tipoDocumento => {
+                      return (<option key={"tipoDocumento" + tipoDocumento["id"]} value={tipoDocumento["id"]}>{tipoDocumento["nombre"]}</option>)
+                    })}
+                  </Form.Select>
+                </FloatingLabel>
+                  <FloatingLabel controlId="identificacion_Apoderado" label="Número de documento">
                     <Form.Control
                       className="col-inputs"
                       type="text"
@@ -884,7 +945,7 @@ function SolicitudesDetalle() {
                 </label>
                 <div className='col-detalle-solicitud'>
                   <FloatingLabel
-                    controlId="floatingInputGrid"
+                    controlId="fechaExpedicion_Apoderado"
                     label="Fecha de expedición de documento"
                   >
                     <Form.Control
@@ -894,7 +955,7 @@ function SolicitudesDetalle() {
                     />
                   </FloatingLabel>
                   <FloatingLabel
-                    controlId="floatingInputGrid"
+                    controlId="lugarExpedicion_Apoderado"
                     label="Lugar de expedición"
                   >
                     <Form.Control
@@ -907,14 +968,14 @@ function SolicitudesDetalle() {
 
                 <label className="subtitles-secciones">Datos adicionales</label>
                 <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Tarjeta profesional ">
+                  <FloatingLabel controlId="tarjetaProfesional_Apoderado" label="Tarjeta profesional ">
                     <Form.Control
                       className="col-inputs"
                       type="text"
                       placeholder="name@example.com"
                     />
                   </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="correo">
+                  <FloatingLabel controlId="correo_Apoderado" label="correo">
                     <Form.Control
                       className="col-inputs"
                       type="text"
@@ -924,14 +985,14 @@ function SolicitudesDetalle() {
                 </div>
 
                 <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Teléfono">
+                  <FloatingLabel controlId="telefono_Apoderado" label="Teléfono">
                     <Form.Control
                       className="col-inputs"
                       type="text"
                       placeholder="name@example.com"
                     />
                   </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Celular">
+                  <FloatingLabel controlId="celular_Apoderado" label="Celular">
                     <Form.Control
                       className="col-inputs"
                       type="text"
