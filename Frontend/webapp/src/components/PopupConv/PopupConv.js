@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react"
 import './PopupConv.css'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import { axiosTokenInstanceApiExpedientes } from "../../helpers/axiosInstances";
 
 export default function PopupConv({text, setEstado, estado}){
     const [sexos, setSexos] = useState([])
@@ -12,6 +13,73 @@ export default function PopupConv({text, setEstado, estado}){
     const [tiposPersona, setTiposPersona] = useState([])
     const [tiposDocumento, setTiposDocumento] = useState([])
     const [conv2, setConv2] = useState(false)
+
+    useEffect(() => {
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: "/tipos_documento/?count=20",
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          console.log(result.data);
+          setTiposDocumento(result.data.results)
+        })
+        .catch(err => {
+          console.log("error");
+        });
+    }, [])
+
+      useEffect(() => {
+        axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/sexos/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setSexos(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+  // fetch generos options
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/generos/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setGeneros(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+  // fetch estratosSocieconomicos options
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/estratos_socioeconomicos/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        setEstratosSocieconomicos(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
     return (
         <div className='wrapp-popup'>
             <div className='popup'>
@@ -267,7 +335,10 @@ export default function PopupConv({text, setEstado, estado}){
                       className="col-inputs"
                       aria-label="Floating label select example"
                     >
-                      <option>Abre el menú para ver las opciones</option>
+                <option value={""}>Abre el menú para ver las opciones</option>
+                {tiposDocumento.map(tipoDocumento => {
+                  return (<option key={"tipoDocumento" + tipoDocumento["id"]} value={tipoDocumento["id"]}>{tipoDocumento["nombre"]}</option>)
+                })}
                     </Form.Select>
                   </FloatingLabel>
                   <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
