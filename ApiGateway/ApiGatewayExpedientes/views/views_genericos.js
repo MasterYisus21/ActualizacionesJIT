@@ -335,20 +335,20 @@ views.DatosCrearPersonas = async (req, res) => {
     ]
 
     await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-      .then(axios.spread(async (data1,data2,data3,data4,data5,data6,data7,data8,data9,data10,data11) => {
+      .then(axios.spread(async (data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11) => {
         let datos = {}
-        datos.paises=data1.data.results
-        datos.estados_civiles=data2.data.results
-        datos.estratos_socioeconomicos=data3.data.results
-        datos.grupos_etnicos=data4.data.results
-        datos.tipos_persona=data5.data.results
-        datos.sexos=data6.data.results
-        datos.tipos_discapacidad=data7.data.results
-        datos.generos=data8.data.results
-        datos.tipos_vivienda=data9.data.results
-        datos.tipos_documento=data10.data.results
-        datos.escolaridades=data11.data.results
-        
+        datos.paises = data1.data.results
+        datos.estados_civiles = data2.data.results
+        datos.estratos_socioeconomicos = data3.data.results
+        datos.grupos_etnicos = data4.data.results
+        datos.tipos_persona = data5.data.results
+        datos.sexos = data6.data.results
+        datos.tipos_discapacidad = data7.data.results
+        datos.generos = data8.data.results
+        datos.tipos_vivienda = data9.data.results
+        datos.tipos_documento = data10.data.results
+        datos.escolaridades = data11.data.results
+
 
         res.status(200).json(datos)
       }))
@@ -435,7 +435,7 @@ views.ListarPreguntasEncuesta = async (req, res) => {
     const url = config.urlApiExpedientes + "preguntas_encuesta=" + req.params.id
 
     requests.get(req, res, url, "&")
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -515,7 +515,7 @@ views.ListarDocumentosCaso = async (req, res) => {
 }
 views.DescargarDocumentos = async (req, res) => {
   try {
-    await axios.get(config.urlDocumentos+ "documentos/" + req.params.id)
+    await axios.get(config.urlDocumentos + "documentos/" + req.params.id)
       .then(async resp => {
 
 
@@ -548,7 +548,7 @@ views.DescargarDocumentos = async (req, res) => {
 }
 views.DescargarResultados = async (req, res) => {
   try {
-    await axios.get(config.urlApiExpedientes+ "resultados/" + req.params.id)
+    await axios.get(config.urlApiExpedientes + "resultados/" + req.params.id)
       .then(async resp => {
 
 
@@ -579,76 +579,131 @@ views.DescargarResultados = async (req, res) => {
     res.sendStatus(500);
   }
 }
-const informacionCaso= async(req)=>{
-  
-  let datos={}
-  endpoints=[ config.urlApiExpedientes+"expedientes/"+req.params.id,
-              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocantes",
-              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/convocados",
-              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/conciliadores",
-              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/estudiantes",
-              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/hechos",
-              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/citaciones",
-              config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/resultados",
-              // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/seguimientos",
-              // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/encuestas",
-            
-            ]
-            // console.log(endpoints)
+const informacionCaso = async (req) => {
 
-              await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-              .then(axios.spread(async (expediente,convocante,convocado,conciliador,estudiante,hechos,citacion,resultado) => {
-                
-                if (Object.keys(expediente.data).length<0) { datos.expediente=[]}else{for (const iterator in expediente.data) {
-                  datos["expediente_"+iterator]=expediente['data'][iterator]
-                }}
-                if (Object.keys(convocante.data.results).length<0) { datos.convocante=[]}else{for (const iterator in convocante.data.results[0]) {
-                  datos["convocante_"+iterator]=convocante.data.results[0][iterator]
-                }}
-                if (Object.keys(convocado.data.results).length<0) { datos.convocado=[]}else{for (const iterator in convocado.data.results[0]) {
-                  datos["convocado_"+iterator]=convocado.data.results[0][iterator]
-                }}
-                if (Object.keys(conciliador.data.results).length<0) { datos.conciliador=[]}else{for (const iterator in conciliador.data.results[0]) {
-                  datos["conciliador_"+iterator]=conciliador.data.results[0][iterator]
-                }}
-                if (Object.keys(estudiante.data.results).length<0) { datos.estudiante=[]}else{for (const iterator in estudiante.data.results[0]) {
-                  datos["estudiante_"+iterator]=estudiante.data.results[0][iterator]
-                }}
-                if (Object.keys(hechos.data.results).length<0) { datos.hechos=[]}else{for (const iterator in hechos.data.results[0]) {
-                  datos["hechos_"+iterator]=hechos.data.results[0][iterator]
-                }}
-                if (Object.keys(citacion.data.results).length<0) { datos.citacion=[]}else{for (const iterator in citacion.data.results[0]) {
-                  datos["citacion_"+iterator]=citacion.data.results[0][iterator]
-                }}
-                if (Object.keys(resultado.data).length<0) { datos.resultado=[]}else{for (const iterator in resultado.data) {
-                  datos["resultado_"+iterator]=resultado.data[iterator]
-                }}
-                
-                
-                // datos["convocante"+convocante.data.results[0].nombres]="nombre"
-                
-              }))
-        return datos;
+  let datos = {}
+  endpoints = [config.urlApiExpedientes + "expedientes/" + req.params.id,
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/convocantes",
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/convocados",
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/conciliadores",
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/estudiantes",
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/hechos",
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/citaciones",
+  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/resultados",
+    // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/seguimientos",
+    // config.urlGatewayExpedientes+"expedientes/"+req.params.id+"/encuestas",
+
+  ]
+  // console.log(endpoints)
+
+  await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+    .then(axios.spread(async (expediente, convocante, convocado, conciliador, estudiante, hechos, citacion, resultado) => {
+
+      if (Object.keys(expediente.data).length < 0) { datos.expediente = [] } else {
+        for (const iterator in expediente.data) {
+          if (typeof (expediente['data'][iterator]) == 'string') { expediente['data'][iterator] = expediente['data'][iterator].toUpperCase() }
+          if (expediente['data'][iterator] == null) { expediente['data'][iterator] = "___" }
+          datos["expediente_" + iterator] = expediente['data'][iterator]
+         
+
+        }
+        const fecha_expediente = new Date(expediente['data'].fecha_registro)
+        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('default', { month: 'long' }).toUpperCase()
+        datos.expediente_fecha_registro_año = fecha_expediente.getFullYear()
+        datos.expediente_fecha_registro_dia = fecha_expediente.getUTCDate()
+      }
+      if (Object.keys(convocante.data.results).length < 0) { datos.convocante = [] } else {
+        for (const iterator in convocante.data.results[0]) {
+          if (typeof (convocante.data.results[0][iterator]) == 'string') { convocante.data.results[0][iterator] = convocante.data.results[0][iterator].toUpperCase() }
+          if (convocante.data.results[0][iterator] == null) { convocante.data.results[0][iterator] = "___" }
+          datos["convocante_" + iterator] = convocante.data.results[0][iterator]
+        }
+      }
+      if (Object.keys(convocado.data.results).length < 0) { datos.convocado = [] } else {
+        for (const iterator in convocado.data.results[0]) {
+          if (typeof (convocado.data.results[0][iterator]) == 'string') { convocado.data.results[0][iterator] = convocado.data.results[0][iterator].toUpperCase() }
+          if (convocado.data.results[0][iterator] == null) { convocado.data.results[0][iterator] = "___" }
+          datos["convocado_" + iterator] = convocado.data.results[0][iterator]
+        }
+      }
+      if (Object.keys(conciliador.data.results).length < 0) { datos.conciliador = [] } else {
+        for (const iterator in conciliador.data.results[0]) {
+          if (typeof (conciliador.data.results[0][iterator]) == 'string') { conciliador.data.results[0][iterator] = conciliador.data.results[0][iterator].toUpperCase() }
+          if (conciliador.data.results[0][iterator] == null) { conciliador.data.results[0][iterator] = "___" }
+          datos["conciliador_" + iterator] = conciliador.data.results[0][iterator]
+        }
+      }
+      if (Object.keys(estudiante.data.results).length < 0) { datos.estudiante = [] } else {
+        let contador = 1
+        for (const iterator of estudiante.data.results) {
+
+          for (const item in iterator) {
+            if (typeof (estudiante.data.results[0][item]) == 'string') { estudiante.data.results[0][item] = estudiante.data.results[0][item].toUpperCase() }
+            if (estudiante.data.results[0][item]== null) { estudiante.data.results[0][item] = "___" }
+            datos["estudiante" + contador + "_" + item] = estudiante.data.results[0][item]
+          }
+          contador++
+        }
+      }
+      if (Object.keys(hechos.data.results).length < 0) { datos.hechos = [] } else {
+        for (const iterator in hechos.data.results[0]) {
+          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator]= hechos.data.results[0][iterator].toUpperCase() }
+          if (hechos.data.results[0][iterator]== null) { hechos.data.results[0][iterator] = "___" }
+          datos["hechos_" + iterator] = hechos.data.results[0][iterator]
+        }
+      }
+      if (Object.keys(citacion.data.results).length < 0) { datos.citacion = [] } else {
+        for (const iterator in citacion.data.results[0]) {
+          if (typeof (citacion.data.results[0][iterator]) == 'string') { citacion.data.results[0][iterator]= citacion.data.results[0][iterator].toUpperCase() }
+          if (citacion.data.results[0][iterator]== null) { citacion.data.results[0][iterator] = "___" }
+          datos["citacion_" + iterator] = citacion.data.results[0][iterator]
+        }
+        const fecha = new Date(citacion.data.results[0].fecha_sesion)
+        datos.citacion_mes = fecha.toLocaleString('default', { month: 'long' }).toUpperCase()
+        datos.citacion_año = fecha.getFullYear()
+        datos.citacion_dia = fecha.getUTCDate()
+      }
+      if (Object.keys(resultado.data).length < 0) { datos.resultado = [] } else {
+        for (const iterator in resultado.data) {
+          if (typeof (resultado.data[iterator]) == 'string') { resultado.data[iterator]= resultado.data[iterator].toUpperCase() }
+          if (resultado.data[iterator]== null) { resultado.data[iterator]= "___" }
+          datos["resultado_" + iterator] = resultado.data[iterator]
+        }
+      }
+
+
+      // datos["convocante"+convocante.data.results[0].nombres]="nombre"
+
+    }))
+  const hoy = new Date()
+  datos.fecha_actual_dia = hoy.getUTCDate()
+  datos.fecha_actual_mes = hoy.toLocaleString('default', { month: 'long' }).toUpperCase()
+  datos.fecha_actual_año = hoy.getFullYear()
+  datos.fecha_actual_hora = hoy.toLocaleTimeString()
+
+
+
+  return datos;
 
 }
-views.InformacionCaso= async (req, res) => {
+views.InformacionCaso = async (req, res) => {
   try {
-    axios.get(config.urlApiExpedientes+"resultados?expediente_id="+req.params.id)
-      .then(async result=>{
-        if(Object.keys(result.data.results).length<1){res.sendStatus(error({message:"El expediente aun no tiene resultado"},204));return}
+    axios.get(config.urlApiExpedientes + "resultados?expediente_id=" + req.params.id)
+      .then(async result => {
+        if (Object.keys(result.data.results).length < 1) { res.sendStatus(error({ message: "El expediente aun no tiene resultado" }, 204)); return }
         await informacionCaso(req).then((result) => {
           res.status(200).json(result)
-    })
-      .catch(err => {
-        res.sendStatus(error(err))
-      })
-   
-   }).catch((err) => {
-    
-   });
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+
+      }).catch((err) => {
+
+      });
 
 
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -807,53 +862,53 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     // console.log(req.file)
     if (Object.keys(req.files).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
 
-    
-    axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
 
-            .then(async result => {
+    axios.get(config.urlApiExpedientes + "expedientes/" + req.params.id)
 
-                
+      .then(async result => {
 
-                for await (const iterator of req.files) {
 
-                  await unirest
-                    .post(config.urlDocumentos + "documentos/")
-            
-            
-                    .field('estado', "null")
-                    .field('expediente', result.data.numero_caso)
-                    .field('nombre', iterator.originalname)
-            
-            
-            
-                    //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-                    .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
-                    //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-                    .then(function (response) {
-                      try {
-                        fs.unlinkSync(iterator.path)
-                      } catch (err) {
-                        error(err)
-                      }
-            
-                      datos.push(response.body)
-            
-                    })
-            
-            
-                }
-                if (intento < 2) { return; }
-                res.status(201).json(datos)
-            
-            
+
+        for await (const iterator of req.files) {
+
+          await unirest
+            .post(config.urlDocumentos + "documentos/")
+
+
+            .field('estado', "null")
+            .field('expediente', result.data.numero_caso)
+            .field('nombre', iterator.originalname)
+
+
+
+            //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+            .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
+            //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+            .then(function (response) {
+              try {
+                fs.unlinkSync(iterator.path)
+              } catch (err) {
+                error(err)
+              }
+
+              datos.push(response.body)
 
             })
-            .catch(err => {
 
-                res.sendStatus(error(err))
-            })
 
-  
+        }
+        if (intento < 2) { return; }
+        res.status(201).json(datos)
+
+
+
+      })
+      .catch(err => {
+
+        res.sendStatus(error(err))
+      })
+
+
 
   } catch (error) {
     console.log(error);
@@ -921,16 +976,16 @@ views.CambiarDocumentoCaso = async (req, res) => {
 
 views.VerResultadoCaso = async (req, res) => {
   try {
-    axios.get(config.urlApiExpedientes+"resultados?expediente_id="+req.params.id)
-      .then(result=>{
-        if(Object.keys(result.data.results).length<1){res.status(error({message:"El expediente aun no tiene resultado"},204)).json([]);return}
+    axios.get(config.urlApiExpedientes + "resultados?expediente_id=" + req.params.id)
+      .then(result => {
+        if (Object.keys(result.data.results).length < 1) { res.status(error({ message: "El expediente aun no tiene resultado" }, 204)).json([]); return }
         res.status(200).json(result.data.results[0])
-        
-    })
+
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -939,27 +994,27 @@ views.VerResultadoCaso = async (req, res) => {
 
 views.VerRespuestasEncuesta = async (req, res) => {
   try {
-    axios.get(config.urlApiExpedientes+"encuestas?expediente_id="+req.params.id)
-      .then(async result=>{
+    axios.get(config.urlApiExpedientes + "encuestas?expediente_id=" + req.params.id)
+      .then(async result => {
         let datos = {}
-        if(Object.keys(result.data.results).length<1){res.status(error({message:"El expediente no tiene encuestas resueltas"},204)).json([]);return}
-        
-        
-     
-        await axios.get(config.urlApiExpedientes+"respuestas_encuesta?encuesta_id="+result.data.results[0].id)
-          .then(resul=>{
-            result.data.results[0].respuestas=resul.data.results
+        if (Object.keys(result.data.results).length < 1) { res.status(error({ message: "El expediente no tiene encuestas resueltas" }, 204)).json([]); return }
+
+
+
+        await axios.get(config.urlApiExpedientes + "respuestas_encuesta?encuesta_id=" + result.data.results[0].id)
+          .then(resul => {
+            result.data.results[0].respuestas = resul.data.results
             res.status(200).json(result.data.results[0])
-        })
+          })
           .catch(err => {
             res.sendStatus(error(err))
           })
-        
-    })
+
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -968,37 +1023,37 @@ views.VerRespuestasEncuesta = async (req, res) => {
 views.CrearResultado = async (req, res) => {
   try {
 
-    req.body.expediente_id=req.params.id
-    let endpoints =[config.urlApiExpedientes+"tipos_resultado/"+req.body.tipo_resultado_id,
-                config.urlApiExpedientes+"resultados?expediente_id="+req.params.id]
+    req.body.expediente_id = req.params.id
+    let endpoints = [config.urlApiExpedientes + "tipos_resultado/" + req.body.tipo_resultado_id,
+    config.urlApiExpedientes + "resultados?expediente_id=" + req.params.id]
     await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-    .then(axios.spread(async(result,data2) => {
-     
-      if(Object.keys(data2.data.results).length>0){res.sendStatus(error({message:"El resultado para este expediente ya existe"},208));return}
-      if(Object.keys(result.data).length<1){res.sendStatus(error({message:"no existe ese tipo de resultado"},404));return}
-      result.data.consecutivo=parseInt(result.data.consecutivo)+1
-      req.body.consecutivo=result.data.consecutivo
-      
-     
-      const resultado=axios.post(config.urlApiExpedientes+"resultados/",req.body)
-      const categoria=axios.patch(config.urlApiExpedientes+"categorias_resultado/"+result.data.categoria_id+"/",{consecutivo_actual:result.data.consecutivo})
-       
-      await Promise.all([resultado, categoria]).then(axios.spread(async(result,data2) => {
-     
-        res.status(200).json(result.data)
+      .then(axios.spread(async (result, data2) => {
+
+        if (Object.keys(data2.data.results).length > 0) { res.sendStatus(error({ message: "El resultado para este expediente ya existe" }, 208)); return }
+        if (Object.keys(result.data).length < 1) { res.sendStatus(error({ message: "no existe ese tipo de resultado" }, 404)); return }
+        result.data.consecutivo = parseInt(result.data.consecutivo) + 1
+        req.body.consecutivo = result.data.consecutivo
+
+
+        const resultado = axios.post(config.urlApiExpedientes + "resultados/", req.body)
+        const categoria = axios.patch(config.urlApiExpedientes + "categorias_resultado/" + result.data.categoria_id + "/", { consecutivo_actual: result.data.consecutivo })
+
+        await Promise.all([resultado, categoria]).then(axios.spread(async (result, data2) => {
+
+          res.status(200).json(result.data)
+        }))
       }))
-    }))
-    .catch(err => {
+      .catch(err => {
 
-      res.sendStatus(error(err))
-      return
+        res.sendStatus(error(err))
+        return
 
-    })
+      })
 
-   
-    
-   
-  }catch (error) {
+
+
+
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -1023,7 +1078,7 @@ views.CargarResultadoCaso = async (req, res) => {
       .patch(config.urlApiExpedientes + "resultados/" + req.params.id_resultado + "/")
 
 
-      
+
 
 
 
@@ -1040,7 +1095,7 @@ views.CargarResultadoCaso = async (req, res) => {
         res.status(200).json(response.body)
 
       })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -1049,10 +1104,10 @@ views.CargarResultadoCaso = async (req, res) => {
 
 views.ListarSeguimientosCaso = async (req, res) => {
   try {
-    const url = config.urlApiExpedientes+"seguimientos?expediente_id="+req.params.id
+    const url = config.urlApiExpedientes + "seguimientos?expediente_id=" + req.params.id
     requests.get(req, res, url, "&")
-    
-  }catch (error) {
+
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -1062,27 +1117,27 @@ views.ListarSeguimientosCaso = async (req, res) => {
 views.CrearSeguimientoCaso = async (req, res) => {
   try {
 
-    req.body.expediente_id=req.params.id
+    req.body.expediente_id = req.params.id
 
-    axios.post(config.urlApiExpedientes+"seguimientos/",req.body)
-      .then(async result=>{
+    axios.post(config.urlApiExpedientes + "seguimientos/", req.body)
+      .then(async result => {
         for (const iterator of req.body.respuestas) {
-          iterator.seguimiento_id=result.data.id
+          iterator.seguimiento_id = result.data.id
         }
-        await axios.post(config.urlApiExpedientes+"respuestas_seguimiento/",req.body.respuestas)
-          .then(resul=>{
+        await axios.post(config.urlApiExpedientes + "respuestas_seguimiento/", req.body.respuestas)
+          .then(resul => {
             res.status(200).json(result.data)
-        })
+          })
           .catch(err => {
             res.sendStatus(error(err))
           })
-    })
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-    
-  
-  }catch (error) {
+
+
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -1091,24 +1146,24 @@ views.CrearSeguimientoCaso = async (req, res) => {
 
 views.VerSeguimiento = async (req, res) => {
   try {
-    let endpoints =[
-      config.urlApiExpedientes+"seguimientos/"+req.params.id,
-      config.urlApiExpedientes+"respuestas_seguimiento?seguimiento_id="+req.params.id
+    let endpoints = [
+      config.urlApiExpedientes + "seguimientos/" + req.params.id,
+      config.urlApiExpedientes + "respuestas_seguimiento?seguimiento_id=" + req.params.id
     ]
     await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-    .then(axios.spread(async (data1,data2) => {
-      
-      data1.data.respuestas=data2.data.results
+      .then(axios.spread(async (data1, data2) => {
 
-      res.status(200).json(data1.data)
-    }))
-    .catch(err => {
+        data1.data.respuestas = data2.data.results
 
-      res.sendStatus(error(err))
-      return
+        res.status(200).json(data1.data)
+      }))
+      .catch(err => {
 
-    })
-  }catch (error) {
+        res.sendStatus(error(err))
+        return
+
+      })
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -1140,25 +1195,25 @@ views.CrearConvocantes = async (req, res) => {
 }
 views.CrearRespuestas = async (req, res) => {
   try {
-   
-    let datos={observacion:req.body.observacion,medio_conocimiento_id:req.body.medio_conocimiento_id,expediente_id:req.params.id}
-    axios.post(config.urlApiExpedientes+"encuestas/",datos)
-      .then(async result=>{
-       for (const iterator of req.body.respuestas) {
-        iterator.encuesta_id= result.data.id
-       }
 
-       await  axios.post(config.urlApiExpedientes+"respuestas_encuesta/",req.body.respuestas)
-         
+    let datos = { observacion: req.body.observacion, medio_conocimiento_id: req.body.medio_conocimiento_id, expediente_id: req.params.id }
+    axios.post(config.urlApiExpedientes + "encuestas/", datos)
+      .then(async result => {
+        for (const iterator of req.body.respuestas) {
+          iterator.encuesta_id = result.data.id
+        }
+
+        await axios.post(config.urlApiExpedientes + "respuestas_encuesta/", req.body.respuestas)
+
           .catch(err => {
             res.sendStatus(error(err))
           })
         res.status(200).json(result.data)
-    })
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -1346,24 +1401,24 @@ views.ActualizarExpediente = async (req, res) => {
 }
 views.CambiarEstadoExpediente = async (req, res) => {
   try {
-    
-    axios.patch(config.urlApiExpedientes+"expedientes/"+req.params.id+"/", {estado_expediente_id:req.body.estado_expediente_id})
-    .then(result => {
 
-      axios.post(config.urlApiExpedientes+"historicos/", {estado_id:req.body.estado_expediente_id,expediente_id:req.params.id})
-      .then(resul => {
-  
-          res.status(200).json(result.data)
+    axios.patch(config.urlApiExpedientes + "expedientes/" + req.params.id + "/", { estado_expediente_id: req.body.estado_expediente_id })
+      .then(result => {
+
+        axios.post(config.urlApiExpedientes + "historicos/", { estado_id: req.body.estado_expediente_id, expediente_id: req.params.id })
+          .then(resul => {
+
+            res.status(200).json(result.data)
+          })
+          .catch(err => {
+            res.sendStatus(error(err))
+            return
+          })
       })
       .catch(err => {
-          res.sendStatus(error(err))
-          return
-      })
-    })
-    .catch(err => {
         res.sendStatus(error(err))
         return
-    })
+      })
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

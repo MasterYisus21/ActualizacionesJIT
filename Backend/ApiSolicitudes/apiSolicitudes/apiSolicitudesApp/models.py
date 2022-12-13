@@ -187,7 +187,7 @@ class Persona_solicitud(EstadoModel):
 class Solicitud(models.Model):
     id = models.AutoField(primary_key=True) # los modelos que apliquen baseModels tendran estos dos campos
     numero_radicado= models.CharField(max_length=25,default = increment_entrada_number,editable=False,unique=True) # los modelos que apliquen baseModels tendran estos dos campos
-    fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
+    fecha_registro=models.DateField(blank=False , null=False,auto_now=False,auto_now_add=True) # Se crea automaticamente 
     comentario = models.TextField(blank=True,null=True)
     
     estado_solicitud_id= models.ForeignKey(Estado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)
