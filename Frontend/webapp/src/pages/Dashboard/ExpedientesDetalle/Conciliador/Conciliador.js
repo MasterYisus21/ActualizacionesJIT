@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { Button } from '../../../../components';
+import { Buscador, Button } from '../../../../components';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
@@ -19,8 +19,71 @@ function Conciliador() {
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
 
+  const [resultadosBusquedaCandidatos, setResultadosBusquedaCandidatos] = useState([]);
+  const [valoresBuscadosCandidatos, setValoresBuscadosCandidatos] = useState([])
+  const [numPagesCandidatos, setNumPagesCandidatos] = useState(1)
+  const [pageCandidatos, setPageCandidatos] = useState(1)
+
   let { id } = useParams();
   let resultados = useRef([])
+  let resultadosCandidatos = useRef([])
+
+  useEffect(() => {
+    if (estado && resultadosBusquedaCandidatos.length === 0) {
+      searchCandidatos()
+    }
+  }, [estado])
+
+  const searchCandidatos = (pageCustom) => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/personas/" + "?ordering=-numero_caso&count=5&page=" + (pageCustom ? pageCustom : pageCandidatos) + "&search=Conciliador," + (valoresBuscadosCandidatos.length !== 0 ? valoresBuscadosCandidatos[valoresBuscadosCandidatos.length - 1] : ""),
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        if (pageCandidatos == 1 || pageCustom == 1) {
+          resultadosCandidatos.current = result.data.results
+          setPageCandidatos(1)
+
+        } else {
+          resultadosCandidatos.current = [...resultadosCandidatos.current, ...result.data.results]
+        }
+        setResultadosBusquedaCandidatos(resultadosCandidatos.current)
+        setNumPagesCandidatos(Math.ceil(result.data.count / 5))
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const handlePageChangeCandidatos = (page) => {
+    if (pageCandidatos <= numPagesCandidatos) {
+      setPageCandidatos(page)
+    }
+  }
+
+  const handleScrollCandidatos = (e) => {
+    // console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
+    // console.log('clientHeight: ', e.target.clientHeight);
+    if (e.target.scrollHeight - e.target.scrollTop - 100 < e.target.clientHeight) {
+      // console.log("almost bottom");
+      handlePageChangeCandidatos(pageCandidatos + 1)
+    }
+  }
+
+  useEffect(() => {
+    setResultadosBusquedaCandidatos([]);
+    searchCandidatos(1)
+  }, [valoresBuscadosCandidatos])
+
+  useEffect(() => {
+    if (pageCandidatos != 1) {
+      searchCandidatos()
+    }
+  }, [pageCandidatos])
+
 
 
   const search = () => {
@@ -118,40 +181,50 @@ function Conciliador() {
           <button className='boton-crear-conciliador' onClick={() => setEstado(!estado)}>Agregar Conciliador</button>
         </div>
         {estado &&
-          <form className='contenedor-tabla-seleccion-conciliador mb-5 p-4 pb-3'>
+          <div className='contenedor-tabla-seleccion-conciliador mb-5 p-4 pb-3'>
             <label className='pb-3 h5'>Seleccione el conciliador que desea agregar</label>
-            <table className='table table-striped table-bordered table-responsive'>
-              <thead >
-                <tr>
-                  <th></th>
-                  <th>Tipo de documento</th>
-                  <th>Identificación</th>
-                  <th>Nombre</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio'></input></td>
-                  <td>Cedula</td>
-                  <td>1033816123</td>
-                  <td>Juan Diego Benavidez</td>
-                </tr>
-                {/* {conciliadoresDisponibles.map((dato, key) => {
-                  return (
-                    <tr>
-                      <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio' value={dato["Identificacion"]}></input></td>
-                      <td key={dato["Tipo_documento_Id"]["Id"]}>{dato["Tipo_documento_Id"]["Nombre"]}</td>
-                      <td key={dato["Identificacion"]}>{dato["Identificacion"]}</td>
-                      <td key={dato["Nombres"]}>{dato["Nombres"] + ' ' + dato["Apellidos"]}</td>
-                    </tr>
-                  );
-                })} */}
-              </tbody>
-            </table>
-            <div className=''>
-              <button type="submit" className="boton-crear-conciliador" id='boton-agregar-conciliador'> Agregar</button>
+            <Buscador
+              valoresBuscados={valoresBuscadosCandidatos}
+              setValoresBuscados={setValoresBuscadosCandidatos}
+              filtros={[]}
+              setFiltros={() => { }}
+              setPage={handlePageChangeCandidatos}
+              required
+            />
+            <div className='conciliadores-candidatos-container' onScroll={e => handleScrollCandidatos(e)}>
+              <table className='table table-striped table-bordered table-responsive '>
+                <thead >
+                  <tr>
+                    <th></th>
+                    <th>Tipo de documento</th>
+                    <th>Identificación</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {resultadosBusquedaCandidatos.map((dato, key) => {
+                    return (
+                      <tr key={dato["id"]}>
+                        <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio' value={dato["id"]}></input></td>
+                        <td>{dato["tipo_documento"]}</td>
+                        <td>{dato["identificacion"]}</td>
+                        <td>{dato["nombres"] + ' ' + dato["apellidos"]}</td>
+                        <td>
+                          <button type="submit" className="boton-crear-conciliador" id='boton-agregar-conciliador'> Agregar</button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  <Button
+                    onClick={e => { handlePageChangeCandidatos(pageCandidatos + 1) }}
+                    className="span2"
+                    text="Cargar más"
+                  />
+                </tbody>
+              </table>
             </div>
-          </form>
+          </div>
         }
         <div className='contenedor-tabla-convocado' onScroll={e => handleScroll(e)}>
           <table className='table table-striped table-bordered table-responsive '>
