@@ -19,10 +19,6 @@ function Hechos() {
 
     const hechoId = useRef()
 
-    useEffect(() => {
-        console.log(document.querySelector('[name="ciudad"]').value);
-
-    }, [departamento])
 
     // Fetch Database for initial Data
     useEffect(() => {
