@@ -114,6 +114,24 @@ function Resultado() {
       });
   }
 
+  const downloadResult = (e) => {
+    console.log(resultadoId.current);
+    console.log('downloadResult');
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: `/resultados/${resultadoId.current}`,
+      responseType: "blob",
+      data: {},
+    })
+      .then(result => {
+        console.log(result.data);
+        FileDownload(result.data, 'resultado.pdf')
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   // Get initialData
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
@@ -181,7 +199,7 @@ function Resultado() {
               {documentUploaded && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
               <input ref={uploadDocumentField} type='file' style={{ display: "none" }} onChange={e => handleDocumentChange(e)}></input>
             </button>
-            <button className="resultado-button" type='button'>
+            <button className="resultado-button" type='button' onClick={e => { downloadResult(e) }}>
               <img src='/icons/download.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>DESCARGAR</p>
               {documentUploaded && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
