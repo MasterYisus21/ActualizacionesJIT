@@ -408,6 +408,7 @@ class Apoderado(EstadoModel):
     nombres = models.CharField(max_length = 25,blank=False,null=False)
     apellidos = models.CharField(max_length= 25, blank=False, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False)
+    fecha_expedicion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     lugar_expedicion = models.CharField(max_length=20, blank=False, null=False)
     telefono = models.CharField(max_length=10, blank=True, null=True)
     celular = models.CharField(max_length=15, blank=False, null=False)

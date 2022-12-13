@@ -583,19 +583,21 @@ const informacionCitacion = async (req) => {
 
   let datos = {}
   endpoints=[
+    config.urlGatewayExpedientes + "expedientes/" + req.params.id,
   config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/convocantes",
-  config.urlApiExpedientes + "relaciones_persona_citacion"+req.params.id_relacion,
+  config.urlApiExpedientes + "relaciones_persona_citacion/"+req.params.id_relacion,
   config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/conciliadores",
   config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/estudiantes",
   config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/hechos",
-  config.urlGatewayExpedientes + "citaciones/"+req.params.id_citacion,
+  config.urlApiExpedientes+"citaciones/"+req.params.id_citacion,
 
 
   ]
+  console.log()
   // console.log(endpoints)
 
   await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-    .then(axios.spread(async (expediente, convocante, convocado, conciliador, estudiante, hechos, citacion, resultado) => {
+    .then(axios.spread(async ( expediente,convocante, convocado, conciliador, estudiante, hechos, citacion, resultado) => {
 
       if (Object.keys(expediente.data).length < 0) { datos.expediente = [] } else {
         for (const iterator in expediente.data) {
@@ -617,11 +619,11 @@ const informacionCitacion = async (req) => {
           datos["convocante_" + iterator] = convocante.data.results[0][iterator]
         }
       }
-      if (Object.keys(convocado.data.results).length < 0) { datos.convocado = [] } else {
-        for (const iterator in convocado.data.results[0]) {
-          if (typeof (convocado.data.results[0][iterator]) == 'string') { convocado.data.results[0][iterator] = convocado.data.results[0][iterator].toUpperCase() }
-          if (convocado.data.results[0][iterator] == null) { convocado.data.results[0][iterator] = "___" }
-          datos["convocado_" + iterator] = convocado.data.results[0][iterator]
+      if (Object.keys(convocado.data).length < 0) { datos.convocado = [] } else {
+        for (const iterator in convocado.data) {
+          if (typeof (convocado.data[iterator]) == 'string') { convocado.data[iterator] = convocado.data[iterator].toUpperCase() }
+          if (convocado.data[iterator] == null) { convocado.data[iterator] = "___" }
+          datos["citado_" + iterator] = convocado.data[iterator]
         }
       }
       if (Object.keys(conciliador.data.results).length < 0) { datos.conciliador = [] } else {
@@ -650,23 +652,16 @@ const informacionCitacion = async (req) => {
           datos["hechos_" + iterator] = hechos.data.results[0][iterator]
         }
       }
-      if (Object.keys(citacion.data.results).length < 0) { datos.citacion = [] } else {
-        for (const iterator in citacion.data.results[0]) {
-          if (typeof (citacion.data.results[0][iterator]) == 'string') { citacion.data.results[0][iterator]= citacion.data.results[0][iterator].toUpperCase() }
-          if (citacion.data.results[0][iterator]== null) { citacion.data.results[0][iterator] = "___" }
-          datos["citacion_" + iterator] = citacion.data.results[0][iterator]
+      if (Object.keys(citacion.data).length < 0) { datos.citacion = [] } else {
+        for (const iterator in citacion.data) {
+          if (typeof (citacion.data[iterator]) == 'string') { citacion.data[iterator]= citacion.data[iterator].toUpperCase() }
+          if (citacion.data[iterator]== null) { citacion.data[iterator] = "___" }
+          datos["citacion_" + iterator] = citacion.data[iterator]
         }
-        const fecha = new Date(citacion.data.results[0].fecha_sesion)
+        const fecha = new Date(citacion.data.fecha_sesion)
         datos.citacion_mes = fecha.toLocaleString('default', { month: 'long' }).toUpperCase()
         datos.citacion_año = fecha.getFullYear()
         datos.citacion_dia = fecha.getUTCDate()
-      }
-      if (Object.keys(resultado.data).length < 0) { datos.resultado = [] } else {
-        for (const iterator in resultado.data) {
-          if (typeof (resultado.data[iterator]) == 'string') { resultado.data[iterator]= resultado.data[iterator].toUpperCase() }
-          if (resultado.data[iterator]== null) { resultado.data[iterator]= "___" }
-          datos["resultado_" + iterator] = resultado.data[iterator]
-        }
       }
 
 
@@ -828,6 +823,30 @@ views.DescargarFormatoResultado = async (req, res) => {
 views.DescargarFormatoCitacion = async (req, res) => {
   try {
     
+    axios.get(config.urlApiExpedientes + "citaciones/" + req.params.id_citacion)
+      .then(async result => {
+        if (Object.keys(result.data).length < 1) { res.sendStatus(error({ message: "El expediente aun no tiene resultado" }, 204)); return }
+        await informacionCitacion(req).then(async (resul) => {
+          // console.log(resul.data.results[0])
+         
+          resul.nombre_documento="CITACION AUDIENCIA DE CONCILIACION"
+          
+          await axios.post(config.urlGeneradorDocumentos+"generar/",resul,{responseType : 'arraybuffer'})
+            .then(async result=>{
+              
+              res.end(result.data)
+          })
+            .catch(err => {
+              res.sendStatus(error(err))
+            })
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+
+      }).catch((err) => {
+
+      });
   }catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -901,19 +920,22 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
           for (const iterator of personas_no_citadas) {
             endpoints[endpoints.length] = config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id + "&persona_id=" + iterator
           }
+       
           personas_no_citadas = []
           await  Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
             .then(axios.spread(async (...allData) => {
 
-              for (const iterator of allData) {
+              for await(const iterator of allData) {
                 personas_no_citadas.push(iterator.data.results[0])
               }
-
+              console.log("entre");
               datos.personas_no_citadas = personas_no_citadas
               
             }))
+            
             .catch(err => {
-
+              console.log(err);
+              
               error(err)
               return
 

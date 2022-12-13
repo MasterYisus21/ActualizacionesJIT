@@ -113,6 +113,7 @@ router.patch("/documentos/:id",views_genericos.AprobarDocumentosCaso)
 
 
 router.post("/expedientes/:id/resultados/:id_resultado/formato", views_genericos.DescargarFormatoResultado);
+router.post("/expedientes/:id/citaciones/:id_citacion/personas/:id_relacion/formato", views_genericos.DescargarFormatoCitacion);
 // turnos fecha
 
 router.get("/expedientes/:id/turnos/:fecha", views_genericos.TurnosFecha);
