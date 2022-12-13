@@ -1,13 +1,68 @@
-import React from 'react'
-
 // Import css
 import './Popup.css'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import { useState, useCallback, useEffect } from "react"
+import { axiosTokenInstanceApiExpedientes } from "../../helpers/axiosInstances";
+
 
 export default function Popup({text, setEstado, estado}){
+
+    const [tiposDocumento, setTiposDocumento] = useState([])
+    const [tiposCargo, setTiposCargo] = useState([])
+    const [tiposGrupo, setTiposGrupo] = useState([])
+
+    useEffect(() => {
+        axiosTokenInstanceApiExpedientes({
+          method: 'get',
+          url: "/tipos_documento/?count=20",
+          // headers: req.headers,
+          data: {}
+        })
+          .then(result => {
+            console.log(result.data);
+            setTiposDocumento(result.data.results)
+          })
+          .catch(err => {
+            console.log("error");
+          });
+      }, [])
+
+      useEffect(() => {
+        axiosTokenInstanceApiExpedientes({
+          method: 'get',
+          url: "/tipos_cargo/?count=20",
+          // headers: req.headers,
+          data: {}
+        })
+          .then(result => {
+            console.log(result.data);
+            setTiposCargo(result.data.results)
+          })
+          .catch(err => {
+            console.log("error");
+          });
+      }, [])
+
+      useEffect(() => {
+        axiosTokenInstanceApiExpedientes({
+          method: 'get',
+          url: "/grupos/?count=20",
+          // headers: req.headers,
+          data: {}
+        })
+          .then(result => {
+            console.log(result.data);
+            setTiposGrupo(result.data.results)
+          })
+          .catch(err => {
+            console.log("error");
+          });
+      }, [])
+
     return (
         <div className='wrapp-popup'>
+           <Form className="secciones-temas" > 
             <div className='popup'>
                 <div className='titulo-popup'>
                     <h1>Crear Persona</h1>
@@ -33,8 +88,11 @@ export default function Popup({text, setEstado, estado}){
                     <div className='columnas-inputs'>
                     <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
                         <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                        <option>Abre el menú para ver las opciones</option>
-                        <option value="1">Cédula de ciudadanía</option>
+          
+                        <option value={""}>Abre el menú para ver las opciones</option>
+                        {tiposDocumento.map(tipoDocumento => {
+                            return (<option key={"tipoDocumento" + tipoDocumento["id"]} value={tipoDocumento["id"]}>{tipoDocumento["nombre"]}</option>)
+                        })}
                         </Form.Select>
                     </FloatingLabel>
                     <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
@@ -61,26 +119,29 @@ export default function Popup({text, setEstado, estado}){
                     <div className='columnas-inputs'>
                         <FloatingLabel controlId="floatingSelectGrid" label="Cargo">
                             <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
+                            <option value={""}>Abre el menú para ver las opciones</option>
+                            {tiposCargo.map(tipoCargo => {
+                                return (<option key={"tipoCargo" + tipoCargo["id"]} value={tipoCargo["id"]}>{tipoCargo["nombre"]}</option>)
+                            })}
                             </Form.Select>
                         </FloatingLabel>
                         <FloatingLabel controlId="floatingSelectGrid" label="Permiso">
                             <Form.Select className='inputs-personas' aria-label="Floating label select example">
-                            <option>Elige una</option>
-                            <option value="1">Cédula de ciudadanía</option>
-                            <option value="2">Cédula extranjera</option>
+                            <option value={""}>Abre el menú para ver las opciones</option>
+                            {tiposGrupo.map(tipoGrupo => {
+                                return (<option key={"tipoGrupo" + tipoGrupo["id"]} value={tipoGrupo["id"]}>{tipoGrupo["name"]}</option>)
+                            })}
                             </Form.Select>
                         </FloatingLabel>
                     </div>
                     
                     <div className="wrapp-botones">
-                        <button className='botones-popup'>Modificar</button>
+                        <button className='botones-popup'>Guardar</button>
                         <button className='botones-popup'>Cancelar</button>
                     </div>
                 </div>
             </div>
+            </Form>
         </div>
     )
 }

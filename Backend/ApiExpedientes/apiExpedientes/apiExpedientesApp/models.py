@@ -550,7 +550,7 @@ class Expediente(EstadoModel):
     identificador_sicaac= models.CharField(max_length=15,blank=True,null=True)
     numero_radicado = models.CharField(max_length =20,editable=True,null=True,blank=True)
     numero_caso = models.CharField(max_length=25,default = increment_numero_caso_number,editable=False,unique=True)
-    fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
+    fecha_registro=models.DateField(blank=False , null=False,auto_now=False,auto_now_add=True) # Se crea automaticamente 
     caso_gratuito= models.BooleanField(default=True, blank=True,null=True)
     asunto_juridico_definible= models.BooleanField(default=False, blank=False,null=False)
     fecha_finalizacion= models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
@@ -595,7 +595,7 @@ class Relacion_persona_expediente(EstadoModel):
 class Historico(models.Model):
 
     id = models.AutoField(primary_key=True, unique=True) 
-    fecha =  models.DateTimeField( auto_now=True,blank=False,null=False)
+    fecha =  models.DateTimeField(blank=False,null=False,auto_now=False,auto_now_add=True)
     estado_id = models.ForeignKey(Estado_expediente, on_delete=models.SET_NULL, blank=False, null=True)
     expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
 
@@ -632,7 +632,7 @@ class Resultado(EstadoModel):
     consecutivo= models.PositiveIntegerField(null=False,blank=False)
     acuerdo  = models.TextField(blank=True,null=True)
     documento = models.FileField(upload_to='resultados/', max_length=100, blank=True,null=True)
-    fecha = models.DateField( auto_now=True, auto_now_add=False , blank=False , null=False) 
+    fecha = models.DateField(auto_now=False,auto_now_add=True , blank=False , null=False) 
     tipo_resultado_id = models.ForeignKey(Tipo_resultado, on_delete=models.SET_NULL, blank=False, null=True)
     expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
     
@@ -673,7 +673,7 @@ class Medio_seguimiento(GeneralModel):
         return self.nombre
 
 class Seguimiento(EstadoModel):
-    fecha = models.DateField(auto_now=True,blank=False,null=False)    
+    fecha = models.DateField(auto_now=False,auto_now_add=True,blank=False,null=False)    
     expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True) 
     medio_seguimiento_id = models.ForeignKey(Medio_seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
     recomendacion_al_usuario = models.TextField(blank=True,null=True)
