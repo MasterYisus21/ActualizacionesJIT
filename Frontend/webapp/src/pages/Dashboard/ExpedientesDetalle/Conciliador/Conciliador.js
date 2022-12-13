@@ -37,7 +37,7 @@ function Conciliador() {
   const searchCandidatos = (pageCustom) => {
     axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/personas/" + "?ordering=-numero_caso&count=5&page=" + (pageCustom ? pageCustom : pageCandidatos) + "&search=Conciliador," + (valoresBuscadosCandidatos.length !== 0 ? valoresBuscadosCandidatos[valoresBuscadosCandidatos.length - 1] : ""),
+      url: "/personas/" + "?ordering=-id&count=5&page=" + (pageCustom ? pageCustom : pageCandidatos) + "&search=Conciliador," + (valoresBuscadosCandidatos.length !== 0 ? valoresBuscadosCandidatos[valoresBuscadosCandidatos.length - 1] : ""),
       // headers: req.headers,
       data: {}
     })
@@ -84,6 +84,46 @@ function Conciliador() {
     }
   }, [pageCandidatos])
 
+  const handleAddPerson = (idPersona, nombre) => {
+    function addPerson(idPersona) {
+      // alert(`deleted person ${idPersona}`)
+      axiosTokenInstanceApiExpedientes({
+        method: 'post',
+        url: "/expedientes/" + id + "/conciliadores/" + idPersona,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          // setResultadosBusqueda(resultadosBusqueda.filter((resultadosBusqueda) => {
+          //   return resultadosBusqueda["id"] != idPersona
+          // }))
+          if (result.status === 208) {
+            alert("Esta persona ya esta registrada como conciliador")
+          } else if (result.status === 200) {
+            setResultadosBusqueda([result.data, ...resultadosBusqueda])
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+    }
+    confirmAlert({
+      title: `Confirmación para agregar persona`,
+      message: `¿Estas seguro de agregar a ${nombre.toUpperCase()} del caso?.`,
+      buttons: [
+        {
+          label: 'Si',
+          onClick: () => addPerson(idPersona)
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  }
+
 
 
   const search = () => {
@@ -91,7 +131,7 @@ function Conciliador() {
     // console.log(e.target.documento.value)
     axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/expedientes/" + id + "/conciliadores/?ordering=-numero_caso&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
+      url: "/expedientes/" + id + "/conciliadores/?ordering=-id&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }),
       // headers: req.headers,
       data: {}
     })
@@ -195,7 +235,7 @@ function Conciliador() {
               <table className='table table-striped table-bordered table-responsive '>
                 <thead >
                   <tr>
-                    <th></th>
+                    {/* <th></th> */}
                     <th>Tipo de documento</th>
                     <th>Identificación</th>
                     <th>Nombre</th>
@@ -206,12 +246,12 @@ function Conciliador() {
                   {resultadosBusquedaCandidatos.map((dato, key) => {
                     return (
                       <tr key={dato["id"]}>
-                        <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio' value={dato["id"]}></input></td>
+                        {/* <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio' value={dato["id"]}></input></td> */}
                         <td>{dato["tipo_documento"]}</td>
                         <td>{dato["identificacion"]}</td>
                         <td>{dato["nombres"] + ' ' + dato["apellidos"]}</td>
                         <td>
-                          <button type="submit" className="boton-crear-conciliador" id='boton-agregar-conciliador'> Agregar</button>
+                          <button type="submit" className="boton-crear-conciliador" id='boton-agregar-conciliador' onClick={(e) => { handleAddPerson(dato["id"], dato["nombres"] + ' ' + dato["apellidos"]) }}> Agregar</button>
                         </td>
                       </tr>
                     );
