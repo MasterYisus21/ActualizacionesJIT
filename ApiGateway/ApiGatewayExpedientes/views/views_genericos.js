@@ -1071,7 +1071,7 @@ views.CambiarDocumentoCaso = async (req, res) => {
       }
       return
     }
-    axios.get(config,urlApiExpedientes+"expedientes/"+req.params.id)
+    axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
       .then(async result=>{
         await unirest
 
