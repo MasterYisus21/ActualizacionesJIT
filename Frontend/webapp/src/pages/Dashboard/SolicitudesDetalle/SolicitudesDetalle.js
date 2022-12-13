@@ -53,6 +53,16 @@ function SolicitudesDetalle() {
       .then(result => {
         console.log(result.data);
         setData(result.data)
+
+        document.getElementById("identificacion").value = result.data.convocante["identificacion"]
+        document.getElementById("tipoDocumento").value = result.data.convocante["tipo_documento_id"]
+        document.getElementById("fechaExpedicion").value = result.data.convocante["fecha_expedicion"]
+        document.getElementById("lugarExpedicion").value = result.data.convocante["lugar_expedicion"]
+        document.getElementById("lugarExpedicion").value = result.data.convocante["lugar_expedicion"]
+        document.getElementById("nombres").value = result.data.convocante["nombres"]
+        document.getElementById("apellidos").value = result.data.convocante["apellidos"]
+        document.getElementById("fechaNacimiento").value = result.data.convocante["fecha_nacimiento"]
+        console.log(document.getElementById("tipoPersona").value = result.data.convocante["tipo_persona_id"])
       })
       .catch(err => {
         console.log("error");
@@ -214,7 +224,8 @@ function SolicitudesDetalle() {
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
-                name="genero"
+                name="tipoDocumento"
+                id ="tipoDocumento"
                 required
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
@@ -224,13 +235,14 @@ function SolicitudesDetalle() {
               </Form.Select>
             </FloatingLabel>
             <FloatingLabel
-              controlId="floatingInputGrid"
+              controlId="identificacion"
               label="Número de documento"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
-                type="number"
+                type="text"
                 placeholder="name@example.com"
+                name="identificacion"
               />
             </FloatingLabel>
 
@@ -238,7 +250,7 @@ function SolicitudesDetalle() {
               Fecha y lugar de expedición de documento
             </label>
             <FloatingLabel
-              controlId="floatingInputGrid"
+              controlId="fechaExpedicion"
               label="Fecha de expedición de documento"
             >
               <Form.Control
@@ -248,7 +260,7 @@ function SolicitudesDetalle() {
               />
             </FloatingLabel>
             <FloatingLabel
-              controlId="floatingInputGrid"
+              controlId="lugarExpedicion"
               label="Lugar de expedición"
             >
               <Form.Control
@@ -259,14 +271,14 @@ function SolicitudesDetalle() {
             </FloatingLabel>
 
             <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="floatingInputGrid" label="Nombres">
+            <FloatingLabel controlId="nombres" label="Nombres">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
               />
             </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
+            <FloatingLabel controlId="apellidos" label="Apellidos">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
@@ -292,7 +304,7 @@ function SolicitudesDetalle() {
                 />
               </FloatingLabel>
             </div>
-            <FloatingLabel controlId="floatingInputGrid" label="Fecha">
+            <FloatingLabel controlId="fechaNacimiento" label="Fecha de Nacimiento">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="date"
@@ -316,7 +328,7 @@ function SolicitudesDetalle() {
                       className="form-check-input"
                       type="radio"
                       name="flexRadioDefault"
-                      id="flexRadioDefault1"
+                      id="tipoPersona"
                     />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                       {tipoPersona["nombre"]}
@@ -328,7 +340,7 @@ function SolicitudesDetalle() {
 
             <label className="subtitles-secciones">Sexo y Género</label>
             <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingSelectGrid" label="Sexo">
+              <FloatingLabel controlId="sexo" label="Sexo">
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
@@ -341,7 +353,7 @@ function SolicitudesDetalle() {
                   })}
                 </Form.Select>
               </FloatingLabel>
-              <FloatingLabel controlId="floatingSelectGrid" label="Género">
+              <FloatingLabel controlId="genero" label="Género">
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
@@ -360,7 +372,7 @@ function SolicitudesDetalle() {
               Estrato y dirección de residencia
             </label>
             <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingSelectGrid" label="Estrato">
+              <FloatingLabel controlId="estratoSocioeconomico" label="Estrato">
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
@@ -373,7 +385,7 @@ function SolicitudesDetalle() {
                   })}
                 </Form.Select>
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Dirección">
+              <FloatingLabel controlId="direccion" label="Dirección">
                 <Form.Control
                   className="col-inputs"
                   type="text"

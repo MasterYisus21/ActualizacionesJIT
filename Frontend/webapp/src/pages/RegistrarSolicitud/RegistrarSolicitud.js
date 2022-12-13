@@ -833,7 +833,7 @@ function RegistrarSolicitud() {
                     <label htmlFor="ciudad" className="form-label">Ciudad:</label>
                     <SearchableSelect
                         axiosInstance={axiosBasicInstanceApiSolicitudes}
-                        url={"/paises/1/departamentos/" + departamento}
+                        url={"/paises/1/departamentos/" + departamento}ºº
                         name={"ciudad"}
                         identifier={"id"}
                         initialValue={""}
