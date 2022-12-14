@@ -290,9 +290,15 @@ class CitacionSerializer(serializers.ModelSerializer):
 class Relacion_persona_citacionSerializer(serializers.ModelSerializer):
     fecha_sesion= serializers.CharField(source='citacion_id.fecha_sesion', read_only=True)
     turno_id= serializers.CharField(source='citacion_id.turno_id.id', read_only=True)
-    nombres_persona = serializers.CharField(source='persona_id', read_only=True)
-    identificacion_persona= serializers.CharField(source='persona_id.identificacion', read_only=True)
-    tipo_documento_persona= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    nombres = serializers.CharField(source='persona_id', read_only=True)
+    identificacion= serializers.CharField(source='persona_id.identificacion', read_only=True)
+    tipo_documento= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    direccion = serializers.CharField(source='persona_id.direccion', read_only=True)
+    correo = serializers.CharField(source='persona_id.correo', read_only=True)
+    celular = serializers.CharField(source='persona_id.celular', read_only=True)
+    barrio  =  serializers.CharField(source='persona_id.barrio_id', read_only=True)
+    localidad = serializers.CharField(source='persona_id.barrio_id.localidad_id', read_only=True)
+    ciudad = serializers.CharField(source='persona_id.barrio_id.localidad_id.ciudad_id', read_only=True)
     class Meta:
         model = Relacion_persona_citacion          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
