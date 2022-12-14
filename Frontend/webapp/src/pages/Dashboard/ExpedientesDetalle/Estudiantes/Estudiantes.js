@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { Button } from '../../../../components/Button'
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
-import { Popup } from '../../../../components';
+import { Buscador, Popup } from '../../../../components';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 
 // Importing css
@@ -11,14 +11,117 @@ import "./Estudiantes.css"
 function Estudiantes() {
 
   const [estado, setEstado] = useState(false);
+
   const [popup, setPopup] = useState(false);
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [valoresBuscados, setValoresBuscados] = useState([])
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
 
+  const [resultadosBusquedaCandidatos, setResultadosBusquedaCandidatos] = useState([]);
+  const [valoresBuscadosCandidatos, setValoresBuscadosCandidatos] = useState([])
+  const [numPagesCandidatos, setNumPagesCandidatos] = useState(1)
+  const [pageCandidatos, setPageCandidatos] = useState(1)
+
   let { id } = useParams();
   let resultados = useRef([])
+  let resultadosCandidatos = useRef([])
+
+  useEffect(() => {
+    if (estado && resultadosBusquedaCandidatos.length === 0) {
+      searchCandidatos()
+    }
+  }, [estado])
+
+  const searchCandidatos = (pageCustom) => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/personas/" + "?ordering=-id&count=5&page=" + (pageCustom ? pageCustom : pageCandidatos) + "&search=Estudiante," + (valoresBuscadosCandidatos.length !== 0 ? valoresBuscadosCandidatos[valoresBuscadosCandidatos.length - 1] : ""),
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        if (pageCandidatos == 1 || pageCustom == 1) {
+          resultadosCandidatos.current = result.data.results
+          setPageCandidatos(1)
+
+        } else {
+          resultadosCandidatos.current = [...resultadosCandidatos.current, ...result.data.results]
+        }
+        setResultadosBusquedaCandidatos(resultadosCandidatos.current)
+        setNumPagesCandidatos(Math.ceil(result.data.count / 5))
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const handlePageChangeCandidatos = (page) => {
+    if (pageCandidatos <= numPagesCandidatos) {
+      setPageCandidatos(page)
+    }
+  }
+
+  const handleScrollCandidatos = (e) => {
+    // console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
+    // console.log('clientHeight: ', e.target.clientHeight);
+    if (e.target.scrollHeight - e.target.scrollTop - 100 < e.target.clientHeight) {
+      // console.log("almost bottom");
+      handlePageChangeCandidatos(pageCandidatos + 1)
+    }
+  }
+
+  useEffect(() => {
+    setResultadosBusquedaCandidatos([]);
+    searchCandidatos(1)
+  }, [valoresBuscadosCandidatos])
+
+  useEffect(() => {
+    if (pageCandidatos != 1) {
+      searchCandidatos()
+    }
+  }, [pageCandidatos])
+
+  const handleAddPerson = (idPersona, nombre) => {
+    function addPerson(idPersona) {
+      // alert(`deleted person ${idPersona}`)
+      axiosTokenInstanceApiExpedientes({
+        method: 'post',
+        url: "/expedientes/" + id + "/estudiantes/" + idPersona,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          // setResultadosBusqueda(resultadosBusqueda.filter((resultadosBusqueda) => {
+          //   return resultadosBusqueda["id"] != idPersona
+          // }))
+          if (result.status === 208) {
+            alert("Esta persona ya esta registrada en este expediente")
+          } else if (result.status === 200) {
+            setResultadosBusqueda([result.data, ...resultadosBusqueda])
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+    }
+    confirmAlert({
+      title: `Confirmación para agregar persona`,
+      message: `¿Estas seguro de agregar a ${nombre.toUpperCase()} al caso?.`,
+      buttons: [
+        {
+          label: 'Si',
+          onClick: () => addPerson(idPersona)
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  }
 
   const search = () => {
 
@@ -108,7 +211,7 @@ function Estudiantes() {
   return (
     <>
       <div className='container container-estudiantes pt-3'>
-      {popup &&
+        {popup &&
           <Popup setEstado={setPopup} estado={popup}></Popup>
         }
         <div className='center-text'><h2>Informacion de estudiantes</h2></div>
@@ -139,38 +242,58 @@ function Estudiantes() {
                 <Button
                   className={""}
                   text={"Agregar Estudiantes"}
+                  onClick={() => { setEstado(!estado) }}
                 />
               </div>
             </div>
           </nav>
         </div>
-        <form className='contenedor-tabla-seleccion-estudiantes mb-5 p-4 pb-3' onSubmit={e => { }}>
-          <label className='pb-3 h5'>Seleccione el estudiante que desea agregar</label>
-          <table className='table table-striped table-bordered table-responsive'>
-            <thead >
-              <tr>
-                <th></th>
-                <th>Tipo de documento</th>
-                <th>Identificación</th>
-                <th>Nombre</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio'></input></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <div className=''>
-            <Button
-              className={""}
-              text={"Agregar"}
+        {estado &&
+          <div className='contenedor-tabla-seleccion-conciliador mb-5 p-4 pb-3'>
+            <label className='pb-3 h5'>Seleccione el conciliador que desea agregar</label>
+            <Buscador
+              valoresBuscados={valoresBuscadosCandidatos}
+              setValoresBuscados={setValoresBuscadosCandidatos}
+              filtros={[]}
+              setFiltros={() => { }}
+              setPage={handlePageChangeCandidatos}
+              required
             />
+            <div className='conciliadores-candidatos-container' onScroll={e => handleScrollCandidatos(e)}>
+              <table className='table table-striped table-bordered table-responsive '>
+                <thead >
+                  <tr>
+                    {/* <th></th> */}
+                    <th>Tipo de documento</th>
+                    <th>Identificación</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {resultadosBusquedaCandidatos.map((dato, key) => {
+                    return (
+                      <tr key={dato["id"]}>
+                        {/* <td><input className='class="custom-control-input"' name="identificacionPersona" type='radio' value={dato["id"]}></input></td> */}
+                        <td>{dato["tipo_documento"]}</td>
+                        <td>{dato["identificacion"]}</td>
+                        <td>{dato["nombres"] + ' ' + dato["apellidos"]}</td>
+                        <td>
+                          <button type="submit" className="boton-crear-conciliador" id='boton-agregar-conciliador' onClick={(e) => { handleAddPerson(dato["id"], dato["nombres"] + ' ' + dato["apellidos"]) }}> Agregar</button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  <Button
+                    onClick={e => { handlePageChangeCandidatos(pageCandidatos + 1) }}
+                    className="span2"
+                    text="Cargar más"
+                  />
+                </tbody>
+              </table>
+            </div>
           </div>
-        </form>
+        }
         <div className='contenedor-tabla-estudiantes' onScroll={e => handleScroll(e)}>
           <table className='table table-striped table-bordered table-responsive '>
             <thead >
