@@ -17,11 +17,8 @@ const path = require("path");
 function Generar(nombre_documento,informacion) {
    // let datos ={}
    try{
-    console.log("ent")
-    if(!fs.existsSync(path.resolve(__dirname, nombre_documento+".docx"))) {
-      console.log("File not found")
-      return;
-  }
+  
+
     const content = fs.readFileSync(
         path.resolve(__dirname, nombre_documento+".docx"),
         "binary"
