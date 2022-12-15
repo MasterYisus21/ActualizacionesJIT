@@ -7,6 +7,10 @@ import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInsta
 //Importing css
 import './DatosGenerales.css'
 
+// Import necesary for notification center
+import { toast } from 'react-toastify';
+
+
 function DatosGenerales() {
 
   const [solicitantesServicio, setSolicitantesServicio] = useState([])
@@ -193,6 +197,9 @@ function DatosGenerales() {
     })
       .then(result => {
         console.log(result.data);
+        toast.success('La información se ha guardado con exito', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
       })
       .catch(err => {
         console.log(err);
