@@ -7,6 +7,11 @@ import { IconButton } from '../../components'
 // Importing css
 import './Dashboard.css'
 
+// Notification system
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// toast.configure()
+
 
 
 
@@ -14,6 +19,20 @@ function Dashboard() {
 
   const [pagina, setPagina] = useState("Dashboard")
   const [nombre, setNombre] = useState("Andres Felipe Villamizar Palacio")
+
+
+  const notify = () => {
+
+    // Calling toast method by passing string
+    toast.success('Hello Geeks', {
+      position: toast.POSITION.BOTTOM_RIGHT
+    })
+  }
+
+  useEffect(() => {
+    notify()
+  }, [])
+
 
 
   return (
@@ -77,7 +96,7 @@ function Dashboard() {
         <Outlet context={{ setPagina }} />
       </div>
 
-
+      <ToastContainer />
     </div>
   )
 }

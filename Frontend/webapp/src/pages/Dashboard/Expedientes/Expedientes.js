@@ -6,6 +6,9 @@ import { axiosBasicInstanceApiExpedientes, axiosTokenInstanceApiExpedientes } fr
 // Importing css
 import './Expedientes.css'
 
+
+
+
 function Expedientes() {
   // Getting outlet context
   const outletContext = useOutletContext();
@@ -20,6 +23,7 @@ function Expedientes() {
   const [numPages, setNumPages] = useState(1)
 
   let resultados = useRef([])
+
 
   const search = () => {
 

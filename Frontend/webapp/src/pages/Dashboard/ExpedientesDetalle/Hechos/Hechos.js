@@ -117,7 +117,7 @@ function Hechos() {
                     <input type="text" className="form-control form-control-sm" id="cuantia_hechos" name='cuantia_hechos' placeholder="" required />
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="cuantia_hechos_indeterminada" onChange={e => { if (e.target.checked) { document.getElementById("cuantia_hechos").disabled = true; document.getElementById("cuantia_hechos").value = "" } else { document.getElementById("cuantia_hechos").disabled = false } }} />
+                    <input className="form-check-input" type="checkbox" id="cuantia_hechos_indeterminada" onChange={e => { if (e.target.checked) { document.getElementById("cuantia_hechos").disabled = true; document.getElementById("cuantia_hechos").value = "0" } else { document.getElementById("cuantia_hechos").disabled = false } }} />
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         Cuantía indeterminada
                     </label>
