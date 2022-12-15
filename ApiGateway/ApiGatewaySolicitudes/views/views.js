@@ -8,7 +8,24 @@ const config = require("../config.json");
 const requests = require("../requests/requests_generales.js");
 const { query } = require("express");
 
-
+const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,) => {
+  let email = {
+    nombre_servicio:"Centro de Conciliación",
+    tipo_mensaje: tipo_mensaje,
+    destinatario: correoQuienRecibe,
+    asunto: asunto,
+    mensaje: {
+      saludo: "<br>Reciba un cordial saludo",
+      encabezado: encabezado,
+      despedida: "Gracias por la atencion prestada",
+      firma: {
+        firma: ["Universidad La Gran Colombia", "Centro de Conciliacion Jose Ignacio Talero Losada ","Teléfono: 3340883","Calle 12 No.8 -37 ", "<u>ccjoseignaciotalerolosada@ugc.edu.co</u>"],
+        style: "color:#b2aaaa"
+      }
+    }
+  }
+  return email
+}
 //listar Seleccionables Principales
 views.SeleccionablesPricipales = async (req, res) => {
   try {
@@ -122,12 +139,19 @@ views.CrearSolicitud = async (req, res) => {
     datos.push(req.body.convocado[0])
     const personas = [config.urlApiSolicitudes + "personas_solicitud/", datos]
     const solicitud = [config.urlApiSolicitudes + "solicitudes/", { estado_solicitud_id: 1 }]
-
+    
     let endpoints = [personas, solicitud]
     // const hechos=config.urlApiSolicitudes+"hechos/"+","+
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
       .then(axios.spread(async (data1, data2) => {
-
+      let  encabezado = `Este mensaje notifica que hemos recibido una solicitud de audiencia al Centro de Conciliación José Ignacio Talero Losada 
+        de la Universidad La Gran Colombia con el siguiente número de radicado: <b>${data2.data.numero_radicado}</b> 
+        <br> <br> Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.
+      `
+      let asunto = "Solicitud de Conciliacion"
+    
+        const correo = axios.post(config.urlEmail,email("html",[req.body.convocante[0].correo],asunto,encabezado))
+          
         req.params.id = data2.data.id
         req.body.hechos[0].solicitud_id = data2.data.id
         const relacion_convocante_solicitud = [config.urlApiSolicitudes + "relaciones_persona_solicitud/", { solicitud_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
@@ -213,24 +237,24 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
 
 views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
   try {
-    
-    let endpoints=[]
-    datos={}
+
+    let endpoints = []
+    datos = {}
     if (!req.query.count) { req.query.count = 20 }
-     endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion ,
-                    config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion ]
-  
-       
+    endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion,
+    config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion]
+
+
     if ((req.url.indexOf('?')) > 0) {
       console.log("entre")
       const query = '&' + req.url.slice(req.url.indexOf('?') + 1)
-       endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion+query ,
-      config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion+query ]
-      
+      endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion + query,
+      config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion + query]
+
     }
-  
+
     // console.log(config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion)
-    
+
     // axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion)
     //   .then(result=>{
     //     res.status(200).json(result.data)
@@ -238,12 +262,12 @@ views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
     //   .catch(err => {
     //     res.sendStatus(error(err))
     //   })
-    
-                    
+
+
     await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
       .then(axios.spread((data1, data2) => {
-      datos.solicitudes=data1.data
-      datos.expedientes=data2.data
+        datos.solicitudes = data1.data
+        datos.expedientes = data2.data
 
         res.status(201).json(datos)
 
@@ -255,7 +279,7 @@ views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
       })
 
 
-   
+
 
 
   } catch (error) {
@@ -304,16 +328,16 @@ views.AprobarSolicitud = async (req, res) => {
         res.status(200).json(result.data)
         // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
         if (req.body.estado_solicitud_id == 2) {
-          
+
           await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id)
             .then(async result => {
-              result.data.conciliador=req.body.conciliador_id
-              result.data.hechos[0].cuantia=req.body.valor_caso
+              result.data.conciliador = req.body.conciliador_id
+              result.data.hechos[0].cuantia = req.body.valor_caso
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
-              .then(result =>{
-                // res.status(200).json(result.data)
-              })  
-              .catch(err => {
+                .then(result => {
+                  // res.status(200).json(result.data)
+                })
+                .catch(err => {
                   error(err)
                   return
                 })
@@ -417,16 +441,16 @@ views.ListarSolicitudes = async (req, res) => {
 }
 views.AutenticacionUsuario = async (req, res) => {
   try {
-    
-    
-    axios.get(config.urlApiExpedientes+"relaciones_persona_solicitud?solicitud_id=")
-      .then(result=>{
-        
-    })
+
+
+    axios.get(config.urlApiExpedientes + "relaciones_persona_solicitud?solicitud_id=")
+      .then(result => {
+
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;

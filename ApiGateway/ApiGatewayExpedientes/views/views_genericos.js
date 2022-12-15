@@ -24,7 +24,23 @@ const path = require("path");
 //encuenstas
 //seguimientos
 //informes
-
+const email=(tipo_mensaje,correoQuienRecibe,asunto,encabezado,)=>{
+  let email = {
+  tipo_mensaje:tipo_mensaje,
+  destinatario:correoQuienRecibe,
+  asunto: asunto,
+  mensaje:{
+    saludo: "<br>Reciba un cordial saludo",
+    encabezado :encabezado,
+   despedida: "Gracias por la atencion prestada",
+  firma: {
+    firma:["Universidad La Gran Colombia","Centro de Conciliacion Jose Ignacio Talero Losada ","<u>ccjoseignaciotalerolosada@ugc.edu.co>"],
+    style:"color:#b2aaaa"
+  }
+}
+}
+return email
+}
 views.CrearPersonas = async (req, res) => {
   try {
     if (req.body.nombres == "" | req.body.nombres == null) { res.sendStatus(error({ message: "No ha ingresado el nombre de la persona" })); return }
