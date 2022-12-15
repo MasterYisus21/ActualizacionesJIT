@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { Buscador, Button, Popup,PopupConv  } from '../../../../components';
+import { Buscador, Button, Popup, PopupConv } from '../../../../components';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 
 // Importing css
 import './Convocados.css'
+
+// Import necesary for notification center
+import { toast } from 'react-toastify';
 
 function Convocados() {
 
@@ -87,6 +90,9 @@ function Convocados() {
           setResultadosBusqueda(resultadosBusqueda.filter((resultadosBusqueda) => {
             return resultadosBusqueda["id"] != idPersona
           }))
+          toast.success('La información se ha guardado con exito', {
+            position: toast.POSITION.BOTTOM_RIGHT
+          })
         })
         .catch(err => {
           console.log("error");
@@ -120,12 +126,12 @@ function Convocados() {
         }
         <h2>Informacion del convocado</h2>
         <div className='navbar-convocado'>
-          <Buscador
+          {/* <Buscador
             valoresBuscados={valoresBuscados}
             setValoresBuscados={setValoresBuscados}
             setPage={handlePageChange}
             required
-          />
+          /> */}
           <button className='boton-crear-convocado' onClick={() => setPopupconv(!popupconv)}>Crear Convocado</button>
         </div>
         <div className='contenedor-tabla-convocado' onScroll={e => handleScroll(e)}>
