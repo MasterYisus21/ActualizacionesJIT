@@ -10,6 +10,7 @@ import './SolicitudesDetalle.css'
 import { useDropzone } from "react-dropzone"
 import { useParams } from "react-router-dom";
 import { axiosBasicInstanceApiSolicitudes, axiosTokenInstanceApiSolicitudes } from "../../../helpers/axiosInstances";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 function SolicitudesDetalle() {
 
@@ -23,8 +24,8 @@ function SolicitudesDetalle() {
   const [seccion3, setSeccion3] = useState(false);
   const [seccion4, setSeccion4] = useState(false);
 
-  const [conv1, setConv1] = useState(false)
-  const [openbutton, setOpenbutton] = useState(false)
+  const [apoderado_convocante, setApoderado_convocante] = useState(false)
+  const [apoderado_convocado, setApoderado_convocado] = useState(false)
 
   // forms options 
   const [sexos, setSexos] = useState([])
@@ -51,10 +52,12 @@ function SolicitudesDetalle() {
       data: {}
     })
       .then(result => {
+
         console.log(result.data);
         setData(result.data)
 
         //Convocante
+        
 
         document.getElementById("identificacion").value = result.data.convocante["identificacion"]
         document.getElementById("tipoDocumento").value = result.data.convocante["tipo_documento_id"]
@@ -72,7 +75,7 @@ function SolicitudesDetalle() {
         document.getElementById("direccion").value = result.data.convocante["direccion"]
         document.getElementById("telefono").value = result.data.convocante["telefono"]
         document.getElementById("celular").value = result.data.convocante["celular"]
-
+        
         //Convocado
 
         document.getElementById("identificacion_Convocado").value = result.data.convocado["identificacion"]
@@ -90,11 +93,13 @@ function SolicitudesDetalle() {
         document.getElementById("celular_Convocado").value = result.data.convocado["celular"]
         document.getElementById("correo_Convocado").value = result.data.convocado["correo"]
 
-        //Convocado
-
+        //Apoderado Convocante
+        
+       
+        
         document.getElementById("identificacion_Apoderado").value = result.data.apoderado["identificacion"]
         document.getElementById("tipoDocumento_Apoderado").value = result.data.apoderado["tipo_documento_id"]
-        // document.getElementById("fechaExpedicion_Apoderado").value = result.data.apoderado["fecha_expedicion"]
+        document.getElementById("fechaExpedicion_Apoderado").value = result.data.apoderado["fecha_expedicion"]
         document.getElementById("lugarExpedicion_Apoderado").value = result.data.apoderado["lugar_expedicion"]
         document.getElementById("nombres_Apoderado").value = result.data.apoderado["nombres"]
         document.getElementById("apellidos_Apoderado").value = result.data.apoderado["apellidos"]
@@ -103,7 +108,9 @@ function SolicitudesDetalle() {
         document.getElementById("correo_Apoderado").value = result.data.apoderado["correo"]
         document.getElementById("tarjetaProfesional_Apoderado").value = result.data.apoderado["tarjeta_profesional"]
 
-
+        
+        // if(result.data.convocante["apoderado_id"] != null) return setApoderado_convocante(true)
+        // if(result.data.convocado["apoderado_id"] != null) return setApoderado_convocado(true)
 
       })
       .catch(err => {
@@ -531,128 +538,132 @@ function SolicitudesDetalle() {
             <label className="subtitles-secciones">Posee apoderado</label>
             <div className='col-detalle-solicitud'>
               <button
-                onClick={() => setConv1(true)}
+                onClick={() => setApoderado_convocante(true)}
                 type = "button"
-                className={conv1 ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
+                className={apoderado_convocante ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
                 Si
               </button>
               <button
-                onClick={() => setConv1(false)}
+                onClick={() => setApoderado_convocante(false)}
                 type = "button"
-                className={conv1 ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
+                className={apoderado_convocante ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
                 No
               </button>
             </div>
+
+            {/* Datos de Apoderado Convocante --------------------------------> */}
             
-            {conv1 &&
+            {apoderado_convocante &&
 
-              <>
-                <label className="subtitles-secciones">Nombre</label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+            <>
+              <label className="subtitles-secciones">Nombre</label>
+              <div className='col-detalle-solicitud'>
+                <FloatingLabel controlId="nombres_Apoderado" label="Nombres">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+                <FloatingLabel controlId="apellidos_Apoderado" label="Apellidos">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-                <label className="subtitles-secciones">
-                  Identificación
-                </label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel
-                    controlId="floatingSelectGrid"
-                    label="Tipo de documento"
-                  >
-                    <Form.Select
-                      className="col-inputs"
-                      aria-label="Floating label select example"
-                    >
-                      <option>Abre el menú para ver las opciones</option>
-                    </Form.Select>
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+              <label className="subtitles-secciones">
+                Identificación
+              </label>
+              <div className='col-detalle-solicitud'>
+              <FloatingLabel controlId="tipoDocumento_Apoderado" label="Tipo de documento">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="tipoDocumento"
+                  required
+                >
+                  <option value={""}>Abre el menú para ver las opciones</option>
+                  {tiposDocumento.map(tipoDocumento => {
+                    return (<option key={"tipoDocumento" + tipoDocumento["id"]} value={tipoDocumento["id"]}>{tipoDocumento["nombre"]}</option>)
+                  })}
+                </Form.Select>
+              </FloatingLabel>
+                <FloatingLabel controlId="identificacion_Apoderado" label="Número de documento">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-                <label className="subtitles-secciones">
-                  Fecha y lugar de expedición de documento
-                </label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel
-                    controlId="floatingInputGrid"
-                    label="Fecha de expedición de documento"
-                  >
-                    <Form.Control
-                      className="col-inputs"
-                      type="date"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel
-                    controlId="floatingInputGrid"
-                    label="Lugar de expedición"
-                  >
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+              <label className="subtitles-secciones">
+                Fecha y lugar de expedición de documento
+              </label>
+              <div className='col-detalle-solicitud'>
+                <FloatingLabel
+                  controlId="fechaExpedicion_Apoderado"
+                  label="Fecha de expedición de documento"
+                >
+                  <Form.Control
+                    className="col-inputs"
+                    type="date"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+                <FloatingLabel
+                  controlId="lugarExpedicion_Apoderado"
+                  label="Lugar de expedición"
+                >
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-                <label className="subtitles-secciones">Datos adicionales</label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Tarjeta profesional ">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="correo">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+              <label className="subtitles-secciones">Datos adicionales</label>
+              <div className='col-detalle-solicitud'>
+                <FloatingLabel controlId="tarjetaProfesional_Apoderado" label="Tarjeta profesional ">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+                <FloatingLabel controlId="correo_Apoderado" label="correo">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Teléfono">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Celular">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+              <div className='col-detalle-solicitud'>
+                <FloatingLabel controlId="telefono_Apoderado" label="Teléfono">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+                <FloatingLabel controlId="celular_Apoderado" label="Celular">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-              </>
-              }
-
+            </>
+            }
+           
           </div>
         </Collapse>
 
@@ -878,130 +889,128 @@ function SolicitudesDetalle() {
             <label className="subtitles-secciones">Posee apoderado</label>
             <div className='col-detalle-solicitud'>
               <button
-                onClick={() => setOpenbutton(true)}
+                onClick={() => setApoderado_convocado(true)}
                 type = "button"
-                className={openbutton ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
+                className={apoderado_convocado ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
                 Si
               </button>
               <button
-                onClick={() => setOpenbutton(false)}
+                onClick={() => setApoderado_convocado(false)}
                 type = "button"
-                className={openbutton ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
+                className={apoderado_convocado ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
                 No
               </button>
             </div>
 
-            {/* Información del Apoderado ------------------------------------------> */}
+            {/* Información del Apoderado Convocado ------------------------------------------> */}
 
-            {openbutton &&
+            {apoderado_convocado &&
 
-              <>
-                <label className="subtitles-secciones">Nombre</label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="nombres_Apoderado" label="Nombres">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="apellidos_Apoderado" label="Apellidos">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+            <>
+              <label className="subtitles-secciones">Nombre</label>
+              <div className='col-detalle-solicitud'>
+                <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+                <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-                <label className="subtitles-secciones">
-                  Identificación
-                </label>
-                <div className='col-detalle-solicitud'>
-                <FloatingLabel controlId="tipoDocumento_Apoderado" label="Tipo de documento">
+              <label className="subtitles-secciones">
+                Identificación
+              </label>
+              <div className='col-detalle-solicitud'>
+                <FloatingLabel
+                  controlId="floatingSelectGrid"
+                  label="Tipo de documento"
+                >
                   <Form.Select
                     className="col-inputs"
                     aria-label="Floating label select example"
-                    name="tipoDocumento"
-                    required
                   >
-                    <option value={""}>Abre el menú para ver las opciones</option>
-                    {tiposDocumento.map(tipoDocumento => {
-                      return (<option key={"tipoDocumento" + tipoDocumento["id"]} value={tipoDocumento["id"]}>{tipoDocumento["nombre"]}</option>)
-                    })}
+                    <option>Abre el menú para ver las opciones</option>
                   </Form.Select>
                 </FloatingLabel>
-                  <FloatingLabel controlId="identificacion_Apoderado" label="Número de documento">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+                <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-                <label className="subtitles-secciones">
-                  Fecha y lugar de expedición de documento
-                </label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel
-                    controlId="fechaExpedicion_Apoderado"
-                    label="Fecha de expedición de documento"
-                  >
-                    <Form.Control
-                      className="col-inputs"
-                      type="date"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel
-                    controlId="lugarExpedicion_Apoderado"
-                    label="Lugar de expedición"
-                  >
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+              <label className="subtitles-secciones">
+                Fecha y lugar de expedición de documento
+              </label>
+              <div className='col-detalle-solicitud'>
+                <FloatingLabel
+                  controlId="floatingInputGrid"
+                  label="Fecha de expedición de documento"
+                >
+                  <Form.Control
+                    className="col-inputs"
+                    type="date"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+                <FloatingLabel
+                  controlId="floatingInputGrid"
+                  label="Lugar de expedición"
+                >
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-                <label className="subtitles-secciones">Datos adicionales</label>
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="tarjetaProfesional_Apoderado" label="Tarjeta profesional ">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="correo_Apoderado" label="correo">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+              <label className="subtitles-secciones">Datos adicionales</label>
+              <div className='col-detalle-solicitud'>
+                <FloatingLabel controlId="floatingSelectGrid" label="Tarjeta profesional ">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+                <FloatingLabel controlId="floatingInputGrid" label="correo">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-                <div className='col-detalle-solicitud'>
-                  <FloatingLabel controlId="telefono_Apoderado" label="Teléfono">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="celular_Apoderado" label="Celular">
-                    <Form.Control
-                      className="col-inputs"
-                      type="text"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </div>
+              <div className='col-detalle-solicitud'>
+                <FloatingLabel controlId="floatingSelectGrid" label="Teléfono">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+                <FloatingLabel controlId="floatingInputGrid" label="Celular">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                  />
+                </FloatingLabel>
+              </div>
 
-              </>
+            </>
             }
 
           </div>
