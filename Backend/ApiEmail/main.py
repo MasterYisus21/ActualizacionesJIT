@@ -62,44 +62,52 @@ def index():
 
     destinatario = request_data['destinatario']
     asunto= request_data['asunto']
-
-    msg = Message(asunto, sender = ("Centro de Conciliacion",username), recipients = destinatario)
-  
+    
+   
+    msg = Message(asunto, sender = (request_data['nombre_servicio'],username), recipients = destinatario)
+    
     
     if request_data['tipo_mensaje']=="html":
-
+  
 
       msg.html = f"""
       <html>
       <body>
       """
       msg.html = msg.html + request_data['mensaje']['saludo']+"<br><br>"+request_data['mensaje']['encabezado'] + "<br><br>"
+      pie=request_data['mensaje']['firma']['firma']
+      estilo_pie=request_data['mensaje']['firma']['style']
+      despedida=request_data['mensaje']['despedida']
+      msg.html = msg.html + despedida + "<br> <br>" + "Este es un correo electrónico generado <b> automáticamente </b> por favor no responder. <br><br><br>"
 
-      if request_data['mensaje']['cuerpo']['tabla']:
+      msg.html=msg.html + firma(pie,estilo_pie)
+      # if request_data['mensaje']['cuerpo']['tabla']:
         
-        atributos= request_data['mensaje']['cuerpo']['tabla']['columnas']['columnas']
-        estilo_columnas =request_data['mensaje']['cuerpo']['tabla']['columnas']['style']
-        filas= request_data['mensaje']['cuerpo']['tabla']['filas']['filas']
-        estilo_filas =request_data['mensaje']['cuerpo']['tabla']['filas']['style']
-        pie=request_data['mensaje']['firma']['firma']
-        estilo_pie=request_data['mensaje']['firma']['style']
-        despedida=request_data['mensaje']['despedida']
+      #   atributos= request_data['mensaje']['cuerpo']['tabla']['columnas']['columnas']
+      #   estilo_columnas =request_data['mensaje']['cuerpo']['tabla']['columnas']['style']
+      #   filas= request_data['mensaje']['cuerpo']['tabla']['filas']['filas']
+      #   estilo_filas =request_data['mensaje']['cuerpo']['tabla']['filas']['style']
+      #   pie=request_data['mensaje']['firma']['firma']
+      #   estilo_pie=request_data['mensaje']['firma']['style']
+      #   despedida=request_data['mensaje']['despedida']
           
-        msg.html = msg.html + tabla() + columnas(atributos,estilo_columnas)
+      #   msg.html = msg.html + tabla() + columnas(atributos,estilo_columnas)
         
 
         
-        for iterator in range(len(filas)):
+      #   for iterator in range(len(filas)):
 
-          msg.html = msg.html + registros(atributos,filas[iterator],estilo_filas)
+      #     msg.html = msg.html + registros(atributos,filas[iterator],estilo_filas)
     
-        msg.html=msg.html + "</table> </div> <br><br>  " 
-        msg.html = msg.html + despedida + "<br> <br>" + "Este es un correo electrónico generado <b> automáticamente </b> por favor no responder. <br><br><br>"
+      #   msg.html=msg.html + "</table> </div> <br><br>  " 
+      #   msg.html = msg.html + despedida + "<br> <br>" + "Este es un correo electrónico generado <b> automáticamente </b> por favor no responder. <br><br><br>"
 
-        msg.html=msg.html + firma(pie,estilo_pie)
+      #   msg.html=msg.html + firma(pie,estilo_pie)
+      
     else :
 
       msg.body = request_data['mensaje']
+
     print("entre")
     mail.send(msg)
     print("envie")

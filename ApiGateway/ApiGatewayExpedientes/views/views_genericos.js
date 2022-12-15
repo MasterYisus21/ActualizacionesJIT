@@ -1494,7 +1494,7 @@ views.AgregarConciliadores = async (req, res) => {
     axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
       .then(async result => {
 
-        if (Object.keys(result.data.results).length > 0) { res.sendStatus(208); return }
+        if (Object.keys(result.data.results).length > 0) { res.status(400).json({response:{mensaje:"Ya se encuentra reportada esta persona "}}); return }
         const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
           .then(result => {
