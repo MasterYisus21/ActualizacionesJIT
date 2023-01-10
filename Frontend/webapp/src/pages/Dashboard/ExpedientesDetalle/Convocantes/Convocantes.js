@@ -12,6 +12,10 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 // Importing css
 import './Convocantes.css'
 
+// Import necesary for notification center
+import { toast } from 'react-toastify';
+
+
 function Convocantes() {
 
   const [estado, setEstado] = useState(false);
@@ -25,6 +29,7 @@ function Convocantes() {
 
   let { id } = useParams();
   let resultados = useRef([])
+
 
   const search = () => {
 
@@ -89,6 +94,9 @@ function Convocantes() {
           setResultadosBusqueda(resultadosBusqueda.filter((resultadosBusqueda) => {
             return resultadosBusqueda["id"] != idPersona
           }))
+          toast.success('La información se ha guardado con exito', {
+            position: toast.POSITION.BOTTOM_RIGHT
+          })
         })
         .catch(err => {
           console.log("error");
@@ -123,17 +131,17 @@ function Convocantes() {
         }
         <h2>Informacion del convocante</h2>
         <div className='navbar-convocante'>
-          <Buscador
+          {/* <Buscador
             valoresBuscados={valoresBuscados}
             setValoresBuscados={setValoresBuscados}
             setPage={handlePageChange}
             required
-          />
+          /> */}
           <button className='boton-crear-convocante' onClick={() => setPopupconv(!popupconv)}>Crear Convocante</button>
         </div>
 
 
-        
+
 
         <div className='contenedor-tabla-convocante' onScroll={e => handleScroll(e)}>
           <table className='table table-striped table-bordered table-responsive '>

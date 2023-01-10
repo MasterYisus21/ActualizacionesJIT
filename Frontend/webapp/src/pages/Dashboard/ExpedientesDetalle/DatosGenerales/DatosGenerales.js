@@ -40,7 +40,7 @@ function DatosGenerales() {
         // console.log(result)
       })
       .catch(err => {
-        console.log("error");
+        console.log(err);
       });
   }, [])
 
@@ -57,7 +57,7 @@ function DatosGenerales() {
         setTiposServicio(result.data.results)
       })
       .catch(err => {
-        console.log("error");
+        console.log(err);
       });
   }, [])
 
