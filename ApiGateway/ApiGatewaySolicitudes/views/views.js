@@ -107,8 +107,7 @@ views.CrearSolicitud = async (req, res) => {
   try {
     req.body = JSON.parse(req.body.datos)
     if (req.files < 2) { res.sendStatus(error({ message: "Solo ha subido un archivo" })); return }
-
-    if (Object.keys(req.body.apoderado).length > 0) {
+    if(req.body.apoderado){    if (Object.keys(req.body.apoderado).length > 0) {
 
       console.log(req.body.apoderado[0].identificacion)
 
@@ -133,7 +132,7 @@ views.CrearSolicitud = async (req, res) => {
 
 
     }
-
+  }
     let datos = []
 
     datos.push(req.body.convocante[0])
