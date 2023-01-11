@@ -58,7 +58,7 @@ function Estudiantes() {
   }
 
   const handlePageChangeCandidatos = (page) => {
-    if (pageCandidatos <= numPagesCandidatos) {
+    if (page <= numPagesCandidatos) {
       setPageCandidatos(page)
     }
   }
