@@ -71,50 +71,50 @@ function RegistrarSolicitud() {
     const data = {
       convocante: [
         {
-          // nombres: event.target.nombres.value,
-          // apellidos: event.target.apellidos.value,
-          // identificacion: event.target.identificacion.value,
-          // telefono: event.target.telefono.value,
-          // celular: event.target.celular.value,
-          // direccion: event.target.direccion.value,
-          // correo: event.target.correo.value,
-          // tipo_persona_id: parseInt(event.target.tipoPersona.value),
-          // sexo_id: event.target.sexo.value,
-          // genero_Id: event.target.genero.value,
-          // estrato_socioeconomico_id: event.target.estratoSocioeconomico.value,
-          // tipo_documento_id: event.target.tipoDocumento.value,
-          // fecha_expedicion: event.target.fechaExpedicion.value,
-          // lugar_expedicion: event.target.lugarExpedicion.value,
-          // fecha_nacimiento: event.target.fechaNacimiento.value,
-          // lugar_nacimiento: event.target.lugarNacimiento.value,
-          // apoderado_id: null,
-
-          nombres: "jairo",
-          apellidos: "urrego",
-          identificacion: "120423098",
-          telefono: null,
-          direccion: null,
-          celular: "32122183723",
-          correo: "jairo@ugc.edu.co",
-          tipo_persona_id: null,
-          sexo_id: 1,
-          genero_id: 1,
-          estrato_socioeconomico_id: 1,
-          tipo_documento_id: 1,
+          nombres: event.target.nombres.value,
+          apellidos: event.target.apellidos.value,
+          identificacion: event.target.identificacion.value,
+          telefono: event.target.telefono.value,
+          celular: event.target.celular.value,
+          direccion: event.target.direccion.value,
+          correo: event.target.correo.value,
+          tipo_persona_id: parseInt(event.target.tipoPersona.value),
+          sexo_id: event.target.sexo.value,
+          genero_Id: event.target.genero.value,
+          estrato_socioeconomico_id: event.target.estratoSocioeconomico.value,
+          tipo_documento_id: event.target.tipoDocumento.value,
+          fecha_expedicion: event.target.fechaExpedicion.value,
+          lugar_expedicion: event.target.lugarExpedicion.value,
+          fecha_nacimiento: event.target.fechaNacimiento.value,
+          lugar_nacimiento: event.target.lugarNacimiento.value,
           apoderado_id: null,
+
+          // nombres: "jairo",
+          // apellidos: "urrego",
+          // identificacion: "120423098",
+          // telefono: null,
+          // direccion: null,
+          // celular: "32122183723",
+          // correo: "jairo@ugc.edu.co",
+          // tipo_persona_id: null,
+          // sexo_id: 1,
+          // genero_id: 1,
+          // estrato_socioeconomico_id: 1,
+          // tipo_documento_id: 1,
+          // apoderado_id: null,
         },
       ],
       apoderado: [
         {
-          identificacion: event.target.identificacionApoderado.value,
-          nombres: event.target.nombresApoderado.value,
-          apellidos: event.target.apellidosApoderado.value,
-          lugar_expedicion: event.target.lugarExpedicionApoderado.value,
-          telefono: event.target.telefonoApoderado.value,
-          celular: event.target.celularApoderado.value,
-          correo: event.target.correoApoderado.value,
-          tarjeta_profesional: event.target.celularApoderado.value,
-          tipo_documento_id: event.target.tipoDocumentoApoderado.value,
+          // identificacion: event.target.identificacionApoderado.value,
+          // nombres: event.target.nombresApoderado.value,
+          // apellidos: event.target.apellidosApoderado.value,
+          // lugar_expedicion: event.target.lugarExpedicionApoderado.value,
+          // telefono: event.target.telefonoApoderado.value,
+          // celular: event.target.celularApoderado.value,
+          // correo: event.target.correoApoderado.value,
+          // tarjeta_profesional: event.target.celularApoderado.value,
+          // tipo_documento_id: event.target.tipoDocumentoApoderado.value,
 
           identificacion: "12345",
           nombres: "roberto",
@@ -576,11 +576,22 @@ function RegistrarSolicitud() {
                     controlId="floatingSelectGrid"
                     label="Tipo de documento"
                   >
-                    <Form.Select
+                   <Form.Select
                       className="col-inputs"
                       aria-label="Floating label select example"
+                      name="tipoDocumento"
                     >
-                      <option>Abre el menú para ver las opciones</option>
+                      <option value={""}>Abre el menú para ver las opciones</option>
+                      {tiposDocumento.map((tipoDocumento) => {
+                        return (
+                          <option
+                            key={"tipoDocumento" + tipoDocumento["id"]}
+                            value={tipoDocumento["id"]}
+                          >
+                            {tipoDocumento["nombre"]}
+                          </option>
+                        );
+                      })}
                     </Form.Select>
                   </FloatingLabel>
                   <FloatingLabel

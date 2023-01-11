@@ -93,24 +93,20 @@ function SolicitudesDetalle() {
         document.getElementById("celular_Convocado").value = result.data.convocado["celular"]
         document.getElementById("correo_Convocado").value = result.data.convocado["correo"]
 
-        //Apoderado Convocante
-        
-       
-        
-        document.getElementById("identificacion_Apoderado").value = result.data.apoderado["identificacion"]
-        document.getElementById("tipoDocumento_Apoderado").value = result.data.apoderado["tipo_documento_id"]
-        document.getElementById("fechaExpedicion_Apoderado").value = result.data.apoderado["fecha_expedicion"]
-        document.getElementById("lugarExpedicion_Apoderado").value = result.data.apoderado["lugar_expedicion"]
-        document.getElementById("nombres_Apoderado").value = result.data.apoderado["nombres"]
-        document.getElementById("apellidos_Apoderado").value = result.data.apoderado["apellidos"]
-        document.getElementById("telefono_Apoderado").value = result.data.apoderado["telefono"]
-        document.getElementById("celular_Apoderado").value = result.data.apoderado["celular"]
-        document.getElementById("correo_Apoderado").value = result.data.apoderado["correo"]
-        document.getElementById("tarjetaProfesional_Apoderado").value = result.data.apoderado["tarjeta_profesional"]
+        // Hechos
+        document.getElementById("descripcion_hechos").value = result.data.hechos[0].descripcion
+
+        // Documentos
+
+        //document.getElementById("descripcion_hechos").value = result.data.documentos.result[0].descripcion
+
+
+        // Apoderado Convocante
+        if(result.data.convocante["apoderado_id"] != null) return setApoderado_convocante(true)
+        // if(result.data.convocado["apoderado_id"] != null) return setApoderado_convocado(true)
 
         
-        // if(result.data.convocante["apoderado_id"] != null) return setApoderado_convocante(true)
-        // if(result.data.convocado["apoderado_id"] != null) return setApoderado_convocado(true)
+
 
       })
       .catch(err => {
@@ -118,6 +114,22 @@ function SolicitudesDetalle() {
       });
 
   }, [])
+
+
+useEffect(() => {
+  if (data.apoderado && apoderado_convocante){
+    document.getElementById("identificacion_Apoderado").value = data?.apoderado?.identificacion
+    document.getElementById("tipoDocumento_Apoderado").value = data?.apoderado?.tipo_documento_id
+    document.getElementById("fechaExpedicion_Apoderado").value = data?.apoderado?.fecha_expedicion
+    document.getElementById("lugarExpedicion_Apoderado").value = data?.apoderado?.lugar_expedicion
+    document.getElementById("nombres_Apoderado").value = data?.apoderado?.nombres
+    document.getElementById("apellidos_Apoderado").value = data?.apoderado?.apellidos
+    document.getElementById("telefono_Apoderado").value = data?.apoderado?.telefono
+    document.getElementById("celular_Apoderado").value = data?.apoderado?.celular
+    document.getElementById("correo_Apoderado").value = data?.apoderado?.correo
+    document.getElementById("tarjetaProfesional_Apoderado").value = data?.apoderado?.tarjeta_profesional
+  }
+}, [apoderado_convocante])
 
 
   // fetch sexos options
@@ -1052,7 +1064,7 @@ function SolicitudesDetalle() {
               </FloatingLabel>
             </div>
             <FloatingLabel
-              controlId="floatingTextarea2"
+              controlId="descripcion_hechos"
               label="Describa los hechos ocurridos"
             >
               <Form.Control
