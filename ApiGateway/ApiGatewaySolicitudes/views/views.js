@@ -110,8 +110,9 @@ views.CrearSolicitud = async (req, res) => {
 
     if (Object.keys(req.body.apoderado).length > 0) {
 
+      console.log(req.body.apoderado[0].identificacion)
 
-      if (!(req.body.apoderado[0].identificacion & req.body.apoderado[0].identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
+      if (!(req.body.apoderado[0].identificacion && req.body.apoderado[0].identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
       req.body.convocante[0].apoderado_id = req.body.apoderado[0].identificacion
       await axios.post(config.urlApiSolicitudes + "apoderados/", req.body.apoderado[0])
 
@@ -150,7 +151,7 @@ views.CrearSolicitud = async (req, res) => {
       `
       let asunto = "Solicitud de Conciliacion"
     
-        const correo = axios.post(config.urlEmail,email("html",[req.body.convocante[0].correo],asunto,encabezado))
+        // const correo = axios.post(config.urlEmail,email("html",[req.body.convocante[0].correo],asunto,encabezado))
           
         req.params.id = data2.data.id
         req.body.hechos[0].solicitud_id = data2.data.id

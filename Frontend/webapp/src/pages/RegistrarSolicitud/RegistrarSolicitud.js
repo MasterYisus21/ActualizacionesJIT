@@ -115,7 +115,7 @@ function RegistrarSolicitud() {
           celular: event.target.celularApoderado?.value,
           correo: event.target.correoApoderado?.value,
           tarjeta_profesional: event.target.celularApoderado?.value,
-          tipo_documento_id: parseInt(event.target.tipoDocumentoApoderado?.value),
+          tipo_documento_id: event.target.tipoDocumentoApoderado?.value,
 
           // identificacion: "12345",
           // nombres: "roberto",
