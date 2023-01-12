@@ -1611,7 +1611,18 @@ views.ActualizarHechos = async (req, res) => {
     return;
   }
 }
+views.ActualizarCitacion = async (req, res) => {
+  try {
+    if (req.body.expediente_id) { delete req.body["expediente_id"]; }
 
+    const url = config.urlApiExpedientes + "citaciones/" + req.params.id + "/"
+    requests.patch(req, res, url, req.body)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.ActualizarPersonas = async (req, res) => {
   try {
     if (req.body.identificacion) { delete req.body["identificacion"]; }
