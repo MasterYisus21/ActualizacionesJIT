@@ -331,7 +331,7 @@ class Tipo_reporteSerializer(serializers.ModelSerializer):
 
 
 class ListaUsuarioSerializer(serializers.ModelSerializer):
-    
+     
     class Meta:
         model = User    # El modelo al que pertenece este serializador
         fields = ('id','username','password','is_staff','groups','is_active') # Coje todos los campos del modelo 
