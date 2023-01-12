@@ -59,6 +59,23 @@ function Audiencia() {
   }, [dataApi])
 
   useEffect(() => {
+    if (dataApi.id) {
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: `/expedientes/${id}/citaciones/${dataApi.id}/personas`,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          console.log(result.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }, [dataApi])
+
+  useEffect(() => {
     if (dataApi) {
       document.getElementById("turno-seleccionado").value = dataApi.turno_id
     }
@@ -73,19 +90,21 @@ function Audiencia() {
 
   const getTurnosDisponibles = (value, turnosAdicionales = []) => {
     // console.log(e);
-    axiosTokenInstanceApiExpedientes({
-      method: 'get',
-      url: `/expedientes/${id}/turnos/${value}`,
-      // headers: req.headers,
-      data: {}
-    })
-      .then(result => {
-        console.log(result.data);
-        setTurnosDisponibles([...turnosAdicionales, ...result.data])
+    if (value) {
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: `/expedientes/${id}/turnos/${value}`,
+        // headers: req.headers,
+        data: {}
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .then(result => {
+          console.log(result.data);
+          setTurnosDisponibles([...turnosAdicionales, ...result.data])
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 
   return (
@@ -140,7 +159,7 @@ function Audiencia() {
               {tiposMedio.map(dato => {
                 return (
                   <>
-                    <input className='class="custom-control-input"' id="tipo-de-medio" value={dato.id} name="tipo-de-medio" type='radio' checked={dataApi ? dataApi.tipo_medio_id == dato.id : false} onChange={e => setDataApi({...dataApi, tipo_medio_id: e.target.value})} required></input>
+                    <input className='class="custom-control-input"' id="tipo-de-medio" value={dato.id} name="tipo-de-medio" type='radio' checked={dataApi ? dataApi.tipo_medio_id == dato.id : false} onChange={e => setDataApi({ ...dataApi, tipo_medio_id: e.target.value })} required></input>
                     <label className="label-virtual">{dato.nombre} </label>
                   </>
                 )
