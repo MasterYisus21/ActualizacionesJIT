@@ -1,10 +1,93 @@
 import React from 'react'
 import './Audiencia.css'
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
+import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
+import { useState, useEffect } from 'react';
 
 
 function Audiencia() {
+
+  let { id } = useParams();
+  const [dataApi, setDataApi] = useState({})
+  const [turnosDisponibles, setTurnosDisponibles] = useState([])
+  const [tiposMedio, setTiposMedio] = useState([])
+
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: `/expedientes/${id}/citaciones/?ordering=id&count=1&page=1`,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        setDataApi(result.data.results[0])
+        document.getElementById("fecha_sesion").value = result.data.results[0].fecha_sesion
+        document.getElementById("descripcion").value = result.data.results[0].descripcion
+        if (result.data.results[0].enlace) { document.getElementById("link-audiencia").value = result.data.results[0].enlace }
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [])
+
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: `/tipos_medio`,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data.results);
+        setTiposMedio(result.data.results)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [])
+
+  useEffect(() => {
+    const turnos = [{
+      id: dataApi.turno_id,
+      estado: dataApi.estado,
+      nombre: dataApi.turno
+    }]
+    getTurnosDisponibles(dataApi.fecha_sesion, turnos)
+  }, [dataApi])
+
+  useEffect(() => {
+    if (dataApi) {
+      document.getElementById("turno-seleccionado").value = dataApi.turno_id
+    }
+  }, [turnosDisponibles])
+
+  useEffect(() => {
+    if (dataApi) {
+      // document.getElementById("tipo-de-medio").checked = dataApi.tipo_medio_id
+    }
+  }, [tiposMedio])
+
+
+  const getTurnosDisponibles = (value, turnosAdicionales = []) => {
+    // console.log(e);
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: `/expedientes/${id}/turnos/${value}`,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        setTurnosDisponibles([...turnosAdicionales, ...result.data])
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   return (
     <div className='contenedor-principal-modulo-audiencia'>
       {/* <div className='contenedor-boton-audiencia'>
@@ -30,34 +113,42 @@ function Audiencia() {
           <div className='izquierda-fecha-descripcion'>
             <label className='titulo-fecha-sesion'>Fecha de la sesión:</label>
             <div className='contenedor-campos-de-llenado'>
-              <input type="date" className='input-fecha-sesion'></input>
+              <input
+                type="date"
+                id='fecha_sesion'
+                className='input-fecha-sesion'
+                onChange={e => getTurnosDisponibles(e.target.value)}
+              />
             </div>
             <label className='titulo-descripcion'>Descripción:</label>
             <div className='contenedor-campos-de-llenado'>
-              <textarea className='campo-descripcion'></textarea>
+              <textarea id='descripcion' className='campo-descripcion'></textarea>
             </div>
           </div>
           <div className='derecha-hora-tipo'>
             <label className='titulo-fecha-sesion'>Hora:</label>
             <div className='contenedor-campos-de-llenado-derecha'>
-              <Form.Select aria-label="Default select example" className='input-seleccionable-hora'>
-                <option>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+              <Form.Select aria-label="Default select example" className='input-seleccionable-hora' id="turno-seleccionado">
+                <option value="">Selecciona una hora</option>
+                {turnosDisponibles.map((dato) => {
+                  return (<option value={dato.id}>{dato.nombre}</option>)
+                })}
               </Form.Select>
             </div>
             <label className='titulo-descripcion'>Tipo de medio:</label>
             <div className='separador-virtual-presencial'>
-              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-              <label className="label-virtual">Virtual </label>
-              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-              <label className="label-presencial">Presencial </label>
-              <input className='class="custom-control-input"' name="flexRadioDefault" type='radio' required></input>
-              <label className="label-mixto">Mixto </label>
+              {tiposMedio.map(dato => {
+                return (
+                  <>
+                    <input className='class="custom-control-input"' id="tipo-de-medio" value={dato.id} name="tipo-de-medio" type='radio' checked={dataApi ? dataApi.tipo_medio_id == dato.id : false} onChange={e => setDataApi({...dataApi, tipo_medio_id: e.target.value})} required></input>
+                    <label className="label-virtual">{dato.nombre} </label>
+                  </>
+                )
+              })}
             </div>
             <div className='contenedor-campos-de-llenado-derecha'>
               <Form.Control
+                id="link-audiencia"
                 type="text"
                 placeholder="Link"
                 aria-label="Disabled input example"
@@ -68,8 +159,10 @@ function Audiencia() {
           </div>
         </div>
         <div className='contenedor-imagen-guardar'>
-          <img src='/icons/save.svg' className='icono-guardar' />
-          <label className='nombre-guardar'>Guardar</label>
+          <button className='contenedor-imagen-guardar-button'>
+            <img src='/icons/save.svg' className='icono-guardar' />
+            <label className='nombre-guardar'>Guardar</label>
+          </button>
         </div>
       </form>
       <div className='contenedor-tabla-audiencia d-flex align-items-center flex-column '>
