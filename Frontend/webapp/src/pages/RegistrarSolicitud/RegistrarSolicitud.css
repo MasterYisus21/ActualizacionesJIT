@@ -101,10 +101,27 @@
     flex-direction: column;
 }
 
-/* .colum-detalle-solicitud{
-    width: 100%;
+.descripcion-documentos{
+    background-color: #c5c5c570;
+    border-radius: 20px;
+    align-items: center;
+    text-align: justify;
+    font-size: 1.2em;
+    width: 80vw;
+    padding: 1em;
+    margin-top: -1.5em;
+    
+}
+
+.col-registro-solicitud{
     display: flex;
-} */
+    flex-direction: column;
+    width: 80vw;
+    gap: 1em;
+    max-width: 50em;
+}
+
+
 
 /* Versión < 700px Tablets y Escritorios*/
 
@@ -122,6 +139,7 @@
         gap: 2.3em;
     }
     
+    
 }
 
 @media (min-width: 1000px) {
@@ -136,6 +154,9 @@
         padding-bottom: 2em;
     }
     
+    .col-registro-solicitud{
+        
+    }
 }
 
 @media (min-height: 1000px) {
