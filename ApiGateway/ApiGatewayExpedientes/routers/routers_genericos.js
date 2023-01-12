@@ -108,6 +108,7 @@ router.patch("/expedientes/:id/resultados/:id_resultado",archivo.uploadMiddlewar
 
 router.patch("/expedientes/:id",views_genericos.ActualizarExpediente)
 router.patch("/hechos/:id",views_genericos.ActualizarHechos)
+router.patch("/citaciones/:id",views_genericos.ActualizarCitacion)
 router.patch("/personas/:id",views_genericos.ActualizarPersonas)
 router.patch("/apoderados/:id",views_genericos.ActualizarApoderado)
 router.patch("/documentos/:id",views_genericos.AprobarDocumentosCaso)
