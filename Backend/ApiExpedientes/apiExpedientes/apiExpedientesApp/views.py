@@ -241,9 +241,8 @@ class Tipo_reporteViewSet(GeneralViewSet):  # Una sola clase para los metodos de
 
     
 class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
-    queryset = User.objects.all()
+    
     serializer_class=ListaUsuarioSerializer
-
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
     def perform_create(self, serializer):
@@ -263,19 +262,15 @@ class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de res
             return model.filter(is_active=True)
     
         return model.filter(is_active=True, id=pk).first() # retorna todos los valores con estado = true
-
-    def create(self, request, *args, **kwargs): 
-        is_many = isinstance(request.data,list)
-        if not is_many:
-            return super(GeneralViewSet,self).create(request, *args, **kwargs)
-           
-        else:
-            serializer = self.get_serializer(data=request.data,many=True)
-            serializer.is_valid(raise_exception=True)
-           
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    def destroy(self,request,pk=None):
+                
+            queryset = self.get_queryset().filter(id=pk).first()
+            if  queryset:
+                queryset.is_active= False
+                queryset.save()
+                return Response (queryset.id)
+            return Response(status = status.HTTP_404_NOT_FOUND)
+   
     
     #    permission_classes = [DjangoModelPermissions]
    
