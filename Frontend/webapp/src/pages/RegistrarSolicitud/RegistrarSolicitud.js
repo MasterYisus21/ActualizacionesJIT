@@ -79,7 +79,7 @@ function RegistrarSolicitud() {
           correo: event.target.correo.value,
           tipo_persona_id: parseInt(event.target.tipoPersona.value),
           sexo_id: parseInt(event.target.sexo.value),
-          genero_Id: parseInt(event.target.genero.value),
+          genero_id: parseInt(event.target.genero.value),
           estrato_socioeconomico_id: event.target.estratoSocioeconomico.value,
           tipo_documento_id: parseInt(event.target.tipoDocumento.value),
           fecha_expedicion: event.target.fechaExpedicion.value,
@@ -154,11 +154,11 @@ function RegistrarSolicitud() {
     })
       .then((result) => {
         console.log(result);
-        event.target.reset();
-        window.location.reload()
-        console.log(myFiles)
-        myFiles.splice(0);
-        alert("Tus archivos han sido envíados correctamente")
+        // event.target.reset();
+        // window.location.reload()
+        // console.log(myFiles)
+        // myFiles.splice(0);
+        // alert("Tus archivos han sido envíados correctamente")
 
       })
       .catch((err) => {
@@ -421,7 +421,7 @@ function RegistrarSolicitud() {
                 })}
               </Form.Select>
             </FloatingLabel>
-            <FloatingLabel controlId="floatingSelectGrid" label="Género">
+            <FloatingLabel controlId="genero" label="Género">
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
