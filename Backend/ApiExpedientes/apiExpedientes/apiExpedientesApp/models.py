@@ -455,7 +455,7 @@ class Persona(EstadoModel):
     tipo_documento_id = models.ForeignKey('Tipo_documento', on_delete=models.SET_NULL, blank=True, null=True)
     escolaridad_id = models.ForeignKey(Escolaridad, on_delete=models.SET_NULL, blank=True, null=True)
     apoderado_id = models.ForeignKey(Apoderado, on_delete=models.SET_NULL, blank=True, null=True)
-    usuarioId= models.OneToOneField(User, on_delete=models.SET_NULL, null=True,blank=True)
+    usuario_id= models.OneToOneField(User, on_delete=models.SET_NULL, null=True,blank=True)
     
     
     class Meta:

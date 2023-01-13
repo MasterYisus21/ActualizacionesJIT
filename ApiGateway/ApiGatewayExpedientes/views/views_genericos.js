@@ -10,7 +10,7 @@ const fs = require('fs');
 const unirest = require('unirest');
 const FormData = require('form-data');
 const path = require("path");
-const xlsx=require('xlsx');
+const xlsx = require('xlsx');
 const ExcelJS = require('exceljs');
 
 // datos generales
@@ -26,22 +26,22 @@ const ExcelJS = require('exceljs');
 //encuenstas
 //seguimientos
 //informes
-const email=(tipo_mensaje,correoQuienRecibe,asunto,encabezado,)=>{
+const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,) => {
   let email = {
-  tipo_mensaje:tipo_mensaje,
-  destinatario:correoQuienRecibe,
-  asunto: asunto,
-  mensaje:{
-    saludo: "<br>Reciba un cordial saludo",
-    encabezado :encabezado,
-   despedida: "Gracias por la atencion prestada",
-  firma: {
-    firma:["Universidad La Gran Colombia","Centro de Conciliacion Jose Ignacio Talero Losada ","<u>ccjoseignaciotalerolosada@ugc.edu.co>"],
-    style:"color:#b2aaaa"
+    tipo_mensaje: tipo_mensaje,
+    destinatario: correoQuienRecibe,
+    asunto: asunto,
+    mensaje: {
+      saludo: "<br>Reciba un cordial saludo",
+      encabezado: encabezado,
+      despedida: "Gracias por la atencion prestada",
+      firma: {
+        firma: ["Universidad La Gran Colombia", "Centro de Conciliacion Jose Ignacio Talero Losada ", "<u>ccjoseignaciotalerolosada@ugc.edu.co>"],
+        style: "color:#b2aaaa"
+      }
+    }
   }
-}
-}
-return email
+  return email
 }
 views.CrearPersonas = async (req, res) => {
   try {
@@ -600,14 +600,14 @@ views.DescargarResultados = async (req, res) => {
 const informacionCitacion = async (req) => {
 
   let datos = {}
-  endpoints=[
+  endpoints = [
     config.urlGatewayExpedientes + "expedientes/" + req.params.id,
-  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/convocantes",
-  config.urlApiExpedientes + "relaciones_persona_citacion/"+req.params.id_relacion,
-  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/conciliadores",
-  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/estudiantes",
-  config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/hechos",
-  config.urlApiExpedientes+"citaciones/"+req.params.id_citacion,
+    config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/convocantes",
+    config.urlApiExpedientes + "relaciones_persona_citacion/" + req.params.id_relacion,
+    config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/conciliadores",
+    config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/estudiantes",
+    config.urlGatewayExpedientes + "expedientes/" + req.params.id + "/hechos",
+    config.urlApiExpedientes + "citaciones/" + req.params.id_citacion,
 
 
   ]
@@ -615,14 +615,14 @@ const informacionCitacion = async (req) => {
   // console.log(endpoints)
 
   await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-    .then(axios.spread(async ( expediente,convocante, convocado, conciliador, estudiante, hechos, citacion, resultado) => {
+    .then(axios.spread(async (expediente, convocante, convocado, conciliador, estudiante, hechos, citacion, resultado) => {
 
       if (Object.keys(expediente.data).length < 0) { datos.expediente = [] } else {
         for (const iterator in expediente.data) {
           if (typeof (expediente['data'][iterator]) == 'string') { expediente['data'][iterator] = expediente['data'][iterator].toUpperCase() }
           if (expediente['data'][iterator] == null) { expediente['data'][iterator] = "___" }
           datos["expediente_" + iterator] = expediente['data'][iterator]
-         
+
 
         }
         const fecha_expediente = new Date(expediente['data'].fecha_registro)
@@ -657,7 +657,7 @@ const informacionCitacion = async (req) => {
 
           for (const item in iterator) {
             if (typeof (estudiante.data.results[0][item]) == 'string') { estudiante.data.results[0][item] = estudiante.data.results[0][item].toUpperCase() }
-            if (estudiante.data.results[0][item]== null) { estudiante.data.results[0][item] = "___" }
+            if (estudiante.data.results[0][item] == null) { estudiante.data.results[0][item] = "___" }
             datos["estudiante" + contador + "_" + item] = estudiante.data.results[0][item]
           }
           contador++
@@ -665,15 +665,15 @@ const informacionCitacion = async (req) => {
       }
       if (Object.keys(hechos.data.results).length < 0) { datos.hechos = [] } else {
         for (const iterator in hechos.data.results[0]) {
-          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator]= hechos.data.results[0][iterator].toUpperCase() }
-          if (hechos.data.results[0][iterator]== null) { hechos.data.results[0][iterator] = "___" }
+          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator] = hechos.data.results[0][iterator].toUpperCase() }
+          if (hechos.data.results[0][iterator] == null) { hechos.data.results[0][iterator] = "___" }
           datos["hechos_" + iterator] = hechos.data.results[0][iterator]
         }
       }
       if (Object.keys(citacion.data).length < 0) { datos.citacion = [] } else {
         for (const iterator in citacion.data) {
-          if (typeof (citacion.data[iterator]) == 'string') { citacion.data[iterator]= citacion.data[iterator].toUpperCase() }
-          if (citacion.data[iterator]== null) { citacion.data[iterator] = "___" }
+          if (typeof (citacion.data[iterator]) == 'string') { citacion.data[iterator] = citacion.data[iterator].toUpperCase() }
+          if (citacion.data[iterator] == null) { citacion.data[iterator] = "___" }
           datos["citacion_" + iterator] = citacion.data[iterator]
         }
         const fecha = new Date(citacion.data.fecha_sesion)
@@ -722,7 +722,7 @@ const informacionCaso = async (req) => {
           if (typeof (expediente['data'][iterator]) == 'string') { expediente['data'][iterator] = expediente['data'][iterator].toUpperCase() }
           if (expediente['data'][iterator] == null) { expediente['data'][iterator] = "___" }
           datos["expediente_" + iterator] = expediente['data'][iterator]
-         
+
 
         }
         const fecha_expediente = new Date(expediente['data'].fecha_registro)
@@ -757,7 +757,7 @@ const informacionCaso = async (req) => {
 
           for (const item in iterator) {
             if (typeof (estudiante.data.results[0][item]) == 'string') { estudiante.data.results[0][item] = estudiante.data.results[0][item].toUpperCase() }
-            if (estudiante.data.results[0][item]== null) { estudiante.data.results[0][item] = "___" }
+            if (estudiante.data.results[0][item] == null) { estudiante.data.results[0][item] = "___" }
             datos["estudiante" + contador + "_" + item] = estudiante.data.results[0][item]
           }
           contador++
@@ -765,15 +765,15 @@ const informacionCaso = async (req) => {
       }
       if (Object.keys(hechos.data.results).length < 0) { datos.hechos = [] } else {
         for (const iterator in hechos.data.results[0]) {
-          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator]= hechos.data.results[0][iterator].toUpperCase() }
-          if (hechos.data.results[0][iterator]== null) { hechos.data.results[0][iterator] = "___" }
+          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator] = hechos.data.results[0][iterator].toUpperCase() }
+          if (hechos.data.results[0][iterator] == null) { hechos.data.results[0][iterator] = "___" }
           datos["hechos_" + iterator] = hechos.data.results[0][iterator]
         }
       }
       if (Object.keys(citacion.data.results).length < 0) { datos.citacion = [] } else {
         for (const iterator in citacion.data.results[0]) {
-          if (typeof (citacion.data.results[0][iterator]) == 'string') { citacion.data.results[0][iterator]= citacion.data.results[0][iterator].toUpperCase() }
-          if (citacion.data.results[0][iterator]== null) { citacion.data.results[0][iterator] = "___" }
+          if (typeof (citacion.data.results[0][iterator]) == 'string') { citacion.data.results[0][iterator] = citacion.data.results[0][iterator].toUpperCase() }
+          if (citacion.data.results[0][iterator] == null) { citacion.data.results[0][iterator] = "___" }
           datos["citacion_" + iterator] = citacion.data.results[0][iterator]
         }
         const fecha = new Date(citacion.data.results[0].fecha_sesion)
@@ -783,8 +783,8 @@ const informacionCaso = async (req) => {
       }
       if (Object.keys(resultado.data).length < 0) { datos.resultado = [] } else {
         for (const iterator in resultado.data) {
-          if (typeof (resultado.data[iterator]) == 'string') { resultado.data[iterator]= resultado.data[iterator].toUpperCase() }
-          if (resultado.data[iterator]== null) { resultado.data[iterator]= "___" }
+          if (typeof (resultado.data[iterator]) == 'string') { resultado.data[iterator] = resultado.data[iterator].toUpperCase() }
+          if (resultado.data[iterator] == null) { resultado.data[iterator] = "___" }
           datos["resultado_" + iterator] = resultado.data[iterator]
         }
       }
@@ -812,13 +812,13 @@ views.DescargarFormatoResultado = async (req, res) => {
         if (Object.keys(result.data).length < 1) { res.sendStatus(error({ message: "El expediente aun no tiene resultado" }, 204)); return }
         await informacionCaso(req).then(async (resul) => {
           // console.log(resul.data.results[0])
-          resul.nombre_documento=result.data.tipo_resultado
-          
-          await axios.post(config.urlGeneradorDocumentos+"generar/",resul,{responseType : 'arraybuffer'})
-            .then(async result=>{
-              
+          resul.nombre_documento = result.data.tipo_resultado
+
+          await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
+            .then(async result => {
+
               res.end(result.data)
-          })
+            })
             .catch(err => {
               res.sendStatus(error(err))
             })
@@ -840,20 +840,20 @@ views.DescargarFormatoResultado = async (req, res) => {
 }
 views.DescargarFormatoCitacion = async (req, res) => {
   try {
-    
+
     axios.get(config.urlApiExpedientes + "citaciones/" + req.params.id_citacion)
       .then(async result => {
         if (Object.keys(result.data).length < 1) { res.sendStatus(error({ message: "El expediente aun no tiene resultado" }, 204)); return }
         await informacionCitacion(req).then(async (resul) => {
           // console.log(resul.data.results[0])
-         
-          resul.nombre_documento="CITACION AUDIENCIA DE CONCILIACION"
-          
-          await axios.post(config.urlGeneradorDocumentos+"generar/",resul,{responseType : 'arraybuffer'})
-            .then(async result=>{
-              
+
+          resul.nombre_documento = "CITACION AUDIENCIA DE CONCILIACION"
+
+          await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
+            .then(async result => {
+
               res.end(result.data)
-          })
+            })
             .catch(err => {
               res.sendStatus(error(err))
             })
@@ -865,7 +865,7 @@ views.DescargarFormatoCitacion = async (req, res) => {
       }).catch((err) => {
 
       });
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -912,9 +912,9 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
 
     await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
       .then(axios.spread(async (datos1, datos2) => {
-        
+
         if (datos1.data.results.length < 1) { res.sendStatus(error({ message: "No se encuentra ninguna persona en este caso" })); return; }
-        
+
         for (const iterator of datos1.data.results) {
           personas_disponibles[personas_disponibles.length] = iterator.persona_id
 
@@ -938,22 +938,22 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
           for (const iterator of personas_no_citadas) {
             endpoints[endpoints.length] = config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id + "&persona_id=" + iterator
           }
-       
+
           personas_no_citadas = []
-          await  Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+          await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
             .then(axios.spread(async (...allData) => {
 
-              for await(const iterator of allData) {
+              for await (const iterator of allData) {
                 personas_no_citadas.push(iterator.data.results[0])
               }
               console.log("entre");
               datos.personas_no_citadas = personas_no_citadas
-              
+
             }))
-            
+
             .catch(err => {
               console.log(err);
-              
+
               error(err)
               return
 
@@ -1086,33 +1086,74 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
 }
 views.CargarTemplatePersonas = async (req, res) => {
 
- 
+
   try {
-    
+
     if (Object.keys(req.file).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
-    const ruta=(req.file.path)
+    const ruta = (req.file.path)
+
+    const workbook = xlsx.readFile(ruta)
+    const workbookSheets = workbook.SheetNames;
+
     
-    const workbook=xlsx.readFile(ruta)
-    const workbookSheets=workbook.SheetNames;
-    const sheet=workbookSheets[0]
-    let letra=workbook.Sheets[sheet]['!ref'].split(":",2)[1][0]
-    for (const iterator in workbook.Sheets[sheet]) {
-       if(iterator!="!ref"){
-         workbook.Sheets[sheet][iterator].w=workbook.Sheets[sheet][iterator].w.toLowerCase()
-        if (iterator[0]==letra){break}
-       }
+    async function  LeerHojas(workbookSheets) {
+      let usuarios = []
+      let personas=[]
+      let id_grupo=0
+      for (const sheet of workbookSheets) {
+          id_grupo++
+        let letra = workbook.Sheets[sheet]['!ref'].split(":", 2)[1][0]
+        for (const iterator in workbook.Sheets[sheet]) {
+          if (iterator != "!ref") {
+            workbook.Sheets[sheet][iterator].w = workbook.Sheets[sheet][iterator].w.toLowerCase()
+            if (iterator[0] == letra) { break }
+          }
+        }
+        
+        personas=personas.concat(xlsx.utils.sheet_to_json(workbook.Sheets[sheet]) )
+        for (const iterator of xlsx.utils.sheet_to_json(workbook.Sheets[sheet])) {
+          usuarios.push({ username: iterator.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [id_grupo] })
+        }
+        
+      }
+  
+      
+      await axios.post(config.urlApiExpedientes+"usuarios/",usuarios)
+        .then(async result=>{
+          for (const iterator in result.data) {
+
+            personas[iterator].usuario_id=result.data[iterator].id
+            // 
+            
+          }
+          console.log(personas)
+          await axios.post(config.urlApiExpedientes+"personas/",personas)
+            .then(result=>{
+              res.sendStatus(201)
+          })
+            .catch(err => {
+              res.sendStatus(error(err))
+            })
+      
+      })
+        .catch(err => {
+          console.log(err)
+          // res.sendStatus(error(err))
+        })
+        // console.log(usuarios)
+      
+      
     }
-    let datos=[]
-    let estudiantes=xlsx.utils.sheet_to_json(workbook.Sheets[sheet])
-    for (const iterator of estudiantes) {
-      datos.push( { username: iterator.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [3] })
-    }
     
-    res.sendStatus(201)
-    console.log(datos);
+    LeerHojas(workbookSheets)
+
+
+
     
-     
-   
+    // console.log(datos);
+
+
+
 
 
 
@@ -1124,48 +1165,48 @@ views.CargarTemplatePersonas = async (req, res) => {
 
 views.DescargarTemplates = async (req, res) => {
   try {
-    
+
     const workbook = new ExcelJS.Workbook();
-workbook.views = [ // controlan cuántas ventanas separadas Excel abrirá al ver el libro de trabajo.
-{
-  x: 0, y: 0, width: 10000, height: 20000,
-  firstSheet: 0, activeTab: 1, visibility: 'visible'
-}
-]
+    workbook.views = [ // controlan cuántas ventanas separadas Excel abrirá al ver el libro de trabajo.
+      {
+        x: 0, y: 0, width: 10000, height: 20000,
+        firstSheet: 0, activeTab: 1, visibility: 'visible'
+      }
+    ]
 
-async function HojaExcelGeneral(nombre,color,docente=false) {
-    const sheet = workbook.addWorksheet(nombre, {properties:{tabColor:{argb:color}}}); //  agregar hoja de trabajo 
+    async function HojaExcelGeneral(nombre, color, docente = false) {
+      const sheet = workbook.addWorksheet(nombre, { properties: { tabColor: { argb: color } } }); //  agregar hoja de trabajo 
 
-    const worksheet = workbook.getWorksheet(nombre)
-    worksheet.views = [
-        {state: 'frozen', xSplit: 0, ySplit: 1}
+      const worksheet = workbook.getWorksheet(nombre)
+      worksheet.views = [
+        { state: 'frozen', xSplit: 0, ySplit: 1 }
       ];
-    const fontEncabezado = {name: 'FrankRuehl', family: 4, size: 14,color:{argb:color},width: 50  }; // 
-    const border  = {top: {style:'thin'},left: {style:'thin'},bottom: {style:'thin'},right: {style:'thin'}};
-    worksheet.columns = [
-        { header: 'Nombres',width:20.64,style:{border:border}},
-        { header: 'Apellidos', width:20.64,style:{border:border}},
-        { header: 'Identificacion', width:15.64,style:{border:border}},
-        { header: 'Celular', width:15.64,style:{border:border}},
-        { header: 'Correo', width:25.64,style:{border:border}},]
-    
-    if (docente){
-        
-        worksheet.columns = worksheet.columns.concat({ header: 'Tarjeta_Profesinal',width:20.64,style:{border:border}})
-    } 
-    
-    worksheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
-    worksheet.getRow(1).font= fontEncabezado 
-}
+      const fontEncabezado = { name: 'FrankRuehl', family: 4, size: 14, color: { argb: color }, width: 50 }; // 
+      const border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+      worksheet.columns = [
+        { header: 'Nombres', width: 20.64, style: { border: border } },
+        { header: 'Apellidos', width: 20.64, style: { border: border } },
+        { header: 'Identificacion', width: 15.64, style: { border: border } },
+        { header: 'Celular', width: 15.64, style: { border: border } },
+        { header: 'Correo', width: 25.64, style: { border: border } },]
+
+      if (docente) {
+
+        worksheet.columns = worksheet.columns.concat({ header: 'Tarjeta_Profesinal', width: 20.64, style: { border: border } })
+      }
+
+      worksheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
+      worksheet.getRow(1).font = fontEncabezado
+    }
 
 
 
-await HojaExcelGeneral('Estudiantes','00913D')
-await HojaExcelGeneral('Docentes-Conciliadores','000000',true)
-await HojaExcelGeneral('Administrativos','00460F')
+    await HojaExcelGeneral('Administrativos', '00913D')
+    await HojaExcelGeneral('Docentes-Conciliadores', '000000', true)
+    await HojaExcelGeneral('Estudiantes', '00460F')
 
-const buffer = await workbook.xlsx.writeBuffer();
-  res.send(buffer)
+    const buffer = await workbook.xlsx.writeBuffer();
+    res.send(buffer)
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -1198,37 +1239,37 @@ views.CambiarDocumentoCaso = async (req, res) => {
       }
       return
     }
-    axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
-      .then(async result=>{
+    axios.get(config.urlApiExpedientes + "expedientes/" + req.params.id)
+      .then(async result => {
         await unirest
 
-      .patch(config.urlDocumentos + "documentos/" + req.params.id_documento + "/")
+          .patch(config.urlDocumentos + "documentos/" + req.params.id_documento + "/")
 
 
-      .field('estado', "null")
-      .field('expediente', result.data.numero_caso)
-      .field('nombre', req.files[0].originalname)
+          .field('estado', "null")
+          .field('expediente', result.data.numero_caso)
+          .field('nombre', req.files[0].originalname)
 
 
 
-      //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-      .attach('documento', fs.createReadStream(req.files[0].path)) // creates a read stream
-      //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-      .then(function (response) {
-        try {
-          fs.unlinkSync(req.files[0].path)
-        } catch (err) {
-          error(err)
-        }
+          //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+          .attach('documento', fs.createReadStream(req.files[0].path)) // creates a read stream
+          //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+          .then(function (response) {
+            try {
+              fs.unlinkSync(req.files[0].path)
+            } catch (err) {
+              error(err)
+            }
 
-        res.status(200).json(response.body)
+            res.status(200).json(response.body)
 
+          })
       })
-    })
       .catch(err => {
         res.sendStatus(error(err))
       })
-    
+
 
   } catch (error) {
     console.log(error);
@@ -1599,7 +1640,7 @@ views.AgregarConciliadores = async (req, res) => {
     axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
       .then(async result => {
 
-        if (Object.keys(result.data.results).length > 0) { res.status(400).json({response:{mensaje:"Ya se encuentra reportada esta persona "}}); return }
+        if (Object.keys(result.data.results).length > 0) { res.status(400).json({ response: { mensaje: "Ya se encuentra reportada esta persona " } }); return }
         const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
           .then(result => {
@@ -1776,7 +1817,7 @@ views.TurnosFecha = async (req, res) => {
 
             await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
               .then(axios.spread(async (...allData) => {
-                datos = []
+                let datos = []
                 for (const iterator of allData) {
                   datos.push(iterator.data)
                 }
