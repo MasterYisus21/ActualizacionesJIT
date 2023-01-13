@@ -1,42 +1,42 @@
+
+
 const error = require("../requests/requests_error.js")
 const multer = require("multer");
 const fs = require('fs');
 // seleccionables Principales
 const maxSize = 10 * 1000 * 1000 // 10Mb Max
-const archivo = {};
+const cargar_excel = {};
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, "public");
     },
     filename: (req, file, cb) => {
-      const ext = file.mimetype.split("/")[1];
-      cb(null, `${file.originalname}-${(new Date(Date.now())).toISOString().split("T")[0]}.${ext}`);
+      const ext = "xlsx";
+      cb(null, `${file.originalname}.${ext}`);
     },
   });
 
   
   // Multer Filter
-const multerFilter = (req, file, cb) => {
-    
 
-    if (file.mimetype.split("/")[1] === "jpeg"|file.mimetype.split("/")[1] ==="pdf"|file.mimetype.split("/")[1] ==="png") {
+const multerFilter = (req, file, cb) => {
+    if( file.mimetype.includes('.sheet')){
       cb(null, true);
-      
+    
     } else {
       cb(new Error("Formato no valido"), false);
     }
   };
   
   //Calling the "multer" Function
-const upload = multer({
+let upload = multer({
     storage: multerStorage,
     fileFilter: multerFilter,
     limits: { fileSize: maxSize },
-  }).array("files")
+  }).single("file")
 
-
-archivo.uploadMiddleware = (req,res,next)=>{
+cargar_excel.uploadMiddleware = (req,res,next)=>{
 
   
     // Here call the upload middleware of multer
@@ -45,7 +45,8 @@ archivo.uploadMiddleware = (req,res,next)=>{
       
        if (err instanceof multer.MulterError) {
          // A Multer error occurred when uploading.
-        console.log(err)
+       
+
          let tipoError={ 
           LIMIT_FILE_SIZE:"TAMAÑO DEL ARCHIVO EXCEDIDO",
           LIMIT_UNEXPECTED_FILE:"LÍMITE DE ARCHIVOS INESPERADO"}
@@ -56,7 +57,7 @@ archivo.uploadMiddleware = (req,res,next)=>{
          next(err)
          } else if (err) {
          // An unknown error occurred when uploading.
-         console.log(err)
+        
          res.sendStatus( error({message:"Formato no valido o falta carpeta public en el servidor"},415))
          return
          
@@ -69,4 +70,4 @@ archivo.uploadMiddleware = (req,res,next)=>{
   }
 
 
-module.exports = archivo
+module.exports = cargar_excel

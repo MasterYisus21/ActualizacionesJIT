@@ -10,6 +10,8 @@ const fs = require('fs');
 const unirest = require('unirest');
 const FormData = require('form-data');
 const path = require("path");
+const xlsx=require('xlsx');
+const ExcelJS = require('exceljs');
 
 // datos generales
 //convocantes
@@ -1080,6 +1082,93 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
   } catch (error) {
     console.log(error);
 
+  }
+}
+views.CargarTemplatePersonas = async (req, res) => {
+
+ 
+  try {
+    
+    if (Object.keys(req.file).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
+    const ruta=(req.file.path)
+    
+    const workbook=xlsx.readFile(ruta)
+    const workbookSheets=workbook.SheetNames;
+    const sheet=workbookSheets[0]
+    let letra=workbook.Sheets[sheet]['!ref'].split(":",2)[1][0]
+    for (const iterator in workbook.Sheets[sheet]) {
+       if(iterator!="!ref"){
+         workbook.Sheets[sheet][iterator].w=workbook.Sheets[sheet][iterator].w.toLowerCase()
+        if (iterator[0]==letra){break}
+       }
+    }
+    let datos=[]
+    let estudiantes=xlsx.utils.sheet_to_json(workbook.Sheets[sheet])
+    for (const iterator of estudiantes) {
+      datos.push( { username: iterator.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [3] })
+    }
+    
+    res.sendStatus(201)
+    console.log(datos);
+    
+     
+   
+
+
+
+  } catch (error) {
+    console.log(error);
+
+  }
+}
+
+views.DescargarTemplates = async (req, res) => {
+  try {
+    
+    const workbook = new ExcelJS.Workbook();
+workbook.views = [ // controlan cuántas ventanas separadas Excel abrirá al ver el libro de trabajo.
+{
+  x: 0, y: 0, width: 10000, height: 20000,
+  firstSheet: 0, activeTab: 1, visibility: 'visible'
+}
+]
+
+async function HojaExcelGeneral(nombre,color,docente=false) {
+    const sheet = workbook.addWorksheet(nombre, {properties:{tabColor:{argb:color}}}); //  agregar hoja de trabajo 
+
+    const worksheet = workbook.getWorksheet(nombre)
+    worksheet.views = [
+        {state: 'frozen', xSplit: 0, ySplit: 1}
+      ];
+    const fontEncabezado = {name: 'FrankRuehl', family: 4, size: 14,color:{argb:color},width: 50  }; // 
+    const border  = {top: {style:'thin'},left: {style:'thin'},bottom: {style:'thin'},right: {style:'thin'}};
+    worksheet.columns = [
+        { header: 'Nombres',width:20.64,style:{border:border}},
+        { header: 'Apellidos', width:20.64,style:{border:border}},
+        { header: 'Identificacion', width:15.64,style:{border:border}},
+        { header: 'Celular', width:15.64,style:{border:border}},
+        { header: 'Correo', width:25.64,style:{border:border}},]
+    
+    if (docente){
+        
+        worksheet.columns = worksheet.columns.concat({ header: 'Tarjeta_Profesinal',width:20.64,style:{border:border}})
+    } 
+    
+    worksheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.getRow(1).font= fontEncabezado 
+}
+
+
+
+await HojaExcelGeneral('Estudiantes','00913D')
+await HojaExcelGeneral('Docentes-Conciliadores','000000',true)
+await HojaExcelGeneral('Administrativos','00460F')
+
+const buffer = await workbook.xlsx.writeBuffer();
+  res.send(buffer)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
   }
 }
 views.AprobarDocumentosCaso = async (req, res) => {
