@@ -2,6 +2,9 @@ import React, { useRef } from 'react'
 import { Buscador, Button, Popup } from '../../../components'
 import TarjetaPersonas from '../../../components/Tarjeta/TarjetaPersonas'
 import { useState, useEffect } from 'react'
+import FileDownload from 'js-file-download'
+
+
 // import css
 import './Personas.css'
 import { axiosTokenInstanceApiExpedientes } from '../../../helpers/axiosInstances'
@@ -76,6 +79,23 @@ function Personas() {
     }
   }
 
+  const descargarFormatoCargarEstudiantes = () => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'post',
+      url: "/personas/formato",
+      // headers: req.headers,
+      responseType: "blob",
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        FileDownload(result.data, "formato_personas.xlsx")
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }
+
   useEffect(() => {
     setResultadosBusqueda([]);
     search()
@@ -113,6 +133,7 @@ function Personas() {
         </svg>
         
         <button className='boton-cargar-personas'>Cargar Excel Estudiantes</button>
+        <button className='boton-cargar-personas' onClick={e => descargarFormatoCargarEstudiantes()}>Descargar Formato</button>
       </div>
 
       <div className='wrapp-tarjetas-personas' onScroll={e => handleScroll(e)}>
