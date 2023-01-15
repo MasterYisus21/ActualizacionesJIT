@@ -1095,13 +1095,16 @@ views.CargarTemplatePersonas = async (req, res) => {
     const workbook = xlsx.readFile(ruta)
     const workbookSheets = workbook.SheetNames;
 
-    
-    async function  LeerHojas(workbookSheets) {
+
+    async function LeerHojas(workbookSheets) {
       let usuarios = []
-      let personas=[]
-      let id_grupo=0
+      let identificacion = []
+      let email = []
+      let duplicados = [];
+      let personas = []
+      let id_grupo = 0
       for (const sheet of workbookSheets) {
-          id_grupo++
+        id_grupo++
         let letra = workbook.Sheets[sheet]['!ref'].split(":", 2)[1][0]
         for (const iterator in workbook.Sheets[sheet]) {
           if (iterator != "!ref") {
@@ -1109,48 +1112,75 @@ views.CargarTemplatePersonas = async (req, res) => {
             if (iterator[0] == letra) { break }
           }
         }
-        
-        personas=personas.concat(xlsx.utils.sheet_to_json(workbook.Sheets[sheet]) )
+
+        personas = personas.concat(xlsx.utils.sheet_to_json(workbook.Sheets[sheet]))
         for (const iterator of xlsx.utils.sheet_to_json(workbook.Sheets[sheet])) {
+          if (!iterator.identificacion | !iterator.correo | iterator.nombres) { res.status(400).json({ message: "Se encuentan celdas obligatorias vacias" }); return }
           usuarios.push({ username: iterator.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [id_grupo] })
+          identificacion.push(iterator.identificacion)
+          email.push(iterator.correo)
+
+
         }
-        
+
       }
-  
-      
-      await axios.post(config.urlApiExpedientes+"usuarios/",usuarios)
-        .then(async result=>{
+
+      function repetidos(arr) {
+        return arr.some(function (v, i) { duplicados.push(v); return arr.indexOf(v, i + 1) > -1 })
+
+      }
+      if (repetidos(identificacion)) {
+        const mensaje = "El numero de identificacion " + duplicados[0] + " aparece  mas de una vez en el archivo";
+        res.status(400).json({ message: mensaje }); return
+      }
+
+      function validarEmail(valor) {
+
+        if (!/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(valor)) {
+          return email = [valor]
+        }
+
+      }
+
+      if (email.some(validarEmail)) {
+        const mensaje = "El correo electronico " + email[0] + " no es valido";
+        res.status(400).json({ message: mensaje }); return
+      }
+
+
+      await axios.post(config.urlApiExpedientes + "usuarios/", usuarios)
+        .then(async result => {
           for (const iterator in result.data) {
 
-            personas[iterator].usuario_id=result.data[iterator].id
+            personas[iterator].usuario_id = result.data[iterator].id
             // 
-            
+
           }
-          console.log(personas)
-          await axios.post(config.urlApiExpedientes+"personas/",personas)
-            .then(result=>{
-              res.sendStatus(201)
-          })
-            .catch(err => {
-              res.sendStatus(error(err))
-            })
-      
+      // console.log(personas)
+      await axios.post(config.urlApiExpedientes+"personas/",personas)
+        .then(result=>{
+          res.sendStatus(201)
       })
         .catch(err => {
-          console.log(err)
-          // res.sendStatus(error(err))
+          res.sendStatus(error(err))
         })
-        // console.log(usuarios)
-      
-      
+
+      })
+      .catch(err => {
+        
+        const mensaje ="Error: Verificar en el archivo subido que no se repita ningún documento de identidad y además que en el aplicativo no exista ninguno de los usuarios que desea añadir "
+        res.status(400).json({message:mensaje})
+      })
+  
+
     }
-    
+
     LeerHojas(workbookSheets)
 
 
 
-    
-    // console.log(datos);
+
+
 
 
 
@@ -1181,7 +1211,8 @@ views.DescargarTemplates = async (req, res) => {
       worksheet.views = [
         { state: 'frozen', xSplit: 0, ySplit: 1 }
       ];
-      const fontEncabezado = { name: 'FrankRuehl', family: 4, size: 14, color: { argb: color }, width: 50 }; // 
+      const fontEncabezado = { name: 'FrankRuehl', family: 4, size: 14, color: { argb: 'FFFFFF' }, width: 50 }; // 
+      const fillEncabezado ={type: 'pattern', pattern: 'solid', fgColor:{argb:color},bgColor:{argb:color}}
       const border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
       worksheet.columns = [
         { header: 'Nombres', width: 20.64, style: { border: border } },
@@ -1189,21 +1220,46 @@ views.DescargarTemplates = async (req, res) => {
         { header: 'Identificacion', width: 15.64, style: { border: border } },
         { header: 'Celular', width: 15.64, style: { border: border } },
         { header: 'Correo', width: 25.64, style: { border: border } },]
-
+       
+        
       if (docente) {
 
         worksheet.columns = worksheet.columns.concat({ header: 'Tarjeta_Profesinal', width: 20.64, style: { border: border } })
       }
-
+      
       worksheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
       worksheet.getRow(1).font = fontEncabezado
+      for (let i = 1; i<=worksheet.lastColumn.number; i++) {
+        worksheet.getCell(1,i).fill=fillEncabezado
+        
+      }
+  
+      worksheet.getCell(1,1).fill=fillEncabezado
+      
+    
+      // formato condicional
+            
+
+      worksheet.addConditionalFormatting({
+          ref: "A2:E4"+ worksheet.lastRow.number ,
+          rules: [
+            {
+              type: 'containsText',
+              operator: 'containsBlanks',
+              text:"",
+              style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'B7DEE8'}}},
+            }
+          ]
+        })
+       
+        
     }
 
 
 
     await HojaExcelGeneral('Administrativos', '00913D')
-    await HojaExcelGeneral('Docentes-Conciliadores', '000000', true)
-    await HojaExcelGeneral('Estudiantes', '00460F')
+    await HojaExcelGeneral('Docentes-Conciliadores', '00460F', true)
+    await HojaExcelGeneral('Estudiantes', '5C9E31')
 
     const buffer = await workbook.xlsx.writeBuffer();
     res.send(buffer)
