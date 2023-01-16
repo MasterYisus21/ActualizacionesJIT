@@ -1536,8 +1536,18 @@ views.VerSeguimiento = async (req, res) => {
 }
 views.CrearConvocantes = async (req, res) => {
   try {
+    if(Object.keys(req.body.apoderado).length>0){
+    await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
+      .then(result=>{
+        req.body.persona.apoderado_id=result.data.id
+    })
+      .catch(err => {
+        res.status(error(err))
+        return
+      })
+    }
 
-    await axios.post(config.urlApiExpedientes + "personas/", req.body)
+    await axios.post(config.urlApiExpedientes + "personas/", req.body.persona)
       .then(async result => {
         const datos = { persona_id: result.data.id, expediente_id: req.params.id, tipo_cliente_id: 1 }
 
@@ -1622,8 +1632,18 @@ views.AgregarConvocantes = async (req, res) => {
 views.CrearConvocados = async (req, res) => {
   try {
 
-
-    await axios.post(config.urlApiExpedientes + "personas/", req.body)
+ if(Object.keys(req.body.apoderado).length>0){
+    await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
+      .then(result=>{
+        req.body.persona.apoderado_id=result.data.id
+    })
+      .catch(err => {
+        res.status(error(err))
+        
+      })
+    }
+    
+    await axios.post(config.urlApiExpedientes + "personas/", req.body.persona)
       .then(async result => {
         let datos = { persona_id: result.data.id, expediente_id: req.params.id, tipo_cliente_id: 2 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
