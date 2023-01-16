@@ -49,25 +49,30 @@ views.CrearPersonas = async (req, res) => {
     if (req.body.identificacion == "" | req.body.identificacion == null) { res.sendStatus(error({ message: "No ha ingresado la identificacion" })); return }
     if (req.body.celular == "" | req.body.celular == null) { res.sendStatus(error({ message: "No ha ingresado el telefono celular" })); return }
     if (req.body.correo == "" | req.body.correo == null) { res.sendStatus(error({ message: "No ha ingresado el correo electronico" })); return }
-    if (req.body.tipo_cargo_id == "" | req.body.tipo_cargo_id == null) { res.sendStatus(error({ message: "No ha ingresado el cargo" })); return }
+    if (req.body.tipo_cargo_id == "" | req.body.grupo_id == null) { res.sendStatus(error({ message: "No ha ingresado los permisos del usuario" })); return }
+    if (req.body.grupo_id == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
+    if (req.body.tarjeta_profesional == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
 
-    axios.post(config.urlApiExpedientes + "personas/", req.body)
-      .then(async resul => {
-
-        let datos = { username: req.body.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [req.body.grupo_id] }
-        await axios.post(config.urlApiExpedientes + "usuarios/", datos)
-          .then(result => {
-            result.data.persona_id = resul.data.id
-            res.status(201).json(result.data)
+    let datos = { username: req.body.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [req.body.grupo_id] }
+    console.log(datos)
+    await axios.post(config.urlApiExpedientes + "usuarios/", datos)
+          .then(async result => {
+            
+            req.body.usuario_id=result.data.id
+            await  axios.post(config.urlApiExpedientes + "personas/", req.body)
+            .then(async resul => {
+              res.sendStatus(201)
+            })
+            .catch(err => {
+              res.sendStatus(error(err))
+            })
+            
           })
           .catch(err => {
+            
             res.sendStatus(error(err))
           })
-
-      })
-      .catch(err => {
-        res.sendStatus(error(err))
-      })
+  
 
   } catch (error) {
     console.log(error);
