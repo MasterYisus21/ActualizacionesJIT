@@ -102,7 +102,7 @@ function RegistrarSolicitud() {
           lugar_expedicion: event.target.lugarExpedicionConvocado.value,
           celular: event.target.celularConvocado.value,
           correo: event.target.correoConvocado.value,
-          tarjeta_profesional: event.target.celularConvocado.value,
+          tipo_persona_id: parseInt(event.target.tipoPersonaConvocado.value),
         },
       ],
       hechos: [
@@ -754,7 +754,8 @@ function RegistrarSolicitud() {
                       className="form-check-input"
                       type="radio"
                       name="flexRadioDefault"
-                      id="flexRadioDefault1"
+                      id="tipoPersonaConvocado"
+                      value={tipoPersona["id"]}
                     />
                     <label
                       className="form-check-label"

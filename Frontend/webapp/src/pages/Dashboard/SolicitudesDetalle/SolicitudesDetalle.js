@@ -63,12 +63,11 @@ function SolicitudesDetalle() {
         document.getElementById("tipoDocumento").value = result.data.convocante["tipo_documento_id"]
         document.getElementById("fechaExpedicion").value = result.data.convocante["fecha_expedicion"]
         document.getElementById("lugarExpedicion").value = result.data.convocante["lugar_expedicion"]
-        document.getElementById("lugarExpedicion").value = result.data.convocante["lugar_expedicion"]
         document.getElementById("nombres").value = result.data.convocante["nombres"]
         document.getElementById("apellidos").value = result.data.convocante["apellidos"]
         document.getElementById("fechaNacimiento").value = result.data.convocante["fecha_nacimiento"]
-        document.getElementById("tipoPersona").value = result.data.convocante["tipo_persona_id"]
-        document.getElementById("tipoPersona").value = result.data.convocante["tipo_persona_id"]
+        document.getElementById("lugarNacimiento").value = result.data.convocante["lugar_nacimiento"]
+        document.getElementById("tipoPersona").checked = result.data.convocante["tipo_persona_id"]
         document.getElementById("sexo").value = result.data.convocante["sexo_id"]
         document.getElementById("genero").value = result.data.convocante["genero_id"]
         document.getElementById("estratoSocioeconomico").value = result.data.convocante["estrato_socioeconomico_id"]
@@ -84,7 +83,7 @@ function SolicitudesDetalle() {
         document.getElementById("lugarExpedicion_Convocado").value = result.data.convocado["lugar_expedicion"]
         document.getElementById("nombres_Convocado").value = result.data.convocado["nombres"]
         document.getElementById("apellidos_Convocado").value = result.data.convocado["apellidos"]
-        //document.getElementById("tipoPersona_Convocado").value = result.data.convocado["tipo_persona"]
+        document.getElementById("tipoPersona_Convocado").checked = result.data.convocado["tipo_persona"]
         document.getElementById("sexo_Convocado").value = result.data.convocado["sexo_id"]
         document.getElementById("genero_Convocado").value = result.data.convocado["genero_id"]
         document.getElementById("estratoSocioeconomico_Convocado").value = result.data.convocado["estrato_socioeconomico_id"]
@@ -280,6 +279,23 @@ useEffect(() => {
 
         <Collapse in={seccion1}>
           <div className="form-datos">
+
+            <label className="subtitles-secciones">Nombre</label>
+            <FloatingLabel controlId="nombres" label="Nombres">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="apellidos" label="Apellidos">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+
             <label className="subtitles-secciones">Identificación</label>
             <FloatingLabel controlId="tipoDocumento" label="Tipo de documento">
               <Form.Select
@@ -330,21 +346,6 @@ useEffect(() => {
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="nombres" label="Nombres">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel controlId="apellidos" label="Apellidos">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
 
             <label className="subtitles-secciones">Lugar y fecha de nacimiento</label>
 
@@ -356,7 +357,7 @@ useEffect(() => {
                   placeholder="name@example.com"
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Ciudad">
+              <FloatingLabel controlId="lugarNacimiento" label="Ciudad">
                 <Form.Control
                   className="col-inputs"
                   type="text"
@@ -389,6 +390,7 @@ useEffect(() => {
                       type="radio"
                       name="flexRadioDefault"
                       id="tipoPersona"
+                      
                     />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                       {tipoPersona["nombre"]}
@@ -764,7 +766,7 @@ useEffect(() => {
                       className="form-check-input"
                       type="radio"
                       name="flexRadioDefault"
-                      id="flexRadioDefault1"
+                      id="tipoPersona_Convocado"
                     />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                       {tipoPersona["nombre"]}
