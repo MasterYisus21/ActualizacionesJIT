@@ -252,7 +252,8 @@ class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de res
         if not is_many:
             usuario.set_password(usuario.password)
             usuario.save()
-            return
+            return 
+           
         for usuario in usuario:
             usuario.set_password(usuario.password)
             usuario.save()

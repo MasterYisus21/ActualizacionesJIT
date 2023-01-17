@@ -3,6 +3,7 @@ const axios = require("axios");
 const app = express();
 const router = express.Router();
 const archivo = require("../views/cargar_documentos.js")
+const cargar_excel = require("../views/cargar_descargar_excel")
 const config = require("../config.json");
 
 const views_genericos = require("../views/views_genericos");
@@ -95,6 +96,8 @@ router.post("/expedientes", views_genericos.CrearExpediente)
 router.post("/personas", views_genericos.CrearPersonas)
 router.post("/personas/:id/apoderados", views_genericos.CrearApoderado)
 router.post("/documentos/:id",archivo.uploadMiddleware, views_genericos.CargarDocumentos)// id expediente
+router.post("/personas/cargar",cargar_excel.uploadMiddleware, views_genericos.CargarTemplatePersonas);
+
 router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware, views_genericos.CambiarDocumentoCaso);
 router.get("/resultados/:id",archivo.uploadMiddleware, views_genericos.DescargarResultados);
 
@@ -103,6 +106,7 @@ router.post("/expedientes/:id/seguimientos", views_genericos.CrearSeguimientoCas
 router.post("/expedientes/:id/estado",views_genericos.CambiarEstadoExpediente)
 
 router.patch("/expedientes/:id/resultados/:id_resultado",archivo.uploadMiddleware, views_genericos.CargarResultadoCaso);
+
 
 
 
@@ -116,7 +120,10 @@ router.patch("/documentos/:id",views_genericos.AprobarDocumentosCaso)
 
 router.post("/expedientes/:id/resultados/:id_resultado/formato", views_genericos.DescargarFormatoResultado);
 router.post("/expedientes/:id/citaciones/:id_citacion/personas/:id_relacion/formato", views_genericos.DescargarFormatoCitacion);
+router.post("/personas/formato", views_genericos.DescargarTemplates);
 // turnos fecha
 
 router.get("/expedientes/:id/turnos/:fecha", views_genericos.TurnosFecha);
 module.exports = router;
+
+

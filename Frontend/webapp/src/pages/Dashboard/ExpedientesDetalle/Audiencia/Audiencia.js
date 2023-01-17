@@ -22,11 +22,12 @@ function Audiencia() {
     })
       .then(result => {
         console.log(result.data);
-        setDataApi(result.data.results[0])
-        document.getElementById("fecha_sesion").value = result.data.results[0].fecha_sesion
-        document.getElementById("descripcion").value = result.data.results[0].descripcion
-        if (result.data.results[0].enlace) { document.getElementById("link-audiencia").value = result.data.results[0].enlace }
-
+        if (result.data.results.length) {
+          setDataApi(result.data.results[0])
+          document.getElementById("fecha_sesion").value = result.data.results[0].fecha_sesion
+          document.getElementById("descripcion").value = result.data.results[0].descripcion
+          if (result.data.results[0].enlace) { document.getElementById("link-audiencia").value = result.data.results[0].enlace }
+        }
       })
       .catch(err => {
         console.log(err);
@@ -50,12 +51,31 @@ function Audiencia() {
   }, [])
 
   useEffect(() => {
-    const turnos = [{
-      id: dataApi.turno_id,
-      estado: dataApi.estado,
-      nombre: dataApi.turno
-    }]
-    getTurnosDisponibles(dataApi.fecha_sesion, turnos)
+    if (dataApi) {
+      const turnos = [{
+        id: dataApi.turno_id,
+        estado: dataApi.estado,
+        nombre: dataApi.turno
+      }]
+      getTurnosDisponibles(dataApi.fecha_sesion, turnos)
+    }
+  }, [dataApi])
+
+  useEffect(() => {
+    if (dataApi?.id) {
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: `/expedientes/${id}/citaciones/${dataApi.id}/personas`,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          console.log(result.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }, [dataApi])
 
   useEffect(() => {
@@ -73,15 +93,44 @@ function Audiencia() {
 
   const getTurnosDisponibles = (value, turnosAdicionales = []) => {
     // console.log(e);
+    if (value) {
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: `/expedientes/${id}/turnos/${value}`,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          console.log(result.data);
+          setTurnosDisponibles([...turnosAdicionales, ...result.data])
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+
+  const createOrUpdateAudiencia = (e) => {
+    e.preventDefault()
+    const data = {
+      enlace: e.target["link-audiencia"].value,
+      descripcion: e.target["descripcion"].value,
+      fecha_sesion: e.target["fecha-sesion"].value,
+      turno_id: e.target["turno-seleccionado"].value,
+      tipo_medio_id: e.target["tipo-de-medio"].value
+    }
+    console.log(dataApi);
+    console.log(`dataApi: ${dataApi?.id}`);
+    const method = dataApi?.id ? 'patch' : 'post'
     axiosTokenInstanceApiExpedientes({
-      method: 'get',
-      url: `/expedientes/${id}/turnos/${value}`,
+      method: method,
+      url: `${dataApi?.id ? '' : `/expedientes/${id}`}/citaciones${dataApi?.id ? `/${dataApi.id}` : ''}`,
       // headers: req.headers,
-      data: {}
+      data: data
     })
       .then(result => {
         console.log(result.data);
-        setTurnosDisponibles([...turnosAdicionales, ...result.data])
+        setDataApi(result.data)
       })
       .catch(err => {
         console.log(err);
@@ -107,7 +156,7 @@ function Audiencia() {
         <label className='subtitulo-audiencia'>Ingrese los datos de la audiencia</label>
       </div>
 
-      <form>
+      <form onSubmit={e => createOrUpdateAudiencia(e)}>
 
         <div className='fecha-y-hora'>
           <div className='izquierda-fecha-descripcion'>
@@ -116,8 +165,10 @@ function Audiencia() {
               <input
                 type="date"
                 id='fecha_sesion'
+                name='fecha-sesion'
                 className='input-fecha-sesion'
                 onChange={e => getTurnosDisponibles(e.target.value)}
+                required
               />
             </div>
             <label className='titulo-descripcion'>Descripción:</label>
@@ -128,7 +179,7 @@ function Audiencia() {
           <div className='derecha-hora-tipo'>
             <label className='titulo-fecha-sesion'>Hora:</label>
             <div className='contenedor-campos-de-llenado-derecha'>
-              <Form.Select aria-label="Default select example" className='input-seleccionable-hora' id="turno-seleccionado">
+              <Form.Select aria-label="Default select example" className='input-seleccionable-hora' id="turno-seleccionado" name="turno-seleccionado" required>
                 <option value="">Selecciona una hora</option>
                 {turnosDisponibles.map((dato) => {
                   return (<option value={dato.id}>{dato.nombre}</option>)
@@ -140,7 +191,7 @@ function Audiencia() {
               {tiposMedio.map(dato => {
                 return (
                   <>
-                    <input className='class="custom-control-input"' id="tipo-de-medio" value={dato.id} name="tipo-de-medio" type='radio' checked={dataApi ? dataApi.tipo_medio_id == dato.id : false} onChange={e => setDataApi({...dataApi, tipo_medio_id: e.target.value})} required></input>
+                    <input className='class="custom-control-input"' id="tipo-de-medio" value={dato.id} name="tipo-de-medio" type='radio' checked={dataApi ? dataApi.tipo_medio_id == dato.id : false} onChange={e => setDataApi({ ...dataApi, tipo_medio_id: e.target.value })} required></input>
                     <label className="label-virtual">{dato.nombre} </label>
                   </>
                 )
@@ -149,10 +200,10 @@ function Audiencia() {
             <div className='contenedor-campos-de-llenado-derecha'>
               <Form.Control
                 id="link-audiencia"
-                type="text"
+                name="link-audiencia"
+                type="url"
                 placeholder="Link"
                 aria-label="Disabled input example"
-                readOnly
                 className='disabled-link'
               />
             </div>

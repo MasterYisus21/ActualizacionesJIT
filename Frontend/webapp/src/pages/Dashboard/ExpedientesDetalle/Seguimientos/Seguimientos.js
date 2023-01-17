@@ -4,19 +4,39 @@ import React, { useEffect, useState } from 'react'
 //importing css
 import "./Seguimientos.css"
 import { Form, Collapse } from 'react-bootstrap'
+import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances'
+import { useParams } from 'react-router-dom'
 
 function Seguimientos() {
 
   const [open, setOpen] = useState(false)
   const [seguimientos, setSeguimientos] = useState([])
 
+  // useEffect(() => {
+  //   setSeguimientos([
+  //     { id: 1, fecha: "22/03/2022", estado: false, },
+  //     { id: 2, fecha: "23/03/2022", estado: false, },
+  //     { id: 3, fecha: "22/04/2022", estado: false, },
+  //     { id: 4, fecha: "03/06/2022", estado: true, },
+  //   ])
+  // }, [])
+
+  let { id } = useParams();
+
   useEffect(() => {
-    setSeguimientos([
-      { id: 1, fecha: "22/03/2022", estado: false, },
-      { id: 2, fecha: "23/03/2022", estado: false, },
-      { id: 3, fecha: "22/04/2022", estado: false, },
-      { id: 4, fecha: "03/06/2022", estado: true, },
-    ])
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/expedientes/" + id + "/seguimientos/?ordering=id&count=20&page=1",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data.results);
+        setSeguimientos(result.data.results);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, [])
 
 
@@ -24,13 +44,15 @@ function Seguimientos() {
     const [opened, setopened] = useState(false)
     const [preguntas, setPreguntas] = useState([])
 
+    
+    
     useEffect(() => {
       setPreguntas([
         { enunciado: "¿Se cumplió o se esta cumpliendo el acuerdo de conciliación?" },
         { enunciado: "¿El acuerdo alcanzao en la conciliación fue llevado a proceso judicial?" },
         { enunciado: "¿Existe reincidencia del conflicto con que se acordó en el caso de conciliación?" },
       ])
-
+      
       return () => {
         setPreguntas([])
       }

@@ -1,5 +1,5 @@
 {
-    "urlApiExpedientes": "http://localhost:8000/api/jit_expedientes/v1/",
+    "urlApiExpedientes": "http://0.0.0.0:8000/api/jit_expedientes/v1/",
     "urlApiSolicitudes": "http://0.0.0.0:8001/api/jit_solicitudes/v1/",
     "urlDocumentos": "http://0.0.0.0:8002/api/documentos/v1/",
     "urlGeneradorDocumentos": "http://localhost:8003/api/generador_documentos/v1/",
