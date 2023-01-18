@@ -27,11 +27,15 @@ function SolicitudesDetalle() {
   const [apoderado_convocante, setApoderado_convocante] = useState(false)
   const [apoderado_convocado, setApoderado_convocado] = useState(false)
 
+  const fechaNacimiento = document.getElementById("fechaNacimiento")
+  const edad = document.getElementById('edad_convocante');
+
   // forms options 
   const [sexos, setSexos] = useState([])
   const [generos, setGeneros] = useState([])
   const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([])
   const [tiposPersona, setTiposPersona] = useState([])
+  const [tiposPersonaConvocante, setTiposPersonaConvocante] = useState([])
   const [tiposDocumento, setTiposDocumento] = useState([])
   const [departamentos, setDepartamentos] = useState([])
 
@@ -67,14 +71,17 @@ function SolicitudesDetalle() {
         document.getElementById("apellidos").value = result.data.convocante["apellidos"]
         document.getElementById("fechaNacimiento").value = result.data.convocante["fecha_nacimiento"]
         document.getElementById("lugarNacimiento").value = result.data.convocante["lugar_nacimiento"]
-        document.getElementById("tipoPersona").checked = result.data.convocante["tipo_persona_id"]
+
+        
+
         document.getElementById("sexo").value = result.data.convocante["sexo_id"]
         document.getElementById("genero").value = result.data.convocante["genero_id"]
         document.getElementById("estratoSocioeconomico").value = result.data.convocante["estrato_socioeconomico_id"]
         document.getElementById("direccion").value = result.data.convocante["direccion"]
         document.getElementById("telefono").value = result.data.convocante["telefono"]
         document.getElementById("celular").value = result.data.convocante["celular"]
-        
+
+
         //Convocado
 
         document.getElementById("identificacion_Convocado").value = result.data.convocado["identificacion"]
@@ -101,21 +108,27 @@ function SolicitudesDetalle() {
 
 
         // Apoderado Convocante
-        if(result.data.convocante["apoderado_id"] != null) return setApoderado_convocante(true)
+        if(result.data.convocante["apoderado_id"] != null && result.data.convocante["apoderado_id"] != "" ) return setApoderado_convocante(true)
         // if(result.data.convocado["apoderado_id"] != null) return setApoderado_convocado(true)
 
+        if(parseInt(result.data.convocante["tipo_persona_id"]) == 2) {
+          console.log("hola");
+        }
         
-
 
       })
       .catch(err => {
         console.log("error");
+        console.log(err)
       });
 
   }, [])
 
 
 useEffect(() => {
+
+  // const calcularEdad 
+
   if (data.apoderado && apoderado_convocante){
     document.getElementById("identificacion_Apoderado").value = data?.apoderado?.identificacion
     document.getElementById("tipoDocumento_Apoderado").value = data?.apoderado?.tipo_documento_id
@@ -128,8 +141,35 @@ useEffect(() => {
     document.getElementById("correo_Apoderado").value = data?.apoderado?.correo
     document.getElementById("tarjetaProfesional_Apoderado").value = data?.apoderado?.tarjeta_profesional
   }
+
+  const fechaNacimiento = document.getElementById("fechaNacimiento").value;
+  const edad = document.getElementById('edad_convocante');
+  edad.value = CalcularFecha(fechaNacimiento)
+  
+
+
+  // if(tiposPersonaConvocante==true){
+  //   console.log("asdf");
+  // }else if(tiposPersonaConvocante== false){
+  //   console.log("no entré");
+  // }
+  
+  // const Natural = document.getElementById("tipo_persona1")
+  // const Juridica = document.getElementById("tipo_persona2")
+
 }, [apoderado_convocante])
 
+
+
+
+
+
+// Check tipo persona 
+
+
+// if(Naural.value == 1){
+//   Natural.value
+// }
 
   // fetch sexos options
   useEffect(() => {
@@ -148,6 +188,37 @@ useEffect(() => {
       });
   }, [])
 
+  // Calcular fecha
+
+  if (fechaNacimiento){
+
+    fechaNacimiento.addEventListener('change', (event) => {
+      const fechaNacimiento = document.getElementById("fechaNacimiento").value
+      edad.value = CalcularFecha(fechaNacimiento);
+    });
+  }
+
+  const CalcularFecha = (fechaNacimiento) => {
+    
+    const fechaActual = new Date();
+    const currentYear = parseInt(fechaActual.getFullYear());
+    const currentMonth = parseInt(fechaActual.getMonth())+1;
+    const currentDay = parseInt(fechaActual.getDate());
+
+    const bornYear = parseInt(String(fechaNacimiento).substring(0,4));
+    const bornMonth = parseInt(String(fechaNacimiento).substring(5,7));
+    const bornDay = parseInt(String(fechaNacimiento).substring(8,10));
+    
+    let edad = currentYear - bornYear;
+    if (currentMonth < bornMonth){
+      edad--;
+    } else if (currentMonth == bornMonth){
+      if (currentDay < bornDay)
+      edad--;
+    }return edad;
+  }
+
+  
   // fetch generos options
   useEffect(() => {
     axiosBasicInstanceApiSolicitudes({
@@ -372,11 +443,12 @@ useEffect(() => {
                 placeholder="name@example.com"
               />
             </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Edad">
+            <FloatingLabel controlId="edad_convocante" label="Edad">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
 
@@ -389,8 +461,7 @@ useEffect(() => {
                       className="form-check-input"
                       type="radio"
                       name="flexRadioDefault"
-                      id="tipoPersona"
-                      
+                      id= {"tipoPersona"+tipoPersona["id"]}
                     />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                       {tipoPersona["nombre"]}
