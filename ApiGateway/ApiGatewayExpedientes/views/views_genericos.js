@@ -933,7 +933,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
           for (const iterator of datos2.data.results) {
             id_personas_citadas[personas_citadas.length] = iterator.persona_id
             personas_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)])
-
+            if (datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)]==null){personas_citadas = [];break}
           }
 
          
@@ -949,8 +949,6 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
           for (const iterator of id_personas_no_citadas) {
             personas_no_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator)])
           }
-
-       
 
            datos.personas_no_citadas = personas_no_citadas
       
