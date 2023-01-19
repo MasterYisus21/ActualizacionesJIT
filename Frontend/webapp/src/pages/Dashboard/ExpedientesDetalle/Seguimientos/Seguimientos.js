@@ -7,6 +7,7 @@ import { Form, Collapse } from 'react-bootstrap'
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances'
 import { useParams } from 'react-router-dom'
 import Seguimiento from './Seguimiento'
+import { toast } from 'react-toastify'
 
 function Seguimientos() {
 
@@ -74,29 +75,34 @@ function Seguimientos() {
       "medio_seguimiento_id": e.target["medio_seguimiento_id"].value,
       "se_cumplio_acuerdo": e.target["se_cumplio_acuerdo"].value == 'true',
       "seguimiento_efectivo": e.target["seguimiento_efectivo"].value == 'true',
-      "respuestas": [
-        {
-          "pregunta_seguimiento_id": 1,
-          "si_o_no": false,
-          "porque": "este es el por que en caso de que respondan no"
-
-
-        },
-        {
-          "pregunta_seguimiento_id": 2,
-          "si_o_no": true,
-          "porque": "este es el por que en caso de que respondan no"
-        }
-      ]
+      "respuestas": []
     }
     preguntas.map(pregunta => {
-        data.respuestas.push({
-          "pregunta_seguimiento_id": pregunta.id,
-          "si_o_no": e.target[`pregunta${pregunta.id}`].value == true,
-          "porque": "este es el por que en caso de que respondan no"
-        })
+      data.respuestas.push({
+        "pregunta_seguimiento_id": pregunta.id,
+        "si_o_no": e.target[`pregunta${pregunta.id}`].value == 'true',
+        "porque": e.target[`pregunta${pregunta.id}detalle`].value
+      })
     })
     console.log(data);
+    axiosTokenInstanceApiExpedientes({
+      method: 'post',
+      url: `/expedientes/${id}/seguimientos`,
+      // headers: req.headers,
+      data: data
+    })
+      .then(result => {
+        console.log(result.data);
+        e.target.reset();
+        setOpen(false)
+        setSeguimientos([...seguimientos, result.data])
+        toast.success('La información se ha guardado con exito', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
 
@@ -139,7 +145,8 @@ function Seguimientos() {
                       label={'Si'}
                       name={`pregunta${pregunta.id}`}
                       value={true}
-                    // id={`disabled-default-${type}`}
+                      onClick={e => { let el = document.getElementById(`pregunta${pregunta.id}detalle`); el.setAttribute('disabled', true); el.value = ""; el.removeAttribute('required') }}
+                      required
                     />
                     <Form.Check
                       // disabled
@@ -147,10 +154,11 @@ function Seguimientos() {
                       label={'No'}
                       name={`pregunta${pregunta.id}`}
                       value={false}
-                      // id={`disabled-default-${type}`}
+                      onClick={e => { let el = document.getElementById(`pregunta${pregunta.id}detalle`); el.removeAttribute('disabled'); el.setAttribute('required', true) }}
+                      required
                     />
                   </div>
-                  <Form.Control as="textarea" name={`pregunta${pregunta.id}detalle`} placeholder="Detalle" style={{ height: '10rem' }} />
+                  <Form.Control as="textarea" id={`pregunta${pregunta.id}detalle`} name={`pregunta${pregunta.id}detalle`} placeholder="Detalle" style={{ height: '10rem' }} />
                   <br />
                 </div>
               )
@@ -167,7 +175,7 @@ function Seguimientos() {
                   label={'Si'}
                   value={true}
                   name="se_cumplio_acuerdo"
-                // id={`disabled-default-${type}`}
+                  required
                 />
                 <Form.Check
                   // disabled
@@ -175,7 +183,7 @@ function Seguimientos() {
                   label={'No'}
                   value={false}
                   name="se_cumplio_acuerdo"
-                // id={`disabled-default-${type}`}
+                  required
                 />
               </div>
               <br />
@@ -188,7 +196,7 @@ function Seguimientos() {
                 label={'Si'}
                 value={true}
                 name="seguimiento_efectivo"
-              // id={`disabled-default-${type}`}
+                required
               />
               <Form.Check
                 // disabled
@@ -196,7 +204,7 @@ function Seguimientos() {
                 label={'No'}
                 value={false}
                 name="seguimiento_efectivo"
-                  // id={`disabled-default-${type}`}
+                required
               />
 
 
