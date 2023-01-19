@@ -192,6 +192,23 @@ function Audiencia() {
       });
   }
 
+  const descargarFormatoCitacion = (e, persona) => {
+    e.preventDefault()
+    axiosTokenInstanceApiExpedientes({
+      method: 'post',
+      url: `expedientes/${id}/citaciones/${dataApi?.id}/personas/${persona.id}/formato`,
+      // headers: req.headers,
+      responseType: "blob",
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   return (
     <div className='contenedor-principal-modulo-audiencia'>
       {/* <div className='contenedor-boton-audiencia'>
@@ -203,9 +220,7 @@ function Audiencia() {
       </div> */}
       <div className='titulo-informacion-audiencia'>
         <label className='titulo-audiencia'>Sesion de Audiencia</label>
-        <div className='contenedor-icono-descarga'>
-          <img src='/icons/descarga-documento.svg' className='icono-descarga-documento' />
-        </div>
+
       </div>
       <div className='contenedor-subtitulo'>
         <label className='subtitulo-audiencia'>Ingrese los datos de la audiencia</label>
@@ -279,6 +294,7 @@ function Audiencia() {
               <th>Identificación</th>
               <th>Nombres y Apellidos</th>
               <th>Rol</th>
+              <th>Citación</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -289,6 +305,11 @@ function Audiencia() {
                   <td>{dato.identificacion}</td>
                   <td>{dato.nombres}</td>
                   <td>{dato.tipo_cliente}</td>
+                  <td className='contenedor-icono-descarga'>
+                    <button className='button-audiencia' onClick={e => {descargarFormatoCitacion(e, dato)}}>
+                      <img src='/icons/descarga-documento.svg' className='icono-descarga-documento' />
+                    </button>
+                  </td>
                   <td>
                     <form onSubmit={e => retirarPersonaCitacion(e, dato)}>
                       <button className='btn btn-outline btn-sm' name="identificacion">
