@@ -284,6 +284,7 @@ class CitacionSerializer(serializers.ModelSerializer):
     turno= serializers.CharField(source='turno_id', read_only=True)
     numero_caso= serializers.CharField(source='expediente_id', read_only=True)
     medio= serializers.CharField(source='tipo_medio_id', read_only=True)
+    tipo_cliente=serializers.CharField(source='expediente_id.re', read_only=True)
     class Meta:
         model = Citacion          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 

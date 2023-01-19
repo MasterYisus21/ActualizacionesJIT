@@ -342,7 +342,7 @@ views.AprobarSolicitud = async (req, res) => {
     
     axios.patch(config.urlApiSolicitudes + "solicitudes/" + req.params.id + "/", req.body)
       .then(async result => {
-        res.status(200).json(result.data)
+        
         let correoConvocante
         // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
         if (req.body.estado_solicitud_id == 2) {
@@ -355,6 +355,7 @@ views.AprobarSolicitud = async (req, res) => {
               
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
                 .then(resul => {
+                  res.status(200).json(resul.data)
                   if(req.body.numero_caso !=""){
                     cuerpo = `<br> Conforme al estado actual de tu solicitud, nos complace informarte que ahora cuentas con un conciliador asignado y un nuevo número de referencia el cual te permitirá identificar tu caso en nuestro Centro de Conciliación. <br> 
                     <br><b>Expediente:</b> ${resul.data.numero_caso}
