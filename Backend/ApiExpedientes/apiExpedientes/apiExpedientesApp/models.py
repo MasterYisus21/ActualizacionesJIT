@@ -704,6 +704,7 @@ class Respuesta_seguimiento(EstadoModel):
     si_o_no=models.BooleanField(blank=False,null=False)
     porque = models.TextField(blank=True,null=True)
     pregunta_seguimiento_id = models.ForeignKey(Pregunta_seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
+    nombre = models.TextField(blank=False, null=False,default="")
     seguimiento_id = models.ForeignKey(Seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
 
     class Meta:

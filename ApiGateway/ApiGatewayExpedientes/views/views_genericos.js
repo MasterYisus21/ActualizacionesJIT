@@ -894,6 +894,16 @@ views.CrearCitaciones = async (req, res) => {
     return;
   }
 }
+views.EnviarDocumentoCitacion = async (req, res) => {
+  try {
+    
+    
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 
 views.ListarPersonasCitadasyPorCitar = async (req, res) => {
   try {
