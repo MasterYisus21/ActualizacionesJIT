@@ -10,7 +10,10 @@ import './SolicitudesDetalle.css'
 import { useDropzone } from "react-dropzone"
 import { useParams } from "react-router-dom";
 import { axiosBasicInstanceApiSolicitudes, axiosTokenInstanceApiSolicitudes } from "../../../helpers/axiosInstances";
-import { propTypes } from "react-bootstrap/esm/Image";
+import { axiosTokenInstanceApiExpedientes } from '../../../helpers/axiosInstances';
+import { SearchableSelect } from '../../../components';
+import FileDownload from 'js-file-download'
+
 
 function SolicitudesDetalle() {
 
@@ -24,8 +27,12 @@ function SolicitudesDetalle() {
   const [seccion3, setSeccion3] = useState(false);
   const [seccion4, setSeccion4] = useState(false);
 
+  const [departamento, setDepartamento] = useState("")
+  const [departamentoInitial, setDepartamentoInitial] = useState(null)
+  const [ciudad, setCiudad] = useState("")
+  const [ciudadInitial, setCiudadInitial] = useState(null)
+
   const [apoderado_convocante, setApoderado_convocante] = useState(false)
-  const [apoderado_convocado, setApoderado_convocado] = useState(false)
 
   const fechaNacimiento = document.getElementById("fechaNacimiento")
   const edad = document.getElementById('edad_convocante');
@@ -35,9 +42,7 @@ function SolicitudesDetalle() {
   const [generos, setGeneros] = useState([])
   const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([])
   const [tiposPersona, setTiposPersona] = useState([])
-  const [tiposPersonaConvocante, setTiposPersonaConvocante] = useState([])
   const [tiposDocumento, setTiposDocumento] = useState([])
-  const [departamentos, setDepartamentos] = useState([])
 
   // data from api
   const [data, setData] = useState({})
@@ -47,6 +52,7 @@ function SolicitudesDetalle() {
 
   // Getting solicitud id from urlParams
   let { id } = useParams();
+
 
   useEffect(() => {
     axiosTokenInstanceApiSolicitudes({
@@ -71,9 +77,7 @@ function SolicitudesDetalle() {
         document.getElementById("apellidos").value = result.data.convocante["apellidos"]
         document.getElementById("fechaNacimiento").value = result.data.convocante["fecha_nacimiento"]
         document.getElementById("lugarNacimiento").value = result.data.convocante["lugar_nacimiento"]
-
-        
-
+        document.getElementById("correo").value = result.data.convocante["correo"]
         document.getElementById("sexo").value = result.data.convocante["sexo_id"]
         document.getElementById("genero").value = result.data.convocante["genero_id"]
         document.getElementById("estratoSocioeconomico").value = result.data.convocante["estrato_socioeconomico_id"]
@@ -90,7 +94,6 @@ function SolicitudesDetalle() {
         document.getElementById("lugarExpedicion_Convocado").value = result.data.convocado["lugar_expedicion"]
         document.getElementById("nombres_Convocado").value = result.data.convocado["nombres"]
         document.getElementById("apellidos_Convocado").value = result.data.convocado["apellidos"]
-        document.getElementById("tipoPersona_Convocado").checked = result.data.convocado["tipo_persona"]
         document.getElementById("sexo_Convocado").value = result.data.convocado["sexo_id"]
         document.getElementById("genero_Convocado").value = result.data.convocado["genero_id"]
         document.getElementById("estratoSocioeconomico_Convocado").value = result.data.convocado["estrato_socioeconomico_id"]
@@ -108,13 +111,25 @@ function SolicitudesDetalle() {
 
 
         // Apoderado Convocante
-        if(result.data.convocante["apoderado_id"] != null && result.data.convocante["apoderado_id"] != "" ) return setApoderado_convocante(true)
-        // if(result.data.convocado["apoderado_id"] != null) return setApoderado_convocado(true)
+        if(result.data.convocante["apoderado_id"] != null && result.data?.convocante["apoderado_id"] != "" )  {setApoderado_convocante(true)}
 
-        if(parseInt(result.data.convocante["tipo_persona_id"]) == 2) {
-          console.log("hola");
-        }
+
+        if(result.data.convocante["tipo_persona_id"] == 1) {
+          document.getElementById("tipoPersona1").checked = result.data.convocante["tipo_persona_id"] 
+        }else if(result.data.convocante["tipo_persona_id"] == 2){
+          document.getElementById("tipoPersona2").checked = result.data.convocante["tipo_persona_id"] 
+        }   
         
+        
+        if(result.data.convocado["tipo_persona_id"] == 1) {
+          document.getElementById("tipoPersonaConvocado1").checked = result.data.convocado["tipo_persona_id"] 
+        }else if(result.data.convocado["tipo_persona_id"] == 2){
+          document.getElementById("tipoPersonaConvocado2").checked = result.data.convocado["tipo_persona_id"] 
+        }
+        if (result.data.hechos[0]["ciudad_id"]) {
+          setDepartamentoInitial({ id: result.data.hechos[0]["ciudad_id"], nombre: result.data.hechos[0]["departamento"] })
+          setCiudadInitial({ id: result.data.hechos[0]["ciudad_id"], nombre: result.data.hechos[0]["ciudad"] })
+        }
 
       })
       .catch(err => {
@@ -123,6 +138,26 @@ function SolicitudesDetalle() {
       });
 
   }, [])
+
+  useEffect(() => {
+    axiosTokenInstanceApiSolicitudes({
+      method: 'get',
+      url: "/documentos/" + id,
+      responseType: "blob",
+      data: {}
+    })
+      .then(result => {
+        console.log(result);
+        // FileDownload(result.data, 'nombre.pdf')
+      })
+      .catch(err => {
+        console.log("error");
+
+      });
+  
+  }, [])
+  
+
 
 
 useEffect(() => {
@@ -146,30 +181,7 @@ useEffect(() => {
   const edad = document.getElementById('edad_convocante');
   edad.value = CalcularFecha(fechaNacimiento)
   
-
-
-  // if(tiposPersonaConvocante==true){
-  //   console.log("asdf");
-  // }else if(tiposPersonaConvocante== false){
-  //   console.log("no entré");
-  // }
-  
-  // const Natural = document.getElementById("tipo_persona1")
-  // const Juridica = document.getElementById("tipo_persona2")
-
 }, [apoderado_convocante])
-
-
-
-
-
-
-// Check tipo persona 
-
-
-// if(Naural.value == 1){
-//   Natural.value
-// }
 
   // fetch sexos options
   useEffect(() => {
@@ -288,24 +300,6 @@ useEffect(() => {
       });
   }, [])
 
-  // fetch departamentos options
-  useEffect(() => {
-    axiosBasicInstanceApiSolicitudes({
-      method: 'get',
-      url: "/paises/1/?count=20",
-      // headers: req.headers,
-      data: {}
-    })
-      .then(result => {
-        console.log(result.data);
-        setDepartamentos(result.data.results)
-      })
-      .catch(err => {
-        console.log("error");
-      });
-  }, [])
-
-
   const onDrop = useCallback(acceptedFiles => {
     setMyFiles([...myFiles, ...acceptedFiles])
   }, [myFiles])
@@ -319,6 +313,8 @@ useEffect(() => {
     newFiles.splice(newFiles.indexOf(file), 1)
     setMyFiles(newFiles)
   }
+
+  
 
   const files = myFiles.map(file => (
     <div className="wrapp-visualizacion-anexos" key={file.path}>
@@ -337,7 +333,7 @@ useEffect(() => {
           Aquí podrás consultar y hacer seguimiento de tu caso.
         </label>
       </div>
-
+      
       <div className="secciones-temas">
         {/* Parte 1 - DATOS SOLICITANTE ---------------------------------> */}
 
@@ -347,7 +343,7 @@ useEffect(() => {
           seccion={seccion1}
           setSeccion={setSeccion1}
         />
-
+          
         <Collapse in={seccion1}>
           <div className="form-datos">
 
@@ -552,13 +548,22 @@ useEffect(() => {
               </FloatingLabel>
             </div>
 
-            <FloatingLabel controlId="floatingInputGrid" label="Ocupación">
+            <div className='col-detalle-solicitud'>
+              <FloatingLabel controlId="ocupacion" label="Ocupación">
                 <Form.Control
-                  className="inputs-registrar-solicitud"
+                  className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
                 />
               </FloatingLabel>
+              <FloatingLabel controlId="correo" label="Correo">
+                <Form.Control
+                  className="col-inputs"
+                  type="text"
+                  placeholder="name@example.com"
+                />
+              </FloatingLabel>
+            </div>
 
             <div className='col-detalle-solicitud'>
               <FloatingLabel controlId="floatingInputGrid" label="Estado civil">
@@ -763,6 +768,23 @@ useEffect(() => {
 
         <Collapse in={seccion2}>
           <div className="form-datos">
+
+            <label className="subtitles-secciones">Nombre</label>
+            <FloatingLabel controlId="nombres_Convocado" label="Nombres">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="apellidos_Convocado" label="Apellidos">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+
             <label className="subtitles-secciones">Identificación</label>
             <FloatingLabel controlId="tipoDocumento_Convocado" label="Tipo de documento">
               <Form.Select
@@ -812,21 +834,6 @@ useEffect(() => {
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="nombres_Convocado" label="Nombres">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel controlId="apellidos_Convocado" label="Apellidos">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
 
             <label className="subtitles-secciones">Tipo de Persona</label>
             <div className="d-flex gap-5">
@@ -836,8 +843,8 @@ useEffect(() => {
                     <input
                       className="form-check-input"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="tipoPersona_Convocado"
+                      name="flexRadioDefault1"
+                      id={"tipoPersonaConvocado"+tipoPersona["id"]}
                     />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                       {tipoPersona["nombre"]}
@@ -971,133 +978,6 @@ useEffect(() => {
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">Posee apoderado</label>
-            <div className='col-detalle-solicitud'>
-              <button
-                onClick={() => setApoderado_convocado(true)}
-                type = "button"
-                className={apoderado_convocado ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
-                Si
-              </button>
-              <button
-                onClick={() => setApoderado_convocado(false)}
-                type = "button"
-                className={apoderado_convocado ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
-                No
-              </button>
-            </div>
-
-            {/* Información del Apoderado Convocado ------------------------------------------> */}
-
-            {apoderado_convocado &&
-
-            <>
-              <label className="subtitles-secciones">Nombre</label>
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-              <label className="subtitles-secciones">
-                Identificación
-              </label>
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel
-                  controlId="floatingSelectGrid"
-                  label="Tipo de documento"
-                >
-                  <Form.Select
-                    className="col-inputs"
-                    aria-label="Floating label select example"
-                  >
-                    <option>Abre el menú para ver las opciones</option>
-                  </Form.Select>
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-              <label className="subtitles-secciones">
-                Fecha y lugar de expedición de documento
-              </label>
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel
-                  controlId="floatingInputGrid"
-                  label="Fecha de expedición de documento"
-                >
-                  <Form.Control
-                    className="col-inputs"
-                    type="date"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-                <FloatingLabel
-                  controlId="floatingInputGrid"
-                  label="Lugar de expedición"
-                >
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-              <label className="subtitles-secciones">Datos adicionales</label>
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel controlId="floatingSelectGrid" label="Tarjeta profesional ">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingInputGrid" label="correo">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel controlId="floatingSelectGrid" label="Teléfono">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingInputGrid" label="Celular">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-            </>
-            }
-
           </div>
         </Collapse>
 
@@ -1114,28 +994,30 @@ useEffect(() => {
           <div className="form-datos">
             <label className="subtitles-secciones">Lugar de los hechos</label>
             <div className='col-detalle-solicitud'>
+              <div>
+                  <label htmlFor="Departamento" className="col-inputs">Departamento:</label>
+                  <SearchableSelect
+                      axiosInstance={axiosTokenInstanceApiExpedientes}
+                      url={"/paises/1"}
+                      name={"departamento"}
+                      identifier={"id"}
+                      initialValue={departamentoInitial}
+                      onChange={(val) => { setDepartamento(val); setCiudad("") }}
+                  />
+                </div>
+                <div>
+                    <label htmlFor="ciudad" className="col-inputs">Ciudad:</label>
+                    <SearchableSelect
+                        axiosInstance={axiosTokenInstanceApiExpedientes}
+                        url={"/paises/1/departamentos/" + departamento}
+                        name={"ciudad"}
+                        identifier={"id"}
+                        initialValue={ciudadInitial}
+                        onChange={(val) => { setCiudad(val) }}
+                    />
+                </div>
+              </div>
 
-              <FloatingLabel controlId="floatingSelectGrid" label="Departamento">
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                  name="departamento"
-                  required
-                >
-                  <option value={""}>Abre el menú para ver las opciones</option>
-                  {departamentos.map(departamento => {
-                    return (<option key={"departamento" + departamento["id"]} value={departamento["id"]}>{departamento["nombre"]}</option>)
-                  })}
-                </Form.Select>
-              </FloatingLabel>
-              <FloatingLabel controlId="floatingSelectGrid" label="Ciudad ">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
-            </div>
             <FloatingLabel
               controlId="descripcion_hechos"
               label="Describa los hechos ocurridos"
@@ -1176,11 +1058,16 @@ useEffect(() => {
         <Collapse in={seccion4}>
 
           <div className="form-datos">
-            <label className="subtitles-secciones">Identificación</label>
-            <Form.Control className="inputs-registrar-solicitud" type="file" />
-            <label className="subtitles-secciones">Recibo Público</label>
-            <Form.Control className="inputs-registrar-solicitud" type="file" />
-            <label className="subtitles-secciones">Anexos</label>
+
+            {data?.documentos?.results.map((dato)=>{
+              return(
+              <div className="wrapp-visualizacion-anexos" id={dato.id}>
+                {dato.nombre}
+                {dato.fecha_registro}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="icon-close" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"></path></svg>
+              </div>
+              )
+            })} 
 
             <section className="form-datos">
               <div className="dropzone" {...getRootProps({ className: 'dropzone' })}>
@@ -1198,11 +1085,13 @@ useEffect(() => {
             </section>
 
           </div>
+
         </Collapse>
-        <button className="">Guardar cambios</button>
+        <div className="fix-position-btn-save">
+          <button className="btn-save-changes">Guardar cambios</button>
+        </div>
       </div>
 
-      <hr></hr>
 
       <div className='contenedor-botones-detalle-solicitud'>
         <div className="mb-4">
