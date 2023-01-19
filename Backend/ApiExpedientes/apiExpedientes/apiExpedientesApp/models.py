@@ -679,6 +679,7 @@ class Seguimiento(EstadoModel):
     expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True) 
     medio_seguimiento_id = models.ForeignKey(Medio_seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
     recomendacion_al_usuario = models.TextField(blank=True,null=True)
+    seguimiento_efectivo=models.BooleanField(default=False, blank=True,null=True)
     
     class Meta:
         db_table='Seguimiento'
