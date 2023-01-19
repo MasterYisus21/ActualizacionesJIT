@@ -84,7 +84,7 @@ export default function PopupConv({text, setEstado, estado}){
         <div className='wrapp-popup'>
             <div className='popup'>
                 <div className='titulo-popup'>
-                    <h1>Crear Persona Convocante</h1>
+                    <h1>Crear Persona Convocado</h1>
                 </div>
                 <div className='form-popup'>
                     <div className='wrapp-boton-cerrar'>
