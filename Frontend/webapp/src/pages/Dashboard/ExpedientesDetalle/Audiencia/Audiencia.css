@@ -18,9 +18,10 @@
 }
 
 .contenedor-icono-descarga {
-    margin-left: 14vw;
+    /* margin-left: 14vw; */
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .titulo-audiencia {
@@ -46,6 +47,18 @@
 
     background-color: rgb(56, 165, 42);
     border-color: rgb(56, 165, 42);
+}
+
+.button-audiencia {
+    background: none;
+    border: none;
+    max-width: fit-content;
+    max-height: fit-content;
+    /* align-self: flex-end; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
 }
 
 .boton-audiencia:hover {
@@ -142,7 +155,7 @@
     border: none;
 }
 
-.contenedor-imagen-guardar-button{
+.contenedor-imagen-guardar-button {
     background: none;
     border: none;
 }

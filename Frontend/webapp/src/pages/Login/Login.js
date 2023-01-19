@@ -19,7 +19,7 @@ function Login() {
                       <input className="form-control rounded col btn-login" placeholder="Usuario" name='nombres' required></input>                    
                       <input className="form-control rounded col btn-login" placeholder="Contraseña" name='contraseña' type="password" required></input>                
                     </form>
-                    <Link to="../../Dashboard" className="link-boton-login">
+                    <Link to="../../dashboard/expedientes" className="link-boton-login">
                         <button className="boton-login" form="form-inicio">Ingresar</button>
                     </Link>
                 </div>
