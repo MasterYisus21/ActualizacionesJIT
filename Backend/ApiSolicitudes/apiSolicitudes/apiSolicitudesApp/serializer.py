@@ -85,7 +85,9 @@ class Tipo_clienteSerializer(serializers.ModelSerializer):
 
 
 class HechosSerializer(serializers.ModelSerializer):
-
+    ciudad= serializers.CharField(source='ciudad_id', read_only=True)
+    departamento_id= serializers.CharField(source='ciudad_id.departamento_id.id', read_only=True)
+    departamento= serializers.CharField(source='ciudad_id.departamento_id', read_only=True)
     class Meta:
         model = Hechos_solicitud          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 

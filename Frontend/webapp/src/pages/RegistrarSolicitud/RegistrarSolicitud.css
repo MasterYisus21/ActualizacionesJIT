@@ -110,7 +110,7 @@
     width: 80vw;
     padding: 1em;
     margin-top: -1.5em;
-    
+    max-width: 42em;
 }
 
 .col-registro-solicitud{

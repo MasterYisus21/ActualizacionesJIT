@@ -10,7 +10,10 @@ import './SolicitudesDetalle.css'
 import { useDropzone } from "react-dropzone"
 import { useParams } from "react-router-dom";
 import { axiosBasicInstanceApiSolicitudes, axiosTokenInstanceApiSolicitudes } from "../../../helpers/axiosInstances";
-import { propTypes } from "react-bootstrap/esm/Image";
+import { axiosTokenInstanceApiExpedientes } from '../../../helpers/axiosInstances';
+import { SearchableSelect } from '../../../components';
+import FileDownload from 'js-file-download'
+
 
 function SolicitudesDetalle() {
 
@@ -24,8 +27,15 @@ function SolicitudesDetalle() {
   const [seccion3, setSeccion3] = useState(false);
   const [seccion4, setSeccion4] = useState(false);
 
+  const [departamento, setDepartamento] = useState("")
+  const [departamentoInitial, setDepartamentoInitial] = useState(null)
+  const [ciudad, setCiudad] = useState("")
+  const [ciudadInitial, setCiudadInitial] = useState(null)
+
   const [apoderado_convocante, setApoderado_convocante] = useState(false)
-  const [apoderado_convocado, setApoderado_convocado] = useState(false)
+
+  const fechaNacimiento = document.getElementById("fechaNacimiento")
+  const edad = document.getElementById('edad_convocante');
 
   // forms options 
   const [sexos, setSexos] = useState([])
@@ -33,7 +43,6 @@ function SolicitudesDetalle() {
   const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([])
   const [tiposPersona, setTiposPersona] = useState([])
   const [tiposDocumento, setTiposDocumento] = useState([])
-  const [departamentos, setDepartamentos] = useState([])
 
   // data from api
   const [data, setData] = useState({})
@@ -44,6 +53,7 @@ function SolicitudesDetalle() {
   // Getting solicitud id from urlParams
   let { id } = useParams();
 
+
   useEffect(() => {
     axiosTokenInstanceApiSolicitudes({
       method: 'get',
@@ -53,7 +63,7 @@ function SolicitudesDetalle() {
     })
       .then(result => {
 
-        console.log(result.data);
+        // console.log(result.data);
         setData(result.data)
 
         //Convocante
@@ -63,19 +73,19 @@ function SolicitudesDetalle() {
         document.getElementById("tipoDocumento").value = result.data.convocante["tipo_documento_id"]
         document.getElementById("fechaExpedicion").value = result.data.convocante["fecha_expedicion"]
         document.getElementById("lugarExpedicion").value = result.data.convocante["lugar_expedicion"]
-        document.getElementById("lugarExpedicion").value = result.data.convocante["lugar_expedicion"]
         document.getElementById("nombres").value = result.data.convocante["nombres"]
         document.getElementById("apellidos").value = result.data.convocante["apellidos"]
         document.getElementById("fechaNacimiento").value = result.data.convocante["fecha_nacimiento"]
-        document.getElementById("tipoPersona").value = result.data.convocante["tipo_persona_id"]
-        document.getElementById("tipoPersona").value = result.data.convocante["tipo_persona_id"]
+        document.getElementById("lugarNacimiento").value = result.data.convocante["lugar_nacimiento"]
+        document.getElementById("correo").value = result.data.convocante["correo"]
         document.getElementById("sexo").value = result.data.convocante["sexo_id"]
         document.getElementById("genero").value = result.data.convocante["genero_id"]
         document.getElementById("estratoSocioeconomico").value = result.data.convocante["estrato_socioeconomico_id"]
         document.getElementById("direccion").value = result.data.convocante["direccion"]
         document.getElementById("telefono").value = result.data.convocante["telefono"]
         document.getElementById("celular").value = result.data.convocante["celular"]
-        
+
+
         //Convocado
 
         document.getElementById("identificacion_Convocado").value = result.data.convocado["identificacion"]
@@ -84,12 +94,6 @@ function SolicitudesDetalle() {
         document.getElementById("lugarExpedicion_Convocado").value = result.data.convocado["lugar_expedicion"]
         document.getElementById("nombres_Convocado").value = result.data.convocado["nombres"]
         document.getElementById("apellidos_Convocado").value = result.data.convocado["apellidos"]
-        //document.getElementById("tipoPersona_Convocado").value = result.data.convocado["tipo_persona"]
-        document.getElementById("sexo_Convocado").value = result.data.convocado["sexo_id"]
-        document.getElementById("genero_Convocado").value = result.data.convocado["genero_id"]
-        document.getElementById("estratoSocioeconomico_Convocado").value = result.data.convocado["estrato_socioeconomico_id"]
-        document.getElementById("direccion_Convocado").value = result.data.convocado["direccion"]
-        document.getElementById("telefono_Convocado").value = result.data.convocado["telefono"]
         document.getElementById("celular_Convocado").value = result.data.convocado["celular"]
         document.getElementById("correo_Convocado").value = result.data.convocado["correo"]
 
@@ -102,21 +106,57 @@ function SolicitudesDetalle() {
 
 
         // Apoderado Convocante
-        if(result.data.convocante["apoderado_id"] != null) return setApoderado_convocante(true)
-        // if(result.data.convocado["apoderado_id"] != null) return setApoderado_convocado(true)
+        if(result.data.convocante["apoderado_id"] != null && result.data?.convocante["apoderado_id"] != "" )  {setApoderado_convocante(true)}
 
+
+        if(result.data.convocante["tipo_persona_id"] == 1) {
+          document.getElementById("tipoPersona1").checked = result.data.convocante["tipo_persona_id"] 
+        }else if(result.data.convocante["tipo_persona_id"] == 2){
+          document.getElementById("tipoPersona2").checked = result.data.convocante["tipo_persona_id"] 
+        }   
         
-
+        
+        if(result.data.convocado["tipo_persona_id"] == 1) {
+          document.getElementById("tipoPersonaConvocado1").checked = result.data.convocado["tipo_persona_id"] 
+        }else if(result.data.convocado["tipo_persona_id"] == 2){
+          document.getElementById("tipoPersonaConvocado2").checked = result.data.convocado["tipo_persona_id"] 
+        }
+        if (result.data.hechos[0]["ciudad_id"]) {
+          setDepartamentoInitial({ id: result.data.hechos[0]["ciudad_id"], nombre: result.data.hechos[0]["departamento"] })
+          setCiudadInitial({ id: result.data.hechos[0]["ciudad_id"], nombre: result.data.hechos[0]["ciudad"] })
+        }
 
       })
       .catch(err => {
         console.log("error");
+        // console.log(err)
       });
 
-  }, [])
+  }, [])  
 
+  const downloadDocument = (event, idDocumento, nombre) => {
+    event.preventDefault()
+    console.log(idDocumento)
+    console.log(nombre)
+
+    axiosTokenInstanceApiSolicitudes({
+      method: 'get',
+      url: `/documentos/${idDocumento}`,
+      responseType: "blob",
+      data: {}
+    })
+      .then(response => {
+        FileDownload(response.data, nombre)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
 useEffect(() => {
+
+  // const calcularEdad 
+
   if (data.apoderado && apoderado_convocante){
     document.getElementById("identificacion_Apoderado").value = data?.apoderado?.identificacion
     document.getElementById("tipoDocumento_Apoderado").value = data?.apoderado?.tipo_documento_id
@@ -129,8 +169,12 @@ useEffect(() => {
     document.getElementById("correo_Apoderado").value = data?.apoderado?.correo
     document.getElementById("tarjetaProfesional_Apoderado").value = data?.apoderado?.tarjeta_profesional
   }
-}, [apoderado_convocante])
 
+  const fechaNacimiento = document.getElementById("fechaNacimiento").value;
+  const edad = document.getElementById('edad_convocante');
+  edad.value = CalcularFecha(fechaNacimiento)
+  
+}, [apoderado_convocante])
 
   // fetch sexos options
   useEffect(() => {
@@ -149,6 +193,37 @@ useEffect(() => {
       });
   }, [])
 
+  // Calcular fecha
+
+  if (fechaNacimiento){
+
+    fechaNacimiento.addEventListener('change', (event) => {
+      const fechaNacimiento = document.getElementById("fechaNacimiento").value
+      edad.value = CalcularFecha(fechaNacimiento);
+    });
+  }
+
+  const CalcularFecha = (fechaNacimiento) => {
+    
+    const fechaActual = new Date();
+    const currentYear = parseInt(fechaActual.getFullYear());
+    const currentMonth = parseInt(fechaActual.getMonth())+1;
+    const currentDay = parseInt(fechaActual.getDate());
+
+    const bornYear = parseInt(String(fechaNacimiento).substring(0,4));
+    const bornMonth = parseInt(String(fechaNacimiento).substring(5,7));
+    const bornDay = parseInt(String(fechaNacimiento).substring(8,10));
+    
+    let edad = currentYear - bornYear;
+    if (currentMonth < bornMonth){
+      edad--;
+    } else if (currentMonth == bornMonth){
+      if (currentDay < bornDay)
+      edad--;
+    }return edad;
+  }
+
+  
   // fetch generos options
   useEffect(() => {
     axiosBasicInstanceApiSolicitudes({
@@ -218,24 +293,6 @@ useEffect(() => {
       });
   }, [])
 
-  // fetch departamentos options
-  useEffect(() => {
-    axiosBasicInstanceApiSolicitudes({
-      method: 'get',
-      url: "/paises/1/?count=20",
-      // headers: req.headers,
-      data: {}
-    })
-      .then(result => {
-        console.log(result.data);
-        setDepartamentos(result.data.results)
-      })
-      .catch(err => {
-        console.log("error");
-      });
-  }, [])
-
-
   const onDrop = useCallback(acceptedFiles => {
     setMyFiles([...myFiles, ...acceptedFiles])
   }, [myFiles])
@@ -249,6 +306,8 @@ useEffect(() => {
     newFiles.splice(newFiles.indexOf(file), 1)
     setMyFiles(newFiles)
   }
+
+  
 
   const files = myFiles.map(file => (
     <div className="wrapp-visualizacion-anexos" key={file.path}>
@@ -267,7 +326,7 @@ useEffect(() => {
           Aquí podrás consultar y hacer seguimiento de tu caso.
         </label>
       </div>
-
+      
       <div className="secciones-temas">
         {/* Parte 1 - DATOS SOLICITANTE ---------------------------------> */}
 
@@ -277,16 +336,35 @@ useEffect(() => {
           seccion={seccion1}
           setSeccion={setSeccion1}
         />
-
+          
         <Collapse in={seccion1}>
           <div className="form-datos">
+
+            <label className="subtitles-secciones">Nombre</label>
+            <FloatingLabel controlId="nombres" label="Nombres">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+                disabled
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="apellidos" label="Apellidos">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+                disabled
+              />
+            </FloatingLabel>
+
             <label className="subtitles-secciones">Identificación</label>
             <FloatingLabel controlId="tipoDocumento" label="Tipo de documento">
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
                 name="tipoDocumento"
-                required
+                disabled
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
                 {tiposDocumento.map(tipoDocumento => {
@@ -303,6 +381,7 @@ useEffect(() => {
                 type="text"
                 placeholder="name@example.com"
                 name="identificacion"
+                disabled
               />
             </FloatingLabel>
 
@@ -317,6 +396,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="date"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
             <FloatingLabel
@@ -327,24 +407,10 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="nombres" label="Nombres">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel controlId="apellidos" label="Apellidos">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
 
             <label className="subtitles-secciones">Lugar y fecha de nacimiento</label>
 
@@ -354,30 +420,37 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Ciudad">
+              <FloatingLabel controlId="lugarNacimiento" label="Ciudad">
                 <Form.Control
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
             </div>
-            <FloatingLabel controlId="fechaNacimiento" label="Fecha de Nacimiento">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="date"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Edad">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
+
+            <div className='col-detalle-solicitud'>
+              <FloatingLabel controlId="fechaNacimiento" label="Fecha de Nacimiento">
+                <Form.Control
+                  className="col-inputs"
+                  type="date"
+                  placeholder="name@example.com"
+                  disabled
+                />
+              </FloatingLabel>
+              <FloatingLabel controlId="edad_convocante" label="Edad">
+                <Form.Control
+                  className="col-inputs"
+                  type="text"
+                  placeholder="name@example.com"
+                  disabled
+                />
+              </FloatingLabel>
+            </div>
 
             <label className="subtitles-secciones">Tipo de Persona</label>
             <div className="d-flex gap-5">
@@ -388,7 +461,8 @@ useEffect(() => {
                       className="form-check-input"
                       type="radio"
                       name="flexRadioDefault"
-                      id="tipoPersona"
+                      id= {"tipoPersona"+tipoPersona["id"]}
+                      disabled
                     />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                       {tipoPersona["nombre"]}
@@ -405,7 +479,7 @@ useEffect(() => {
                   className="col-inputs"
                   aria-label="Floating label select example"
                   name="sexo"
-                  required
+                  disabled
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {sexos.map(sexo => {
@@ -418,7 +492,7 @@ useEffect(() => {
                   className="col-inputs"
                   aria-label="Floating label select example"
                   name="genero"
-                  required
+                  disabled
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {generos.map(genero => {
@@ -437,7 +511,7 @@ useEffect(() => {
                   className="col-inputs"
                   aria-label="Floating label select example"
                   name="estrato"
-                  required
+                  disabled
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {estratosSocieconomicos.map(estrato => {
@@ -450,49 +524,19 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
             </div>
-            <FloatingLabel controlId="floatingInputGrid" label="Ciudad de Residencia">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
 
             <label className="subtitles-secciones">Datos Adicionales</label>
             <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingInputGrid" label="Escolaridad">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
               <FloatingLabel controlId="celular" label="Celular">
                 <Form.Control
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
-                />
-              </FloatingLabel>
-            </div>
-
-            <FloatingLabel controlId="floatingInputGrid" label="Ocupación">
-                <Form.Control
-                  className="inputs-registrar-solicitud"
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
-
-            <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingInputGrid" label="Estado civil">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
               <FloatingLabel controlId="telefono" label="Teléfono">
@@ -500,53 +544,27 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
+              
             </div>
 
-            <label className="subtitles-secciones">Presenta algún tipo de discapacidad</label>
-            <FloatingLabel controlId="floatingInputGrid" label="Cuál?">
+            <FloatingLabel controlId="correo" label="Correo">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
+            
 
-            <label className="subtitles-secciones">Hace parte de algún grupo minoritarío</label>
-            <FloatingLabel controlId="floatingInputGrid" label="Cuál?">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
+       
 
-            <label className="subtitles-secciones">El conflicto se genera por su incapacidad</label>
-            <div className="d-flex gap-5">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault3"
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault3">
-                  Si
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault4"
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault4">
-                  No
-                </label>
-              </div>
-            </div>
+      
+
+      
             <label className="subtitles-secciones">Posee apoderado</label>
             <div className='col-detalle-solicitud'>
               <button
@@ -575,6 +593,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
                 <FloatingLabel controlId="apellidos_Apoderado" label="Apellidos">
@@ -582,6 +601,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -595,7 +615,7 @@ useEffect(() => {
                   className="col-inputs"
                   aria-label="Floating label select example"
                   name="tipoDocumento"
-                  required
+                  disabled
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {tiposDocumento.map(tipoDocumento => {
@@ -608,6 +628,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -624,6 +645,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="date"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
                 <FloatingLabel
@@ -634,6 +656,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -645,6 +668,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
                 <FloatingLabel controlId="correo_Apoderado" label="correo">
@@ -652,6 +676,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -662,6 +687,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
                 <FloatingLabel controlId="celular_Apoderado" label="Celular">
@@ -669,6 +695,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -690,13 +717,32 @@ useEffect(() => {
 
         <Collapse in={seccion2}>
           <div className="form-datos">
+
+            <label className="subtitles-secciones">Nombre</label>
+            <FloatingLabel controlId="nombres_Convocado" label="Nombres">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+                disabled
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="apellidos_Convocado" label="Apellidos">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+                disabled
+              />
+            </FloatingLabel>
+
             <label className="subtitles-secciones">Identificación</label>
             <FloatingLabel controlId="tipoDocumento_Convocado" label="Tipo de documento">
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
                 name="genero"
-                required
+                disabled
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
                 {tiposDocumento.map(tipoDocumento => {
@@ -712,6 +758,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
 
@@ -726,6 +773,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="date"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
             <FloatingLabel
@@ -736,24 +784,10 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="nombres_Convocado" label="Nombres">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel controlId="apellidos_Convocado" label="Apellidos">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
 
             <label className="subtitles-secciones">Tipo de Persona</label>
             <div className="d-flex gap-5">
@@ -763,8 +797,9 @@ useEffect(() => {
                     <input
                       className="form-check-input"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
+                      name="flexRadioDefault1"
+                      id={"tipoPersonaConvocado"+tipoPersona["id"]}
+                      disabled
                     />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                       {tipoPersona["nombre"]}
@@ -773,112 +808,14 @@ useEffect(() => {
                 )
               })}
             </div>
-
-            <label className="subtitles-secciones">Sexo y Género</label>
+           
             <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="sexo_Convocado" label="Sexo">
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                  name="sexo"
-                  required
-                >
-                  <option value={""}>Abre el menú para ver las opciones</option>
-                  {sexos.map(sexo => {
-                    return (<option key={"sexos" + sexo["id"]} value={sexo["id"]}>{sexo["nombre"]}</option>)
-                  })}
-                </Form.Select>
-              </FloatingLabel>
-              <FloatingLabel controlId="genero_Convocado" label="Género">
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                  name="genero"
-                  required
-                >
-                  <option value={""}>Abre el menú para ver las opciones</option>
-                  {generos.map(genero => {
-                    return (<option key={"generos" + genero["id"]} value={genero["id"]}>{genero["nombre"]}</option>)
-                  })}
-                </Form.Select>
-              </FloatingLabel>
-            </div>
-
-            <label className="subtitles-secciones">
-              Estrato y dirección de residencia
-            </label>
-            <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="estratoSocioeconomico_Convocado" label="Estrato">
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                  name="genero"
-                  required
-                >
-                  <option value={""}>Abre el menú para ver las opciones</option>
-                  {estratosSocieconomicos.map(estrato => {
-                    return (<option key={"estratos" + estrato["id"]} value={estrato["id"]}>{estrato["nombre"]}</option>)
-                  })}
-                </Form.Select>
-              </FloatingLabel>
-              <FloatingLabel controlId="direccion_Convocado" label="Dirección">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
-            </div>
-            <FloatingLabel controlId="floatingInputGrid" label="Ciudad de Residencia">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-
-            <label className="subtitles-secciones">Datos Adicionales</label>
-            <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingSelectGrid" label="Estado civil ">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Edad">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
-            </div>
-
-            <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingSelectGrid" label="Escolaridad ">
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                >
-                  <option>Abre el menú para ver las opciones</option>
-                </Form.Select>
-              </FloatingLabel>
               <FloatingLabel controlId="celular_Convocado" label="Celular">
                 <Form.Control
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
-                />
-              </FloatingLabel>
-            </div>
-
-            <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="telefono_Convocado" label="Teléfono ">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
               <FloatingLabel controlId="correo_Convocado" label="Correo electrónico">
@@ -886,144 +823,10 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
             </div>
-
-            <FloatingLabel controlId="" label="Ocupacion">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-
-            <label className="subtitles-secciones">Posee apoderado</label>
-            <div className='col-detalle-solicitud'>
-              <button
-                onClick={() => setApoderado_convocado(true)}
-                type = "button"
-                className={apoderado_convocado ? "boton-datos-apoderado-active" : "boton-datos-apoderado"} >
-                Si
-              </button>
-              <button
-                onClick={() => setApoderado_convocado(false)}
-                type = "button"
-                className={apoderado_convocado ? "boton-datos-apoderado" : "boton-datos-apoderado-active"} >
-                No
-              </button>
-            </div>
-
-            {/* Información del Apoderado Convocado ------------------------------------------> */}
-
-            {apoderado_convocado &&
-
-            <>
-              <label className="subtitles-secciones">Nombre</label>
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-              <label className="subtitles-secciones">
-                Identificación
-              </label>
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel
-                  controlId="floatingSelectGrid"
-                  label="Tipo de documento"
-                >
-                  <Form.Select
-                    className="col-inputs"
-                    aria-label="Floating label select example"
-                  >
-                    <option>Abre el menú para ver las opciones</option>
-                  </Form.Select>
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-              <label className="subtitles-secciones">
-                Fecha y lugar de expedición de documento
-              </label>
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel
-                  controlId="floatingInputGrid"
-                  label="Fecha de expedición de documento"
-                >
-                  <Form.Control
-                    className="col-inputs"
-                    type="date"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-                <FloatingLabel
-                  controlId="floatingInputGrid"
-                  label="Lugar de expedición"
-                >
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-              <label className="subtitles-secciones">Datos adicionales</label>
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel controlId="floatingSelectGrid" label="Tarjeta profesional ">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingInputGrid" label="correo">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-              <div className='col-detalle-solicitud'>
-                <FloatingLabel controlId="floatingSelectGrid" label="Teléfono">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingInputGrid" label="Celular">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </div>
-
-            </>
-            }
 
           </div>
         </Collapse>
@@ -1041,28 +844,30 @@ useEffect(() => {
           <div className="form-datos">
             <label className="subtitles-secciones">Lugar de los hechos</label>
             <div className='col-detalle-solicitud'>
+              <div>
+                  <label htmlFor="Departamento" className="col-inputs">Departamento:</label>
+                  <SearchableSelect
+                      axiosInstance={axiosTokenInstanceApiExpedientes}
+                      url={"/paises/1"}
+                      name={"departamento"}
+                      identifier={"id"}
+                      initialValue={departamentoInitial}
+                      onChange={(val) => { setDepartamento(val); setCiudad("") }}
+                  />
+                </div>
+                <div>
+                    <label htmlFor="ciudad" className="col-inputs">Ciudad:</label>
+                    <SearchableSelect
+                        axiosInstance={axiosTokenInstanceApiExpedientes}
+                        url={"/paises/1/departamentos/" + departamento}
+                        name={"ciudad"}
+                        identifier={"id"}
+                        initialValue={ciudadInitial}
+                        onChange={(val) => { setCiudad(val) }}
+                    />
+                </div>
+              </div>
 
-              <FloatingLabel controlId="floatingSelectGrid" label="Departamento">
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                  name="departamento"
-                  required
-                >
-                  <option value={""}>Abre el menú para ver las opciones</option>
-                  {departamentos.map(departamento => {
-                    return (<option key={"departamento" + departamento["id"]} value={departamento["id"]}>{departamento["nombre"]}</option>)
-                  })}
-                </Form.Select>
-              </FloatingLabel>
-              <FloatingLabel controlId="floatingSelectGrid" label="Ciudad ">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
-            </div>
             <FloatingLabel
               controlId="descripcion_hechos"
               label="Describa los hechos ocurridos"
@@ -1072,18 +877,7 @@ useEffect(() => {
                 as="textarea"
                 placeholder=""
                 style={{ height: "130px" }}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel
-              controlId="floatingTextarea2"
-              label="Pretenciones"
-            >
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                as="textarea"
-                placeholder=""
-                style={{ height: "130px" }}
+                disabled
               />
             </FloatingLabel>
 
@@ -1103,39 +897,30 @@ useEffect(() => {
         <Collapse in={seccion4}>
 
           <div className="form-datos">
-            <label className="subtitles-secciones">Identificación</label>
-            <Form.Control className="inputs-registrar-solicitud" type="file" />
-            <label className="subtitles-secciones">Recibo Público</label>
-            <Form.Control className="inputs-registrar-solicitud" type="file" />
-            <label className="subtitles-secciones">Anexos</label>
 
-            <section className="form-datos">
-              <div className="dropzone" {...getRootProps({ className: 'dropzone' })}>
-                <input {...getInputProps()} />
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="icon-drag-drop" viewBox="0 0 16 16">
-                  <path fillRule="evenodd" d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2z" />
-                  <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z" />
-                </svg>
-                <h4>Selecciona los archivos que desseas anexar</h4>
+            {data?.documentos?.results.map((dato)=>{
+              return(
+              <div className="wrapp-visualizacion-anexos">
+                {dato.nombre}
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="doc-download" viewBox="0 0 16 16" onClick={(event) => { downloadDocument(event, dato["id"], dato["nombre"]) }} >
+                <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+              </svg>
               </div>
-              <aside className="lista-anexos">
-                {files}
-              </aside>
-              {files.length > 0}
-            </section>
+              )
+            })} 
 
           </div>
+
         </Collapse>
-        <button className="">Guardar cambios</button>
+        
       </div>
 
-      <hr></hr>
 
       <div className='contenedor-botones-detalle-solicitud'>
         <div className="mb-4">
           <button className='boton-remitir' onClick={() => setOpen2(false) & setOpen(!open) & setOpen3(false) & setOpen4(false)} aria-controls="ejemplo">REMITIR</button>
           <button className='boton-rechazar' onClick={() => setOpen2(!open2) & setOpen(false) & setOpen3(false) & setOpen4(false)} aria-controls="ejemplo">RECHAZAR</button>
-          <button className='boton-incompleto' onClick={() => setOpen2(false) & setOpen(false) & setOpen3(!open3) & setOpen4(false)} aria-controls="ejemplo">INFORMACIÓN INCOMPLETA</button>
           <button className='boton-aceptar' onClick={() => setOpen2(false) & setOpen(false) & setOpen3(false) & setOpen4(!open4)} aria-controls="ejemplo">ACEPTAR SOLICITUD</button>
         </div>
         <Collapse className='colapse-general' in={open}>
@@ -1162,18 +947,6 @@ useEffect(() => {
               <textarea className='campo-explicacion'></textarea>
               <div className='contenedor-boton-remitir'>
                 <button className='boton-rechazar-solicitud'>Rechazar</button>
-              </div>
-            </div>
-          </div>
-        </Collapse>
-
-        <Collapse className='colapse-general' in={open3}>
-          <div id="ejemplo">
-            <div className='contenedor-incompleto' >
-              <label className='label-explicacion-rechazar'>Escriba una nota explicando al usuario que información hace falta o una razón del por qué se retorna su solicitud</label>
-              <textarea className='campo-explicacion'></textarea>
-              <div className='contenedor-boton-remitir'>
-                <button className='boton-devolver-solicitud'>Rechazar</button>
               </div>
             </div>
           </div>

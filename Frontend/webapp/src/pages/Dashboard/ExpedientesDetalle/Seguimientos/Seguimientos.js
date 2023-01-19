@@ -7,6 +7,7 @@ import { Form, Collapse } from 'react-bootstrap'
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances'
 import { useParams } from 'react-router-dom'
 import Seguimiento from './Seguimiento'
+import { toast } from 'react-toastify'
 
 function Seguimientos() {
 
@@ -67,6 +68,43 @@ function Seguimientos() {
       });
   }
 
+  const createSeguimiento = (e) => {
+    e.preventDefault()
+    const data = {
+      "recomendacion_al_usuario": e.target["recomendacion_al_usuario"].value,
+      "medio_seguimiento_id": e.target["medio_seguimiento_id"].value,
+      "se_cumplio_acuerdo": e.target["se_cumplio_acuerdo"].value == 'true',
+      "seguimiento_efectivo": e.target["seguimiento_efectivo"].value == 'true',
+      "respuestas": []
+    }
+    preguntas.map(pregunta => {
+      data.respuestas.push({
+        "pregunta_seguimiento_id": pregunta.id,
+        "si_o_no": e.target[`pregunta${pregunta.id}`].value == 'true',
+        "porque": e.target[`pregunta${pregunta.id}detalle`].value
+      })
+    })
+    console.log(data);
+    axiosTokenInstanceApiExpedientes({
+      method: 'post',
+      url: `/expedientes/${id}/seguimientos`,
+      // headers: req.headers,
+      data: data
+    })
+      .then(result => {
+        console.log(result.data);
+        e.target.reset();
+        setOpen(false)
+        setSeguimientos([...seguimientos, result.data])
+        toast.success('La información se ha guardado con exito', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
 
   return (
     <div className='seguimientos-container'>
@@ -82,13 +120,13 @@ function Seguimientos() {
       </button>
       <Collapse in={open}>
         <div className={"seguimientos-card-content"}>
-          <Form onSubmit={() => { console.log("Hola") }}>
+          <Form onSubmit={(e) => { createSeguimiento(e) }}>
             <Form.Group className="mb-3">
               <Form.Label className='h3'>Medio de Seguimiento</Form.Label>
-              <Form.Select size="lg" onFocus={e => { if(mediosSeguimiento.length === 0) {getMediosSeguimiento()}}} required>
+              <Form.Select size="lg" name='medio_seguimiento_id' onFocus={e => { if (mediosSeguimiento.length === 0) { getMediosSeguimiento() } }} required>
                 <option value="">Selecciona una opción</option>
                 {mediosSeguimiento.map(dato => {
-                  return(
+                  return (
                     <option key={`medioSeguimiento${dato.id}`} value={dato.id}>{dato.nombre}</option>
                   )
                 })}
@@ -100,42 +138,76 @@ function Seguimientos() {
               return (
                 <div key={`pregunta${pregunta.id}`}>
                   <Form.Label className='h3'>{pregunta.nombre}</Form.Label>
-                  <div className="mb-3" style={{ display: "flex", gap: "2rem" }}>
+                  <div className="mb-3" style={{ display: "flex", gap: "2rem", alignItems: "center", justifyContent: "center" }}>
                     <Form.Check
                       // disabled
                       type={'radio'}
                       label={'Si'}
-                    // id={`disabled-default-${type}`}
+                      name={`pregunta${pregunta.id}`}
+                      value={true}
+                      onClick={e => { let el = document.getElementById(`pregunta${pregunta.id}detalle`); el.setAttribute('disabled', true); el.value = ""; el.removeAttribute('required') }}
+                      required
                     />
                     <Form.Check
                       // disabled
                       type={'radio'}
                       label={'No'}
-                    // id={`disabled-default-${type}`}
+                      name={`pregunta${pregunta.id}`}
+                      value={false}
+                      onClick={e => { let el = document.getElementById(`pregunta${pregunta.id}detalle`); el.removeAttribute('disabled'); el.setAttribute('required', true) }}
+                      required
                     />
                   </div>
-                  <Form.Control as="textarea" placeholder="Detalle" style={{ height: '10rem' }} />
+                  <Form.Control as="textarea" id={`pregunta${pregunta.id}detalle`} name={`pregunta${pregunta.id}detalle`} placeholder="Detalle" style={{ height: '10rem' }} />
                   <br />
                 </div>
               )
             })}
             <Form.Label className='h3'>Recomendación al usuario</Form.Label>
-            <Form.Control as="textarea" placeholder="Detalle" style={{ height: '10rem' }} />
+            <Form.Control as="textarea" name='recomendacion_al_usuario' placeholder="Detalle" style={{ height: '10rem' }} />
             <br />
-            <Form.Label className='h3'>¿Se cumplió o se esta cumpliendo el acuerdo de conciliación?</Form.Label>
+            <div>
+              <Form.Label className='h3'>¿Se cumplió o se esta cumpliendo el acuerdo de conciliación?</Form.Label>
+              <div className="mb-3" style={{ display: "flex", gap: "2rem", alignItems: "center", justifyContent: "center" }}>
+                <Form.Check
+                  // disabled
+                  type={'radio'}
+                  label={'Si'}
+                  value={true}
+                  name="se_cumplio_acuerdo"
+                  required
+                />
+                <Form.Check
+                  // disabled
+                  type={'radio'}
+                  label={'No'}
+                  value={false}
+                  name="se_cumplio_acuerdo"
+                  required
+                />
+              </div>
+              <br />
+            </div>
+            <Form.Label className='h3'>¿Fue efectivo el seguimiento?</Form.Label>
             <div className="mb-3" style={{ display: "flex", gap: "2rem", alignItems: "center", justifyContent: "center" }}>
               <Form.Check
                 // disabled
                 type={'radio'}
                 label={'Si'}
-              // id={`disabled-default-${type}`}
+                value={true}
+                name="seguimiento_efectivo"
+                required
               />
               <Form.Check
                 // disabled
                 type={'radio'}
                 label={'No'}
-              // id={`disabled-default-${type}`}
+                value={false}
+                name="seguimiento_efectivo"
+                required
               />
+
+
               <button className="modulo-solicitud-content-main-column2-save-button">
                 <img src='/icons/save.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
                 <p>GUARDAR</p>
