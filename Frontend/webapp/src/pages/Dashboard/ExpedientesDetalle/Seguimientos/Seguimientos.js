@@ -26,11 +26,11 @@ function Seguimientos() {
       data: {}
     })
       .then(result => {
-        console.log(result.data.results);
+        // console.log(result.data.results);
         setSeguimientos(result.data.results);
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
       });
   }, [])
 
@@ -44,11 +44,11 @@ function Seguimientos() {
         data: {}
       })
         .then(result => {
-          console.log(result.data.results);
+          // console.log(result.data.results);
           setPreguntas(result.data.results)
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
   }, [open])
 
@@ -60,11 +60,11 @@ function Seguimientos() {
       data: {}
     })
       .then(result => {
-        console.log(result.data.results);
+        // console.log(result.data.results);
         setMediosSeguimiento(result.data.results);
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
       });
   }
 
@@ -84,7 +84,7 @@ function Seguimientos() {
         "porque": e.target[`pregunta${pregunta.id}detalle`].value
       })
     })
-    console.log(data);
+    // console.log(data);
     axiosTokenInstanceApiExpedientes({
       method: 'post',
       url: `/expedientes/${id}/seguimientos`,
@@ -92,7 +92,7 @@ function Seguimientos() {
       data: data
     })
       .then(result => {
-        console.log(result.data);
+        // console.log(result.data);
         e.target.reset();
         setOpen(false)
         setSeguimientos([...seguimientos, result.data])
@@ -101,7 +101,7 @@ function Seguimientos() {
         })
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
       });
   }
 
@@ -134,7 +134,6 @@ function Seguimientos() {
             </Form.Group>
             <br />
             {preguntas.map(pregunta => {
-              console.log(pregunta);
               return (
                 <div key={`pregunta${pregunta.id}`}>
                   <Form.Label className='h3'>{pregunta.nombre}</Form.Label>
