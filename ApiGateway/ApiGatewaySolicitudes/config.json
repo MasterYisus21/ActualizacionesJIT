@@ -2,7 +2,7 @@
     "urlApiExpedientes": "http://0.0.0.0:8000/api/jit_expedientes/v1/",
     "urlApiSolicitudes": "http://0.0.0.0:8001/api/jit_solicitudes/v1/",
     "urlDocumentos": "http://0.0.0.0:8002/api/documentos/v1/",
-    "urlEmail": "http://0.0.0.0:8004/",
+    "urlEmail": "http://0.0.0.0:5001/",
     "urlGatewaySolicitudes": "http://localhost:3001/api/gateway/v1/",
     "urlGatewayExpedientes": "http://localhost:3002/api/gateway/v1/"
     
