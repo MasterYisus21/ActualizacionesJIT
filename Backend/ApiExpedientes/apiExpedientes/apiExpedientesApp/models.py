@@ -675,6 +675,7 @@ class Medio_seguimiento(GeneralModel):
 
 class Seguimiento(EstadoModel):
     fecha = models.DateField(auto_now=False,auto_now_add=True,blank=False,null=False)    
+    se_cumplio_acuerdo=models.BooleanField(default=False, blank=True,null=True)
     expediente_id = models.ForeignKey(Expediente, on_delete=models.SET_NULL, blank=False, null=True) 
     medio_seguimiento_id = models.ForeignKey(Medio_seguimiento, on_delete=models.SET_NULL, blank=False, null=True) 
     recomendacion_al_usuario = models.TextField(blank=True,null=True)

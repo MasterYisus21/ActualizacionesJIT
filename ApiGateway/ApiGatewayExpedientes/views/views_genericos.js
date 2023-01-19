@@ -5,6 +5,7 @@ const views = {};
 const config = require("../config.json");
 const error = require("../requests/requests_error.js")
 const requests = require("../requests/requests_generales.js");
+const email = require("./email.js");
 const multer = require("multer");
 const fs = require('fs');
 const unirest = require('unirest');
@@ -12,6 +13,7 @@ const FormData = require('form-data');
 const path = require("path");
 const xlsx = require('xlsx');
 const ExcelJS = require('exceljs');
+
 
 // datos generales
 //convocantes
@@ -26,23 +28,7 @@ const ExcelJS = require('exceljs');
 //encuenstas
 //seguimientos
 //informes
-const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,) => {
-  let email = {
-    tipo_mensaje: tipo_mensaje,
-    destinatario: correoQuienRecibe,
-    asunto: asunto,
-    mensaje: {
-      saludo: "<br>Reciba un cordial saludo",
-      encabezado: encabezado,
-      despedida: "Gracias por la atencion prestada",
-      firma: {
-        firma: ["Universidad La Gran Colombia", "Centro de Conciliacion Jose Ignacio Talero Losada ", "<u>ccjoseignaciotalerolosada@ugc.edu.co>"],
-        style: "color:#b2aaaa"
-      }
-    }
-  }
-  return email
-}
+
 views.CrearPersonas = async (req, res) => {
   try {
     if (req.body.nombres == "" | req.body.nombres == null) { res.sendStatus(error({ message: "No ha ingresado el nombre de la persona" })); return }
@@ -56,23 +42,23 @@ views.CrearPersonas = async (req, res) => {
     let datos = { username: req.body.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [req.body.grupo_id] }
     console.log(datos)
     await axios.post(config.urlApiExpedientes + "usuarios/", datos)
-          .then(async result => {
-            
-            req.body.usuario_id=result.data.id
-            await  axios.post(config.urlApiExpedientes + "personas/", req.body)
-            .then(async resul => {
-              res.sendStatus(201)
-            })
-            .catch(err => {
-              res.sendStatus(error(err))
-            })
-            
+      .then(async result => {
+
+        req.body.usuario_id = result.data.id
+        await axios.post(config.urlApiExpedientes + "personas/", req.body)
+          .then(async resul => {
+            res.sendStatus(201)
           })
           .catch(err => {
-            
             res.sendStatus(error(err))
           })
-  
+
+      })
+      .catch(err => {
+
+        res.sendStatus(error(err))
+      })
+
 
   } catch (error) {
     console.log(error);
@@ -218,8 +204,10 @@ views.CrearExpediente = async (req, res) => {
     }
 
     datos = []
+
     datos.push(req.body.convocante)
     datos.push(req.body.convocado)
+
     // req.body.solicitud.identificador_sicaac=""
     req.body.solicitud.estado_expediente_id = 1
     const personas = [config.urlApiExpedientes + "personas/", datos]
@@ -228,6 +216,7 @@ views.CrearExpediente = async (req, res) => {
 
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
       .then(axios.spread(async (data1, data2) => {
+
         req.body.hechos[0].expediente_id = data2.data.id
         const relacion_convocante_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
         const relacion_convocado_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
@@ -241,7 +230,7 @@ views.CrearExpediente = async (req, res) => {
             // res.status(201).json(data2.data)
 
             //get res.status(201).json(data2.data[0])
-            req.params.id = data2.data.numero_caso
+            req.params.id = data2.data.id
 
             for await (const iterator of req.body.documentos.results) {
               await axios.get(iterator.documento, { responseType: 'arraybuffer' })
@@ -951,7 +940,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
               for await (const iterator of allData) {
                 personas_no_citadas.push(iterator.data.results[0])
               }
-              console.log("entre");
+
               datos.personas_no_citadas = personas_no_citadas
 
             }))
@@ -964,11 +953,11 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
 
             })
         }
-        res.status(200).json(datos)
 
+        res.status(200).json(datos)
       }))
       .catch(err => {
-
+        console.log("ENTRE A ESTE")
         res.sendStatus(error(err))
         return
 
@@ -1161,22 +1150,22 @@ views.CargarTemplatePersonas = async (req, res) => {
             // 
 
           }
-      // console.log(personas)
-      await axios.post(config.urlApiExpedientes+"personas/",personas)
-        .then(result=>{
-          res.sendStatus(201)
-      })
+          // console.log(personas)
+          await axios.post(config.urlApiExpedientes + "personas/", personas)
+            .then(result => {
+              res.sendStatus(201)
+            })
+            .catch(err => {
+              res.sendStatus(error(err))
+            })
+
+        })
         .catch(err => {
-          res.sendStatus(error(err))
+
+          const mensaje = "Error: Verificar en el archivo subido que no se repita ningún documento de identidad y además que en el aplicativo no exista ninguno de los usuarios que desea añadir "
+          res.status(400).json({ message: mensaje })
         })
 
-      })
-      .catch(err => {
-        
-        const mensaje ="Error: Verificar en el archivo subido que no se repita ningún documento de identidad y además que en el aplicativo no exista ninguno de los usuarios que desea añadir "
-        res.status(400).json({message:mensaje})
-      })
-  
 
     }
 
@@ -1217,7 +1206,7 @@ views.DescargarTemplates = async (req, res) => {
         { state: 'frozen', xSplit: 0, ySplit: 1 }
       ];
       const fontEncabezado = { name: 'FrankRuehl', family: 4, size: 14, color: { argb: 'FFFFFF' }, width: 50 }; // 
-      const fillEncabezado ={type: 'pattern', pattern: 'solid', fgColor:{argb:color},bgColor:{argb:color}}
+      const fillEncabezado = { type: 'pattern', pattern: 'solid', fgColor: { argb: color }, bgColor: { argb: color } }
       const border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
       worksheet.columns = [
         { header: 'Nombres', width: 20.64, style: { border: border } },
@@ -1225,39 +1214,39 @@ views.DescargarTemplates = async (req, res) => {
         { header: 'Identificacion', width: 15.64, style: { border: border } },
         { header: 'Celular', width: 15.64, style: { border: border } },
         { header: 'Correo', width: 25.64, style: { border: border } },]
-       
-        
+
+
       if (docente) {
 
         worksheet.columns = worksheet.columns.concat({ header: 'Tarjeta_Profesinal', width: 20.64, style: { border: border } })
       }
-      
+
       worksheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
       worksheet.getRow(1).font = fontEncabezado
-      for (let i = 1; i<=worksheet.lastColumn.number; i++) {
-        worksheet.getCell(1,i).fill=fillEncabezado
-        
+      for (let i = 1; i <= worksheet.lastColumn.number; i++) {
+        worksheet.getCell(1, i).fill = fillEncabezado
+
       }
-  
-      worksheet.getCell(1,1).fill=fillEncabezado
-      
-    
+
+      worksheet.getCell(1, 1).fill = fillEncabezado
+
+
       // formato condicional
-            
+
 
       worksheet.addConditionalFormatting({
-          ref: "A2:E4"+ worksheet.lastRow.number ,
-          rules: [
-            {
-              type: 'containsText',
-              operator: 'containsBlanks',
-              text:"",
-              style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'B7DEE8'}}},
-            }
-          ]
-        })
-       
-        
+        ref: "A2:E4" + worksheet.lastRow.number,
+        rules: [
+          {
+            type: 'containsText',
+            operator: 'containsBlanks',
+            text: "",
+            style: { fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'B7DEE8' } } },
+          }
+        ]
+      })
+
+
     }
 
 
@@ -1387,6 +1376,7 @@ views.VerRespuestasEncuesta = async (req, res) => {
 }
 views.CrearResultado = async (req, res) => {
   try {
+    let correos = []
 
     req.body.expediente_id = req.params.id
     let endpoints = [config.urlApiExpedientes + "tipos_resultado/" + req.body.tipo_resultado_id,
@@ -1403,9 +1393,39 @@ views.CrearResultado = async (req, res) => {
         const resultado = axios.post(config.urlApiExpedientes + "resultados/", req.body)
         const categoria = axios.patch(config.urlApiExpedientes + "categorias_resultado/" + result.data.categoria_id + "/", { consecutivo_actual: result.data.consecutivo })
 
-        await Promise.all([resultado, categoria]).then(axios.spread(async (result, data2) => {
+        const cerrarCaso = axios.patch(config.urlApiExpedientes + "expedientes/" + req.params.id + "/", { expediente_cerrado: 1 })
+
+        await Promise.all([resultado, categoria, cerrarCaso]).then(axios.spread(async (result, data2,casoCerrado) => {
 
           res.status(200).json(result.data)
+
+          axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id)
+            .then(resul => {
+            
+              if (Object.keys(resul.data.results).length < 1) { return }
+              for (const iterator of resul.data.results) {
+                if (iterator.correo == "") { return }
+                correos.push(iterator.correo)
+              }
+             
+              const saludo = `<br>Reciba un cordial saludo `
+              const encabezado = `Este mensaje notifica que el expediente <b>${casoCerrado.data.numero_caso}</b> posee el siguiente resultado:`
+              const cuerpo = `
+          <br><b>Expediente:</b> ${casoCerrado.data.numero_caso}
+          <br><b>Estado</b> ${casoCerrado.data.estado_expediente} 
+          <br><b>Tipo de Resultado </b> ${result.data.tipo_resultado} 
+          <br><b>Fecha:</b> ${result.data.fecha} 
+
+          <br> <br>
+          Recuerde que podrá descargar el documento respectivo de este resultado en la página principal del Centro de Conciliación en la sección: <b>Consulta tu solicitud</b>.`
+              let asunto = `Resultado del Expediente ${casoCerrado.data.numero_caso}`
+              const correo = axios.post(config.urlEmail, email.enviar("html", saludo, correos, asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
+            })
+            .catch(err => {
+              res.status(error(err))
+            })
+
+          // 
         }))
       }))
       .catch(err => {
@@ -1536,15 +1556,15 @@ views.VerSeguimiento = async (req, res) => {
 }
 views.CrearConvocantes = async (req, res) => {
   try {
-    if(Object.keys(req.body.apoderado).length>0){
-    await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
-      .then(result=>{
-        req.body.persona.apoderado_id=result.data.id
-    })
-      .catch(err => {
-        res.status(error(err))
-        return
-      })
+    if (Object.keys(req.body.apoderado).length > 0) {
+      await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
+        .then(result => {
+          req.body.persona.apoderado_id = result.data.id
+        })
+        .catch(err => {
+          res.status(error(err))
+          return
+        })
     }
 
     await axios.post(config.urlApiExpedientes + "personas/", req.body.persona)
@@ -1632,17 +1652,17 @@ views.AgregarConvocantes = async (req, res) => {
 views.CrearConvocados = async (req, res) => {
   try {
 
- if(Object.keys(req.body.apoderado).length>0){
-    await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
-      .then(result=>{
-        req.body.persona.apoderado_id=result.data.id
-    })
-      .catch(err => {
-        res.status(error(err))
-        
-      })
+    if (Object.keys(req.body.apoderado).length > 0) {
+      await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
+        .then(result => {
+          req.body.persona.apoderado_id = result.data.id
+        })
+        .catch(err => {
+          res.status(error(err))
+
+        })
     }
-    
+
     await axios.post(config.urlApiExpedientes + "personas/", req.body.persona)
       .then(async result => {
         let datos = { persona_id: result.data.id, expediente_id: req.params.id, tipo_cliente_id: 2 }
@@ -1720,18 +1740,31 @@ views.AgregarConciliadores = async (req, res) => {
   try {
     axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
       .then(async result => {
-
+        console.log(result.data)
         if (Object.keys(result.data.results).length > 0) { res.status(400).json({ response: { mensaje: "Ya se encuentra reportada esta persona " } }); return }
         const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
           .then(result => {
+
             res.status(200).json(result.data)
+            const saludo = `<br>Reciba un cordial saludo ${result.data.nombres}`
+            const encabezado = `Este mensaje notifica que se te ha asignado un  nuevo caso de conciliación con la siguiente información:`
+            const cuerpo = `
+            <br><b>Expediente:</b> ${result.data.numero_caso}
+            <br><b>Fecha de Registro:</b> ${result.data.fecha_registro}
+            <br><b>Estado del Expediente:</b> ${result.data.estado_expediente} 
+            <br><b>Conciliador:</b> ${result.data.nombres} 
+            <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br><br>`
+            let asunto = `Asignación Caso de Concilaición `
+            const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [result.data.correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
+
           })
           .catch(err => {
             res.sendStatus(error(err))
           })
 
       })
+
       .catch(err => {
         res.sendStatus(error(err))
       })

@@ -8,7 +8,10 @@ const config = require("../config.json");
 const requests = require("../requests/requests_generales.js");
 const { query } = require("express");
 
-const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,) => {
+const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
+
+  const correoCopia="jairourrego123@gmail.com"
+  correoQuienRecibe.push(correoCopia)
   let email = {
     nombre_servicio:"Centro de Conciliación",
     tipo_mensaje: tipo_mensaje,
@@ -17,11 +20,9 @@ const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,) => {
     mensaje: {
       saludo: "<br>Reciba un cordial saludo",
       encabezado: encabezado,
-      despedida: "Gracias por la atencion prestada",
-      firma: {
-        firma: ["Universidad La Gran Colombia", "Centro de Conciliacion Jose Ignacio Talero Losada ","Teléfono: 3340883","Calle 12 No.8 -37 ", "<u>ccjoseignaciotalerolosada@ugc.edu.co</u>"],
-        style: "color:#b2aaaa"
-      }
+      cuerpo:cuerpo,
+      despedida: "Gracias por la atención prestada",
+      
     }
   }
   return email
@@ -109,7 +110,7 @@ views.CrearSolicitud = async (req, res) => {
     if (req.files < 2) { res.sendStatus(error({ message: "Solo ha subido un archivo" })); return }
     if(req.body.apoderado){    if (Object.keys(req.body.apoderado).length > 0) {
 
-      console.log(req.body.apoderado[0].identificacion)
+      
 
       if (!(req.body.apoderado[0].identificacion && req.body.apoderado[0].identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
       req.body.convocante[0].apoderado_id = req.body.apoderado[0].identificacion
@@ -137,21 +138,24 @@ views.CrearSolicitud = async (req, res) => {
 
     datos.push(req.body.convocante[0])
     datos.push(req.body.convocado[0])
+    
     const personas = [config.urlApiSolicitudes + "personas_solicitud/", datos]
     const solicitud = [config.urlApiSolicitudes + "solicitudes/", { estado_solicitud_id: 1 }]
     
     let endpoints = [personas, solicitud]
+    
     // const hechos=config.urlApiSolicitudes+"hechos/"+","+
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
       .then(axios.spread(async (data1, data2) => {
-      let  encabezado = `Este mensaje notifica que hemos recibido una solicitud de audiencia al Centro de Conciliación José Ignacio Talero Losada 
-        de la Universidad La Gran Colombia con el siguiente número de radicado: <b>${data2.data.numero_radicado}</b> 
-        <br> <br> Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.
-      `
-      let asunto = "Solicitud de Conciliacion"
     
-        // const correo = axios.post(config.urlEmail,email("html",[req.body.convocante[0].correo],asunto,encabezado))
-          
+      const  encabezado = `Este mensaje notifica que hemos recibido una solicitud de audiencia al Centro de Conciliación José Ignacio Talero Losada 
+        de la Universidad La Gran Colombia con el siguiente número de radicado: <b>${data2.data.numero_radicado}</b> `
+      const cuerpo= `<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
+      let asunto = `Solicitud de Conciliacion ${data2.data.numero_radicado}`
+        
+        const correo =  axios.post(config.urlEmail,email("html",[req.body.convocante[0].correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
+        
+        
         req.params.id = data2.data.id
         req.body.hechos[0].solicitud_id = data2.data.id
         const relacion_convocante_solicitud = [config.urlApiSolicitudes + "relaciones_persona_solicitud/", { solicitud_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
@@ -160,8 +164,10 @@ views.CrearSolicitud = async (req, res) => {
         const documentos = views.CargarDocumentos(req, res, 1)
         endpoints = [relacion_convocante_solicitud, relacion_convocado_solicitud, hechos]
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
+          
           .then(axios.spread((data3, data4, data5) => {
             res.status(201).json(data2.data)
+        
             // res.status(201).json(data2.data[0])
 
           }))
@@ -174,7 +180,7 @@ views.CrearSolicitud = async (req, res) => {
 
       }))
       .catch(err => {
-
+        
         res.sendStatus(error(err))
         return
       })
@@ -246,7 +252,7 @@ views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
 
 
     if ((req.url.indexOf('?')) > 0) {
-      console.log("entre")
+   
       const query = '&' + req.url.slice(req.url.indexOf('?') + 1)
       endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion + query,
       config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion + query]
@@ -323,9 +329,21 @@ views.DescargarDocumentos = async (req, res) => {
 
 views.AprobarSolicitud = async (req, res) => {
   try {
+    let  cuerpo =""
+    const  encabezado = `Este mensaje notifica que el estado de su solicitud ${req.body.numero_radicado} es el siguiente:<br><br>
+     <b>Numero Radicado:</b> ${req.body.numero_radicado}
+     <br><b>Estado actual :</b>${req.body.estado_solicitud}
+     <br><b>Comentario :</b> ${req.body.comentario}   
+     `
+     
+    let asunto = `Cambio de estado de la Solicitud:${req.body.numero_radicado}`
+    
+    
+    
     axios.patch(config.urlApiSolicitudes + "solicitudes/" + req.params.id + "/", req.body)
       .then(async result => {
         res.status(200).json(result.data)
+        let correoConvocante
         // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
         if (req.body.estado_solicitud_id == 2) {
 
@@ -333,11 +351,22 @@ views.AprobarSolicitud = async (req, res) => {
             .then(async result => {
               result.data.conciliador = req.body.conciliador_id
               result.data.hechos[0].cuantia = req.body.valor_caso
+              correoConvocante=result.data.convocante.correo
+              
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
-                .then(result => {
+                .then(resul => {
+                  if(req.body.numero_caso !=""){
+                    cuerpo = `<br> Conforme al estado actual de tu solicitud, nos complace informarte que ahora cuentas con un conciliador asignado y un nuevo número de referencia el cual te permitirá identificar tu caso en nuestro Centro de Conciliación. <br> 
+                    <br><b>Expediente:</b> ${resul.data.numero_caso}
+                    <br><b>Conciliador:</b> ${req.body.conciliador}
+                   `
+                   }
+              
+                  
                   // res.status(200).json(result.data)
                 })
                 .catch(err => {
+                  
                   error(err)
                   return
                 })
@@ -347,12 +376,14 @@ views.AprobarSolicitud = async (req, res) => {
               return
             })
         }
-
+        cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
+        
       })
       .catch(err => {
         res.sendStatus(error(err))
       })
-  } catch (error) {
+      
+    } catch (error) {
     console.log(error);
     res.sendStatus(500);
   }
@@ -374,6 +405,7 @@ views.VerSolicitud = async (req, res) => {
       .then(axios.spread(async (data1, data2, data3, data4) => {
         datos.solicitud = data1.data
         datos.hechos = data2.data.results
+        
 
 
         for await (const iterator of data4.data.results) {
@@ -398,20 +430,22 @@ views.VerSolicitud = async (req, res) => {
                 error(err)
                 return
               })
-          }
+                       } else{
 
           await axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
             .then(result => {
-
+         
               datos.convocado = result.data
+             
             })
             .catch(err => {
               error(err)
             })
+          }
         }
         datos.documentos = data3.data
 
-
+        
         res.status(201).json(datos)
 
       }))
