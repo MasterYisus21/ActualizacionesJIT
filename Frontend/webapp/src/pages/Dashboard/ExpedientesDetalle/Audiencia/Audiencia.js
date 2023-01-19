@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import fileDownload from 'js-file-download';
 
 
 function Audiencia() {
@@ -196,13 +197,14 @@ function Audiencia() {
     e.preventDefault()
     axiosTokenInstanceApiExpedientes({
       method: 'post',
-      url: `expedientes/${id}/citaciones/${dataApi?.id}/personas/${persona.id}/formato`,
+      url: `expedientes/${id}/citaciones/${dataApi?.id}/personas/${persona.id_relacion}/formato`,
       // headers: req.headers,
       responseType: "blob",
       data: {}
     })
       .then(result => {
         console.log(result.data);
+        fileDownload(result.data, `Formato_citacion_${persona.nombres}.docx`)
       })
       .catch(err => {
         console.log(err);
