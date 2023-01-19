@@ -8,14 +8,17 @@ import { BarRectangulo, SubtemaRectangulo } from "../../../components";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import './SolicitudesDetalle.css'
 import { useDropzone } from "react-dropzone"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { axiosBasicInstanceApiSolicitudes, axiosTokenInstanceApiSolicitudes } from "../../../helpers/axiosInstances";
 import { axiosTokenInstanceApiExpedientes } from '../../../helpers/axiosInstances';
 import { SearchableSelect } from '../../../components';
 import FileDownload from 'js-file-download'
+import { toast } from "react-toastify";
 
 
 function SolicitudesDetalle() {
+
+  const navigate = useNavigate()
 
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
@@ -30,6 +33,8 @@ function SolicitudesDetalle() {
   const [departamento, setDepartamento] = useState("")
   const [departamentoInitial, setDepartamentoInitial] = useState(null)
   const [ciudad, setCiudad] = useState("")
+  const [conciliador, setConciliador] = useState(null)
+  const [nameconciliador, setNameconciliador] = useState("")
   const [ciudadInitial, setCiudadInitial] = useState(null)
 
   const [apoderado_convocante, setApoderado_convocante] = useState(false)
@@ -317,6 +322,82 @@ useEffect(() => {
       </svg>
     </div>
   ))
+
+  const rechazarSolicitud = (e) => {
+    e.preventDefault()
+    const descripcionRechazada = document.getElementById("descripcionRechazada").value
+    console.log(descripcionRechazada);
+    const body = {
+      "estado_solicitud":"rechazada",
+      "estado_solicitud_id":3,
+      "comentario":descripcionRechazada,
+      "valor_caso":null,
+      "conciliador":null,
+      "conciliador_id":null
+    }
+    console.log(body);
+    axiosTokenInstanceApiSolicitudes({
+      method: 'post',
+      url: "/solicitudes/" + id,
+      data:body
+    })
+      .then(response => {
+        e.target.reset();
+        toast.info('La solicitud ha sido rechazada', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const aceptarSolicitud = (e) => {
+
+    e.preventDefault()
+    const descripcionAceptada = document.getElementById("descripcionAprovado").value
+    const valorCaso = document.getElementById("valorCaso").value
+    const body = {
+      "estado_solicitud":"aprobada",
+      "estado_solicitud_id":2,
+      "comentario":descripcionAceptada,
+      "valor_caso":valorCaso,
+      "conciliador":nameconciliador,
+      "conciliador_id":conciliador
+    }
+    console.log(body);
+    axiosTokenInstanceApiSolicitudes({
+      method: 'post',
+      url: "/solicitudes/" + id,
+      data:body
+    })
+      .then(response => {
+        e.target.reset();
+        toast.info('La solicitud ha sido aceptada', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+        // navigate("/dashboard/expedientes/detalle/"+id+"/datosgenerales")
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "conciliadores?ordering=-" + id,
+    })
+      .then(response => {
+        const choseConciliador = response.data.results[0].nombres;
+        setNameconciliador(choseConciliador);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    
+  }, [conciliador])
+  
 
   return (
     <div className="wrapp-main-detalle-solicitud">
@@ -919,7 +1000,7 @@ useEffect(() => {
 
       <div className='contenedor-botones-detalle-solicitud'>
         <div className="mb-4">
-          <button className='boton-remitir' onClick={() => setOpen2(false) & setOpen(!open) & setOpen3(false) & setOpen4(false)} aria-controls="ejemplo">REMITIR</button>
+          <button className='boton-remitir' onClick={() => setOpen2(false) & setOpen(!open) & setOpen3(false) & setOpen4(false)} aria-controls="ejemplo" disabled>REMITIR</button>
           <button className='boton-rechazar' onClick={() => setOpen2(!open2) & setOpen(false) & setOpen3(false) & setOpen4(false)} aria-controls="ejemplo">RECHAZAR</button>
           <button className='boton-aceptar' onClick={() => setOpen2(false) & setOpen(false) & setOpen3(false) & setOpen4(!open4)} aria-controls="ejemplo">ACEPTAR SOLICITUD</button>
         </div>
@@ -941,41 +1022,45 @@ useEffect(() => {
           </div>
         </Collapse>
         <Collapse className='colapse-general' in={open2}>
-          <div id="ejemplo">
+          <form id="ejemplo" onSubmit={(e)=>{rechazarSolicitud(e)}}>
             <div className='contenedor-rechazar' >
               <label className='label-explicacion-rechazar'>Escriba una nota explicando al usuario el por qué se rechaza o no se puede atender su solicitud</label>
-              <textarea className='campo-explicacion'></textarea>
+              <textarea className='campo-explicacion' id="descripcionRechazada"></textarea>
               <div className='contenedor-boton-remitir'>
                 <button className='boton-rechazar-solicitud'>Rechazar</button>
               </div>
             </div>
-          </div>
+          </form>
         </Collapse>
 
         <Collapse className='colapse-general' in={open4}>
-          <div id="ejemplo">
+          <form id="ejemplo" onSubmit={(e)=>{aceptarSolicitud(e)}}>
             <div className='contenedor-aceptar' >
               <div className='contenedor-campos-aceptar-caso'>
                 <div className='izquierda-aceptar-caso'>
                   <label className='titulo-remitir'>Valor estimado del caso</label>
-                  <input className='input-aceptar-valor'></input>
+                  <input className='input-aceptar-valor' id="valorCaso" min="1" pattern="^[0-9]+" type="number"></input>
                 </div>
                 <div className='derecha-aceptar-caso'>
                   <label className='titulo-remitir'>Conciliador</label>
-                  <Form.Select className='seleccionable-centro-conciliacion-aceptar' aria-label="Default select example">
-                    <option></option>
-                    <option value="1">JIT</option>
-                    <option value="2">CCA</option>
-                  </Form.Select>
+                  <SearchableSelect
+                        axiosInstance={axiosTokenInstanceApiExpedientes}
+                        url={"/conciliadores/"}
+                        name={"conciliador"}
+                        identifier={"id"}
+                        initialValue=""
+                        onChange={(val) => { setConciliador(val) }}
+                        label="nombres"
+                    />
                 </div>
               </div>
               <label className='label-explicacion-remitir'>Escriba una nota explicando al usuario la razón de aprobación y los pasos a seguir para continuar con el proceso</label>
-              <textarea className='campo-explicacion'></textarea>
+              <textarea className='campo-explicacion' id="descripcionAprovado"></textarea>
               <div className='contenedor-boton-remitir'>
                 <button className='boton-remitir-solicitud'>Aceptar solicitud</button>
               </div>
             </div>
-          </div>
+          </form>
         </Collapse>
       </div>
     </div>

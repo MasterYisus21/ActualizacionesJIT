@@ -6,7 +6,7 @@ import "./SearchableSelect.css"
 
 let cancelToken = ""
 
-function SearchableSelect({ axiosInstance, url, name, identifier, initialValue, onChange }) {
+function SearchableSelect({ axiosInstance, url, name, identifier, initialValue, onChange, label='nombre' }) {
     const [texto, setTexto] = useState("")
     const [opened, setOpened] = useState(false)
     const auxId = useId()
@@ -40,7 +40,7 @@ function SearchableSelect({ axiosInstance, url, name, identifier, initialValue, 
 
     useEffect(() => {
         if (initialValue) {
-            setTexto(initialValue.nombre + " - " + initialValue[identifier]);
+            setTexto(initialValue[label] + " - " + initialValue[identifier]);
         }
     }, [initialValue])
 
@@ -64,8 +64,8 @@ function SearchableSelect({ axiosInstance, url, name, identifier, initialValue, 
                 {options?.map((object) => {
                     return (
                         <div key={object.id} className="option">
-                            <input type="radio" id={"a" + auxId + object[identifier]} className="radio" name={name} value={object["id"]} onClick={e => { setTexto(object.nombre + " - " + object[identifier]); setOpened(false); onChange(e.target.value) }} />
-                            <label htmlFor={"a" + auxId + object[identifier]} className="radio-label">{object.nombre} - {object[identifier]}</label>
+                            <input type="radio" id={"a" + auxId + object[identifier]} className="radio" name={name} value={object["id"]} onClick={e => { setTexto(object[label] + " - " + object[identifier]); setOpened(false); onChange(e.target.value) }} />
+                            <label htmlFor={"a" + auxId + object[identifier]} className="radio-label">{object[label]} - {object[identifier]}</label>
                         </div>
                     )
                 })}
