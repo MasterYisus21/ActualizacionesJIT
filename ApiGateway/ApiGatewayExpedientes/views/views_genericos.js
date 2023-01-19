@@ -932,6 +932,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
         if (datos2.data.results.length < 1) { personas_citadas = [] } else {
           for (const iterator of datos2.data.results) {
             id_personas_citadas[personas_citadas.length] = iterator.persona_id
+            datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)].id_relacion=iterator.id
             personas_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)])
             if (datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)]==null){personas_citadas = [];break}
           }
@@ -1020,13 +1021,16 @@ views.CitarPersonas = async (req, res) => {
 views.EnviarNotificacionCitacion = async (req, res) => {
   try {
     await unirest
-                .post(config.urlEmail + "adjuntar/")
+                .post(config.urlEmail + "adjuntar")
 
-    
+                .field('estado', "null")
+                .field('expediente', "result.data.numero_caso")
+                .field('nombre', "iterator.originalname")
                 //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-                .attach('documento', fs.createReadStream("C:\Users\JairoM.UrregoG\Documents\GitHub\Plataforma-Centro-de-Conciliacion\ApiGateway\ApiGatewayExpedientes\public\formatos\node.pdf")) // creates a read stream
+                // .attach('adjuntar', fs.createReadStream("/public/formatos/node.pdf")) // creates a read stream
                 //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
                 .then(function (response) {
+                  console.log(response.body)
                   // try {
                   //   fs.unlinkSync(iterator.path)
                   // } catch (err) {
