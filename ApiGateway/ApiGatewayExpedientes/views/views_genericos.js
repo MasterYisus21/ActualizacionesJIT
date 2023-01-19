@@ -908,8 +908,10 @@ views.EnviarDocumentoCitacion = async (req, res) => {
 views.ListarPersonasCitadasyPorCitar = async (req, res) => {
   try {
     let personas_disponibles = []
+    let id_personas_citadas = []
     let personas_citadas = []
     let personas_no_citadas = []
+    let id_personas_no_citadas = []
     let datos = {}
     let endpoints = [config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id,
     config.urlApiExpedientes + "relaciones_persona_citacion?citacion_id=" + req.params.id_citacion]
@@ -921,47 +923,39 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
 
         for (const iterator of datos1.data.results) {
           personas_disponibles[personas_disponibles.length] = iterator.persona_id
-
+          
         }
-        // personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
+        
+        console.log(personas_disponibles)
+
+        // // personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
         if (datos2.data.results.length < 1) { personas_citadas = [] } else {
           for (const iterator of datos2.data.results) {
-            personas_citadas[personas_citadas.length] = iterator.persona_id
+            id_personas_citadas[personas_citadas.length] = iterator.persona_id
+            personas_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)])
 
           }
 
-
-          // personas_citadas = personas_citadas.sort((a, b) => { return a - b });
+          console.log(id_personas_citadas)
+        //   // personas_citadas = personas_citadas.sort((a, b) => { return a - b });
         }
-        datos.personas_citadas = datos2.data.results
-        personas_no_citadas = personas_disponibles.filter(element => !personas_citadas.includes(element))
-        endpoints = []
+        datos.personas_citadas = personas_citadas
+        id_personas_no_citadas = personas_disponibles.filter(element => !personas_citadas.includes(element))
+        
+        // endpoints = []
 
         if (personas_no_citadas.length < 1) { datos.personas_no_citadas = [] } else {
 
           for (const iterator of personas_no_citadas) {
-            endpoints[endpoints.length] = config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id + "&persona_id=" + iterator
+            personas_no_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator)])
           }
 
-          personas_no_citadas = []
-          await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-            .then(axios.spread(async (...allData) => {
+        //   for (const iterator of personas_no_citadas) {
+        //     endpoints[endpoints.length] = config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id + "&persona_id=" + iterator
+        //   }
 
-              for await (const iterator of allData) {
-                personas_no_citadas.push(iterator.data.results[0])
-              }
-
-              datos.personas_no_citadas = personas_no_citadas
-
-            }))
-
-            .catch(err => {
-              console.log(err);
-
-              error(err)
-              return
-
-            })
+           datos.personas_no_citadas = personas_no_citadas
+      
         }
 
         res.status(200).json(datos)
@@ -1022,6 +1016,28 @@ views.CitarPersonas = async (req, res) => {
       })
 
   } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.EnviarNotificacionCitacion = async (req, res) => {
+  try {
+    await unirest
+                .post(config.urlEmail + "adjuntar/")
+
+    
+                //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+                .attach('documento', fs.createReadStream("C:\Users\JairoM.UrregoG\Documents\GitHub\Plataforma-Centro-de-Conciliacion\ApiGateway\ApiGatewayExpedientes\public\formatos\node.pdf")) // creates a read stream
+                //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+                .then(function (response) {
+                  // try {
+                  //   fs.unlinkSync(iterator.path)
+                  // } catch (err) {
+                  //   error(err)
+                  // }
+                })
+  }catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
