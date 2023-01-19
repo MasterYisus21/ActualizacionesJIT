@@ -137,7 +137,7 @@ function Convocantes() {
             setPage={handlePageChange}
             required
           /> */}
-          <button className='boton-crear-convocante' onClick={() => setPopupconv(!popupconv)}>Crear Convocante</button>
+          <button className='boton-crear-convocante' onClick={() => setPopupconv(!popupconv)}>Crear Convocado</button>
         </div>
 
 
