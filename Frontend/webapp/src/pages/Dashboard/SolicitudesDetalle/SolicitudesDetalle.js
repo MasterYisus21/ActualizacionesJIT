@@ -63,7 +63,7 @@ function SolicitudesDetalle() {
     })
       .then(result => {
 
-        console.log(result.data);
+        // console.log(result.data);
         setData(result.data)
 
         //Convocante
@@ -129,29 +129,10 @@ function SolicitudesDetalle() {
       })
       .catch(err => {
         console.log("error");
-        console.log(err)
+        // console.log(err)
       });
 
-  }, [])
-
-  useEffect(() => {
-    axiosTokenInstanceApiSolicitudes({
-      method: 'get',
-      url: "/documentos/" + id,
-      responseType: "blob",
-      data: {}
-    })
-      .then(result => {
-        console.log(result);
-        // FileDownload(result.data, 'nombre.pdf')
-      })
-      .catch(err => {
-        console.log("error");
-
-      });
-  
-  }, [])
-  
+  }, [])  
 
   const downloadDocument = (event, idDocumento, nombre) => {
     event.preventDefault()
@@ -365,6 +346,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
             <FloatingLabel controlId="apellidos" label="Apellidos">
@@ -372,6 +354,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
 
@@ -381,7 +364,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
                 name="tipoDocumento"
-                required
+                disabled
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
                 {tiposDocumento.map(tipoDocumento => {
@@ -398,6 +381,7 @@ useEffect(() => {
                 type="text"
                 placeholder="name@example.com"
                 name="identificacion"
+                disabled
               />
             </FloatingLabel>
 
@@ -412,6 +396,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="date"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
             <FloatingLabel
@@ -422,6 +407,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
 
@@ -434,6 +420,7 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
               <FloatingLabel controlId="lugarNacimiento" label="Ciudad">
@@ -441,6 +428,7 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
             </div>
@@ -451,6 +439,7 @@ useEffect(() => {
                   className="col-inputs"
                   type="date"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
               <FloatingLabel controlId="edad_convocante" label="Edad">
@@ -473,6 +462,7 @@ useEffect(() => {
                       type="radio"
                       name="flexRadioDefault"
                       id= {"tipoPersona"+tipoPersona["id"]}
+                      disabled
                     />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                       {tipoPersona["nombre"]}
@@ -489,7 +479,7 @@ useEffect(() => {
                   className="col-inputs"
                   aria-label="Floating label select example"
                   name="sexo"
-                  required
+                  disabled
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {sexos.map(sexo => {
@@ -502,7 +492,7 @@ useEffect(() => {
                   className="col-inputs"
                   aria-label="Floating label select example"
                   name="genero"
-                  required
+                  disabled
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {generos.map(genero => {
@@ -521,7 +511,7 @@ useEffect(() => {
                   className="col-inputs"
                   aria-label="Floating label select example"
                   name="estrato"
-                  required
+                  disabled
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {estratosSocieconomicos.map(estrato => {
@@ -534,6 +524,7 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
             </div>
@@ -545,6 +536,7 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
               <FloatingLabel controlId="telefono" label="Teléfono">
@@ -552,6 +544,7 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
               
@@ -562,6 +555,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
             
@@ -599,6 +593,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
                 <FloatingLabel controlId="apellidos_Apoderado" label="Apellidos">
@@ -606,6 +601,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -619,7 +615,7 @@ useEffect(() => {
                   className="col-inputs"
                   aria-label="Floating label select example"
                   name="tipoDocumento"
-                  required
+                  disabled
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {tiposDocumento.map(tipoDocumento => {
@@ -632,6 +628,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -648,6 +645,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="date"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
                 <FloatingLabel
@@ -658,6 +656,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -669,6 +668,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
                 <FloatingLabel controlId="correo_Apoderado" label="correo">
@@ -676,6 +676,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -686,6 +687,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
                 <FloatingLabel controlId="celular_Apoderado" label="Celular">
@@ -693,6 +695,7 @@ useEffect(() => {
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    disabled
                   />
                 </FloatingLabel>
               </div>
@@ -721,6 +724,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
             <FloatingLabel controlId="apellidos_Convocado" label="Apellidos">
@@ -728,6 +732,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
 
@@ -737,7 +742,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
                 name="genero"
-                required
+                disabled
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
                 {tiposDocumento.map(tipoDocumento => {
@@ -753,6 +758,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
 
@@ -767,6 +773,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="date"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
             <FloatingLabel
@@ -777,6 +784,7 @@ useEffect(() => {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                disabled
               />
             </FloatingLabel>
 
@@ -791,6 +799,7 @@ useEffect(() => {
                       type="radio"
                       name="flexRadioDefault1"
                       id={"tipoPersonaConvocado"+tipoPersona["id"]}
+                      disabled
                     />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                       {tipoPersona["nombre"]}
@@ -806,6 +815,7 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
               <FloatingLabel controlId="correo_Convocado" label="Correo electrónico">
@@ -813,6 +823,7 @@ useEffect(() => {
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  disabled
                 />
               </FloatingLabel>
             </div>
@@ -866,6 +877,7 @@ useEffect(() => {
                 as="textarea"
                 placeholder=""
                 style={{ height: "130px" }}
+                disabled
               />
             </FloatingLabel>
 

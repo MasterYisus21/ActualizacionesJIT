@@ -81,11 +81,7 @@ function Consultar() {
                     </Form.Select>
                   </FloatingLabel>
                 </Col>
-                <Col md className='seleccionable-cedula'>
-                  <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
-                    <Form.Control type="number" name="documento" required />
-                  </FloatingLabel>
-                </Col>
+
                 <div className='contenedor-boton-buscar'>
                   <button className='boton-buscar-consultar'>Buscar<img className="icono-buscar-consultar" src={"./images/buscar.svg"} alt="" /></button>
                 </div>
