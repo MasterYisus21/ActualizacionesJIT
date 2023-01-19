@@ -926,7 +926,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
           
         }
         
-        console.log(personas_disponibles)
+        
 
         // // personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
         if (datos2.data.results.length < 1) { personas_citadas = [] } else {
@@ -936,23 +936,21 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
 
           }
 
-          console.log(id_personas_citadas)
+         
         //   // personas_citadas = personas_citadas.sort((a, b) => { return a - b });
         }
         datos.personas_citadas = personas_citadas
-        id_personas_no_citadas = personas_disponibles.filter(element => !personas_citadas.includes(element))
+        id_personas_no_citadas = personas_disponibles.filter(element => !id_personas_citadas.includes(element))
         
         // endpoints = []
 
-        if (personas_no_citadas.length < 1) { datos.personas_no_citadas = [] } else {
+        if (id_personas_no_citadas.length < 1) { datos.personas_no_citadas = [] } else {
 
-          for (const iterator of personas_no_citadas) {
+          for (const iterator of id_personas_no_citadas) {
             personas_no_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator)])
           }
 
-        //   for (const iterator of personas_no_citadas) {
-        //     endpoints[endpoints.length] = config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id + "&persona_id=" + iterator
-        //   }
+       
 
            datos.personas_no_citadas = personas_no_citadas
       
@@ -961,7 +959,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
         res.status(200).json(datos)
       }))
       .catch(err => {
-        console.log("ENTRE A ESTE")
+        
         res.sendStatus(error(err))
         return
 
