@@ -187,13 +187,13 @@ function Resultado() {
               {previousData && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
             </button>
           </div>
-          <div className='resultado-button-container-actions' onClick={e => { downloadFormat(e) }}>
-            <button className="resultado-button" type='button'>
+          <div className='resultado-button-container-actions'>
+            <button className="resultado-button" type='button' onClick={e => { downloadFormat(e) }}>
               <img src='/icons/filetype-docx.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>DESCARGAR</p>
               {previousData && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
             </button>
-            <button className="resultado-button" type='button' onClick={e => uploadDocument(e)}>
+            <button className="resultado-button" type='button' onClick={e => uploadDocument(e)} disabled={documentUploaded}>
               <img src='/icons/upload.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>CARGAR</p>
               {documentUploaded && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}

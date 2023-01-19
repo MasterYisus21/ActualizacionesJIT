@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 
 function Audiencia() {
@@ -131,6 +132,9 @@ function Audiencia() {
       .then(result => {
         console.log(result.data);
         setDataApi(result.data)
+        toast.success('La información se ha guardado con exito', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
       })
       .catch(err => {
         console.log(err);
