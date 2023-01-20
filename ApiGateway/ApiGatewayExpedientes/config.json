@@ -6,6 +6,8 @@
     "urlGatewaySolicitudes": "http://localhost:3001/api/gateway/v1/",
     "urlGatewayExpedientes": "http://localhost:3002/api/gateway/v1/",
     "clave_usuarios_nuevos": "conciliacion2022*.",
-    "urlEmail": "http://0.0.0.0:5001/"
+    "urlEmail": "http://0.0.0.0:5001/",
+    "urlConvertidorPDF":"http://0.0.0.0:9999/docx-to-pdf"
+    
     
 }

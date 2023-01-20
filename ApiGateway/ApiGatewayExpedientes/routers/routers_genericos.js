@@ -57,6 +57,10 @@ router.post("/expedientes/:id/citaciones", views_genericos.CrearCitaciones);
 router.post("/expedientes/:id/citaciones/:id_citacion/notificar", views_genericos.EnviarNotificacionCitacion);
 router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
 router.post("/expedientes/:id/resultados", views_genericos.CrearResultado)
+router.post("/expedientes/:id/enviar_resultados", views_genericos.EnviarResultado)
+
+
+
 router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPersonaDeCitacion);
 router.delete("/expedientes/:id/personas/:id_relacion",views_genericos.EliminarPersonaCaso);
 router.get("/expedientes/:id/resultados", views_genericos.VerResultadoCaso)
