@@ -926,33 +926,30 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
           
         }
         
-        console.log(personas_disponibles)
+        
 
         // // personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
         if (datos2.data.results.length < 1) { personas_citadas = [] } else {
           for (const iterator of datos2.data.results) {
             id_personas_citadas[personas_citadas.length] = iterator.persona_id
+            datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)].id_relacion=iterator.id
             personas_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)])
-
+            if (datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)]==null){personas_citadas = [];break}
           }
 
-          console.log(id_personas_citadas)
+         
         //   // personas_citadas = personas_citadas.sort((a, b) => { return a - b });
         }
         datos.personas_citadas = personas_citadas
-        id_personas_no_citadas = personas_disponibles.filter(element => !personas_citadas.includes(element))
+        id_personas_no_citadas = personas_disponibles.filter(element => !id_personas_citadas.includes(element))
         
         // endpoints = []
 
-        if (personas_no_citadas.length < 1) { datos.personas_no_citadas = [] } else {
+        if (id_personas_no_citadas.length < 1) { datos.personas_no_citadas = [] } else {
 
-          for (const iterator of personas_no_citadas) {
+          for (const iterator of id_personas_no_citadas) {
             personas_no_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator)])
           }
-
-        //   for (const iterator of personas_no_citadas) {
-        //     endpoints[endpoints.length] = config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id + "&persona_id=" + iterator
-        //   }
 
            datos.personas_no_citadas = personas_no_citadas
       
@@ -961,7 +958,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
         res.status(200).json(datos)
       }))
       .catch(err => {
-        console.log("ENTRE A ESTE")
+        
         res.sendStatus(error(err))
         return
 
@@ -1024,13 +1021,16 @@ views.CitarPersonas = async (req, res) => {
 views.EnviarNotificacionCitacion = async (req, res) => {
   try {
     await unirest
-                .post(config.urlEmail + "adjuntar/")
+                .post(config.urlEmail + "adjuntar")
 
-    
+                .field('estado', "null")
+                .field('expediente', "result.data.numero_caso")
+                .field('nombre', "iterator.originalname")
                 //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-                .attach('documento', fs.createReadStream("C:\Users\JairoM.UrregoG\Documents\GitHub\Plataforma-Centro-de-Conciliacion\ApiGateway\ApiGatewayExpedientes\public\formatos\node.pdf")) // creates a read stream
+                // .attach('adjuntar', fs.createReadStream("/public/formatos/node.pdf")) // creates a read stream
                 //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
                 .then(function (response) {
+                  console.log(response.body)
                   // try {
                   //   fs.unlinkSync(iterator.path)
                   // } catch (err) {

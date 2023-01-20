@@ -115,20 +115,22 @@ function DatosGenerales() {
 
   // Fetch subtemas
   const fetchSubtemas = (tema) => {
-    axiosTokenInstanceApiExpedientes({
-      method: 'get',
-      url: "/temas/" + tema + "/?ordering=id&count=20&page=" + 1,
-      // headers: req.headers,
-      data: {}
-    })
-      .then(result => {
-        //console.log(result.data);
-        subtemasRef.current = result.data.results
-        setSubtemas(subtemasRef.current)
+    if (tema) {
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: "/temas/" + tema + "/?ordering=id&count=20&page=" + 1,
+        // headers: req.headers,
+        data: {}
       })
-      .catch(err => {
-        console.log("error");
-      });
+        .then(result => {
+          //console.log(result.data);
+          subtemasRef.current = result.data.results
+          setSubtemas(subtemasRef.current)
+        })
+        .catch(err => {
+          console.log("error");
+        });
+    }
   }
 
 

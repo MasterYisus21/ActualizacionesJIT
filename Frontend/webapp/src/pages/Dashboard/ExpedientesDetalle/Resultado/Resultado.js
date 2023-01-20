@@ -13,6 +13,7 @@ function Resultado() {
   const [tiposResultado, setTiposResultado] = useState([])
   const [previousData, setPreviousData] = useState(false)
   const [documentUploaded, setDocumentUploaded] = useState(false)
+  const [fecha, setFecha] = useState(null)
 
   let { id } = useParams();
   let uploadDocumentField = useRef()
@@ -47,6 +48,7 @@ function Resultado() {
           console.log(result.data.id);
           resultadoId.current = result.data.id
           setPreviousData(true)
+          setFecha(result.data.fecha)
         })
         .catch(err => {
           console.log(err);
@@ -146,6 +148,7 @@ function Resultado() {
           document.getElementById('acuerdos_resultado_expediente').value = result.data.acuerdo
           document.getElementById('tipo_resultado_expediente').value = result.data.tipo_resultado_id
           setPreviousData(true)
+          setFecha(result.data.fecha)
           resultadoId.current = result.data.id
           if (result.data.documento) {
             setDocumentUploaded(true)
@@ -163,6 +166,7 @@ function Resultado() {
   return (
     <form className='resultado-container' onSubmit={e => saveResultado(e)}>
       <h2 className='center-text'>Resultado</h2>
+      {fecha && <div className='h3'>Fecha: {fecha}</div>}
       <div className="">
         <label htmlFor="floatingTextarea2" className="form-label h4">Resultado del caso</label>
         <select type="text" className="form-select" id="tipo_resultado_expediente" name='tipo_resultado_expediente' required disabled={previousData}>

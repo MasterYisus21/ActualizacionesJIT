@@ -4,28 +4,37 @@ import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInsta
 
 export default function Seguimiento({ index, seguimiento }) {
   const [opened, setopened] = useState(false)
-  const [preguntas, setPreguntas] = useState([])
+  const [data, setData] = useState([])
   const [mediosSeguimiento, setMediosSeguimiento] = useState([])
 
 
 
   useEffect(() => {
     //   console.log("seguimiento");
-      console.log(seguimiento);
+    // console.log(seguimiento);
+    if (opened && mediosSeguimiento.length === 0) {
+
       setMediosSeguimiento([{
         id: seguimiento.medio_seguimiento_id,
         nombre: seguimiento.medio_seguimiento
       }])
-    setPreguntas([
-      { enunciado: "¿Se cumplió o se esta cumpliendo el acuerdo de conciliación?" },
-      { enunciado: "¿El acuerdo alcanzao en la conciliación fue llevado a proceso judicial?" },
-      { enunciado: "¿Existe reincidencia del conflicto con que se acordó en el caso de conciliación?" },
-    ])
 
-    return () => {
-      setPreguntas([])
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: `/seguimientos/${seguimiento.id}`,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          console.log(result.data);
+          setData(result.data)
+        })
+        .catch(err => {
+          // console.log(err);
+        });
+
     }
-  }, [])
+  }, [opened])
 
 
   return (
@@ -49,78 +58,59 @@ export default function Seguimiento({ index, seguimiento }) {
               </Form.Select>
             </Form.Group>
             <br />
-            <Form.Label className='h3'>¿Se cumplió o se esta cumpliendo el acuerdo de conciliación?</Form.Label>
-            <div className="mb-3" style={{ display: "flex", gap: "2rem", alignItems: "center", justifyContent: "center"  }}>
-              <Form.Check
-                // disabled
-                type={'radio'}
-                label={'Si'}
-              // id={`disabled-default-${type}`}
-              />
-              <Form.Check
-                // disabled
-                type={'radio'}
-                label={'No'}
-              // id={`disabled-default-${type}`}
-              />
-            </div>
-            <Form.Control as="textarea" placeholder="Detalle" style={{ height: '10rem' }} />
-            <br />
-            <Form.Label className='h3'>¿El acuerdo alcanzado en la conciliación fue llevado a proceso judicial?</Form.Label>
-            <div className="mb-3" style={{ display: "flex", gap: "2rem", alignItems: "center", justifyContent: "center"  }}>
-              <Form.Check
-                // disabled
-                type={'radio'}
-                label={'Si'}
-              // id={`disabled-default-${type}`}
-              />
-              <Form.Check
-                // disabled
-                type={'radio'}
-                label={'No'}
-              // id={`disabled-default-${type}`}
-              />
-            </div>
-            <Form.Control as="textarea" placeholder="Detalle" style={{ height: '10rem' }} />
-            <br />
-            <Form.Label className='h3'>¿Existe reincidencia del conflicto con que se acordó en el caso de conciliación?</Form.Label>
-            <div className="mb-3" style={{ display: "flex", gap: "2rem", alignItems: "center", justifyContent: "center"  }}>
-              <Form.Check
-                // disabled
-                type={'radio'}
-                label={'Si'}
-              // id={`disabled-default-${type}`}
-              />
-              <Form.Check
-                // disabled
-                type={'radio'}
-                label={'No'}
-              // id={`disabled-default-${type}`}
-              />
-            </div>
-            <Form.Control as="textarea" placeholder="Detalle" style={{ height: '10rem' }} />
-            <br />
+            {data?.respuestas?.map(dato => {
+              return (
+                <div key={`pregunta${dato.id}`}>
+                  <Form.Label className='h3'>{dato.nombre}</Form.Label>
+                  <div className="mb-3" style={{ display: "flex", gap: "2rem", alignItems: "center", justifyContent: "center" }}>
+                    <Form.Check
+                      // disabled
+                      type={'radio'}
+                      label={'Si'}
+                      name={`pregunta${dato.id}`}
+                      defaultChecked={dato['si_o_no']}
+                      disabled
+                    />
+                    <Form.Check
+                      // disabled
+                      type={'radio'}
+                      label={'No'}
+                      name={`pregunta${dato.id}`}
+                      defaultChecked={!dato['si_o_no']}
+                      disabled
+                    />
+                  </div>
+                  <Form.Control as="textarea" defaultValue={dato.porque} placeholder="Detalle" style={{ height: '10rem' }} />
+                  <br />
+                </div>
+              )
+            })}
+            
             <Form.Label className='h3'>Recomendación al usuario</Form.Label>
-            <Form.Control as="textarea" placeholder="Detalle" style={{ height: '10rem' }} />
+            <Form.Control as="textarea" placeholder="Detalle" style={{ height: '10rem' }} defaultValue={data["recomendacion_al_usuario"] ? data["recomendacion_al_usuario"] : ""} disabled />
             <br />
             <Form.Label className='h3'>¿Se cumplió o se esta cumpliendo el acuerdo de conciliación?</Form.Label>
             <div className="mb-3" style={{ display: "flex", gap: "2rem", alignItems: "center", justifyContent: "center" }}>
               <Form.Check
-                // disabled
+                disabled
                 type={'radio'}
                 label={'Si'}
+                name="se_cumplio_acuerdo"
+                defaultChecked={data['se_cumplio_acuerdo']}
               // id={`disabled-default-${type}`}
               />
               <Form.Check
-                // disabled
+                disabled
                 type={'radio'}
                 label={'No'}
+                name="se_cumplio_acuerdo"
+                defaultChecked={!data['se_cumplio_acuerdo']}
               // id={`disabled-default-${type}`}
               />
-              <button className="modulo-solicitud-content-main-column2-save-button">
+              {/* <button className="modulo-solicitud-content-main-column2-save-button">
                 <img src='/icons/save.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
                 <p>GUARDAR</p>
-              </button>
+              </button> */}
             </div>
           </Form>
         </div>
