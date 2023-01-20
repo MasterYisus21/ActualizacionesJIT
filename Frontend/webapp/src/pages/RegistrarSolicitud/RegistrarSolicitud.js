@@ -128,7 +128,6 @@ function RegistrarSolicitud() {
           correo: event.target.correoApoderado?.value,
           tarjeta_profesional: event.target.celularApoderado?.value,
           tipo_documento_id: event.target.tipoDocumentoApoderado?.value,
-
         },
       ];
     }
@@ -159,7 +158,6 @@ function RegistrarSolicitud() {
         // console.log(myFiles)
         // myFiles.splice(0);
         // alert("Tus archivos han sido envíados correctamente")
-
       })
       .catch((err) => {
         console.log("error");
@@ -819,8 +817,10 @@ function RegistrarSolicitud() {
                   name={"departamento"}
                   identifier={"id"}
                   initialValue={""}
-                  onChange={(val) => { setDepartamento(val); setCiudad("") }}
-
+                  onChange={(val) => {
+                    setDepartamento(val);
+                    setCiudad("");
+                  }}
                 />
               </div>
               <div>
@@ -864,7 +864,13 @@ function RegistrarSolicitud() {
 
         <Collapse in={seccion4}>
           <div className="form-datos">
-            <label className="descripcion-documentos">IMPORTANTE: En esta sección debes subir los siguientes documentos; documento de identidad, fotocopia de recibo público y documentos adicionales que consideres pertinentes para el caso. Recuerda que los formatos solicitados son PDF, JPEJ, JPG y PNG con tamaño total máximo de 10Mbytes.</label>
+            <label className="descripcion-documentos">
+              IMPORTANTE: En esta sección debes subir los siguientes documentos;
+              documento de identidad, fotocopia de recibo público y documentos
+              adicionales que consideres pertinentes para el caso. Recuerda que
+              los formatos solicitados son PDF, JPEJ, JPG y PNG con tamaño total
+              máximo de 10Mbytes.
+            </label>
             <label className="subtitles-secciones">Identificación</label>
             <Form.Control
               className="inputs-registrar-solicitud"

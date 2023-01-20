@@ -1,5 +1,5 @@
 const  email ={}
-email.enviar= (tipo_mensaje, saludo,correoQuienRecibe, asunto, encabezado,cuerpo) => {
+email.enviar= (tipo_mensaje, saludo,correoQuienRecibe, asunto, encabezado,cuerpo,adjunto=false) => {
 
     const correoCopia="jairourrego123@gmail.com"
     correoQuienRecibe.push(correoCopia)
@@ -8,6 +8,7 @@ email.enviar= (tipo_mensaje, saludo,correoQuienRecibe, asunto, encabezado,cuerpo
       tipo_mensaje: tipo_mensaje,
       destinatario: correoQuienRecibe,
       asunto: asunto,
+     
       mensaje: {
         saludo: saludo,
         encabezado: encabezado,
@@ -16,6 +17,7 @@ email.enviar= (tipo_mensaje, saludo,correoQuienRecibe, asunto, encabezado,cuerpo
         
       }
     }
+    if(adjunto){ email.adjunto=adjunto}
     return email
   } 
 

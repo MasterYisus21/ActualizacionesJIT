@@ -605,7 +605,7 @@ const informacionCitacion = async (req) => {
 
 
   ]
-  console.log()
+  
   // console.log(endpoints)
 
   await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
@@ -1020,23 +1020,172 @@ views.CitarPersonas = async (req, res) => {
 }
 views.EnviarNotificacionCitacion = async (req, res) => {
   try {
-    await unirest
+  
+    // validacion correo 
+    for  await (const iterator of req.body) {
+      req.params.id_relacion=iterator
+      await informacionCitacion(req).then(async (resul) => {
+        // console.log(resul.data.results[0])
+        
+        resul.nombre_documento = "CITACION AUDIENCIA DE CONCILIACION"
+        if(!resul.citado_localidad){resul.citado_localidad="______"}
+        if(!resul.citado_ciudad){resul.citado_ciudad="______"}
+        if(!resul.estudiante1_nombres){resul.estudiante1_nombres=""}
+        if(!resul.estudiante2_nombres){resul.estudiante2_nombres=""}
+        await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
+          .then(async (result) => {
+              
+             fs.writeFile("./public/formatos/citacion_"+resul.citado_nombres+".docx", result.data, async (err) => {
+              if (err){throw new Error(err)}
+              
+              // resul.citado_nombres=resul.citado_nombres.replace("","_")
+              console.log(resul.citado_nombres)
+               let file = fs.readFileSync("./public/formatos/citacion_"+resul.citado_nombres+".docx")
+               let formdata=new FormData()
+               formdata.append("document",file)
+               
+               await axios.post(config.urlConvertidorPDF,formdata,{responseType: "arraybuffer"})
+                .then(async result=>{
+
+                  fs.writeFile("./public/formatos/citacion_"+resul.citado_nombres+".pdf", result.data, async (err) => {
+                    if (err){throw new Error(err)}
+
+                  let fil = fs.readFileSync("./public/formatos/citacion_"+resul.citado_nombres+".pdf")
+                  let formdat=new FormData()
+                  formdat.append("adjunto",fil)
+                  await unirest
                 .post(config.urlEmail + "adjuntar")
 
-                .field('estado', "null")
-                .field('expediente', "result.data.numero_caso")
-                .field('nombre', "iterator.originalname")
+               
                 //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-                // .attach('adjuntar', fs.createReadStream("/public/formatos/node.pdf")) // creates a read stream
+                 .attach('adjunto', fs.createReadStream("./public/formatos/citacion_"+resul.citado_nombres+".pdf")) // creates a read stream
                 //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-                .then(function (response) {
+                .then(async function (response) {
                   console.log(response.body)
+                  // res.send(response.body)
+                  const saludo = `<br>Reciba un cordial saludo `
+                  const encabezado = `Este mensaje notifica que se te ha asignado un  nuevo caso de conciliación con la siguiente información:`
+                  const cuerpo = `
+                  <br><b>Expediente:</b> ${result.data.numero_caso}
+                  <br><b>Fecha de Registro:</b> ${result.data.fecha_registro}
+                  <br><b>Estado del Expediente:</b> ${result.data.estado_expediente} 
+                  <br><b>Conciliador:</b> ${result.data.nombres} 
+                  <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br><br>`
+                 
+                  let asunto = `Asignación Caso de Concilaición `
+                  console.log(resul.citado_correo="jairo.urrego@ugc.edu.co")
+                  const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo,response.body)).catch(err => { res.status(error(err)) })
+      
+                  // await axios.post(config.urlEmail)
+                  //   .then(result=>{
+                  //     res.send(result.data)
+                  // })
+                  //   .catch(err => {
+                  //     res.sendStatus(error(err))
+                  //   })
+                  
                   // try {
                   //   fs.unlinkSync(iterator.path)
                   // } catch (err) {
                   //   error(err)
                   // }
                 })
+                  // await axios.post(config.urlEmail+"adjuntar",formdat)
+                  //   .then(result=>{
+                  //     res.send(result)
+                  // })
+                  //   .catch(err => {
+                  //     res.status(error(err))
+                  //   })
+
+                  res.end(result.data)
+               })
+              })
+                .catch(err => {
+                  res.sendStatus(error(err))
+                })
+                  
+      
+      
+            // res.end(result.data)
+          })
+        })
+          .catch(err => {
+            throw new Error(err)
+          })
+      })
+        .catch(err => {
+          res.sendStatus(error(err))
+          return
+        })
+
+
+    }
+   
+  
+
+      // axios({
+      //   method: 'post',
+      //   url: config.urlConvertidorPDF,
+
+      //   // url: `/documentos/2022-452`,
+      //   responseType: "arraybuffer",
+      //   data: formdata
+      // })
+      //   .then(response => {
+ 
+          
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+    
+     
+
+    
+  
+    // await unirest
+    //             .post(config.urlEmail + "adjuntar")
+
+               
+    //             //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+    //              .attach('adjunto', fs.createReadStream("public/formatos/node.pdf")) // creates a read stream
+    //             //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+    //             .then(async function (response) {
+    //               const saludo = `<br>Reciba un cordial saludo `
+    //               const encabezado = `Este mensaje notifica que se te ha asignado un  nuevo caso de conciliación con la siguiente información:`
+    //               const cuerpo = `
+    //               <br><b>Expediente:</b> ${result.data.numero_caso}
+    //               <br><b>Fecha de Registro:</b> ${result.data.fecha_registro}
+    //               <br><b>Estado del Expediente:</b> ${result.data.estado_expediente} 
+    //               <br><b>Conciliador:</b> ${result.data.nombres} 
+    //               <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br><br>`
+    //               let asunto = `Asignación Caso de Concilaición `
+    //               const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [result.data.correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
+      
+    //               await axios.post(config.urlEmail)
+    //                 .then(result=>{
+                      
+    //               })
+    //                 .catch(err => {
+    //                   res.sendStatus(error(err))
+    //                 })
+    //               res.send(response.body)
+    //               // try {
+    //               //   fs.unlinkSync(iterator.path)
+    //               // } catch (err) {
+    //               //   error(err)
+    //               // }
+    //             })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.EnviarResultado = async (req, res) => {
+  try {
+    res.sendStatus(200)
   }catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -1068,7 +1217,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
             .field('expediente', result.data.numero_caso)
             .field('nombre', iterator.originalname)
 
-
+            
 
             //.attach('Ruta_directorio', req.file.path) // reads directly from local file
             .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream

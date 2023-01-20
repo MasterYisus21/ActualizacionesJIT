@@ -9,7 +9,7 @@ const requests = require("../requests/requests_generales.js");
 const { query } = require("express");
 
 const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
-
+  
   const correoCopia="jairourrego123@gmail.com"
   correoQuienRecibe.push(correoCopia)
   let email = {
@@ -25,6 +25,7 @@ const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
       
     }
   }
+  console.log(email)
   return email
 }
 //listar Seleccionables Principales
@@ -341,17 +342,19 @@ views.AprobarSolicitud = async (req, res) => {
     
     
     axios.patch(config.urlApiSolicitudes + "solicitudes/" + req.params.id + "/", req.body)
-      .then(async result => {
+      .then(async resul => {
         
-        let correoConvocante
+        let correoConvocante =[]
         // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
-        if (req.body.estado_solicitud_id == 2) {
-
+        
           await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id)
             .then(async result => {
+              correoConvocante.push(result.data.convocante.correo)
+              if (req.body.estado_solicitud_id == 2) {
+
               result.data.conciliador = req.body.conciliador_id
               result.data.hechos[0].cuantia = req.body.valor_caso
-              correoConvocante=result.data.convocante.correo
+              
               
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
                 .then(resul => {
@@ -366,19 +369,25 @@ views.AprobarSolicitud = async (req, res) => {
                   
                   // res.status(200).json(result.data)
                 })
+
                 .catch(err => {
                   
                   error(err)
                   return
                 })
+              }
+              else{cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
+              res.status(200).json(resul.data)
+            }
+            const correo =  axios.post(config.urlEmail,email("html",correoConvocante,asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
+         
             })
             .catch(err => {
               error(err)
               return
             })
-        }
-        cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
-        
+      
+      
       })
       .catch(err => {
         res.sendStatus(error(err))
