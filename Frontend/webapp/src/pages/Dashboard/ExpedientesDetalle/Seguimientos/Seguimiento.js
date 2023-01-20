@@ -80,7 +80,7 @@ export default function Seguimiento({ index, seguimiento }) {
                       disabled
                     />
                   </div>
-                  <Form.Control as="textarea" defaultValue={dato.porque} placeholder="Detalle" style={{ height: '10rem' }} />
+                  <Form.Control as="textarea" defaultValue={dato.porque} placeholder="Detalle" style={{ height: '10rem' }} disabled />
                   <br />
                 </div>
               )
