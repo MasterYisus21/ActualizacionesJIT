@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Dashboard() {
 
-  const [pagina, setPagina] = useState("Dashboard")
+  const [pagina, setPagina] = useState("Expedientes")
   const [nombre, setNombre] = useState("Andres Felipe Villamizar Palacio")
 
 

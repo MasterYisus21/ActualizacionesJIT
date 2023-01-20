@@ -81,7 +81,8 @@ function Seguimientos() {
       data.respuestas.push({
         "pregunta_seguimiento_id": pregunta.id,
         "si_o_no": e.target[`pregunta${pregunta.id}`].value == 'true',
-        "porque": e.target[`pregunta${pregunta.id}detalle`].value
+        "porque": e.target[`pregunta${pregunta.id}detalle`].value,
+        "nombre": pregunta.nombre
       })
     })
     // console.log(data);
