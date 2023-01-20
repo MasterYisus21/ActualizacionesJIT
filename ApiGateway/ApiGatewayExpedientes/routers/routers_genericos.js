@@ -54,7 +54,7 @@ router.post("/expedientes/:id/convocados/:identificacion", views_genericos.Agreg
 router.post("/expedientes/:id/conciliadores/:id2", views_genericos.AgregarConciliadores)
 router.post("/expedientes/:id/estudiantes/:id2", views_genericos.AgregarEstudiantes)
 router.post("/expedientes/:id/citaciones", views_genericos.CrearCitaciones);
-router.post("/expedientes/:id/citaciones/notificar", views_genericos.EnviarNotificacionCitacion);
+router.post("/expedientes/:id/citaciones/:id_citacion/notificar", views_genericos.EnviarNotificacionCitacion);
 router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
 router.post("/expedientes/:id/resultados", views_genericos.CrearResultado)
 router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPersonaDeCitacion);

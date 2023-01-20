@@ -366,6 +366,7 @@ views.AprobarSolicitud = async (req, res) => {
                   
                   // res.status(200).json(result.data)
                 })
+
                 .catch(err => {
                   
                   error(err)
@@ -377,7 +378,8 @@ views.AprobarSolicitud = async (req, res) => {
               return
             })
         }
-        cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
+        else{cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
+        res.status(200).json(result.data)}
         
       })
       .catch(err => {
