@@ -7,189 +7,45 @@ import Form from 'react-bootstrap/Form';
 
 function EvaluacionServicio() {
   return (
-    
-    <div className='principal'>
+
+    <div>
       <div className='titulo-caras'>
         <label className='titulo-encuesta'>Selecciona de 1 a 5 tu calificación, siendo 1 el más bajo y 5 el más alto</label>
-        <div className='contenedor-caras'>
-          <img className="imagen-caras-encuesta" src={"/images/caras-png.png"} alt="" />
-        </div>
       </div>
-      <div className='contenedor-encuesta-calificacion'>
-        <div className='contenedor-preguntas'>
-          <label className='preguntas'>Servicio recibido por parte del conciliador</label>
-          <label className='preguntas'>Puntualidad del conciliador</label>
-          <label className='preguntas'>Dominio del tema del conciliador</label>
-          <label className='preguntas'>Lenguaje utilizado del conciliador</label>
-          <label className='preguntas'>Manejo de la audiencia del conciliador</label>
-          <label className='preguntas'>Imparcialidad del conciliador</label>
-          <label className='preguntas'>Servicio prestado por el centro</label>
-          <label className='preguntas'>Satisfacción por la información que brinda el centro</label>
-          <label className='preguntas'>Satisfacción por el tiempo de atención del centro</label>
-        </div>
-        <div className='contenedor-calificacion'>
-        <ButtonToolbar className='grupo-botones' aria-label="Toolbar with button groups">
-          <ButtonGroup className="me-2" >
-            <Button className='cal-1'>1</Button> 
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-          <Button className='cal-2'>2</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-3'>3</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-4'>4</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button className='cal-5'>5</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-
-        <ButtonToolbar aria-label="Toolbar with button groups">
-          <ButtonGroup className="me-2" >
-            <Button className='cal-1'>1</Button> 
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-          <Button className='cal-2'>2</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-3'>3</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-4'>4</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button className='cal-5'>5</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-
-        <ButtonToolbar aria-label="Toolbar with button groups">
-          <ButtonGroup className="me-2" >
-            <Button className='cal-1'>1</Button> 
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-          <Button className='cal-2'>2</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-3'>3</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-4'>4</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button className='cal-5'>5</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-
-        <ButtonToolbar aria-label="Toolbar with button groups">
-          <ButtonGroup className="me-2" >
-            <Button className='cal-1'>1</Button> 
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-          <Button className='cal-2'>2</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-3'>3</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-4'>4</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button className='cal-5'>5</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-
-        <ButtonToolbar aria-label="Toolbar with button groups">
-          <ButtonGroup className="me-2" >
-            <Button className='cal-1'>1</Button> 
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-          <Button className='cal-2'>2</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-3'>3</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-4'>4</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button className='cal-5'>5</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-
-        <ButtonToolbar aria-label="Toolbar with button groups">
-          <ButtonGroup className="me-2" >
-            <Button className='cal-1'>1</Button> 
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-          <Button className='cal-2'>2</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-3'>3</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-4'>4</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button className='cal-5'>5</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-
-        <ButtonToolbar aria-label="Toolbar with button groups">
-          <ButtonGroup className="me-2" >
-            <Button className='cal-1'>1</Button> 
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-          <Button className='cal-2'>2</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-3'>3</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-4'>4</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button className='cal-5'>5</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-
-        <ButtonToolbar aria-label="Toolbar with button groups">
-          <ButtonGroup className="me-2" >
-            <Button className='cal-1'>1</Button> 
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-          <Button className='cal-2'>2</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-3'>3</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-4'>4</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button className='cal-5'>5</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-
-        <ButtonToolbar aria-label="Toolbar with button groups">
-          <ButtonGroup className="me-2" >
-            <Button className='cal-1'>1</Button> 
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-          <Button className='cal-2'>2</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-3'>3</Button>
-          </ButtonGroup>
-          <ButtonGroup className="me-2" >
-            <Button className='cal-4'>4</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button className='cal-5'>5</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-        </div>
+      <br />
+      <div className='contenedor-tabla-encuesta'>
+        <table className='tabla-encuesta'>
+          <tr className=''>
+            <th></th>
+            <th>
+              <img className="imagen-caras-encuesta" src={"/images/caras-png.png"} alt="" />
+            </th>
+          </tr>
+          <tr className=''>
+            <td className='encuesta-contenedor-pregunta'>
+              Servicio recibido por parssssssssssssssssssssssssssssssssssssssssssssssssssste del conciliador
+            </td>
+            <td className='text-center td-encuesta-checkbox-container'> 
+              <ButtonToolbar className='encuesta-checkbox-container' aria-label="Toolbar with button groups">
+                <ButtonGroup className="me-2" >
+                  <Button className='cal-1'>1</Button>
+                </ButtonGroup>
+                <ButtonGroup className="me-2" >
+                  <Button className='cal-2'>2</Button>
+                </ButtonGroup>
+                <ButtonGroup className="me-2" >
+                  <Button className='cal-3'>3</Button>
+                </ButtonGroup>
+                <ButtonGroup className="me-2" >
+                  <Button className='cal-4'>4</Button>
+                </ButtonGroup>
+                <ButtonGroup>
+                  <Button className='cal-5'>5</Button>
+                </ButtonGroup>
+              </ButtonToolbar>
+            </td>
+          </tr>
+        </table>
       </div>
       <div className='pregunta-medio-conocimiento'>
         <label className='label-medio'>Medio por el cual conoció el servicio</label>
@@ -204,7 +60,7 @@ function EvaluacionServicio() {
         <button className='boton-enviar-encuesta'>Enviar</button>
       </div>
     </div>
-    )
+  )
 }
 
 export default EvaluacionServicio
