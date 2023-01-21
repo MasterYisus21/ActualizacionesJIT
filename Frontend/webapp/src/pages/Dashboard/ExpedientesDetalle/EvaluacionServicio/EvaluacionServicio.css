@@ -92,10 +92,11 @@
     margin-left: 0.5vw;
 }
 
-.cal-1:focus {
+.cal-1:hover {
     background-color: #C4C4C4;
     color: red;
 }
+
 
 .cal-2 {
     background-color: white;
@@ -155,6 +156,10 @@
 .cal-5:hover {
     background-color: #C4C4C4;
     color: rgb(4, 200, 4);
+}
+
+.cal-n-selected {
+    background-color: #C4C4C4;
 }
 
 .pregunta-medio-conocimiento {
