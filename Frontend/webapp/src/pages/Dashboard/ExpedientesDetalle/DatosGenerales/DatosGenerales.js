@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 
 //importing axios instance
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances'
@@ -24,7 +24,7 @@ function DatosGenerales() {
   let temasRef = useRef([])
   let subtemasRef = useRef([])
 
-
+  const outletContext = useOutletContext();
 
   //Fetch solicitanteServicioOptions
   useEffect(() => {
