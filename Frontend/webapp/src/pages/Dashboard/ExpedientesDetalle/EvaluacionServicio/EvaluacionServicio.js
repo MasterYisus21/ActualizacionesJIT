@@ -17,11 +17,25 @@ function EvaluacionServicio() {
     "medio_conocimiento_id": null,
     "respuestas": []
   })
+  const [mediosConocimiento, setMediosConocimiento] = useState([])
 
   let { id } = useParams();
 
 
   useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/medios_conocimiento/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data.results);
+        setMediosConocimiento(result.data.results)
+      })
+      .catch(err => {
+        console.log(err);
+      });
     axiosTokenInstanceApiExpedientes({
       method: 'get',
       url: `expedientes/${id}/encuestas`,
@@ -33,6 +47,7 @@ function EvaluacionServicio() {
         if (result.status == 204) {
           getRespuestas()
         } else {
+          setPreviousData(true)
           setRespuestasData(result.data)
           let tempPreguntas = []
           result.data["respuestas"].map(valor => {
@@ -46,7 +61,6 @@ function EvaluacionServicio() {
           document.getElementById("medio-conocimiento").setAttribute('disabled', true)
           document.getElementById("observacion").value = result.data.observacion
           document.getElementById("observacion").setAttribute('disabled', true)
-          setPreviousData(true)
         }
       })
       .catch(err => {
@@ -84,6 +98,7 @@ function EvaluacionServicio() {
       .catch(err => {
         console.log(err);
       });
+
   }
 
   const setValorRespuesta = (index, valor) => {
@@ -136,7 +151,7 @@ function EvaluacionServicio() {
     })
       .then(result => {
         console.log(result.data);
-        let tempRespuestasData = {...respuestasData}
+        let tempRespuestasData = { ...respuestasData }
         tempRespuestasData.fecha = result.data.fecha
         setRespuestasData(tempRespuestasData)
         toast.success('Encuesta creada con exito.', {
@@ -204,10 +219,12 @@ function EvaluacionServicio() {
       <div className='pregunta-medio-conocimiento'>
         <label className='label-medio'>Medio por el cual conoció el servicio</label>
         <Form.Select className='seleccionable-medio' aria-label="Default select example" id='medio-conocimiento' onChange={e => { setMedioConocimiento(e.target.value) }} disabled={previousData}>
-          <option></option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <option value=''>Selecciona una opción</option>
+          {mediosConocimiento.map((dato) => {
+            return (
+              <option key={`medioConocimiento${dato.id}`} value={dato.id}>{dato.nombre}</option>
+            )
+          })}
         </Form.Select>
       </div>
       <div className='contenedor-tabla-encuesta'>
