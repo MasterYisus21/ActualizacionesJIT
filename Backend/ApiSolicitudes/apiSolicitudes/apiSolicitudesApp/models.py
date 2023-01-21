@@ -136,6 +136,7 @@ class Apoderado_solicitud(models.Model):
     nombres = models.CharField(max_length = 25,blank=False,null=False)
     apellidos = models.CharField(max_length= 25, blank=True, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False,primary_key=True)
+    fecha_expedicion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     lugar_expedicion = models.CharField(max_length=20, blank=True, null=False)
     telefono = models.CharField(max_length=10, blank=True, null=True)
     celular = models.CharField(max_length=15, blank=True, null=False)
@@ -167,7 +168,8 @@ class Persona_solicitud(EstadoModel):
     direccion = models.CharField(max_length= 40, blank=False, null=True)
     celular = models.CharField(max_length=15, blank=False, null=False)
     correo = models.EmailField(max_length=120,blank=False,null=False)  
-    ciudad_nacimiento_id= models.ForeignKey(Ciudad, on_delete=models.SET_NULL, blank=False, null=True)
+    lugar_nacimiento=  models.CharField(max_length = 50,blank=True,null=True)
+    
     tipo_persona_id = models.ForeignKey(Tipo_persona, on_delete=models.SET_NULL, blank=False, null=True)
     sexo_id = models.ForeignKey(Sexo, on_delete=models.SET_NULL, blank=False, null=True)
     genero_id = models.ForeignKey(Genero, on_delete=models.SET_NULL, blank=False, null=True)
@@ -187,7 +189,7 @@ class Persona_solicitud(EstadoModel):
 class Solicitud(models.Model):
     id = models.AutoField(primary_key=True) # los modelos que apliquen baseModels tendran estos dos campos
     numero_radicado= models.CharField(max_length=25,default = increment_entrada_number,editable=False,unique=True) # los modelos que apliquen baseModels tendran estos dos campos
-    fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
+    fecha_registro=models.DateField(blank=False , null=False,auto_now=False,auto_now_add=True) # Se crea automaticamente 
     comentario = models.TextField(blank=True,null=True)
     
     estado_solicitud_id= models.ForeignKey(Estado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)

@@ -1,4 +1,3 @@
-
 .contenedor-principal-modulo-audiencia {
     width: 100%;
     height: 100%;
@@ -9,7 +8,7 @@
     align-items: center;
 }
 
-.titulo-informacion-audiencia{
+.titulo-informacion-audiencia {
     width: 100%;
     height: 5rem;
     display: flex;
@@ -18,13 +17,14 @@
 
 }
 
-.contenedor-icono-descarga{
-    margin-left: 14vw;
+.contenedor-icono-descarga {
+    /* margin-left: 14vw; */
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
-.titulo-audiencia{
+.titulo-audiencia {
     font-size: 1.6vw;
     margin-left: 27vw;
     display: flex;
@@ -32,23 +32,36 @@
     font-weight: 500;
 }
 
-.icono-descarga-documento{
-    width: 4vw;
+.icono-descarga-documento {
+    width: 2vw;
 }
 
-.contenedor-boton-audiencia{
+.contenedor-boton-audiencia {
     display: flex;
     justify-content: start;
     margin-left: 6vw;
     margin-top: 5rem;
 }
-.boton-audiencia{
+
+.boton-audiencia {
 
     background-color: rgb(56, 165, 42);
     border-color: rgb(56, 165, 42);
 }
 
-.boton-audiencia:hover{
+.button-audiencia {
+    background: none;
+    border: none;
+    max-width: fit-content;
+    max-height: fit-content;
+    /* align-self: flex-end; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.boton-audiencia:hover {
     background-color: #00460F;
 }
 
@@ -57,7 +70,7 @@
     text-align: center;
 }
 
-.contenedor-subtitulo{
+.contenedor-subtitulo {
     width: 100%;
     height: 5rem;
     display: flex;
@@ -65,18 +78,18 @@
     justify-content: center;
 }
 
-.subtitulo-audiencia{
+.subtitulo-audiencia {
     font-size: 1.3vw;
 }
 
-.fecha-y-hora{
+.fecha-y-hora {
     width: 100%;
     height: 15rem;
     display: flex;
     flex-direction: row;
 }
 
-.izquierda-fecha-descripcion{
+.izquierda-fecha-descripcion {
     width: 50%;
     height: 100%;
     display: flex;
@@ -84,7 +97,7 @@
     justify-content: center;
 }
 
-.derecha-hora-tipo{
+.derecha-hora-tipo {
     width: 50%;
     height: 100%;
     display: flex;
@@ -92,11 +105,11 @@
     justify-content: center;
 }
 
-.titulo-descripcion{
+.titulo-descripcion {
     margin-top: 2rem;
 }
 
-.input-fecha-sesion{
+.input-fecha-sesion {
     height: 2.3rem;
     width: 80%;
     border-radius: 0.4rem;
@@ -104,44 +117,50 @@
     border-color: rgb(199, 199, 199);
 }
 
-.campo-descripcion{
+.campo-descripcion {
     width: 80%;
     border-radius: 0.4rem;
     border: 0.2px solid;
     border-color: rgb(199, 199, 199);
 }
 
-.disabled-link{
+.disabled-link {
     width: 80%;
 }
 
-.contenedor-campos-de-llenado-derecha{
+.contenedor-campos-de-llenado-derecha {
     display: flex;
     justify-content: center;
 }
 
-.input-seleccionable-hora{
+.input-seleccionable-hora {
     width: 80%;
 }
 
-.icono-guardar{
+.icono-guardar {
     width: 4vw;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.contenedor-imagen-guardar{
+.contenedor-imagen-guardar {
     width: 100%;
-    height: 12rem;
+    /* height: 12rem; */
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 3rem;
-
+    background: none;
+    border: none;
 }
 
-.contenedor-tabla-audiencia{
+.contenedor-imagen-guardar-button {
+    background: none;
+    border: none;
+}
+
+.contenedor-tabla-audiencia {
     width: 80%;
     display: flex;
     justify-content: center;
@@ -149,11 +168,11 @@
     margin-left: 6vw;
 }
 
-.nombre-guardar{
+.nombre-guardar {
     font-size: 1.2vw;
 }
 
-.contenedor-boton-notificar-via-correo{
+.contenedor-boton-notificar-via-correo {
     width: 100%;
     height: 20%;
     display: flex;
@@ -161,7 +180,7 @@
     align-items: center;
 }
 
-.boton-notificar{
+.boton-notificar {
     width: 15vw;
     height: 3rem;
     border-radius: 3rem;
@@ -171,6 +190,6 @@
     cursor: pointer;
 }
 
-.mini-image{
+.mini-image {
     width: 1.5rem;
 }

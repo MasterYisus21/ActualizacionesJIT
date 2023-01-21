@@ -5,6 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from apiExpedientesApp.general.general_views import  *
 from django.contrib.auth.models import User, Group
 from django_filters import FilterSet, AllValuesFilter
+
 from django_filters import DateTimeFilter, NumberFilter
 # from apiInventarioApp.pagination import StandardResultsSetPagination
 
@@ -12,12 +13,11 @@ from django_filters import DateTimeFilter, NumberFilter
 # Create your views here.
 class PaisViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PaisSerializer
-
-
+    
 class DepartamentoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = DepartamentoSerializer
-
+    search_fields = ['id','nombre']
 class CiudadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = CiudadSerializer
@@ -155,7 +155,7 @@ class Estado_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metod
 
     serializer_class = Estado_expedienteSerializer
 
-class HistoricoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+class HistoricoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = HistoricoSerializer
 
@@ -240,19 +240,46 @@ class Tipo_reporteViewSet(GeneralViewSet):  # Una sola clase para los metodos de
 
 
     
-class UsuariosViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
-   queryset = User.objects.all()
-   serializer_class=ListaUsuarioSerializer
-   
-   filter_backends = [DjangoFilterBackend]
-   filterset_fields = '__all__'
-#    permission_classes = [DjangoModelPermissions]
-   
-   def perform_create(self, serializer):
-        usuario=serializer.save()
-        usuario.set_password(usuario.password)
-        usuario.save()
+class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+    
+    serializer_class=ListaUsuarioSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = '__all__'
+    def perform_create(self, serializer):
         
+        usuario=serializer.save()
+        is_many = isinstance(usuario,list)
+        if not is_many:
+            usuario.set_password(usuario.password)
+            usuario.save()
+            return 
+           
+        for usuario in usuario:
+            usuario.set_password(usuario.password)
+            usuario.save()
+    def get_queryset(self,pk=None):
+        model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
+        if pk is None:
+            return model.filter(is_active=True)
+    
+        return model.filter(is_active=True, id=pk).first() # retorna todos los valores con estado = true
+    def destroy(self,request,pk=None):
+                
+            queryset = self.get_queryset().filter(id=pk).first()
+            if  queryset:
+                queryset.is_active= False
+                queryset.save()
+                return Response (queryset.id)
+            return Response(status = status.HTTP_404_NOT_FOUND)
+   
+    
+    #    permission_classes = [DjangoModelPermissions]
+   
+    
+    
+
+    
+    
 class GruposViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
    queryset = Group.objects.all()
    serializer_class= ListaGrupoSerializer  

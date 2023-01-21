@@ -3,13 +3,15 @@
     display: flex;
     flex-direction: column;
     padding-top: 4em;
-    gap: 3em;
     align-items: center;
+    gap: 3em;
 }
 
 .contenedor-botones-detalle-solicitud{
+    border-top: #a1a6a2 dashed 3px;
     width: 100%;
     height: 40rem;
+    padding-top: 3em;
 }
 
 .boton-remitir{
@@ -92,16 +94,12 @@
     width: 55vw;
     height: 30rem;
     background-color: #d8e1fc;
-    margin-top: 2rem;
     border-radius: 0.5rem;
-
 }
 
 .contenedor-rechazar{
     width: 55vw;
-    height: 30rem;
     background-color: #ffdbdb;
-    margin-top: 2rem;
     border-radius: 0.5rem;
 }
 
@@ -115,10 +113,7 @@
 
 .contenedor-aceptar{
     width: 55vw;
-    height: 30rem;
     background-color: #bfd4c6;
-
-    margin-top: 2rem;
     border-radius: 0.5rem;
 }
 
@@ -162,7 +157,6 @@
     color: white;
     border-radius: 0.5rem;
     font-size: 1.6rem;
-    margin-right: 4vw;
 }
 
 .boton-remitir-solicitud{
@@ -172,13 +166,11 @@
     color: white;
     border-radius: 0.5rem;
     font-size: 1.6rem;
-    margin-right: 4vw;
 }
 
 .contenedor-boton-remitir{
-    width: 100%;
-    height: 20%;
-
+    width: 95%;
+    padding: 1.5em 0em;
     display: flex;
     align-items: center;
     justify-content: end;
@@ -201,9 +193,8 @@
     color: white;
     border-radius: 0.5rem;
     font-size: 1.6rem;
-    margin-top: 2rem;
-    margin-right: 4vw;
     border: 0;
+
 }
 
 .boton-devolver-solicitud{
@@ -300,6 +291,33 @@
 }
 .icon-close:hover {
     color:#00913D;
+}
+
+.fix-position-btn-save{
+    width: 100%;
+    display: flex;  
+    justify-content: center;
+}
+
+.btn-save-changes{
+    width: 50%;
+    color:#00460F;
+    background-color: #ffffff;
+    border-radius: 7px;
+    border: #00460F solid 3px;
+    padding: .6em 3em;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.btn-save-changes:hover{
+    background-color: #00460F;
+    color: white;
+}
+
+.doc-download{
+    color: #00913D;
+    cursor: pointer;
 }
 
 @media (max-width: 700px) {

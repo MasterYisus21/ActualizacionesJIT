@@ -113,8 +113,7 @@ class PersonaSerializer(serializers.ModelSerializer):
     ciudad = serializers.CharField(source='barrio_id.localidad_id.ciudad_id', read_only=True)
     departamento = serializers.CharField(source='barrio_id.localidad_id.ciudad_id.departamento_id', read_only=True)
     pais = serializers.CharField(source='barrio_id.localidad_id.ciudad_id.departamento_id.pais_id', read_only=True)
-    ciudad_nacimiento =serializers.CharField(source='ciudad_nacimiento_id', read_only=True)
-    departamento_nacimiento = serializers.CharField(source='ciudad_nacimiento_id.departamento_id', read_only=True)
+   
     estado_civil = serializers.CharField(source='estado_civil_id', read_only=True)
     estrato_socioeconomico = serializers.CharField(source='estrato_socioeconomico_id', read_only=True)
     grupo_etnico = serializers.CharField(source='grupo_etnico_id', read_only=True)
@@ -192,9 +191,17 @@ class Relacion_persona_expedienteSerializer(serializers.ModelSerializer):
     estado_expediente = serializers.CharField(source='expediente_id.estado_expediente_id', read_only=True)
     fecha_registro = serializers.CharField(source='expediente_id.fecha_registro', read_only=True)
     numero_caso= serializers.CharField(source='expediente_id', read_only=True)
-    nombres_persona = serializers.CharField(source='persona_id', read_only=True)
-    identificacion_persona= serializers.CharField(source='persona_id.identificacion', read_only=True)
-    tipo_documento_persona= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    nombres = serializers.CharField(source='persona_id', read_only=True)
+    identificacion= serializers.CharField(source='persona_id.identificacion', read_only=True)
+    tipo_documento= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    lugar_expedicion= serializers.CharField(source='persona_id.lugar_expedicion', read_only=True)
+    barrio  =  serializers.CharField(source='persona_id.barrio_id', read_only=True)
+    localidad = serializers.CharField(source='persona_id.barrio_id.localidad_id', read_only=True)
+    ciudad = serializers.CharField(source='persona_id.barrio_id.localidad_id.ciudad_id', read_only=True)
+    direccion = serializers.CharField(source='persona_id.direccion', read_only=True)
+    correo = serializers.CharField(source='persona_id.correo', read_only=True)
+    celular = serializers.CharField(source='persona_id.celular', read_only=True)
+    tarjeta_profesional= serializers.CharField(source='persona_id.tarjeta_profesional', read_only=True)
     apoderado_id= serializers.CharField(source='persona_id.apoderado_id.id', read_only=True)
     nombre_apoderado= serializers.CharField(source='persona_id.apoderado_id', read_only=True)
     tipo_cliente= serializers.CharField(source='tipo_cliente_id', read_only=True)
@@ -210,6 +217,7 @@ class Estado_expedienteSerializer(serializers.ModelSerializer):
         model = Estado_expediente          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class HistoricoSerializer(serializers.ModelSerializer):
+    estado = serializers.CharField(source='estado_id', read_only=True)
 
     class Meta:
         model = Historico          # El modelo al que pertenece este serializador
@@ -236,7 +244,9 @@ class ResultadoSerializer(serializers.ModelSerializer):
         model = Resultado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class HechosSerializer(serializers.ModelSerializer):
-
+    ciudad= serializers.CharField(source='ciudad_id', read_only=True)
+    departamento_id= serializers.CharField(source='ciudad_id.departamento_id.id', read_only=True)
+    departamento= serializers.CharField(source='ciudad_id.departamento_id', read_only=True)
     class Meta:
         model = Hechos          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
@@ -274,15 +284,22 @@ class CitacionSerializer(serializers.ModelSerializer):
     turno= serializers.CharField(source='turno_id', read_only=True)
     numero_caso= serializers.CharField(source='expediente_id', read_only=True)
     medio= serializers.CharField(source='tipo_medio_id', read_only=True)
+    tipo_cliente=serializers.CharField(source='expediente_id.re', read_only=True)
     class Meta:
         model = Citacion          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 class Relacion_persona_citacionSerializer(serializers.ModelSerializer):
     fecha_sesion= serializers.CharField(source='citacion_id.fecha_sesion', read_only=True)
     turno_id= serializers.CharField(source='citacion_id.turno_id.id', read_only=True)
-    nombres_persona = serializers.CharField(source='persona_id', read_only=True)
-    identificacion_persona= serializers.CharField(source='persona_id.identificacion', read_only=True)
-    tipo_documento_persona= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    nombres = serializers.CharField(source='persona_id', read_only=True)
+    identificacion= serializers.CharField(source='persona_id.identificacion', read_only=True)
+    tipo_documento= serializers.CharField(source='persona_id.tipo_documento_id', read_only=True)
+    direccion = serializers.CharField(source='persona_id.direccion', read_only=True)
+    correo = serializers.CharField(source='persona_id.correo', read_only=True)
+    celular = serializers.CharField(source='persona_id.celular', read_only=True)
+    barrio  =  serializers.CharField(source='persona_id.barrio_id', read_only=True)
+    localidad = serializers.CharField(source='persona_id.barrio_id.localidad_id', read_only=True)
+    ciudad = serializers.CharField(source='persona_id.barrio_id.localidad_id.ciudad_id', read_only=True)
     class Meta:
         model = Relacion_persona_citacion          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
@@ -315,7 +332,7 @@ class Tipo_reporteSerializer(serializers.ModelSerializer):
 
 
 class ListaUsuarioSerializer(serializers.ModelSerializer):
-    
+     
     class Meta:
         model = User    # El modelo al que pertenece este serializador
         fields = ('id','username','password','is_staff','groups','is_active') # Coje todos los campos del modelo 

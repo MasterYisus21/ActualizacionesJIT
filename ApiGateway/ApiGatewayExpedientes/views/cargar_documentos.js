@@ -17,17 +17,19 @@ const multerStorage = multer.diskStorage({
 
   
   // Multer Filter
-  const multerFilter = (req, file, cb) => {
+const multerFilter = (req, file, cb) => {
+    
+
     if (file.mimetype.split("/")[1] === "jpeg"|file.mimetype.split("/")[1] ==="pdf"|file.mimetype.split("/")[1] ==="png") {
       cb(null, true);
-    
+      
     } else {
       cb(new Error("Formato no valido"), false);
     }
   };
   
   //Calling the "multer" Function
-  const upload = multer({
+const upload = multer({
     storage: multerStorage,
     fileFilter: multerFilter,
     limits: { fileSize: maxSize },
@@ -39,9 +41,17 @@ archivo.uploadMiddleware = (req,res,next)=>{
   
     // Here call the upload middleware of multer
     upload(req, res, function (err) {
+      
+      
        if (err instanceof multer.MulterError) {
          // A Multer error occurred when uploading.
-         res.sendStatus( error({message:"Error cargando documentos, verificar el tamaño del archivo"},413)); return;
+        console.log(err)
+         let tipoError={ 
+          LIMIT_FILE_SIZE:"TAMAÑO DEL ARCHIVO EXCEDIDO",
+          LIMIT_UNEXPECTED_FILE:"LÍMITE DE ARCHIVOS INESPERADO"}
+         
+          if (tipoError[err.code]) { res.sendStatus( error({message:tipoError[err.code]},413));return;}
+         res.sendStatus( error({message:"Error cargando documentos"})); return;
        
          next(err)
          } else if (err) {

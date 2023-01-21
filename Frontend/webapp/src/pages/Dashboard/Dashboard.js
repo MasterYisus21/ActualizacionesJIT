@@ -7,12 +7,17 @@ import { IconButton } from '../../components'
 // Importing css
 import './Dashboard.css'
 
+// Notification system
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// toast.configure()
+
 
 
 
 function Dashboard() {
 
-  const [pagina, setPagina] = useState("Dashboard")
+  const [pagina, setPagina] = useState("Expedientes")
   const [nombre, setNombre] = useState("Andres Felipe Villamizar Palacio")
 
 
@@ -77,7 +82,7 @@ function Dashboard() {
         <Outlet context={{ setPagina }} />
       </div>
 
-
+      <ToastContainer />
     </div>
   )
 }
