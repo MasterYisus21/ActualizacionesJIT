@@ -8,7 +8,7 @@ import "./RegistrarSolicitud.css";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Collapse from "react-bootstrap/Collapse";
-import { axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
+import { axiosBasicInstanceApiExpedientes, axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
 import { Button } from "../../components/Button";
 
 function RegistrarSolicitud() {
@@ -23,6 +23,8 @@ function RegistrarSolicitud() {
   const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([])
   const [tiposPersona, setTiposPersona] = useState([])
   const [tiposDocumento, setTiposDocumento] = useState([])
+  const [departamento, setDepartamento] = useState("")
+  const [ciudades, setCiudades] = useState("")
 
   const [conv2, setConv2] = useState(false)
 
@@ -70,6 +72,7 @@ function RegistrarSolicitud() {
     })
       .then(result => {
         console.log(result);
+        alert("Hola")
       })
       .catch(err => {
         console.log("error");
@@ -162,6 +165,23 @@ function RegistrarSolicitud() {
       });
   }, [])
 
+  useEffect(() => {
+    axiosBasicInstanceApiSolicitudes({
+      method: 'get',
+      url: "/paises/1/?count=20",
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        setDepartamento(result.data.results)
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  }, [])
+
+
 
   return (
     <div className="wrapp-main-registrar-solicitud">
@@ -189,20 +209,22 @@ function RegistrarSolicitud() {
           <div className="form-datos">
             
             <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="floatingInputGrid" label="Nombres">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
+            <div className='col-detalle-solicitud'>
+              <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
+                <Form.Control
+                  className="col-inputs"
+                  type="text"
+                  placeholder="name@example.com"
+                />
+              </FloatingLabel>
+              <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
+                <Form.Control
+                  className="col-inputs"
+                  type="text"
+                  placeholder="name@example.com"
+                />
+              </FloatingLabel>
+            </div>
 
             <label className="subtitles-secciones">
               Fecha y lugar de nacimiento
@@ -360,7 +382,7 @@ function RegistrarSolicitud() {
                     placeholder="name@example.com"
                   />
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Correo">
+              <FloatingLabel controlId="floatingInputGrid" label="Correo electrónco">
                   <Form.Control
                     className="col-inputs"
                     type="text"
@@ -405,7 +427,7 @@ function RegistrarSolicitud() {
                       placeholder="name@example.com"
                     />
                   </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
+                  <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
                     <Form.Control
                       className="col-inputs"
                       type="text"
@@ -473,7 +495,7 @@ function RegistrarSolicitud() {
                       placeholder="name@example.com"
                     />
                   </FloatingLabel>
-                  <FloatingLabel controlId="floatingInputGrid" label="correo">
+                  <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
                     <Form.Control
                       className="col-inputs"
                       type="text"
@@ -652,10 +674,11 @@ function RegistrarSolicitud() {
                   name="departamento"
                   required
                 >
-                  <option value={""}>Abre el menú para ver las opciones</option>
-                  {sexos.map(sexo => {
-                    return (<option key={"sexos" + sexo["id"]} value={sexo["id"]}>{sexo["nombre"]}</option>)
+                   <option value={""}>Abre el menú para ver las opciones</option>
+                  {departamento.map(departamento => {
+                    return (<option key={"departamento" + departamento["id"]} value={departamento["id"]}>{departamento["nombre"]}</option>)
                   })}
+                 
                 </Form.Select>
               </FloatingLabel>
               <FloatingLabel controlId="floatingSelectGrid" label="Ciudad">
@@ -665,10 +688,10 @@ function RegistrarSolicitud() {
                   name="ciudad"
                   required
                 >
-                  <option value={""}>Abre el menú para ver las opciones</option>
-                  {sexos.map(sexo => {
-                    return (<option key={"sexos" + sexo["id"]} value={sexo["id"]}>{sexo["nombre"]}</option>)
-                  })}
+                  {/* <option value={""}>Abre el menú para ver las opciones</option>
+                  {ciudades.map(ciudades => {
+                    return (<option key={"ciudades" + ciudades["id"]} value={ciudades["id"]}>{ciudades["nombre"]}</option>)
+                  })} */}
                 </Form.Select>
               </FloatingLabel>
             </div>
