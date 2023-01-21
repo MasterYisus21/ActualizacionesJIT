@@ -11,7 +11,7 @@ import "./RegistrarSolicitud.css";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Collapse from "react-bootstrap/Collapse";
-import { axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
+import { axiosBasicInstanceApiExpedientes, axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
 import { Button } from "../../components/Button";
 
 function RegistrarSolicitud() {
