@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 
 function EvaluacionServicio() {
 
+  const [previousData, setPreviousData] = useState(false)
   const [preguntas, setPreguntas] = useState([])
   const [respuestasData, setRespuestasData] = useState({
     "observacion": '',
@@ -19,7 +20,47 @@ function EvaluacionServicio() {
 
   let { id } = useParams();
 
+
   useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: `expedientes/${id}/encuestas`,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        if (result.status == 204) {
+          getRespuestas()
+        } else {
+          setRespuestasData(result.data)
+          let tempPreguntas = []
+          result.data["respuestas"].map(valor => {
+            tempPreguntas.push({
+              id: valor["pregunta_encuesta_id"],
+              nombre: "cualquier valor temporal"
+            })
+          })
+          setPreguntas(tempPreguntas)
+          document.getElementById("medio-conocimiento").value = result.data.medio_conocimiento_id
+          document.getElementById("medio-conocimiento").setAttribute('disabled', true)
+          document.getElementById("observacion").value = result.data.observacion
+          document.getElementById("observacion").setAttribute('disabled', true)
+          setPreviousData(true)
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [])
+
+  //////////////////////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    console.log(respuestasData);
+  }, [respuestasData])
+  //////////////////////////////////////////////////////////////////////////////////////////
+
+  const getRespuestas = () => {
     axiosTokenInstanceApiExpedientes({
       method: 'get',
       url: "/preguntas_encuesta/",
@@ -43,11 +84,7 @@ function EvaluacionServicio() {
       .catch(err => {
         console.log(err);
       });
-  }, [])
-
-  useEffect(() => {
-    console.log(respuestasData);
-  }, [respuestasData])
+  }
 
   const setValorRespuesta = (index, valor) => {
     console.log(index);
@@ -99,9 +136,13 @@ function EvaluacionServicio() {
     })
       .then(result => {
         console.log(result.data);
+        let tempRespuestasData = {...respuestasData}
+        tempRespuestasData.fecha = result.data.fecha
+        setRespuestasData(tempRespuestasData)
         toast.success('Encuesta creada con exito.', {
           position: toast.POSITION.BOTTOM_RIGHT
         })
+        setPreviousData(true)
       })
       .catch(err => {
         console.log(err);
@@ -111,9 +152,16 @@ function EvaluacionServicio() {
   return (
 
     <div>
-      <div className='titulo-caras'>
-        <label className='titulo-encuesta'>Selecciona de 1 a 5 tu calificación, siendo 1 el más bajo y 5 el más alto</label>
-      </div>
+      {!previousData &&
+        <div className='titulo-caras'>
+          <label className='titulo-encuesta'>Selecciona de 1 a 5 tu calificación, siendo 1 el más bajo y 5 el más alto</label>
+        </div>
+      }
+      {previousData &&
+        <div className='titulo-caras'>
+          <label className='titulo-encuesta'>{respuestasData["fecha"]}</label>
+        </div>
+      }
       <br />
       <div className='contenedor-tabla-encuesta'>
         <table className='tabla-encuesta'>
@@ -132,19 +180,19 @@ function EvaluacionServicio() {
                 <td className='text-center td-encuesta-checkbox-container'>
                   <ButtonToolbar className='encuesta-checkbox-container' aria-label="Toolbar with button groups">
                     <ButtonGroup className="me-2" >
-                      <Button className={`cal-1 ${respuestasData["respuestas"][index]["calificacion"] == 1 ? 'cal-n-selected' : ''}`} onClick={e => { setValorRespuesta(index, 1) }}>1</Button>
+                      <Button className={`cal-1 ${respuestasData["respuestas"][index]["calificacion"] == 1 ? 'cal-n-selected' : ''}`} onClick={e => { if (!previousData) { setValorRespuesta(index, 1) } }}>1</Button>
                     </ButtonGroup>
                     <ButtonGroup className="me-2" >
-                      <Button className={`cal-1 ${respuestasData["respuestas"][index]["calificacion"] == 2 ? 'cal-n-selected' : ''}`} onClick={e => { setValorRespuesta(index, 2) }}>2</Button>
+                      <Button className={`cal-2 ${respuestasData["respuestas"][index]["calificacion"] == 2 ? 'cal-n-selected' : ''}`} onClick={e => { if (!previousData) { setValorRespuesta(index, 2) } }}>2</Button>
                     </ButtonGroup>
                     <ButtonGroup className="me-2" >
-                      <Button className={`cal-1 ${respuestasData["respuestas"][index]["calificacion"] == 3 ? 'cal-n-selected' : ''}`} onClick={e => { setValorRespuesta(index, 3) }}>3</Button>
+                      <Button className={`cal-3 ${respuestasData["respuestas"][index]["calificacion"] == 3 ? 'cal-n-selected' : ''}`} onClick={e => { if (!previousData) { setValorRespuesta(index, 3) } }}>3</Button>
                     </ButtonGroup>
                     <ButtonGroup className="me-2" >
-                      <Button className={`cal-1 ${respuestasData["respuestas"][index]["calificacion"] == 4 ? 'cal-n-selected' : ''}`} onClick={e => { setValorRespuesta(index, 4) }}>4</Button>
+                      <Button className={`cal-4 ${respuestasData["respuestas"][index]["calificacion"] == 4 ? 'cal-n-selected' : ''}`} onClick={e => { if (!previousData) { setValorRespuesta(index, 4) } }}>4</Button>
                     </ButtonGroup>
                     <ButtonGroup>
-                      <Button className={`cal-1 ${respuestasData["respuestas"][index]["calificacion"] == 5 ? 'cal-n-selected' : ''}`} onClick={e => { setValorRespuesta(index, 5) }}>5</Button>
+                      <Button className={`cal-5 ${respuestasData["respuestas"][index]["calificacion"] == 5 ? 'cal-n-selected' : ''}`} onClick={e => { if (!previousData) { setValorRespuesta(index, 5) } }}>5</Button>
                     </ButtonGroup>
                   </ButtonToolbar>
                 </td>
@@ -155,7 +203,7 @@ function EvaluacionServicio() {
       </div>
       <div className='pregunta-medio-conocimiento'>
         <label className='label-medio'>Medio por el cual conoció el servicio</label>
-        <Form.Select className='seleccionable-medio' aria-label="Default select example" onChange={e => { setMedioConocimiento(e.target.value) }}>
+        <Form.Select className='seleccionable-medio' aria-label="Default select example" id='medio-conocimiento' onChange={e => { setMedioConocimiento(e.target.value) }} disabled={previousData}>
           <option></option>
           <option value="1">One</option>
           <option value="2">Two</option>
@@ -163,11 +211,13 @@ function EvaluacionServicio() {
         </Form.Select>
       </div>
       <div className='contenedor-tabla-encuesta'>
-        <Form.Control as="textarea" placeholder="Observación" style={{ height: '10rem' }} onChange={e => { setObservacion(e.target.value) }} />
+        <Form.Control as="textarea" placeholder="Observación" id="observacion" style={{ height: '10rem' }} onChange={e => { setObservacion(e.target.value) }} disabled={previousData} />
       </div>
-      <div className='contenedor-boton-enviar-encuesta'>
-        <button className='boton-enviar-encuesta' onClick={e => { saveEncuesta(e) }}>Enviar</button>
-      </div>
+      {!previousData &&
+        <div className='contenedor-boton-enviar-encuesta'>
+          <button className='boton-enviar-encuesta' onClick={e => { saveEncuesta(e) }}>Enviar</button>
+        </div>
+      }
     </div>
   )
 }
