@@ -83,7 +83,7 @@ function ExpedientesDetalle() {
                 });
         }
         confirmAlert({
-            title: `Confirmación para agregar persona`,
+            title: `Confirmación`,
             message: `¿Estas seguro de cambiar el estado del caso a ${estado.nombre.toUpperCase()}`,
             buttons: [
                 {
