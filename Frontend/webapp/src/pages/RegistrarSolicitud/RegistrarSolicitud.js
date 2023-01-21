@@ -20,15 +20,6 @@ function RegistrarSolicitud() {
   const [seccion3, setSeccion3] = useState(false);
   const [seccion4, setSeccion4] = useState(false);
 
-<<<<<<< HEAD
-  const [sexos, setSexos] = useState([])
-  const [generos, setGeneros] = useState([])
-  const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([])
-  const [tiposPersona, setTiposPersona] = useState([])
-  const [tiposDocumento, setTiposDocumento] = useState([])
-  const [departamento, setDepartamento] = useState("")
-  const [ciudades, setCiudades] = useState("")
-=======
   const [sexos, setSexos] = useState([]);
   const [generos, setGeneros] = useState([]);
   const [estratosSocieconomicos, setEstratosSocieconomicos] = useState([]);
@@ -36,7 +27,6 @@ function RegistrarSolicitud() {
   const [tiposDocumento, setTiposDocumento] = useState([]);
   const [departamento, setDepartamento] = useState("");
   const [ciudad, setCiudad] = useState("");
->>>>>>> 5f9d0257bfdbe6afe8de7182c8e4aca03c252da9
 
   const [conv2, setConv2] = useState(false);
 
@@ -163,15 +153,11 @@ function RegistrarSolicitud() {
     })
       .then((result) => {
         console.log(result);
-<<<<<<< HEAD
-        alert("Hola")
-=======
         // event.target.reset();
         // window.location.reload()
         // console.log(myFiles)
         // myFiles.splice(0);
         // alert("Tus archivos han sido envíados correctamente")
->>>>>>> 5f9d0257bfdbe6afe8de7182c8e4aca03c252da9
       })
       .catch((err) => {
         console.log("error");
@@ -261,29 +247,7 @@ function RegistrarSolicitud() {
       .catch((err) => {
         console.log("error");
       });
-<<<<<<< HEAD
-  }, [])
-
-  useEffect(() => {
-    axiosBasicInstanceApiSolicitudes({
-      method: 'get',
-      url: "/paises/1/?count=20",
-      // headers: req.headers,
-      data: {}
-    })
-      .then(result => {
-        console.log(result.data);
-        setDepartamento(result.data.results)
-      })
-      .catch(err => {
-        console.log("error");
-      });
-  }, [])
-
-
-=======
   }, []);
->>>>>>> 5f9d0257bfdbe6afe8de7182c8e4aca03c252da9
 
   return (
     <div className="wrapp-main-registrar-solicitud">
@@ -310,24 +274,6 @@ function RegistrarSolicitud() {
         <Collapse in={seccion1}>
           <div className="form-datos">
             <label className="subtitles-secciones">Nombre</label>
-<<<<<<< HEAD
-            <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingSelectGrid" label="Nombres ">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
-                <Form.Control
-                  className="col-inputs"
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
-            </div>
-=======
             <FloatingLabel controlId="floatingInputGrid" label="Nombres">
               <Form.Control
                 className="inputs-registrar-solicitud"
@@ -344,7 +290,6 @@ function RegistrarSolicitud() {
                 name="apellidos"
               />
             </FloatingLabel>
->>>>>>> 5f9d0257bfdbe6afe8de7182c8e4aca03c252da9
 
             <label className="subtitles-secciones">
               Fecha y lugar de nacimiento
@@ -532,14 +477,6 @@ function RegistrarSolicitud() {
                   name="celular"
                 />
               </FloatingLabel>
-<<<<<<< HEAD
-              <FloatingLabel controlId="floatingInputGrid" label="Correo electrónco">
-                  <Form.Control
-                    className="col-inputs"
-                    type="text"
-                    placeholder="name@example.com"
-                  />
-=======
               <FloatingLabel controlId="floatingInputGrid" label="Correo">
                 <Form.Control
                   className=""
@@ -547,7 +484,6 @@ function RegistrarSolicitud() {
                   placeholder="name@example.com"
                   name="correo"
                 />
->>>>>>> 5f9d0257bfdbe6afe8de7182c8e4aca03c252da9
               </FloatingLabel>
             </div>
 
@@ -600,14 +536,10 @@ function RegistrarSolicitud() {
                       required
                     />
                   </FloatingLabel>
-<<<<<<< HEAD
-                  <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
-=======
                   <FloatingLabel
                     controlId="apellidosApoderado"
                     label="Apellidos"
                   >
->>>>>>> 5f9d0257bfdbe6afe8de7182c8e4aca03c252da9
                     <Form.Control
                       className=""
                       type="text"
@@ -874,36 +806,6 @@ function RegistrarSolicitud() {
         <Collapse in={seccion3}>
           <div className="form-datos">
             <label className="subtitles-secciones">Lugar de los hechos</label>
-<<<<<<< HEAD
-            <div className='col-detalle-solicitud'>
-              <FloatingLabel controlId="floatingSelectGrid" label="Departamento">
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                  name="departamento"
-                  required
-                >
-                   <option value={""}>Abre el menú para ver las opciones</option>
-                  {departamento.map(departamento => {
-                    return (<option key={"departamento" + departamento["id"]} value={departamento["id"]}>{departamento["nombre"]}</option>)
-                  })}
-                 
-                </Form.Select>
-              </FloatingLabel>
-              <FloatingLabel controlId="floatingSelectGrid" label="Ciudad">
-                <Form.Select
-                  className="col-inputs"
-                  aria-label="Floating label select example"
-                  name="ciudad"
-                  required
-                >
-                  {/* <option value={""}>Abre el menú para ver las opciones</option>
-                  {ciudades.map(ciudades => {
-                    return (<option key={"ciudades" + ciudades["id"]} value={ciudades["id"]}>{ciudades["nombre"]}</option>)
-                  })} */}
-                </Form.Select>
-              </FloatingLabel>
-=======
             <div className="col-detalle-solicitud">
               <div>
                 <label htmlFor="Departamento" className="form-label">
@@ -936,7 +838,6 @@ function RegistrarSolicitud() {
                   }}
                 />
               </div>
->>>>>>> 5f9d0257bfdbe6afe8de7182c8e4aca03c252da9
             </div>
             <FloatingLabel
               controlId="descripcionHechos"
