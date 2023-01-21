@@ -38,7 +38,7 @@ export default function Seguimiento({ index, seguimiento }) {
 
 
   return (
-    <div className='seguimientos-container' style={{ gap: "0px" }}>
+    <div className='seguimiento-container' style={{ gap: "0px" }}>
       <button className='seguimientos-card' onClick={e => setopened(!opened)}>
         <h3>Seguimiento #{index}</h3>
         <h4>Fecha: {seguimiento["fecha"]}</h4>
