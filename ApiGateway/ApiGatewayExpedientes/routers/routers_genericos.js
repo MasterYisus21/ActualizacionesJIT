@@ -104,12 +104,14 @@ router.post("/personas", views_genericos.CrearPersonas)
 router.post("/personas/:id/apoderados", views_genericos.CrearApoderado)
 router.post("/documentos/:id",archivo.uploadMiddleware, views_genericos.CargarDocumentos)// id expediente
 
+
 router.post("/personas/cargar",cargar_excel.uploadMiddleware, views_genericos.CargarTemplatePersonas);
 
 router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware, views_genericos.CambiarDocumentoCaso);
 router.get("/resultados/:id",archivo.uploadMiddleware, views_genericos.DescargarResultados);
 
 router.post("/expedientes/:id/respuestas", views_genericos.CrearRespuestas);
+router.post("/reportes/:id/", views_genericos.GenerarReportes)
 router.post("/expedientes/:id/seguimientos", views_genericos.CrearSeguimientoCaso);
 router.post("/expedientes/:id/estado",views_genericos.CambiarEstadoExpediente)
 

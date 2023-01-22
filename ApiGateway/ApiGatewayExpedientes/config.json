@@ -3,11 +3,13 @@
     "urlApiSolicitudes": "http://0.0.0.0:8001/api/jit_solicitudes/v1/",
     "urlDocumentos": "http://0.0.0.0:8002/api/documentos/v1/",
     "urlGeneradorDocumentos": "http://localhost:8003/api/generador_documentos/v1/",
+    "urlEmail": "http://0.0.0.0:5001/",
+    "urlConvertidorPDF":"http://0.0.0.0:9999/docx-to-pdf",
+    "urlGeneradorReportes": "http://localhost:8006/api/generador_reportes/v1/",
+    
     "urlGatewaySolicitudes": "http://localhost:3001/api/gateway/v1/",
     "urlGatewayExpedientes": "http://localhost:3002/api/gateway/v1/",
-    "clave_usuarios_nuevos": "conciliacion2022*.",
-    "urlEmail": "http://0.0.0.0:5001/",
-    "urlConvertidorPDF":"http://0.0.0.0:9999/docx-to-pdf"
+    "clave_usuarios_nuevos": "conciliacion2022*."
     
     
 }

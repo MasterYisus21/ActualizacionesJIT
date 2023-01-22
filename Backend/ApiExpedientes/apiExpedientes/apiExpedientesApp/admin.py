@@ -14,6 +14,9 @@ class SearchExpediente(admin.ModelAdmin):
 class SearchRelacionpersonaExpediente(admin.ModelAdmin):
   
     search_fields = ['expediente_id__numero_caso','expediente_id__fecha_registro'] #atributo por el cual se filtrará
+class SearchRelacionpersonaCitacion(admin.ModelAdmin):
+  
+    search_fields = ['citacion_id__expediente_id__numero_caso','persona_id__nombres'] #atributo por el cual se filtrará
 
 class SearchPersona(admin.ModelAdmin):
   
@@ -92,7 +95,7 @@ admin.site.register(Respuesta_seguimiento,SearchRespuestasSeguimiento)
 admin.site.register(Turno,SearchAdminGeneral)
 admin.site.register(Tipo_medio,SearchAdminGeneral)
 admin.site.register(Citacion,SearchCitacion)
-admin.site.register(Relacion_persona_citacion)
+admin.site.register(Relacion_persona_citacion,SearchRelacionpersonaCitacion)
 admin.site.register(Medio_conocimiento,SearchAdminGeneral)
 admin.site.register(Encuesta,SearchEncuesta)
 admin.site.register(Pregunta_encuesta,SearchAdminGeneral)
