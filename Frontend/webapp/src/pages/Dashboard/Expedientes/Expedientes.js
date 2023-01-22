@@ -45,7 +45,7 @@ function Expedientes() {
         setNumPages(Math.ceil(result.data.count / 14))
       })
       .catch(err => {
-        console.log("error");
+        console.log(err);
       });
 
   }

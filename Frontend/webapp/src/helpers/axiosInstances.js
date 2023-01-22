@@ -6,13 +6,13 @@ import { toast } from 'react-toastify';
 
 const axiosBasicInstanceApiSolicitudes = axios.create({
     baseURL: config.ApiSolicitudes,
-    timeout: 1000,
+    timeout: 10000,
     // headers: { 'X-Custom-Header': 'foobar' }
 });
 
 const axiosTokenInstanceApiSolicitudes = axios.create({
     baseURL: config.ApiSolicitudes,
-    timeout: 1000,
+    timeout: 10000,
     // headers: { 'X-Custom-Header': 'foobar' }
 });
 
@@ -27,8 +27,8 @@ axiosTokenInstanceApiSolicitudes.interceptors.response.use((response) => {
 
 const axiosBasicInstanceApiExpedientes = axios.create({
     baseURL: config.ApiExpedientes,
-    timeout: 1000,
-    headers: { 'X-Custom-Header': 'foobar' }
+    timeout: 10000,
+    // headers: { 'X-Custom-Header': 'foobar' }
 });
 
 axiosBasicInstanceApiExpedientes.interceptors.response.use((response) => {
@@ -49,8 +49,8 @@ axiosBasicInstanceApiExpedientes.interceptors.response.use((response) => {
 
 const axiosTokenInstanceApiExpedientes = axios.create({
     baseURL: config.ApiExpedientes,
-    timeout: 1000,
-    headers: { 'X-Custom-Header': 'foobar' }
+    timeout: 10000,
+    // headers: { 'X-Custom-Header': 'foobar' }
 });
 
 axiosTokenInstanceApiExpedientes.interceptors.response.use((response) => {
