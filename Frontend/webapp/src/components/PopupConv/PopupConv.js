@@ -231,6 +231,14 @@ export default function PopupConv({
           document.getElementById("genero").value = result.data["genero_id"];
           document.getElementById("celular").value = result.data["celular"];
           document.getElementById("escolaridad").value = result.data["escolaridad_id"];
+          document.getElementById("estratosocioeconomico").value = result.data["estrato_socioeconomico_id"];
+          document.getElementById("direccion").value = result.data["direccion"];
+          document.getElementById("ocupacion").value = result.data["ocupacion"];
+          document.getElementById("estado_civil").value = result.data["estado_civil_id"];
+          document.getElementById("vivienda").value = result.data["tipo_vivienda_id"];
+          document.getElementById("tipoDiscapacidad").value = result.data["tipo_discapacidad_id"];
+          document.getElementById("grupo_etnico").value = result.data["grupo_etnico_id"];
+          
 
         //   if (result.data["tipo_persona_id"] == 1) {
         //     document.getElementById("tipoPersona1").checked =
@@ -278,6 +286,36 @@ export default function PopupConv({
         escolaridad_id: event.target.escolaridad.value,
       },
     };
+
+    const dataModificar = {
+      
+        nombres: event.target.nombres.value,
+        apellidos: event.target.apellidos.value,
+        identificacion: event.target.identificacion.value,
+        fecha_expedicion: event.target.fecha_expedicion.value,
+        lugar_expedicion: event.target.lugar_expedicion.value,
+        fecha_nacimiento: event.target.fecha_nacimiento.value,
+        telefono: event.target.telefono.value,
+        direccion: event.target.direccion.value,
+        ocupacion: event.target.ocupacion.value,
+        celular: event.target.celular.value,
+        correo: event.target.correo.value,
+        tarjeta_profesional: event.target.tarjetaProfesional.value,
+        lugar_nacimiento: event.target.lugar_nacimiento.value,
+        // barrio_id: null,
+        estado_civil_id: event.target.estado_civil.value,
+        estrato_socioeconomico_id: event.target.estratosocioeconomico.value,
+        grupo_etnico_id: event.target.grupo_etnico.value,
+        tipo_persona_id: event.target.tipoPersona.value,
+        sexo_id: event.target.sexo.value,
+        tipo_discapacidad_id: event.target.tipoDiscapacidad.value,
+        genero_id: event.target.genero.value,
+        tipo_vivienda_id: event.target.vivienda.value,
+        tipo_documento_id: event.target.tipoDocumento.value,
+        escolaridad_id: event.target.escolaridad.value,
+      
+    };
+
     data.apoderado = {};
     if (conv2) {
       data.apoderado = {
@@ -294,7 +332,30 @@ export default function PopupConv({
       };
     }
 
-    console.log(data.apoderado);
+    if (personaid) {
+
+      axiosTokenInstanceApiExpedientes({
+          
+        method: "patch",
+        url:`/personas/${personaid}`,
+        // headers: req.headers,
+        data: dataModificar,
+      })
+        .then((result) => {
+          console.log(result);
+          // event.target.reset();
+          toast.success("La persona ha sido modificada correctamente", {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+          // setResultadosBusqueda([resultadosBusqueda]);
+          setEstado(!estado);
+        })
+        .catch((err) => {
+          console.log("error");
+        });
+    }
+    else{
+    console.log(data.persona);
     axiosBasicInstanceApiExpedientes({
       method: "post",
       url: `/expedientes/${id}/${personas}/`,
@@ -313,6 +374,7 @@ export default function PopupConv({
       .catch((err) => {
         console.log("error");
       });
+    }
   };
 
   return (
