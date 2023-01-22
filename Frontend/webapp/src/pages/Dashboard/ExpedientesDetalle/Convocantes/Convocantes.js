@@ -60,6 +60,9 @@ function Convocantes() {
       })
       .catch((err) => {
         console.log("error");
+        console.log('====================================');
+        console.log(err);
+        console.log('====================================');
       });
   };
 
