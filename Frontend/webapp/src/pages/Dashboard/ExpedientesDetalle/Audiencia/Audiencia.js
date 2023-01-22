@@ -4,6 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import fileDownload from 'js-file-download';
 
 
 function Audiencia() {
@@ -12,6 +14,10 @@ function Audiencia() {
   const [dataApi, setDataApi] = useState({})
   const [turnosDisponibles, setTurnosDisponibles] = useState([])
   const [tiposMedio, setTiposMedio] = useState([])
+  const [personas, setPersonas] = useState({
+    "personas_citadas": [],
+    "personas_no_citadas": []
+  })
 
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
@@ -21,7 +27,7 @@ function Audiencia() {
       data: {}
     })
       .then(result => {
-        console.log(result.data);
+        // console.log(result.data);
         if (result.data.results.length) {
           setDataApi(result.data.results[0])
           document.getElementById("fecha_sesion").value = result.data.results[0].fecha_sesion
@@ -42,7 +48,7 @@ function Audiencia() {
       data: {}
     })
       .then(result => {
-        console.log(result.data.results);
+        // console.log(result.data.results);
         setTiposMedio(result.data.results)
       })
       .catch(err => {
@@ -70,7 +76,8 @@ function Audiencia() {
         data: {}
       })
         .then(result => {
-          console.log(result.data);
+          // console.log(result.data);
+          setPersonas(result.data)
         })
         .catch(err => {
           console.log(err);
@@ -101,7 +108,7 @@ function Audiencia() {
         data: {}
       })
         .then(result => {
-          console.log(result.data);
+          // console.log(result.data);
           setTurnosDisponibles([...turnosAdicionales, ...result.data])
         })
         .catch(err => {
@@ -119,8 +126,8 @@ function Audiencia() {
       turno_id: e.target["turno-seleccionado"].value,
       tipo_medio_id: e.target["tipo-de-medio"].value
     }
-    console.log(dataApi);
-    console.log(`dataApi: ${dataApi?.id}`);
+    // console.log(dataApi);
+    // console.log(`dataApi: ${dataApi?.id}`);
     const method = dataApi?.id ? 'patch' : 'post'
     axiosTokenInstanceApiExpedientes({
       method: method,
@@ -129,8 +136,75 @@ function Audiencia() {
       data: data
     })
       .then(result => {
-        console.log(result.data);
+        // console.log(result.data);
         setDataApi(result.data)
+        toast.success('La información se ha guardado con exito', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const citarPersona = (e, persona) => {
+    e.preventDefault()
+    // console.log(persona);
+    axiosTokenInstanceApiExpedientes({
+      method: 'post',
+      url: `citaciones/${dataApi?.id}/personas/${persona.persona_id}`,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        let personasTemp = { ...personas }
+        personasTemp["personas_no_citadas"] = personasTemp["personas_no_citadas"].filter(personaIt => {
+          return (personaIt.persona_id != persona.persona_id)
+        });
+        personasTemp["personas_citadas"].push(persona)
+        setPersonas(personasTemp)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const retirarPersonaCitacion = (e, persona) => {
+    e.preventDefault()
+    // console.log(persona);
+    axiosTokenInstanceApiExpedientes({
+      method: 'delete',
+      url: `citaciones/${dataApi?.id}/personas/${persona.persona_id}`,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data);
+        let personasTemp = { ...personas }
+        personasTemp["personas_citadas"] = personasTemp["personas_citadas"].filter(personaIt => {
+          return (personaIt.persona_id != persona.persona_id)
+        });
+        personasTemp["personas_no_citadas"].push(persona)
+        setPersonas(personasTemp)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const descargarFormatoCitacion = (e, persona) => {
+    e.preventDefault()
+    axiosTokenInstanceApiExpedientes({
+      method: 'post',
+      url: `expedientes/${id}/citaciones/${dataApi?.id}/personas/${persona.id_relacion}/formato`,
+      // headers: req.headers,
+      responseType: "blob",
+      data: {}
+    })
+      .then(result => {
+        console.log(result.data);
+        fileDownload(result.data, `Formato_citacion_${persona.nombres}.docx`)
       })
       .catch(err => {
         console.log(err);
@@ -148,9 +222,7 @@ function Audiencia() {
       </div> */}
       <div className='titulo-informacion-audiencia'>
         <label className='titulo-audiencia'>Sesion de Audiencia</label>
-        <div className='contenedor-icono-descarga'>
-          <img src='/icons/descarga-documento.svg' className='icono-descarga-documento' />
-        </div>
+
       </div>
       <div className='contenedor-subtitulo'>
         <label className='subtitulo-audiencia'>Ingrese los datos de la audiencia</label>
@@ -182,18 +254,18 @@ function Audiencia() {
               <Form.Select aria-label="Default select example" className='input-seleccionable-hora' id="turno-seleccionado" name="turno-seleccionado" required>
                 <option value="">Selecciona una hora</option>
                 {turnosDisponibles.map((dato) => {
-                  return (<option value={dato.id}>{dato.nombre}</option>)
+                  return (<option key={`turnoDisponibles${dato.id}`} value={dato.id}>{dato.nombre}</option>)
                 })}
               </Form.Select>
             </div>
             <label className='titulo-descripcion'>Tipo de medio:</label>
-            <div className='separador-virtual-presencial'>
+            <div className='separador-virtual-presencial d-flex' style={{ display: "flex", gap: "2rem", alignItems: "center", justifyContent: "center" }}>
               {tiposMedio.map(dato => {
                 return (
-                  <>
+                  <div key={`tipoMedio${dato.id}`}>
                     <input className='class="custom-control-input"' id="tipo-de-medio" value={dato.id} name="tipo-de-medio" type='radio' checked={dataApi ? dataApi.tipo_medio_id == dato.id : false} onChange={e => setDataApi({ ...dataApi, tipo_medio_id: e.target.value })} required></input>
                     <label className="label-virtual">{dato.nombre} </label>
-                  </>
+                  </div >
                 )
               })}
             </div>
@@ -224,23 +296,32 @@ function Audiencia() {
               <th>Identificación</th>
               <th>Nombres y Apellidos</th>
               <th>Rol</th>
+              <th>Citación</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <form onSubmit={event => { }}>
-                  <button className='btn btn-outline btn-sm' name="identificacion">
-                    <img className='mini-image' src="/images/arrow-down.svg"></img>
-                  </button>
-                </form>
-              </td>
-            </tr>
+            {personas["personas_citadas"].map(dato => {
+              return (
+                <tr key={`personas_citadas${dato.persona_id}`}>
+                  <td>{dato.identificacion}</td>
+                  <td>{dato.nombres}</td>
+                  <td>{dato.tipo_cliente}</td>
+                  <td className='contenedor-icono-descarga'>
+                    <button className='button-audiencia' onClick={e => {descargarFormatoCitacion(e, dato)}}>
+                      <img src='/icons/descarga-documento.svg' className='icono-descarga-documento' />
+                    </button>
+                  </td>
+                  <td>
+                    <form onSubmit={e => retirarPersonaCitacion(e, dato)}>
+                      <button className='btn btn-outline btn-sm' name="identificacion">
+                        <img className='mini-image' src="/images/arrow-down.svg"></img>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              )
+            })}
 
           </tbody>
         </table>
@@ -258,19 +339,22 @@ function Audiencia() {
             </tr>
           </thead>
           <tbody>
-
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <form onSubmit={event => { }}>
-                  <button className='btn btn-outline btn-sm' name="identificacion">
-                    <img className='mini-image' src="/images/arrow-up.svg"></img>
-                  </button>
-                </form>
-              </td>
-            </tr>
+            {personas["personas_no_citadas"].map(dato => {
+              return (
+                <tr key={`personas_no_citadas${dato.persona_id}`}>
+                  <td>{dato.identificacion}</td>
+                  <td>{dato.nombres}</td>
+                  <td>{dato.tipo_cliente}</td>
+                  <td>
+                    <form onSubmit={e => citarPersona(e, dato)}>
+                      <button className='btn btn-outline btn-sm' name="identificacion">
+                        <img className='mini-image' src="/images/arrow-up.svg"></img>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              )
+            })}
 
           </tbody>
         </table>

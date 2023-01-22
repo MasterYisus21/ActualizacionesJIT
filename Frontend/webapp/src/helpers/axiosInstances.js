@@ -34,10 +34,16 @@ const axiosBasicInstanceApiExpedientes = axios.create({
 axiosBasicInstanceApiExpedientes.interceptors.response.use((response) => {
     return response;
 }, (error) => {
-    toast.error(`Ocurrió un error con estado ${error.response.status}`, {
-        position: toast.POSITION.BOTTOM_RIGHT
-    })
-    return Promise.reject(error);
+    if (error.response.status == 401) {
+        toast.info('Usuario o contraseña invalidos.', {
+            position: toast.POSITION.BOTTOM_RIGHT
+        })
+    } else {
+        toast.error(`Ocurrió un error con estado ${error.response.status}`, {
+            position: toast.POSITION.BOTTOM_RIGHT
+        })
+        return Promise.reject(error);
+    }
 })
 
 

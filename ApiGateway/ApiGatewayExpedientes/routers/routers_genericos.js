@@ -54,8 +54,13 @@ router.post("/expedientes/:id/convocados/:identificacion", views_genericos.Agreg
 router.post("/expedientes/:id/conciliadores/:id2", views_genericos.AgregarConciliadores)
 router.post("/expedientes/:id/estudiantes/:id2", views_genericos.AgregarEstudiantes)
 router.post("/expedientes/:id/citaciones", views_genericos.CrearCitaciones);
+router.post("/expedientes/:id/citaciones/:id_citacion/notificar", views_genericos.EnviarNotificacionCitacion);
 router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
 router.post("/expedientes/:id/resultados", views_genericos.CrearResultado)
+router.post("/expedientes/:id/enviar_resultados", views_genericos.EnviarResultado)
+
+
+
 router.delete("/citaciones/:id/personas/:id_persona",views_genericos.EliminarPersonaDeCitacion);
 router.delete("/expedientes/:id/personas/:id_relacion",views_genericos.EliminarPersonaCaso);
 router.get("/expedientes/:id/resultados", views_genericos.VerResultadoCaso)
@@ -96,6 +101,7 @@ router.post("/expedientes", views_genericos.CrearExpediente)
 router.post("/personas", views_genericos.CrearPersonas)
 router.post("/personas/:id/apoderados", views_genericos.CrearApoderado)
 router.post("/documentos/:id",archivo.uploadMiddleware, views_genericos.CargarDocumentos)// id expediente
+
 router.post("/personas/cargar",cargar_excel.uploadMiddleware, views_genericos.CargarTemplatePersonas);
 
 router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware, views_genericos.CambiarDocumentoCaso);
@@ -125,5 +131,4 @@ router.post("/personas/formato", views_genericos.DescargarTemplates);
 
 router.get("/expedientes/:id/turnos/:fecha", views_genericos.TurnosFecha);
 module.exports = router;
-
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 
 //importing axios instance
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances'
@@ -24,7 +24,7 @@ function DatosGenerales() {
   let temasRef = useRef([])
   let subtemasRef = useRef([])
 
-
+  const outletContext = useOutletContext();
 
   //Fetch solicitanteServicioOptions
   useEffect(() => {
@@ -115,20 +115,22 @@ function DatosGenerales() {
 
   // Fetch subtemas
   const fetchSubtemas = (tema) => {
-    axiosTokenInstanceApiExpedientes({
-      method: 'get',
-      url: "/temas/" + tema + "/?ordering=id&count=20&page=" + 1,
-      // headers: req.headers,
-      data: {}
-    })
-      .then(result => {
-        //console.log(result.data);
-        subtemasRef.current = result.data.results
-        setSubtemas(subtemasRef.current)
+    if (tema) {
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: "/temas/" + tema + "/?ordering=id&count=20&page=" + 1,
+        // headers: req.headers,
+        data: {}
       })
-      .catch(err => {
-        console.log("error");
-      });
+        .then(result => {
+          //console.log(result.data);
+          subtemasRef.current = result.data.results
+          setSubtemas(subtemasRef.current)
+        })
+        .catch(err => {
+          console.log("error");
+        });
+    }
   }
 
 

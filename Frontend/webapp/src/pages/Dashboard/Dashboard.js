@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { IconButton } from '../../components'
 
 // import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import './Dashboard.css'
 // Notification system
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { confirmAlert } from 'react-confirm-alert';
 // toast.configure()
 
 
@@ -17,8 +18,46 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Dashboard() {
 
-  const [pagina, setPagina] = useState("Dashboard")
+  const [pagina, setPagina] = useState("Expedientes")
   const [nombre, setNombre] = useState("Andres Felipe Villamizar Palacio")
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    try {
+      setNombre(JSON.parse(localStorage.getItem('usuario')).nombres)
+    } catch {
+      navigate("/", { replace: true });
+    }
+
+    return () => {
+      setNombre('')
+    }
+  }, [])
+
+  const logout = () => {
+    const salir = () => {
+      navigate("/", { replace: true });
+      localStorage.removeItem("inventarioToken");
+      localStorage.removeItem("usuario");
+    }
+    confirmAlert({
+      title: `Confirmación`,
+      message: `¿Estas seguro de cerrar la sesión`,
+      buttons: [
+        {
+          label: 'Si',
+          onClick: () => salir()
+
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  };
+
 
 
   return (
@@ -62,9 +101,10 @@ function Dashboard() {
         <div className='dashboard-item dashboard-container-bottom-left-bottom'>
           <IconButton
             type={"Link"}
-            linkto={"/"}
+            // linkto={"/"}
             text={"Cerrar Sesión"}
             icon={"bi-box-arrow-in-left"}
+            onClick={e => logout()}
           />
         </div>
       </div>
