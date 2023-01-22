@@ -9,6 +9,7 @@ import {
   axiosTokenInstanceApiExpedientes,
 } from "../../helpers/axiosInstances";
 import { toast } from "react-toastify";
+import { SearchableSelect } from "../../components";
 
 export default function PopupConv({
   text,
@@ -20,6 +21,8 @@ export default function PopupConv({
   resultadosBusqueda,
   setPopupconv,
   popupconv,
+  personaid,
+  setPersonaid
 }) {
   const [sexos, setSexos] = useState([]);
   const [generos, setGeneros] = useState([]);
@@ -32,8 +35,13 @@ export default function PopupConv({
   const [tiposPersona, setTiposPersona] = useState([]);
   const [tiposDocumento, setTiposDocumento] = useState([]);
   const [conv2, setConv2] = useState(false);
+  const [departamento, setDepartamento] = useState("");
+  const [departamentoInitial, setDepartamentoInitial] = useState(null);
+  const [ciudad, setCiudad] = useState("");
+  const [ciudadInitial, setCiudadInitial] = useState(null);
 
   useEffect(() => {
+    console.log(personaid);
     axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "/tipos_documento/?count=20",
@@ -192,9 +200,56 @@ export default function PopupConv({
       });
   }, []);
 
+  useEffect(() => {
+
+    if (personaid) { 
+    
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: `/personas/${personaid}`,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          console.log(result.data);
+          // toast.success("Los datos llegaron", {
+          //   position: toast.POSITION.BOTTOM_RIGHT,
+          // });
+          document.getElementById("nombres").value = result.data["nombres"];
+          document.getElementById("apellidos").value = result.data["apellidos"];
+          document.getElementById("tipoDocumento").value = result.data["tipo_documento_id"];
+          document.getElementById("identificacion").value = result.data["identificacion"];
+          document.getElementById("fecha_nacimiento").value = result.data["fecha_nacimiento"];
+          document.getElementById("lugar_nacimiento").value = result.data["lugar_nacimiento"];
+          document.getElementById("fecha_expedicion").value = result.data["fecha_expedicion"];
+          document.getElementById("lugar_expedicion").value = result.data["lugar_expedicion"];
+          document.getElementById("tarjetaProfesional").value = result.data["tarjeta_profesional"];
+          document.getElementById("correo").value = result.data["correo"];
+          document.getElementById("tarjetaProfesional").value = result.data["tarjeta_profesional"];
+          document.getElementById("telefono").value = result.data["telefono"];
+          document.getElementById("sexo").value = result.data["sexo_id"];
+          document.getElementById("genero").value = result.data["genero_id"];
+          document.getElementById("celular").value = result.data["celular"];
+          document.getElementById("escolaridad").value = result.data["escolaridad_id"];
+
+        //   if (result.data["tipo_persona_id"] == 1) {
+        //     document.getElementById("tipoPersona1").checked =
+        //       result.data["tipo_persona_id"];
+        //   } else if (result.data["tipo_persona_id"] == 2) {
+        //     document.getElementById("tipoPersona2").checked =
+        //       result.data["tipo_persona_id"];
+         })
+        .catch(err => {
+          console.log("error");
+          console.log(err);
+        });
+      }
+    
+  }, [])
+
   const submitForm = (event) => {
     event.preventDefault();
-
+    
     const data = {
       persona: {
         nombres: event.target.nombres.value,
@@ -264,13 +319,14 @@ export default function PopupConv({
     <div className="wrapp-popup">
       <div className="popup">
         <div className="titulo-popup">
-          <h1>Crear Persona Convocado</h1>
+          
+          <h1>{personaid ? "Modificar": "Crear"} Persona Convocado</h1>
         </div>
         <form className="form-popup" onSubmit={(e) => submitForm(e)}>
           <div className="wrapp-boton-cerrar">
             <svg
               className="boton-cerrar-popup"
-              onClick={() => setEstado(!estado)}
+              onClick={() => {setEstado(!estado);setPersonaid(null)}}
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
               viewBox="0 0 16 16"
@@ -483,6 +539,74 @@ export default function PopupConv({
                 </FloatingLabel>
               </div>
 
+              <div className="col-detalle-solicitud">
+                <div>
+                  <label htmlFor="Departamento" className="col-inputs">
+                    Departamento:
+                  </label>
+                  <SearchableSelect
+                    axiosInstance={axiosTokenInstanceApiExpedientes}
+                    url={"/paises/1"}
+                    name={"departamento"}
+                    identifier={"id"}
+                    initialValue={departamentoInitial}
+                    onChange={(val) => {
+                      setDepartamento(val);
+                      setCiudad("");
+                    }}
+                  />
+                  </div>
+                  <div>
+                    <label htmlFor="ciudad" className="col-inputs">
+                      Ciudad:
+                    </label>
+                    <SearchableSelect
+                      axiosInstance={axiosTokenInstanceApiExpedientes}
+                      url={"/paises/1/departamentos/" + departamento}
+                      name={"ciudad"}
+                      identifier={"id"}
+                      initialValue={ciudadInitial}
+                      onChange={(val) => {
+                        setCiudad(val);
+                      }}
+                    />
+                 </div>
+              </div>
+
+              <div className="col-detalle-solicitud">
+                <div>
+                  <label htmlFor="Localidad" className="col-inputs">
+                    Localidad:
+                  </label>
+                  <SearchableSelect
+                    axiosInstance={axiosTokenInstanceApiExpedientes}
+                    url={"/paises/1"}
+                    name={"departamento"}
+                    identifier={"id"}
+                    initialValue={departamentoInitial}
+                    onChange={(val) => {
+                      setDepartamento(val);
+                      setCiudad("");
+                    }}
+                  />
+                  </div>
+                  <div>
+                    <label htmlFor="barrio" className="col-inputs">
+                      Barrio
+                    </label>
+                    <SearchableSelect
+                      axiosInstance={axiosTokenInstanceApiExpedientes}
+                      url={"/paises/1/departamentos/" + departamento}
+                      name={"ciudad"}
+                      identifier={"id"}
+                      initialValue={ciudadInitial}
+                      onChange={(val) => {
+                        setCiudad(val);
+                      }}
+                    />
+                 </div>
+              </div>
+
               <label className="subtitles-secciones">Datos Adicionales</label>
               <div className="col-detalle-solicitud">
                 <FloatingLabel controlId="escolaridad" label="Escolaridad">
@@ -644,7 +768,7 @@ export default function PopupConv({
               </FloatingLabel>
 
               {/* Apoderado ---------------------------------------------------> */}
-
+              {personaid == null && <>   
               <label className="subtitles-secciones">Posee apoderado</label>
               <div className="col-detalle-solicitud">
                 <button
@@ -804,14 +928,16 @@ export default function PopupConv({
                   </div>
                 </>
               )}
+              </>}
             </div>
           </div>
+        
 
           <div className="wrapp-botones">
             <button className="botones-popup" onClick={() => {}}>
               Guardar
             </button>
-            <button className="botones-popup">Cancelar</button>
+            <button className="botones-popup" onClick={() => {setPopupconv(!PopupConv);setPersonaid(null);}}>Cancelar</button>
           </div>
         </form>
       </div>

@@ -19,6 +19,7 @@ import "./Convocantes.css";
 
 // Import necesary for notification center
 import { toast } from "react-toastify";
+import PopupApoderado from './../../../../components/popupApoderado/PopupApoderado';
 
 function Convocantes() {
   const [estado, setEstado] = useState(false);
@@ -29,6 +30,8 @@ function Convocantes() {
   const [page, setPage] = useState(1);
   const [numPages, setNumPages] = useState(1);
   const [openbutton, setOpenbutton] = useState(false);
+  const [apoderadoid, setApoderadoid] = useState([]);
+  const [newApoderado, setNewApoderado] = useState(null);
 
   let { id } = useParams();
   let resultados = useRef([]);
@@ -60,9 +63,6 @@ function Convocantes() {
       })
       .catch((err) => {
         console.log("error");
-        console.log('====================================');
-        console.log(err);
-        console.log('====================================');
       });
   };
 
@@ -134,6 +134,7 @@ function Convocantes() {
     });
   };
 
+
   return (
     <>
       <div className="container-convocante">
@@ -147,10 +148,20 @@ function Convocantes() {
             setResultadosBusqueda={setResultadosBusqueda}
             setPopupconv={setPopupconv}
             popupconv={popupconv}
+            personaid={newApoderado}
+            setPersonaid={setNewApoderado}
           ></PopupConv>
         )}
 
-        {popup && <Popup setEstado={setPopup} estado={popup}></Popup>}
+        {popup && 
+            <PopupApoderado 
+              setEstado={setPopup} 
+              estado={popup} 
+              apoderadoid={apoderadoid} 
+              resultadosBusqueda={resultadosBusqueda}
+              setResultadosBusqueda={setResultadosBusqueda}
+              newApoderado={newApoderado}>
+            </PopupApoderado>}
         <h2>Informacion del convocante</h2>
         <div className="navbar-convocante">
           {/* <Buscador
@@ -189,18 +200,28 @@ function Convocantes() {
                     <td>{resultadoBusqueda["tipo_documento"]}</td>
                     <td>{resultadoBusqueda["identificacion"]}</td>
                     <td>
-                      <button
-                        onClick={() => setPopup(!popup)}
-                        className="boton-tabla-eliminar"
+
+                    {resultadoBusqueda.apoderado_id ? 
+                     <button
+                       onClick={() => {setPopup(!popup); setApoderadoid(resultadoBusqueda["apoderado_id"]);}}
+                       className="boton-tabla-eliminar"
+                     >
+                       {resultadoBusqueda["nombre_apoderado"]}
+                     </button>
+                     : <button
+                     onClick={() => {setPopup(!popup); setApoderadoid(null); setNewApoderado(resultadoBusqueda["persona_id"]);}}
+                     className="boton-tabla-eliminar"
                       >
-                        {resultadoBusqueda["nombre_apoderado"]}
+                        Crear apoderado
                       </button>
+                     }
+
                     </td>
                     <td>
                       <button
                         className="boton-tabla-eliminar"
                         value={resultadoBusqueda["id"]}
-                        onClick={() => setPopupconv(!popupconv)}
+                        onClick={() => {setPopupconv(!popupconv); setNewApoderado(resultadoBusqueda["persona_id"]);}}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

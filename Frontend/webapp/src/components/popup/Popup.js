@@ -76,7 +76,7 @@ export default function Popup({text, setEstado, estado}){
 
                     <label className='subtitles-secciones'>Nombre</label>
                     <div className='columnas-inputs'> 
-                        <FloatingLabel controlId="floatingInputGrid" label="Nombres">
+                        <FloatingLabel controlId="nombres" label="Nombres">
                             <Form.Control className='inputs-personas' type="text" placeholder="name@example.com" />
                         </FloatingLabel>
                         <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
