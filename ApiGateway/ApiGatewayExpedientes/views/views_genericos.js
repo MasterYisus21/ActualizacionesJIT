@@ -410,6 +410,26 @@ views.ListarCiudades = async (req, res) => {
     res.sendStatus(500);
   }
 }
+views.ListarLocalidades = async (req, res) => {
+  try {
+    const url = config.urlApiExpedientes + "localidades?ciudad_id=" + req.params.id3
+    requests.get(req, res, url, "&")
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+}
+views.ListarBarrios = async (req, res) => {
+  try {
+    const url = config.urlApiExpedientes + "barrios?localidad_id=" + req.params.id4
+    requests.get(req, res, url, "&")
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+}
 views.ListarConciliadores = async (req, res) => {
   try {
 

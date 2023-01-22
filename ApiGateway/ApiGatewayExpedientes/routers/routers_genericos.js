@@ -94,6 +94,8 @@ router.get("/crear_personas", views_genericos.DatosCrearPersonas)
 
 router.get("/paises/:id", views_genericos.ListarDepartamentos);
 router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
+router.get("/paises/:id/departamentos/:id2/ciudades/:id3", views_genericos.ListarLocalidades);
+router.get("/paises/:id/departamentos/:id2/ciudades/:id3/localidades/:id4", views_genericos.ListarBarrios);
 router.get("/temas/:id", views_genericos.ListarSubtemas);
 
 
