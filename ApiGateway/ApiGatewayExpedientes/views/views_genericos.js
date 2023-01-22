@@ -1122,6 +1122,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                   <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento  .<br><br>`
                  
                   let asunto = `Citación Audiencia Conciliación`
+                  
               
                   const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo,response.body)).catch(err => { res.status(error(err)) })
       
