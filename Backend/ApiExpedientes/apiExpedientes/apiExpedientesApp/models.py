@@ -46,7 +46,7 @@ class Departamento(GeneralModel):
 class Ciudad(GeneralModel):
     
     departamento_id=models.ForeignKey(Departamento, on_delete=models.SET_NULL,blank=False,null=True)
-
+    nombre= models.CharField(max_length=50,blank=False, null=False)
     class Meta:
         managed = False
         db_table='Ciudad'
@@ -289,7 +289,8 @@ def increment_numero_caso_number():
 class Localidad(GeneralModel):
 
     ciudad_id=models.ForeignKey(Ciudad, on_delete=models.SET_NULL,blank=False,null=True)
-
+    nombre= models.CharField(max_length=50,blank=False, null=False)
+    
     class Meta:
         db_table='Localidad'
         ordering = ['-id']
