@@ -794,7 +794,7 @@ class Respuesta_encuesta(EstadoModel):
     calificacion=models.PositiveSmallIntegerField(null=False,blank=False)
     pregunta_encuesta_id = models.ForeignKey(Pregunta_encuesta, on_delete=models.SET_NULL,blank=False,null=True)
     encuesta_id = models.ForeignKey(Encuesta, on_delete=models.SET_NULL,blank=True,null=True)
-    
+    nombre = models.TextField(blank=True, null=False,default="")
     
     class Meta:
         db_table='Respuesta_encuesta'

@@ -40,7 +40,7 @@ views.CrearPersonas = async (req, res) => {
     if (req.body.tarjeta_profesional == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
 
     let datos = { username: req.body.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [req.body.grupo_id] }
-    console.log(datos)
+   
     await axios.post(config.urlApiExpedientes + "usuarios/", datos)
       .then(async result => {
 

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 //importing css
 import "./Seguimientos.css"
@@ -9,29 +9,21 @@ import { useParams } from 'react-router-dom'
 import Seguimiento from './Seguimiento'
 import { toast } from 'react-toastify'
 
-function Seguimientos() {
 
+function Seguimientos() {
+  
   const [open, setOpen] = useState(false)
   const [seguimientos, setSeguimientos] = useState([])
   const [preguntas, setPreguntas] = useState([])
   const [mediosSeguimiento, setMediosSeguimiento] = useState([])
-
+  const [page, setPage] = useState(1);
+  const [numPages, setNumPages] = useState(1);
+  
+  let resultados = useRef([]);
   let { id } = useParams();
 
   useEffect(() => {
-    axiosTokenInstanceApiExpedientes({
-      method: 'get',
-      url: "/expedientes/" + id + "/seguimientos/?ordering=id&count=20&page=1",
-      // headers: req.headers,
-      data: {}
-    })
-      .then(result => {
-        // console.log(result.data.results);
-        setSeguimientos(result.data.results);
-      })
-      .catch(err => {
-        // console.log(err);
-      });
+    search()
   }, [])
 
   useEffect(() => {
@@ -51,6 +43,52 @@ function Seguimientos() {
           // console.log(err);
         });
   }, [open])
+
+  useEffect(() => {
+    if (page != 1) {
+      search();
+    }
+  }, [page]);
+
+  const handlePageChange = (page) => {
+    if (page <= numPages) {
+      setPage(page);
+    }
+  };
+
+  const search = async () => {
+    axiosTokenInstanceApiExpedientes({
+      method: 'get',
+      url: "/expedientes/" + id + "/seguimientos/?ordering=id&count=14&page=" + page,
+      // headers: req.headers,
+      data: {}
+    })
+      .then(result => {
+        // console.log(result.data.results);
+        if (page != 1) {
+          resultados.current = [...resultados.current, ...result.data.results];
+        } else {
+          resultados.current = result.data.results;
+        }
+        setSeguimientos(resultados.current);
+        setNumPages(Math.ceil(result.data.count / 14));
+      })
+      .catch(err => {
+        // console.log(err);
+      });
+  };
+
+  const handleScroll = (e) => {
+    // console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
+    // console.log('clientHeight: ', e.target.clientHeight);
+    if (
+      e.target.scrollHeight - e.target.scrollTop - 300 <
+      e.target.clientHeight
+    ) {
+      // console.log("almost bottom");
+      handlePageChange(page + 1);
+    }
+  };
 
   const getMediosSeguimiento = () => {
     axiosTokenInstanceApiExpedientes({
@@ -108,7 +146,7 @@ function Seguimientos() {
 
 
   return (
-    <div className='seguimientos-container'>
+    <div className='seguimientos-container' onScroll={e => handleScroll(e)}>
       <br />
       <h2>Seguimientos</h2>
       {seguimientos.map((seguimiento, index) => {
