@@ -39,6 +39,10 @@ export default function PopupConv({
   const [departamentoInitial, setDepartamentoInitial] = useState(null);
   const [ciudad, setCiudad] = useState("");
   const [ciudadInitial, setCiudadInitial] = useState(null);
+  const [localidad, setLocalidad] = useState("");
+  const [localidadInitial, setLocalidadInitial] = useState("")
+  const [barrio, setBarrio] = useState("");
+  const [barrioInitial, setBarrioInitial] = useState("")
 
   useEffect(() => {
     console.log(personaid);
@@ -239,13 +243,20 @@ export default function PopupConv({
           document.getElementById("tipoDiscapacidad").value = result.data["tipo_discapacidad_id"];
           document.getElementById("grupo_etnico").value = result.data["grupo_etnico_id"];
           
+          if (result.data["barrio_id"]) {
+            setBarrioInitial({ id:result.data["barrio_id"], nombre: result.data["barrio"]})
+            setLocalidadInitial({ id:result.data["localidad_id"], nombre: result.data["localidad"]})
+            setCiudadInitial({ id:result.data["ciudad_id"], nombre: result.data["ciudad"]})
+            setDepartamentoInitial({ id:result.data["departamento_id"], nombre: result.data["departamento"]})
+        }
 
-        //   if (result.data["tipo_persona_id"] == 1) {
-        //     document.getElementById("tipoPersona1").checked =
-        //       result.data["tipo_persona_id"];
-        //   } else if (result.data["tipo_persona_id"] == 2) {
-        //     document.getElementById("tipoPersona2").checked =
-        //       result.data["tipo_persona_id"];
+          if (result.data["tipo_persona_id"] == 1) {
+            document.getElementById("tipoPersona1").checked =
+              result.data["tipo_persona_id"];
+          } else if (result.data["tipo_persona_id"] == 2) {
+            document.getElementById("tipoPersona2").checked =
+              result.data["tipo_persona_id"];
+          }
          })
         .catch(err => {
           console.log("error");
@@ -284,6 +295,7 @@ export default function PopupConv({
         tipo_vivienda_id: event.target.vivienda.value,
         tipo_documento_id: event.target.tipoDocumento.value,
         escolaridad_id: event.target.escolaridad.value,
+        barrio_id: event.target.barrio.value,
       },
     };
 
@@ -302,7 +314,6 @@ export default function PopupConv({
         correo: event.target.correo.value,
         tarjeta_profesional: event.target.tarjetaProfesional.value,
         lugar_nacimiento: event.target.lugar_nacimiento.value,
-        // barrio_id: null,
         estado_civil_id: event.target.estado_civil.value,
         estrato_socioeconomico_id: event.target.estratosocioeconomico.value,
         grupo_etnico_id: event.target.grupo_etnico.value,
@@ -313,6 +324,10 @@ export default function PopupConv({
         tipo_vivienda_id: event.target.vivienda.value,
         tipo_documento_id: event.target.tipoDocumento.value,
         escolaridad_id: event.target.escolaridad.value,
+        barrio_id: event.target.barrio.value,
+        departamento_id: event.target.departamento.value,
+        ciuadad_id: event.target.ciudad.value,
+        localidad_id: event.target.localidad.value,
       
     };
 
@@ -343,8 +358,9 @@ export default function PopupConv({
       })
         .then((result) => {
           console.log(result);
-          // event.target.reset();
-          toast.success("La persona ha sido modificada correctamente", {
+            console.log("resultado:");
+            console.log(result);
+            toast.success("La persona ha sido modificada correctamente", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
           // setResultadosBusqueda([resultadosBusqueda]);
@@ -508,8 +524,8 @@ export default function PopupConv({
                       <input
                         className="form-check-input"
                         type="radio"
-                        name="flexRadioDefault"
-                        id="tipoPersona"
+                        name="tipoPersona"
+                        id={"tipoPersona" + tipoPersona["id"]}
                         value={tipoPersona["id"]}
                       />
                       <label
@@ -642,13 +658,12 @@ export default function PopupConv({
                   </label>
                   <SearchableSelect
                     axiosInstance={axiosTokenInstanceApiExpedientes}
-                    url={"/paises/1"}
-                    name={"departamento"}
+                    url={"/paises/1/departamentos/" + departamento +"/ciudades/" + ciudad}
+                    name={"localidad"}
                     identifier={"id"}
-                    initialValue={departamentoInitial}
+                    initialValue={localidadInitial}
                     onChange={(val) => {
-                      setDepartamento(val);
-                      setCiudad("");
+                      setLocalidad(val)
                     }}
                   />
                   </div>
@@ -658,12 +673,12 @@ export default function PopupConv({
                     </label>
                     <SearchableSelect
                       axiosInstance={axiosTokenInstanceApiExpedientes}
-                      url={"/paises/1/departamentos/" + departamento}
-                      name={"ciudad"}
+                      url={"/paises/1/departamentos/" + departamento +"/ciudades/" + ciudad + "/localidades/" + localidad}
+                      name={"barrio"}
                       identifier={"id"}
-                      initialValue={ciudadInitial}
+                      initialValue={barrioInitial}
                       onChange={(val) => {
-                        setCiudad(val);
+                        setBarrio(val);
                       }}
                     />
                  </div>
