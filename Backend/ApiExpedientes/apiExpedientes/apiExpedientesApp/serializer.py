@@ -323,7 +323,7 @@ class Respuesta_encuestaSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Respuesta_encuesta          # El modelo al que pertenece este serializador
-        fields = ('calificacion','pregunta_encuesta_id','encuesta_id')  # Coje todos los campos del modelo   # Coje todos los campos del modelo 
+        fields = ('calificacion','pregunta_encuesta_id','encuesta_id','nombre')  # Coje todos los campos del modelo   # Coje todos los campos del modelo 
 class Tipo_reporteSerializer(serializers.ModelSerializer):
 
     class Meta:
