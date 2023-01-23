@@ -2180,9 +2180,23 @@ views.ActualizarCitacion = async (req, res) => {
 }
 views.ActualizarPersonas = async (req, res) => {
   try {
-    if (req.body.identificacion) { delete req.body["identificacion"]; }
-    const url = config.urlApiExpedientes + "personas/" + req.params.id + "/"
-    requests.patch(req, res, url, req.body)
+    let endpoints=[]
+    if (req.body.identificacion) { delete req.body["identificacion"];  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
+    if (req.body.usuario_id) { req.body.groups=[req.body.grupo_id];endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/")  }
+    
+    await Promise.all(endpoints.map((endpoint) => axios.patch(endpoint,req.body)))
+      .then(axios.spread(async (data1) => {
+      
+      
+        res.status(200).json(data1.data)
+      }))
+      .catch(err => {
+
+        res.sendStatus(error(err))
+        return
+
+      })
+    
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
