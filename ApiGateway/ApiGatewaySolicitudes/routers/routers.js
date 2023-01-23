@@ -17,7 +17,8 @@ router.get("/solicitudes",views_genericos.ListarSolicitudes);
 router.get("/estados_solicitud",views_genericos.SeleccionablesPricipales);
 router.get("/paises/:id", views_genericos.ListarDepartamentos);
 router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
-router.get("/estados_solicitudes/:identificacion",views_genericos.Listar_Estados_solicitud_y_expediente);
+router.get("/estados_solicitudes/:identificacion",views_genericos.Listar_estados_solicitud);
+router.get("/estados_expedientes/:identificacion",views_genericos.Listar_estados_expediente);
 
 //Obtener datos 
 

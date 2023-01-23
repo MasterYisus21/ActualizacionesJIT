@@ -10,6 +10,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_api_key.permissions import HasAPIKey
 
+
 # api key
 # from rest_framework_api_key.permissions import HasAPIKey
 class CustomDjangoModelPermission(DjangoModelPermissions):
@@ -32,7 +33,7 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    # permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+    permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
     
     # permission_classes = [CustomDjangoModelPermission]
    

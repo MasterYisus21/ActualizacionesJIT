@@ -7,6 +7,9 @@ from django.contrib.auth.models import User, Group
 from django_filters import FilterSet, AllValuesFilter
 
 from django_filters import DateTimeFilter, NumberFilter
+from rest_framework_api_key.permissions import HasAPIKey
+from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 # from apiInventarioApp.pagination import StandardResultsSetPagination
 
 
@@ -137,8 +140,10 @@ class ExpedienteFilter(FilterSet):
 class ExpedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
     serializer_class = ExpedienteSerializer
+   
     search_fields=['numero_caso','fecha_registro','tipo_servicio_id__nombre','subtema_id__nombre','numero_radicado','estado_expediente_id__nombre']
     filter_class = ExpedienteFilter
+   
 class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_clienteSerializer
@@ -147,7 +152,7 @@ class Relacion_persona_expedienteViewSet(GeneralViewSet):  # Una sola clase para
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = ['persona_id__identificacion','persona_id','expediente_id','tipo_cliente_id']
     ordering_fields = '__all__'
-    
+    permission_classes = [HasAPIKey & IsAuthenticatedOrReadOnly]
     search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre','expediente_id__estado_expediente_id__nombre']
     serializer_class = Relacion_persona_expedienteSerializer
     

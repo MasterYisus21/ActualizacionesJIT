@@ -19,6 +19,7 @@ export default function Popup({
   const [tiposDocumento, setTiposDocumento] = useState([]);
   const [tiposCargo, setTiposCargo] = useState([]);
   const [tiposGrupo, setTiposGrupo] = useState([]);
+  const [usuarioid, setUsuarioid] = useState(null);
 
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
@@ -28,7 +29,6 @@ export default function Popup({
       data: {},
     })
       .then((result) => {
-        console.log(result.data);
         setTiposDocumento(result.data.results);
       })
       .catch((err) => {
@@ -44,7 +44,6 @@ export default function Popup({
       data: {},
     })
       .then((result) => {
-        console.log(result.data);
         setTiposCargo(result.data.results);
       })
       .catch((err) => {
@@ -60,7 +59,6 @@ export default function Popup({
       data: {},
     })
       .then((result) => {
-        console.log(result.data);
         setTiposGrupo(result.data.results);
       })
       .catch((err) => {
@@ -69,7 +67,6 @@ export default function Popup({
   }, []);
 
   useEffect(() => {
-    console.log(id);
     axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "personas/" + id,
@@ -90,6 +87,7 @@ export default function Popup({
         document.getElementById("celular").value = result.data["celular"];
         document.getElementById("cargo").value = result.data["tipo_cargo_id"];
         document.getElementById("permiso").value = result.data["grupo_id"];
+        setUsuarioid(result.data["usuario_id"]);
       }
     });
   }, []);
@@ -107,6 +105,7 @@ export default function Popup({
       tarjeta_profesional: event.target.tarjetaProfesional.value,
       tipo_cargo_id: event.target.cargo.value,
       grupo_id: event.target.permiso.value,
+      usuarios_id: usuarioid,
     };
 
     if (modificar == null) {
@@ -249,7 +248,6 @@ export default function Popup({
                 className=""
                 type="text"
                 placeholder="name@example.com"
-                required
               />
             </FloatingLabel>
 
