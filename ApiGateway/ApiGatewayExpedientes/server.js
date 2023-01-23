@@ -105,6 +105,8 @@ async function verifier(req, res, next) {
   try {
     axios.defaults.headers['X-Api-Key'] =config.apiKey ;
     axios.defaults.headers['Id'] ="jairo";
+    req.identificacion="1013689035";
+    req.grupo=2
     if (req.headers.authorization) {
 
       await axios

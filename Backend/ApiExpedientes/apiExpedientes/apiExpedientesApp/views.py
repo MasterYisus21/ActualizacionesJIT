@@ -145,10 +145,10 @@ class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de
 
 class Relacion_persona_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
-    filterset_fields = '__all__'
+    filterset_fields = ['persona_id__identificacion','persona_id','expediente_id','tipo_cliente_id']
     ordering_fields = '__all__'
     
-    search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre']
+    search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre','expediente_id__estado_expediente_id__nombre']
     serializer_class = Relacion_persona_expedienteSerializer
     
 class Estado_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 

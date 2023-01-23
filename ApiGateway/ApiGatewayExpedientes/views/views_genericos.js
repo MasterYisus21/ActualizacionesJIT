@@ -388,6 +388,24 @@ views.ListarDepartamentos = async (req, res) => {
 
 
 }
+views.ListarExpedientes = async (req, res) => {
+  try {
+    if(req.grupo==1){
+    const url = config.urlApiExpedientes + "expedientes"
+    
+    requests.get(req, res, url, "?")
+    }else{
+      const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion="+req.identificacion
+      console.log(req.query)
+      requests.get(req, res, url, "&")
+    }
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+
+
+}
 views.ListarSubtemas = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "subtemas?tema_id=" + req.params.id
