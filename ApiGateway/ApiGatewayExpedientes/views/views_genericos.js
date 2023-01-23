@@ -395,12 +395,12 @@ views.VerPersonas = async (req, res) => {
         if(result.data.usuario_id){
         await axios.get(config.urlApiExpedientes+"usuarios/"+result.data.usuario_id)
           .then(resul=>{
-            console.log(resul.data)
+           
             result.data.grupo_id=resul.data.groups[0]
 
         })
           .catch(err => {
-            res.sendStatus(error(err))
+            res.status(error(err))
           })
         }
         res.status(200).json(result.data)
@@ -1155,18 +1155,18 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                  .attach('adjunto', fs.createReadStream("./public/formatos/citacion_"+resul.citado_nombres+".pdf")) // creates a read stream
                 //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
                 .then(async function (response) {
-                  
+                  console.log(resul)
                   // res.send(response.body)
                   const saludo = `<br>Reciba un cordial saludo `
                   const encabezado = `Este mensaje notifica que se ha generado una citación de audiencia de conciliación con la siguiente informacion:`
                   const cuerpo = `
                   <br><b>Expediente:</b> ${resul.expediente_numero_radicado}
-                  <br><b>Nombre del Citado:</b> ${result.citado_nombres}
-                  <br><b>Fecha:</b> ${result.citado_fecha_sesion} 
-                  <br><b>Hora:</b> ${result.citacion_turno} 
-                  <br><b>Medio:</b> ${result.citacion_medio} 
-                  <br><b>Enlace:</b> ${result.citacion_enlace} 
-                  <br><b>Descripcion:</b> ${result.citacion_descripcion} 
+                  <br><b>Nombre del Citado:</b> ${resul.citado_nombres}
+                  <br><b>Fecha:</b> ${resul.citado_fecha_sesion} 
+                  <br><b>Hora:</b> ${resul.citacion_turno} 
+                  <br><b>Medio:</b> ${resul.citacion_medio} 
+                  <br><b>Enlace:</b> ${resul.citacion_enlace} 
+                  <br><b>Descripcion:</b> ${resul.citacion_descripcion} 
 
 
                   <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento  .<br><br>`

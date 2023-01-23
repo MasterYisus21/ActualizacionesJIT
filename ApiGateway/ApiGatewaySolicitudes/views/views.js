@@ -174,7 +174,7 @@ views.CrearSolicitud = async (req, res) => {
           }))
           .catch(err => {
 
-            res.sendStatus(error(err))
+            res.status(error(err))
             return
 
           })
@@ -182,7 +182,7 @@ views.CrearSolicitud = async (req, res) => {
       }))
       .catch(err => {
         
-        res.sendStatus(error(err))
+        res.status(error(err))
         return
       })
 
@@ -330,6 +330,7 @@ views.DescargarDocumentos = async (req, res) => {
 
 views.AprobarSolicitud = async (req, res) => {
   try {
+
     let  cuerpo =""
     const  encabezado = `Este mensaje notifica que el estado de su solicitud ${req.body.numero_radicado} es el siguiente:<br><br>
      <b>Numero Radicado:</b> ${req.body.numero_radicado}
@@ -383,7 +384,7 @@ views.AprobarSolicitud = async (req, res) => {
          
             })
             .catch(err => {
-              error(err)
+              res.status(error(err))
               return
             })
       
