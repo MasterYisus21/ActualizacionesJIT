@@ -22,13 +22,13 @@ function Consultar() {
   const [filtros, setFiltros] = useState([])
   const [filtrosAplicados, setFiltrosAplicados] = useState([])
   const [page, setPage] = useState(1)
-  const [solexp, setSolexp] = useState("solicitudes")
+  const [solexp, setSolexp] = useState(false)
   let resultados = useRef([]);
   const [numPages, setNumPages] = useState(1);
   let currentPage = 1;
 
   const search = () => {
-
+    if(!solexp){
     // console.log(e.target.documento.value)
     axiosBasicInstanceApiSolicitudes({
       method: 'get',
@@ -40,18 +40,42 @@ function Consultar() {
       .then(result => {
         if (page != 1){
         console.log(result.data);
-        resultados.current = [...resultados.current, ...result.data.solicitudes.results];
+        resultados.current = [...resultados.current, ...result.data.results];
         
       } else{
-        resultados.current = result.data.solicitudes.results;
+        resultados.current = result.data.results;
         
       }
       setResultadosBusqueda(resultados.current)
-      setNumPages(Math.ceil(result.data.solicitudes.count / 8));
+      setNumPages(Math.ceil(result.data.count / 8));
       })
       .catch(err => {
         console.log("error");
       });
+    }else{
+      axiosBasicInstanceApiSolicitudes({
+        method: 'get',
+        url: "/estados_expedientes/" + documento + "/?ordering=-id&count=8&page=" + page + valoresBuscados.map(valor => { return valor }) + filtrosAplicados.map(valor => { return valor }),
+        // headers: req.headers,
+        data: {}
+      })
+      
+        .then(result => {
+          if (page != 1){
+          console.log(result.data);
+          resultados.current = [...resultados.current, ...result.data.results];
+          
+        } else{
+          resultados.current = result.data.results;
+          
+        }
+        setResultadosBusqueda(resultados.current)
+        setNumPages(Math.ceil(result.data.count / 8));
+        })
+        .catch(err => {
+          console.log("error");
+        });
+    }
 
 
   }
@@ -115,48 +139,31 @@ function Consultar() {
         </div>
         <div className='contenedor-consultar-documento'>
           <div className='rectangulo-pregunta-documento'>
-            <Row className="g-2">
+
               <Form className='form-consulta-solicitud'onSubmit={e => { e.preventDefault(); setPage(1); setDocumento(e.target.documento.value); }}>
-                <Col className='seleccionable-cedula'>
-                  <FloatingLabel
-                    controlId="floatingSelectGrid"
-                    label="Soicitud - Expediente"
-                  >
-
-                    {/* seleccionable tipo de cedula */}
-
-                    <Form.Select className='opciones-cedula' aria-label="Floating label select example">
-                      <option>Abre el menú para ver las opciones</option>
-                      <option value="1">Solicitud</option>
-                      <option value="2">Expediente</option>
-
-                    </Form.Select>
-                  </FloatingLabel>
-                </Col>
-
-
-                <input className='' type="text" placeholder='Documento' name='documento'></input>
-                <button>buscar</button>
+                <div className='contenedor-botones-solicitud-expediente'>
+                  <button className={solexp?"boton-consultar-solicitud":"boton-consultar-solicitud-activado"} onClick={()=>setSolexp(false)}>Solicitud</button>
+                  <button className={!solexp?"boton-consultar-solicitud":"boton-consultar-solicitud-activado"} onClick={()=>setSolexp(true)}>Expediente</button>
+                </div>
+                <input className='entrada-cedula-buscar' type="text" placeholder='Documento' name='documento'></input>
+                <button className='boton-ingreso2'>buscar</button>
               </Form>
-            </Row>
-
-
           </div>
         </div>
         <div className='cuerpo-consulta'>
           <div className='contenedor-casos-consulta'>
             {resultadosBusqueda.map(resultado => {
               return (
-                <Link key={resultado["id"]} to={"solicitudes/" + resultado["id"]} className='text-decoration-none '>
+                
                 <div className='carta-caso-consulta' >
                   <div className='contenedor-rectangulo-tarjeta-consultar'>
-                    <RectanguloCelular text={resultado["numero_radicado"]} />
+                    <RectanguloCelular text={resultado["numero_caso"]||resultado["numero_radicado"]} />
                   </div>
                   <div className='contenedor-caso-consulta'>
                     <div className='lado-izquierdo'>
                       <div className='orden-lado-izquierdo'>
                         <label className='estado-consulta'>Estado:</label>
-                        <label className='fecha-consulta'>{resultado["estado_solicitud"]}</label>
+                        <label className='fecha-consulta'>{resultado["estado_solicitud"]||resultado["estado_expediente"]}</label>
                       </div>
                     </div>
                     <div className='centro'>
@@ -174,7 +181,7 @@ function Consultar() {
                   </div>
                   
                 </div>
-                </Link>
+                
               )
             })}
             <Button
