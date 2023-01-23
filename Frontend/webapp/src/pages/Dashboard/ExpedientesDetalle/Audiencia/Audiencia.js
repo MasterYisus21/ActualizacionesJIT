@@ -6,6 +6,8 @@ import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInsta
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import fileDownload from 'js-file-download';
+import { confirmAlert } from 'react-confirm-alert';
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function Audiencia() {
@@ -18,6 +20,7 @@ function Audiencia() {
     "personas_citadas": [],
     "personas_no_citadas": []
   })
+  const [cargandoNotificacion, setCargandoNotificacion] = useState(false)
 
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
@@ -212,6 +215,42 @@ function Audiencia() {
       });
   }
 
+  const notificarCitacion = () => {
+    console.log("notificarCitacion");
+    const confirmacion = () => {
+      const data = personas["personas_citadas"].map(v => v.id_relacion)
+      console.log(data);
+      axiosTokenInstanceApiExpedientes({
+        method: 'post',
+        url: `expedientes/${id}/citaciones/${dataApi?.id}/notificar`,
+        // headers: req.headers,
+        data: data
+      })
+        .then(result => {
+          setCargandoNotificacion(false)
+          console.log(result.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    confirmAlert({
+      title: `Confirmación`,
+      message: `¿Estas seguro de notificar a los usuarios?. Esta acción enviara un correo electrónico y no puede ser revertida`,
+      buttons: [
+        {
+          label: 'Si',
+          onClick: () => { setCargandoNotificacion(true); confirmacion() }
+
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  }
+
   return (
     <div className='contenedor-principal-modulo-audiencia'>
       {/* <div className='contenedor-boton-audiencia'>
@@ -309,7 +348,7 @@ function Audiencia() {
                   <td>{dato.nombres}</td>
                   <td>{dato.tipo_cliente}</td>
                   <td className='contenedor-icono-descarga'>
-                    <button className='button-audiencia' onClick={e => {descargarFormatoCitacion(e, dato)}}>
+                    <button className='button-audiencia' onClick={e => { descargarFormatoCitacion(e, dato) }}>
                       <img src='/icons/descarga-documento.svg' className='icono-descarga-documento' />
                     </button>
                   </td>
@@ -352,6 +391,7 @@ function Audiencia() {
                         <img className='mini-image' src="/images/arrow-up.svg"></img>
                       </button>
                     </form>
+
                   </td>
                 </tr>
               )
@@ -361,7 +401,21 @@ function Audiencia() {
         </table>
       </div>
       <div className='contenedor-boton-notificar-via-correo'>
-        <button className='boton-notificar'>Notificar vía correo</button>
+        <button
+          className='boton-notificar'
+          onClick={e => { notificarCitacion() }}
+        >
+          Notificar vía correo
+        </button>
+        <ClipLoader
+          color={"#000000"}
+          loading={cargandoNotificacion}
+          // cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+        {!cargandoNotificacion && <img src='/icons/check-mark.svg' alt='imagen guardar' className="" />}
       </div>
     </div >
   )
