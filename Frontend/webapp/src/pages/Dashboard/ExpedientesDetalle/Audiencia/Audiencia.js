@@ -162,6 +162,7 @@ function Audiencia() {
         personasTemp["personas_no_citadas"] = personasTemp["personas_no_citadas"].filter(personaIt => {
           return (personaIt.persona_id != persona.persona_id)
         });
+        persona.id_relacion = result.data.id
         personasTemp["personas_citadas"].push(persona)
         setPersonas(personasTemp)
       })
