@@ -6,6 +6,7 @@ const views_genericos = require("../views/views");
 const archivo = require("../views/cargar_documentos.js")
 
 //Listar
+
 router.get("/tipos_documento", views_genericos.SeleccionablesPricipales);
 router.get("/tipos_persona", views_genericos.SeleccionablesPricipales);
 router.get("/generos", views_genericos.SeleccionablesPricipales);

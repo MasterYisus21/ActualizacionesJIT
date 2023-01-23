@@ -4,6 +4,7 @@
     "urlDocumentos": "http://0.0.0.0:8002/api/documentos/v1/",
     "urlEmail": "http://0.0.0.0:5001/",
     "urlGatewaySolicitudes": "http://localhost:3001/api/gateway/v1/",
-    "urlGatewayExpedientes": "http://localhost:3002/api/gateway/v1/"
+    "urlGatewayExpedientes": "http://localhost:3002/api/gateway/v1/",
+    "apiKey":"2ZwZtPbd.34ikEaXRQrblBlJRD6XxxfR5lau6GMFE"
     
 }

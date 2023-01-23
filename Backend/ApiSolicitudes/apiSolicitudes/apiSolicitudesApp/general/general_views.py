@@ -9,7 +9,7 @@ from copy import deepcopy
 from rest_framework import filters
 
 from django_filters.rest_framework import DjangoFilterBackend
-# from rest_framework_api_key.permissions import HasAPIKey
+from rest_framework_api_key.permissions import HasAPIKey
 
 
 
@@ -24,7 +24,7 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    # permission_classes = [HasAPIKey & CustomUpdateDjangoModelPermission]
+    permission_classes = [HasAPIKey & CustomUpdateDjangoModelPermission]
 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
