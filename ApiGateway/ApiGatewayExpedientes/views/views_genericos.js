@@ -40,7 +40,7 @@ views.CrearPersonas = async (req, res) => {
     if (req.body.tarjeta_profesional == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
 
     let datos = { username: req.body.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [req.body.grupo_id] }
-   
+
     await axios.post(config.urlApiExpedientes + "usuarios/", datos)
       .then(async result => {
 
@@ -227,8 +227,21 @@ views.CrearExpediente = async (req, res) => {
         endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, relacion_conciliador_expediente, hechos]
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           .then(axios.spread(async (data3, data4, data5) => {
+
+
             // res.status(201).json(data2.data)
-            console.log(data5.data)
+
+            const saludo = `<br>Reciba un cordial saludo ${data5.data.nombres}`
+            const encabezado = `Este mensaje notifica que se te ha asignado un  nuevo caso de conciliación con la siguiente información:`
+            const cuerpo = `
+            <br><b>Expediente:</b> ${data5.data.numero_caso}
+            <br><b>Fecha de Registro:</b> ${data5.data.fecha_registro}
+            <br><b>Estado del Expediente:</b> ${data5.data.estado_expediente} 
+            <br><b>Conciliador:</b> ${data5.data.nombres} 
+            <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br>`
+            let asunto = `Asignación Caso de Conciliación`
+            const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [data5.data.correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
+
             //get res.status(201).json(data2.data[0])
             req.params.id = data2.data.id
 
@@ -390,25 +403,25 @@ views.ListarDepartamentos = async (req, res) => {
 }
 views.VerPersonas = async (req, res) => {
   try {
-    await axios.get(config.urlApiExpedientes+"personas/"+req.params.id)
-      .then(async result=>{
-        if(result.data.usuario_id){
-        await axios.get(config.urlApiExpedientes+"usuarios/"+result.data.usuario_id)
-          .then(resul=>{
-           
-            result.data.grupo_id=resul.data.groups[0]
+    await axios.get(config.urlApiExpedientes + "personas/" + req.params.id)
+      .then(async result => {
+        if (result.data.usuario_id) {
+          await axios.get(config.urlApiExpedientes + "usuarios/" + result.data.usuario_id)
+            .then(resul => {
 
-        })
-          .catch(err => {
-            res.status(error(err))
-          })
+              result.data.grupo_id = resul.data.groups[0]
+
+            })
+            .catch(err => {
+              res.status(error(err))
+            })
         }
         res.status(200).json(result.data)
-    })
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -416,13 +429,13 @@ views.VerPersonas = async (req, res) => {
 }
 views.ListarExpedientes = async (req, res) => {
   try {
-    if(req.grupo==1){
-    const url = config.urlApiExpedientes + "expedientes"
-    
-    requests.get(req, res, url, "?")
-    }else{
-      const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion="+req.identificacion
-      console.log(req.query)
+    if (req.grupo == 1) {
+      const url = config.urlApiExpedientes + "expedientes"
+
+      requests.get(req, res, url, "?")
+    } else {
+      const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion
+
       requests.get(req, res, url, "&")
     }
   } catch (error) {
@@ -670,7 +683,7 @@ const informacionCitacion = async (req) => {
 
 
   ]
-  
+
   // console.log(endpoints)
 
   await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
@@ -712,13 +725,16 @@ const informacionCitacion = async (req) => {
       }
       if (Object.keys(estudiante.data.results).length < 0) { datos.estudiante = [] } else {
         let contador = 1
+        let i=0
         for (const iterator of estudiante.data.results) {
-
+        
           for (const item in iterator) {
-            if (typeof (estudiante.data.results[0][item]) == 'string') { estudiante.data.results[0][item] = estudiante.data.results[0][item].toUpperCase() }
-            if (estudiante.data.results[0][item] == null) { estudiante.data.results[0][item] = "___" }
-            datos["estudiante" + contador + "_" + item] = estudiante.data.results[0][item]
+            
+            if (typeof (estudiante.data.results[i][item]) == 'string') { estudiante.data.results[i][item] = estudiante.data.results[i][item].toUpperCase() }
+            if (estudiante.data.results[i][item] == null) { estudiante.data.results[i][item] = "___" }
+            datos["estudiante" + contador + "_" + item] = estudiante.data.results[i][item]
           }
+          i++
           contador++
         }
       }
@@ -899,23 +915,24 @@ views.DescargarFormatoResultado = async (req, res) => {
 }
 views.GenerarReportes = async (req, res) => {
   try {
-    req.body.reporte_id=req.params.id
-    axios.post(config.urlGeneradorReportes,req.body,{ responseType: 'arraybuffer' })
+    req.body.reporte_id = req.params.id
+    axios.post(config.urlGeneradorReportes, req.body, { responseType: 'arraybuffer' })
 
-            .then(result => {
+      .then(result => {
 
-                res.end(result.data)
+        res.end(result.data)
 
-            })
-            .catch(err => {
+      })
+      .catch(err => {
 
-              if(err.response){
-                res.sendStatus(error(err));
-                return
-              }
-              if (err.request) {
-              res.sendStatus(503);return}
-            })
+        if (err.response) {
+          res.sendStatus(error(err));
+          return
+        }
+        if (err.request) {
+          res.sendStatus(503); return
+        }
+      })
 
   } catch (error) {
     console.log(error);
@@ -987,9 +1004,9 @@ views.CrearCitaciones = async (req, res) => {
 }
 views.EnviarDocumentoCitacion = async (req, res) => {
   try {
-    
-    
-  }catch (error) {
+
+
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -1014,27 +1031,27 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
 
         for (const iterator of datos1.data.results) {
           personas_disponibles[personas_disponibles.length] = iterator.persona_id
-          
+
         }
-        
-        
+
+
 
         // // personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
         if (datos2.data.results.length < 1) { personas_citadas = [] } else {
           for (const iterator of datos2.data.results) {
             id_personas_citadas[personas_citadas.length] = iterator.persona_id
-            datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)].id_relacion=iterator.id
+            datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)].id_relacion = iterator.id
             personas_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)])
-            if (datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)]==null){personas_citadas = [];break}
+            if (datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)] == null) { personas_citadas = []; break }
           }
 
-         
-        //   // personas_citadas = personas_citadas.sort((a, b) => { return a - b });
+
+          //   // personas_citadas = personas_citadas.sort((a, b) => { return a - b });
         }
-        
+
         datos.personas_citadas = personas_citadas
         id_personas_no_citadas = personas_disponibles.filter(element => !id_personas_citadas.includes(element))
-        
+
         // endpoints = []
 
         if (id_personas_no_citadas.length < 1) { datos.personas_no_citadas = [] } else {
@@ -1043,14 +1060,14 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
             personas_no_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator)])
           }
 
-           datos.personas_no_citadas = personas_no_citadas
-      
+          datos.personas_no_citadas = personas_no_citadas
+
         }
 
         res.status(200).json(datos)
       }))
       .catch(err => {
-        
+
         res.sendStatus(error(err))
         return
 
@@ -1112,54 +1129,66 @@ views.CitarPersonas = async (req, res) => {
 }
 views.EnviarNotificacionCitacion = async (req, res) => {
   try {
-  
+
     // validacion correo 
-    for  await (const iterator of req.body) {
-      req.params.id_relacion=iterator
+    for await (const iterator of req.body) {
+      req.params.id_relacion = iterator
       await informacionCitacion(req).then(async (resul) => {
         // console.log(resul.data.results[0])
-        
+
         resul.nombre_documento = "CITACION AUDIENCIA DE CONCILIACION"
-        if(!resul.citado_localidad){resul.citado_localidad="______"}
-        if(!resul.citado_ciudad){resul.citado_ciudad="______"}
-        if(!resul.estudiante1_nombres){resul.estudiante1_nombres=""}
-        if(!resul.estudiante2_nombres){resul.estudiante2_nombres=""}
+        if (!resul.citado_localidad) { resul.citado_localidad = "______" }
+        if (!resul.citado_ciudad) { resul.citado_ciudad = "______" }
+        if (!resul.estudiante1_nombres) { resul.estudiante1_nombres = "" }
+        if (!resul.estudiante2_nombres) { resul.estudiante2_nombres = "" }
+     
         await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
           .then(async (result) => {
-              
-             fs.writeFile("./public/formatos/citacion_"+resul.citado_nombres+".docx", result.data, async (err) => {
-              if (err){throw new Error(err)}
-              
+
+            fs.writeFile("./public/formatos/citacion_" + resul.citado_nombres + ".docx", result.data, async (err) => {
+              if (err) { throw new Error(err) }
+
               // resul.citado_nombres=resul.citado_nombres.replace("","_")
-        
-               let file = fs.readFileSync("./public/formatos/citacion_"+resul.citado_nombres+".docx")
-               let formdata=new FormData()
-           
-               formdata.append("document",file)
-               
-               await axios.post(config.urlConvertidorPDF,formdata,{responseType: "arraybuffer"})
-                .then(async result=>{
 
-                  fs.writeFile("./public/formatos/citacion_"+resul.citado_nombres+".pdf", result.data, async (err) => {
-                    if (err){throw new Error(err)}
+              let file = fs.readFileSync("./public/formatos/citacion_" + resul.citado_nombres + ".docx")
+              let formdata = new FormData()
 
-                  let fil = fs.readFileSync("./public/formatos/citacion_"+resul.citado_nombres+".pdf")
-                  let formdat=new FormData()
-                  formdat.append("adjunto",fil)
-                  
-                  await unirest
-                .post(config.urlEmail + "adjuntar")
+              formdata.append("document", file)
 
-               
-                //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-                 .attach('adjunto', fs.createReadStream("./public/formatos/citacion_"+resul.citado_nombres+".pdf")) // creates a read stream
-                //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-                .then(async function (response) {
-          
-                  // res.send(response.body)
-                  const saludo = `<br>Reciba un cordial saludo `
-                  const encabezado = `Este mensaje notifica que se ha generado una citación de audiencia de conciliación con la siguiente informacion:`
-                  const cuerpo = `
+              await axios.post(config.urlConvertidorPDF, formdata, { responseType: "arraybuffer" })
+                .then(async result => {
+                  try {
+                    fs.unlinkSync("./public/formatos/citacion_" + resul.citado_nombres + ".docx")
+                  } catch (err) {
+                    error(err)
+                    return
+                  }
+                  fs.writeFile("./public/formatos/citacion_" + resul.citado_nombres + ".pdf", result.data, async (err) => {
+                    if (err) { throw new Error(err) }
+
+                    let fil = fs.readFileSync("./public/formatos/citacion_" + resul.citado_nombres + ".pdf")
+                    let formdat = new FormData()
+                    formdat.append("adjunto", fil)
+
+                    await unirest
+                      .post(config.urlEmail + "adjuntar")
+
+
+                      //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+                      .attach('adjunto', fs.createReadStream("./public/formatos/citacion_" + resul.citado_nombres + ".pdf")) // creates a read stream
+                      //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+                      .then(async function (response) {
+
+                        try {
+                          fs.unlinkSync("./public/formatos/citacion_" + resul.citado_nombres + ".pdf")
+                        } catch (err) {
+                          error(err)
+                          return
+                        }
+                        // res.send(response.body)
+                        const saludo = `<br>Reciba un cordial saludo `
+                        const encabezado = `Este mensaje notifica que se ha generado una citación de audiencia de conciliación con la siguiente informacion:`
+                        const cuerpo = `
                   <br><b>Expediente:</b> ${resul.expediente_numero_radicado}
                   <br><b>Nombre del Citado:</b> ${resul.citado_nombres}
                   <br><b>Fecha:</b> ${resul.citado_fecha_sesion} 
@@ -1169,53 +1198,54 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                   <br><b>Descripcion:</b> ${resul.citacion_descripcion} 
 
 
-                  <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento  .<br><br>`
-                 
-                  let asunto = `Citación Audiencia Conciliación`
+                  <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento  .<br>`
 
-              
-                  const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo,response.body)).catch(err => { res.status(error(err)) })
-      
-                  // await axios.post(config.urlEmail)
-                  //   .then(result=>{
-                  //     res.send(result.data)
-                  // })
-                  //   .catch(err => {
-                  //     res.sendStatus(error(err))
-                  //   })
-                  
-                  // try {
-                  //   fs.unlinkSync(iterator.path)
-                  // } catch (err) {
-                  //   error(err)
-                  // }
+                        let asunto = `Citación Audiencia Conciliación`
+
+
+                        const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { res.status(error(err)) })
+
+                        // await axios.post(config.urlEmail)
+                        //   .then(result=>{
+                        //     res.send(result.data)
+                        // })
+                        //   .catch(err => {
+                        //     res.sendStatus(error(err))
+                        //   })
+
+                        // try {
+                        //   fs.unlinkSync(iterator.path)
+                        // } catch (err) {
+                        //   error(err)
+                        // }
+                      })
+                    // await axios.post(config.urlEmail+"adjuntar",formdat)
+                    //   .then(result=>{
+                    //     res.send(result)
+                    // })
+                    //   .catch(err => {
+                    //     res.status(error(err))
+                    //   })
+
+                    res.end(result.data)
+                  })
                 })
-                  // await axios.post(config.urlEmail+"adjuntar",formdat)
-                  //   .then(result=>{
-                  //     res.send(result)
-                  // })
-                  //   .catch(err => {
-                  //     res.status(error(err))
-                  //   })
-
-                  res.end(result.data)
-               })
-              })
                 .catch(err => {
-                  if(err.response){
+                  if (err.response) {
                     res.sendStatus(error(err));
                     return
                   }
                   if (err.request) {
-                  res.sendStatus(503);return}
-                  
+                    res.sendStatus(503); return
+                  }
+
                 })
-                  
-      
-      
-            // res.end(result.data)
+
+
+
+              // res.end(result.data)
+            })
           })
-        })
           .catch(err => {
             throw new Error(err)
           })
@@ -1227,33 +1257,33 @@ views.EnviarNotificacionCitacion = async (req, res) => {
 
 
     }
-   
-  
 
-      // axios({
-      //   method: 'post',
-      //   url: config.urlConvertidorPDF,
 
-      //   // url: `/documentos/2022-452`,
-      //   responseType: "arraybuffer",
-      //   data: formdata
-      // })
-      //   .then(response => {
- 
-          
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
-    
-     
 
-    
-  
+    // axios({
+    //   method: 'post',
+    //   url: config.urlConvertidorPDF,
+
+    //   // url: `/documentos/2022-452`,
+    //   responseType: "arraybuffer",
+    //   data: formdata
+    // })
+    //   .then(response => {
+
+
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+
+
+
+
+
     // await unirest
     //             .post(config.urlEmail + "adjuntar")
 
-               
+
     //             //.attach('Ruta_directorio', req.file.path) // reads directly from local file
     //              .attach('adjunto', fs.createReadStream("public/formatos/node.pdf")) // creates a read stream
     //             //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
@@ -1268,10 +1298,10 @@ views.EnviarNotificacionCitacion = async (req, res) => {
     //               <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br><br>`
     //               let asunto = `Asignación Caso de Concilaición `
     //               const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [result.data.correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
-      
+
     //               await axios.post(config.urlEmail)
     //                 .then(result=>{
-                      
+
     //               })
     //                 .catch(err => {
     //                   res.sendStatus(error(err))
@@ -1283,7 +1313,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
     //               //   error(err)
     //               // }
     //             })
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -1292,7 +1322,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
 views.EnviarResultado = async (req, res) => {
   try {
     res.sendStatus(200)
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;
@@ -1323,7 +1353,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
             .field('expediente', result.data.numero_caso)
             .field('nombre', iterator.originalname)
 
-            
+
 
             //.attach('Ruta_directorio', req.file.path) // reads directly from local file
             .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
@@ -1676,19 +1706,19 @@ views.CrearResultado = async (req, res) => {
 
         const cerrarCaso = axios.patch(config.urlApiExpedientes + "expedientes/" + req.params.id + "/", { expediente_cerrado: 1 })
 
-        await Promise.all([resultado, categoria, cerrarCaso]).then(axios.spread(async (result, data2,casoCerrado) => {
+        await Promise.all([resultado, categoria, cerrarCaso]).then(axios.spread(async (result, data2, casoCerrado) => {
 
           res.status(200).json(result.data)
 
           axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id=" + req.params.id)
             .then(resul => {
-            
+
               if (Object.keys(resul.data.results).length < 1) { return }
               for (const iterator of resul.data.results) {
                 if (iterator.correo == "") { return }
                 correos.push(iterator.correo)
               }
-             
+
               const saludo = `<br>Reciba un cordial saludo `
               const encabezado = `Este mensaje notifica que el expediente <b>${casoCerrado.data.numero_caso}</b> posee el siguiente resultado:`
               const cuerpo = `

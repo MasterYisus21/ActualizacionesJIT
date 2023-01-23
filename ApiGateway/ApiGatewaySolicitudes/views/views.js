@@ -242,51 +242,24 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
   }
 }
 
-views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
+views.Listar_estados_solicitud = async (req, res) => {
   try {
-
-    let endpoints = []
-    datos = {}
-    if (!req.query.count) { req.query.count = 20 }
-    endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion,
-    config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion]
-
-
+    let query = ""
     if ((req.url.indexOf('?')) > 0) {
    
-      const query = '&' + req.url.slice(req.url.indexOf('?') + 1)
-      endpoints = [config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion + query,
-      config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion + query]
+      query = '&' + req.url.slice(req.url.indexOf('?') + 1)
 
     }
 
-    // console.log(config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion)
 
-    // axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion)
-    //   .then(result=>{
-    //     res.status(200).json(result.data)
-    // })
-    //   .catch(err => {
-    //     res.sendStatus(error(err))
-    //   })
-
-
-    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-      .then(axios.spread((data1, data2) => {
-        datos.solicitudes = data1.data
-        datos.expedientes = data2.data
-
-        res.status(201).json(datos)
-
-      }))
+    axios.get(config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion+query)
+      .then(result=>{
+        
+        res.status(200).json(result.data)
+    })
       .catch(err => {
-
         res.sendStatus(error(err))
-
       })
-
-
-
 
 
   } catch (error) {
@@ -294,6 +267,31 @@ views.Listar_Estados_solicitud_y_expediente = async (req, res) => {
     res.sendStatus(500);
   }
 }
+views.Listar_estados_expediente = async (req, res) => {
+  try {
+    let query = ""
+    if ((req.url.indexOf('?')) > 0) {
+   
+      query = '&' + req.url.slice(req.url.indexOf('?') + 1)
+
+    }
+    axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion+query)
+      .then(result=>{
+        let datos=[]
+        for (const iterator of result.data.results) {
+          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado})
+        }
+        result.data.results=datos
+        res.status(200).json(result.data)
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
 views.DescargarDocumentos = async (req, res) => {
   try {
     await axios.get(config.urlApiSolicitudes + "documentos/" + req.params.id)
@@ -362,7 +360,7 @@ views.AprobarSolicitud = async (req, res) => {
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
                 .then(resul => {
                   
-                  res.status(200).json(resul.data)
+                  // res.status(200).json(resul.data)
                   if(req.body.numero_caso !=""){
                     cuerpo = `<br> Conforme al estado actual de tu solicitud, nos complace informarte que ahora cuentas con un conciliador asignado y un nuevo número de referencia el cual te permitirá identificar tu caso en nuestro Centro de Conciliación. <br> 
                     <br><b>Expediente:</b> ${resul.data.numero_caso}
@@ -375,7 +373,7 @@ views.AprobarSolicitud = async (req, res) => {
                 })
 
                 .catch(err => {
-                  console.log("aqui")
+               
                   error(err)
                   return
                 })
