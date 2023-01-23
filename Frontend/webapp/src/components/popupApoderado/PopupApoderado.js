@@ -135,7 +135,19 @@ export default function PopupApoderado({
           toast.success("La persona ha sido modificada correctamente", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
-          // setResultadosBusqueda([resultadosBusqueda]);
+          console.log(apoderadoid);
+          let tempArray = [...resultadosBusqueda];
+          const pos = tempArray
+            .map((e) => {
+              return e["apoderado_id"];
+            })
+            .indexOf(apoderadoid);
+          console.log(pos);
+          tempArray[pos][
+            "nombre_apoderado"
+          ] = `${result.data.nombres} ${result.data.apellidos}`;
+          setResultadosBusqueda(tempArray);
+
           setEstado(!estado);
         })
         .catch((err) => {
