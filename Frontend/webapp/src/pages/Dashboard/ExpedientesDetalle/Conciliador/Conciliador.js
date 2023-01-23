@@ -217,7 +217,6 @@ function Conciliador() {
 
         <h2>Informacion del Conciliador</h2>
         <div className='navbar-conciliador'>
-          <input type="search" className="form-control rounded input-buscar" placeholder="Buscar conciliador" aria-label="Search" aria-describedby="search-addon" />
           <button className='boton-crear-conciliador' onClick={() => setEstado(!estado)}>Agregar Conciliador</button>
         </div>
         {estado &&

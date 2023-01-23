@@ -14,9 +14,13 @@
     display: grid;
 }
 
-.contenedor-navbar-agregar-estudiantes {
-    margin-bottom: 3%;
+.conciliadores-candidatos-container{
+    max-height: 20rem;
+    width: 55em;
+}
 
+.buscador{
+    padding-bottom: 2em;
 }
 
 #boton-agregar-estudiantes {
