@@ -387,13 +387,21 @@ export default function PopupConv({
           console.log(tempArray);
 
           const pos = tempArray
-            .map((e) => e["persona_id "])
-            .indexOf([personaid]);
-          tempArray[pos] = result.data;
+            .map((e) => {
+              return e["persona_id"];
+            })
+            .indexOf(personaid);
           console.log(pos);
+          tempArray[pos][
+            "nombres"
+          ] = `${result.data.nombres} ${result.data.apellidos}`;
+          tempArray[pos]["persona_id"] = result.data.id;
+          tempArray[pos]["identificacion"] = result.data.identificacion;
+          // tempArray[pos]["tipo_documento"] = result.data.tipo_documento_id;
           setResultadosBusqueda(tempArray);
           // setResultadosBusqueda([resultadosBusqueda]);
           setEstado(!estado);
+          setPersonaid(null);
         })
         .catch((err) => {
           console.log("error");
@@ -413,7 +421,7 @@ export default function PopupConv({
             position: toast.POSITION.BOTTOM_RIGHT,
           });
 
-          // setResultadosBusqueda([...resultadosBusqueda, result.data]);
+          setResultadosBusqueda([...resultadosBusqueda, result.data]);
           setPopupconv(!popupconv);
         })
         .catch((err) => {
