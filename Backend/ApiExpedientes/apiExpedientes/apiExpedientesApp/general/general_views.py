@@ -7,19 +7,35 @@ from rest_framework.permissions import DjangoModelPermissions
 from copy import deepcopy
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_api_key.permissions import HasAPIKey
 
 # api key
 # from rest_framework_api_key.permissions import HasAPIKey
 class CustomDjangoModelPermission(DjangoModelPermissions):
+
+    def has_permission(self, request, view):
+    # Workaround to ensure DjangoModelPermissions are not applied
+    # to the root view when using DefaultRouter.
+        if getattr(view, '_ignore_model_permissions', False):
+            return True
+        user=User.objects.get(username=request.headers['Id'])
+        queryset = self._queryset(view)
+        perms = self.get_required_permissions(request.method, queryset.model)
+
+        return user.has_perms(perms)
     def __init__(self):
+        
         self.perms_map= deepcopy(self.perms_map)
         self.perms_map['GET']=['%(app_label)s.view_%(model_name)s']
 class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     
     serializer_class = None
     pagination_class= StandardResultsSetPagination
+    permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+    
     # permission_classes = [CustomDjangoModelPermission]
-    # permission_classes = [HasAPIKey]
+   
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
     search_fields = ['nombre']
@@ -27,6 +43,7 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
    
    
     def get_queryset(self,pk=None):
+       
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
         if pk is None:
             return model.filter(estado=True)

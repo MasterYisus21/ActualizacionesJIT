@@ -94,7 +94,7 @@ class ApoderadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de re
 class PersonaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
     serializer_class = PersonaSerializer
-    search_fields=['nombres','apellidos','identificacion','tarjeta_profesional','tipo_cargo_id__nombre']
+    search_fields=['nombres','apellidos','=identificacion','tarjeta_profesional','tipo_cargo_id__nombre']
 class Solicitante_servicioViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Solicitante_servicioSerializer

@@ -4,15 +4,14 @@ from apiSolicitudesApp.models import *
 from rest_framework.response import Response
 from apiSolicitudesApp.pagination import * 
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+# from rest_framework_api_key.permissions import HasAPIKey
 from copy import deepcopy
 from rest_framework import filters
 
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework_api_key.permissions import HasAPIKey
 
-class CustomDjangoModelPermission(DjangoModelPermissionsOrAnonReadOnly):
-    def __init__(self):
-        self.perms_map= deepcopy(self.perms_map)
-        self.perms_map['POST']=[]
+
 
 
 class CustomUpdateDjangoModelPermission(DjangoModelPermissionsOrAnonReadOnly):
@@ -25,7 +24,7 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    permission_classes = [CustomDjangoModelPermission]
+    permission_classes = [HasAPIKey & CustomUpdateDjangoModelPermission]
 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'

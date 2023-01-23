@@ -5,11 +5,13 @@
     "urlGeneradorDocumentos": "http://localhost:8003/api/generador_documentos/v1/",
     "urlEmail": "http://0.0.0.0:5001/",
     "urlConvertidorPDF":"http://0.0.0.0:9999/docx-to-pdf",
-    "urlGeneradorReportes": "http://localhost:8006/api/generador_reportes/v1/",
-    
+    "urlGeneradorReportes": "http://0.0.0.0:8006/api/generador_reportes/v1/",
+    "urlAutenticacion": "http://0.0.0.0:4000/",
     "urlGatewaySolicitudes": "http://localhost:3001/api/gateway/v1/",
     "urlGatewayExpedientes": "http://localhost:3002/api/gateway/v1/",
-    "clave_usuarios_nuevos": "conciliacion2022*."
+    "clave_usuarios_nuevos": "conciliacion2022*.",
+    "apiKey":"wHo6CMs6.PBA1noJfvWq8RiwtIunZoBIuRzUte26C"
+    
     
     
 }
