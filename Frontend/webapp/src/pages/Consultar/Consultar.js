@@ -1,23 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Col from 'react-bootstrap/Col';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { BarRectangulo } from '../../components/BarRectangulo'
 import { RectanguloCelular } from '../../components/RectanguloCelular'
-import { axiosBasicInstanceApiSolicitudes } from '../../helpers/axiosInstances'
+import { axiosBasicInstanceApiSolicitudes,  axiosBasicInstanceApiExpedientes} from '../../helpers/axiosInstances'
+import { Buscador, Button } from '../../components';
 
 import { Link } from "react-router-dom";
 
 // Importing css
 import './Consultar.css'
 
+
 function Consultar() {
 
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
-  const [documento, setDocumento] = useState(0)
+  const [documento, setDocumento] = useState()
+  const [valoresBuscados, setValoresBuscados] = useState([])
+  const [filtros, setFiltros] = useState([])
+  const [filtrosAplicados, setFiltrosAplicados] = useState([])
   const [page, setPage] = useState(1)
-
+  const [solexp, setSolexp] = useState("solicitudes")
+  let resultados = useRef([]);
+  const [numPages, setNumPages] = useState(1);
   let currentPage = 1;
 
   const search = () => {
@@ -25,18 +32,52 @@ function Consultar() {
     // console.log(e.target.documento.value)
     axiosBasicInstanceApiSolicitudes({
       method: 'get',
-      url: "/estados_solicitudes/" + documento + "/?ordering=-id&count=3&page=" + page,
+      url: "/estados_solicitudes/" + documento + "/?ordering=-id&count=8&page=" + page + valoresBuscados.map(valor => { return valor }) + filtrosAplicados.map(valor => { return valor }),
       // headers: req.headers,
       data: {}
     })
+    
       .then(result => {
+        if (page != 1){
         console.log(result.data);
-        setResultadosBusqueda([...resultadosBusqueda, ...result.data.solicitudes.results])
+        resultados.current = [...resultados.current, ...result.data.solicitudes.results];
+        
+      } else{
+        resultados.current = result.data.solicitudes.results;
+        
+      }
+      setResultadosBusqueda(resultados.current)
+      setNumPages(Math.ceil(result.data.solicitudes.count / 8));
       })
       .catch(err => {
         console.log("error");
       });
+
+
   }
+
+  const handlePageChange = (page) => {
+    console.log("hola")
+    console.log(numPages);
+    if (page <= numPages) {
+      setPage(page);
+      console.log("hola")
+    }
+  };
+
+  const handleScroll = (e) => {
+    // console.log('scrollTop: ', e.target.scrollHeight - e.target.scrollTop);
+    // console.log('clientHeight: ', e.target.clientHeight);
+    if (
+      e.target.scrollHeight - e.target.scrollTop - 300 <
+      e.target.clientHeight
+    ) {
+      console.log("almost bottom");
+      handlePageChange(page + 1);
+    }
+  };
+
+
 
   useEffect(() => {
     setResultadosBusqueda([]);
@@ -44,17 +85,31 @@ function Consultar() {
   }, [documento])
 
   useEffect(() => {
+    console.log("pages");
     if (page != 1) {
-      search()
+      search();
     }
-  }, [page])
+  }, [page]);
+  // useEffect(() => {
+  //   if (page != 1) {
+  //     search()
+  //   }
+  // }, [page])
 
+  // useEffect(() => {
+  //   setResultadosBusqueda([]);
+  //   search()
+  // }, [valoresBuscados])
+
+  // useEffect(() => {
+  //   search()
+  // }, [filtrosAplicados])
 
 
 
   return (
-    <div>
-      <div className=''>
+
+      <div className='as'  onScroll={e => handleScroll(e)}>
         <div className='contenedor-rectangulo-verde'>
           <BarRectangulo text="Consulta tu solicitud" />
         </div>
@@ -65,26 +120,23 @@ function Consultar() {
                 <Col className='seleccionable-cedula'>
                   <FloatingLabel
                     controlId="floatingSelectGrid"
-                    label="Tipo de documento"
+                    label="Soicitud - Expediente"
                   >
 
                     {/* seleccionable tipo de cedula */}
 
                     <Form.Select className='opciones-cedula' aria-label="Floating label select example">
                       <option>Abre el menú para ver las opciones</option>
-                      <option value="1">Cédula de ciudadanía</option>
-                      <option value="2">Cédula extranjera</option>
-                      <option value="3">Tarjeta de Identidad</option>
-                      <option value="1">Registro civil</option>
-                      <option value="2">Pasaporte</option>
-                      <option value="3">NIT</option>
+                      <option value="1">Solicitud</option>
+                      <option value="2">Expediente</option>
+
                     </Form.Select>
                   </FloatingLabel>
                 </Col>
 
-                <div className='contenedor-boton-buscar'>
-                  <button className='boton-buscar-consultar'>Buscar<img className="icono-buscar-consultar" src={"./images/buscar.svg"} alt="" /></button>
-                </div>
+
+                <input className='' type="text" placeholder='Documento' name='documento'></input>
+                <button>buscar</button>
               </Form>
             </Row>
 
@@ -95,7 +147,8 @@ function Consultar() {
           <div className='contenedor-casos-consulta'>
             {resultadosBusqueda.map(resultado => {
               return (
-                <div className='carta-caso-consulta' key={resultado["id"]}>
+                <Link key={resultado["id"]} to={"solicitudes/" + resultado["id"]} className='text-decoration-none '>
+                <div className='carta-caso-consulta' >
                   <div className='contenedor-rectangulo-tarjeta-consultar'>
                     <RectanguloCelular text={resultado["numero_radicado"]} />
                   </div>
@@ -119,15 +172,20 @@ function Consultar() {
                       </div>
                     </div>
                   </div>
-                  <Link to={""} >entrar</Link>
+                  
                 </div>
+                </Link>
               )
             })}
-            <button onClick={e => { setPage(page + 1) }} >Cargar mas</button>
+            <Button
+              onClick={e => { setPage(page + 1) }}
+              className="span2"
+              text="Cargar más"
+            />
           </div>
         </div>
       </div>
-    </div>
+
   )
 }
 
