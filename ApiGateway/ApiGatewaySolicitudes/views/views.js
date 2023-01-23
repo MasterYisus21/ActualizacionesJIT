@@ -174,7 +174,7 @@ views.CrearSolicitud = async (req, res) => {
           }))
           .catch(err => {
 
-            res.status(error(err))
+            res.sendStatus(error(err))
             return
 
           })
@@ -182,8 +182,8 @@ views.CrearSolicitud = async (req, res) => {
       }))
       .catch(err => {
         
-        res.status(error(err))
-        return
+        res.sendStatus(error(err))
+        
       })
 
     // const hechos= config.urlApiSolicitudes+"hechos",{solicitud_id:}
