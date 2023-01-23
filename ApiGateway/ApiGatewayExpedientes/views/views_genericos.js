@@ -228,7 +228,7 @@ views.CrearExpediente = async (req, res) => {
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           .then(axios.spread(async (data3, data4, data5) => {
             // res.status(201).json(data2.data)
-
+            console.log(data5.data)
             //get res.status(201).json(data2.data[0])
             req.params.id = data2.data.id
 
