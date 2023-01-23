@@ -25,7 +25,7 @@ const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
       
     }
   }
-  console.log(email)
+
   return email
 }
 //listar Seleccionables Principales
@@ -183,7 +183,7 @@ views.CrearSolicitud = async (req, res) => {
       .catch(err => {
         
         res.sendStatus(error(err))
-        return
+        
       })
 
     // const hechos= config.urlApiSolicitudes+"hechos",{solicitud_id:}
@@ -330,6 +330,7 @@ views.DescargarDocumentos = async (req, res) => {
 
 views.AprobarSolicitud = async (req, res) => {
   try {
+    
     let  cuerpo =""
     const  encabezado = `Este mensaje notifica que el estado de su solicitud ${req.body.numero_radicado} es el siguiente:<br><br>
      <b>Numero Radicado:</b> ${req.body.numero_radicado}
@@ -349,7 +350,9 @@ views.AprobarSolicitud = async (req, res) => {
         
           await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id)
             .then(async result => {
+              
               correoConvocante.push(result.data.convocante.correo)
+              
               if (req.body.estado_solicitud_id == 2) {
 
               result.data.conciliador = req.body.conciliador_id
@@ -358,6 +361,7 @@ views.AprobarSolicitud = async (req, res) => {
               
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
                 .then(resul => {
+                  
                   res.status(200).json(resul.data)
                   if(req.body.numero_caso !=""){
                     cuerpo = `<br> Conforme al estado actual de tu solicitud, nos complace informarte que ahora cuentas con un conciliador asignado y un nuevo número de referencia el cual te permitirá identificar tu caso en nuestro Centro de Conciliación. <br> 
@@ -371,29 +375,35 @@ views.AprobarSolicitud = async (req, res) => {
                 })
 
                 .catch(err => {
-                  
+                  console.log("aqui")
                   error(err)
                   return
                 })
               }
-              else{cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
-              res.status(200).json(resul.data)
+              else{
+                
+                cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
+               
             }
-            const correo =  axios.post(config.urlEmail,email("html",correoConvocante,asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
-         
+            
+            res.status(200).json(resul.data)
+            const correo =  axios.post(config.urlEmail,email("html",correoConvocante,asunto,encabezado,cuerpo)).catch(  err => {res.status(error(err))})
+            
             })
             .catch(err => {
-              error(err)
+              res.status(error(err))
               return
             })
       
       
       })
       .catch(err => {
+        
         res.sendStatus(error(err))
       })
       
     } catch (error) {
+      
     console.log(error);
     res.sendStatus(500);
   }

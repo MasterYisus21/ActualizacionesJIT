@@ -154,6 +154,6 @@ REST_FRAMEWORK = {
     
     # 'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
 }
-
+API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media') 

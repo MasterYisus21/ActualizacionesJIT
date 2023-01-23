@@ -1,24 +1,24 @@
-.tarjeta{
+.tarjeta {
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     justify-content: space-evenly;
     background-color: #D8D8D8;
     border-radius: 15px;
 }
 
-.tarjeta:hover{
+.tarjeta:hover {
     background-color: rgba(0, 51, 19, 0.534);
     cursor: pointer;
 }
 
-.heading-tarjeta{
+.heading-tarjeta {
     width: 100%;
     display: flex;
     justify-content: left;
 }
 
-.body-tarjeta{
+.body-tarjeta {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -27,33 +27,33 @@
     gap: 2em;
 }
 
-.subtitle-tarjeta{
+.subtitle-tarjeta {
     color: #838383;
     margin: 0;
 }
 
 /* Tarjetas Personas */
 
-.tarjeta-personas{
+.tarjeta-personas {
     max-width: 30em;
     display: flex;
     flex-direction: column;
-    align-items:flex-start;
+    align-items: flex-start;
     text-align: left;
     background-color: #D8D8D8;
 }
 
-.tarjeta-personas:hover{
+.tarjeta-personas:hover {
     background-color: #396c3c7d;
     color: white;
     cursor: pointer;
 }
 
-.body-tarjeta-personas{
+.body-tarjeta-personas {
     padding: 1.5em 3em;
 }
 
-.indicador-persona{
+.indicador-persona-Conciliador {
     width: 8em;
     text-align: right;
     background-color: #307934;
@@ -63,19 +63,39 @@
     text-align: center;
 }
 
-.indicador-persona-yellow{
+.indicador-persona-Estudiante {
     width: 8em;
     text-align: right;
-    background-color: #8a9b83;
+    background-color: #b4be23fb;
     color: white;
     padding: .4em;
     border-radius: 1em 0em 0em 1em;
     text-align: center;
 }
 
-.wrapp-indicador-persona{
+.indicador-persona-Administrador {
+    width: 8em;
+    text-align: right;
+    background-color: #2163c0de;
+    color: white;
+    padding: .4em;
+    border-radius: 1em 0em 0em 1em;
+    text-align: center;
+}
+
+.indicador-persona-Asignar {
+    width: 8em;
+    text-align: right;
+    background-color: #8a9b838d;
+    color: white;
+    padding: .4em;
+    border-radius: 1em 0em 0em 1em;
+    text-align: center;
+}
+
+.wrapp-indicador-persona {
     width: 100%;
     display: flex;
-    justify-content:flex-end;
+    justify-content: flex-end;
     padding-bottom: 1em;
 }
