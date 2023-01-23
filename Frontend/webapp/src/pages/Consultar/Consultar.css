@@ -162,30 +162,21 @@
 
 .entrada-cedula-buscar{
     width: 35vw;
-    height: 3rem;
+    height: 3em;
     border-radius: 5px;
     border: 0;
     max-width: 50rem;
     margin-top: 1.5rem;
+    min-height: 3em;
 }
 .contenedor-botones-solicitud-expediente{
     display: flex;
-    gap: 6rem;
+    gap: 2rem;
 }
 
 
 
-.boton-consultar-solicitud{
-    border-radius: 5px;
-    border: 0;
-    width: 15vw;
-    height: 2.5rem;
-}
 
-.boton-consultar-expediente{
-    border-radius: 5px;
-    border: 0;
-}
 
 .boton-consultar-solicitud{
     border: 0;
@@ -209,6 +200,21 @@
     .entrada-cedula-buscar{
         width: 80%;
     }
+    .contenedor-botones-solicitud-expediente{
+        padding-top: 0.5rem;
+    }
+    .rectangulo-pregunta-documento{
+        height: 100%;
+    }
+}
+@media (max-width: 900px) {
+
+    .contenedor-botones-solicitud-expediente{
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
 }
 
 @media (min-width: 768px) {
@@ -246,11 +252,4 @@
     .fecha-consulta{
         font-size: 1.2rem;
     }
-}
-
-@media (min-width: 1200px) {
-    .boton-buscar-consultar{
-        width: 14rem;
-    }
-
 }

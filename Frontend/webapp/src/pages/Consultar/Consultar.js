@@ -28,7 +28,7 @@ function Consultar() {
   let currentPage = 1;
 
   const search = () => {
-    
+    if(!solexp){
     // console.log(e.target.documento.value)
     axiosBasicInstanceApiSolicitudes({
       method: 'get',
@@ -52,7 +52,30 @@ function Consultar() {
       .catch(err => {
         console.log("error");
       });
-
+    }else{
+      axiosBasicInstanceApiSolicitudes({
+        method: 'get',
+        url: "/estados_expedientes/" + documento + "/?ordering=-id&count=8&page=" + page + valoresBuscados.map(valor => { return valor }) + filtrosAplicados.map(valor => { return valor }),
+        // headers: req.headers,
+        data: {}
+      })
+      
+        .then(result => {
+          if (page != 1){
+          console.log(result.data);
+          resultados.current = [...resultados.current, ...result.data.results];
+          
+        } else{
+          resultados.current = result.data.results;
+          
+        }
+        setResultadosBusqueda(resultados.current)
+        setNumPages(Math.ceil(result.data.count / 8));
+        })
+        .catch(err => {
+          console.log("error");
+        });
+    }
 
 
   }
@@ -131,16 +154,16 @@ function Consultar() {
           <div className='contenedor-casos-consulta'>
             {resultadosBusqueda.map(resultado => {
               return (
-                <Link key={resultado["id"]} to={"solicitudes/" + resultado["id"]} className='text-decoration-none '>
+                
                 <div className='carta-caso-consulta' >
                   <div className='contenedor-rectangulo-tarjeta-consultar'>
-                    <RectanguloCelular text={resultado["numero_radicado"]} />
+                    <RectanguloCelular text={resultado["numero_caso"]||resultado["numero_radicado"]} />
                   </div>
                   <div className='contenedor-caso-consulta'>
                     <div className='lado-izquierdo'>
                       <div className='orden-lado-izquierdo'>
                         <label className='estado-consulta'>Estado:</label>
-                        <label className='fecha-consulta'>{resultado["estado_solicitud"]}</label>
+                        <label className='fecha-consulta'>{resultado["estado_solicitud"]||resultado["estado_expediente"]}</label>
                       </div>
                     </div>
                     <div className='centro'>
@@ -158,7 +181,7 @@ function Consultar() {
                   </div>
                   
                 </div>
-                </Link>
+                
               )
             })}
             <Button
