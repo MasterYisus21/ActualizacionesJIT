@@ -10,7 +10,7 @@ const { query } = require("express");
 
 const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
   
-  const correoCopia="jairourrego123@gmail.com"
+  const correoCopia=config.copia_correo
   correoQuienRecibe.push(correoCopia)
   let email = {
     nombre_servicio:"Centro de Conciliación",
@@ -369,22 +369,22 @@ views.AprobarSolicitud = async (req, res) => {
                    }
               
                   
-                  // res.status(200).json(result.data)
+                  res.status(200).json(resul.data)
                 })
 
                 .catch(err => {
-               
+                  console.log("entreeeeeeeeeeee")
                   error(err)
                   return
                 })
               }
               else{
-                
+                res.status(200).json(resul.data)
                 cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
                
             }
             
-            res.status(200).json(resul.data)
+           
             const correo =  axios.post(config.urlEmail,email("html",correoConvocante,asunto,encabezado,cuerpo)).catch(  err => {res.status(error(err))})
             
             })

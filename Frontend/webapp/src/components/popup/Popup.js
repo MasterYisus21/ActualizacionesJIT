@@ -146,11 +146,10 @@ export default function Popup({
           toast.success("La persona ha sido modificada correctamente", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
-          // setResultadosBusqueda([resultadosBusqueda]);
+
           let tempArray = [...resultadosBusqueda];
           const pos = tempArray.map((e) => e["id"]).indexOf(id);
           tempArray[pos] = result.data;
-          console.log(pos);
           setResultadosBusqueda(tempArray);
           setEstado(!estado);
         })
