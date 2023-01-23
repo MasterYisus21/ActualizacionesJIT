@@ -159,6 +159,7 @@ function RegistrarSolicitud() {
     })
       .then((result) => {
         console.log(result);
+
         toast.info("La solicitud ha sido creada con exito", {
           position: toast.POSITION.BOTTOM_RIGHT,
         });

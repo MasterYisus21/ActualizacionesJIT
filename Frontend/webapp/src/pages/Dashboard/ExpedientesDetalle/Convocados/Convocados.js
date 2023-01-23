@@ -1,7 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Buscador, Button, PopupApoderado, PopupConv } from "../../../../components";
+import {
+  Buscador,
+  Button,
+  PopupApoderado,
+  PopupConv,
+} from "../../../../components";
 import { axiosTokenInstanceApiExpedientes } from "../../../../helpers/axiosInstances";
 
 import { confirmAlert } from "react-confirm-alert"; // Import
@@ -20,7 +25,7 @@ function Convocados() {
   const [valoresBuscados, setValoresBuscados] = useState([]);
   const [page, setPage] = useState(1);
   const [numPages, setNumPages] = useState(1);
-  const [apoderadoid, setApoderadoid] = useState([])
+  const [apoderadoid, setApoderadoid] = useState([]);
   const [newApoderado, setNewApoderado] = useState([]);
 
   let { id } = useParams();
@@ -129,15 +134,16 @@ function Convocados() {
   return (
     <>
       <div className="container-convocado">
-      {popup && 
-            <PopupApoderado 
-              setEstado={setPopup} 
-              estado={popup} 
-              apoderadoid={apoderadoid} 
-              resultadosBusqueda={resultadosBusqueda}
-              setResultadosBusqueda={setResultadosBusqueda}
-              newApoderado={newApoderado}>
-            </PopupApoderado>}
+        {popup && (
+          <PopupApoderado
+            setEstado={setPopup}
+            estado={popup}
+            apoderadoid={apoderadoid}
+            resultadosBusqueda={resultadosBusqueda}
+            setResultadosBusqueda={setResultadosBusqueda}
+            newApoderado={newApoderado}
+          ></PopupApoderado>
+        )}
 
         {popupconv && (
           <PopupConv
@@ -149,6 +155,8 @@ function Convocados() {
             setResultadosBusqueda={setResultadosBusqueda}
             setPopupconv={setPopupconv}
             popupconv={popupconv}
+            personaid={newApoderado}
+            setPersonaid={setNewApoderado}
           ></PopupConv>
         )}
         <h2>Informacion del convocado</h2>
@@ -189,28 +197,37 @@ function Convocados() {
                     <td>{resultadoBusqueda["tipo_documento"]}</td>
                     <td>{resultadoBusqueda["identificacion"]}</td>
                     <td>
-
-                    {resultadoBusqueda.apoderado_id ? 
-                     <button
-                       onClick={() => {setPopup(!popup); setApoderadoid(resultadoBusqueda["apoderado_id"]);}}
-                       className="boton-tabla-eliminar"
-                     >
-                       {resultadoBusqueda["nombre_apoderado"]}
-                     </button>
-                     : <button
-                     onClick={() => {setPopup(!popup); setApoderadoid(null); setNewApoderado(resultadoBusqueda["persona_id"]);}}
-                     className="boton-tabla-eliminar"
-                      >
-                        Crear apoderado
-                      </button>
-                     }
-
+                      {resultadoBusqueda.apoderado_id ? (
+                        <button
+                          onClick={() => {
+                            setPopup(!popup);
+                            setApoderadoid(resultadoBusqueda["apoderado_id"]);
+                          }}
+                          className="boton-tabla-eliminar"
+                        >
+                          {resultadoBusqueda["nombre_apoderado"]}
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            setPopup(!popup);
+                            setApoderadoid(null);
+                            setNewApoderado(resultadoBusqueda["persona_id"]);
+                          }}
+                          className="boton-tabla-eliminar"
+                        >
+                          Crear apoderado
+                        </button>
+                      )}
                     </td>
                     <td>
                       <button
                         className="boton-tabla-eliminar"
                         value={resultadoBusqueda["id"]}
-                        onClick={() => setPopup(!popup)}
+                        onClick={() => {
+                          setPopupconv(!popupconv);
+                          setNewApoderado(resultadoBusqueda["persona_id"]);
+                        }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
