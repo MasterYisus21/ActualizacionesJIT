@@ -1044,9 +1044,11 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
 
 
         // // personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
+       
         if (datos2.data.results.length < 1) { personas_citadas = [] } else {
           for (const iterator of datos2.data.results) {
             id_personas_citadas[personas_citadas.length] = iterator.persona_id
+            if(personas_disponibles.indexOf(iterator.persona_id)<0){break}
             datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)].id_relacion = iterator.id
             personas_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)])
             if (datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)] == null) { personas_citadas = []; break }
@@ -1746,7 +1748,7 @@ views.CrearResultado = async (req, res) => {
 }
 views.CargarResultadoCaso = async (req, res) => {
   try {
-    console.log(req.files)
+ 
     if (Object.keys(req.files).length > 1) {
       res.sendStatus(error({ message: "Solo puede subir un documento" }));
       for (const iterator of req.files) {
@@ -2049,7 +2051,7 @@ views.AgregarConciliadores = async (req, res) => {
   try {
     axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
       .then(async result => {
-        console.log(result.data)
+        
         if (Object.keys(result.data.results).length > 0) { res.status(400).json({ response: { mensaje: "Ya se encuentra reportada esta persona " } }); return }
         const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)

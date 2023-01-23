@@ -438,7 +438,7 @@ views.VerSolicitud = async (req, res) => {
               .then(async result => {
 
                 datos.convocante = result.data
-                if (!(result.data.apoderado_id != null | result.data.apoderado_id != "")) { return }
+                if ((result.data.apoderado_id == null | result.data.apoderado_id == "")) { return }
                 await axios.get(config.urlApiSolicitudes + "apoderados/" + result.data.apoderado_id)
                   .then(result => {
                     datos.apoderado = result.data
