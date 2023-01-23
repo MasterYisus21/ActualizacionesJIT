@@ -1131,6 +1131,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
   try {
 
     // validacion correo 
+    if(Object.keys(req.body).length<1){return res.sendStatus(204)}
     for await (const iterator of req.body) {
       req.params.id_relacion = iterator
       await informacionCitacion(req).then(async (resul) => {
@@ -1205,29 +1206,10 @@ views.EnviarNotificacionCitacion = async (req, res) => {
 
                         const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { res.status(error(err)) })
 
-                        // await axios.post(config.urlEmail)
-                        //   .then(result=>{
-                        //     res.send(result.data)
-                        // })
-                        //   .catch(err => {
-                        //     res.sendStatus(error(err))
-                        //   })
-
-                        // try {
-                        //   fs.unlinkSync(iterator.path)
-                        // } catch (err) {
-                        //   error(err)
-                        // }
+  
                       })
-                    // await axios.post(config.urlEmail+"adjuntar",formdat)
-                    //   .then(result=>{
-                    //     res.send(result)
-                    // })
-                    //   .catch(err => {
-                    //     res.status(error(err))
-                    //   })
-
-                    res.end(result.data)
+         
+                    res.sendStatus(200)
                   })
                 })
                 .catch(err => {
@@ -2041,6 +2023,15 @@ views.EliminarPersonaCaso = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "relaciones_persona_expediente/" + req.params.id_relacion + "/"
     requests.delete(req, res, url)
+    
+   
+      .then(result=>{
+        
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+    
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -2180,6 +2171,7 @@ views.ActualizarCitacion = async (req, res) => {
 }
 views.ActualizarPersonas = async (req, res) => {
   try {
+   
     let endpoints=[]
     if (req.body.identificacion) { delete req.body["identificacion"];  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
     if (req.body.usuario_id) { req.body.groups=[req.body.grupo_id];endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/")  }
