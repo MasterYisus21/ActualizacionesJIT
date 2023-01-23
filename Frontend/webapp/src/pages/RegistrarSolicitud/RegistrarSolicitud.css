@@ -1,5 +1,4 @@
-
-.wrapp-main-registrar-solicitud{
+.wrapp-main-registrar-solicitud {
     display: grid;
     height: 100%;
 }
@@ -8,10 +7,11 @@
     padding-top: 1em;
 }
 
-.wrapp-introduccion{
+.wrapp-introduccion {
     padding-top: 3em;
     padding-bottom: 1em;
 }
+
 .introduccion-texto-solicitud {
     background-color: #c5c5c570;
     border-radius: 20px;
@@ -30,7 +30,7 @@
     padding-bottom: 2em;
 }
 
-.subtitles-secciones{
+.subtitles-secciones {
     margin: 0;
     font-weight: bold;
     text-align: left;
@@ -38,7 +38,7 @@
     max-width: 50em;
 }
 
-.form-datos{
+.form-datos {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,24 +46,24 @@
     gap: 1em;
 }
 
-.inputs-registrar-solicitud{
+.inputs-registrar-solicitud {
     width: 80vw;
     max-width: 50em;
 }
 
-.wrapp-input-load{
-   position: relative;
-   width: 50vw;
-   max-width: 20em;
-   height: 20em; 
-   border-radius: 15px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+.wrapp-input-load {
+    position: relative;
+    width: 50vw;
+    max-width: 20em;
+    height: 20em;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-.inputs-subir-archivos{
+.inputs-subir-archivos {
     position: absolute;
     top: 0;
     left: 0;
@@ -73,7 +73,7 @@
     cursor: pointer;
 }
 
-.boton-subir-anexos{
+.boton-subir-anexos {
     border: 0;
     border-radius: 10px;
     padding: .6em;
@@ -82,7 +82,7 @@
     margin: 0;
 }
 
-.wrapp-visualizacion-anexos{
+.wrapp-visualizacion-anexos {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -92,16 +92,16 @@
     border-radius: 0.5em;
     border: .2em solid #000000;
     padding: 1em;
-    color:#000000;
+    color: #000000;
 }
 
-.lista-anexos{
+.lista-anexos {
     gap: 2em;
     display: flex;
     flex-direction: column;
 }
 
-.descripcion-documentos{
+.descripcion-documentos {
     background-color: #c5c5c570;
     border-radius: 20px;
     align-items: center;
@@ -113,12 +113,16 @@
     max-width: 42em;
 }
 
-.col-registro-solicitud{
+.col-registro-solicitud {
     display: flex;
     flex-direction: column;
     width: 80vw;
     gap: 1em;
     max-width: 50em;
+}
+
+.btn-regresar {
+    display: none;
 }
 
 
@@ -128,42 +132,55 @@
 @media (min-width: 700px) {
 
     .wrapp-introduccion {
-      display: none;
+        display: none;
     }
 
-    .heading-registrar-solicitud{
+    .heading-registrar-solicitud {
         padding-bottom: 3em;
     }
 
-    .secciones-temas{
+    .secciones-temas {
         gap: 2.3em;
     }
-    
-    
+
+
 }
 
 @media (min-width: 1000px) {
 
-    .img-rectangulo{
+    .btn-regresar {
+        display: block;
+        position: absolute;
+        right: 3%;
+        top: 4em;
+        border-radius: 7px;
+        border: 0;
+        background-color: #00913D;
+        color: white;
+        padding: .5em 2em;
+    }
+
+    .btn-regresar:hover {
+        background-color: #57bb8186;
+    }
+
+    .img-rectangulo {
         max-height: 5em;
     }
 
-    .heading-registrar-solicitud{
+    .heading-registrar-solicitud {
         padding-top: 5em;
         height: 40%;
         padding-bottom: 2em;
     }
-    
-    .col-registro-solicitud{
-        
-    }
+
+    .col-registro-solicitud {}
 }
 
 @media (min-height: 1000px) {
 
-    .secciones-temas{
+    .secciones-temas {
         gap: 5em;
     }
-    
-}
 
+}

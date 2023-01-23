@@ -11,10 +11,16 @@ import "./RegistrarSolicitud.css";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Collapse from "react-bootstrap/Collapse";
-import { axiosBasicInstanceApiExpedientes, axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
+import {
+  axiosBasicInstanceApiExpedientes,
+  axiosBasicInstanceApiSolicitudes,
+} from "../../helpers/axiosInstances";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
+import { toast } from "react-toastify";
 
 function RegistrarSolicitud() {
+  const navigate = useNavigate();
   const [seccion1, setSeccion1] = useState(true);
   const [seccion2, setSeccion2] = useState(false);
   const [seccion3, setSeccion3] = useState(false);
@@ -153,15 +159,15 @@ function RegistrarSolicitud() {
     })
       .then((result) => {
         console.log(result);
-        // event.target.reset();
-        // window.location.reload()
-        // console.log(myFiles)
-        // myFiles.splice(0);
-        // alert("Tus archivos han sido envíados correctamente")
+        toast.info("La solicitud ha sido creada con exito", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       })
       .catch((err) => {
+        toast.error("Asegurate de llenar los campos obligatorios", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
         console.log("error");
-        console.log(err);
       });
   };
 
@@ -254,6 +260,14 @@ function RegistrarSolicitud() {
     <div className="wrapp-main-registrar-solicitud">
       <div className="heading-registrar-solicitud">
         <BarRectangulo text="Registrar Solicitud" />
+        <button
+          className="btn-regresar"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Regresar
+        </button>
       </div>
 
       <div className="wrapp-introduccion">
@@ -281,6 +295,7 @@ function RegistrarSolicitud() {
                 type="text"
                 name="nombres"
                 placeholder="name@example.com"
+                required
               />
             </FloatingLabel>
             <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
@@ -289,6 +304,7 @@ function RegistrarSolicitud() {
                 type="text"
                 placeholder="name@example.com"
                 name="apellidos"
+                required
               />
             </FloatingLabel>
 
@@ -304,6 +320,7 @@ function RegistrarSolicitud() {
                 type="date"
                 placeholder="name@example.com"
                 name="fechaNacimiento"
+                required
               />
             </FloatingLabel>
             <FloatingLabel
@@ -347,6 +364,7 @@ function RegistrarSolicitud() {
                 type="text"
                 placeholder="name@example.com"
                 name="identificacion"
+                required
               />
             </FloatingLabel>
 
@@ -362,6 +380,7 @@ function RegistrarSolicitud() {
                 type="date"
                 placeholder="name@example.com"
                 name="fechaExpedicion"
+                required
               />
             </FloatingLabel>
             <FloatingLabel
@@ -373,6 +392,7 @@ function RegistrarSolicitud() {
                 type="text"
                 placeholder="name@example.com"
                 name="lugarExpedicion"
+                required
               />
             </FloatingLabel>
 
@@ -476,6 +496,7 @@ function RegistrarSolicitud() {
                   type="text"
                   placeholder="name@example.com"
                   name="celular"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel controlId="floatingInputGrid" label="Correo">
@@ -484,6 +505,7 @@ function RegistrarSolicitud() {
                   type="text"
                   placeholder="name@example.com"
                   name="correo"
+                  required
                 />
               </FloatingLabel>
             </div>
@@ -494,6 +516,7 @@ function RegistrarSolicitud() {
                 type="text"
                 placeholder="name@example.com"
                 name="direccion"
+                required
               />
             </FloatingLabel>
 
@@ -672,6 +695,7 @@ function RegistrarSolicitud() {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                required
               />
             </FloatingLabel>
             <FloatingLabel controlId="apellidosConvocado" label="Apellidos">
@@ -679,6 +703,7 @@ function RegistrarSolicitud() {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                required
               />
             </FloatingLabel>
             <label className="subtitles-secciones">Identificación</label>
@@ -712,6 +737,7 @@ function RegistrarSolicitud() {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                required
               />
             </FloatingLabel>
 
@@ -727,6 +753,7 @@ function RegistrarSolicitud() {
                   className=""
                   type="date"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel
@@ -774,6 +801,7 @@ function RegistrarSolicitud() {
                   className=""
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel controlId="correoConvocado" label="Correo">
@@ -781,6 +809,7 @@ function RegistrarSolicitud() {
                   className=""
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
             </div>
@@ -849,6 +878,7 @@ function RegistrarSolicitud() {
                 as="textarea"
                 placeholder=""
                 style={{ height: "130px" }}
+                required
               />
             </FloatingLabel>
           </div>
