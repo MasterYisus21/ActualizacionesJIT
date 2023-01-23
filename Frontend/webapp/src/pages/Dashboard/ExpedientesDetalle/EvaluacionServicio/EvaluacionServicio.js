@@ -53,7 +53,7 @@ function EvaluacionServicio() {
           result.data["respuestas"].map(valor => {
             tempPreguntas.push({
               id: valor["pregunta_encuesta_id"],
-              nombre: "cualquier valor temporal"
+              nombre: valor["nombre"]
             })
           })
           setPreguntas(tempPreguntas)
@@ -89,7 +89,8 @@ function EvaluacionServicio() {
           result.data.results.map((pregunta) => {
             tempRespuestas["respuestas"].push({
               "pregunta_encuesta_id": pregunta.id,
-              "calificacion": null
+              "calificacion": null,
+              "nombre": pregunta.nombre
             })
           })
           setRespuestasData(tempRespuestas)
