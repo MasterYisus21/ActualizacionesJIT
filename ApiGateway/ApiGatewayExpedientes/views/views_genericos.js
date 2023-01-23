@@ -388,6 +388,32 @@ views.ListarDepartamentos = async (req, res) => {
 
 
 }
+views.VerPersonas = async (req, res) => {
+  try {
+    await axios.get(config.urlApiExpedientes+"personas/"+req.params.id)
+      .then(async result=>{
+        if(result.data.usuario_id){
+        await axios.get(config.urlApiExpedientes+"usuarios/"+result.data.usuario_id)
+          .then(resul=>{
+            console.log(resul.data)
+            result.data.grupo_id=resul.data.groups[0]
+
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+        }
+        res.status(200).json(result.data)
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.ListarExpedientes = async (req, res) => {
   try {
     if(req.grupo==1){
