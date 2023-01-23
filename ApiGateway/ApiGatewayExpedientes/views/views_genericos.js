@@ -864,7 +864,12 @@ views.GenerarReportes = async (req, res) => {
             })
             .catch(err => {
 
-                res.sendStatus(error(err))
+              if(err.response){
+                res.sendStatus(error(err));
+                return
+              }
+              if (err.request) {
+              res.sendStatus(503);return}
             })
 
   } catch (error) {
@@ -1081,10 +1086,10 @@ views.EnviarNotificacionCitacion = async (req, res) => {
               if (err){throw new Error(err)}
               
               // resul.citado_nombres=resul.citado_nombres.replace("","_")
-              console.log(resul.citado_nombres)
+        
                let file = fs.readFileSync("./public/formatos/citacion_"+resul.citado_nombres+".docx")
                let formdata=new FormData()
-               console.log(resul)
+           
                formdata.append("document",file)
                
                await axios.post(config.urlConvertidorPDF,formdata,{responseType: "arraybuffer"})
@@ -1122,7 +1127,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                   <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento  .<br><br>`
                  
                   let asunto = `Citación Audiencia Conciliación`
-                  
+
               
                   const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo,response.body)).catch(err => { res.status(error(err)) })
       
