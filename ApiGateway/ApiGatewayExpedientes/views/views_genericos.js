@@ -47,7 +47,7 @@ views.CrearPersonas = async (req, res) => {
         req.body.usuario_id = result.data.id
         await axios.post(config.urlApiExpedientes + "personas/", req.body)
           .then(async resul => {
-            res.sendStatus(201)
+            res.status(201).json(resul.data)
           })
           .catch(err => {
             res.sendStatus(error(err))
@@ -1155,7 +1155,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                  .attach('adjunto', fs.createReadStream("./public/formatos/citacion_"+resul.citado_nombres+".pdf")) // creates a read stream
                 //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
                 .then(async function (response) {
-                  console.log(resul)
+          
                   // res.send(response.body)
                   const saludo = `<br>Reciba un cordial saludo `
                   const encabezado = `Este mensaje notifica que se ha generado una citación de audiencia de conciliación con la siguiente informacion:`
