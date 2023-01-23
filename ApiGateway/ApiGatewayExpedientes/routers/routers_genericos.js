@@ -32,8 +32,7 @@ router.get("/areas", views_genericos.GenericList)
 router.get("/tipos_medio", views_genericos.GenericList)
 router.get("/tipos_reporte", views_genericos.GenericList)
 router.get("/inicios_conflicto", views_genericos.GenericList)
-router.get("/expedientes", views_genericos.GenericList)
-router.get("/expedientes/:id", views_genericos.GenericList)
+
 router.get("/personas", views_genericos.GenericList)
 router.get("/apoderados", views_genericos.GenericList)
 router.get("/personas/:id", views_genericos.GenericList)
@@ -97,6 +96,8 @@ router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
 router.get("/paises/:id/departamentos/:id2/ciudades/:id3", views_genericos.ListarLocalidades);
 router.get("/paises/:id/departamentos/:id2/ciudades/:id3/localidades/:id4", views_genericos.ListarBarrios);
 router.get("/temas/:id", views_genericos.ListarSubtemas);
+router.get("/expedientes", views_genericos.ListarExpedientes)
+router.get("/expedientes/:id", views_genericos.GenericList)
 
 
 router.post("/expedientes", views_genericos.CrearExpediente)
@@ -104,12 +105,14 @@ router.post("/personas", views_genericos.CrearPersonas)
 router.post("/personas/:id/apoderados", views_genericos.CrearApoderado)
 router.post("/documentos/:id",archivo.uploadMiddleware, views_genericos.CargarDocumentos)// id expediente
 
+
 router.post("/personas/cargar",cargar_excel.uploadMiddleware, views_genericos.CargarTemplatePersonas);
 
 router.post("/expedientes/:id/documentos/:id_documento",archivo.uploadMiddleware, views_genericos.CambiarDocumentoCaso);
 router.get("/resultados/:id",archivo.uploadMiddleware, views_genericos.DescargarResultados);
 
 router.post("/expedientes/:id/respuestas", views_genericos.CrearRespuestas);
+router.post("/reportes/:id/", views_genericos.GenerarReportes)
 router.post("/expedientes/:id/seguimientos", views_genericos.CrearSeguimientoCaso);
 router.post("/expedientes/:id/estado",views_genericos.CambiarEstadoExpediente)
 

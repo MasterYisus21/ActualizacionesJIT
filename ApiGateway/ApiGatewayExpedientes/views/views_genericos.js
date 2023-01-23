@@ -388,6 +388,25 @@ views.ListarDepartamentos = async (req, res) => {
 
 
 }
+views.ListarExpedientes = async (req, res) => {
+  try {
+    if(req.grupo==1){
+    const url = config.urlApiExpedientes + "expedientes"
+    
+    requests.get(req, res, url, "?")
+    }else{
+      const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion="+req.identificacion
+      console.log(req.query)
+      requests.get(req, res, url, "&")
+    }
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+
+
+}
+
 views.ListarSubtemas = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "subtemas?tema_id=" + req.params.id
@@ -852,6 +871,32 @@ views.DescargarFormatoResultado = async (req, res) => {
     return;
   }
 }
+views.GenerarReportes = async (req, res) => {
+  try {
+    req.body.reporte_id=req.params.id
+    axios.post(config.urlGeneradorReportes,req.body,{ responseType: 'arraybuffer' })
+
+            .then(result => {
+
+                res.end(result.data)
+
+            })
+            .catch(err => {
+
+              if(err.response){
+                res.sendStatus(error(err));
+                return
+              }
+              if (err.request) {
+              res.sendStatus(503);return}
+            })
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.DescargarFormatoCitacion = async (req, res) => {
   try {
 
@@ -960,6 +1005,7 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
          
         //   // personas_citadas = personas_citadas.sort((a, b) => { return a - b });
         }
+        
         datos.personas_citadas = personas_citadas
         id_personas_no_citadas = personas_disponibles.filter(element => !id_personas_citadas.includes(element))
         
@@ -1059,9 +1105,10 @@ views.EnviarNotificacionCitacion = async (req, res) => {
               if (err){throw new Error(err)}
               
               // resul.citado_nombres=resul.citado_nombres.replace("","_")
-              console.log(resul.citado_nombres)
+        
                let file = fs.readFileSync("./public/formatos/citacion_"+resul.citado_nombres+".docx")
                let formdata=new FormData()
+           
                formdata.append("document",file)
                
                await axios.post(config.urlConvertidorPDF,formdata,{responseType: "arraybuffer"})
@@ -1073,6 +1120,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                   let fil = fs.readFileSync("./public/formatos/citacion_"+resul.citado_nombres+".pdf")
                   let formdat=new FormData()
                   formdat.append("adjunto",fil)
+                  
                   await unirest
                 .post(config.urlEmail + "adjuntar")
 
@@ -1081,19 +1129,25 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                  .attach('adjunto', fs.createReadStream("./public/formatos/citacion_"+resul.citado_nombres+".pdf")) // creates a read stream
                 //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
                 .then(async function (response) {
-                  console.log(response.body)
+                  
                   // res.send(response.body)
                   const saludo = `<br>Reciba un cordial saludo `
-                  const encabezado = `Este mensaje notifica que se te ha asignado un  nuevo caso de conciliación con la siguiente información:`
+                  const encabezado = `Este mensaje notifica que se ha generado una citación de audiencia de conciliación con la siguiente informacion:`
                   const cuerpo = `
-                  <br><b>Expediente:</b> ${result.data.numero_caso}
-                  <br><b>Fecha de Registro:</b> ${result.data.fecha_registro}
-                  <br><b>Estado del Expediente:</b> ${result.data.estado_expediente} 
-                  <br><b>Conciliador:</b> ${result.data.nombres} 
-                  <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br><br>`
+                  <br><b>Expediente:</b> ${resul.expediente_numero_radicado}
+                  <br><b>Nombre del Citado:</b> ${result.citado_nombres}
+                  <br><b>Fecha:</b> ${result.citado_fecha_sesion} 
+                  <br><b>Hora:</b> ${result.citacion_turno} 
+                  <br><b>Medio:</b> ${result.citacion_medio} 
+                  <br><b>Enlace:</b> ${result.citacion_enlace} 
+                  <br><b>Descripcion:</b> ${result.citacion_descripcion} 
+
+
+                  <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento  .<br><br>`
                  
-                  let asunto = `Asignación Caso de Concilaición `
-                  console.log(resul.citado_correo="jairo.urrego@ugc.edu.co")
+                  let asunto = `Citación Audiencia Conciliación`
+
+              
                   const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo,response.body)).catch(err => { res.status(error(err)) })
       
                   // await axios.post(config.urlEmail)
@@ -1122,7 +1176,13 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                })
               })
                 .catch(err => {
-                  res.sendStatus(error(err))
+                  if(err.response){
+                    res.sendStatus(error(err));
+                    return
+                  }
+                  if (err.request) {
+                  res.sendStatus(503);return}
+                  
                 })
                   
       

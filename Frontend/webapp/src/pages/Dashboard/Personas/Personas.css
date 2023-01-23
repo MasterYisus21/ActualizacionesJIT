@@ -35,4 +35,14 @@
     color: white;
     padding: .5em 1em;
     border-radius: 10px;
+    height: 2.5em;
+}
+
+.tarjeta-personas{
+    border-top-left-radius: 15px;
+}
+
+.texto-rectangulo2{
+    max-width: 18em;
+    font-size: 1em;
 }

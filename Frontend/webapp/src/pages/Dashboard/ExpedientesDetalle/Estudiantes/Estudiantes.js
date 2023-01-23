@@ -211,46 +211,25 @@ function Estudiantes() {
   return (
     <>
       <div className='container container-estudiantes pt-3'>
-        {popup &&
-          <Popup setEstado={setPopup} estado={popup}></Popup>
-        }
-        <div className='center-text'><h2>Informacion de estudiantes</h2></div>
+        
+        <div className='center-text'><h2>Información de estudiantes</h2></div>
         <div className='contenedor-navbar-agregar-estudiantes'>
-          <nav className="navbar navbar-light ">
-            <div className="container-fluid">
-              <form className="d-flex input-group w-auto align-items-sm-baseline gap-1" onSubmit={e => { }}>
-                <input
-                  type="text"
-                  className="form-control form-control-lg rounded"
-                  name="cedula"
-                  placeholder="Cédula"
-                  aria-label="Search"
-                  aria-describedby="search-addon"
-                />
-                <button className='border-0 bg-transparent '>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                  </svg>
-                </button>
-              </form>
-              <div className="d-flex align-items-end">
-                <Button
-                  className={""}
-                  text={"Crear Estudiante"}
-                  onClick={() => setPopup(!popup)}
-                />
-                <Button
-                  className={""}
-                  text={"Agregar Estudiantes"}
-                  onClick={() => { setEstado(!estado) }}
-                />
-              </div>
+          
+          <div className="container-fluid">
+  
+            <div className="d-flex align-items-end">
+              <Button
+                className={""}
+                text={"Agregar Estudiantes"}
+                onClick={() => { setEstado(!estado) }}
+              />
             </div>
-          </nav>
+          </div>
+         
         </div>
         {estado &&
-          <div className='contenedor-tabla-seleccion-conciliador mb-5 p-4 pb-3'>
-            <label className='pb-3 h5'>Seleccione el conciliador que desea agregar</label>
+          <div className='contenedor-tabla-seleccion-conciliador pt-4'>
+            <label className='h5'>Seleccione el conciliador que desea agregar</label>
             <Buscador
               valoresBuscados={valoresBuscadosCandidatos}
               setValoresBuscados={setValoresBuscadosCandidatos}

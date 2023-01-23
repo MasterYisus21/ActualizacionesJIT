@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Buscador, Button, Popup, PopupConv } from "../../../../components";
+import { Buscador, Button, PopupApoderado, PopupConv } from "../../../../components";
 import { axiosTokenInstanceApiExpedientes } from "../../../../helpers/axiosInstances";
 
 import { confirmAlert } from "react-confirm-alert"; // Import
@@ -20,6 +20,8 @@ function Convocados() {
   const [valoresBuscados, setValoresBuscados] = useState([]);
   const [page, setPage] = useState(1);
   const [numPages, setNumPages] = useState(1);
+  const [apoderadoid, setApoderadoid] = useState([])
+  const [newApoderado, setNewApoderado] = useState([]);
 
   let { id } = useParams();
 
@@ -127,7 +129,16 @@ function Convocados() {
   return (
     <>
       <div className="container-convocado">
-        {popup && <Popup setEstado={setPopup} estado={popup}></Popup>}
+      {popup && 
+            <PopupApoderado 
+              setEstado={setPopup} 
+              estado={popup} 
+              apoderadoid={apoderadoid} 
+              resultadosBusqueda={resultadosBusqueda}
+              setResultadosBusqueda={setResultadosBusqueda}
+              newApoderado={newApoderado}>
+            </PopupApoderado>}
+
         {popupconv && (
           <PopupConv
             setEstado={setPopupconv}
@@ -178,12 +189,22 @@ function Convocados() {
                     <td>{resultadoBusqueda["tipo_documento"]}</td>
                     <td>{resultadoBusqueda["identificacion"]}</td>
                     <td>
-                      <button
-                        onClick={() => setPopup(!popup)}
-                        className="boton-tabla-eliminar"
+
+                    {resultadoBusqueda.apoderado_id ? 
+                     <button
+                       onClick={() => {setPopup(!popup); setApoderadoid(resultadoBusqueda["apoderado_id"]);}}
+                       className="boton-tabla-eliminar"
+                     >
+                       {resultadoBusqueda["nombre_apoderado"]}
+                     </button>
+                     : <button
+                     onClick={() => {setPopup(!popup); setApoderadoid(null); setNewApoderado(resultadoBusqueda["persona_id"]);}}
+                     className="boton-tabla-eliminar"
                       >
-                        {resultadoBusqueda["nombre_apoderado"]}
+                        Crear apoderado
                       </button>
+                     }
+
                     </td>
                     <td>
                       <button

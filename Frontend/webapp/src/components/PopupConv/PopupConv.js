@@ -9,6 +9,7 @@ import {
   axiosTokenInstanceApiExpedientes,
 } from "../../helpers/axiosInstances";
 import { toast } from "react-toastify";
+import { SearchableSelect } from "../../components";
 
 export default function PopupConv({
   text,
@@ -20,6 +21,8 @@ export default function PopupConv({
   resultadosBusqueda,
   setPopupconv,
   popupconv,
+  personaid,
+  setPersonaid
 }) {
   const [sexos, setSexos] = useState([]);
   const [generos, setGeneros] = useState([]);
@@ -32,8 +35,17 @@ export default function PopupConv({
   const [tiposPersona, setTiposPersona] = useState([]);
   const [tiposDocumento, setTiposDocumento] = useState([]);
   const [conv2, setConv2] = useState(false);
+  const [departamento, setDepartamento] = useState("");
+  const [departamentoInitial, setDepartamentoInitial] = useState(null);
+  const [ciudad, setCiudad] = useState("");
+  const [ciudadInitial, setCiudadInitial] = useState(null);
+  const [localidad, setLocalidad] = useState("");
+  const [localidadInitial, setLocalidadInitial] = useState("")
+  const [barrio, setBarrio] = useState("");
+  const [barrioInitial, setBarrioInitial] = useState("")
 
   useEffect(() => {
+    console.log(personaid);
     axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "/tipos_documento/?count=20",
@@ -192,9 +204,71 @@ export default function PopupConv({
       });
   }, []);
 
+  useEffect(() => {
+
+    if (personaid) { 
+    
+      axiosTokenInstanceApiExpedientes({
+        method: 'get',
+        url: `/personas/${personaid}`,
+        // headers: req.headers,
+        data: {}
+      })
+        .then(result => {
+          console.log(result.data);
+          // toast.success("Los datos llegaron", {
+          //   position: toast.POSITION.BOTTOM_RIGHT,
+          // });
+          document.getElementById("nombres").value = result.data["nombres"];
+          document.getElementById("apellidos").value = result.data["apellidos"];
+          document.getElementById("tipoDocumento").value = result.data["tipo_documento_id"];
+          document.getElementById("identificacion").value = result.data["identificacion"];
+          document.getElementById("fecha_nacimiento").value = result.data["fecha_nacimiento"];
+          document.getElementById("lugar_nacimiento").value = result.data["lugar_nacimiento"];
+          document.getElementById("fecha_expedicion").value = result.data["fecha_expedicion"];
+          document.getElementById("lugar_expedicion").value = result.data["lugar_expedicion"];
+          document.getElementById("tarjetaProfesional").value = result.data["tarjeta_profesional"];
+          document.getElementById("correo").value = result.data["correo"];
+          document.getElementById("tarjetaProfesional").value = result.data["tarjeta_profesional"];
+          document.getElementById("telefono").value = result.data["telefono"];
+          document.getElementById("sexo").value = result.data["sexo_id"];
+          document.getElementById("genero").value = result.data["genero_id"];
+          document.getElementById("celular").value = result.data["celular"];
+          document.getElementById("escolaridad").value = result.data["escolaridad_id"];
+          document.getElementById("estratosocioeconomico").value = result.data["estrato_socioeconomico_id"];
+          document.getElementById("direccion").value = result.data["direccion"];
+          document.getElementById("ocupacion").value = result.data["ocupacion"];
+          document.getElementById("estado_civil").value = result.data["estado_civil_id"];
+          document.getElementById("vivienda").value = result.data["tipo_vivienda_id"];
+          document.getElementById("tipoDiscapacidad").value = result.data["tipo_discapacidad_id"];
+          document.getElementById("grupo_etnico").value = result.data["grupo_etnico_id"];
+          
+          if (result.data["barrio_id"]) {
+            setBarrioInitial({ id:result.data["barrio_id"], nombre: result.data["barrio"]})
+            setLocalidadInitial({ id:result.data["localidad_id"], nombre: result.data["localidad"]})
+            setCiudadInitial({ id:result.data["ciudad_id"], nombre: result.data["ciudad"]})
+            setDepartamentoInitial({ id:result.data["departamento_id"], nombre: result.data["departamento"]})
+        }
+
+          if (result.data["tipo_persona_id"] == 1) {
+            document.getElementById("tipoPersona1").checked =
+              result.data["tipo_persona_id"];
+          } else if (result.data["tipo_persona_id"] == 2) {
+            document.getElementById("tipoPersona2").checked =
+              result.data["tipo_persona_id"];
+          }
+         })
+        .catch(err => {
+          console.log("error");
+          console.log(err);
+        });
+      }
+    
+  }, [])
+
   const submitForm = (event) => {
     event.preventDefault();
-
+    
     const data = {
       persona: {
         nombres: event.target.nombres.value,
@@ -221,8 +295,42 @@ export default function PopupConv({
         tipo_vivienda_id: event.target.vivienda.value,
         tipo_documento_id: event.target.tipoDocumento.value,
         escolaridad_id: event.target.escolaridad.value,
+        barrio_id: event.target.barrio.value,
       },
     };
+
+    const dataModificar = {
+      
+        nombres: event.target.nombres.value,
+        apellidos: event.target.apellidos.value,
+        identificacion: event.target.identificacion.value,
+        fecha_expedicion: event.target.fecha_expedicion.value,
+        lugar_expedicion: event.target.lugar_expedicion.value,
+        fecha_nacimiento: event.target.fecha_nacimiento.value,
+        telefono: event.target.telefono.value,
+        direccion: event.target.direccion.value,
+        ocupacion: event.target.ocupacion.value,
+        celular: event.target.celular.value,
+        correo: event.target.correo.value,
+        tarjeta_profesional: event.target.tarjetaProfesional.value,
+        lugar_nacimiento: event.target.lugar_nacimiento.value,
+        estado_civil_id: event.target.estado_civil.value,
+        estrato_socioeconomico_id: event.target.estratosocioeconomico.value,
+        grupo_etnico_id: event.target.grupo_etnico.value,
+        tipo_persona_id: event.target.tipoPersona.value,
+        sexo_id: event.target.sexo.value,
+        tipo_discapacidad_id: event.target.tipoDiscapacidad.value,
+        genero_id: event.target.genero.value,
+        tipo_vivienda_id: event.target.vivienda.value,
+        tipo_documento_id: event.target.tipoDocumento.value,
+        escolaridad_id: event.target.escolaridad.value,
+        barrio_id: event.target.barrio.value,
+        departamento_id: event.target.departamento.value,
+        ciuadad_id: event.target.ciudad.value,
+        localidad_id: event.target.localidad.value,
+      
+    };
+
     data.apoderado = {};
     if (conv2) {
       data.apoderado = {
@@ -239,7 +347,31 @@ export default function PopupConv({
       };
     }
 
-    console.log(data.apoderado);
+    if (personaid) {
+
+      axiosTokenInstanceApiExpedientes({
+          
+        method: "patch",
+        url:`/personas/${personaid}`,
+        // headers: req.headers,
+        data: dataModificar,
+      })
+        .then((result) => {
+          console.log(result);
+            console.log("resultado:");
+            console.log(result);
+            toast.success("La persona ha sido modificada correctamente", {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+          // setResultadosBusqueda([resultadosBusqueda]);
+          setEstado(!estado);
+        })
+        .catch((err) => {
+          console.log("error");
+        });
+    }
+    else{
+    console.log(data.persona);
     axiosBasicInstanceApiExpedientes({
       method: "post",
       url: `/expedientes/${id}/${personas}/`,
@@ -258,19 +390,21 @@ export default function PopupConv({
       .catch((err) => {
         console.log("error");
       });
+    }
   };
 
   return (
     <div className="wrapp-popup">
       <div className="popup">
         <div className="titulo-popup">
-          <h1>Crear Persona Convocado</h1>
+          
+          <h1>{personaid ? "Modificar": "Crear"} Persona Convocado</h1>
         </div>
         <form className="form-popup" onSubmit={(e) => submitForm(e)}>
           <div className="wrapp-boton-cerrar">
             <svg
               className="boton-cerrar-popup"
-              onClick={() => setEstado(!estado)}
+              onClick={() => {setEstado(!estado);setPersonaid(null)}}
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
               viewBox="0 0 16 16"
@@ -390,8 +524,8 @@ export default function PopupConv({
                       <input
                         className="form-check-input"
                         type="radio"
-                        name="flexRadioDefault"
-                        id="tipoPersona"
+                        name="tipoPersona"
+                        id={"tipoPersona" + tipoPersona["id"]}
                         value={tipoPersona["id"]}
                       />
                       <label
@@ -481,6 +615,73 @@ export default function PopupConv({
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
+              </div>
+
+              <div className="col-detalle-solicitud">
+                <div>
+                  <label htmlFor="Departamento" className="col-inputs">
+                    Departamento:
+                  </label>
+                  <SearchableSelect
+                    axiosInstance={axiosTokenInstanceApiExpedientes}
+                    url={"/paises/1"}
+                    name={"departamento"}
+                    identifier={"id"}
+                    initialValue={departamentoInitial}
+                    onChange={(val) => {
+                      setDepartamento(val);
+                      setCiudad("");
+                    }}
+                  />
+                  </div>
+                  <div>
+                    <label htmlFor="ciudad" className="col-inputs">
+                      Ciudad:
+                    </label>
+                    <SearchableSelect
+                      axiosInstance={axiosTokenInstanceApiExpedientes}
+                      url={"/paises/1/departamentos/" + departamento}
+                      name={"ciudad"}
+                      identifier={"id"}
+                      initialValue={ciudadInitial}
+                      onChange={(val) => {
+                        setCiudad(val);
+                      }}
+                    />
+                 </div>
+              </div>
+
+              <div className="col-detalle-solicitud">
+                <div>
+                  <label htmlFor="Localidad" className="col-inputs">
+                    Localidad:
+                  </label>
+                  <SearchableSelect
+                    axiosInstance={axiosTokenInstanceApiExpedientes}
+                    url={"/paises/1/departamentos/" + departamento +"/ciudades/" + ciudad}
+                    name={"localidad"}
+                    identifier={"id"}
+                    initialValue={localidadInitial}
+                    onChange={(val) => {
+                      setLocalidad(val)
+                    }}
+                  />
+                  </div>
+                  <div>
+                    <label htmlFor="barrio" className="col-inputs">
+                      Barrio
+                    </label>
+                    <SearchableSelect
+                      axiosInstance={axiosTokenInstanceApiExpedientes}
+                      url={"/paises/1/departamentos/" + departamento +"/ciudades/" + ciudad + "/localidades/" + localidad}
+                      name={"barrio"}
+                      identifier={"id"}
+                      initialValue={barrioInitial}
+                      onChange={(val) => {
+                        setBarrio(val);
+                      }}
+                    />
+                 </div>
               </div>
 
               <label className="subtitles-secciones">Datos Adicionales</label>
@@ -644,7 +845,7 @@ export default function PopupConv({
               </FloatingLabel>
 
               {/* Apoderado ---------------------------------------------------> */}
-
+              {personaid == null && <>   
               <label className="subtitles-secciones">Posee apoderado</label>
               <div className="col-detalle-solicitud">
                 <button
@@ -804,14 +1005,16 @@ export default function PopupConv({
                   </div>
                 </>
               )}
+              </>}
             </div>
           </div>
+        
 
           <div className="wrapp-botones">
             <button className="botones-popup" onClick={() => {}}>
               Guardar
             </button>
-            <button className="botones-popup">Cancelar</button>
+            <button className="botones-popup" onClick={() => {setPopupconv(!PopupConv);setPersonaid(null);}}>Cancelar</button>
           </div>
         </form>
       </div>

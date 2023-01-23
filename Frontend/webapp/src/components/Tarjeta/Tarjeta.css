@@ -43,6 +43,12 @@
     background-color: #D8D8D8;
 }
 
+.tarjeta-personas:hover{
+    background-color: #396c3c7d;
+    color: white;
+    cursor: pointer;
+}
+
 .body-tarjeta-personas{
     padding: 1.5em 3em;
 }
@@ -50,7 +56,18 @@
 .indicador-persona{
     width: 8em;
     text-align: right;
-    background-color: #5C9E31;
+    background-color: #307934;
+    color: white;
+    padding: .4em;
+    border-radius: 1em 0em 0em 1em;
+    text-align: center;
+}
+
+.indicador-persona-yellow{
+    width: 8em;
+    text-align: right;
+    background-color: #8a9b83;
+    color: white;
     padding: .4em;
     border-radius: 1em 0em 0em 1em;
     text-align: center;
