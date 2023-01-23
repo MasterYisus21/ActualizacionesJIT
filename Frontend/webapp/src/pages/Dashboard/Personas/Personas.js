@@ -19,6 +19,8 @@ function Personas() {
   const [filtrosAplicados, setFiltrosAplicados] = useState([])
   const [page, setPage] = useState(1)
   const [numPages, setNumPages] = useState(1)
+  const [modificar, setModificar] = useState(null)
+  const [id, setId] = useState([])
   let resultados = useRef([])
 
   const search = () => {
@@ -134,7 +136,15 @@ function Personas() {
   return (
     <div className='wrapp-personas'>
       {estado &&
-        <Popup setEstado={setEstado} estado={estado} />
+        <Popup 
+        setEstado={setEstado} 
+        estado={estado} 
+        setResultadosBusqueda={setResultadosBusqueda} 
+        resultadosBusqueda={resultadosBusqueda} 
+        modificar={modificar}
+        setModificar={setModificar}
+        id={id}
+        />
       }
       <div className='search-load-bar'>
         <Buscador
@@ -172,6 +182,12 @@ function Personas() {
               correo={resultado["correo"]}
               celular={resultado["celular"]}
               rol={resultado["tipo_cargo"]}
+              setEstado={setEstado} 
+              estado={estado}
+              modificar={modificar}
+              setModificar={setModificar}
+              id={resultado.id}
+              setId={setId}
             />
           )
         })}
