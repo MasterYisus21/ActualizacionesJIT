@@ -1,4 +1,4 @@
-.wrapp-main-detalle-solicitud{
+.wrapp-main-detalle-solicitud {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -7,14 +7,14 @@
     gap: 3em;
 }
 
-.contenedor-botones-detalle-solicitud{
+.contenedor-botones-detalle-solicitud {
     border-top: #a1a6a2 dashed 3px;
     width: 100%;
     height: 40rem;
     padding-top: 3em;
 }
 
-.boton-remitir{
+.boton-remitir {
     margin-right: 2rem;
     height: 2.5rem;
     width: 12vw;
@@ -26,13 +26,13 @@
 
 }
 
-.boton-remitir:hover{
+.boton-remitir:hover {
     border-color: white;
     background-color: blue;
     color: white;
 }
 
-.boton-rechazar{
+.boton-rechazar {
     margin-right: 2rem;
     height: 2.5rem;
     width: 12vw;
@@ -44,13 +44,13 @@
 
 }
 
-.boton-rechazar:hover{
+.boton-rechazar:hover {
     border-color: white;
     background-color: #D33B3B;
     color: white;
 }
 
-.boton-incompleto{
+.boton-incompleto {
     margin-right: 2rem;
     height: 2.5rem;
     width: 12vw;
@@ -61,13 +61,13 @@
     font-size: 0.8vw;
 }
 
-.boton-incompleto:hover{
+.boton-incompleto:hover {
     border-color: white;
     background-color: yellow;
     color: black;
 }
 
-.boton-aceptar{
+.boton-aceptar {
     height: 2.5rem;
     width: 12vw;
     border-radius: 0.5rem;
@@ -78,32 +78,32 @@
 
 }
 
-.boton-aceptar:hover{
+.boton-aceptar:hover {
     border-color: white;
     background-color: green;
     color: white;
 }
 
-.colapse-general{
+.colapse-general {
     display: flex;
     justify-content: center;
     padding-bottom: 2em;
 }
 
-.contenedor-remitir{
+.contenedor-remitir {
     width: 55vw;
     height: 30rem;
     background-color: #d8e1fc;
     border-radius: 0.5rem;
 }
 
-.contenedor-rechazar{
+.contenedor-rechazar {
     width: 55vw;
     background-color: #ffdbdb;
     border-radius: 0.5rem;
 }
 
-.contenedor-incompleto{
+.contenedor-incompleto {
     width: 55vw;
     height: 30rem;
     background-color: #fcfdc6;
@@ -111,13 +111,13 @@
     border-radius: 0.5rem;
 }
 
-.contenedor-aceptar{
+.contenedor-aceptar {
     width: 55vw;
     background-color: #bfd4c6;
     border-radius: 0.5rem;
 }
 
-.titulo-remitir{
+.titulo-remitir {
     display: flex;
     justify-content: start;
     font-size: 1.2rem;
@@ -125,12 +125,12 @@
     margin-left: 3rem;
 }
 
-.seleccionable-centro-conciliacion{
+.seleccionable-centro-conciliacion {
     width: 23vw;
     margin-left: 3rem;
 }
 
-.label-explicacion-remitir{
+.label-explicacion-remitir {
     display: flex;
     justify-content: start;
     margin-left: 3rem;
@@ -140,7 +140,7 @@
     padding-bottom: 1em;
 }
 
-.campo-explicacion{
+.campo-explicacion {
     width: 90%;
     height: 12rem;
     border-radius: 0.5rem;
@@ -150,7 +150,7 @@
     margin-right: 3rem;
 }
 
-.boton-remitir1-solicitud{
+.boton-remitir1-solicitud {
     height: 2.7rem;
     width: 15rem;
     background-color: blue;
@@ -159,7 +159,7 @@
     font-size: 1.6rem;
 }
 
-.boton-remitir-solicitud{
+.boton-remitir-solicitud {
     height: 2.7rem;
     width: 15rem;
     background-color: #00460F;
@@ -168,7 +168,7 @@
     font-size: 1.6rem;
 }
 
-.contenedor-boton-remitir{
+.contenedor-boton-remitir {
     width: 95%;
     padding: 1.5em 0em;
     display: flex;
@@ -176,7 +176,7 @@
     justify-content: end;
 }
 
-.label-explicacion-rechazar{
+.label-explicacion-rechazar {
     display: flex;
     justify-content: start;
     margin-left: 3rem;
@@ -186,7 +186,7 @@
     margin-bottom: 1rem;
 }
 
-.boton-rechazar-solicitud{
+.boton-rechazar-solicitud {
     height: 2.7rem;
     width: 15rem;
     background-color: #D33B3B;
@@ -197,7 +197,7 @@
 
 }
 
-.boton-devolver-solicitud{
+.boton-devolver-solicitud {
     height: 2.7rem;
     width: 15rem;
     background-color: #E4E900;
@@ -209,7 +209,7 @@
     border: 0;
 }
 
-.contenedor-campos-aceptar-caso{
+.contenedor-campos-aceptar-caso {
     width: 100%;
     height: 7rem;
 
@@ -217,40 +217,40 @@
     flex-direction: row;
 }
 
-.izquierda-aceptar-caso{
+.izquierda-aceptar-caso {
     width: 50%;
     height: 100%;
 
 }
 
-.derecha-aceptar-caso{
+.derecha-aceptar-caso {
     width: 50%;
     height: 100%;
 
 }
 
-.seleccionable-centro-conciliacion-aceptar{
+.seleccionable-centro-conciliacion-aceptar {
     width: 21.5vw;
     margin-left: 3rem;
 }
 
-.input-aceptar-valor{
+.input-aceptar-valor {
     width: 21.5vw;
     border-radius: 0.3rem;
     height: 2.3rem;
     border: 0;
 }
 
-.col-detalle-solicitud{
+.col-detalle-solicitud {
     display: flex;
     gap: 2em;
 }
 
-.col-inputs{
+.col-inputs {
     width: 24em;
 }
 
-.boton-datos-apoderado{
+.boton-datos-apoderado {
     border: 0;
     color: black;
     background-color: #D9D9D9;
@@ -266,16 +266,16 @@
     height: 2.5em;
     background-color: #00913D;
     color: white;
-}   
+}
 
-.icon-drag-drop{
+.icon-drag-drop {
     width: 10em;
 }
 
-.dropzone{
+.dropzone {
     padding: 2em;
     border-radius: 1.5em;
-    color:#00913D;
+    color: #00913D;
     border: 5px solid #00913D;
     border-style: dashed;
 }
@@ -286,22 +286,23 @@
     cursor: pointer;
 }
 
-.icon-close{
+.icon-close {
     width: 1.5em;
 }
+
 .icon-close:hover {
-    color:#00913D;
+    color: #00913D;
 }
 
-.fix-position-btn-save{
+.fix-position-btn-save {
     width: 100%;
-    display: flex;  
+    display: flex;
     justify-content: center;
 }
 
-.btn-save-changes{
+.btn-save-changes {
     width: 50%;
-    color:#00460F;
+    color: #00460F;
     background-color: #ffffff;
     border-radius: 7px;
     border: #00460F solid 3px;
@@ -310,32 +311,46 @@
     font-weight: 600;
 }
 
-.btn-save-changes:hover{
+.btn-save-changes:hover {
     background-color: #00460F;
     color: white;
 }
 
-.doc-download{
+.doc-download {
     color: #00913D;
     cursor: pointer;
 }
 
+.estado-solicitud-Rechazada {
+    background-color: #d41414;
+    padding: .5em;
+    color: white;
+    border-radius: 10px;
+}
+
+.estado-solicitud-Aprobada {
+    background-color: #37913d;
+    padding: .5em;
+    color: white;
+    border-radius: 10px;
+}
+
 @media (max-width: 700px) {
 
-    .dropzone{
+    .dropzone {
         width: 80%;
     }
 
-    .lista-anexos{
+    .lista-anexos {
         display: flex;
         align-items: center;
     }
 
-    .wrapp-visualizacion-anexos{
+    .wrapp-visualizacion-anexos {
         width: 90%;
     }
 
-    .col-detalle-solicitud{
+    .col-detalle-solicitud {
         width: 20em;
     }
 }

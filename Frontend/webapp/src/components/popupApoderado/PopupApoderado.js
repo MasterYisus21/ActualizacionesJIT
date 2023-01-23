@@ -135,7 +135,19 @@ export default function PopupApoderado({
           toast.success("La persona ha sido modificada correctamente", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
-          // setResultadosBusqueda([resultadosBusqueda]);
+          console.log(apoderadoid);
+          let tempArray = [...resultadosBusqueda];
+          const pos = tempArray
+            .map((e) => {
+              return e["apoderado_id"];
+            })
+            .indexOf(apoderadoid);
+          console.log(pos);
+          tempArray[pos][
+            "nombre_apoderado"
+          ] = `${result.data.nombres} ${result.data.apellidos}`;
+          setResultadosBusqueda(tempArray);
+
           setEstado(!estado);
         })
         .catch((err) => {
@@ -190,6 +202,7 @@ export default function PopupApoderado({
                   className="inputs-personas"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel controlId="apellidos" label="Apellidos">
@@ -197,6 +210,7 @@ export default function PopupApoderado({
                   className="inputs-personas"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
             </div>
@@ -210,6 +224,7 @@ export default function PopupApoderado({
                 <Form.Select
                   className="col-inputs"
                   aria-label="Floating label select example"
+                  required
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {tiposDocumento.map((tipoDocumento) => {
@@ -229,6 +244,7 @@ export default function PopupApoderado({
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
             </div>
@@ -245,6 +261,7 @@ export default function PopupApoderado({
                   className="col-inputs"
                   type="date"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel
@@ -255,6 +272,7 @@ export default function PopupApoderado({
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
             </div>
@@ -276,6 +294,7 @@ export default function PopupApoderado({
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
             </div>
@@ -293,6 +312,7 @@ export default function PopupApoderado({
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
             </div>

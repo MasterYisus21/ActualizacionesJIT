@@ -397,9 +397,8 @@ export default function PopupConv({
           ] = `${result.data.nombres} ${result.data.apellidos}`;
           tempArray[pos]["persona_id"] = result.data.id;
           tempArray[pos]["identificacion"] = result.data.identificacion;
-          // tempArray[pos]["tipo_documento"] = result.data.tipo_documento_id;
+          tempArray[pos]["tipo_documento"] = result.data.tipo_documento;
           setResultadosBusqueda(tempArray);
-          // setResultadosBusqueda([resultadosBusqueda]);
           setEstado(!estado);
           setPersonaid(null);
         })
@@ -460,6 +459,7 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel controlId="apellidos" label="Apellidos">
@@ -467,6 +467,7 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
 
@@ -481,6 +482,7 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="date"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel
@@ -491,6 +493,7 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
 
@@ -503,6 +506,7 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   aria-label="Floating label select example"
                   name="tipo_documento"
+                  required
                 >
                   <option value={""}>Abre el menú para ver las opciones</option>
                   {tiposDocumento.map((tipoDocumento) => {
@@ -525,6 +529,7 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
 
@@ -539,6 +544,7 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="date"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel
@@ -549,6 +555,7 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
 
@@ -566,6 +573,7 @@ export default function PopupConv({
                         name="tipoPersona"
                         id={"tipoPersona" + tipoPersona["id"]}
                         value={tipoPersona["id"]}
+                        required
                       />
                       <label
                         className="form-check-label"
@@ -780,6 +788,7 @@ export default function PopupConv({
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    required
                   />
                 </FloatingLabel>
               </div>

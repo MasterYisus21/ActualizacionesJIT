@@ -155,6 +155,7 @@ function Convocados() {
             setResultadosBusqueda={setResultadosBusqueda}
             setPopupconv={setPopupconv}
             popupconv={popupconv}
+            personaid={newApoderado}
             setPersonaid={setNewApoderado}
           ></PopupConv>
         )}
