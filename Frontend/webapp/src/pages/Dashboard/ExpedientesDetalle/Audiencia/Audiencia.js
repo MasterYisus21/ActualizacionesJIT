@@ -6,6 +6,7 @@ import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInsta
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import fileDownload from 'js-file-download';
+import { confirmAlert } from 'react-confirm-alert';
 
 
 function Audiencia() {
@@ -212,6 +213,41 @@ function Audiencia() {
       });
   }
 
+  const notificarCitacion = () => {
+    console.log("notificarCitacion");
+    const confirmacion = () => {
+      const data = personas["personas_citadas"].map(v => v.id_relacion)
+      console.log(data);
+      axiosTokenInstanceApiExpedientes({
+        method: 'post',
+        url: `expedientes/${id}/citaciones/${dataApi?.id}/notificar`,
+        // headers: req.headers,
+        data: data
+      })
+        .then(result => {
+          console.log(result.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    confirmAlert({
+      title: `Confirmación`,
+      message: `¿Estas seguro de notificar a los usuarios?. Esta acción enviara un correo electrónico y no puede ser revertida`,
+      buttons: [
+        {
+          label: 'Si',
+          onClick: () => confirmacion()
+
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  }
+
   return (
     <div className='contenedor-principal-modulo-audiencia'>
       {/* <div className='contenedor-boton-audiencia'>
@@ -309,7 +345,7 @@ function Audiencia() {
                   <td>{dato.nombres}</td>
                   <td>{dato.tipo_cliente}</td>
                   <td className='contenedor-icono-descarga'>
-                    <button className='button-audiencia' onClick={e => {descargarFormatoCitacion(e, dato)}}>
+                    <button className='button-audiencia' onClick={e => { descargarFormatoCitacion(e, dato) }}>
                       <img src='/icons/descarga-documento.svg' className='icono-descarga-documento' />
                     </button>
                   </td>
@@ -361,7 +397,12 @@ function Audiencia() {
         </table>
       </div>
       <div className='contenedor-boton-notificar-via-correo'>
-        <button className='boton-notificar'>Notificar vía correo</button>
+        <button
+          className='boton-notificar'
+          onClick={e => { notificarCitacion() }}
+        >
+          Notificar vía correo
+        </button>
       </div>
     </div >
   )
