@@ -382,6 +382,16 @@ export default function PopupConv({
           toast.success("La persona ha sido modificada correctamente", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
+
+          let tempArray = [...resultadosBusqueda];
+          console.log(tempArray);
+
+          const pos = tempArray
+            .map((e) => e["persona_id "])
+            .indexOf([personaid]);
+          tempArray[pos] = result.data;
+          console.log(pos);
+          setResultadosBusqueda(tempArray);
           // setResultadosBusqueda([resultadosBusqueda]);
           setEstado(!estado);
         })
@@ -397,12 +407,13 @@ export default function PopupConv({
         data: data,
       })
         .then((result) => {
-          console.log(result);
+          console.log(result.data);
           // event.target.reset();
           toast.success("La persona ha sido creada correctamente", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
-          setResultadosBusqueda([...resultadosBusqueda, result.data]);
+
+          // setResultadosBusqueda([...resultadosBusqueda, result.data]);
           setPopupconv(!popupconv);
         })
         .catch((err) => {

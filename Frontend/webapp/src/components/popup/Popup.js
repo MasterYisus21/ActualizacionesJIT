@@ -249,7 +249,6 @@ export default function Popup({
                 className=""
                 type="text"
                 placeholder="name@example.com"
-                required
               />
             </FloatingLabel>
 
