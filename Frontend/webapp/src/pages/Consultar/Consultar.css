@@ -22,8 +22,8 @@
 }
 
 .form-consulta-solicitud{
-    width: 100vw;
-    height: 100%;
+    width: 80vw;
+    height: 20vh;
     border-radius: 1rem;
     display: flex;
     justify-content: center;
@@ -136,10 +136,11 @@
 }
 
 .boton-ingreso2{
-    height: 2rem;
-    width: 6rem;
+    height: 3rem;
+    width: 7rem;
     border-radius: 0.6rem;
     border: 0;
+    margin-top: 8px;
 }
 
 .boton-ingreso2:hover{
@@ -159,22 +160,67 @@
 
 }
 
+.entrada-cedula-buscar{
+    width: 35vw;
+    height: 3rem;
+    border-radius: 5px;
+    border: 0;
+    max-width: 50rem;
+    margin-top: 1.5rem;
+}
+.contenedor-botones-solicitud-expediente{
+    display: flex;
+    gap: 6rem;
+}
 
+
+
+.boton-consultar-solicitud{
+    border-radius: 5px;
+    border: 0;
+    width: 15vw;
+    height: 2.5rem;
+}
+
+.boton-consultar-expediente{
+    border-radius: 5px;
+    border: 0;
+}
+
+.boton-consultar-solicitud{
+    border: 0;
+    color: black;
+    background-color: #f1f1f1;
+    width: 15em;
+    border-radius: .5em;
+    height: 2.5em;
+}
+
+.boton-consultar-solicitud-activado {
+    border: 0;
+    width: 15em;
+    border-radius: .5em;
+    height: 2.5em;
+    background-color: #00913D;
+    color: white;
+}   
+
+@media (max-width: 768px) {
+    .entrada-cedula-buscar{
+        width: 80%;
+    }
+}
 
 @media (min-width: 768px) {
 
     .rectangulo-pregunta-documento {
-      padding: 0;
+
       height: 100%;
-      width: 80%;
+      width: 60%;
     }
-    
-    .seleccionable-cedula{
-        width: 35vw;
-    }
-    .g-2{
-        gap:4em;
-    }
+
+
+
     .centro {
         height: 100%;
         width: 33.3%;
