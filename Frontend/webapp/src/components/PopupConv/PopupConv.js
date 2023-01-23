@@ -397,9 +397,8 @@ export default function PopupConv({
           ] = `${result.data.nombres} ${result.data.apellidos}`;
           tempArray[pos]["persona_id"] = result.data.id;
           tempArray[pos]["identificacion"] = result.data.identificacion;
-          // tempArray[pos]["tipo_documento"] = result.data.tipo_documento_id;
+          tempArray[pos]["tipo_documento"] = result.data.tipo_documento;
           setResultadosBusqueda(tempArray);
-          // setResultadosBusqueda([resultadosBusqueda]);
           setEstado(!estado);
           setPersonaid(null);
         })
