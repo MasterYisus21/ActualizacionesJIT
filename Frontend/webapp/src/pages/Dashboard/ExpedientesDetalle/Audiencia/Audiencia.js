@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import fileDownload from 'js-file-download';
 import { confirmAlert } from 'react-confirm-alert';
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function Audiencia() {
@@ -19,6 +20,7 @@ function Audiencia() {
     "personas_citadas": [],
     "personas_no_citadas": []
   })
+  const [cargandoNotificacion, setCargandoNotificacion] = useState(false)
 
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
@@ -225,6 +227,7 @@ function Audiencia() {
         data: data
       })
         .then(result => {
+          setCargandoNotificacion(false)
           console.log(result.data);
         })
         .catch(err => {
@@ -237,7 +240,7 @@ function Audiencia() {
       buttons: [
         {
           label: 'Si',
-          onClick: () => confirmacion()
+          onClick: () => { setCargandoNotificacion(true); confirmacion() }
 
         },
         {
@@ -388,6 +391,7 @@ function Audiencia() {
                         <img className='mini-image' src="/images/arrow-up.svg"></img>
                       </button>
                     </form>
+
                   </td>
                 </tr>
               )
@@ -403,6 +407,15 @@ function Audiencia() {
         >
           Notificar vía correo
         </button>
+        <ClipLoader
+          color={"#000000"}
+          loading={cargandoNotificacion}
+          // cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+        {!cargandoNotificacion && <img src='/icons/check-mark.svg' alt='imagen guardar' className="" />}
       </div>
     </div >
   )
