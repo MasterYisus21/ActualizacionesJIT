@@ -13,7 +13,7 @@ email.enviar= (tipo_mensaje, saludo,correoQuienRecibe, asunto, encabezado,cuerpo
         saludo: saludo,
         encabezado: encabezado,
         cuerpo:cuerpo,
-        despedida: "Gracias por la atención prestada",
+        despedida: "Gracias por la atención prestada.",
         
       }
     }

@@ -36,6 +36,7 @@ function SolicitudesDetalle() {
   const [conciliador, setConciliador] = useState(null);
   const [nameconciliador, setNameconciliador] = useState("");
   const [ciudadInitial, setCiudadInitial] = useState(null);
+  const [radicado, setRadicado] = useState([]);
 
   const [apoderado_convocante, setApoderado_convocante] = useState(false);
 
@@ -65,7 +66,7 @@ function SolicitudesDetalle() {
       data: {},
     })
       .then((result) => {
-        // console.log(result.data);
+        console.log(result.data);
         setData(result.data);
 
         //Convocante
@@ -124,7 +125,8 @@ function SolicitudesDetalle() {
         document.getElementById("descripcion_hechos").value =
           result.data.hechos[0].descripcion;
 
-        // Documentos
+        // Solicitud
+        setRadicado(result.data.solicitud["numero_radicado"]);
 
         //document.getElementById("descripcion_hechos").value = result.data.documentos.result[0].descripcion
 
@@ -379,13 +381,10 @@ function SolicitudesDetalle() {
     console.log(body);
     axiosTokenInstanceApiSolicitudes({
       method: "post",
-      url: "/solicitudes/"+id,
+      url: "/solicitudes/" + id,
       data: body,
     })
       .then((response) => {
-        console.log('====================================');
-        console.log("entré");
-        console.log('====================================');
         e.target.reset();
         toast.info("La solicitud ha sido rechazada", {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -398,7 +397,9 @@ function SolicitudesDetalle() {
 
   const aceptarSolicitud = (e) => {
     e.preventDefault();
-    const descripcionAceptada = document.getElementById("descripcionAprovado").value;
+    const descripcionAceptada = document.getElementById(
+      "descripcionAprovado"
+    ).value;
     const valorCaso = document.getElementById("valorCaso").value;
     const body = {
       estado_solicitud: "aprobada",
@@ -407,6 +408,7 @@ function SolicitudesDetalle() {
       valor_caso: valorCaso,
       conciliador: nameconciliador,
       conciliador_id: conciliador,
+      numero_radicado: radicado,
     };
     console.log(body);
     axiosTokenInstanceApiSolicitudes({
@@ -431,13 +433,12 @@ function SolicitudesDetalle() {
   };
 
   useEffect(() => {
-    
     axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "conciliadores?ordering=-" + id,
     })
       .then((response) => {
-        const choseConciliador = response.data.results[0].nombres;
+        setNameconciliador(response.data.results[0].nombres);
       })
       .catch((err) => {
         console.log(err);

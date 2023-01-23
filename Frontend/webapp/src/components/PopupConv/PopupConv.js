@@ -22,7 +22,7 @@ export default function PopupConv({
   setPopupconv,
   popupconv,
   personaid,
-  setPersonaid
+  setPersonaid,
 }) {
   const [sexos, setSexos] = useState([]);
   const [generos, setGeneros] = useState([]);
@@ -40,9 +40,9 @@ export default function PopupConv({
   const [ciudad, setCiudad] = useState("");
   const [ciudadInitial, setCiudadInitial] = useState(null);
   const [localidad, setLocalidad] = useState("");
-  const [localidadInitial, setLocalidadInitial] = useState("")
+  const [localidadInitial, setLocalidadInitial] = useState("");
   const [barrio, setBarrio] = useState("");
-  const [barrioInitial, setBarrioInitial] = useState("")
+  const [barrioInitial, setBarrioInitial] = useState("");
 
   useEffect(() => {
     console.log(personaid);
@@ -205,50 +205,74 @@ export default function PopupConv({
   }, []);
 
   useEffect(() => {
-
-    if (personaid) { 
-    
+    if (personaid) {
       axiosTokenInstanceApiExpedientes({
-        method: 'get',
+        method: "get",
         url: `/personas/${personaid}`,
         // headers: req.headers,
-        data: {}
+        data: {},
       })
-        .then(result => {
+        .then((result) => {
           console.log(result.data);
           // toast.success("Los datos llegaron", {
           //   position: toast.POSITION.BOTTOM_RIGHT,
           // });
           document.getElementById("nombres").value = result.data["nombres"];
           document.getElementById("apellidos").value = result.data["apellidos"];
-          document.getElementById("tipoDocumento").value = result.data["tipo_documento_id"];
-          document.getElementById("identificacion").value = result.data["identificacion"];
-          document.getElementById("fecha_nacimiento").value = result.data["fecha_nacimiento"];
-          document.getElementById("lugar_nacimiento").value = result.data["lugar_nacimiento"];
-          document.getElementById("fecha_expedicion").value = result.data["fecha_expedicion"];
-          document.getElementById("lugar_expedicion").value = result.data["lugar_expedicion"];
-          document.getElementById("tarjetaProfesional").value = result.data["tarjeta_profesional"];
+          document.getElementById("tipoDocumento").value =
+            result.data["tipo_documento_id"];
+          document.getElementById("identificacion").value =
+            result.data["identificacion"];
+          document.getElementById("fecha_nacimiento").value =
+            result.data["fecha_nacimiento"];
+          document.getElementById("lugar_nacimiento").value =
+            result.data["lugar_nacimiento"];
+          document.getElementById("fecha_expedicion").value =
+            result.data["fecha_expedicion"];
+          document.getElementById("lugar_expedicion").value =
+            result.data["lugar_expedicion"];
+          document.getElementById("tarjetaProfesional").value =
+            result.data["tarjeta_profesional"];
           document.getElementById("correo").value = result.data["correo"];
-          document.getElementById("tarjetaProfesional").value = result.data["tarjeta_profesional"];
+          document.getElementById("tarjetaProfesional").value =
+            result.data["tarjeta_profesional"];
           document.getElementById("telefono").value = result.data["telefono"];
           document.getElementById("sexo").value = result.data["sexo_id"];
           document.getElementById("genero").value = result.data["genero_id"];
           document.getElementById("celular").value = result.data["celular"];
-          document.getElementById("escolaridad").value = result.data["escolaridad_id"];
-          document.getElementById("estratosocioeconomico").value = result.data["estrato_socioeconomico_id"];
+          document.getElementById("escolaridad").value =
+            result.data["escolaridad_id"];
+          document.getElementById("estratosocioeconomico").value =
+            result.data["estrato_socioeconomico_id"];
           document.getElementById("direccion").value = result.data["direccion"];
           document.getElementById("ocupacion").value = result.data["ocupacion"];
-          document.getElementById("estado_civil").value = result.data["estado_civil_id"];
-          document.getElementById("vivienda").value = result.data["tipo_vivienda_id"];
-          document.getElementById("tipoDiscapacidad").value = result.data["tipo_discapacidad_id"];
-          document.getElementById("grupo_etnico").value = result.data["grupo_etnico_id"];
-          
+          document.getElementById("estado_civil").value =
+            result.data["estado_civil_id"];
+          document.getElementById("vivienda").value =
+            result.data["tipo_vivienda_id"];
+          document.getElementById("tipoDiscapacidad").value =
+            result.data["tipo_discapacidad_id"];
+          document.getElementById("grupo_etnico").value =
+            result.data["grupo_etnico_id"];
+
           if (result.data["barrio_id"]) {
-            setBarrioInitial({ id:result.data["barrio_id"], nombre: result.data["barrio"]})
-            setLocalidadInitial({ id:result.data["localidad_id"], nombre: result.data["localidad"]})
-            setCiudadInitial({ id:result.data["ciudad_id"], nombre: result.data["ciudad"]})
-            setDepartamentoInitial({ id:result.data["departamento_id"], nombre: result.data["departamento"]})
-        }
+            setBarrioInitial({
+              id: result.data["barrio_id"],
+              nombre: result.data["barrio"],
+            });
+            setLocalidadInitial({
+              id: result.data["localidad_id"],
+              nombre: result.data["localidad"],
+            });
+            setCiudadInitial({
+              id: result.data["ciudad_id"],
+              nombre: result.data["ciudad"],
+            });
+            setDepartamentoInitial({
+              id: result.data["departamento_id"],
+              nombre: result.data["departamento"],
+            });
+          }
 
           if (result.data["tipo_persona_id"] == 1) {
             document.getElementById("tipoPersona1").checked =
@@ -257,18 +281,17 @@ export default function PopupConv({
             document.getElementById("tipoPersona2").checked =
               result.data["tipo_persona_id"];
           }
-         })
-        .catch(err => {
+        })
+        .catch((err) => {
           console.log("error");
           console.log(err);
         });
-      }
-    
-  }, [])
+    }
+  }, []);
 
   const submitForm = (event) => {
     event.preventDefault();
-    
+
     const data = {
       persona: {
         nombres: event.target.nombres.value,
@@ -300,35 +323,33 @@ export default function PopupConv({
     };
 
     const dataModificar = {
-      
-        nombres: event.target.nombres.value,
-        apellidos: event.target.apellidos.value,
-        identificacion: event.target.identificacion.value,
-        fecha_expedicion: event.target.fecha_expedicion.value,
-        lugar_expedicion: event.target.lugar_expedicion.value,
-        fecha_nacimiento: event.target.fecha_nacimiento.value,
-        telefono: event.target.telefono.value,
-        direccion: event.target.direccion.value,
-        ocupacion: event.target.ocupacion.value,
-        celular: event.target.celular.value,
-        correo: event.target.correo.value,
-        tarjeta_profesional: event.target.tarjetaProfesional.value,
-        lugar_nacimiento: event.target.lugar_nacimiento.value,
-        estado_civil_id: event.target.estado_civil.value,
-        estrato_socioeconomico_id: event.target.estratosocioeconomico.value,
-        grupo_etnico_id: event.target.grupo_etnico.value,
-        tipo_persona_id: event.target.tipoPersona.value,
-        sexo_id: event.target.sexo.value,
-        tipo_discapacidad_id: event.target.tipoDiscapacidad.value,
-        genero_id: event.target.genero.value,
-        tipo_vivienda_id: event.target.vivienda.value,
-        tipo_documento_id: event.target.tipoDocumento.value,
-        escolaridad_id: event.target.escolaridad.value,
-        barrio_id: event.target.barrio.value,
-        departamento_id: event.target.departamento.value,
-        ciuadad_id: event.target.ciudad.value,
-        localidad_id: event.target.localidad.value,
-      
+      nombres: event.target.nombres.value,
+      apellidos: event.target.apellidos.value,
+      identificacion: event.target.identificacion.value,
+      fecha_expedicion: event.target.fecha_expedicion.value,
+      lugar_expedicion: event.target.lugar_expedicion.value,
+      fecha_nacimiento: event.target.fecha_nacimiento.value,
+      telefono: event.target.telefono.value,
+      direccion: event.target.direccion.value,
+      ocupacion: event.target.ocupacion.value,
+      celular: event.target.celular.value,
+      correo: event.target.correo.value,
+      tarjeta_profesional: event.target.tarjetaProfesional.value,
+      lugar_nacimiento: event.target.lugar_nacimiento.value,
+      estado_civil_id: event.target.estado_civil.value,
+      estrato_socioeconomico_id: event.target.estratosocioeconomico.value,
+      grupo_etnico_id: event.target.grupo_etnico.value,
+      tipo_persona_id: event.target.tipoPersona.value,
+      sexo_id: event.target.sexo.value,
+      tipo_discapacidad_id: event.target.tipoDiscapacidad.value,
+      genero_id: event.target.genero.value,
+      tipo_vivienda_id: event.target.vivienda.value,
+      tipo_documento_id: event.target.tipoDocumento.value,
+      escolaridad_id: event.target.escolaridad.value,
+      barrio_id: event.target.barrio.value,
+      departamento_id: event.target.departamento.value,
+      ciuadad_id: event.target.ciudad.value,
+      localidad_id: event.target.localidad.value,
     };
 
     data.apoderado = {};
@@ -348,48 +369,64 @@ export default function PopupConv({
     }
 
     if (personaid) {
-
       axiosTokenInstanceApiExpedientes({
-          
         method: "patch",
-        url:`/personas/${personaid}`,
+        url: `/personas/${personaid}`,
         // headers: req.headers,
         data: dataModificar,
       })
         .then((result) => {
           console.log(result);
-            console.log("resultado:");
-            console.log(result);
-            toast.success("La persona ha sido modificada correctamente", {
+          console.log("resultado:");
+          console.log(result);
+          toast.success("La persona ha sido modificada correctamente", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
+
+          let tempArray = [...resultadosBusqueda];
+          console.log(tempArray);
+
+          const pos = tempArray
+            .map((e) => {
+              return e["persona_id"];
+            })
+            .indexOf(personaid);
+          console.log(pos);
+          tempArray[pos][
+            "nombres"
+          ] = `${result.data.nombres} ${result.data.apellidos}`;
+          tempArray[pos]["persona_id"] = result.data.id;
+          tempArray[pos]["identificacion"] = result.data.identificacion;
+          // tempArray[pos]["tipo_documento"] = result.data.tipo_documento_id;
+          setResultadosBusqueda(tempArray);
           // setResultadosBusqueda([resultadosBusqueda]);
           setEstado(!estado);
+          setPersonaid(null);
         })
         .catch((err) => {
           console.log("error");
         });
-    }
-    else{
-    console.log(data.persona);
-    axiosBasicInstanceApiExpedientes({
-      method: "post",
-      url: `/expedientes/${id}/${personas}/`,
-      // headers: req.headers,
-      data: data,
-    })
-      .then((result) => {
-        console.log(result);
-        // event.target.reset();
-        toast.success("La persona ha sido creada correctamente", {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
-        setResultadosBusqueda([...resultadosBusqueda, result.data]);
-        setPopupconv(!popupconv);
+    } else {
+      console.log(data.persona);
+      axiosBasicInstanceApiExpedientes({
+        method: "post",
+        url: `/expedientes/${id}/${personas}/`,
+        // headers: req.headers,
+        data: data,
       })
-      .catch((err) => {
-        console.log("error");
-      });
+        .then((result) => {
+          console.log(result.data);
+          // event.target.reset();
+          toast.success("La persona ha sido creada correctamente", {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+
+          setResultadosBusqueda([...resultadosBusqueda, result.data]);
+          setPopupconv(!popupconv);
+        })
+        .catch((err) => {
+          console.log("error");
+        });
     }
   };
 
@@ -397,14 +434,16 @@ export default function PopupConv({
     <div className="wrapp-popup">
       <div className="popup">
         <div className="titulo-popup">
-          
-          <h1>{personaid ? "Modificar": "Crear"} Persona Convocado</h1>
+          <h1>{personaid ? "Modificar" : "Crear"} Persona</h1>
         </div>
         <form className="form-popup" onSubmit={(e) => submitForm(e)}>
           <div className="wrapp-boton-cerrar">
             <svg
               className="boton-cerrar-popup"
-              onClick={() => {setEstado(!estado);setPersonaid(null)}}
+              onClick={() => {
+                setEstado(!estado);
+                setPersonaid(null);
+              }}
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
               viewBox="0 0 16 16"
@@ -633,22 +672,22 @@ export default function PopupConv({
                       setCiudad("");
                     }}
                   />
-                  </div>
-                  <div>
-                    <label htmlFor="ciudad" className="col-inputs">
-                      Ciudad:
-                    </label>
-                    <SearchableSelect
-                      axiosInstance={axiosTokenInstanceApiExpedientes}
-                      url={"/paises/1/departamentos/" + departamento}
-                      name={"ciudad"}
-                      identifier={"id"}
-                      initialValue={ciudadInitial}
-                      onChange={(val) => {
-                        setCiudad(val);
-                      }}
-                    />
-                 </div>
+                </div>
+                <div>
+                  <label htmlFor="ciudad" className="col-inputs">
+                    Ciudad:
+                  </label>
+                  <SearchableSelect
+                    axiosInstance={axiosTokenInstanceApiExpedientes}
+                    url={"/paises/1/departamentos/" + departamento}
+                    name={"ciudad"}
+                    identifier={"id"}
+                    initialValue={ciudadInitial}
+                    onChange={(val) => {
+                      setCiudad(val);
+                    }}
+                  />
+                </div>
               </div>
 
               <div className="col-detalle-solicitud">
@@ -658,30 +697,42 @@ export default function PopupConv({
                   </label>
                   <SearchableSelect
                     axiosInstance={axiosTokenInstanceApiExpedientes}
-                    url={"/paises/1/departamentos/" + departamento +"/ciudades/" + ciudad}
+                    url={
+                      "/paises/1/departamentos/" +
+                      departamento +
+                      "/ciudades/" +
+                      ciudad
+                    }
                     name={"localidad"}
                     identifier={"id"}
                     initialValue={localidadInitial}
                     onChange={(val) => {
-                      setLocalidad(val)
+                      setLocalidad(val);
                     }}
                   />
-                  </div>
-                  <div>
-                    <label htmlFor="barrio" className="col-inputs">
-                      Barrio
-                    </label>
-                    <SearchableSelect
-                      axiosInstance={axiosTokenInstanceApiExpedientes}
-                      url={"/paises/1/departamentos/" + departamento +"/ciudades/" + ciudad + "/localidades/" + localidad}
-                      name={"barrio"}
-                      identifier={"id"}
-                      initialValue={barrioInitial}
-                      onChange={(val) => {
-                        setBarrio(val);
-                      }}
-                    />
-                 </div>
+                </div>
+                <div>
+                  <label htmlFor="barrio" className="col-inputs">
+                    Barrio
+                  </label>
+                  <SearchableSelect
+                    axiosInstance={axiosTokenInstanceApiExpedientes}
+                    url={
+                      "/paises/1/departamentos/" +
+                      departamento +
+                      "/ciudades/" +
+                      ciudad +
+                      "/localidades/" +
+                      localidad
+                    }
+                    name={"barrio"}
+                    identifier={"id"}
+                    initialValue={barrioInitial}
+                    onChange={(val) => {
+                      setBarrio(val);
+                    }}
+                  />
+                </div>
               </div>
 
               <label className="subtitles-secciones">Datos Adicionales</label>
@@ -845,176 +896,193 @@ export default function PopupConv({
               </FloatingLabel>
 
               {/* Apoderado ---------------------------------------------------> */}
-              {personaid == null && <>   
-              <label className="subtitles-secciones">Posee apoderado</label>
-              <div className="col-detalle-solicitud">
-                <button
-                  onClick={() => setConv2(true)}
-                  type="button"
-                  className={
-                    conv2
-                      ? "boton-datos-apoderado-active"
-                      : "boton-datos-apoderado"
-                  }
-                >
-                  Si
-                </button>
-                <button
-                  onClick={() => setConv2(false)}
-                  type="button"
-                  className={
-                    conv2
-                      ? "boton-datos-apoderado"
-                      : "boton-datos-apoderado-active"
-                  }
-                >
-                  No
-                </button>
-              </div>
-
-              {conv2 && (
+              {personaid == null && (
                 <>
-                  <label className="subtitles-secciones">Nombre</label>
+                  <label className="subtitles-secciones">Posee apoderado</label>
                   <div className="col-detalle-solicitud">
-                    <FloatingLabel
-                      controlId="nombresApoderado"
-                      label="Nombres "
+                    <button
+                      onClick={() => setConv2(true)}
+                      type="button"
+                      className={
+                        conv2
+                          ? "boton-datos-apoderado-active"
+                          : "boton-datos-apoderado"
+                      }
                     >
-                      <Form.Control
-                        className="col-inputs"
-                        type="text"
-                        placeholder="name@example.com"
-                      />
-                    </FloatingLabel>
-                    <FloatingLabel
-                      controlId="apellidosApoderado"
-                      label="Apellidos"
+                      Si
+                    </button>
+                    <button
+                      onClick={() => setConv2(false)}
+                      type="button"
+                      className={
+                        conv2
+                          ? "boton-datos-apoderado"
+                          : "boton-datos-apoderado-active"
+                      }
                     >
-                      <Form.Control
-                        className="col-inputs"
-                        type="text"
-                        placeholder="name@example.com"
-                      />
-                    </FloatingLabel>
+                      No
+                    </button>
                   </div>
 
-                  <label className="subtitles-secciones">Identificación</label>
-                  <div className="col-detalle-solicitud">
-                    <FloatingLabel
-                      controlId="tipoDocumentoApoderado"
-                      label="Tipo de documento"
-                    >
-                      <Form.Select
-                        className="col-inputs"
-                        aria-label="Floating label select example"
-                      >
-                        <option value={""}>
-                          Abre el menú para ver las opciones
-                        </option>
-                        {tiposDocumento.map((tipoDocumento) => {
-                          return (
-                            <option
-                              key={"tipoDocumento" + tipoDocumento["id"]}
-                              value={tipoDocumento["id"]}
-                            >
-                              {tipoDocumento["nombre"]}
+                  {conv2 && (
+                    <>
+                      <label className="subtitles-secciones">Nombre</label>
+                      <div className="col-detalle-solicitud">
+                        <FloatingLabel
+                          controlId="nombresApoderado"
+                          label="Nombres "
+                        >
+                          <Form.Control
+                            className="col-inputs"
+                            type="text"
+                            placeholder="name@example.com"
+                          />
+                        </FloatingLabel>
+                        <FloatingLabel
+                          controlId="apellidosApoderado"
+                          label="Apellidos"
+                        >
+                          <Form.Control
+                            className="col-inputs"
+                            type="text"
+                            placeholder="name@example.com"
+                          />
+                        </FloatingLabel>
+                      </div>
+
+                      <label className="subtitles-secciones">
+                        Identificación
+                      </label>
+                      <div className="col-detalle-solicitud">
+                        <FloatingLabel
+                          controlId="tipoDocumentoApoderado"
+                          label="Tipo de documento"
+                        >
+                          <Form.Select
+                            className="col-inputs"
+                            aria-label="Floating label select example"
+                          >
+                            <option value={""}>
+                              Abre el menú para ver las opciones
                             </option>
-                          );
-                        })}
-                      </Form.Select>
-                    </FloatingLabel>
-                    <FloatingLabel
-                      controlId="documentoApoderado"
-                      label="Número de documento"
-                    >
-                      <Form.Control
-                        className="col-inputs"
-                        type="text"
-                        placeholder="name@example.com"
-                      />
-                    </FloatingLabel>
-                  </div>
+                            {tiposDocumento.map((tipoDocumento) => {
+                              return (
+                                <option
+                                  key={"tipoDocumento" + tipoDocumento["id"]}
+                                  value={tipoDocumento["id"]}
+                                >
+                                  {tipoDocumento["nombre"]}
+                                </option>
+                              );
+                            })}
+                          </Form.Select>
+                        </FloatingLabel>
+                        <FloatingLabel
+                          controlId="documentoApoderado"
+                          label="Número de documento"
+                        >
+                          <Form.Control
+                            className="col-inputs"
+                            type="text"
+                            placeholder="name@example.com"
+                          />
+                        </FloatingLabel>
+                      </div>
 
-                  <label className="subtitles-secciones">
-                    Fecha y lugar de expedición de documento
-                  </label>
-                  <div className="col-detalle-solicitud">
-                    <FloatingLabel
-                      controlId="fechaExpedicionApoderado"
-                      label="Fecha de expedición de documento"
-                    >
-                      <Form.Control
-                        className="col-inputs"
-                        type="date"
-                        placeholder="name@example.com"
-                      />
-                    </FloatingLabel>
-                    <FloatingLabel
-                      controlId="lugarExpedicionApoderado"
-                      label="Lugar de expedición"
-                    >
-                      <Form.Control
-                        className="col-inputs"
-                        type="text"
-                        placeholder="name@example.com"
-                      />
-                    </FloatingLabel>
-                  </div>
+                      <label className="subtitles-secciones">
+                        Fecha y lugar de expedición de documento
+                      </label>
+                      <div className="col-detalle-solicitud">
+                        <FloatingLabel
+                          controlId="fechaExpedicionApoderado"
+                          label="Fecha de expedición de documento"
+                        >
+                          <Form.Control
+                            className="col-inputs"
+                            type="date"
+                            placeholder="name@example.com"
+                          />
+                        </FloatingLabel>
+                        <FloatingLabel
+                          controlId="lugarExpedicionApoderado"
+                          label="Lugar de expedición"
+                        >
+                          <Form.Control
+                            className="col-inputs"
+                            type="text"
+                            placeholder="name@example.com"
+                          />
+                        </FloatingLabel>
+                      </div>
 
-                  <label className="subtitles-secciones">
-                    Datos adicionales
-                  </label>
-                  <div className="col-detalle-solicitud">
-                    <FloatingLabel
-                      controlId="tarjetaProfesionalApoderado"
-                      label="Tarjeta profesional "
-                    >
-                      <Form.Control
-                        className="col-inputs"
-                        type="text"
-                        placeholder="name@example.com"
-                      />
-                    </FloatingLabel>
-                    <FloatingLabel controlId="correoApoderado" label="correo">
-                      <Form.Control
-                        className="col-inputs"
-                        type="text"
-                        placeholder="name@example.com"
-                      />
-                    </FloatingLabel>
-                  </div>
+                      <label className="subtitles-secciones">
+                        Datos adicionales
+                      </label>
+                      <div className="col-detalle-solicitud">
+                        <FloatingLabel
+                          controlId="tarjetaProfesionalApoderado"
+                          label="Tarjeta profesional "
+                        >
+                          <Form.Control
+                            className="col-inputs"
+                            type="text"
+                            placeholder="name@example.com"
+                          />
+                        </FloatingLabel>
+                        <FloatingLabel
+                          controlId="correoApoderado"
+                          label="correo"
+                        >
+                          <Form.Control
+                            className="col-inputs"
+                            type="text"
+                            placeholder="name@example.com"
+                          />
+                        </FloatingLabel>
+                      </div>
 
-                  <div className="col-detalle-solicitud">
-                    <FloatingLabel
-                      controlId="telefonoApoderado"
-                      label="Teléfono"
-                    >
-                      <Form.Control
-                        className="col-inputs"
-                        type="text"
-                        placeholder="name@example.com"
-                      />
-                    </FloatingLabel>
-                    <FloatingLabel controlId="celularApoderado" label="Celular">
-                      <Form.Control
-                        className="col-inputs"
-                        type="text"
-                        placeholder="name@example.com"
-                      />
-                    </FloatingLabel>
-                  </div>
+                      <div className="col-detalle-solicitud">
+                        <FloatingLabel
+                          controlId="telefonoApoderado"
+                          label="Teléfono"
+                        >
+                          <Form.Control
+                            className="col-inputs"
+                            type="text"
+                            placeholder="name@example.com"
+                          />
+                        </FloatingLabel>
+                        <FloatingLabel
+                          controlId="celularApoderado"
+                          label="Celular"
+                        >
+                          <Form.Control
+                            className="col-inputs"
+                            type="text"
+                            placeholder="name@example.com"
+                          />
+                        </FloatingLabel>
+                      </div>
+                    </>
+                  )}
                 </>
               )}
-              </>}
             </div>
           </div>
-        
 
           <div className="wrapp-botones">
             <button className="botones-popup" onClick={() => {}}>
               Guardar
             </button>
-            <button className="botones-popup" onClick={() => {setPopupconv(!PopupConv);setPersonaid(null);}}>Cancelar</button>
+            <button
+              className="botones-popup"
+              onClick={() => {
+                setPopupconv(!PopupConv);
+                setPersonaid(null);
+              }}
+            >
+              Cancelar
+            </button>
           </div>
         </form>
       </div>

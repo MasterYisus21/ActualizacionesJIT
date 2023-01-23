@@ -76,7 +76,7 @@ function Audiencia() {
         data: {}
       })
         .then(result => {
-          // console.log(result.data);
+          console.log(result.data);
           setPersonas(result.data)
         })
         .catch(err => {
