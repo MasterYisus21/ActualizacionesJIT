@@ -348,11 +348,14 @@ views.AprobarSolicitud = async (req, res) => {
         
           await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id)
             .then(async result => {
-              
+              // const myHeaders = new Headers();
+              // myHeaders.append('X-Api-Key', 'image/jpeg');
+              // myHeaders.append('Id', 'image/jpeg');
               correoConvocante.push(result.data.convocante.correo)
-              
+              //req.headers['X-Api-Key'] =config.apiKey ;
+              // req.headers['Id'] ="jairo"
               if (req.body.estado_solicitud_id == 2) {
-
+       
               result.data.conciliador = req.body.conciliador_id
               result.data.hechos[0].cuantia = req.body.valor_caso
               
@@ -373,9 +376,10 @@ views.AprobarSolicitud = async (req, res) => {
                 })
 
                 .catch(err => {
-                  console.log("entreeeeeeeeeeee")
-                  error(err)
-                  return
+                  // console.log(err)
+                  res.status(error(err)).json(error(err))
+                  
+                  return 
                 })
               }
               else{
@@ -389,7 +393,7 @@ views.AprobarSolicitud = async (req, res) => {
             
             })
             .catch(err => {
-              res.status(error(err))
+              res.status(error(err)).json(error(err))
               return
             })
       
@@ -401,7 +405,7 @@ views.AprobarSolicitud = async (req, res) => {
       })
       
     } catch (error) {
-      
+
     console.log(error);
     res.sendStatus(500);
   }

@@ -182,14 +182,15 @@ views.GenericList = async (req, res) => {
 views.CrearExpediente = async (req, res) => {
   try {
 
-
+    
     if (req.body.apoderado) {
 
 
       if (!(req.body.apoderado.identificacion & req.body.apoderado.identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
-
+      
       await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
         .then((result) => {
+          
           req.body.convocante.apoderado_id = result.data.id
 
         })
@@ -216,20 +217,21 @@ views.CrearExpediente = async (req, res) => {
 
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
       .then(axios.spread(async (data1, data2) => {
-
+        
         req.body.hechos[0].expediente_id = data2.data.id
         const relacion_convocante_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
+        
         const relacion_convocado_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
         const relacion_conciliador_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: req.body.conciliador, tipo_cliente_id: 3 }]
         const hechos = [config.urlApiExpedientes + "hechos/", req.body.hechos[0]]
-
+        
         // const documentos = views.CargarDocumentos(req, res)
         endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, relacion_conciliador_expediente, hechos]
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           .then(axios.spread(async (data3, data4, data5) => {
 
-
-            // res.status(201).json(data2.data)
+            
+            res.status(201).json(data2.data)
 
             const saludo = `<br>Reciba un cordial saludo ${data5.data.nombres}`
             const encabezado = `Este mensaje notifica que se te ha asignado un  nuevo caso de conciliación con la siguiente información:`
@@ -248,7 +250,7 @@ views.CrearExpediente = async (req, res) => {
             for await (const iterator of req.body.documentos.results) {
               await axios.get(iterator.documento, { responseType: 'arraybuffer' })
                 .then(async result => {
-
+                  
                   await fs.writeFile("./public/" + iterator.nombre, result.data, (err) => {
                     if (err)
                       console.log(err);
@@ -258,7 +260,7 @@ views.CrearExpediente = async (req, res) => {
 
                     }
                   })
-
+                  
                   let bodyFormData = new FormData();
                   const file = fs.createReadStream("./public/" + iterator.nombre)
                   bodyFormData.append('files', file);
@@ -279,6 +281,7 @@ views.CrearExpediente = async (req, res) => {
                         return
                       }
                     }).catch((err) => {
+             
                       error(err)
                       return
                     });
@@ -286,23 +289,27 @@ views.CrearExpediente = async (req, res) => {
 
                 })
                 .catch(err => {
+            
                   error(err)
                   return
                 })
+                
             }
 
-            res.status(200).json(data2.data)
-          }))
+            // res.status(200).json(data2.data)
+          })
+          )
+          
           .catch(err => {
 
             res.sendStatus(error(err))
             return
 
           })
-
+          // console.log("entre aq este lado");
       }))
       .catch(err => {
-
+        
         res.sendStatus(error(err))
         return
       })
