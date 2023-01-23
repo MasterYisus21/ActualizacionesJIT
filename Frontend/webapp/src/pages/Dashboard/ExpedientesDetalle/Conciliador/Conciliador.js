@@ -221,7 +221,7 @@ function Conciliador() {
         </div>
         {estado &&
           <div className='contenedor-tabla-seleccion-conciliador mb-5 p-4 pb-3'>
-            <label className='pb-3 h5'>Seleccione el conciliador que desea agregar</label>
+            <label className='h5'>Seleccione el conciliador que desea agregar</label>
             <Buscador
               valoresBuscados={valoresBuscadosCandidatos}
               setValoresBuscados={setValoresBuscadosCandidatos}

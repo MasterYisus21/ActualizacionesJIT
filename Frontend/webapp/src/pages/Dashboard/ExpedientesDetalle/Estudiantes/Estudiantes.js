@@ -212,7 +212,7 @@ function Estudiantes() {
     <>
       <div className='container container-estudiantes pt-3'>
         
-        <div className='center-text'><h2>Informacion de estudiantes</h2></div>
+        <div className='center-text'><h2>Información de estudiantes</h2></div>
         <div className='contenedor-navbar-agregar-estudiantes'>
           
           <div className="container-fluid">
@@ -228,8 +228,8 @@ function Estudiantes() {
          
         </div>
         {estado &&
-          <div className='contenedor-tabla-seleccion-conciliador mb-5 p-4'>
-            <label className='pb-3 h5'>Seleccione el conciliador que desea agregar</label>
+          <div className='contenedor-tabla-seleccion-conciliador pt-4'>
+            <label className='h5'>Seleccione el conciliador que desea agregar</label>
             <Buscador
               valoresBuscados={valoresBuscadosCandidatos}
               setValoresBuscados={setValoresBuscadosCandidatos}
