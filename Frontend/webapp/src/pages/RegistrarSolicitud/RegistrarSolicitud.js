@@ -11,10 +11,15 @@ import "./RegistrarSolicitud.css";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Collapse from "react-bootstrap/Collapse";
-import { axiosBasicInstanceApiExpedientes, axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
+import {
+  axiosBasicInstanceApiExpedientes,
+  axiosBasicInstanceApiSolicitudes,
+} from "../../helpers/axiosInstances";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 
 function RegistrarSolicitud() {
+  const navigate = useNavigate();
   const [seccion1, setSeccion1] = useState(true);
   const [seccion2, setSeccion2] = useState(false);
   const [seccion3, setSeccion3] = useState(false);
@@ -254,6 +259,14 @@ function RegistrarSolicitud() {
     <div className="wrapp-main-registrar-solicitud">
       <div className="heading-registrar-solicitud">
         <BarRectangulo text="Registrar Solicitud" />
+        <button
+          className="btn-regresar"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Regresar
+        </button>
       </div>
 
       <div className="wrapp-introduccion">
