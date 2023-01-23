@@ -406,6 +406,7 @@ views.ListarExpedientes = async (req, res) => {
 
 
 }
+
 views.ListarSubtemas = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "subtemas?tema_id=" + req.params.id

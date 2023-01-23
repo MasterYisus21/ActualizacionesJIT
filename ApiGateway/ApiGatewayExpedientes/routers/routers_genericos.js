@@ -32,7 +32,7 @@ router.get("/areas", views_genericos.GenericList)
 router.get("/tipos_medio", views_genericos.GenericList)
 router.get("/tipos_reporte", views_genericos.GenericList)
 router.get("/inicios_conflicto", views_genericos.GenericList)
-router.get("/expedientes/:id", views_genericos.GenericList)
+
 router.get("/personas", views_genericos.GenericList)
 router.get("/apoderados", views_genericos.GenericList)
 router.get("/personas/:id", views_genericos.GenericList)
@@ -97,6 +97,7 @@ router.get("/paises/:id/departamentos/:id2/ciudades/:id3", views_genericos.Lista
 router.get("/paises/:id/departamentos/:id2/ciudades/:id3/localidades/:id4", views_genericos.ListarBarrios);
 router.get("/temas/:id", views_genericos.ListarSubtemas);
 router.get("/expedientes", views_genericos.ListarExpedientes)
+router.get("/expedientes/:id", views_genericos.GenericList)
 
 
 router.post("/expedientes", views_genericos.CrearExpediente)
