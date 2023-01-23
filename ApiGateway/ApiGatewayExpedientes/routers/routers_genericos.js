@@ -35,7 +35,7 @@ router.get("/inicios_conflicto", views_genericos.GenericList)
 
 router.get("/personas", views_genericos.GenericList)
 router.get("/apoderados", views_genericos.GenericList)
-router.get("/personas/:id", views_genericos.GenericList)
+
 router.get("/tipos_resultado", views_genericos.GenericList)
 router.get("/preguntas_encuesta", views_genericos.GenericList)
 router.get("/medios_conocimiento", views_genericos.GenericList)
@@ -44,7 +44,7 @@ router.get("/preguntas_seguimiento", views_genericos.GenericList)
 router.get("/seguimientos", views_genericos.GenericList)
 
 
-
+router.get("/personas/:id", views_genericos.VerPersonas)
 
 router.post("/expedientes/:id/convocantes", views_genericos.CrearConvocantes)
 router.post("/expedientes/:id/convocantes/:identificacion", views_genericos.AgregarConvocantes)
