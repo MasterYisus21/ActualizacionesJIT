@@ -10,7 +10,8 @@ import { PopupConv } from "./PopupConv"
 import { SearchableSelect } from "./SearchableSelect"
 import {Button} from './Button'
 import {ThreePositionSwitch} from './ThreePositionSwitch'
+import PopupApoderado from './popupApoderado/PopupApoderado';
 
 export {
-    BarRectangulo, SubtemaRectangulo, IconButton, Buscador, Tarjeta, BarRectanguloPequeño, RectanguloCelular, TarjetaPersonas, Popup, SearchableSelect, Button, ThreePositionSwitch, PopupConv,
+    BarRectangulo, SubtemaRectangulo, IconButton, Buscador, Tarjeta, BarRectanguloPequeño, RectanguloCelular, TarjetaPersonas, Popup, SearchableSelect, Button, ThreePositionSwitch, PopupConv, PopupApoderado
 }

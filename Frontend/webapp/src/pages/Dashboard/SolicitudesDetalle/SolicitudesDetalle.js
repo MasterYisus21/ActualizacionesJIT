@@ -379,10 +379,13 @@ function SolicitudesDetalle() {
     console.log(body);
     axiosTokenInstanceApiSolicitudes({
       method: "post",
-      url: "/solicitudes/" + id,
+      url: "/solicitudes/"+id,
       data: body,
     })
       .then((response) => {
+        console.log('====================================');
+        console.log("entré");
+        console.log('====================================');
         e.target.reset();
         toast.info("La solicitud ha sido rechazada", {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -395,9 +398,7 @@ function SolicitudesDetalle() {
 
   const aceptarSolicitud = (e) => {
     e.preventDefault();
-    const descripcionAceptada = document.getElementById(
-      "descripcionAprovado"
-    ).value;
+    const descripcionAceptada = document.getElementById("descripcionAprovado").value;
     const valorCaso = document.getElementById("valorCaso").value;
     const body = {
       estado_solicitud: "aprobada",
@@ -430,13 +431,13 @@ function SolicitudesDetalle() {
   };
 
   useEffect(() => {
+    
     axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "conciliadores?ordering=-" + id,
     })
       .then((response) => {
         const choseConciliador = response.data.results[0].nombres;
-        setNameconciliador(choseConciliador);
       })
       .catch((err) => {
         console.log(err);

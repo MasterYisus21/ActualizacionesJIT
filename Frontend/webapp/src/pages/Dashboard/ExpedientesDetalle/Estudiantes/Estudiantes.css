@@ -14,10 +14,11 @@
     display: grid;
 }
 
-.contenedor-navbar-agregar-estudiantes {
-    margin-bottom: 3%;
-
+.conciliadores-candidatos-container{
+    max-height: 20rem;
+    width: 55em;
 }
+
 
 #boton-agregar-estudiantes {
     background-color: rgb(56, 165, 42);
@@ -32,13 +33,14 @@
     overflow-y: auto;
 }
 
-.contenedor-tabla-seleccion-estudiantes {
+.contenedor-tabla-seleccion-conciliador {
     display: flex;
     flex-direction: column;
     font-size: small;
     text-align: center;
     box-shadow: 0px 2px 4px rgb(0 0 0 / 10%), 0 4px 20px rgb(0 0 0 / 10%);
     align-items: center;
+    gap: 2em;
 }
 
 

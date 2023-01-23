@@ -217,12 +217,11 @@ function Conciliador() {
 
         <h2>Informacion del Conciliador</h2>
         <div className='navbar-conciliador'>
-          <input type="search" className="form-control rounded input-buscar" placeholder="Buscar conciliador" aria-label="Search" aria-describedby="search-addon" />
           <button className='boton-crear-conciliador' onClick={() => setEstado(!estado)}>Agregar Conciliador</button>
         </div>
         {estado &&
           <div className='contenedor-tabla-seleccion-conciliador mb-5 p-4 pb-3'>
-            <label className='pb-3 h5'>Seleccione el conciliador que desea agregar</label>
+            <label className='h5'>Seleccione el conciliador que desea agregar</label>
             <Buscador
               valoresBuscados={valoresBuscadosCandidatos}
               setValoresBuscados={setValoresBuscadosCandidatos}

@@ -30,7 +30,7 @@ export default function Buscador({ valoresBuscados, setValoresBuscados, filtros,
 
   return (
     <form onSubmit={e => agregar_busqueda(e)} className="wrapp-buscador">
-      <InputGroup className="buscador">
+      <InputGroup className="buscador ">
         <DropdownButton
           variant="outline-secondary"
           title={title}
