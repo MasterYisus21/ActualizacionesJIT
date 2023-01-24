@@ -43,7 +43,7 @@ function Dashboard() {
     }
     confirmAlert({
       title: `Confirmación`,
-      message: `¿Estas seguro de cerrar la sesión`,
+      message: `¿Estas seguro de cerrar la sesión?`,
       buttons: [
         {
           label: 'Si',
