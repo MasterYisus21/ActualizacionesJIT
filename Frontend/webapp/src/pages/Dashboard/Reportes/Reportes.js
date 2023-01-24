@@ -1,5 +1,6 @@
 import fileDownload from 'js-file-download';
 import React, { useEffect, useState } from 'react'
+import ClipLoader from "react-spinners/ClipLoader";
 import { axiosTokenInstanceApiExpedientes } from '../../../helpers/axiosInstances';
 
 // Impirting css
@@ -8,6 +9,7 @@ import './Reportes.css'
 function Reportes() {
 
   const [tiposReporte, setTiposReporte] = useState([])
+const [cargando, setCargando] = useState(false)
 
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
@@ -45,6 +47,7 @@ function Reportes() {
           return object.id == e.target.reporte.value;
         });
         // documentsTransition[index] = { id: result.data.id, nombre: result.data.nombre, fecha: result.data.fecha }
+        // setCargando(false)
         fileDownload(response.data, tempTiposReporte[index].nombre)
       })
       .catch(err => {
@@ -54,7 +57,7 @@ function Reportes() {
 
 
   return (
-    <form className="contenedor-principal-reportes" onSubmit={e => generarReporte(e)}>
+    <form className="contenedor-principal-reportes" onSubmit={e => {setCargando(true); generarReporte(e)}}>
       <img src={"/images/Reportes.png"}></img>
       <div className="contedor-encapsulamiento-gris">
 
@@ -80,6 +83,15 @@ function Reportes() {
         <div>
           <button className="btn btn-reportes">Descargar</button>
         </div>
+        <ClipLoader
+          color={"green"}
+          loading={cargando}
+          // cssOverride={override}
+          size={40}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+        {/* {!cargando && <img src='/icons/check-mark.svg' alt='imagen guardar' className="" />} */}
         <br />
       </div>
     </form>
