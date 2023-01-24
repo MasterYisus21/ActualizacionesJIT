@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { BarRectangulo } from '../../components/BarRectangulo'
 import { RectanguloCelular } from '../../components/RectanguloCelular'
-import { axiosBasicInstanceApiSolicitudes,  axiosBasicInstanceApiExpedientes} from '../../helpers/axiosInstances'
+import { axiosBasicInstanceApiSolicitudes, axiosBasicInstanceApiExpedientes } from '../../helpers/axiosInstances'
 import { Buscador, Button } from '../../components';
 
 import { Link } from "react-router-dom";
@@ -28,49 +28,49 @@ function Consultar() {
   let currentPage = 1;
 
   const search = () => {
-    if(!solexp){
-    // console.log(e.target.documento.value)
-    axiosBasicInstanceApiSolicitudes({
-      method: 'get',
-      url: "/estados_solicitudes/" + documento + "/?ordering=-id&count=8&page=" + page + valoresBuscados.map(valor => { return valor }) + filtrosAplicados.map(valor => { return valor }),
-      // headers: req.headers,
-      data: {}
-    })
-    
-      .then(result => {
-        if (page != 1){
-        console.log(result.data);
-        resultados.current = [...resultados.current, ...result.data.results];
-        
-      } else{
-        resultados.current = result.data.results;
-        
-      }
-      setResultadosBusqueda(resultados.current)
-      setNumPages(Math.ceil(result.data.count / 8));
+    if (!solexp) {
+      // console.log(e.target.documento.value)
+      axiosBasicInstanceApiSolicitudes({
+        method: 'get',
+        url: "/estados_solicitudes/" + documento + "/?ordering=-id&count=8&page=" + page + valoresBuscados.map(valor => { return valor }) + filtrosAplicados.map(valor => { return valor }),
+        // headers: req.headers,
+        data: {}
       })
-      .catch(err => {
-        console.log("error");
-      });
-    }else{
+
+        .then(result => {
+          if (page != 1) {
+            console.log(result.data);
+            resultados.current = [...resultados.current, ...result.data.results];
+
+          } else {
+            resultados.current = result.data.results;
+
+          }
+          setResultadosBusqueda(resultados.current)
+          setNumPages(Math.ceil(result.data.count / 8));
+        })
+        .catch(err => {
+          console.log("error");
+        });
+    } else {
       axiosBasicInstanceApiSolicitudes({
         method: 'get',
         url: "/estados_expedientes/" + documento + "/?ordering=-id&count=8&page=" + page + valoresBuscados.map(valor => { return valor }) + filtrosAplicados.map(valor => { return valor }),
         // headers: req.headers,
         data: {}
       })
-      
+
         .then(result => {
-          if (page != 1){
-          console.log(result.data);
-          resultados.current = [...resultados.current, ...result.data.results];
-          
-        } else{
-          resultados.current = result.data.results;
-          
-        }
-        setResultadosBusqueda(resultados.current)
-        setNumPages(Math.ceil(result.data.count / 8));
+          if (page != 1) {
+            console.log(result.data);
+            resultados.current = [...resultados.current, ...result.data.results];
+
+          } else {
+            resultados.current = result.data.results;
+
+          }
+          setResultadosBusqueda(resultados.current)
+          setNumPages(Math.ceil(result.data.count / 8));
         })
         .catch(err => {
           console.log("error");
@@ -133,65 +133,65 @@ function Consultar() {
 
   return (
 
-      <div className='as'  onScroll={e => handleScroll(e)}>
-        <div className='contenedor-rectangulo-verde'>
-          <BarRectangulo text="Consulta tu solicitud" />
-        </div>
-        <div className='contenedor-consultar-documento'>
-          <div className='rectangulo-pregunta-documento'>
+    <div className='as' onScroll={e => handleScroll(e)}>
+      <div className='contenedor-rectangulo-verde'>
+        <BarRectangulo text="Consulta tu solicitud" />
+      </div>
+      <div className='contenedor-consultar-documento'>
+        <div className='rectangulo-pregunta-documento'>
 
-              <Form className='form-consulta-solicitud'onSubmit={e => { e.preventDefault(); setPage(1); setDocumento(e.target.documento.value); }}>
-                <div className='contenedor-botones-solicitud-expediente'>
-                  <button className={solexp?"boton-consultar-solicitud":"boton-consultar-solicitud-activado"} onClick={()=>setSolexp(false)}>Solicitud</button>
-                  <button className={!solexp?"boton-consultar-solicitud":"boton-consultar-solicitud-activado"} onClick={()=>setSolexp(true)}>Expediente</button>
-                </div>
-                <input className='entrada-cedula-buscar' type="text" placeholder='Documento' name='documento'></input>
-                <button className='boton-ingreso2'>buscar</button>
-              </Form>
-          </div>
-        </div>
-        <div className='cuerpo-consulta'>
-          <div className='contenedor-casos-consulta'>
-            {resultadosBusqueda.map(resultado => {
-              return (
-                
-                <div className='carta-caso-consulta' >
-                  <div className='contenedor-rectangulo-tarjeta-consultar'>
-                    <RectanguloCelular text={resultado["numero_caso"]||resultado["numero_radicado"]} />
-                  </div>
-                  <div className='contenedor-caso-consulta'>
-                    <div className='lado-izquierdo'>
-                      <div className='orden-lado-izquierdo'>
-                        <label className='estado-consulta'>Estado:</label>
-                        <label className='fecha-consulta'>{resultado["estado_solicitud"]||resultado["estado_expediente"]}</label>
-                      </div>
-                    </div>
-                    <div className='centro'>
-                      <div className='orden-centro'>
-                        <label className='estado-consulta'>Radicado:</label>
-                        <label className='fecha-consulta'>{resultado["numero_radicado"]}</label>
-                      </div>
-                    </div>
-                    <div className='lado-derecho'>
-                      <div className='orden-lado-izquierdo'>
-                        <label className='estado-consulta'>Fecha:</label>
-                        <label className='fecha-consulta'>{resultado["fecha_registro"]}</label>
-                      </div>
-                    </div>
-                  </div>
-                  
-                </div>
-                
-              )
-            })}
-            <Button
-              onClick={e => { setPage(page + 1) }}
-              className="span2"
-              text="Cargar más"
-            />
-          </div>
+          <Form className='form-consulta-solicitud' onSubmit={e => { e.preventDefault(); setPage(1); setDocumento(e.target.documento.value); }}>
+            <div className='contenedor-botones-solicitud-expediente'>
+              <button className={solexp ? "boton-consultar-solicitud" : "boton-consultar-solicitud-activado"} type='button' onClick={() => {setSolexp(false); setResultadosBusqueda([]); setDocumento(''); setPage(1)}}>Solicitud</button>
+              <button className={!solexp ? "boton-consultar-solicitud" : "boton-consultar-solicitud-activado"} type='button' onClick={() => {setSolexp(true);  setResultadosBusqueda([]); setDocumento(''); setPage(1)}}>Expediente</button>
+            </div>
+            <input className='entrada-cedula-buscar' type="text" placeholder='Documento' name='documento'></input>
+            <button className='boton-ingreso2'>buscar</button>
+          </Form>
         </div>
       </div>
+      <div className='cuerpo-consulta'>
+        <div className='contenedor-casos-consulta'>
+          {resultadosBusqueda.map(resultado => {
+            return (
+
+              <div className='carta-caso-consulta' >
+                <div className='contenedor-rectangulo-tarjeta-consultar'>
+                  <RectanguloCelular text={resultado["numero_caso"] || resultado["numero_radicado"]} />
+                </div>
+                <div className='contenedor-caso-consulta'>
+                  <div className='lado-izquierdo'>
+                    <div className='orden-lado-izquierdo'>
+                      <label className='estado-consulta'>Estado:</label>
+                      <label className='fecha-consulta'>{resultado["estado_solicitud"] || resultado["estado_expediente"]}</label>
+                    </div>
+                  </div>
+                  <div className='centro'>
+                    <div className='orden-centro'>
+                      <label className='estado-consulta'>Radicado:</label>
+                      <label className='fecha-consulta'>{resultado["numero_radicado"]}</label>
+                    </div>
+                  </div>
+                  <div className='lado-derecho'>
+                    <div className='orden-lado-izquierdo'>
+                      <label className='estado-consulta'>Fecha:</label>
+                      <label className='fecha-consulta'>{resultado["fecha_registro"]}</label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            )
+          })}
+          <Button
+            onClick={e => { setPage(page + 1) }}
+            className="span2"
+            text="Cargar más"
+          />
+        </div>
+      </div>
+    </div>
 
   )
 }

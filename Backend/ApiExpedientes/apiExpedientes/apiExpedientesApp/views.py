@@ -11,8 +11,19 @@ from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.permissions import *
 # from apiInventarioApp.pagination import StandardResultsSetPagination
+from django.http import JsonResponse
+def Modulos(request):
+    data={}
+    user=User.objects.get(username=request.headers['Id'])
+    request.user=user
+   
+    data['modulo_expedientes']= request.user.has_perm('apiExpedientesApp.add_expediente')
+    data['modulo_solicitudes']= (request.user.has_perm('apiSolicitudesApp.change_solicitud') |request.user.has_perm('apiSolicitudesApp.view_solicitud'))
+    data['modulo_personas']= request.user.has_perm('auth.add_user')
+    data['modulo_reportes']= request.user.has_perm('apiExpedientesApp.add_tipo_reporte')
+        
 
-
+    return JsonResponse(data)
 # Create your views here.
 class PaisViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PaisSerializer
@@ -250,6 +261,9 @@ class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de res
     serializer_class=ListaUsuarioSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
+    permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+
+    
     def perform_create(self, serializer):
         
         usuario=serializer.save()
@@ -288,3 +302,6 @@ class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de res
 class GruposViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
    queryset = Group.objects.all()
    serializer_class= ListaGrupoSerializer  
+   permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+
+    

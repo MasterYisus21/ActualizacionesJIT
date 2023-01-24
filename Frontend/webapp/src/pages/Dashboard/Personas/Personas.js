@@ -166,7 +166,7 @@ function Personas() {
 
         <form onSubmit={e => { e.preventDefault(); e.target.document.click() }}>
           <input type="file" name="document" style={{ display: "none" }} onChange={e => { cargarFormatoCargarEstudiantes(e) }} />
-          <button className='boton-cargar-personas'>Cargar Excel Estudiantes</button>
+          <button className='boton-cargar-personas'>Cargar Excel Personas</button>
         </form>
 
         <button className='boton-cargar-personas' onClick={e => descargarFormatoCargarEstudiantes()}>Descargar Formato</button>

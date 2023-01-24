@@ -3,7 +3,7 @@ from rest_framework import generics, status, viewsets
 from apiSolicitudesApp.models import *
 from rest_framework.response import Response
 from apiSolicitudesApp.pagination import * 
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly,DjangoModelPermissions,DjangoModelPermissionsOrAnonReadOnly,IsAuthenticated
 # from rest_framework_api_key.permissions import HasAPIKey
 from copy import deepcopy
 from rest_framework import filters
@@ -14,17 +14,37 @@ from rest_framework_api_key.permissions import HasAPIKey
 
 
 
+class CustomCreateDjangoModelPermission(DjangoModelPermissionsOrAnonReadOnly):
+    def __init__(self):
+        self.perms_map= deepcopy(self.perms_map)
+        self.perms_map['POST']=[]
+
 class CustomUpdateDjangoModelPermission(DjangoModelPermissionsOrAnonReadOnly):
     def __init__(self):
         self.perms_map= deepcopy(self.perms_map)
         self.perms_map['POST']=[]
         self.perms_map['PATCH']=[]
-        self.perms_map['PUT']=[]
+
+class CustomDjangoModelPermission(DjangoModelPermissions):
+
+    def has_permission(self, request, view):
+    # Workaround to ensure DjangoModelPermissions are not applied
+    # to the root view when using DefaultRouter.
+        if getattr(view, '_ignore_model_permissions', False):
+            return True
+        if 'Id' in request.headers:
+            user=User.objects.get(username=request.headers['Id'])
+            queryset = self._queryset(view)
+            perms = self.get_required_permissions(request.method, queryset.model)
+
+            return user.has_perms(perms)  
+        else:
+            return False 
 class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    permission_classes = [HasAPIKey & CustomUpdateDjangoModelPermission]
+    permission_classes = [(HasAPIKey & IsAuthenticatedOrReadOnly )|(HasAPIKey & CustomDjangoModelPermission) ]
 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
@@ -66,6 +86,8 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
 class EspecificViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     serializer_class = None
     pagination_class= StandardResultsSetPagination
+    permission_classes = [(HasAPIKey & IsAuthenticatedOrReadOnly )|(HasAPIKey & CustomDjangoModelPermission) ]
+
     # filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     # filterset_fields = '__all__'
     # ordering_fields = '__all__'
