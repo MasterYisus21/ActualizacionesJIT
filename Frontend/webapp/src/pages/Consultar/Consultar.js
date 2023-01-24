@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 
 // Importing css
 import './Consultar.css'
+import { confirmAlert } from 'react-confirm-alert';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 function Consultar() {
@@ -26,11 +28,13 @@ function Consultar() {
   const [filtrosAplicados, setFiltrosAplicados] = useState([])
   const [page, setPage] = useState(1)
   const [solexp, setSolexp] = useState(false)
+
   let resultados = useRef([]);
   const [numPages, setNumPages] = useState(1);
   let currentPage = 1;
 
   const search = () => {
+    if(documento !== ''){
     if (!solexp) {
       // console.log(e.target.documento.value)
       axiosBasicInstanceApiSolicitudes({
@@ -79,9 +83,67 @@ function Consultar() {
           console.log("error");
         });
     }
-
+  }
 
   }
+
+  const notificar=(idSolicitud)=>{
+    const confirmar=()=>{
+    if (!solexp) {
+    axiosBasicInstanceApiSolicitudes({
+      method: 'post',
+      url: "/solicitudes/" + idSolicitud + "/informacion_solicitudes",
+      // headers: req.headers,
+      data: {}
+    })
+
+      .then(result => { 
+        console.log(result.data);
+        toast.success('Se ha enviado la información al correo electrónico registrado', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+      })
+      .catch(err => {
+        console.log("error");
+      });
+    }else{
+      axiosBasicInstanceApiSolicitudes({
+        method: 'post',
+        url: "/solicitudes/" + idSolicitud + "/enviar_resultados",
+        // headers: req.headers,
+        data: {}
+      })
+  
+        .then(result => { 
+          console.log(result.data);
+          toast.success('Se ha enviado la información al correo electrónico registrado', {
+            position: toast.POSITION.BOTTOM_RIGHT
+          })
+        })
+        .catch(err => {
+          console.log("error");
+        });
+      }
+    }
+      confirmAlert({
+        title: `Confirmación`,
+        message: `¿Quieres que se envíe a tu correo toda la información?`,
+        buttons: [
+          {
+            label: 'Si',
+            onClick: () => confirmar()
+            
+          },
+          {
+            label: 'No',
+            onClick: () => { }
+          }
+        ]
+      });
+    
+  }
+  
+
 
   const handlePageChange = (page) => {
     console.log("hola")
@@ -167,8 +229,8 @@ function Consultar() {
         <div className='contenedor-casos-consulta'>
           {resultadosBusqueda.map(resultado => {
             return (
-
-              <div className='carta-caso-consulta' >
+              
+              <div className='carta-caso-consulta' onClick={e =>notificar(resultado["id"])}>
                 <div className='contenedor-rectangulo-tarjeta-consultar'>
                   <RectanguloCelular text={resultado["numero_caso"] || resultado["numero_radicado"]} />
                 </div>
@@ -200,6 +262,7 @@ function Consultar() {
 
         </div>
       </div>
+      <ToastContainer />
     </div>
 
   )
