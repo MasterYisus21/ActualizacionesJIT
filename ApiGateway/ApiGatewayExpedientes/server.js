@@ -16,7 +16,7 @@ app.post("/api/gateway/v1/auth/ingresar/", async (req, res) => {
     let modulos=[]
     const data = req.body;
     axios.defaults.headers['X-Api-Key'] =config.apiKey ;
-    axios.defaults.headers['Id'] =data.username;
+    axios.defaults.headers['Id'] ="jairo";
     let endpoints = [config.urlApiExpedientes + "usuarios?username=" + data.username,
     config.urlApiExpedientes + "personas?identificacion=" + data.username,config.urlApiExpedientes+"modulos"]
 
