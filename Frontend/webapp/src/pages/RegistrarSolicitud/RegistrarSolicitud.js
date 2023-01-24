@@ -18,6 +18,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
 
 function RegistrarSolicitud() {
   const navigate = useNavigate();
@@ -158,17 +159,20 @@ function RegistrarSolicitud() {
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then((result) => {
-        console.log(result);
-
-        toast.info("La solicitud ha sido creada con exito", {
-          position: toast.POSITION.BOTTOM_RIGHT,
+        event.target.reset();
+        confirmAlert({
+          title: `Confirmación`,
+          message: `Se ha registrado tu solicitud satisfactoriamente, recibiras un correo electronico con la información.`,
+          buttons: [
+            {
+              label: "Aceptar",
+              onClick: () => navigate("/"),
+            },
+          ],
         });
       })
       .catch((err) => {
-        toast.error("Asegurate de llenar los campos obligatorios", {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
-        console.log("error");
+        console.log(err);
       });
   };
 
