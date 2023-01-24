@@ -7,7 +7,7 @@ import { BarRectangulo } from '../../components/BarRectangulo'
 import { RectanguloCelular } from '../../components/RectanguloCelular'
 import { axiosBasicInstanceApiSolicitudes,  axiosBasicInstanceApiExpedientes} from '../../helpers/axiosInstances'
 import { Buscador, Button } from '../../components';
-
+import { confirmAlert } from 'react-confirm-alert';
 import { Link } from "react-router-dom";
 
 // Importing css
@@ -184,11 +184,6 @@ function Consultar() {
                 
               )
             })}
-            <Button
-              onClick={e => { setPage(page + 1) }}
-              className="span2"
-              text="Cargar más"
-            />
           </div>
         </div>
       </div>
