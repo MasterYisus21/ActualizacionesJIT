@@ -1397,6 +1397,7 @@ views.CargarTemplatePersonas = async (req, res) => {
     const workbook = xlsx.readFile(ruta)
     const workbookSheets = workbook.SheetNames;
 
+
     // console.log(workbook.Sheets[workbookSheets[1]])
     async function LeerHojas(workbookSheets) {
       let usuarios = []
@@ -1418,16 +1419,22 @@ views.CargarTemplatePersonas = async (req, res) => {
         }
         
         
-        personas = personas.concat(xlsx.utils.sheet_to_json(workbook.Sheets[sheet]))
-        for (const iterator of xlsx.utils.sheet_to_json(workbook.Sheets[sheet])) {
+        
+        for await(iterator of xlsx.utils.sheet_to_json(workbook.Sheets[sheet])) {
+
           if (!iterator.identificacion | !iterator.correo | iterator.nombres) { res.status(400).json({ message: "Se encuentan celdas obligatorias vacias" }); return }
+      
+          
           usuarios.push({ username: iterator.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [id_grupo] })
           identificacion.push(iterator.identificacion)
           email.push(iterator.correo)
-
+          iterator.tipo_cargo_id=id_grupo
+          personas.push(iterator)
+          
 
         }
 
+        
       }
 
       function repetidos(arr) {
@@ -1455,6 +1462,7 @@ views.CargarTemplatePersonas = async (req, res) => {
 
       await axios.post(config.urlApiExpedientes + "usuarios/", usuarios)
         .then(async result => {
+        
           for (const iterator in result.data) {
 
             personas[iterator].usuario_id = result.data[iterator].id
@@ -1472,7 +1480,7 @@ views.CargarTemplatePersonas = async (req, res) => {
 
         })
         .catch(err => {
-
+          error(err)
           const mensaje = "Error: Verificar en el archivo subido que no se repita ningún documento de identidad y además que en el aplicativo no exista ninguno de los usuarios que desea añadir "
           res.status(400).json({ message: mensaje })
         })
