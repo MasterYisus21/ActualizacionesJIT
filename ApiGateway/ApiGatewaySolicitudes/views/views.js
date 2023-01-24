@@ -252,7 +252,7 @@ views.Listar_estados_solicitud = async (req, res) => {
     }
 
 
-    axios.get(config.urlApiSolicitudes + "relaciones_persona_solicitud?search=" + req.params.identificacion+query)
+    axios.get(config.urlApiSolicitudes + "relaciones_persona_solicitud?persona_id__identificacion=" + req.params.identificacion+query)
       .then(result=>{
         
         res.status(200).json(result.data)
@@ -275,7 +275,7 @@ views.Listar_estados_expediente = async (req, res) => {
       query = '&' + req.url.slice(req.url.indexOf('?') + 1)
 
     }
-    axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?search=" + req.params.identificacion+query)
+    axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.params.identificacion+query)
       .then(result=>{
         let datos=[]
         for (const iterator of result.data.results) {

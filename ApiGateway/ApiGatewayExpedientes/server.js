@@ -13,18 +13,24 @@ app.disable('x-powered-by');
 
 app.post("/api/gateway/v1/auth/ingresar/", async (req, res) => {
   try {
+    let modulos=[]
     const data = req.body;
+    axios.defaults.headers['X-Api-Key'] =config.apiKey ;
+    axios.defaults.headers['Id'] =data.username;
     let endpoints = [config.urlApiExpedientes + "usuarios?username=" + data.username,
-    config.urlApiExpedientes + "personas?identificacion=" + data.username]
+    config.urlApiExpedientes + "personas?identificacion=" + data.username,config.urlApiExpedientes+"modulos"]
 
     await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-      .then(axios.spread(async (data1, data2) => {
+      .then(axios.spread(async (data1, data2,data3) => {
         if (Object.keys(data1.data.results).length < 1|Object.keys(data2.data.results).length < 1) { res.sendStatus(401); return }
         data.rol = data1.data.results[0].groups
         data.app = "Centro Conciliacion JIT";
         await axios.post(config.urlAutenticacion + "auth", data)
           .then(async function (response) {
-
+            for (const iterator in data3.data) {
+             if(data3.data[iterator]==true){modulos.push(iterator)}
+            }
+            response.data.modulos = modulos
             response.data.nombres = data2.data.results[0].nombres +" "+data2.data.results[0].apellidos ;
             res.status(200).json(response.data)
           })

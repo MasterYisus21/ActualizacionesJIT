@@ -21,6 +21,7 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('api/jit_solicitudes/v1/', include('apiSolicitudesApp.routers')), # Todas las url   deberan empezar por 'api/'
     
 ]

@@ -20,11 +20,15 @@ class CustomDjangoModelPermission(DjangoModelPermissions):
     # to the root view when using DefaultRouter.
         if getattr(view, '_ignore_model_permissions', False):
             return True
-        user=User.objects.get(username=request.headers['Id'])
-        queryset = self._queryset(view)
-        perms = self.get_required_permissions(request.method, queryset.model)
+        
+        if 'Id' in request.headers:
+            user=User.objects.get(username=request.headers['Id'])
+            queryset = self._queryset(view)
+            perms = self.get_required_permissions(request.method, queryset.model)
 
-        return user.has_perms(perms)
+            return user.has_perms(perms)   
+        else:
+            return False
     def __init__(self):
         
         self.perms_map= deepcopy(self.perms_map)
@@ -78,13 +82,17 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
 class EspecificViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    # permission_classes = [CustomDjangoModelPermission]
+    permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+
     
    
     def get_queryset(self,pk=None):
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
         if pk is None:
             return model.filter()
- 
+        
         return model.filter(id=pk).first() # retorna todos los valores con estado = true
+
+
+
     

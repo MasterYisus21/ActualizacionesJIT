@@ -13,6 +13,8 @@ app.use(cors()); // Use this after the variable declaration
 
 const routers = require("./routers/routers");
 axios.defaults.headers['X-Api-Key'] =config.apiKey
+// axios.defaults.headers['Id'] ="jairo"
+
 //app.use("/api/gateway/v1/solicitudes", Solicitud);
 app.use("/api/gateway/v1/", routers);
 
