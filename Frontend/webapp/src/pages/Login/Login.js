@@ -17,23 +17,24 @@ function Login() {
             username: e.target.username.value,
             password: e.target.password.value
         }
-        // axiosBasicInstanceApiExpedientes({
-        //     method: 'post',
-        //     url: "/auth/ingresar", /// Posible cambio de url
-        //     // headers: req.headers,
-        //     data: data
-        // })
-        //     .then(response => {
-        //         localStorage.setItem("tokens", JSON.stringify({ access_token: response.data["access_token"], refresh_token: response.data["refresh_token"] }))
-        //         localStorage.setItem("usuario", JSON.stringify({ nombres: response.data["nombres"], identificacion: response.data["identity"] }))
-        //         navigate('/dashboard/expedientes', { replace: true })
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
-        localStorage.setItem("tokens", JSON.stringify({ access_token: "aquiVaElAccessToken", refresh_token: "aquiVaElRefreshToken" }))
-        localStorage.setItem("usuario", JSON.stringify({ nombres: "aquiVaElNombreDelUsuario", identificacion: "aquiVaLaIdentificacionDelUsuario" }))
-        navigate('/dashboard/expedientes', { replace: true })
+        axiosBasicInstanceApiExpedientes({
+            method: 'post',
+            url: "/auth/ingresar/", /// Posible cambio de url
+            // headers: req.headers,
+            data: data
+        })
+            .then(response => {
+                localStorage.setItem("tokens", JSON.stringify({ access_token: response.data["access_token"], refresh_token: response.data["refresh_token"] }))
+                localStorage.setItem("usuario", JSON.stringify({ nombres: response.data["nombres"], identificacion: response.data["identity"] }))
+                localStorage.setItem("modulos", JSON.stringify(response.data["modulos"]))
+                navigate('/dashboard/expedientes', { replace: true })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        // localStorage.setItem("tokens", JSON.stringify({ access_token: "aquiVaElAccessToken", refresh_token: "aquiVaElRefreshToken" }))
+        // localStorage.setItem("usuario", JSON.stringify({ nombres: "aquiVaElNombreDelUsuario", identificacion: "aquiVaLaIdentificacionDelUsuario" }))
+        // navigate('/dashboard/expedientes', { replace: true })
     }
 
     return (

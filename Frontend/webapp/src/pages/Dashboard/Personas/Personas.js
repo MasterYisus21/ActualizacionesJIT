@@ -28,7 +28,7 @@ function Personas() {
     // console.log(e.target.documento.value)
     axiosTokenInstanceApiExpedientes({
       method: 'get',
-      url: "/personas/?ordering=-id&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }) + filtrosAplicados.map(valor => { return '&search=' + valor }),
+      url: "/personas/?ordering=-id&count=14&page=" + page + "&search=" + valoresBuscados.map(valor => { return ',' + valor }) + filtrosAplicados.map(valor => { return ',' + valor }),
       // headers: req.headers,
       data: {}
     })
@@ -136,14 +136,14 @@ function Personas() {
   return (
     <div className='wrapp-personas'>
       {estado &&
-        <Popup 
-        setEstado={setEstado} 
-        estado={estado} 
-        setResultadosBusqueda={setResultadosBusqueda} 
-        resultadosBusqueda={resultadosBusqueda} 
-        modificar={modificar}
-        setModificar={setModificar}
-        id={id}
+        <Popup
+          setEstado={setEstado}
+          estado={estado}
+          setResultadosBusqueda={setResultadosBusqueda}
+          resultadosBusqueda={resultadosBusqueda}
+          modificar={modificar}
+          setModificar={setModificar}
+          id={id}
         />
       }
       <div className='search-load-bar'>
@@ -182,7 +182,7 @@ function Personas() {
               correo={resultado["correo"]}
               celular={resultado["celular"]}
               rol={resultado["tipo_cargo"]}
-              setEstado={setEstado} 
+              setEstado={setEstado}
               estado={estado}
               modificar={modificar}
               setModificar={setModificar}
