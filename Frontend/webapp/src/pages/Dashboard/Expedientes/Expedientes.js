@@ -114,7 +114,7 @@ function Expedientes() {
       <div className='wrapp-tarjetas' onScroll={e => handleScroll(e)}>
         {resultadosBusqueda.map(resultadoBusqueda => {
           return (
-            <Link key={"expediente" + resultadoBusqueda["id"]} to={"detalle/" + resultadoBusqueda["id"] + "/datosgenerales"} className='text-decoration-none ' onClick={() => { setPagina("Caso #" + resultadoBusqueda["numero_caso"]) }}>
+            <Link key={"expediente" + resultadoBusqueda["id"]} to={"detalle/" + resultadoBusqueda["expediente_id"] + "/datosgenerales"} className='text-decoration-none ' onClick={() => { setPagina("Caso #" + resultadoBusqueda["numero_caso"]) }}>
               <Tarjeta
                 titulo={"Caso #" + resultadoBusqueda["numero_caso"]}
                 radicado={resultadoBusqueda["numero_radicado"]}
