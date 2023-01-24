@@ -110,8 +110,8 @@ async function verifier(req, res, next) {
   // console.log(req.headers.authorization)
   try {
     axios.defaults.headers['X-Api-Key'] =config.apiKey ;
-    axios.defaults.headers['Id'] ="jairo";
-    req.identificacion="1013689035";
+    axios.defaults.headers['Id'] ="100074595";
+    req.identificacion="100074595";
     req.grupo=2
    
     if (req.headers.authorization) {
