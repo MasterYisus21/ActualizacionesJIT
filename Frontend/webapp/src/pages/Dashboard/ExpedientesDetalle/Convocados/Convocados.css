@@ -14,11 +14,11 @@
     justify-content: space-between;
 }
 
-.input-buscar{
+.input-buscar {
     width: 15em;
 }
 
-.boton-crear-convocado{
+.boton-crear-convocado {
     background-color: #00460e;
     color: white;
     padding: 0em .7em;

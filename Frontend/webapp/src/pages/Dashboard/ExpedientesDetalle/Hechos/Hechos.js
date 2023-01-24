@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { SearchableSelect } from '../../../../components';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 
@@ -64,6 +65,9 @@ function Hechos() {
         })
             .then(result => {
                 console.log(result.data);
+                toast.success('La información se ha guardado con exito', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
             })
             .catch(err => {
                 console.log(err);
