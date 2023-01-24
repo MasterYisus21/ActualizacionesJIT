@@ -135,7 +135,7 @@ function Convocados() {
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Editar Convocante
+      Editar Convocado
     </Tooltip>
   );
 
