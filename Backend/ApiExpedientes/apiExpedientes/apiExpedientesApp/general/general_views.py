@@ -37,7 +37,7 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+    # permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
     
     # permission_classes = [CustomDjangoModelPermission]
    
@@ -82,7 +82,7 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
 class EspecificViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+    # permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
 
     
    
