@@ -182,14 +182,15 @@ views.GenericList = async (req, res) => {
 views.CrearExpediente = async (req, res) => {
   try {
 
-
+    
     if (req.body.apoderado) {
 
 
       if (!(req.body.apoderado.identificacion & req.body.apoderado.identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
-
+      
       await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
         .then((result) => {
+          
           req.body.convocante.apoderado_id = result.data.id
 
         })
@@ -216,20 +217,21 @@ views.CrearExpediente = async (req, res) => {
 
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
       .then(axios.spread(async (data1, data2) => {
-
+        
         req.body.hechos[0].expediente_id = data2.data.id
         const relacion_convocante_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
+        
         const relacion_convocado_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
         const relacion_conciliador_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: req.body.conciliador, tipo_cliente_id: 3 }]
         const hechos = [config.urlApiExpedientes + "hechos/", req.body.hechos[0]]
-
+        
         // const documentos = views.CargarDocumentos(req, res)
         endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, relacion_conciliador_expediente, hechos]
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           .then(axios.spread(async (data3, data4, data5) => {
 
-
-            // res.status(201).json(data2.data)
+            
+            res.status(201).json(data2.data)
 
             const saludo = `<br>Reciba un cordial saludo ${data5.data.nombres}`
             const encabezado = `Este mensaje notifica que se te ha asignado un  nuevo caso de conciliación con la siguiente información:`
@@ -248,7 +250,7 @@ views.CrearExpediente = async (req, res) => {
             for await (const iterator of req.body.documentos.results) {
               await axios.get(iterator.documento, { responseType: 'arraybuffer' })
                 .then(async result => {
-
+                  
                   await fs.writeFile("./public/" + iterator.nombre, result.data, (err) => {
                     if (err)
                       console.log(err);
@@ -258,7 +260,7 @@ views.CrearExpediente = async (req, res) => {
 
                     }
                   })
-
+                  
                   let bodyFormData = new FormData();
                   const file = fs.createReadStream("./public/" + iterator.nombre)
                   bodyFormData.append('files', file);
@@ -279,6 +281,7 @@ views.CrearExpediente = async (req, res) => {
                         return
                       }
                     }).catch((err) => {
+             
                       error(err)
                       return
                     });
@@ -286,23 +289,27 @@ views.CrearExpediente = async (req, res) => {
 
                 })
                 .catch(err => {
+            
                   error(err)
                   return
                 })
+                
             }
 
-            res.status(200).json(data2.data)
-          }))
+            // res.status(200).json(data2.data)
+          })
+          )
+          
           .catch(err => {
 
             res.sendStatus(error(err))
             return
 
           })
-
+          // console.log("entre aq este lado");
       }))
       .catch(err => {
-
+        
         res.sendStatus(error(err))
         return
       })
@@ -1037,9 +1044,11 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
 
 
         // // personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
+       
         if (datos2.data.results.length < 1) { personas_citadas = [] } else {
           for (const iterator of datos2.data.results) {
             id_personas_citadas[personas_citadas.length] = iterator.persona_id
+            if(personas_disponibles.indexOf(iterator.persona_id)<0){break}
             datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)].id_relacion = iterator.id
             personas_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)])
             if (datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)] == null) { personas_citadas = []; break }
@@ -1131,6 +1140,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
   try {
 
     // validacion correo 
+    if(Object.keys(req.body).length<1){return res.sendStatus(204)}
     for await (const iterator of req.body) {
       req.params.id_relacion = iterator
       await informacionCitacion(req).then(async (resul) => {
@@ -1205,29 +1215,10 @@ views.EnviarNotificacionCitacion = async (req, res) => {
 
                         const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { res.status(error(err)) })
 
-                        // await axios.post(config.urlEmail)
-                        //   .then(result=>{
-                        //     res.send(result.data)
-                        // })
-                        //   .catch(err => {
-                        //     res.sendStatus(error(err))
-                        //   })
-
-                        // try {
-                        //   fs.unlinkSync(iterator.path)
-                        // } catch (err) {
-                        //   error(err)
-                        // }
+  
                       })
-                    // await axios.post(config.urlEmail+"adjuntar",formdat)
-                    //   .then(result=>{
-                    //     res.send(result)
-                    // })
-                    //   .catch(err => {
-                    //     res.status(error(err))
-                    //   })
-
-                    res.end(result.data)
+         
+                    res.sendStatus(200)
                   })
                 })
                 .catch(err => {
@@ -1757,7 +1748,7 @@ views.CrearResultado = async (req, res) => {
 }
 views.CargarResultadoCaso = async (req, res) => {
   try {
-    console.log(req.files)
+ 
     if (Object.keys(req.files).length > 1) {
       res.sendStatus(error({ message: "Solo puede subir un documento" }));
       for (const iterator of req.files) {
@@ -2041,6 +2032,15 @@ views.EliminarPersonaCaso = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "relaciones_persona_expediente/" + req.params.id_relacion + "/"
     requests.delete(req, res, url)
+    
+   
+      .then(result=>{
+        
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+    
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -2051,7 +2051,7 @@ views.AgregarConciliadores = async (req, res) => {
   try {
     axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
       .then(async result => {
-        console.log(result.data)
+        
         if (Object.keys(result.data.results).length > 0) { res.status(400).json({ response: { mensaje: "Ya se encuentra reportada esta persona " } }); return }
         const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
@@ -2180,6 +2180,7 @@ views.ActualizarCitacion = async (req, res) => {
 }
 views.ActualizarPersonas = async (req, res) => {
   try {
+   
     let endpoints=[]
     if (req.body.identificacion) { delete req.body["identificacion"];  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
     if (req.body.usuario_id) { req.body.groups=[req.body.grupo_id];endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/")  }

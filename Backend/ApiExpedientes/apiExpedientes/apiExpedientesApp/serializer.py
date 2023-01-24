@@ -113,7 +113,6 @@ class PersonaSerializer(serializers.ModelSerializer):
     ciudad = serializers.CharField(source='barrio_id.localidad_id.ciudad_id', read_only=True)
     departamento = serializers.CharField(source='barrio_id.localidad_id.ciudad_id.departamento_id', read_only=True)
     pais = serializers.CharField(source='barrio_id.localidad_id.ciudad_id.departamento_id.pais_id', read_only=True)
-
     estado_civil = serializers.CharField(source='estado_civil_id', read_only=True)
     estrato_socioeconomico = serializers.CharField(source='estrato_socioeconomico_id', read_only=True)
     grupo_etnico = serializers.CharField(source='grupo_etnico_id', read_only=True)

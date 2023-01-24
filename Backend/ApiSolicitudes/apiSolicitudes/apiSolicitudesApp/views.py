@@ -24,7 +24,7 @@ class CiudadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest
     serializer_class = CiudadSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
-
+filters
 class Tipo_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_personaSerializer

@@ -408,14 +408,16 @@ function Audiencia() {
           Notificar vía correo
         </button>
         <ClipLoader
-          color={"#000000"}
+          color={"green"}
           loading={cargandoNotificacion}
           // cssOverride={override}
-          size={50}
+          size={40}
           aria-label="Loading Spinner"
           data-testid="loader"
         />
         {!cargandoNotificacion && <img src='/icons/check-mark.svg' alt='imagen guardar' className="" />}
+
+
       </div>
     </div >
   )

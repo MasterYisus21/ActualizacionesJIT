@@ -10,7 +10,7 @@ const { query } = require("express");
 
 const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
   
-  const correoCopia="jairourrego123@gmail.com"
+  const correoCopia=config.copia_correo
   correoQuienRecibe.push(correoCopia)
   let email = {
     nombre_servicio:"Centro de Conciliación",
@@ -348,11 +348,14 @@ views.AprobarSolicitud = async (req, res) => {
         
           await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id)
             .then(async result => {
-              
+              // const myHeaders = new Headers();
+              // myHeaders.append('X-Api-Key', 'image/jpeg');
+              // myHeaders.append('Id', 'image/jpeg');
               correoConvocante.push(result.data.convocante.correo)
-              
+              //req.headers['X-Api-Key'] =config.apiKey ;
+              // req.headers['Id'] ="jairo"
               if (req.body.estado_solicitud_id == 2) {
-
+       
               result.data.conciliador = req.body.conciliador_id
               result.data.hechos[0].cuantia = req.body.valor_caso
               
@@ -369,27 +372,28 @@ views.AprobarSolicitud = async (req, res) => {
                    }
               
                   
-                  // res.status(200).json(result.data)
+                  res.status(200).json(resul.data)
                 })
 
                 .catch(err => {
-               
-                  error(err)
-                  return
+                  // console.log(err)
+                  res.status(error(err)).json(error(err))
+                  
+                  return 
                 })
               }
               else{
-                
+                res.status(200).json(resul.data)
                 cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
                
             }
             
-            res.status(200).json(resul.data)
+           
             const correo =  axios.post(config.urlEmail,email("html",correoConvocante,asunto,encabezado,cuerpo)).catch(  err => {res.status(error(err))})
             
             })
             .catch(err => {
-              res.status(error(err))
+              res.status(error(err)).json(error(err))
               return
             })
       
@@ -401,7 +405,7 @@ views.AprobarSolicitud = async (req, res) => {
       })
       
     } catch (error) {
-      
+
     console.log(error);
     res.sendStatus(500);
   }
@@ -434,7 +438,7 @@ views.VerSolicitud = async (req, res) => {
               .then(async result => {
 
                 datos.convocante = result.data
-                if (!(result.data.apoderado_id != null | result.data.apoderado_id != "")) { return }
+                if ((result.data.apoderado_id == null | result.data.apoderado_id == "")) { return }
                 await axios.get(config.urlApiSolicitudes + "apoderados/" + result.data.apoderado_id)
                   .then(result => {
                     datos.apoderado = result.data

@@ -107,6 +107,7 @@ async function verifier(req, res, next) {
     axios.defaults.headers['Id'] ="jairo";
     req.identificacion="1013689035";
     req.grupo=2
+   
     if (req.headers.authorization) {
 
       await axios
