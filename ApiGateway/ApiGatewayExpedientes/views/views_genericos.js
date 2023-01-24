@@ -1144,7 +1144,7 @@ views.CitarPersonas = async (req, res) => {
 }
 views.EnviarNotificacionCitacion = async (req, res) => {
   try {
-
+    let falla = false
     // validacion correo 
     if(Object.keys(req.body).length<1){return res.sendStatus(204)}
     for await (const iterator of req.body) {
@@ -1220,21 +1220,23 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                         let asunto = `Citación Audiencia Conciliación`
 
 
-                        const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { res.status(error(err)) })
+                        const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { (error(err)); falla=true  })
 
   
                       })
          
-                    res.status(200).json("ok")
+                    
                   })
                 })
                 .catch(err => {
                   if (err.response) {
-                    res.sendStatus(error(err));
+                    (error(err)); falla=true
+                    
                     return
                   }
                   if (err.request) {
-                    res.sendStatus(503); return
+                    (error(err)); falla=true
+                     return
                   }
 
                 })
@@ -1245,15 +1247,21 @@ views.EnviarNotificacionCitacion = async (req, res) => {
             })
           })
           .catch(err => {
-            throw new Error(err)
+            (error(err)); falla=true
           })
       })
         .catch(err => {
-          res.sendStatus(error(err))
-          return
+          (error(err)); falla=true
+          
         })
 
 
+    }
+    if(!falla){
+    res.sendStatus(200)
+    }
+    else{
+    res.sendstatus(503) 
     }
 
 
