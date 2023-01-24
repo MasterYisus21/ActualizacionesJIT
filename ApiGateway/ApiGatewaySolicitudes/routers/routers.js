@@ -31,6 +31,8 @@ router.get("/solicitudes/:id",views_genericos.VerSolicitud);
 router.post("/solicitud",archivo.uploadMiddleware,views_genericos.CrearSolicitud);
 router.post("/documentos/:id",archivo.uploadMiddleware,views_genericos.CargarDocumentos);
 router.post("/solicitudes/:id",views_genericos.AprobarSolicitud);
+router.post("/solicitudes/:id/enviar_resultados",views_genericos.EnviarResultadoExpediente);
+router.post("/solicitudes/:id/informacion_solicitudes",views_genericos.EnviarInformacionSolicitud);
 
 
 

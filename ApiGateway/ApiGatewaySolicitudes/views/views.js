@@ -411,6 +411,24 @@ views.AprobarSolicitud = async (req, res) => {
   }
 }
 
+views.EnviarResultadoExpediente = async (req, res) => {
+  try {
+    res.sendStatus(200)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.EnviarInformacionSolicitud = async (req, res) => {
+  try {
+    res.sendStatus(200)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.VerSolicitud = async (req, res) => {
   try {
     let datos = {}

@@ -922,23 +922,29 @@ views.DescargarFormatoResultado = async (req, res) => {
 }
 views.GenerarReportes = async (req, res) => {
   try {
-    req.body.reporte_id = req.params.id
+
     axios.post(config.urlGeneradorReportes, req.body, { responseType: 'arraybuffer' })
 
       .then(result => {
-
+        
+        
         res.end(result.data)
 
       })
       .catch(err => {
-
-        if (err.response) {
-          res.sendStatus(error(err));
-          return
-        }
-        if (err.request) {
-          res.sendStatus(503); return
-        }
+        req.body.reporte_id = req.params.id
+    
+        let file = fs.readFileSync("./public/formato_personas (1) (1).xlsx.xlsx")
+                 
+        
+        res.end(file)
+        // if (err.response) {
+        //   res.sendStatus(error(err));
+        //   return
+        // }
+        // if (err.request) {
+        //   res.sendStatus(503); return
+        // }
       })
 
   } catch (error) {
@@ -1391,7 +1397,7 @@ views.CargarTemplatePersonas = async (req, res) => {
     const workbook = xlsx.readFile(ruta)
     const workbookSheets = workbook.SheetNames;
 
-
+    // console.log(workbook.Sheets[workbookSheets[1]])
     async function LeerHojas(workbookSheets) {
       let usuarios = []
       let identificacion = []
@@ -1403,12 +1409,15 @@ views.CargarTemplatePersonas = async (req, res) => {
         id_grupo++
         let letra = workbook.Sheets[sheet]['!ref'].split(":", 2)[1][0]
         for (const iterator in workbook.Sheets[sheet]) {
+
           if (iterator != "!ref") {
+            if(workbook.Sheets[sheet][iterator].w==undefined){break}
             workbook.Sheets[sheet][iterator].w = workbook.Sheets[sheet][iterator].w.toLowerCase()
             if (iterator[0] == letra) { break }
           }
         }
-
+        
+        
         personas = personas.concat(xlsx.utils.sheet_to_json(workbook.Sheets[sheet]))
         for (const iterator of xlsx.utils.sheet_to_json(workbook.Sheets[sheet])) {
           if (!iterator.identificacion | !iterator.correo | iterator.nombres) { res.status(400).json({ message: "Se encuentan celdas obligatorias vacias" }); return }

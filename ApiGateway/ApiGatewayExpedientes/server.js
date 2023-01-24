@@ -139,14 +139,14 @@ async function verifier(req, res, next) {
             res.sendStatus(401);
           }
         })
-        .catch(function (error) {
+        .catch(function (err) {
 
-          if (error.response.status == 401) {
-            res.sendStatus(401);
+        
+            res.sendStatus(error());
             return;
-          }
+       
 
-          res.sendStatus(404);
+        
         });
     } else {
 
