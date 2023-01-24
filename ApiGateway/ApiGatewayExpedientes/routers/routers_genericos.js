@@ -46,6 +46,7 @@ router.get("/seguimientos", views_genericos.GenericList)
 
 router.get("/personas/:id", views_genericos.VerPersonas)
 
+router.get("/personas_admin", views_genericos.GenericList)
 router.post("/expedientes/:id/convocantes", views_genericos.CrearConvocantes)
 router.post("/expedientes/:id/convocantes/:identificacion", views_genericos.AgregarConvocantes)
 router.post("/expedientes/:id/convocados", views_genericos.CrearConvocados)

@@ -1160,6 +1160,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
      
         await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
           .then(async (result) => {
+            
 
             fs.writeFile("./public/formatos/citacion_" + resul.citado_nombres + ".docx", result.data, async (err) => {
               if (err) { throw new Error(err) }
@@ -1224,7 +1225,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
   
                       })
          
-                    res.sendStatus(200)
+                    res.status(200).json("ok")
                   })
                 })
                 .catch(err => {
