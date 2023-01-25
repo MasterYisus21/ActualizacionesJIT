@@ -29,14 +29,7 @@ function Expedientes() {
     axiosTokenInstanceApiExpedientes({
       method: "get",
       url:
-        "/expedientes/?ordering=-numero_caso&count=14&page=" +
-        page +
-        valoresBuscados.map((valor) => {
-          return "&search=" + valor;
-        }) +
-        filtrosAplicados.map((valor) => {
-          return "&search=" + valor;
-        }),
+        "/expedientes/?ordering=-numero_caso&count=14&page=" + page  + "&search=" + valoresBuscados.map(valor => { return ',' + valor }) + filtrosAplicados.map(valor => { return ',' + valor }),
       // headers: req.headers,
       data: {},
     })
@@ -140,6 +133,7 @@ function Expedientes() {
             </Link>
           );
         })}
+        {(page < numPages) &&
         <Button
           onClick={(e) => {
             handlePageChange(page + 1);
@@ -147,6 +141,7 @@ function Expedientes() {
           className="span2"
           text="Cargar más"
         />
+        }
       </div>
     </div>
   );

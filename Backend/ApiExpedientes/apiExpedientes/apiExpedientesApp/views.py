@@ -163,9 +163,17 @@ class Relacion_persona_expedienteViewSet(GeneralViewSet):  # Una sola clase para
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = ['persona_id__identificacion','persona_id','expediente_id','tipo_cliente_id']
     ordering_fields = '__all__'
-    permission_classes = [HasAPIKey & (IsAuthenticatedOrReadOnly |CustomDjangoModelPermission)]
-    search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre','expediente_id__estado_expediente_id__nombre']
+    # permission_classes = [HasAPIKey & (IsAuthenticatedOrReadOnly |CustomDjangoModelPermission)]
+    search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre','expediente_id__estado_expediente_id__nombre','persona_id__nombres']
     serializer_class = Relacion_persona_expedienteSerializer
+   
+    # def get_queryset(self,pk=None):
+       
+    #     model=Relacion_persona_expediente.objects.all().distinct("expediente_id") # Recoje la informacion del modelo que aparece en el meta de los serializer
+    #     if pk is None:
+    #         return model.filter(estado=True)
+    
+    #     return model
     
 class Estado_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 

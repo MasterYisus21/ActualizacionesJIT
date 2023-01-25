@@ -33,9 +33,10 @@ function Dashboard() {
 
   const logout = () => {
     const salir = () => {
-      navigate("/", { replace: true });
-      localStorage.removeItem("inventarioToken");
+      localStorage.removeItem("tokens");
       localStorage.removeItem("usuario");
+      localStorage.removeItem("modulos");
+      navigate("/", { replace: true });
     };
     confirmAlert({
       title: `Confirmación`,

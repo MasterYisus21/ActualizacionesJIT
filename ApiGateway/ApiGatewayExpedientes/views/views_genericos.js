@@ -13,6 +13,7 @@ const FormData = require('form-data');
 const path = require("path");
 const xlsx = require('xlsx');
 const ExcelJS = require('exceljs');
+const { Console } = require("console");
 
 
 // datos generales
@@ -434,13 +435,16 @@ views.VerPersonas = async (req, res) => {
     return;
   }
 }
+
 views.ListarExpedientes = async (req, res) => {
   try {
     if (req.grupo == 1) {
-      const url = config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id"
-
+      let url = config.urlApiExpedientes + "expedientes";
+      if(req.query.search){url = config.urlApiExpedientes + "relaciones_persona_expediente"}
       requests.get(req, res, url, "?")
+      
     } else {
+
       const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion
 
       requests.get(req, res, url, "&")
@@ -550,6 +554,16 @@ views.VerApoderado = async (req, res) => {
   }
 }
 
+views.verExpediente = async (req, res) => {
+  try {
+    console.log(req.identificacion)
+    axios
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 
 views.ListarConvocadosCaso = async (req, res) => {
   try {
@@ -2208,17 +2222,21 @@ views.ActualizarPersonas = async (req, res) => {
   try {
    
     let endpoints=[]
-    if (req.body.identificacion) { delete req.body["identificacion"];  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
-    if (req.body.usuario_id) { req.body.groups=[req.body.grupo_id];endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/")  }
-    
+    let datos = {}
+   
+    req.body.grupo_id=parseInt(req.body.grupo_id)
+    if (req.body.identificacion) { delete req.body["identificacion"] ;  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
+    if (req.body.usuario_id) {endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/"); }
+    req.body.groups=[parseInt(req.body.grupo_id)]
+    console.log(req.body)
     await Promise.all(endpoints.map((endpoint) => axios.patch(endpoint,req.body)))
-      .then(axios.spread(async (data1) => {
+      .then(axios.spread(async (data1,data2) => {
       
       
         res.status(200).json(data1.data)
       }))
       .catch(err => {
-
+      
         res.sendStatus(error(err))
         return
 
