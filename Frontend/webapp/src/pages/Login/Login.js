@@ -31,6 +31,11 @@ function Login() {
             })
             .catch(err => {
                 console.log(err);
+                if (err.response.status == 401) {
+                    toast.warning(`Usuario o contraseña invalidos`, {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    })
+                }
             });
         // localStorage.setItem("tokens", JSON.stringify({ access_token: "aquiVaElAccessToken", refresh_token: "aquiVaElRefreshToken" }))
         // localStorage.setItem("usuario", JSON.stringify({ nombres: "aquiVaElNombreDelUsuario", identificacion: "aquiVaLaIdentificacionDelUsuario" }))
