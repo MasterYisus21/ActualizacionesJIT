@@ -175,6 +175,17 @@ function RegistrarSolicitud() {
         })
         .catch((err) => {
           console.log(err);
+          if (err.response.status == 413) {
+            toast.error("El tamaño de los archivos excede el limite admitido.", {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
+          else {
+            toast.error(`Ha  ocurrido un error al cargar su solicitud con estado ${err.response.status}`, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
+
         });
     };
     confirmAlert({
@@ -187,7 +198,7 @@ function RegistrarSolicitud() {
         },
         {
           label: "Todavia no",
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     });
@@ -971,7 +982,7 @@ function RegistrarSolicitud() {
           linkto={""}
           text={"Enviar Solicitud"}
           icon={""}
-          onClick={() => {}}
+          onClick={() => { }}
         />
       </Form>
     </div>
