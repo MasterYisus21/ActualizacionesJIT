@@ -78,7 +78,7 @@ function App() {
             <Route path="reportes" element={<Reportes />} />
           </Route>
           <Route path="forbidden" element={<ErrorPage codigo={403} />} />
-          <Route path="*" element={<ErrorPage codigo={404}/>} />
+          {/* <Route path="*" element={<ErrorPage codigo={404}/>} /> */}
         </Route>
       </Routes>
       <ToastContainer />

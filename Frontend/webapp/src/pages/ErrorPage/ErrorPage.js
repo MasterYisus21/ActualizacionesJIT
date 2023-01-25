@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./ErrorPage.css";
 
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,10 @@ import { confirmAlert } from 'react-confirm-alert';
 function ErrorPage({ codigo }) {
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(codigo);
+  }, [])
 
   const codigos = {
     403: {
@@ -60,9 +64,9 @@ function ErrorPage({ codigo }) {
         <img className="error-page-logo-principal" src={"/images/logo_universidad_texto.png"} alt="" />
       </div>
       <div className='error-page-text'>Centro de Conciliación José Ignacio Talero Losada.</div>
-      <div className='error-page-title'>404</div>
+      <div className='error-page-title'>{codigo}</div>
       <div className='error-page-subtitle'>Ooops...</div>
-      <div className='error-page-text'>Pagina no encontrada.</div>
+      <div className='error-page-text'>{codigos[codigo].mensaje}</div>
       <div className='error-page-links-container'>
         <div className='error-page-floating-button'>
           <IconButton
@@ -80,13 +84,15 @@ function ErrorPage({ codigo }) {
           icon={"house"}
           onClick={() => { goToHomePage(); }}
         />
-        <IconButton
-          type={"Link"}
-          // linkto={"/"}
-          text={"Cerrar Sesión"}
-          icon={"bi-box-arrow-in-left"}
-          onClick={(e) => { logout() }}
-        />
+        {localStorage.getItem('modulos') &&
+          <IconButton
+            type={"Link"}
+            // linkto={"/"}
+            text={"Cerrar Sesión"}
+            icon={"bi-box-arrow-in-left"}
+            onClick={(e) => { logout() }}
+          />
+        }
       </div>
 
     </div>
