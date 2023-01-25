@@ -109,27 +109,59 @@ function Consultar() {
         })
         swal({
           title:"Digita el código enviado a tu correo",
-          text:"",
+          text:"Si no tienes acceso a este correo contactate con el Centro de conciliación",
           icon:"info",
           content:"input",
           button:"Aceptar"
         })
         .then(valor => {
-          console.log(valor);
           axiosBasicInstanceApiSolicitudes({
-            method: 'get',
-            url: "/solicitudes/" + resultado["solicitud_id"] + "/informacion_solicitudes",
-            headers: {
-              Authorization: valor
-            },
-            data:{}
+            method: 'post',
+            url: "/solicitudes/" + resultado["solicitud_id"] + "/verificar_codigos",
+            
+            data:{
+              "codigo":valor
+            }
           })
           .then((result)=>{
-            console.log(result)
-
+            
+            localStorage.setItem("codigo", valor)
+            navigate("/consultar/solicitudes/" + resultado["solicitud_id"]);
           })
           .catch(err =>{
-            console.log(err);
+            
+            if(err.response.status===401){
+            swal({
+              title:"Digita el código enviado a tu correo",
+              text:"Código incorrecto",
+              icon:"error",
+              content:"input",
+              button:"Aceptar"
+            })
+            .then(valor => {
+              console.log(valor);
+              axiosBasicInstanceApiSolicitudes({
+                method: 'post',
+                url: "/solicitudes/" + resultado["solicitud_id"] + "/verificar_codigos",
+                
+                data:{
+                  "codigo":valor
+                }
+              })
+              .then((result)=>{
+                localStorage.setItem("codigo", valor)
+                navigate("/consultar/solicitudes/" + resultado["solicitud_id"]);
+              })
+              .catch(err=>{
+                toast.error('Código invalido intenta de nuevo', {
+                  position: toast.POSITION.BOTTOM_RIGHT
+                })
+              })
+            })
+            
+          }
+        
+            
           })
         })
       })
