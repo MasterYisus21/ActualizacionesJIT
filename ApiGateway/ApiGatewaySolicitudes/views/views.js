@@ -298,7 +298,7 @@ views.Listar_estados_expediente = async (req, res) => {
       .then(result=>{
         let datos=[]
         for (const iterator of result.data.results) {
-          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado})
+          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado,numero_radicado:iterator.expediente_id})
         }
         result.data.results=datos
         res.status(200).json(result.data)
@@ -349,8 +349,70 @@ views.DescargarDocumentos = async (req, res) => {
 
 views.EnviarResultadoExpediente = async (req, res) => {
   try {
+
+
+    await axios.get(config.urlApiExpedientes+"resultados?expediente_id="+req.params.id)
+      .then(async result=>{
+        if (Object.keys(result.data.results).length<1) {
+          let endpoints=[config.urlApiExpedientes+"resultados?expediente_id="+req.params.id,config.urlApiExpedientes+"citaciones?expediente_id="+req.params.id]
+          await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
+          
+          .then(axios.spread((data3, data4, data5) => {
+            res.status(201).json(data2.data)
+        
+            // res.status(201).json(data2.data[0])
+
+          }))
+          .catch(err => {
+
+            res.sendStatus(error(err))
+            return
+
+          })
+          axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
+            .then(result=>{
+
+              
+              const  encabezado = `Este mensaje notifica que el estado de su expediente ${result.data.numero_caso} es el siguiente:<br><br>
+               <b>Numero Caso:</b> ${result.data.numero_caso}
+               <br><b>Estado actual :</b>${result.data.estado_expediente}
+              
+               `
+               const  cuerpo ="En este momento no cuenta con un resultado del caso, "
+              let asunto = `Cambio de estado de la Solicitud:${req.body.numero_radicado}`
+          })
+            .catch(err => {
+              res.sendStatus(error(err))
+            })
+         
+          
+          res.sendStatus(200)}
+        if (Object.keys(result.data.results).length<1) {res.sendStatus(200)}
+
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
     res.sendStatus(200)
   } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.VerificarCodigo = async (req, res) => {
+  try {
+    axios.get(config.urlApiSolicitudes+"codigos?solicitud_id="+req.params.id)
+      .then(result=>{
+        console.log(result.data.results[0])
+        if (Object.keys(result.data.results).length<1) {res.sendStatus(401);return}
+        if(req.body.codigo!=result.data.results[0].codigo){res.sendStatus(401);return}
+        res.sendStatus(200)
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;

@@ -328,6 +328,13 @@
     border-radius: 10px;
 }
 
+.estado-solicitud-Falta {
+    background-color: #fffb00;
+    padding: .5em;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+}
+
 .estado-solicitud-Aprobada {
     background-color: #37913d;
     padding: .5em;

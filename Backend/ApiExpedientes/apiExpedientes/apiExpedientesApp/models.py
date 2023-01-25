@@ -455,6 +455,7 @@ class Persona(EstadoModel):
     ocupacion = models.CharField(max_length = 25,blank=True,null=False)
     celular = models.CharField(max_length=15, blank=False, null=False)
     correo = models.EmailField(max_length=120,blank=False,null=False)
+    persona_ugc= models.BooleanField(default=False, blank=True,null=True)
     tarjeta_profesional= models.CharField(max_length=25, blank=True, null=True)
     barrio_id= models.ForeignKey(Barrio, on_delete=models.SET_NULL, blank=True, null=True)
     lugar_nacimiento=  models.CharField(max_length = 50,blank=True,null=True)
@@ -472,6 +473,7 @@ class Persona(EstadoModel):
     escolaridad_id = models.ForeignKey(Escolaridad, on_delete=models.SET_NULL, blank=True, null=True)
     apoderado_id = models.ForeignKey(Apoderado, on_delete=models.SET_NULL, blank=True, null=True)
     usuario_id= models.OneToOneField(User, on_delete=models.SET_NULL, null=True,blank=True)
+
     
     
     class Meta:

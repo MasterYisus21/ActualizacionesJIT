@@ -88,15 +88,18 @@ function Consultar() {
 
   }
 
-  const notificar=(idSolicitud)=>{
+  const notificar=(resultado)=>{
     const confirmar=()=>{
       
     if (!solexp) {
     axiosBasicInstanceApiSolicitudes({
       method: 'post',
-      url: "/solicitudes/" + idSolicitud + "/informacion_solicitudes",
+      url: "/solicitudes/" + resultado["solicitud_id"] + "/enviar_codigos",
       // headers: req.headers,
-      data:{}
+      data:{
+        "numero_radicado":resultado["numero_radicado"],
+        "persona_id":resultado["persona_id"]
+      }
     })
 
       .then(result => { 
@@ -104,25 +107,41 @@ function Consultar() {
         toast.success('Se ha enviado la información al correo electrónico registrado', {
           position: toast.POSITION.BOTTOM_RIGHT
         })
+        swal({
+          title:"Digita el código enviado a tu correo",
+          text:"",
+          icon:"info",
+          content:"input",
+          button:"Aceptar"
+        })
+        .then(valor => {
+          console.log(valor);
+          axiosBasicInstanceApiSolicitudes({
+            method: 'get',
+            url: "/solicitudes/" + resultado["solicitud_id"] + "/informacion_solicitudes",
+            headers: {
+              Authorization: valor
+            },
+            data:{}
+          })
+          .then((result)=>{
+            console.log(result)
+
+          })
+          .catch(err =>{
+            console.log(err);
+          })
+        })
       })
       .catch(err => {
         console.log("error");
       });
-      swal({
-        title:"Digita el código enviado a tu correo",
-        text:"",
-        icon:"success",
-        content:"input",
-        button:"Aceptar"
-      })
-      .then(valor => {
-        console.log(valor);
-      })
+      
       
     }else{
       axiosBasicInstanceApiSolicitudes({
         method: 'post',
-        url: "/solicitudes/" + idSolicitud + "/enviar_resultados",
+        url: "/solicitudes/" + resultado["id"] + "/enviar_resultados",
         // headers: req.headers,
         data: {}
       })
@@ -246,7 +265,7 @@ function Consultar() {
           {resultadosBusqueda.map(resultado => {
             return (
               
-              <div className='carta-caso-consulta' onClick={e =>notificar(resultado["id"])}>
+              <div className='carta-caso-consulta' onClick={e =>notificar(resultado)}>
                 <div className='contenedor-rectangulo-tarjeta-consultar'>
                   <RectanguloCelular text={resultado["numero_caso"] || resultado["numero_radicado"]} />
                 </div>

@@ -91,7 +91,7 @@ router.get("/paises/:id", views_genericos.ListarDepartamentos);
 router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
 router.get("/estados_solicitudes/:identificacion",views_genericos.Listar_estados_solicitud);
 router.get("/estados_expedientes/:identificacion",views_genericos.Listar_estados_expediente);
-router.get("/solicitudes/:id/informacion_solicitudes",verificarCodigo,views_genericos.DetalleSolicitud);
+router.post("/solicitudes/:id/informacion_solicitudes",verificarCodigo,views_genericos.DetalleSolicitud);
 
 //Obtener datos 
 
@@ -107,6 +107,7 @@ router.post("/documentos/:id",verificarCodigo,archivo.uploadMiddleware,views_gen
 router.post("/solicitudes/:id",verifier,views_genericos.AprobarSolicitud);
 router.post("/solicitudes/:id/enviar_resultados",views_genericos.EnviarResultadoExpediente);
 router.post("/solicitudes/:id/enviar_codigos",views_genericos.CodigoSolicitud);
+router.post("/solicitudes/:id/verificar_codigos",views_genericos.VerificarCodigo);
 
 
 
