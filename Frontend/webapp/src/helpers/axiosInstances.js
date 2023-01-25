@@ -48,6 +48,9 @@ axiosTokenInstanceApiExpedientes.interceptors.response.use((response) => {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
         return axiosTokenInstanceApiExpedientes(originalRequest);
     }
+    if (error.response.status === 403) {
+        window.location.href = `${config.WebApp}forbidden`;
+    }
     toast.error(`Ocurrió un error con estado ${error.response.status}`, {
         position: toast.POSITION.BOTTOM_RIGHT
     })
@@ -58,7 +61,7 @@ axiosTokenInstanceApiExpedientes.interceptors.request.use(
     async configuration => {
         const value = await localStorage.getItem('tokens')
         const keys = JSON.parse(value)
-        console.log(configuration.headers);
+        // console.log(configuration.headers);
         try {
             configuration.headers = {
                 'Authorization': `Bearer ${keys.access_token}`,
@@ -109,6 +112,9 @@ axiosTokenInstanceApiSolicitudes.interceptors.response.use((response) => {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
         return axiosTokenInstanceApiSolicitudes(originalRequest);
     }
+    if (error.response.status === 403) {
+        window.location.href = `${config.WebApp}/forbidden`;
+    }
     toast.error(`Ocurrió un error con estado ${error.response.status}`, {
         position: toast.POSITION.BOTTOM_RIGHT
     })
@@ -138,7 +144,7 @@ axiosTokenInstanceApiSolicitudes.interceptors.request.use(
         Promise.reject(error)
     });
 
-axiosTokenInstanceApiSolicitudes.interceptors.response.use((response) => {
+    axiosTokenInstanceApiSolicitudes.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     toast.error(`Ocurrió un error con estado ${error.response.status}`, {

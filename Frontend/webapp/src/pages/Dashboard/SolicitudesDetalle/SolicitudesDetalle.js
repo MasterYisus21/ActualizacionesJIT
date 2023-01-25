@@ -1034,7 +1034,7 @@ function SolicitudesDetalle() {
                 />
               </FloatingLabel>
             </div>
-            <FloatingLabel controlId="direccion_convocado" label="Dirección">
+            <FloatingLabel controlId="direccion_Convocado" label="Dirección">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
