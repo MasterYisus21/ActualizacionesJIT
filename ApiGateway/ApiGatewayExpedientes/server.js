@@ -115,7 +115,7 @@ async function verifier(req, res, next) {
     req.grupo=1
    
     if (req.headers.authorization) {
-
+      
       await axios
         .post(
           config.urlAutenticacion + "get_identity",
@@ -128,37 +128,39 @@ async function verifier(req, res, next) {
         )
         .then((response) => {
           if (response.data["logged_in_as"]) {
-
+    
             req.idgrupo = response.data.claims.rol;
             req.identificacion = response.data.claims.sub;
-       
-       
+            req.auth={
+              auth: {
+                username: req.identificacion,
+                password: ""
+              }} 
+            //  req.mivariable = response.data.
+            // console.log(response.data["logged_in_as"])
+            
             next();
           } else {
-
+            
             res.sendStatus(401);
           }
         })
-        .catch(function (err) {
-          if(error.response.status){
+        .catch(function (error) {
+          
           if (error.response.status == 401) {
             res.sendStatus(401);
           }
-        } else{
+          
           res.sendStatus(404);
-        }
-        
         });
     } else {
 
-      // res.sendStatus(403)
-      // return;
-      
-      next()
+      res.sendStatus(403)
+      //next()
     }
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    // res.sendStatus(400)
   }
 }
 
