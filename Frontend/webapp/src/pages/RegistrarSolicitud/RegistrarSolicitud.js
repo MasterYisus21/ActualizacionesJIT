@@ -730,12 +730,13 @@ function RegistrarSolicitud() {
             <label className="subtitles-secciones">Identificación</label>
             <FloatingLabel
               controlId="tipoDocumentoConvocado"
-              label="Tipo de documento"
+              label="Tipo de documento *"
             >
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
                 name="tipodocumentoConvocado"
+                required
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
                 {tiposDocumento.map((tipoDocumento) => {
@@ -752,12 +753,13 @@ function RegistrarSolicitud() {
             </FloatingLabel>
             <FloatingLabel
               controlId="identificacionConvocado"
-              label="Número de documento"
+              label="Número de documento *"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                required
               />
             </FloatingLabel>
 
@@ -767,12 +769,13 @@ function RegistrarSolicitud() {
             <div className="col-registro-solicitud">
               <FloatingLabel
                 controlId="fechaExpedicionConvocado"
-                label="Fecha de expedición de documento"
+                label="Fecha de expedición de documento *"
               >
                 <Form.Control
                   className=""
                   type="date"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel
@@ -815,18 +818,20 @@ function RegistrarSolicitud() {
 
             <label className="subtitles-secciones">Datos Adicionales</label>
             <div className="col-registro-solicitud">
-              <FloatingLabel controlId="celularConvocado" label="Celular">
+              <FloatingLabel controlId="celularConvocado" label="Celular *">
                 <Form.Control
                   className=""
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="correoConvocado" label="Correo">
+              <FloatingLabel controlId="correoConvocado" label="Correo *">
                 <Form.Control
                   className=""
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
             </div>
