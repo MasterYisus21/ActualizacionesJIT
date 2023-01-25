@@ -110,9 +110,8 @@ async function verifier(req, res, next) {
   // console.log(req.headers.authorization)
   try {
     axios.defaults.headers['X-Api-Key'] =config.apiKey ;
-    axios.defaults.headers['Id'] ="jairo";
-    req.identificacion="1010074595";
-    req.grupo=1
+    
+
    
     if (req.headers.authorization) {
       
@@ -128,14 +127,10 @@ async function verifier(req, res, next) {
         )
         .then((response) => {
           if (response.data["logged_in_as"]) {
-    
-            req.idgrupo = response.data.claims.rol;
+            axios.defaults.headers['Id'] =response.data.claims.sub;
+            req.grupo = response.data.claims.rol;
             req.identificacion = response.data.claims.sub;
-            req.auth={
-              auth: {
-                username: req.identificacion,
-                password: ""
-              }} 
+          
             //  req.mivariable = response.data.
             // console.log(response.data["logged_in_as"])
             
