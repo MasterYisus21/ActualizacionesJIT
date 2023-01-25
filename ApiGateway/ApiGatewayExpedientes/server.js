@@ -41,7 +41,7 @@ app.post("/api/gateway/v1/auth/ingresar/", async (req, res) => {
       }))
       .catch(err => {
 
-        res.sendStatus(error(err))
+        res.sendStatus(401)
         return
 
       })
