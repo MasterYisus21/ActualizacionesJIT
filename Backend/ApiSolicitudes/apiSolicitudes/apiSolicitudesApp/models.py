@@ -161,19 +161,19 @@ class Persona_solicitud(EstadoModel):
     nombres = models.CharField(max_length = 25,blank=False,null=False)
     apellidos = models.CharField(max_length= 25, blank=False, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False,unique=False)
-    fecha_expedicion = models.DateField(blank=False,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
-    lugar_expedicion = models.CharField(max_length=20, blank=False, null=True)
-    fecha_nacimiento = models.DateField(blank=False,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
+    fecha_expedicion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
+    lugar_expedicion = models.CharField(max_length=20, blank=True, null=True)
+    fecha_nacimiento = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     telefono = models.CharField(max_length=10, blank=True, null=True)
-    direccion = models.CharField(max_length= 40, blank=False, null=True)
+    direccion = models.CharField(max_length= 40, blank=True, null=True)
     celular = models.CharField(max_length=15, blank=False, null=False)
     correo = models.EmailField(max_length=120,blank=False,null=False)  
     lugar_nacimiento=  models.CharField(max_length = 50,blank=True,null=True)
     
-    tipo_persona_id = models.ForeignKey(Tipo_persona, on_delete=models.SET_NULL, blank=False, null=True)
-    sexo_id = models.ForeignKey(Sexo, on_delete=models.SET_NULL, blank=False, null=True)
-    genero_id = models.ForeignKey(Genero, on_delete=models.SET_NULL, blank=False, null=True)
-    estrato_socioeconomico_id = models.ForeignKey(Estrato_socioeconomico, on_delete=models.SET_NULL, blank=False, null=True)      
+    tipo_persona_id = models.ForeignKey(Tipo_persona, on_delete=models.SET_NULL, blank=True, null=True)
+    sexo_id = models.ForeignKey(Sexo, on_delete=models.SET_NULL, blank=True, null=True)
+    genero_id = models.ForeignKey(Genero, on_delete=models.SET_NULL, blank=True, null=True)
+    estrato_socioeconomico_id = models.ForeignKey(Estrato_socioeconomico, on_delete=models.SET_NULL, blank=True, null=True)      
     tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=False, null=True)
     apoderado_id = models.ForeignKey(Apoderado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)
               
