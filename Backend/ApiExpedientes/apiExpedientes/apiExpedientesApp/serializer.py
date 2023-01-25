@@ -329,6 +329,12 @@ class Tipo_reporteSerializer(serializers.ModelSerializer):
         model = Tipo_reporte          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
+class CodigoSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model = Codigo    # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+
 
 class ListaUsuarioSerializer(serializers.ModelSerializer):
      

@@ -108,7 +108,7 @@ class ApoderadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de re
 class PersonaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
     serializer_class = PersonaSerializer
-    search_fields=['nombres','apellidos','=identificacion','tarjeta_profesional','tipo_cargo_id__nombre']
+    search_fields=['nombres','apellidos','=identificacion','tarjeta_profesional','tipo_cargo_id__nombre','^tipo_cargo_id']
 class Solicitante_servicioViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Solicitante_servicioSerializer
@@ -262,7 +262,11 @@ class Tipo_reporteViewSet(GeneralViewSet):  # Una sola clase para los metodos de
 
     serializer_class = Tipo_reporteSerializer
 
-
+class CodigoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = '__all__'
+    ordering_fields = '__all__'
+    serializer_class = CodigoSerializer
     
 class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     

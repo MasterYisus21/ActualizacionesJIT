@@ -49,10 +49,10 @@ function RegistrarSolicitud() {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      'image/jpeg': ['.jpeg'],
-      'image/png': ['.png'],
-      'application/pdf': ['.pdf'],
-    }
+      "image/jpeg": [".jpeg"],
+      "image/png": [".png"],
+      "application/pdf": [".pdf"],
+    },
   });
 
   const removeFile = (file) => () => {
@@ -115,6 +115,7 @@ function RegistrarSolicitud() {
             lugar_expedicion: event.target.lugarExpedicionConvocado.value,
             celular: event.target.celularConvocado.value,
             correo: event.target.correoConvocado.value,
+            direccion: event.target.direccionConvocado.value,
             tipo_persona_id: parseInt(event.target.tipoPersonaConvocado.value),
           },
         ],
@@ -180,8 +181,7 @@ function RegistrarSolicitud() {
         .catch((err) => {
           console.log(err);
         });
-
-    }
+    };
     confirmAlert({
       title: `Confirmación`,
       message: `¿Estás seguro de enviar su solicitud?`,
@@ -316,7 +316,7 @@ function RegistrarSolicitud() {
         <Collapse in={seccion1}>
           <div className="form-datos">
             <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="floatingInputGrid" label="Nombres">
+            <FloatingLabel controlId="floatingInputGrid" label="Nombres *">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
@@ -325,7 +325,7 @@ function RegistrarSolicitud() {
                 required
               />
             </FloatingLabel>
-            <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
+            <FloatingLabel controlId="floatingInputGrid" label="Apellidos *">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
@@ -334,16 +334,15 @@ function RegistrarSolicitud() {
                 required
               />
             </FloatingLabel>
-
             <label className="subtitles-secciones">
               Fecha y lugar de nacimiento
             </label>
             <FloatingLabel
               controlId="floatingInputGrid"
-              label="Fecha de nacimiento"
+              label="Fecha de nacimiento *"
             >
               <Form.Control
-                className="inputs-registrar-solicitud"
+                className="inputs-registrar-solicitud *"
                 type="date"
                 placeholder="name@example.com"
                 name="fechaNacimiento"
@@ -352,18 +351,21 @@ function RegistrarSolicitud() {
             </FloatingLabel>
             <FloatingLabel
               controlId="floatingInputGrid"
-              label="Lugar de nacimiento"
+              label="Lugar de nacimiento *"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
                 name="lugarNacimiento"
+                required
               />
             </FloatingLabel>
-
             <label className="subtitles-secciones">Identificación</label>
-            <FloatingLabel controlId="tipoDocumento" label="Tipo de documento">
+            <FloatingLabel
+              controlId="tipoDocumento"
+              label="Tipo de documento *"
+            >
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
@@ -384,7 +386,7 @@ function RegistrarSolicitud() {
             </FloatingLabel>
             <FloatingLabel
               controlId="floatingInputGrid"
-              label="Número de documento"
+              label="Número de documento *"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
@@ -394,13 +396,12 @@ function RegistrarSolicitud() {
                 required
               />
             </FloatingLabel>
-
             <label className="subtitles-secciones">
               Fecha y lugar de expedición de documento
             </label>
             <FloatingLabel
               controlId="fechaExpedicion"
-              label="Fecha de expedición de documento"
+              label="Fecha de expedición de documento *"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
@@ -412,7 +413,7 @@ function RegistrarSolicitud() {
             </FloatingLabel>
             <FloatingLabel
               controlId="lugarExpedicion"
-              label="Lugar de expedición"
+              label="Lugar de expedición *"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
@@ -422,9 +423,7 @@ function RegistrarSolicitud() {
                 required
               />
             </FloatingLabel>
-
-            <label className="subtitles-secciones">Tipo de Persona</label>
-
+            <label className="subtitles-secciones">Tipo de Persona *</label>
             <div className="d-flex gap-5">
               {tiposPersona.map((tipoPersona) => {
                 return (
@@ -438,6 +437,7 @@ function RegistrarSolicitud() {
                       name="tipoPersona"
                       id="tipoPersona"
                       value={tipoPersona["id"]}
+                      required
                     />
                     <label
                       className="form-check-label"
@@ -449,13 +449,13 @@ function RegistrarSolicitud() {
                 );
               })}
             </div>
-
             <label className="subtitles-secciones">Sexo y Género</label>
-            <FloatingLabel controlId="floatingSelectGrid" label="Sexo">
+            <FloatingLabel controlId="floatingSelectGrid" label="Sexo *">
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
                 name="sexo"
+                required
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
                 {sexos.map((sexo) => {
@@ -467,11 +467,12 @@ function RegistrarSolicitud() {
                 })}
               </Form.Select>
             </FloatingLabel>
-            <FloatingLabel controlId="genero" label="Género">
+            <FloatingLabel controlId="genero" label="Género *">
               <Form.Select
                 className="inputs-registrar-solicitud"
                 aria-label="Floating label select example"
                 name="genero"
+                required
               >
                 <option value={""}>Abre el menú para ver las opciones</option>
                 {generos.map((genero) => {
@@ -483,9 +484,7 @@ function RegistrarSolicitud() {
                 })}
               </Form.Select>
             </FloatingLabel>
-
             <label className="subtitles-secciones">Datos adicionales</label>
-
             <div className="col-registro-solicitud">
               <FloatingLabel controlId="floatingSelectGrid" label="Estrato">
                 <Form.Select
@@ -515,9 +514,8 @@ function RegistrarSolicitud() {
                 />
               </FloatingLabel>
             </div>
-
             <div className="col-registro-solicitud">
-              <FloatingLabel controlId="floatingInputGrid" label="Celular">
+              <FloatingLabel controlId="floatingInputGrid" label="Celular *">
                 <Form.Control
                   className=""
                   type="text"
@@ -526,7 +524,7 @@ function RegistrarSolicitud() {
                   required
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Correo">
+              <FloatingLabel controlId="floatingInputGrid" label="Correo *">
                 <Form.Control
                   className=""
                   type="text"
@@ -536,8 +534,7 @@ function RegistrarSolicitud() {
                 />
               </FloatingLabel>
             </div>
-
-            <FloatingLabel controlId="floatingInputGrid" label="Dirección">
+            <FloatingLabel controlId="floatingInputGrid" label="Dirección *">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
@@ -546,9 +543,7 @@ function RegistrarSolicitud() {
                 required
               />
             </FloatingLabel>
-
             {/* Parte 1 - DATOS APODERADO ---------------------------------> */}
-
             <label className="subtitles-secciones">Posee apoderado</label>
             <div className="col-detalle-solicitud">
               <button
@@ -574,7 +569,6 @@ function RegistrarSolicitud() {
                 No
               </button>
             </div>
-
             {conv2 && (
               <>
                 <label className="subtitles-secciones">Nombre</label>
@@ -717,7 +711,7 @@ function RegistrarSolicitud() {
         <Collapse in={seccion2}>
           <div className="form-datos">
             <label className="subtitles-secciones">Nombre</label>
-            <FloatingLabel controlId="nombresConvocado" label="Nombres">
+            <FloatingLabel controlId="nombresConvocado" label="Nombres *">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
@@ -725,7 +719,7 @@ function RegistrarSolicitud() {
                 required
               />
             </FloatingLabel>
-            <FloatingLabel controlId="apellidosConvocado" label="Apellidos">
+            <FloatingLabel controlId="apellidosConvocado" label="Apellidos *">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
@@ -764,7 +758,6 @@ function RegistrarSolicitud() {
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
-                required
               />
             </FloatingLabel>
 
@@ -780,7 +773,6 @@ function RegistrarSolicitud() {
                   className=""
                   type="date"
                   placeholder="name@example.com"
-                  required
                 />
               </FloatingLabel>
               <FloatingLabel
@@ -828,7 +820,6 @@ function RegistrarSolicitud() {
                   className=""
                   type="text"
                   placeholder="name@example.com"
-                  required
                 />
               </FloatingLabel>
               <FloatingLabel controlId="correoConvocado" label="Correo">
@@ -836,18 +827,17 @@ function RegistrarSolicitud() {
                   className=""
                   type="text"
                   placeholder="name@example.com"
-                  required
                 />
               </FloatingLabel>
             </div>
 
-            {/* <FloatingLabel controlId="floatingInputGrid" label="Dirección">
+            <FloatingLabel controlId="direccionConvocado" label="Dirección">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
               />
-            </FloatingLabel> */}
+            </FloatingLabel>
           </div>
         </Collapse>
 
@@ -866,7 +856,7 @@ function RegistrarSolicitud() {
             <div className="col-detalle-solicitud">
               <div>
                 <label htmlFor="Departamento" className="form-label">
-                  Departamento:
+                  Departamento *:
                 </label>
                 <SearchableSelect
                   axiosInstance={axiosBasicInstanceApiSolicitudes}
@@ -882,7 +872,7 @@ function RegistrarSolicitud() {
               </div>
               <div>
                 <label htmlFor="ciudad" className="form-label">
-                  Ciudad:
+                  Ciudad *:
                 </label>
                 <SearchableSelect
                   axiosInstance={axiosBasicInstanceApiSolicitudes}
@@ -898,7 +888,7 @@ function RegistrarSolicitud() {
             </div>
             <FloatingLabel
               controlId="descripcionHechos"
-              label="Describa los hechos ocurridos"
+              label="Describa los hechos ocurridos (Camplo obligatorio)"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
@@ -978,7 +968,7 @@ function RegistrarSolicitud() {
           linkto={""}
           text={"Enviar Solicitud"}
           icon={""}
-          onClick={() => { }}
+          onClick={() => {}}
         />
       </Form>
     </div>
