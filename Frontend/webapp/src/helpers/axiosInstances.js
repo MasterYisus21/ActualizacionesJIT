@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from '../config.json'
 
+
 // Import necesary for notification center
 import { toast } from 'react-toastify';
 
@@ -35,7 +36,7 @@ const refreshAccessToken = async () => {
 
     const refresh_token = JSON.parse(localStorage.getItem('tokens'))["refresh_token"]
     console.log(refresh_token)
-    await axios.post(config.apiGatewayURL + "/auth/refresh", {}, {
+    await axios.post(config.ApiExpedientes + "/auth/refresh", {}, {
         headers: {
             Authorization: "Bearer " + refresh_token
         }
@@ -48,7 +49,7 @@ const refreshAccessToken = async () => {
         .catch(error => {
             localStorage.removeItem("tokens")
             console.log(error)
-            window.location.href = config.webAppURL;
+            window.location.href = config.WebApp;
         })
 }
 
@@ -77,21 +78,21 @@ axiosTokenInstanceApiExpedientes.interceptors.response.use((response) => {
 })
 
 axiosTokenInstanceApiExpedientes.interceptors.request.use(
-    async config => {
+    async configuration => {
         const value = await localStorage.getItem('tokens')
         const keys = JSON.parse(value)
-        console.log(config.headers);
+        console.log(configuration.headers);
         try {
-            config.headers = {
+            configuration.headers = {
                 'Authorization': `Bearer ${keys.access_token}`,
                 // 'Accept': 'application/json',
                 // 'Content-Type': 'application/x-www-form-urlencoded'
             }
-            console.log(config.headers);
-            return config;
+            return configuration;
         }
         catch (error) {
             console.log(error)
+            window.location.href = config.WebApp;
         }
     },
     error => {
