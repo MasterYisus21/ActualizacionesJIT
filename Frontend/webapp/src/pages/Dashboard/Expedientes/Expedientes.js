@@ -133,6 +133,7 @@ function Expedientes() {
             </Link>
           );
         })}
+        {(page < numPages) &&
         <Button
           onClick={(e) => {
             handlePageChange(page + 1);
@@ -140,6 +141,7 @@ function Expedientes() {
           className="span2"
           text="Cargar más"
         />
+        }
       </div>
     </div>
   );

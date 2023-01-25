@@ -26,7 +26,7 @@ function Solicitudes() {
     // console.log(e.target.documento.value)
     axiosTokenInstanceApiSolicitudes({
       method: 'get',
-      url: "/solicitudes/?ordering=-numero_radicado&count=14&page=" + page  + "&search=" + valoresBuscados.map(valor => { return ',' + valor }) + filtrosAplicados.map(valor => { return ',' + valor }),
+      url: "/solicitudes/?ordering=-numero_radicado&count=14&page=" + page + "&search=" + valoresBuscados.map(valor => { return ',' + valor }) + filtrosAplicados.map(valor => { return ',' + valor }),
       // headers: req.headers,
       data: {}
     })
@@ -101,8 +101,8 @@ function Solicitudes() {
       <Buscador
         valoresBuscados={valoresBuscados}
         setValoresBuscados={setValoresBuscados}
-        filtros = {filtros}
-        setFiltros = {setFiltrosAplicados}
+        filtros={filtros}
+        setFiltros={setFiltrosAplicados}
         setPage={handlePageChange}
         required
       />
@@ -118,11 +118,13 @@ function Solicitudes() {
             </Link>
           )
         })}
-        <Button
-          onClick={e => { handlePageChange(page + 1) }}
-          className="span2"
-          text="Cargar más"
-        />
+        {(page < numPages) &&
+          <Button
+            onClick={e => { handlePageChange(page + 1) }}
+            className="span2"
+            text="Cargar más"
+          />
+        }
       </div>
     </div>
   )
