@@ -8,6 +8,7 @@ import { RectanguloCelular } from '../../components/RectanguloCelular'
 import { axiosBasicInstanceApiSolicitudes, axiosBasicInstanceApiExpedientes } from '../../helpers/axiosInstances'
 import { Buscador, Button } from '../../components';
 import { useNavigate } from "react-router-dom";
+import swal from 'sweetalert';
 
 import { Link } from "react-router-dom";
 
@@ -89,12 +90,13 @@ function Consultar() {
 
   const notificar=(idSolicitud)=>{
     const confirmar=()=>{
+      
     if (!solexp) {
     axiosBasicInstanceApiSolicitudes({
       method: 'post',
       url: "/solicitudes/" + idSolicitud + "/informacion_solicitudes",
       // headers: req.headers,
-      data: {}
+      data:{}
     })
 
       .then(result => { 
@@ -106,6 +108,17 @@ function Consultar() {
       .catch(err => {
         console.log("error");
       });
+      swal({
+        title:"Digita el código enviado a tu correo",
+        text:"",
+        icon:"success",
+        content:"input",
+        button:"Aceptar"
+      })
+      .then(valor => {
+        console.log(valor);
+      })
+      
     }else{
       axiosBasicInstanceApiSolicitudes({
         method: 'post',
@@ -127,7 +140,7 @@ function Consultar() {
     }
       confirmAlert({
         title: `Confirmación`,
-        message: `¿Quieres que se envíe a tu correo toda la información?`,
+        message: `¿Quieres que enviemos un código a tu correo para ver la información de tu solicitud?`,
         buttons: [
           {
             label: 'Si',
@@ -140,6 +153,9 @@ function Consultar() {
           }
         ]
       });
+      
+      
+
     
   }
   
@@ -263,6 +279,7 @@ function Consultar() {
         </div>
       </div>
       <ToastContainer />
+      
     </div>
 
   )
