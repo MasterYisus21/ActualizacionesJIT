@@ -349,6 +349,50 @@ views.DescargarDocumentos = async (req, res) => {
 
 views.EnviarResultadoExpediente = async (req, res) => {
   try {
+
+
+    await axios.get(config.urlApiExpedientes+"resultados?expediente_id="+req.params.id)
+      .then(async result=>{
+        if (Object.keys(result.data.results).length<1) {
+          let endpoints=[config.urlApiExpedientes+"resultados?expediente_id="+req.params.id,config.urlApiExpedientes+"citaciones?expediente_id="+req.params.id]
+          await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
+          
+          .then(axios.spread((data3, data4, data5) => {
+            res.status(201).json(data2.data)
+        
+            // res.status(201).json(data2.data[0])
+
+          }))
+          .catch(err => {
+
+            res.sendStatus(error(err))
+            return
+
+          })
+          axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
+            .then(result=>{
+
+              
+              const  encabezado = `Este mensaje notifica que el estado de su expediente ${result.data.numero_caso} es el siguiente:<br><br>
+               <b>Numero Caso:</b> ${result.data.numero_caso}
+               <br><b>Estado actual :</b>${result.data.estado_expediente}
+              
+               `
+               const  cuerpo ="En este momento no cuenta con un resultado del caso, "
+              let asunto = `Cambio de estado de la Solicitud:${req.body.numero_radicado}`
+          })
+            .catch(err => {
+              res.sendStatus(error(err))
+            })
+         
+          
+          res.sendStatus(200)}
+        if (Object.keys(result.data.results).length<1) {res.sendStatus(200)}
+
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
     res.sendStatus(200)
   } catch (error) {
     console.log(error);
