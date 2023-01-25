@@ -48,6 +48,11 @@ function RegistrarSolicitud() {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
+    accept: {
+      'image/jpeg': ['.jpeg'],
+      'image/png': ['.png'],
+      'application/pdf': ['.pdf'],
+    }
   });
 
   const removeFile = (file) => () => {
@@ -904,7 +909,7 @@ function RegistrarSolicitud() {
               IMPORTANTE: En esta sección debes subir los siguientes documentos;
               documento de identidad, fotocopia de recibo público y documentos
               adicionales que consideres pertinentes para el caso. Recuerda que
-              los formatos solicitados son PDF, JPEJ, JPG y PNG con tamaño total
+              los formatos solicitados son PDF, JPEG, JPG y PNG con tamaño total
               máximo de 10Mbytes.
             </label>
             <label className="subtitles-secciones">Identificación</label>
@@ -912,6 +917,7 @@ function RegistrarSolicitud() {
               className="inputs-registrar-solicitud"
               type="file"
               name="fileIdentificacion"
+              accept=".pdf"
               required
             />
             <label className="subtitles-secciones">Recibo Público</label>
@@ -919,6 +925,7 @@ function RegistrarSolicitud() {
               className="inputs-registrar-solicitud"
               type="file"
               name="fileRecibo"
+              accept="image/*,.pdf"
               required
             />
             <label className="subtitles-secciones">Anexos</label>
