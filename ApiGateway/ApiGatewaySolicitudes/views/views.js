@@ -1,12 +1,64 @@
 const axios = require("axios");
 const unirest = require('unirest');
 const fs = require('fs');
-
+const app = express(); // aplicaicon express
 const views = {};
 const error = require("../requests/requests_error.js")
 const config = require("../config.json");
 const requests = require("../requests/requests_generales.js");
 const { query } = require("express");
+async function verifier(req, res, next) {
+
+  // console.log(req.headers.authorization)
+  try {
+    axios.defaults.headers['X-Api-Key'] =config.apiKey ;
+    
+   
+    if (req.headers.authorization) {
+      
+      await axios
+        .post(
+          config.urlAutenticacion + "get_identity",
+          {},
+          {
+            headers: {
+              Authorization: req.headers.authorization,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data["logged_in_as"]) {
+            axios.defaults.headers['Id'] =response.data.claims.sub;
+            req.grupo = response.data.claims.rol;
+            req.identificacion = response.data.claims.sub;
+          
+            //  req.mivariable = response.data.
+            // console.log(response.data["logged_in_as"])
+            
+            next();
+          } else {
+            
+            res.sendStatus(401);
+          }
+        })
+        .catch(function (error) {
+          
+          if (error.response.status == 401) {
+            res.sendStatus(401);
+          }
+          
+          res.sendStatus(404);
+        });
+    } else {
+
+      res.sendStatus(403)
+      //next()
+    }
+  } catch (error) {
+    console.log(error);
+    // res.sendStatus(400)
+  }
+}
 
 const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
   
@@ -326,6 +378,131 @@ views.DescargarDocumentos = async (req, res) => {
   }
 }
 
+
+
+views.EnviarResultadoExpediente = async (req, res) => {
+  try {
+    res.sendStatus(200)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.EnviarInformacionSolicitud = async (req, res) => {
+  try {
+    res.sendStatus(200)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+views.ListarSolicitudes = async (req, res) => {
+  try {
+    const url = config.urlApiSolicitudes + req.route.path.slice(1)
+    requests.get(req, res, url, "?")
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+views.AutenticacionUsuario = async (req, res) => {
+  try {
+
+
+    axios.get(config.urlApiExpedientes + "relaciones_persona_solicitud?solicitud_id=")
+      .then(result => {
+
+      })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
+
+app.use(verifier);
+views.VerSolicitud = async (req, res) => {
+  try {
+    let datos = {}
+    const solicitud = config.urlApiSolicitudes + "solicitudes/" + req.params.id
+    const hechos = config.urlApiSolicitudes + "hechos?solicitud_id=" + req.params.id
+    const documentos = config.urlApiSolicitudes + "documentos?solicitud_id=" + req.params.id
+    const relacion_persona_solicitud = config.urlApiSolicitudes + "relaciones_persona_solicitud?solicitud_id=" + req.params.id
+
+    let endpoints = [
+      solicitud, hechos, documentos, relacion_persona_solicitud
+    ];
+
+    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+      .then(axios.spread(async (data1, data2, data3, data4) => {
+        datos.solicitud = data1.data
+        datos.hechos = data2.data.results
+        
+
+
+        for await (const iterator of data4.data.results) {
+
+          if (iterator.tipo_cliente_id == 1) {
+
+            await axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
+              .then(async result => {
+
+                datos.convocante = result.data
+                if ((result.data.apoderado_id == null | result.data.apoderado_id == "")) { return }
+                await axios.get(config.urlApiSolicitudes + "apoderados/" + result.data.apoderado_id)
+                  .then(result => {
+                    datos.apoderado = result.data
+                  })
+                  .catch(err => {
+                    error(err)
+                  })
+                return
+              })
+              .catch(err => {
+                error(err)
+                return
+              })
+                       } else{
+
+          await axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
+            .then(result => {
+         
+              datos.convocado = result.data
+             
+            })
+            .catch(err => {
+              error(err)
+            })
+          }
+        }
+        datos.documentos = data3.data
+
+        
+        res.status(201).json(datos)
+
+      }))
+      .catch(err => {
+
+        res.sendStatus(error(err))
+        return
+
+      })
+
+
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+}
+
 views.AprobarSolicitud = async (req, res) => {
   try {
     
@@ -411,123 +588,4 @@ views.AprobarSolicitud = async (req, res) => {
   }
 }
 
-views.EnviarResultadoExpediente = async (req, res) => {
-  try {
-    res.sendStatus(200)
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-    return;
-  }
-}
-views.EnviarInformacionSolicitud = async (req, res) => {
-  try {
-    res.sendStatus(200)
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-    return;
-  }
-}
-views.VerSolicitud = async (req, res) => {
-  try {
-    let datos = {}
-    const solicitud = config.urlApiSolicitudes + "solicitudes/" + req.params.id
-    const hechos = config.urlApiSolicitudes + "hechos?solicitud_id=" + req.params.id
-    const documentos = config.urlApiSolicitudes + "documentos?solicitud_id=" + req.params.id
-    const relacion_persona_solicitud = config.urlApiSolicitudes + "relaciones_persona_solicitud?solicitud_id=" + req.params.id
-
-    let endpoints = [
-      solicitud, hechos, documentos, relacion_persona_solicitud
-    ];
-
-    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-      .then(axios.spread(async (data1, data2, data3, data4) => {
-        datos.solicitud = data1.data
-        datos.hechos = data2.data.results
-        
-
-
-        for await (const iterator of data4.data.results) {
-
-          if (iterator.tipo_cliente_id == 1) {
-
-            await axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
-              .then(async result => {
-
-                datos.convocante = result.data
-                if ((result.data.apoderado_id == null | result.data.apoderado_id == "")) { return }
-                await axios.get(config.urlApiSolicitudes + "apoderados/" + result.data.apoderado_id)
-                  .then(result => {
-                    datos.apoderado = result.data
-                  })
-                  .catch(err => {
-                    error(err)
-                  })
-                return
-              })
-              .catch(err => {
-                error(err)
-                return
-              })
-                       } else{
-
-          await axios.get(config.urlApiSolicitudes + "personas_solicitud/" + iterator.persona_id)
-            .then(result => {
-         
-              datos.convocado = result.data
-             
-            })
-            .catch(err => {
-              error(err)
-            })
-          }
-        }
-        datos.documentos = data3.data
-
-        
-        res.status(201).json(datos)
-
-      }))
-      .catch(err => {
-
-        res.sendStatus(error(err))
-        return
-
-      })
-
-
-
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-}
-views.ListarSolicitudes = async (req, res) => {
-  try {
-    const url = config.urlApiSolicitudes + req.route.path.slice(1)
-    requests.get(req, res, url, "?")
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-    return;
-  }
-}
-views.AutenticacionUsuario = async (req, res) => {
-  try {
-
-
-    axios.get(config.urlApiExpedientes + "relaciones_persona_solicitud?solicitud_id=")
-      .then(result => {
-
-      })
-      .catch(err => {
-        res.sendStatus(error(err))
-      })
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-    return;
-  }
-}
 module.exports = views;

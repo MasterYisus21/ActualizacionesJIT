@@ -6,6 +6,7 @@
     "urlGatewaySolicitudes": "http://localhost:3001/api/gateway/v1/",
     "urlGatewayExpedientes": "http://localhost:3002/api/gateway/v1/",
     "apiKey":"2ZwZtPbd.34ikEaXRQrblBlJRD6XxxfR5lau6GMFE",
+    "urlAutenticacion": "http://0.0.0.0:4000/",
     "copia_correo":"jairo.urrego@ugc.edu.co"
     
 }

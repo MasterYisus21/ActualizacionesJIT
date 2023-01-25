@@ -111,7 +111,6 @@ async function verifier(req, res, next) {
   try {
     axios.defaults.headers['X-Api-Key'] =config.apiKey ;
     
-
    
     if (req.headers.authorization) {
       
