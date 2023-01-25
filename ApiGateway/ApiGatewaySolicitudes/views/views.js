@@ -1,4 +1,5 @@
 const axios = require("axios");
+const express = require("express");
 const unirest = require('unirest');
 const fs = require('fs');
 const app = express(); // aplicaicon express
@@ -427,7 +428,7 @@ views.AutenticacionUsuario = async (req, res) => {
   }
 }
 
-app.use(verifier);
+// app.use(verifier);
 views.VerSolicitud = async (req, res) => {
   try {
     let datos = {}
