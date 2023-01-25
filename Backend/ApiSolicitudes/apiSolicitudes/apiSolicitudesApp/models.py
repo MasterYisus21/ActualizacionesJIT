@@ -137,7 +137,7 @@ class Apoderado_solicitud(models.Model):
     apellidos = models.CharField(max_length= 25, blank=True, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False,primary_key=True)
     fecha_expedicion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
-    lugar_expedicion = models.CharField(max_length=20, blank=True, null=False)
+    lugar_expedicion = models.CharField(max_length=20, blank=True, null=True)
     telefono = models.CharField(max_length=10, blank=True, null=True)
     celular = models.CharField(max_length=15, blank=True, null=False)
     correo = models.EmailField(max_length=120,blank=True,null=False)
