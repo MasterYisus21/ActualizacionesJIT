@@ -437,7 +437,7 @@ views.VerPersonas = async (req, res) => {
 views.ListarExpedientes = async (req, res) => {
   try {
     if (req.grupo == 1) {
-      const url = config.urlApiExpedientes + "expedientes"
+      const url = config.urlApiExpedientes + "relaciones_persona_expediente?expediente_id"
 
       requests.get(req, res, url, "?")
     } else {
