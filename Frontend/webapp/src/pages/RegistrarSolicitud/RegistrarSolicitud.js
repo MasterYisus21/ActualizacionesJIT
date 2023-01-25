@@ -15,7 +15,7 @@ import {
   axiosBasicInstanceApiExpedientes,
   axiosBasicInstanceApiSolicitudes,
 } from "../../helpers/axiosInstances";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
@@ -967,6 +967,36 @@ function RegistrarSolicitud() {
             </section>
           </div>
         </Collapse>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="invalidCheck3"
+            required
+          />
+          <label class="form-check-label" for="invalidCheck3">
+            He leído y acepto los términos de{" "}
+            <a
+              href={
+                "https://www.ugc.edu.co/sede/bogota/documentos/ministerio/politica_tratamiento_de_la_informacion.pdf"
+              }
+              target="_blank"
+            >
+              AVISO DE PRIVACIDAD
+            </a>
+            <label className=" px-2"> y </label>
+            <a
+              href={
+                "https://docs.google.com/document/d/1NlUD6XCS1bm7bnhHCoIMgsAshpA0EgpjnXi9y_S2TfU/edit?usp=sharing"
+              }
+              target="_blank"
+            >
+              LEY DE PROTECCIÓN DE DATOS.
+            </a>
+          </label>
+          <div class="invalid-feedback">You must agree before submitting.</div>
+        </div>
         <Button
           className={""}
           type={"submit"}

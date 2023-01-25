@@ -438,6 +438,38 @@ function SolicitudesDetalle() {
       });
   };
 
+  const informacionIncompleta = (e) => {
+    e.preventDefault();
+    const descripcionInformacion =
+      document.getElementById("faltaInformacion").value;
+    const body = {
+      estado_solicitud: "Falta de información",
+      estado_solicitud_id: 4,
+      comentario: descripcionInformacion,
+      conciliador: null,
+      conciliador_id: null,
+      numero_radicado: radicado,
+    };
+    console.log(body);
+    axiosTokenInstanceApiSolicitudes({
+      method: "post",
+      url: "/solicitudes/" + id,
+      data: body,
+    })
+      .then((response) => {
+        e.target.reset();
+        toast.info(
+          "La solicitud es encuentra en estado de Información incompleta",
+          {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
       method: "get",
@@ -1171,6 +1203,18 @@ function SolicitudesDetalle() {
               RECHAZAR
             </button>
             <button
+              className="boton-incompleto"
+              onClick={() =>
+                setOpen2(false) &
+                setOpen(false) &
+                setOpen3(!open3) &
+                setOpen4(false)
+              }
+              aria-controls="ejemplo"
+            >
+              INFORMACIÓN INCOMPLETA
+            </button>
+            <button
               className="boton-aceptar"
               onClick={() =>
                 setOpen2(false) &
@@ -1231,6 +1275,31 @@ function SolicitudesDetalle() {
             </form>
           </Collapse>
 
+          <Collapse className="colapse-general" in={open3}>
+            <form
+              id="ejemplo"
+              onSubmit={(e) => {
+                informacionIncompleta(e);
+              }}
+            >
+              <div className="contenedor-incompleto">
+                <label className="label-explicacion-rechazar">
+                  Escriba una nota explicando al usuario que información hace
+                  falta o una razón del por qué se retorna su solicitud
+                </label>
+                <textarea
+                  className="campo-explicacion"
+                  id="faltaInformacion"
+                ></textarea>
+                <div className="contenedor-boton-remitir">
+                  <button className="boton-devolver-solicitud">
+                    Notificar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </Collapse>
+
           <Collapse className="colapse-general" in={open4}>
             <form
               id="ejemplo"
@@ -1284,7 +1353,7 @@ function SolicitudesDetalle() {
         </div>
       ) : (
         <h1 className={"estado-solicitud-" + estado}>
-          Esta solicitud fue {estado}
+          Esta solicitud se encuentra en el estado {estado}
         </h1>
       )}
     </div>
