@@ -20,7 +20,6 @@ class SearchHechos(admin.ModelAdmin):
 
 
 
-
 # Register your models here.
 admin.site.register(Pais,SearchAdminGeneral)
 admin.site.register(Departamento,SearchAdminGeneral)
@@ -38,6 +37,6 @@ admin.site.register(Tipo_cliente,SearchAdminGeneral)
 admin.site.register(Relacion_persona_solicitud)
 admin.site.register(Hechos_solicitud,SearchHechos)
 admin.site.register(Documento_solicitud,SearchHechos)
-
+admin.site.register(Codigo,SearchHechos)
 admin.site.register(Solicitud,SearchSolicitud)
 

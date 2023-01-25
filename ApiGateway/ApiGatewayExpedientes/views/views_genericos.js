@@ -13,6 +13,7 @@ const FormData = require('form-data');
 const path = require("path");
 const xlsx = require('xlsx');
 const ExcelJS = require('exceljs');
+const { Console } = require("console");
 
 
 // datos generales
@@ -434,15 +435,19 @@ views.VerPersonas = async (req, res) => {
     return;
   }
 }
+
 views.ListarExpedientes = async (req, res) => {
   try {
     if (req.grupo == 1) {
-      const url = config.urlApiExpedientes + "expedientes"
-
+      let url = config.urlApiExpedientes + "expedientes";
+      
+      if(req.query.search){url = config.urlApiExpedientes + "relaciones_persona_expediente"}
       requests.get(req, res, url, "?")
+      
     } else {
-      const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion
 
+      const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion
+      console.log(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion)
       requests.get(req, res, url, "&")
     }
   } catch (error) {
@@ -1144,7 +1149,7 @@ views.CitarPersonas = async (req, res) => {
 }
 views.EnviarNotificacionCitacion = async (req, res) => {
   try {
-
+    let falla = false
     // validacion correo 
     if(Object.keys(req.body).length<1){return res.sendStatus(204)}
     for await (const iterator of req.body) {
@@ -1160,6 +1165,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
      
         await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
           .then(async (result) => {
+            
 
             fs.writeFile("./public/formatos/citacion_" + resul.citado_nombres + ".docx", result.data, async (err) => {
               if (err) { throw new Error(err) }
@@ -1219,21 +1225,23 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                         let asunto = `Citación Audiencia Conciliación`
 
 
-                        const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { res.status(error(err)) })
+                        const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { (error(err)); falla=true  })
 
   
                       })
          
-                    res.sendStatus(200)
+                    
                   })
                 })
                 .catch(err => {
                   if (err.response) {
-                    res.sendStatus(error(err));
+                    (error(err)); falla=true
+                    
                     return
                   }
                   if (err.request) {
-                    res.sendStatus(503); return
+                    (error(err)); falla=true
+                     return
                   }
 
                 })
@@ -1244,15 +1252,21 @@ views.EnviarNotificacionCitacion = async (req, res) => {
             })
           })
           .catch(err => {
-            throw new Error(err)
+            (error(err)); falla=true
           })
       })
         .catch(err => {
-          res.sendStatus(error(err))
-          return
+          (error(err)); falla=true
+          
         })
 
 
+    }
+    if(!falla){
+    res.sendStatus(200)
+    }
+    else{
+    res.sendstatus(503) 
     }
 
 
@@ -1397,6 +1411,7 @@ views.CargarTemplatePersonas = async (req, res) => {
     const workbook = xlsx.readFile(ruta)
     const workbookSheets = workbook.SheetNames;
 
+
     // console.log(workbook.Sheets[workbookSheets[1]])
     async function LeerHojas(workbookSheets) {
       let usuarios = []
@@ -1418,16 +1433,22 @@ views.CargarTemplatePersonas = async (req, res) => {
         }
         
         
-        personas = personas.concat(xlsx.utils.sheet_to_json(workbook.Sheets[sheet]))
-        for (const iterator of xlsx.utils.sheet_to_json(workbook.Sheets[sheet])) {
+        
+        for await(iterator of xlsx.utils.sheet_to_json(workbook.Sheets[sheet])) {
+
           if (!iterator.identificacion | !iterator.correo | iterator.nombres) { res.status(400).json({ message: "Se encuentan celdas obligatorias vacias" }); return }
+      
+          
           usuarios.push({ username: iterator.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [id_grupo] })
           identificacion.push(iterator.identificacion)
           email.push(iterator.correo)
-
+          iterator.tipo_cargo_id=id_grupo
+          personas.push(iterator)
+          
 
         }
 
+        
       }
 
       function repetidos(arr) {
@@ -1455,6 +1476,7 @@ views.CargarTemplatePersonas = async (req, res) => {
 
       await axios.post(config.urlApiExpedientes + "usuarios/", usuarios)
         .then(async result => {
+        
           for (const iterator in result.data) {
 
             personas[iterator].usuario_id = result.data[iterator].id
@@ -1472,7 +1494,7 @@ views.CargarTemplatePersonas = async (req, res) => {
 
         })
         .catch(err => {
-
+          error(err)
           const mensaje = "Error: Verificar en el archivo subido que no se repita ningún documento de identidad y además que en el aplicativo no exista ninguno de los usuarios que desea añadir "
           res.status(400).json({ message: mensaje })
         })
@@ -2191,17 +2213,21 @@ views.ActualizarPersonas = async (req, res) => {
   try {
    
     let endpoints=[]
-    if (req.body.identificacion) { delete req.body["identificacion"];  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
-    if (req.body.usuario_id) { req.body.groups=[req.body.grupo_id];endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/")  }
-    
+    let datos = {}
+   
+    req.body.grupo_id=parseInt(req.body.grupo_id)
+    if (req.body.identificacion) { delete req.body["identificacion"] ;  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
+    if (req.body.usuario_id) {endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/"); }
+    req.body.groups=[parseInt(req.body.grupo_id)]
+    console.log(req.body)
     await Promise.all(endpoints.map((endpoint) => axios.patch(endpoint,req.body)))
-      .then(axios.spread(async (data1) => {
+      .then(axios.spread(async (data1,data2) => {
       
       
         res.status(200).json(data1.data)
       }))
       .catch(err => {
-
+      
         res.sendStatus(error(err))
         return
 

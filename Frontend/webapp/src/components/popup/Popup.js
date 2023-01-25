@@ -105,7 +105,7 @@ export default function Popup({
       tarjeta_profesional: event.target.tarjetaProfesional.value,
       tipo_cargo_id: event.target.cargo.value,
       grupo_id: event.target.permiso.value,
-      usuarios_id: usuarioid,
+      usuario_id: usuarioid,
     };
 
     if (modificar == null) {
@@ -236,6 +236,7 @@ export default function Popup({
                   className="inputs-personas"
                   type="text"
                   placeholder="name@example.com"
+                  disabled = {modificar !== null}
                   required
                 />
               </FloatingLabel>

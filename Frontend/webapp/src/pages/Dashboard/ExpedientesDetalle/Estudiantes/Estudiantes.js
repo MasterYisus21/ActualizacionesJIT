@@ -211,12 +211,12 @@ function Estudiantes() {
   return (
     <>
       <div className='container container-estudiantes pt-3'>
-        
+
         <div className='center-text'><h2>Información de estudiantes</h2></div>
         <div className='contenedor-navbar-agregar-estudiantes'>
-          
+
           <div className="container-fluid">
-  
+
             <div className="d-flex align-items-end">
               <Button
                 className={""}
@@ -225,7 +225,7 @@ function Estudiantes() {
               />
             </div>
           </div>
-         
+
         </div>
         {estado &&
           <div className='contenedor-tabla-seleccion-conciliador pt-4'>
@@ -297,11 +297,13 @@ function Estudiantes() {
                 )
               })}
             </tbody>
-            <Button
-              onClick={e => { handlePageChange(page + 1) }}
-              className="span2"
-              text="Cargar más"
-            />
+            {(page < numPages) &&
+              <Button
+                onClick={e => { handlePageChange(page + 1) }}
+                className="span2"
+                text="Cargar más"
+              />
+            }
           </table>
         </div>
       </div>

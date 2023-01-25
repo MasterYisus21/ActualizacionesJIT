@@ -176,7 +176,7 @@ class ExpedienteSerializer(serializers.ModelSerializer):
     inicio_conflicto = serializers.CharField(source='inicio_conflicto_id', read_only=True)
     estado_expediente = serializers.CharField(source='estado_expediente_id', read_only=True)
     finalidad_servicio = serializers.CharField(source='Finalidad_servicio_id', read_only=True)
-
+    expediente_id = serializers.IntegerField(source='id', read_only=True)
     class Meta:
         model = Expediente          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
@@ -327,6 +327,12 @@ class Tipo_reporteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tipo_reporte          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+
+class CodigoSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model = Codigo    # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
 

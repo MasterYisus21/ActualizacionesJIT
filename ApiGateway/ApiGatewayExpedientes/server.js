@@ -41,7 +41,7 @@ app.post("/api/gateway/v1/auth/ingresar/", async (req, res) => {
       }))
       .catch(err => {
 
-        res.sendStatus(error(err))
+        res.sendStatus(401)
         return
 
       })
@@ -110,12 +110,10 @@ async function verifier(req, res, next) {
   // console.log(req.headers.authorization)
   try {
     axios.defaults.headers['X-Api-Key'] =config.apiKey ;
-    axios.defaults.headers['Id'] ="jairo";
-    req.identificacion="1013689035";
-    req.grupo=2
+    
    
     if (req.headers.authorization) {
-
+      
       await axios
         .post(
           config.urlAutenticacion + "get_identity",
@@ -128,36 +126,35 @@ async function verifier(req, res, next) {
         )
         .then((response) => {
           if (response.data["logged_in_as"]) {
-
-            req.idgrupo = response.data.claims.rol;
+            axios.defaults.headers['Id'] =response.data.claims.sub;
+            req.grupo = response.data.claims.rol;
             req.identificacion = response.data.claims.sub;
-       
-       
+          
+            //  req.mivariable = response.data.
+            // console.log(response.data["logged_in_as"])
+            
             next();
           } else {
-
+            
             res.sendStatus(401);
           }
         })
-        .catch(function (err) {
-
-        
-            res.sendStatus(error());
-            return;
-       
-
-        
+        .catch(function (error) {
+          
+          if (error.response.status == 401) {
+            res.sendStatus(401);
+          }
+          
+          res.sendStatus(404);
         });
     } else {
 
-      // res.sendStatus(403)
-      // return;
-      
-      next()
+      res.sendStatus(403)
+      //next()
     }
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    // res.sendStatus(400)
   }
 }
 

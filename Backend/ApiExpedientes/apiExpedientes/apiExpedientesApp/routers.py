@@ -56,6 +56,7 @@ router.register(r'respuestas_encuesta',Respuesta_encuestaViewSet,basename='respu
 router.register(r'tipos_reporte',Tipo_reporteViewSet,basename='tipos_reporte'),
 router.register(r'usuarios',UsuariosViewSet,basename='usuarios'),
 router.register(r'grupos',GruposViewSet,basename='grupos'),
+router.register(r'codigos',CodigoViewSet,basename='codigos'),
 
 
 

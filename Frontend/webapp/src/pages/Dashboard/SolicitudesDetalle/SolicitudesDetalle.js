@@ -122,6 +122,8 @@ function SolicitudesDetalle() {
           result.data.convocado["celular"];
         document.getElementById("correo_Convocado").value =
           result.data.convocado["correo"];
+        document.getElementById("direccion_Convocado").value =
+          result.data.convocado["direccion"];
 
         // Hechos
         document.getElementById("descripcion_hechos").value =
@@ -1032,6 +1034,14 @@ function SolicitudesDetalle() {
                 />
               </FloatingLabel>
             </div>
+            <FloatingLabel controlId="direccion_convocado" label="Dirección">
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+                disabled
+              />
+            </FloatingLabel>
           </div>
         </Collapse>
 
@@ -1266,9 +1276,7 @@ function SolicitudesDetalle() {
                   id="descripcionAprovado"
                 ></textarea>
                 <div className="contenedor-boton-remitir">
-                  <button className="boton-remitir-solicitud">
-                    Aceptar solicitud
-                  </button>
+                  <button className="boton-remitir-solicitud">Aceptar</button>
                 </div>
               </div>
             </form>

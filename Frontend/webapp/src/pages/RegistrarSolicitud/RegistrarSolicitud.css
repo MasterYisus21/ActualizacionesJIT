@@ -152,12 +152,14 @@
         display: block;
         position: absolute;
         right: 3%;
-        top: 4em;
+        top: 2.5em;
         border-radius: 7px;
         border: 0;
         background-color: #00913D;
         color: white;
         padding: .5em 2em;
+        z-index: 1;
+
     }
 
     .btn-regresar:hover {
@@ -174,7 +176,6 @@
         padding-bottom: 2em;
     }
 
-    .col-registro-solicitud {}
 }
 
 @media (min-height: 1000px) {

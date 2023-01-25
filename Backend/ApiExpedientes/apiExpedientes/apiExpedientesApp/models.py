@@ -263,6 +263,21 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
+class Codigo(EstadoModel):
+    codigo = models.CharField(max_length = 7,blank=True,null=True)
+    fecha_registro=models.DateField(blank=False , null=False,auto_now=False,auto_now_add=True) # Se crea automaticamente 
+   
+    
+    class Meta:
+        managed = False
+        db_table='Codigo'
+        ordering = ['-id']
+        verbose_name = ("Codigo")
+        verbose_name_plural = ("Codigos")
+        
+
+    def __str__(self):
+        return str(self.fecha_registro)
 ############################################ modelos expedientes#########################################################
 
 def increment_numero_caso_number():
