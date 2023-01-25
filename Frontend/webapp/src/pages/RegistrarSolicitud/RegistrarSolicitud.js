@@ -79,106 +79,123 @@ function RegistrarSolicitud() {
   const submitForm = (event) => {
     event.preventDefault();
 
-    const data = {
-      convocante: [
-        {
-          nombres: event.target.nombres.value,
-          apellidos: event.target.apellidos.value,
-          identificacion: event.target.identificacion.value,
-          telefono: event.target.telefono.value,
-          celular: event.target.celular.value,
-          direccion: event.target.direccion.value,
-          correo: event.target.correo.value,
-          tipo_persona_id: parseInt(event.target.tipoPersona.value),
-          sexo_id: parseInt(event.target.sexo.value),
-          genero_id: parseInt(event.target.genero.value),
-          estrato_socioeconomico_id: event.target.estratoSocioeconomico.value,
-          tipo_documento_id: parseInt(event.target.tipoDocumento.value),
-          fecha_expedicion: event.target.fechaExpedicion.value,
-          lugar_expedicion: event.target.lugarExpedicion.value,
-          fecha_nacimiento: event.target.fechaNacimiento.value,
-          lugar_nacimiento: event.target.lugarNacimiento.value,
-          apoderado_id: null,
-        },
-      ],
+    const send = () => {
+      const data = {
+        convocante: [
+          {
+            nombres: event.target.nombres.value,
+            apellidos: event.target.apellidos.value,
+            identificacion: event.target.identificacion.value,
+            telefono: event.target.telefono.value,
+            celular: event.target.celular.value,
+            direccion: event.target.direccion.value,
+            correo: event.target.correo.value,
+            tipo_persona_id: parseInt(event.target.tipoPersona.value),
+            sexo_id: parseInt(event.target.sexo.value),
+            genero_id: parseInt(event.target.genero.value),
+            estrato_socioeconomico_id: event.target.estratoSocioeconomico.value,
+            tipo_documento_id: parseInt(event.target.tipoDocumento.value),
+            fecha_expedicion: event.target.fechaExpedicion.value,
+            lugar_expedicion: event.target.lugarExpedicion.value,
+            fecha_nacimiento: event.target.fechaNacimiento.value,
+            lugar_nacimiento: event.target.lugarNacimiento.value,
+            apoderado_id: null,
+          },
+        ],
 
-      convocado: [
-        {
-          nombres: event.target.nombresConvocado.value,
-          apellidos: event.target.apellidosConvocado.value,
-          tipo_documento_id: parseInt(
-            event.target.tipoDocumentoConvocado.value
-          ),
-          identificacion: event.target.identificacionConvocado.value,
-          fecha_expedicion: event.target.fechaExpedicionConvocado.value,
-          lugar_expedicion: event.target.lugarExpedicionConvocado.value,
-          celular: event.target.celularConvocado.value,
-          correo: event.target.correoConvocado.value,
-          tipo_persona_id: parseInt(event.target.tipoPersonaConvocado.value),
-        },
-      ],
-      hechos: [
-        {
-          descripcion: event.target.descripcionHechos.value,
-          departamento_id: event.target.ciudad.value,
-          ciudad_id: event.target.ciudad.value,
-        },
-      ],
-    };
+        convocado: [
+          {
+            nombres: event.target.nombresConvocado.value,
+            apellidos: event.target.apellidosConvocado.value,
+            tipo_documento_id: parseInt(
+              event.target.tipoDocumentoConvocado.value
+            ),
+            identificacion: event.target.identificacionConvocado.value,
+            fecha_expedicion: event.target.fechaExpedicionConvocado.value,
+            lugar_expedicion: event.target.lugarExpedicionConvocado.value,
+            celular: event.target.celularConvocado.value,
+            correo: event.target.correoConvocado.value,
+            tipo_persona_id: parseInt(event.target.tipoPersonaConvocado.value),
+          },
+        ],
+        hechos: [
+          {
+            descripcion: event.target.descripcionHechos.value,
+            departamento_id: event.target.ciudad.value,
+            ciudad_id: event.target.ciudad.value,
+          },
+        ],
+      };
 
-    data.apoderado = [];
-    if (conv2) {
-      data.apoderado = [
-        {
-          identificacion: event.target.identificacionApoderado?.value,
-          nombres: event.target.nombresApoderado?.value,
-          apellidos: event.target.apellidosApoderado?.value,
-          fecha_expedicion: event.target.fechaExpedicionApoderado?.value,
-          lugar_expedicion: event.target.lugarExpedicionApoderado?.value,
-          telefono: event.target.telefonoApoderado?.value,
-          celular: event.target.celularApoderado?.value,
-          correo: event.target.correoApoderado?.value,
-          tarjeta_profesional: event.target.celularApoderado?.value,
-          tipo_documento_id: event.target.tipoDocumentoApoderado?.value,
-        },
-      ];
-    }
+      data.apoderado = [];
+      if (conv2) {
+        data.apoderado = [
+          {
+            identificacion: event.target.identificacionApoderado?.value,
+            nombres: event.target.nombresApoderado?.value,
+            apellidos: event.target.apellidosApoderado?.value,
+            fecha_expedicion: event.target.fechaExpedicionApoderado?.value,
+            lugar_expedicion: event.target.lugarExpedicionApoderado?.value,
+            telefono: event.target.telefonoApoderado?.value,
+            celular: event.target.celularApoderado?.value,
+            correo: event.target.correoApoderado?.value,
+            tarjeta_profesional: event.target.celularApoderado?.value,
+            tipo_documento_id: event.target.tipoDocumentoApoderado?.value,
+          },
+        ];
+      }
 
-    let dataSolicitud = new FormData();
-    dataSolicitud.append("datos", JSON.stringify(data));
-    console.log(data);
-    // console.log(JSON.stringify(data));
+      let dataSolicitud = new FormData();
+      dataSolicitud.append("datos", JSON.stringify(data));
+      console.log(data);
+      // console.log(JSON.stringify(data));
 
-    dataSolicitud.append("files", event.target.fileIdentificacion.files[0]);
-    dataSolicitud.append("files", event.target.fileRecibo.files[0]);
+      dataSolicitud.append("files", event.target.fileIdentificacion.files[0]);
+      dataSolicitud.append("files", event.target.fileRecibo.files[0]);
 
-    for (let i = 0; i < myFiles.length; i++) {
-      dataSolicitud.append("files", myFiles[i]);
-    }
+      for (let i = 0; i < myFiles.length; i++) {
+        dataSolicitud.append("files", myFiles[i]);
+      }
 
-    axiosBasicInstanceApiSolicitudes({
-      method: "post",
-      url: "/solicitud/",
-      // headers: req.headers,
-      data: dataSolicitud,
-      headers: { "Content-Type": "multipart/form-data" },
-    })
-      .then((result) => {
-        event.target.reset();
-        confirmAlert({
-          title: `Confirmación`,
-          message: `Se ha registrado tu solicitud satisfactoriamente, recibiras un correo electronico con la información.`,
-          buttons: [
-            {
-              label: "Aceptar",
-              onClick: () => navigate("/"),
-            },
-          ],
-        });
+      axiosBasicInstanceApiSolicitudes({
+        method: "post",
+        url: "/solicitud/",
+        // headers: req.headers,
+        data: dataSolicitud,
+        headers: { "Content-Type": "multipart/form-data" },
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((result) => {
+          event.target.reset();
+          confirmAlert({
+            title: `Confirmación`,
+            message: `Se ha registrado tu solicitud satisfactoriamente, recibiras un correo electronico con la información.`,
+            buttons: [
+              {
+                label: "Aceptar",
+                onClick: () => navigate("/"),
+              },
+            ],
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+    }
+    confirmAlert({
+      title: `Confirmación`,
+      message: `¿Estás seguro de enviar su solicitud?`,
+      buttons: [
+        {
+          label: "Si",
+          onClick: () => send(),
+        },
+        {
+          label: "Todavia no",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   // fetch sexos options
@@ -961,7 +978,7 @@ function RegistrarSolicitud() {
           linkto={""}
           text={"Enviar Solicitud"}
           icon={""}
-          onClick={() => {}}
+          onClick={() => { }}
         />
       </Form>
     </div>
