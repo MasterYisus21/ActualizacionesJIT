@@ -74,7 +74,7 @@ function ErrorPage({ codigo }) {
             // linkto={"/"}
             text={"Volver atras"}
             icon={"bi-arrow-left"}
-            onClick={(e) => { navigate(-1, { replace: true }) }}
+            onClick={(e) => { navigate((codigo == 403 ? -2 : -1), { replace: true }) }}
           />
         </div>
         <IconButton
