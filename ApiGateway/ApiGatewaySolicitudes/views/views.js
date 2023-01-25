@@ -400,6 +400,24 @@ views.EnviarResultadoExpediente = async (req, res) => {
     return;
   }
 }
+views.VerificarCodigo = async (req, res) => {
+  try {
+    axios.get(config.urlApiSolicitudes+"codigos?solicitud_id="+req.params.id)
+      .then(result=>{
+        console.log(result.data.results[0])
+        if (Object.keys(result.data.results).length<1) {res.sendStatus(401);return}
+        if(req.body.codigo!=result.data.results[0].codigo){res.sendStatus(401);return}
+        res.sendStatus(200)
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.CodigoSolicitud = async (req, res) => {
   try {
     
