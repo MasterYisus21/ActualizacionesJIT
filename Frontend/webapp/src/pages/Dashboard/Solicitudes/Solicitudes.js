@@ -26,7 +26,7 @@ function Solicitudes() {
     // console.log(e.target.documento.value)
     axiosTokenInstanceApiSolicitudes({
       method: 'get',
-      url: "/solicitudes/?ordering=-numero_radicado&count=14&page=" + page + valoresBuscados.map(valor => { return '&search=' + valor }) + filtrosAplicados.map(valor => { return '&search=' + valor }),
+      url: "/solicitudes/?ordering=-numero_radicado&count=14&page=" + page  + "&search=" + valoresBuscados.map(valor => { return ',' + valor }) + filtrosAplicados.map(valor => { return ',' + valor }),
       // headers: req.headers,
       data: {}
     })
