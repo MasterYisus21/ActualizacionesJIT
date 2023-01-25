@@ -289,7 +289,7 @@ export default function PopupApoderado({
                   placeholder="name@example.com"
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="correo" label="correo">
+              <FloatingLabel controlId="correo" label="Correo">
                 <Form.Control
                   className="col-inputs"
                   type="text"
