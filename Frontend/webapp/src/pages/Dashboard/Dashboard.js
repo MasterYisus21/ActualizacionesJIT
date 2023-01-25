@@ -117,7 +117,7 @@ function Dashboard() {
             alt="journal-icon"
           />
           <h3 className="dashboard-container-top-right-title-text">
-            Centros de conciliación
+            Centro de conciliación
           </h3>
           <h3 className="dashboard-container-top-right-title-text-hint">
             {pagina}

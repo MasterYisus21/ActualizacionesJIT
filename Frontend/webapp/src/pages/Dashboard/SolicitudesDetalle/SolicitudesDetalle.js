@@ -1267,7 +1267,7 @@ function SolicitudesDetalle() {
                 ></textarea>
                 <div className="contenedor-boton-remitir">
                   <button className="boton-remitir-solicitud">
-                    Aceptar solicitud
+                    Aceptar
                   </button>
                 </div>
               </div>

@@ -169,7 +169,7 @@ function Personas() {
           <button className='boton-cargar-personas'>Cargar Excel Personas</button>
         </form>
 
-        <button className='boton-cargar-personas' onClick={e => descargarFormatoCargarEstudiantes()}>Descargar Formato</button>
+        <button className='boton-cargar-personas' onClick={e => descargarFormatoCargarEstudiantes()}>Descargar Plantilla</button>
       </div>
 
       <div className='wrapp-tarjetas-personas' onScroll={e => handleScroll(e)}>
