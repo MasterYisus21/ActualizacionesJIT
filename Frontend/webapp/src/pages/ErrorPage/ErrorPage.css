@@ -1,0 +1,45 @@
+.error-page-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* gap: 0px; */
+}
+
+.error-page-logo-principal{
+    width: 17em;
+    /* margin-top: 6em; */
+}
+
+.error-page-title {
+    font-size: 15vw;
+    color: green;
+}
+
+.error-page-subtitle {
+    font-size: 10vw;
+}
+
+.error-page-text {
+    font-size: 5vw;
+}
+
+.error-page-links-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    margin: 4px;
+    width: 16rem;
+    height: 7rem;
+}
+
+.error-page-floating-button {
+    width: 5rem;
+    height: 5rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
