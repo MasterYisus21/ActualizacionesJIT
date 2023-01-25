@@ -39,7 +39,7 @@ views.CrearPersonas = async (req, res) => {
     if (req.body.tipo_cargo_id == "" | req.body.grupo_id == null) { res.sendStatus(error({ message: "No ha ingresado los permisos del usuario" })); return }
     if (req.body.grupo_id == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
     if (req.body.tarjeta_profesional == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
-
+    req.body.persona_ugc=true
     let datos = { username: req.body.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [req.body.grupo_id] }
 
     await axios.post(config.urlApiExpedientes + "usuarios/", datos)
@@ -447,7 +447,7 @@ views.ListarExpedientes = async (req, res) => {
     } else {
 
       const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion
-      console.log(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion)
+     
       requests.get(req, res, url, "&")
     }
   } catch (error) {
@@ -1441,6 +1441,7 @@ views.CargarTemplatePersonas = async (req, res) => {
           
           usuarios.push({ username: iterator.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [id_grupo] })
           identificacion.push(iterator.identificacion)
+          iterator.persona_ugc=true
           email.push(iterator.correo)
           iterator.tipo_cargo_id=id_grupo
           personas.push(iterator)
@@ -2252,7 +2253,18 @@ views.ActualizarApoderado = async (req, res) => {
   }
 }
 //turnos para una fecha 
+views.ListarPersonas = async (req, res) => {
+  try {
+    console.log(config.urlApiExpedientes + "personas?persona_ugc=true")
+    const url = config.urlApiExpedientes + "personas?persona_ugc=true" 
 
+    requests.get(req, res, url, "&")
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.TurnosFecha = async (req, res) => {
   try {
     let turnos_ocupados = []

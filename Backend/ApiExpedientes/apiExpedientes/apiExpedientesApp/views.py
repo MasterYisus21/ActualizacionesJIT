@@ -108,7 +108,7 @@ class ApoderadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de re
 class PersonaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
     serializer_class = PersonaSerializer
-    search_fields=['nombres','apellidos','=identificacion','tarjeta_profesional','tipo_cargo_id__nombre','$tipo_cargo_id']
+    search_fields=['nombres','apellidos','=identificacion','tarjeta_profesional','tipo_cargo_id__nombre']
 class Solicitante_servicioViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Solicitante_servicioSerializer
@@ -272,8 +272,10 @@ class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de res
     
     serializer_class=ListaUsuarioSerializer
     filter_backends = [DjangoFilterBackend]
+    search_fields = ['persona_id__nombres']
     filterset_fields = '__all__'
-    permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+
+    # permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
 
     
     def perform_create(self, serializer):
