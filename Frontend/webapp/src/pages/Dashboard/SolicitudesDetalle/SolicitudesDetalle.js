@@ -110,10 +110,6 @@ function SolicitudesDetalle() {
           result.data.convocado["identificacion"];
         document.getElementById("tipoDocumento_Convocado").value =
           result.data.convocado["tipo_documento_id"];
-        document.getElementById("fechaExpedicion_Convocado").value =
-          result.data.convocado["fecha_expedicion"];
-        document.getElementById("lugarExpedicion_Convocado").value =
-          result.data.convocado["lugar_expedicion"];
         document.getElementById("nombres_Convocado").value =
           result.data.convocado["nombres"];
         document.getElementById("apellidos_Convocado").value =
@@ -984,32 +980,6 @@ function SolicitudesDetalle() {
             <FloatingLabel
               controlId="identificacion_Convocado"
               label="Número de documento"
-            >
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-                disabled
-              />
-            </FloatingLabel>
-
-            <label className="subtitles-secciones">
-              Fecha y lugar de expedición de documento
-            </label>
-            <FloatingLabel
-              controlId="fechaExpedicion_Convocado"
-              label="Fecha de expedición de documento"
-            >
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="date"
-                placeholder="name@example.com"
-                disabled
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="lugarExpedicion_Convocado"
-              label="Lugar de expedición"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"

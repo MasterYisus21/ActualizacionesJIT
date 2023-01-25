@@ -78,7 +78,6 @@ function RegistrarSolicitud() {
 
   const submitForm = (event) => {
     event.preventDefault();
-
     const send = () => {
       const data = {
         convocante: [
@@ -90,11 +89,11 @@ function RegistrarSolicitud() {
             celular: event.target.celular.value,
             direccion: event.target.direccion.value,
             correo: event.target.correo.value,
-            tipo_persona_id: parseInt(event.target.tipoPersona.value),
-            sexo_id: parseInt(event.target.sexo.value),
-            genero_id: parseInt(event.target.genero.value),
+            tipo_persona_id: event.target.tipoPersona.value,
+            sexo_id: event.target.sexo.value,
+            genero_id: event.target.genero.value,
             estrato_socioeconomico_id: event.target.estratoSocioeconomico.value,
-            tipo_documento_id: parseInt(event.target.tipoDocumento.value),
+            tipo_documento_id: event.target.tipoDocumento.value,
             fecha_expedicion: event.target.fechaExpedicion.value,
             lugar_expedicion: event.target.lugarExpedicion.value,
             fecha_nacimiento: event.target.fechaNacimiento.value,
@@ -107,16 +106,12 @@ function RegistrarSolicitud() {
           {
             nombres: event.target.nombresConvocado.value,
             apellidos: event.target.apellidosConvocado.value,
-            tipo_documento_id: parseInt(
-              event.target.tipoDocumentoConvocado.value
-            ),
+            tipo_documento_id: event.target.tipoDocumentoConvocado.value,
             identificacion: event.target.identificacionConvocado.value,
-            fecha_expedicion: event.target.fechaExpedicionConvocado.value,
-            lugar_expedicion: event.target.lugarExpedicionConvocado.value,
             celular: event.target.celularConvocado.value,
             correo: event.target.correoConvocado.value,
             direccion: event.target.direccionConvocado.value,
-            tipo_persona_id: parseInt(event.target.tipoPersonaConvocado.value),
+            tipo_persona_id: event.target.tipoPersonaConvocado.value,
           },
         ],
         hechos: [
@@ -762,33 +757,6 @@ function RegistrarSolicitud() {
                 required
               />
             </FloatingLabel>
-
-            <label className="subtitles-secciones">
-              Fecha y lugar de expedición de documento
-            </label>
-            <div className="col-registro-solicitud">
-              <FloatingLabel
-                controlId="fechaExpedicionConvocado"
-                label="Fecha de expedición de documento *"
-              >
-                <Form.Control
-                  className=""
-                  type="date"
-                  placeholder="name@example.com"
-                  required
-                />
-              </FloatingLabel>
-              <FloatingLabel
-                controlId="lugarExpedicionConvocado"
-                label="Lugar de expedición"
-              >
-                <Form.Control
-                  className=""
-                  type="text"
-                  placeholder="name@example.com"
-                />
-              </FloatingLabel>
-            </div>
 
             <label className="subtitles-secciones">Tipo de Persona</label>
             <div className="d-flex gap-5">
