@@ -140,12 +140,13 @@ async function verifier(req, res, next) {
           }
         })
         .catch(function (err) {
-
-        
-            res.sendStatus(error());
-            return;
-       
-
+          if(error.response.status){
+          if (error.response.status == 401) {
+            res.sendStatus(401);
+          }
+        } else{
+          res.sendStatus(404);
+        }
         
         });
     } else {
