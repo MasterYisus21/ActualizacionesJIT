@@ -16,12 +16,15 @@ import { confirmAlert } from "react-confirm-alert";
 function Dashboard() {
   const [pagina, setPagina] = useState("Solicitudes");
   const [nombre, setNombre] = useState("Andres Felipe Villamizar Palacio");
+  const [permisos, setPermisos] = useState([])
 
   let navigate = useNavigate();
 
   useEffect(() => {
     try {
       setNombre(JSON.parse(localStorage.getItem("usuario")).nombres);
+      setPermisos(JSON.parse(localStorage.getItem("modulos")))
+      console.log(JSON.parse(localStorage.getItem("modulos")));
     } catch {
       navigate("/", { replace: true });
     }
@@ -48,7 +51,7 @@ function Dashboard() {
         },
         {
           label: "No",
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     });
@@ -61,44 +64,52 @@ function Dashboard() {
       </div>
       <div className="dashboard-item dashboard-container-bottom-left">
         <div className="dashboard-item dashboard-container-bottom-left-top">
-          <IconButton
-            type={"Link"}
-            linkto={"/dashboard/solicitudes"}
-            text={"Solicitudes"}
-            icon={"file-diff"}
-            onClick={() => {
-              setPagina("Solicitudes");
-            }}
-          />
-          <IconButton
-            type={"Link"}
-            linkto={"/dashboard/expedientes"}
-            text={"Expedientes"}
-            icon={"journal"}
-            onClick={() => {
-              setPagina("Expedientes");
-            }}
-          />
+          {permisos.includes("modulo_solicitudes") &&
+            <IconButton
+              type={"Link"}
+              linkto={"/dashboard/solicitudes"}
+              text={"Solicitudes"}
+              icon={"file-diff"}
+              onClick={() => {
+                setPagina("Solicitudes");
+              }}
+            />
+          }
+          {permisos.includes("modulo_expedientes") &&
+            <IconButton
+              type={"Link"}
+              linkto={"/dashboard/expedientes"}
+              text={"Expedientes"}
+              icon={"journal"}
+              onClick={() => {
+                setPagina("Expedientes");
+              }}
+            />
+          }
           <hr />
-          <IconButton
-            type={"Link"}
-            linkto={"/dashboard/personas"}
-            text={"Personas"}
-            icon={"people-fill"}
-            onClick={() => {
-              setPagina("Personas");
-            }}
-          />
+          {permisos.includes("modulo_personas") &&
+            <IconButton
+              type={"Link"}
+              linkto={"/dashboard/personas"}
+              text={"Personas"}
+              icon={"people-fill"}
+              onClick={() => {
+                setPagina("Personas");
+              }}
+            />
+          }
           <hr />
-          <IconButton
-            type={"Link"}
-            linkto={"/dashboard/reportes"}
-            text={"Reportes"}
-            icon={"file-bar-graph"}
-            onClick={() => {
-              setPagina("Reportes");
-            }}
-          />
+          {permisos.includes("modulo_reportes") &&
+            <IconButton
+              type={"Link"}
+              linkto={"/dashboard/reportes"}
+              text={"Reportes"}
+              icon={"file-bar-graph"}
+              onClick={() => {
+                setPagina("Reportes");
+              }}
+            />
+          }
         </div>
         <div className="dashboard-item dashboard-container-bottom-left-bottom">
           <IconButton
