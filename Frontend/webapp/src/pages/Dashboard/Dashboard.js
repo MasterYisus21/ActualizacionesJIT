@@ -99,7 +99,7 @@ function Dashboard() {
             />
           }
           <hr />
-          {permisos.includes("modulo_informes") &&
+          {permisos.includes("modulo_reportes") &&
             <IconButton
               type={"Link"}
               linkto={"/dashboard/reportes"}
