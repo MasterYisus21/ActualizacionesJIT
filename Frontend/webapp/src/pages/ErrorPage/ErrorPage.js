@@ -8,9 +8,20 @@ import { confirmAlert } from 'react-confirm-alert';
 
 // Importing css
 
-function ErrorPage() {
+function ErrorPage({ codigo }) {
 
   const navigate = useNavigate();
+
+  const codigos = {
+    403: {
+      codigo: 403,
+      mensaje: 'No tienes autorización para esta acción.'
+    },
+    404: {
+      codigo: 404,
+      mensaje: 'Pagina no encontrada.'
+    },
+  }
 
   const logout = () => {
     const salir = () => {
