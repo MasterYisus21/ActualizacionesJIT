@@ -298,7 +298,7 @@ views.Listar_estados_expediente = async (req, res) => {
       .then(result=>{
         let datos=[]
         for (const iterator of result.data.results) {
-          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado})
+          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado,numero_radicado:iterator.expediente_id})
         }
         result.data.results=datos
         res.status(200).json(result.data)
