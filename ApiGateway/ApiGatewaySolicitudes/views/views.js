@@ -8,58 +8,6 @@ const error = require("../requests/requests_error.js")
 const config = require("../config.json");
 const requests = require("../requests/requests_generales.js");
 const { query } = require("express");
-async function verifier(req, res, next) {
-
-  // console.log(req.headers.authorization)
-  try {
-    axios.defaults.headers['X-Api-Key'] =config.apiKey ;
-    
-   
-    if (req.headers.authorization) {
-      
-      await axios
-        .post(
-          config.urlAutenticacion + "get_identity",
-          {},
-          {
-            headers: {
-              Authorization: req.headers.authorization,
-            },
-          }
-        )
-        .then((response) => {
-          if (response.data["logged_in_as"]) {
-            axios.defaults.headers['Id'] =response.data.claims.sub;
-            req.grupo = response.data.claims.rol;
-            req.identificacion = response.data.claims.sub;
-          
-            //  req.mivariable = response.data.
-            // console.log(response.data["logged_in_as"])
-            
-            next();
-          } else {
-            
-            res.sendStatus(401);
-          }
-        })
-        .catch(function (error) {
-          
-          if (error.response.status == 401) {
-            res.sendStatus(401);
-          }
-          
-          res.sendStatus(404);
-        });
-    } else {
-
-      res.sendStatus(403)
-      //next()
-    }
-  } catch (error) {
-    console.log(error);
-    // res.sendStatus(400)
-  }
-}
 
 const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
   
