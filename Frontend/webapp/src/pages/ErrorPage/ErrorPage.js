@@ -8,9 +8,20 @@ import { confirmAlert } from 'react-confirm-alert';
 
 // Importing css
 
-function ErrorPage() {
+function ErrorPage({ codigo }) {
 
   const navigate = useNavigate();
+
+  const codigos = {
+    403: {
+      codigo: 403,
+      mensaje: 'No tienes autorización para esta acción.'
+    },
+    404: {
+      codigo: 404,
+      mensaje: 'Pagina no encontrada.'
+    },
+  }
 
   const logout = () => {
     const salir = () => {
@@ -45,10 +56,10 @@ function ErrorPage() {
 
   return (
     <div className='error-page-container'>
-      <div className='logo-pagina-escritorio'>
+      <div className=''>
         <img className="error-page-logo-principal" src={"/images/logo_universidad_texto.png"} alt="" />
       </div>
-      <div className='h3'>Centro de Conciliación José Ignacio Talero Losada.</div>
+      <div className='error-page-text'>Centro de Conciliación José Ignacio Talero Losada.</div>
       <div className='error-page-title'>404</div>
       <div className='error-page-subtitle'>Ooops...</div>
       <div className='error-page-text'>Pagina no encontrada.</div>
