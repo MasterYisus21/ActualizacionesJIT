@@ -14,7 +14,7 @@ function PaginaPrincipal() {
           <div className="logo-universidad-movil">
             <img className="imagen-logo-principal" src={"./images/logo-ugc.png"} alt="" />
           </div>
-            <img className="logo-icontec" src={"./images/logo-icontec.png"} alt="" />
+            {/* <img className="logo-icontec" src={"./images/logo-icontec.png"} alt="" /> */}
           <div className="contenedor-rectangulo-grande">
             <BarRectangulo text="Centros de conciliación" />
           </div>

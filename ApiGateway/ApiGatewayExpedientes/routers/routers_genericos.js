@@ -14,7 +14,7 @@ async function ValidacionExpedientes(req, res, next) {
             next()
     })
         .catch(err => {
-            res.sendStatus(error(err))
+            res.sendStatus(403)
         })
     
     
