@@ -14,7 +14,7 @@ import { confirmAlert } from "react-confirm-alert";
 // toast.configure()
 
 function Dashboard() {
-  const [pagina, setPagina] = useState("Expedientes");
+  const [pagina, setPagina] = useState("Solicitudes");
   const [nombre, setNombre] = useState("Andres Felipe Villamizar Palacio");
 
   let navigate = useNavigate();

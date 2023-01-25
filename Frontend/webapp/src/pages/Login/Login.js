@@ -27,7 +27,7 @@ function Login() {
                 localStorage.setItem("tokens", JSON.stringify({ access_token: response.data["access_token"], refresh_token: response.data["refresh_token"] }))
                 localStorage.setItem("usuario", JSON.stringify({ nombres: response.data["nombres"], identificacion: response.data["identity"] }))
                 localStorage.setItem("modulos", JSON.stringify(response.data["modulos"]))
-                navigate('/dashboard/expedientes', { replace: true })
+                navigate('/dashboard/solicitudes', { replace: true })
             })
             .catch(err => {
                 console.log(err);

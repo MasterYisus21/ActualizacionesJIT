@@ -31,20 +31,65 @@ const axiosBasicInstanceApiExpedientes = axios.create({
     // headers: { 'X-Custom-Header': 'foobar' }
 });
 
+const refreshAccessToken = async() => {
+
+    const refresh_token = JSON.parse(localStorage.getItem('tokens'))["refresh_token"]
+    console.log(refresh_token)
+    await axios.post(config.apiGatewayURL + "/auth/refresh", {}, {
+      headers: {
+        Authorization: "Bearer " + refresh_token
+      }
+    })
+    .then(response => {
+      console.log(response)
+      localStorage.setItem("tokens", JSON.stringify({access_token: response.data["access_token"], refresh_token: refresh_token}))
+      return(response.data["access_token"])
+    })
+    .catch(error => {
+      localStorage.removeItem("tokens")
+      console.log(error)
+      window.location.href = config.webAppURL;
+    })
+  }
+
 axiosBasicInstanceApiExpedientes.interceptors.response.use((response) => {
     return response;
-}, (error) => {
-    if (error.response.status == 401) {
-        toast.info('Usuario o contraseña invalidos.', {
-            position: toast.POSITION.BOTTOM_RIGHT
-        })
-    } else {
-        toast.error(`Ocurrió un error con estado ${error.response.status}`, {
-            position: toast.POSITION.BOTTOM_RIGHT
-        })
-        return Promise.reject(error);
+}, async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      console.log("Entrando")
+      const access_token = await refreshAccessToken();
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
+      return axiosBasicInstanceApiExpedientes(originalRequest);
     }
+    toast.error(`Ocurrió un error con estado ${error.response.status}`, {
+        position: toast.POSITION.BOTTOM_RIGHT
+    })
+    return Promise.reject(error);
 })
+
+axiosBasicInstanceApiExpedientes.interceptors.request.use(
+    async config => {
+        const value = await localStorage.getItem('tokens')
+        const keys = JSON.parse(value)
+        try {
+            config.headers = {
+                'Authorization': `Bearer ${keys.access_token}`,
+                // 'Accept': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+            }
+            return config;
+        }
+        catch (error) {
+            console.log(error)
+        }
+
+    },
+    error => {
+        Promise.reject(error)
+
+    });
 
 
 const axiosTokenInstanceApiExpedientes = axios.create({

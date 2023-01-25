@@ -18,7 +18,7 @@ export default function Buscador({ valoresBuscados, setValoresBuscados, filtros,
     e.preventDefault()
     setPage(1)
     console.log(e.target.campobuscar.value);
-    setValoresBuscados([...valoresBuscados, e.target.campobuscar.value])
+    setValoresBuscados([e.target.campobuscar.value])
   }
 
   const filtrar = (value) => {
