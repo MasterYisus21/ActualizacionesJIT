@@ -250,8 +250,16 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
 
 
     }
-    if (intento < 2) { return; }
-    res.status(201).json(datos)
+    if (intento < 2) { return;
+     }
+     await axios.patch(config.urlApiSolicitudes+"solicitudes/"+req.params.id+"/",{estado_solicitud_id:1})
+      .then(result=>{
+        res.status(201).json(datos)
+     })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+    
 
 
 
