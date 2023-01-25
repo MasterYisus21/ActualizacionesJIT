@@ -191,7 +191,6 @@ class Solicitud(models.Model):
     numero_radicado= models.CharField(max_length=25,default = increment_entrada_number,editable=False,unique=True) # los modelos que apliquen baseModels tendran estos dos campos
     fecha_registro=models.DateField(blank=False , null=False,auto_now=False,auto_now_add=True) # Se crea automaticamente 
     comentario = models.TextField(blank=True,null=True)
-    
     estado_solicitud_id= models.ForeignKey(Estado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)
     estado = models.BooleanField(default=True,blank=True,null=False)
     class Meta:
@@ -200,6 +199,20 @@ class Solicitud(models.Model):
         verbose_name_plural = ('Solicitudes')
     def __str__(self):
         return str(self.numero_radicado)
+class Codigo(EstadoModel):
+    codigo = models.CharField(max_length = 7,blank=True,null=True)
+    fecha_registro=models.DateField(blank=False , null=False,auto_now=False,auto_now_add=True) # Se crea automaticamente 
+    solicitud_id= models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=True, null=True)
+    
+    class Meta:
+
+        db_table='Codigo'
+        ordering = ['-id']
+        verbose_name = ("Codigo")
+        verbose_name_plural = ("Codigos")
+
+    def __str__(self):
+        return str(self.solicitud_id.numero_radicado)
 
 class Tipo_cliente(GeneralModel):
 

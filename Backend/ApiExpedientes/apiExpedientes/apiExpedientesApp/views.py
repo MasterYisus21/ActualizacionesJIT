@@ -262,7 +262,11 @@ class Tipo_reporteViewSet(GeneralViewSet):  # Una sola clase para los metodos de
 
     serializer_class = Tipo_reporteSerializer
 
-
+class CodigoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = '__all__'
+    ordering_fields = '__all__'
+    serializer_class = CodigoSerializer
     
 class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     

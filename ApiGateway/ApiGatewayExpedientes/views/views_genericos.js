@@ -440,13 +440,14 @@ views.ListarExpedientes = async (req, res) => {
   try {
     if (req.grupo == 1) {
       let url = config.urlApiExpedientes + "expedientes";
+      
       if(req.query.search){url = config.urlApiExpedientes + "relaciones_persona_expediente"}
       requests.get(req, res, url, "?")
       
     } else {
 
       const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion
-
+      console.log(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion)
       requests.get(req, res, url, "&")
     }
   } catch (error) {
@@ -554,16 +555,6 @@ views.VerApoderado = async (req, res) => {
   }
 }
 
-views.verExpediente = async (req, res) => {
-  try {
-    console.log(req.identificacion)
-    axios
-  }catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-    return;
-  }
-}
 
 views.ListarConvocadosCaso = async (req, res) => {
   try {

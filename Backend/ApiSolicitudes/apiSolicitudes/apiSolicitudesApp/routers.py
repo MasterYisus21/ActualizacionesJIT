@@ -23,6 +23,7 @@ router.register(r'grupos',GruposViewSet,basename='grupos'),
 router.register(r'solicitudes',SolicitudViewSet,basename='solicitudes'),
 router.register(r'relaciones_persona_solicitud',Relacion_persona_solicitudViewSet,basename='relaciones_persona_solicitud'),
 router.register(r'documentos',Documento_solicitudViewSet,basename='documentos'),
+router.register(r'codigos',CodigoViewSet,basename='codigos'),
 
 
 

@@ -9,6 +9,22 @@ const config = require("../config.json");
 const requests = require("../requests/requests_generales.js");
 const { query } = require("express");
 
+
+function cadenaAleatoria(longitud) {
+  
+  // Nota: no uses esta función para cosas criptográficamente seguras. 
+  const banco = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let aleatoria = "";
+  for (let i = 0; i < longitud; i++) {
+      // Lee más sobre la elección del índice aleatorio en:
+      // https://parzibyte.me/blog/2021/11/30/elemento-aleatorio-arreglo-javascript/
+      aleatoria += banco.charAt(Math.floor(Math.random() * banco.length));
+  }
+
+  return aleatoria;
+ 
+};
+
 const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
   
   const correoCopia=config.copia_correo
@@ -194,12 +210,14 @@ views.CrearSolicitud = async (req, res) => {
     res.sendStatus(500);
   }
 }
+
 //crear solicitud
 views.CargarDocumentos = async (req, res, intento = 2) => {
 
   let datos = []
 
   try {
+    console.log("entre")
     // console.log(req.file)
     if (Object.keys(req.files).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
 
@@ -338,9 +356,35 @@ views.EnviarResultadoExpediente = async (req, res) => {
     return;
   }
 }
-views.EnviarInformacionSolicitud = async (req, res) => {
+views.CodigoSolicitud = async (req, res) => {
   try {
-    res.sendStatus(200)
+    
+    axios.get(config.urlApiSolicitudes+"personas_solicitud/"+req.body.persona_id)
+      .then(async resul=>{
+        const codigo=cadenaAleatoria(5)
+        await axios.post(config.urlApiSolicitudes+"codigos/",{codigo:codigo,solicitud_id:req.params.id})
+          .then(result=>{
+        
+        res.sendStatus(200)
+        const  encabezado = `Este mensaje notifica que estas intentando ingresar a la solicitud número:<b> ${req.body.numero_radicado}</b> y para esto debes ingresar la siguiente clave de acceso:<br><br>Clave de Acceso: <b>${result.data.codigo}</b>.`
+        const cuerpo= `<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
+        let asunto = `Clave de Acceso Solicitud  ${req.body.numero_radicado}`
+        
+        const correo =  axios.post(config.urlEmail,email("html",[resul.data.correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
+    
+        })
+          .catch(err => {
+            res.sendStatus(error(err))
+          })
+      
+        
+          
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+    
+
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -451,7 +495,24 @@ views.VerSolicitud = async (req, res) => {
     res.sendStatus(500);
   }
 }
+views.DetalleSolicitud = async (req, res) => {
+  try {
 
+      try {
+        const url = config.urlApiSolicitudes  + "solicitudes/"+req.params.id
+        requests.get(req, res, url, "?")
+    
+      } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+      }
+
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
+  }
+}
 views.AprobarSolicitud = async (req, res) => {
   try {
     

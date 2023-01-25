@@ -111,7 +111,14 @@ class Hechos_solicitudViewSet(EspecificViewSet):  # Una sola clase para los meto
     serializer_class = HechosSerializer
     # permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
 
-    
+class CodigoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = '__all__'
+    ordering_fields = '__all__'
+    serializer_class = CodigoSerializer
+    # permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
+
+     
     
         
         
