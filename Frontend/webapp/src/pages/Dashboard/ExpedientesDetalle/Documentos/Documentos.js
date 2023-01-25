@@ -139,7 +139,7 @@ function Documentos() {
         const index = documentsTransition.findIndex(object => {
           return object.id === idDocumento;
         });
-        documentsTransition[index] = {id: result.data.id, nombre: result.data.nombre, fecha: result.data.fecha}
+        documentsTransition[index] = { id: result.data.id, nombre: result.data.nombre, fecha: result.data.fecha }
         setDocumentos(documentsTransition)
         console.log(`index ${index}`);
       })
@@ -243,11 +243,13 @@ function Documentos() {
               )
             })}
           </tbody>
-          <Button
-            onClick={e => { handlePageChange(page + 1) }}
-            className="span2"
-            text="Cargar más"
-          />
+          {(page < numPages) &&
+            <Button
+              onClick={e => { handlePageChange(page + 1) }}
+              className="span2"
+              text="Cargar más"
+            />
+          }
         </table>
       </div>
     </div >

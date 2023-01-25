@@ -16,7 +16,7 @@ import {
   Personas,
   Reportes,
 } from "./pages/Dashboard";
-import { NoMatch } from "./pages/NoMatch";
+import { ErrorPage } from "./pages/ErrorPage";
 import {
   Audiencia,
   Conciliador,
@@ -77,7 +77,7 @@ function App() {
             <Route path="personas" element={<Personas />} />
             <Route path="reportes" element={<Reportes />} />
           </Route>
-          <Route path="*" element={<NoMatch />} />
+          <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
       <ToastContainer />

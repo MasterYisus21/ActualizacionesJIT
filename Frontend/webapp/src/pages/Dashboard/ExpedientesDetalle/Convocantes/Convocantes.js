@@ -130,7 +130,7 @@ function Convocantes() {
         },
         {
           label: "No",
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     });
@@ -287,13 +287,15 @@ function Convocantes() {
                 );
               })}
             </tbody>
-            <Button
-              onClick={(e) => {
-                handlePageChange(page + 1);
-              }}
-              className="span2"
-              text="Cargar más"
-            />
+            {(page < numPages) &&
+              <Button
+                onClick={(e) => {
+                  handlePageChange(page + 1);
+                }}
+                className="span2"
+                text="Cargar más"
+              />
+            }
           </table>
         </div>
       </div>

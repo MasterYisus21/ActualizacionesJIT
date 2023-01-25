@@ -49,10 +49,10 @@ function RegistrarSolicitud() {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      'image/jpeg': ['.jpeg'],
-      'image/png': ['.png'],
-      'application/pdf': ['.pdf'],
-    }
+      "image/jpeg": [".jpeg"],
+      "image/png": [".png"],
+      "application/pdf": [".pdf"],
+    },
   });
 
   const removeFile = (file) => () => {
@@ -325,6 +325,7 @@ function RegistrarSolicitud() {
                 required
               />
             </FloatingLabel>
+
             <FloatingLabel controlId="floatingInputGrid" label="Apellidos">
               <Form.Control
                 className="inputs-registrar-solicitud"
@@ -340,7 +341,7 @@ function RegistrarSolicitud() {
             </label>
             <FloatingLabel
               controlId="floatingInputGrid"
-              label="Fecha de nacimiento"
+              label="Fecha de nacimiento *"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
@@ -352,13 +353,14 @@ function RegistrarSolicitud() {
             </FloatingLabel>
             <FloatingLabel
               controlId="floatingInputGrid"
-              label="Lugar de nacimiento"
+              label="Lugar de nacimiento *"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
                 name="lugarNacimiento"
+                required
               />
             </FloatingLabel>
 
