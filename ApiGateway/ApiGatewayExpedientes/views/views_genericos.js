@@ -2255,7 +2255,7 @@ views.ActualizarApoderado = async (req, res) => {
 //turnos para una fecha 
 views.ListarPersonas = async (req, res) => {
   try {
-    console.log(config.urlApiExpedientes + "personas?persona_ugc=true")
+   
     const url = config.urlApiExpedientes + "personas?persona_ugc=true" 
 
     requests.get(req, res, url, "&")

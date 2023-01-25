@@ -577,7 +577,7 @@ views.DetalleSolicitud = async (req, res) => {
 }
 views.AprobarSolicitud = async (req, res) => {
   try {
-    
+    console.log("el error esta aqui")
     let  cuerpo =""
     const  encabezado = `Este mensaje notifica que el estado de su solicitud ${req.body.numero_radicado} es el siguiente:<br><br>
      <b>Numero Radicado:</b> ${req.body.numero_radicado}
@@ -588,15 +588,18 @@ views.AprobarSolicitud = async (req, res) => {
     let asunto = `Cambio de estado de la Solicitud:${req.body.numero_radicado}`
     
     
-    
+  
     axios.patch(config.urlApiSolicitudes + "solicitudes/" + req.params.id + "/", req.body)
       .then(async resul => {
-        
+    
+      
         let correoConvocante =[]
         // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
-        
-          await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id)
+          req.headers['X-Api-Key'] =config.apiKey
+          console.log(req.headers)
+          await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id,{headers:{authorization :req.headers.authorization}})
             .then(async result => {
+            
               // const myHeaders = new Headers();
               // myHeaders.append('X-Api-Key', 'image/jpeg');
               // myHeaders.append('Id', 'image/jpeg');
@@ -642,6 +645,7 @@ views.AprobarSolicitud = async (req, res) => {
             
             })
             .catch(err => {
+              
               res.status(error(err)).json(error(err))
               return
             })

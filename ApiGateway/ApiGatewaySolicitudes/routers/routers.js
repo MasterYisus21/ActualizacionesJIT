@@ -8,11 +8,9 @@ const config = require("../config.json");
 const error = require("../requests/requests_error.js")
 
 async function verifier(req, res, next) {
-
-    // console.log(req.headers.authorization)
+    
+   
     try {
-      axios.defaults.headers['X-Api-Key'] =config.apiKey ;
-      
      
       if (req.headers.authorization) {
         
@@ -27,6 +25,7 @@ async function verifier(req, res, next) {
             }
           )
           .then((response) => {
+            console.log("oki")
             if (response.data["logged_in_as"]) {
               axios.defaults.headers['Id'] =response.data.claims.sub;
               req.grupo = response.data.claims.rol;
@@ -34,12 +33,13 @@ async function verifier(req, res, next) {
             
               //  req.mivariable = response.data.
               // console.log(response.data["logged_in_as"])
-              
+             
               next();
             } else {
               
               res.sendStatus(401);
             }
+         
           })
           .catch(function (error) {
             
@@ -50,14 +50,16 @@ async function verifier(req, res, next) {
             res.sendStatus(404);
           });
       } else {
-  
+        
         res.sendStatus(403)
+        return
         //next()
       }
     } catch (error) {
       console.log(error);
       // res.sendStatus(400)
     }
+    // next()
   }
 
 async function verificarCodigo(req, res, next) {
