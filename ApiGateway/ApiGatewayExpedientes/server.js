@@ -108,12 +108,13 @@ app.get("/api/gateway/v1/protectedView", verifier, (req, res) => {
 async function verifier(req, res, next) {
 
   // console.log(req.headers.authorization)
+
   try {
     axios.defaults.headers['X-Api-Key'] =config.apiKey ;
     
    
     if (req.headers.authorization) {
-      
+      axios.defaults.headers['Authorization'] =req.headers.authorization
       await axios
         .post(
           config.urlAutenticacion + "get_identity",

@@ -9,7 +9,7 @@ const error = require("../requests/requests_error.js")
 
 async function verifier(req, res, next) {
     
-   
+  
     try {
      
       if (req.headers.authorization) {
@@ -25,7 +25,7 @@ async function verifier(req, res, next) {
             }
           )
           .then((response) => {
-            console.log("oki")
+         
             if (response.data["logged_in_as"]) {
               axios.defaults.headers['Id'] =response.data.claims.sub;
               req.grupo = response.data.claims.rol;

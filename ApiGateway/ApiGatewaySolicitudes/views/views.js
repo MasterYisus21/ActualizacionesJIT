@@ -307,7 +307,7 @@ views.Listar_estados_expediente = async (req, res) => {
       .then(result=>{
         let datos=[]
         for (const iterator of result.data.results) {
-          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado,numero_radicado:iterator.expediente_id})
+          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado,expediente_id:iterator.expediente_id})
         }
         result.data.results=datos
         res.status(200).json(result.data)
@@ -486,7 +486,7 @@ views.CodigoSolicitud = async (req, res) => {
         const cuerpo= `<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
         let asunto = `Clave de Acceso Solicitud  ${req.body.numero_radicado}`
         
-        const correo =  axios.post(config.urlEmail,("html",[resul.data.correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
+        const correo =  axios.post(config.urlEmail,email("html",[resul.data.correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
     
         })
           .catch(err => {
@@ -631,7 +631,7 @@ views.DetalleSolicitud = async (req, res) => {
 }
 views.AprobarSolicitud = async (req, res) => {
   try {
-    console.log("el error esta aqui")
+    
     let  cuerpo =""
     const  encabezado = `Este mensaje notifica que el estado de su solicitud ${req.body.numero_radicado} es el siguiente:<br><br>
      <b>Numero Radicado:</b> ${req.body.numero_radicado}
@@ -649,9 +649,9 @@ views.AprobarSolicitud = async (req, res) => {
       
         let correoConvocante =[]
         // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
-          req.headers['X-Api-Key'] =config.apiKey
-          console.log(req.headers)
-          await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id,{headers:{authorization :req.headers.authorization}})
+          
+         
+          await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id,{headers:{authorization :req.headers.authorization,"X-Api-Key":config.apiKey}})
             .then(async result => {
             
               // const myHeaders = new Headers();
@@ -665,8 +665,8 @@ views.AprobarSolicitud = async (req, res) => {
               result.data.conciliador = req.body.conciliador_id
               result.data.hechos[0].cuantia = req.body.valor_caso
               
-              
-              await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
+              console.log(req.headers)
+              await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data,{headers:{authorization :req.headers.authorization}})
                 .then(resul => {
                   
                   // res.status(200).json(resul.data)
@@ -682,7 +682,7 @@ views.AprobarSolicitud = async (req, res) => {
                 })
 
                 .catch(err => {
-                  // console.log(err)
+                 console.log("el error esta en este catch");
                   res.status(error(err)).json(error(err))
                   
                   return 
