@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { confirmAlert } from 'react-confirm-alert';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { axiosTokenInstanceApiExpedientes } from '../../../../helpers/axiosInstances';
 import FileDownload from 'js-file-download'
 
@@ -14,10 +14,22 @@ function Resultado() {
   const [previousData, setPreviousData] = useState(false)
   const [documentUploaded, setDocumentUploaded] = useState(false)
   const [fecha, setFecha] = useState(null)
+  const [permisos, setPermisos] = useState([])
 
   let { id } = useParams();
   let uploadDocumentField = useRef()
   let resultadoId = useRef(null)
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    try {
+      setPermisos(JSON.parse(localStorage.getItem("modulos")))
+      console.log(JSON.parse(localStorage.getItem("modulos")));
+    } catch {
+      navigate("/", { replace: true });
+    }
+  }, []);
 
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
@@ -197,12 +209,12 @@ function Resultado() {
               <p>DESCARGAR</p>
               {previousData && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
             </button>
-            <button className="resultado-button" type='button' onClick={e => uploadDocument(e)} disabled={documentUploaded}>
-              <img src='/icons/upload.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
-              <p>CARGAR</p>
-              {documentUploaded && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
-              <input ref={uploadDocumentField} type='file' style={{ display: "none" }} onChange={e => handleDocumentChange(e)}></input>
-            </button>
+              <button className="resultado-button" type='button' onClick={e => uploadDocument(e)} disabled={documentUploaded && !permisos.includes("modulo_modificar_resultado")}>
+                <img src='/icons/upload.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
+                <p>CARGAR</p>
+                {documentUploaded && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
+                <input ref={uploadDocumentField} type='file' style={{ display: "none" }} onChange={e => handleDocumentChange(e)}></input>
+              </button>
             <button className="resultado-button" type='button' onClick={e => { downloadResult(e) }}>
               <img src='/icons/download.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>DESCARGAR</p>
