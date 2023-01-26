@@ -173,9 +173,11 @@ function Consultar() {
     }else{
       axiosBasicInstanceApiSolicitudes({
         method: 'post',
-        url: "/solicitudes/" + resultado["id"] + "/enviar_resultados",
+        url: "/solicitudes/" + resultado["expediente_id"] + "/enviar_resultados",
         // headers: req.headers,
-        data: {}
+        data: {
+          "persona_id":resultado["persona_id"]
+        }
       })
   
         .then(result => { 

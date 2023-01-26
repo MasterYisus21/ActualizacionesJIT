@@ -6,3 +6,35 @@
     margin-bottom: 2rem;
     padding-bottom: 2em;
 }
+
+.boton-cargar-documentos-solicitud{
+    border-radius: 1em;
+    height: 3rem;
+    width: 10em;
+    border:0;
+    background-color: #00460e;
+    color: white;
+}
+
+.contenedor-boton-salir-consulta-solicitud{
+    padding-top: 1em;
+}
+
+.boton-salir-consulta-solicitud{
+    width: 30em;
+    height: 3rem;
+    border-radius: 1em;
+    border: 0;
+    background-color: #00460e;
+    color: white;
+    
+}
+
+.boton-salir-consulta-solicitud:hover{
+    background-color: #02b826;
+    color: black;
+}
+.boton-cargar-documentos-solicitud:hover{
+    background-color: #02b826;
+    color: black;
+}

@@ -183,10 +183,12 @@ function Solicitud() {
                   </aside>
                   {files.length > 0}
                 </section>
-                <button onClick={e => { cargarDocumentos() }}>cargar</button>
+                <button className="boton-cargar-documentos-solicitud" onClick={e => { cargarDocumentos() }}>cargar</button>
               </div>
             }
-            <button onClick={e => { logout() }}>salir</button>
+            <div className="contenedor-boton-salir-consulta-solicitud">
+              <button className="boton-salir-consulta-solicitud" onClick={e => { logout() }}>salir</button>
+            </div>
           </div>
         </div>
       </div>
