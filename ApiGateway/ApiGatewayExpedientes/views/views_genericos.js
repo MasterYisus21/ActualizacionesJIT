@@ -1331,7 +1331,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
   }
 }
 views.EnviarResultado = async (req, res) => {
-  try {
+  try {s
     res.sendStatus(200)
   } catch (error) {
     console.log(error);
