@@ -1199,6 +1199,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                       //.attach('Ruta_directorio', req.file.path) // reads directly from local file
                       .attach('adjunto', fs.createReadStream("./public/formatos/citacion_" + resul.citado_nombres + ".pdf")) // creates a read stream
                       //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+                      .headers({"X-Api-Key":config.apiKey})
                       .then(async function (response) {
 
                         try {
@@ -1369,6 +1370,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
             //.attach('Ruta_directorio', req.file.path) // reads directly from local file
             .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
             //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+            .headers({"X-Api-Key":config.apiKey})
             .then(function (response) {
               try {
                 fs.unlinkSync(iterator.path)
@@ -1639,6 +1641,7 @@ views.CambiarDocumentoCaso = async (req, res) => {
           //.attach('Ruta_directorio', req.file.path) // reads directly from local file
           .attach('documento', fs.createReadStream(req.files[0].path)) // creates a read stream
           //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+          .headers({"X-Api-Key":config.apiKey})
           .then(function (response) {
             try {
               fs.unlinkSync(req.files[0].path)
@@ -1804,6 +1807,7 @@ views.CargarResultadoCaso = async (req, res) => {
       //.attach('Ruta_directorio', req.file.path) // reads directly from local file
       .attach('documento', fs.createReadStream(req.files[0].path)) // creates a read stream
       //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+      .headers({"X-Api-Key":config.apiKey})
       .then(function (response) {
         try {
           fs.unlinkSync(req.files[0].path)

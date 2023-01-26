@@ -105,7 +105,7 @@ router.get("/solicitudes/:id",verifier,views_genericos.VerSolicitud);
 
 // Post
 router.post("/solicitud",archivo.uploadMiddleware,views_genericos.CrearSolicitud);
-router.post("/documentos/:id",archivo.uploadMiddleware,views_genericos.CargarDocumentos);
+router.post("/documentos/:id",verificarCodigo,archivo.uploadMiddleware,views_genericos.CargarDocumentos);
 router.post("/solicitudes/:id",verifier,views_genericos.AprobarSolicitud);
 router.post("/solicitudes/:id/enviar_resultados",views_genericos.EnviarResultadoExpediente);
 router.post("/solicitudes/:id/enviar_codigos",views_genericos.CodigoSolicitud);
