@@ -236,7 +236,7 @@ export default function Popup({
                   className="inputs-personas"
                   type="text"
                   placeholder="name@example.com"
-                  disabled = {modificar !== null}
+                  // disabled = {modificar !== null}
                   required
                 />
               </FloatingLabel>
