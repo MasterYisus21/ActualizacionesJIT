@@ -667,8 +667,7 @@ views.AprobarSolicitud = async (req, res) => {
        
               result.data.conciliador = req.body.conciliador_id
               result.data.hechos[0].cuantia = req.body.valor_caso
-              
-              console.log(req.headers)
+            
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data,{headers:{authorization :req.headers.authorization}})
                 .then(resul => {
                   

@@ -113,7 +113,7 @@ export default function PopupConv({
 
   // fetch tiposPersona options
   useEffect(() => {
-    axiosBasicInstanceApiExpedientes({
+    axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "/tipos_persona/?count=20",
       // headers: req.headers,
@@ -130,7 +130,7 @@ export default function PopupConv({
 
   // fetch tiposPersona options
   useEffect(() => {
-    axiosBasicInstanceApiExpedientes({
+    axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "/estados_civiles/?count=20",
       // headers: req.headers,
@@ -145,7 +145,7 @@ export default function PopupConv({
   }, []);
 
   useEffect(() => {
-    axiosBasicInstanceApiExpedientes({
+    axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "/grupos_etnicos/?count=20",
       // headers: req.headers,
@@ -160,7 +160,7 @@ export default function PopupConv({
   }, []);
 
   useEffect(() => {
-    axiosBasicInstanceApiExpedientes({
+    axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "/tipos_discapacidad/?count=20",
       // headers: req.headers,
@@ -175,7 +175,7 @@ export default function PopupConv({
   }, []);
 
   useEffect(() => {
-    axiosBasicInstanceApiExpedientes({
+    axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "/tipos_vivienda/?count=20",
       // headers: req.headers,
@@ -190,7 +190,7 @@ export default function PopupConv({
   }, []);
 
   useEffect(() => {
-    axiosBasicInstanceApiExpedientes({
+    axiosTokenInstanceApiExpedientes({
       method: "get",
       url: "/escolaridades/?count=20",
       // headers: req.headers,
