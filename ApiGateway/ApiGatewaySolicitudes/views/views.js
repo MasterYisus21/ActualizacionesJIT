@@ -2,6 +2,7 @@ const axios = require("axios");
 const express = require("express");
 const unirest = require('unirest');
 const fs = require('fs');
+const FormData = require('form-data');
 const app = express(); // aplicaicon express
 const views = {};
 const error = require("../requests/requests_error.js")
@@ -25,7 +26,7 @@ function cadenaAleatoria(longitud) {
  
 };
 
-const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
+const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo,adjunto=false) => {
   
   const correoCopia=config.copia_correo
   correoQuienRecibe.push(correoCopia)
@@ -42,7 +43,7 @@ const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
       
     }
   }
-
+  if(adjunto){ email.adjunto=adjunto}
   return email
 }
 //listar Seleccionables Principales
@@ -358,17 +359,82 @@ views.DescargarDocumentos = async (req, res) => {
 views.EnviarResultadoExpediente = async (req, res) => {
   try {
 
-
-    await axios.get(config.urlApiExpedientes+"resultados?expediente_id="+req.params.id)
-      .then(async result=>{
-        if (Object.keys(result.data.results).length<1) {
-          let endpoints=[config.urlApiExpedientes+"resultados?expediente_id="+req.params.id,config.urlApiExpedientes+"citaciones?expediente_id="+req.params.id]
-          await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           
-          .then(axios.spread((data3, data4, data5) => {
-            res.status(201).json(data2.data)
-        
-            // res.status(201).json(data2.data[0])
+      
+          let endpoints=[config.urlApiExpedientes+"resultados?expediente_id="+req.params.id,config.urlApiExpedientes+"citaciones?expediente_id="+req.params.id,config.urlApiExpedientes+"expedientes/"+req.params.id,config.urlApiExpedientes+"relaciones_persona_expediente?expediente_id="+req.params.id+"&persona_id="+req.body.persona_id]
+          await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+          
+          .then(axios.spread(async (data1, data2, data3,data4) => {
+            
+            if(Object.keys(data4.data.results).length<1){res.sendStatus(403);return}
+            let cuerpo=""
+            const saludo = `<br>Reciba un cordial saludo `
+            let asunto = `Consulta del expediente:${data3.data.numero_caso}`
+            const  encabezado = `Este mensaje notifica que el estado de su expediente ${data3.data.numero_caso} es el siguiente:<br><br>
+            <b>Numero Caso:</b> ${data3.data.numero_caso}
+            <br><b>Estado Actual :</b>${data3.data.estado_expediente}
+            `
+            
+            if(Object.keys(data1.data.results).length<1){
+              
+              if(Object.keys(data2.data.results).length<1){
+                
+                cuerpo=cuerpo+"<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso. "
+                const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { (error(err));  })
+                return;
+              }
+             
+              cuerpo=cuerpo+`<br><b>Además, cuenta con la siguiente fecha de audiencia
+                  <br><b>Expediente:</b> ${data2.data.results[0].numero_caso}
+                  <br><b>Nombre del Citado:</b> ${data2.data.results[0].citado_nombres}
+                  <br><b>Fecha:</b> ${data2.data.results[0].citado_fecha_sesion} 
+                  <br><b>Hora:</b> ${data2.data.results[0].citacion_turno} 
+                  <br><b>Medio:</b> ${data2.data.results[0].citacion_medio} 
+                  <br><b>Enlace:</b> ${data2.data.results[0].citacion_enlace} 
+                  <br><b>Descripcion:</b> ${data2.data.results[0].citacion_descripcion} 
+              `
+              const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { (error(err)); falla=true  })
+              return
+            }else{
+              
+              if(!data1.data.results[0].documento){ cuerpo="<br>Cabe mencionar que en este momento no cuenta con un resultado del caso"; res.sendStatus(200)
+              const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { (error(err));}); return}
+              
+              cuerpo=cuerpo+"<br>El resultado del caso se anexa en esta correo."
+               await axios.get(data1.data.results[0].documento,{ responseType: 'arraybuffer' })
+                 .then(async result=>{
+                  fs.writeFile("./public/resultado.pdf", result.data, async (err) => {console.log(err)})
+              let formdata = new FormData()
+              let fil = fs.createReadStream("./public/resultado.pdf",)
+              formdata.append("adjunto", fil)
+                      // res.end(result.data)
+                     await axios.post(config.urlEmail+"adjuntar",formdata)
+                        .then(response=>{
+                          try {
+                            fs.unlinkSync("./public/resultado.pdf")
+                          } catch (err) {
+                            error(err)
+                            return
+                          }
+                         
+                          const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo,response.data)).catch(err => { (error(err));})
+                          
+                          // console.log(result.data)
+                      })
+                        .catch(err => {
+                          res.sendStatus(error(err))
+                        })
+
+
+               })
+                 .catch(err => {
+                   res.status(error(err))
+                 })
+               
+            }
+           
+            res.status(200).json("ok")
+
 
           }))
           .catch(err => {
@@ -377,31 +443,11 @@ views.EnviarResultadoExpediente = async (req, res) => {
             return
 
           })
-          axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
-            .then(result=>{
-
-              
-              const  encabezado = `Este mensaje notifica que el estado de su expediente ${result.data.numero_caso} es el siguiente:<br><br>
-               <b>Numero Caso:</b> ${result.data.numero_caso}
-               <br><b>Estado actual :</b>${result.data.estado_expediente}
-              
-               `
-               const  cuerpo ="En este momento no cuenta con un resultado del caso, "
-              let asunto = `Cambio de estado de la Solicitud:${req.body.numero_radicado}`
-          })
-            .catch(err => {
-              res.sendStatus(error(err))
-            })
          
-          
-          res.sendStatus(200)}
-        if (Object.keys(result.data.results).length<1) {res.sendStatus(200)}
 
-    })
-      .catch(err => {
-        res.sendStatus(error(err))
-      })
-    res.sendStatus(200)
+  
+   
+   
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -440,7 +486,7 @@ views.CodigoSolicitud = async (req, res) => {
         const cuerpo= `<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
         let asunto = `Clave de Acceso Solicitud  ${req.body.numero_radicado}`
         
-        const correo =  axios.post(config.urlEmail,email("html",[resul.data.correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
+        const correo =  axios.post(config.urlEmail,("html",[resul.data.correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
     
         })
           .catch(err => {

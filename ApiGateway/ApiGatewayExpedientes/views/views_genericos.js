@@ -1331,7 +1331,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
   }
 }
 views.EnviarResultado = async (req, res) => {
-  try {
+  try {s
     res.sendStatus(200)
   } catch (error) {
     console.log(error);
@@ -2217,8 +2217,8 @@ views.ActualizarPersonas = async (req, res) => {
     let datos = {}
    
     req.body.grupo_id=parseInt(req.body.grupo_id)
-    if (req.body.identificacion) { delete req.body["identificacion"] ;  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
-    if (req.body.usuario_id) {endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/"); }
+    if (req.body.identificacion) {  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
+    if (req.body.usuario_id) {req.body.username=req.body.identificacion; endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/"); }
     req.body.groups=[parseInt(req.body.grupo_id)]
     console.log(req.body)
     await Promise.all(endpoints.map((endpoint) => axios.patch(endpoint,req.body)))

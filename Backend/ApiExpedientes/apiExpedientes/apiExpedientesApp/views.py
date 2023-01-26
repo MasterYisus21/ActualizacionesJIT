@@ -21,6 +21,7 @@ def Modulos(request):
     data['modulo_solicitudes']= (request.user.has_perm('apiSolicitudesApp.change_solicitud') |request.user.has_perm('apiSolicitudesApp.view_solicitud'))
     data['modulo_personas']= request.user.has_perm('auth.add_user')
     data['modulo_reportes']= request.user.has_perm('apiExpedientesApp.add_tipo_reporte')
+    data['modulo_modificar_resultado']= request.user.has_perm('apiExpedientesApp.add_tipo_resultado')
         
 
     return JsonResponse(data)

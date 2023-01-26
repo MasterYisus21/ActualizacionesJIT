@@ -455,7 +455,7 @@ function SolicitudesDetalle() {
       .then((response) => {
         e.target.reset();
         toast.info(
-          "La solicitud es encuentra en estado de Información incompleta",
+          "La solicitud se encuentra en estado de Información incompleta",
           {
             position: toast.POSITION.BOTTOM_RIGHT,
           }
