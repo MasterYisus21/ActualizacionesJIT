@@ -10,8 +10,9 @@ const multerStorage = multer.diskStorage({
       cb(null, "public");
     },
     filename: (req, file, cb) => {
+      console.log(file.originalname)
       const ext = file.mimetype.split("/")[1];
-      cb(null, `${file.originalname}-${(new Date(Date.now())).toISOString().split("T")[0]}.${ext}`);
+      cb(null, `${(new Date(Date.now())).toISOString().split("T")[0]}-${file.originalname}`);
     },
   });
 
