@@ -89,57 +89,30 @@ function Consultar() {
   }
 
   const notificar=(resultado)=>{
-    const confirmar=()=>{
-      
-    if (!solexp) {
-    axiosBasicInstanceApiSolicitudes({
-      method: 'post',
-      url: "/solicitudes/" + resultado["solicitud_id"] + "/enviar_codigos",
-      // headers: req.headers,
-      data:{
-        "numero_radicado":resultado["numero_radicado"],
-        "persona_id":resultado["persona_id"]
-      }
-    })
-
-      .then(result => { 
-        console.log(result.data);
-        toast.success('Se ha enviado la información al correo electrónico registrado', {
-          position: toast.POSITION.BOTTOM_RIGHT
+    const confirmarSol=()=>{
+      axiosBasicInstanceApiSolicitudes({
+          method: 'post',
+          url: "/solicitudes/" + resultado["solicitud_id"] + "/enviar_codigos",
+          // headers: req.headers,
+          data:{
+            "numero_radicado":resultado["numero_radicado"],
+            "persona_id":resultado["persona_id"]
+          }
         })
-        swal({
-          title:"Digita el código enviado a tu correo",
-          text:"Si no tienes acceso a este correo contactate con el Centro de conciliación",
-          icon:"info",
-          content:"input",
-          button:"Aceptar"
-        })
-        .then(valor => {
-          axiosBasicInstanceApiSolicitudes({
-            method: 'post',
-            url: "/solicitudes/" + resultado["solicitud_id"] + "/verificar_codigos",
-            
-            data:{
-              "codigo":valor
-            }
-          })
-          .then((result)=>{
-            
-            localStorage.setItem("codigo", valor)
-            navigate("/consultar/solicitudes/" + resultado["solicitud_id"]);
-          })
-          .catch(err =>{
-            
-            if(err.response.status===401){
+    
+          .then(result => { 
+            console.log(result.data);
+            toast.success('Se ha enviado la información al correo electrónico registrado', {
+            position: toast.POSITION.BOTTOM_RIGHT
+            })
             swal({
               title:"Digita el código enviado a tu correo",
-              text:"Código incorrecto",
-              icon:"error",
+              text:"Si no tienes acceso a este correo contactate con el Centro de conciliación",
+              icon:"info",
               content:"input",
               button:"Aceptar"
             })
             .then(valor => {
-              console.log(valor);
               axiosBasicInstanceApiSolicitudes({
                 method: 'post',
                 url: "/solicitudes/" + resultado["solicitud_id"] + "/verificar_codigos",
@@ -149,28 +122,53 @@ function Consultar() {
                 }
               })
               .then((result)=>{
+                
                 localStorage.setItem("codigo", valor)
                 navigate("/consultar/solicitudes/" + resultado["solicitud_id"]);
               })
-              .catch(err=>{
-                toast.error('Código invalido intenta de nuevo', {
-                  position: toast.POSITION.BOTTOM_RIGHT
+              .catch(err =>{
+                
+                if(err.response.status===401){
+                swal({
+                  title:"Digita el código enviado a tu correo",
+                  text:"Código incorrecto",
+                  icon:"error",
+                  content:"input",
+                  button:"Aceptar"
                 })
+                .then(valor => {
+                  console.log(valor);
+                  axiosBasicInstanceApiSolicitudes({
+                    method: 'post',
+                    url: "/solicitudes/" + resultado["solicitud_id"] + "/verificar_codigos",
+                    
+                    data:{
+                      "codigo":valor
+                    }
+                  })
+                  .then((result)=>{
+                    localStorage.setItem("codigo", valor)
+                    navigate("/consultar/solicitudes/" + resultado["solicitud_id"]);
+                  })
+                  .catch(err=>{
+                    toast.error('Código invalido intenta de nuevo', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                    })
+                  })
+                })
+                
+              }
+            
+                
               })
             })
-            
-          }
-        
-            
           })
-        })
-      })
-      .catch(err => {
-        console.log("error");
-      });
-      
-      
-    }else{
+          .catch(err => {
+            console.log("error");
+          });
+    }
+
+    const confirmarExp=()=>{
       axiosBasicInstanceApiSolicitudes({
         method: 'post',
         url: "/solicitudes/" + resultado["expediente_id"] + "/enviar_resultados",
@@ -187,17 +185,21 @@ function Consultar() {
           })
         })
         .catch(err => {
+          toast.error('No ha sido posible enviar el correo por favor intenta de nuevo', {
+          position: toast.POSITION.BOTTOM_RIGHT
+            })
           console.log("error");
         });
       }
-    }
+    
+    if (!solexp) {
       confirmAlert({
         title: `Confirmación`,
         message: `¿Quieres que enviemos un código a tu correo para ver la información de tu solicitud?`,
         buttons: [
           {
             label: 'Si',
-            onClick: () => confirmar()
+            onClick: () => confirmarSol()
             
           },
           {
@@ -208,7 +210,24 @@ function Consultar() {
       });
       
       
-
+    }else{
+      confirmAlert({
+        title: `Confirmación`,
+        message: `¿Quieres ?`,
+        buttons: [
+          {
+            label: 'Si',
+            onClick: () => confirmarExp()
+            
+          },
+          {
+            label: 'No',
+            onClick: () => { }
+          }
+        ]
+      });
+      
+    }
     
   }
   

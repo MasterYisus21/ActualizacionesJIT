@@ -118,7 +118,7 @@ function Solicitud() {
     };
     confirmAlert({
       title: `Confirmación`,
-      message: `¿Estas seguro de cerrar la sesión?`,
+      message: `¿Estas seguro de salir de la solicitud?`,
       buttons: [
         {
           label: "Si",
