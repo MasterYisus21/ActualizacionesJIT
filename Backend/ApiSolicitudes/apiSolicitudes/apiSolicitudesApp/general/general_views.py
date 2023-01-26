@@ -18,6 +18,8 @@ class CustomCreateDjangoModelPermission(DjangoModelPermissionsOrAnonReadOnly):
     def __init__(self):
         self.perms_map= deepcopy(self.perms_map)
         self.perms_map['POST']=[]
+    
+      
 
 class CustomUpdateDjangoModelPermission(DjangoModelPermissionsOrAnonReadOnly):
     def __init__(self):

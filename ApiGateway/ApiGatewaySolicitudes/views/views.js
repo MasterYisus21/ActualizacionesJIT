@@ -218,7 +218,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
   let datos = []
 
   try {
-    console.log("entre")
+   
     // console.log(req.file)
     if (Object.keys(req.files).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
 
@@ -227,7 +227,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     for await (const iterator of req.files) {
 
       await unirest
-        .post(config.urlApiSolicitudes + 'documentos/')
+        .post(config.urlApiSolicitudes + 'documentos/',)
 
 
         .field('estado', true)
@@ -238,6 +238,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
         //.attach('Ruta_directorio', req.file.path) // reads directly from local file
         .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
         //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+        .headers({"X-Api-Key":config.apiKey})
         .then(function (response) {
           try {
             fs.unlinkSync(iterator.path)
@@ -253,6 +254,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     }
     if (intento < 2) { return;
      }
+  
      await axios.patch(config.urlApiSolicitudes+"solicitudes/"+req.params.id+"/",{estado_solicitud_id:1})
       .then(result=>{
         res.status(201).json(datos)
@@ -458,7 +460,7 @@ views.VerificarCodigo = async (req, res) => {
   try {
     axios.get(config.urlApiSolicitudes+"codigos?solicitud_id="+req.params.id)
       .then(result=>{
-        console.log(result.data.results[0])
+   
         if (Object.keys(result.data.results).length<1) {res.sendStatus(401);return}
         if(req.body.codigo!=result.data.results[0].codigo){res.sendStatus(401);return}
         res.sendStatus(200)
@@ -510,6 +512,7 @@ views.CodigoSolicitud = async (req, res) => {
 
 views.ListarSolicitudes = async (req, res) => {
   try {
+  
     const url = config.urlApiSolicitudes + req.route.path.slice(1)
     requests.get(req, res, url, "?")
   } catch (error) {

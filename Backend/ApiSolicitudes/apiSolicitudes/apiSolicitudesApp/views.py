@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from apiSolicitudesApp.general.general_views import  *
 
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
-
+from rest_framework_api_key.permissions import HasAPIKey
 # from django_filters import FilterSet, AllValuesFilter
 # from django_filters import DateTimeFilter, NumberFilter
 # from apiInventarioApp.pagination import StandardResultsSetPagination
@@ -54,7 +54,9 @@ class Documento_solicitudViewSet(EspecificViewSet):  # Una sola clase para los m
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = ['solicitud_id']
     ordering_fields = '__all__'
-    serializer_class = DocumentoSerializer
+    serializer_class = DocumentoSerializer 
+    # permission_classes = [HasAPIKey ]
+
     permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
 
 class Relacion_persona_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
