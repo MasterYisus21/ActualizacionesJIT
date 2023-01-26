@@ -213,7 +213,7 @@ function Consultar() {
     }else{
       confirmAlert({
         title: `Confirmación`,
-        message: `¿Quieres ?`,
+        message: `¿Quieres que enviemos la información del expediente al correo electrónico registrado?`,
         buttons: [
           {
             label: 'Si',

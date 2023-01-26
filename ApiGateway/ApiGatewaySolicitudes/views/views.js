@@ -309,7 +309,7 @@ views.Listar_estados_expediente = async (req, res) => {
       .then(result=>{
         let datos=[]
         for (const iterator of result.data.results) {
-          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado,expediente_id:iterator.expediente_id})
+          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado,expediente_id:iterator.expediente_id,persona_id:iterator.persona_id})
         }
         result.data.results=datos
         res.status(200).json(result.data)
@@ -385,15 +385,14 @@ views.EnviarResultadoExpediente = async (req, res) => {
                 const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { (error(err));  })
                 return;
               }
-             
-              cuerpo=cuerpo+`<br><b>Además, cuenta con la siguiente fecha de audiencia
+           
+              cuerpo=cuerpo+`<br>Además, cuenta con la siguiente fecha de audiencia<br>
                   <br><b>Expediente:</b> ${data2.data.results[0].numero_caso}
-                  <br><b>Nombre del Citado:</b> ${data2.data.results[0].citado_nombres}
-                  <br><b>Fecha:</b> ${data2.data.results[0].citado_fecha_sesion} 
-                  <br><b>Hora:</b> ${data2.data.results[0].citacion_turno} 
-                  <br><b>Medio:</b> ${data2.data.results[0].citacion_medio} 
-                  <br><b>Enlace:</b> ${data2.data.results[0].citacion_enlace} 
-                  <br><b>Descripcion:</b> ${data2.data.results[0].citacion_descripcion} 
+                  <br><b>Fecha:</b> ${data2.data.results[0].fecha_sesion} 
+                  <br><b>Hora:</b> ${data2.data.results[0].turno} 
+                  <br><b>Medio:</b> ${data2.data.results[0].medio} 
+                  <br><b>Enlace:</b> ${data2.data.results[0].enlace} 
+                  <br><b>Descripcion:</b> ${data2.data.results[0].descripcion} 
               `
               const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { (error(err)); falla=true  })
               return
@@ -484,7 +483,7 @@ views.CodigoSolicitud = async (req, res) => {
           .then(result=>{
         
         res.sendStatus(200)
-        const  encabezado = `Este mensaje notifica que estas intentando ingresar a la solicitud número:<b> ${req.body.numero_radicado}</b> y para esto debes ingresar la siguiente clave de acceso:<br><br>Clave de Acceso: <b>${result.data.codigo}</b>.`
+        const  encabezado = `Este mensaje notifica que estas intentando ingresar a la solicitud número:<b> ${req.body.numero_radicado}</b> y para esto debes ingresar la siguiente clave de acceso:<br><br>Clave de Acceso: <b>${result.data.codigo}</b>`
         const cuerpo= `<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
         let asunto = `Clave de Acceso Solicitud  ${req.body.numero_radicado}`
         
