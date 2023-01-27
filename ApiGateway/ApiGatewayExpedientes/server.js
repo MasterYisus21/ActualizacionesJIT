@@ -137,7 +137,7 @@ async function verifier(req, res, next) {
             next();
           } else {
             
-            res.sendStatus(401);
+            res.statStatus(401);
           }
         })
         .catch(function (error) {
@@ -146,7 +146,7 @@ async function verifier(req, res, next) {
             res.sendStatus(401);
           }
           
-          res.sendStatus(404);
+          res.status(404);
         });
     } else {
 

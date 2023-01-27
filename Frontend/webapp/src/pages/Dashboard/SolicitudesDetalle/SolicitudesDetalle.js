@@ -72,7 +72,7 @@ function SolicitudesDetalle() {
         setData(result.data);
 
         //Convocante
-
+        
         document.getElementById("identificacion").value =
           result.data.convocante["identificacion"];
         document.getElementById("tipoDocumento").value =
@@ -193,7 +193,7 @@ function SolicitudesDetalle() {
 
   useEffect(() => {
     // const calcularEdad
-
+      
     if (data.apoderado && apoderado_convocante) {
       document.getElementById("identificacion_Apoderado").value =
         data?.apoderado?.identificacion;
@@ -460,6 +460,9 @@ function SolicitudesDetalle() {
             position: toast.POSITION.BOTTOM_RIGHT,
           }
         );
+        // navigate(
+        //   "/dashboard/solicitudes/"
+        // );
       })
       .catch((err) => {
         console.log(err);
@@ -480,6 +483,7 @@ function SolicitudesDetalle() {
   }, [conciliador]);
 
   return (
+    
     <div className="wrapp-main-detalle-solicitud">
       <div className="wrapp-introduccion">
         <label className="introduccion-texto-solicitud">
