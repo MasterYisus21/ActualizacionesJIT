@@ -520,23 +520,7 @@ views.ListarSolicitudes = async (req, res) => {
     return;
   }
 }
-views.AutenticacionUsuario = async (req, res) => {
-  try {
 
-
-    axios.get(config.urlApiExpedientes + "relaciones_persona_solicitud?solicitud_id=")
-      .then(result => {
-
-      })
-      .catch(err => {
-        res.sendStatus(error(err))
-      })
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-    return;
-  }
-}
 
 // app.use(verifier);
 views.VerSolicitud = async (req, res) => {
@@ -641,7 +625,7 @@ views.AprobarSolicitud = async (req, res) => {
      <br><b>Comentario :</b> ${req.body.comentario}   
      `
      
-    let asunto = `Cambio de estado de la Solicitud:${req.body.numero_radicado}`
+    let asunto = `Cambio de estado de la Solicitud: ${req.body.numero_radicado}`
     
     
   
@@ -666,7 +650,7 @@ views.AprobarSolicitud = async (req, res) => {
        
               result.data.conciliador = req.body.conciliador_id
               result.data.hechos[0].cuantia = req.body.valor_caso
-            
+              
               await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data,{headers:{authorization :req.headers.authorization}})
                 .then(resul => {
                   
@@ -678,7 +662,7 @@ views.AprobarSolicitud = async (req, res) => {
                    `
                    }
               
-                  
+                 
                   res.status(200).json(resul.data)
                 })
 
@@ -691,6 +675,11 @@ views.AprobarSolicitud = async (req, res) => {
               }
               else{
                 res.status(200).json(resul.data)
+                cuerpo= cuerpo + `<br>Recuerde que podrá consultar esta y demás información del caso en la página principal del Centro de Conciliación en la sección: <b>Consulta tu solicitud</b> 
+                pulsando click en la opción <b>Solicitudes</b> e ingresando su número de identificación para luego seleccionar la solicitud:<b> ${req.body.numero_radicado}</b>.
+                
+                <br><b>Nota:*</b>Si su solicitud se encuentra en el estado: <b>FALTA DE INFROMACIÓN</b>  se le habilitara en el módulo <b>Consulta tu Solicitud</b>  
+                la opción de ingresar al detalle de su solicitud mediante su número de identificación  y allí subir los documentos solicitados.( EL TAMAÑO LIMITE TOTAL DE LOS ARCHIVOS ES 10Mb)</b>:`
                 cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
                
             }

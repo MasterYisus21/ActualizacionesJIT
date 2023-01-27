@@ -33,12 +33,17 @@ class CustomDjangoModelPermission(DjangoModelPermissions):
         
         self.perms_map= deepcopy(self.perms_map)
         self.perms_map['GET']=['%(app_label)s.view_%(model_name)s']
+
+
+      
+
 class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    # permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+    permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
     
+
     # permission_classes = [CustomDjangoModelPermission]
    
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
@@ -82,7 +87,7 @@ class GeneralViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
 class EspecificViewSet(viewsets.ModelViewSet):# Lista los objetos con ListAPIVIEW
     serializer_class = None
     pagination_class= StandardResultsSetPagination
-    # permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+    permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
 
     
    

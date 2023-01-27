@@ -36,8 +36,8 @@ views.CrearPersonas = async (req, res) => {
     if (req.body.identificacion == "" | req.body.identificacion == null) { res.sendStatus(error({ message: "No ha ingresado la identificacion" })); return }
     if (req.body.celular == "" | req.body.celular == null) { res.sendStatus(error({ message: "No ha ingresado el telefono celular" })); return }
     if (req.body.correo == "" | req.body.correo == null) { res.sendStatus(error({ message: "No ha ingresado el correo electronico" })); return }
-    if (req.body.tipo_cargo_id == "" | req.body.grupo_id == null) { res.sendStatus(error({ message: "No ha ingresado los permisos del usuario" })); return }
-    if (req.body.grupo_id == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
+    if (req.body.tipo_cargo_id == "" ) { res.sendStatus(error({ message: "No ha ingresado  el cargo del del usuario" })); return }
+    if (req.body.grupo_id == null) { res.sendStatus(error({ message: "No ha ingresado el grupo del usuario" })); return }
     if (req.body.tarjeta_profesional == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
     req.body.persona_ugc = true
     let datos = { username: req.body.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [req.body.grupo_id] }
@@ -159,6 +159,7 @@ views.GenericList = async (req, res) => {
   try {
     // console.log(config.urlApiExpedientes + req.url.slice(1))
     axios({
+      
       method: req.method.toLowerCase(),
       url: config.urlApiExpedientes + req.url.slice(1),
       // headers: req.headers,
@@ -411,22 +412,28 @@ views.ListarDepartamentos = async (req, res) => {
 }
 views.VerPersonas = async (req, res) => {
   try {
+    
     await axios.get(config.urlApiExpedientes + "personas/" + req.params.id)
       .then(async result => {
-        if (result.data.usuario_id) {
+        
+        if (!result.data.usuario_id) {res.status(200).json(result.data);return;}
+         
           await axios.get(config.urlApiExpedientes + "usuarios/" + result.data.usuario_id)
             .then(resul => {
-
+             
               result.data.grupo_id = resul.data.groups[0]
-
+              
+             
+            
+              res.status(200).json(result.data) 
             })
             .catch(err => {
               res.status(error(err))
             })
-        }
-        res.status(200).json(result.data)
+          
+         
       })
-      .catch(err => {
+      .catch(err => { 
         res.sendStatus(error(err))
       })
   } catch (error) {
@@ -937,19 +944,19 @@ views.GenerarReportes = async (req, res) => {
 
       })
       .catch(err => {
-        req.body.reporte_id = req.params.id
+       
 
-        let file = fs.readFileSync("./public/formato_personas (1) (1).xlsx.xlsx")
+        // let file = fs.readFileSync("./public/formato_personas (1) (1).xlsx.xlsx")
 
 
-        res.end(file)
-        // if (err.response) {
-        //   res.sendStatus(error(err));
-        //   return
-        // }
-        // if (err.request) {
-        //   res.sendStatus(503); return
-        // }
+        // res.end(file)
+        if (err.response) {
+          res.sendStatus(error(err));
+          return
+        }
+        if (err.request) {
+          res.sendStatus(503); return
+        }
       })
 
   } catch (error) {
@@ -1199,7 +1206,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                       //.attach('Ruta_directorio', req.file.path) // reads directly from local file
                       .attach('adjunto', fs.createReadStream("./public/formatos/citacion_" + resul.citado_nombres + ".pdf")) // creates a read stream
                       //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-                      .headers({ "X-Api-Key": config.apiKey })
+                      .headers({ "X-Api-Key": config.apiKey,"Id":req.identificacion })
                       .then(async function (response) {
 
                         try {
@@ -1371,7 +1378,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
             //.attach('Ruta_directorio', req.file.path) // reads directly from local file
             .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
             //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-            .headers({ "X-Api-Key": config.apiKey })
+            .headers({ "X-Api-Key": config.apiKey,"Id":req.identificacion })
             .then(function (response) {
               try {
                 fs.unlinkSync(iterator.path)
@@ -1477,7 +1484,7 @@ views.CargarTemplatePersonas = async (req, res) => {
         res.status(400).json({ message: mensaje }); return
       }
 
-
+      console.log(usuarios)
       await axios.post(config.urlApiExpedientes + "usuarios/", usuarios)
         .then(async result => {
 
@@ -1642,7 +1649,7 @@ views.CambiarDocumentoCaso = async (req, res) => {
           //.attach('Ruta_directorio', req.file.path) // reads directly from local file
           .attach('documento', fs.createReadStream(req.files[0].path)) // creates a read stream
           //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-          .headers({ "X-Api-Key": config.apiKey })
+          .headers({ "X-Api-Key": config.apiKey,"Id":req.identificacion })
           .then(function (response) {
             try {
               fs.unlinkSync(req.files[0].path)
@@ -1808,7 +1815,7 @@ views.CargarResultadoCaso = async (req, res) => {
       //.attach('Ruta_directorio', req.file.path) // reads directly from local file
       .attach('documento', fs.createReadStream(req.files[0].path)) // creates a read stream
       //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-      .headers({ "X-Api-Key": config.apiKey })
+      .headers({ "X-Api-Key": config.apiKey,"Id":req.identificacion })
       .then(function (response) {
         try {
           fs.unlinkSync(req.files[0].path)
@@ -2250,11 +2257,11 @@ views.ActualizarPersonas = async (req, res) => {
     if (req.body.identificacion) { endpoints.push(config.urlApiExpedientes + "personas/" + req.params.id + "/") }
     if (req.body.usuario_id) { req.body.username = req.body.identificacion; endpoints.push(config.urlApiExpedientes + "usuarios/" + req.body.usuario_id + "/"); }
     req.body.groups = [parseInt(req.body.grupo_id)]
-    console.log(req.body)
+    
     await Promise.all(endpoints.map((endpoint) => axios.patch(endpoint, req.body)))
       .then(axios.spread(async (data1, data2) => {
 
-
+        
         res.status(200).json(data1.data)
       }))
       .catch(err => {

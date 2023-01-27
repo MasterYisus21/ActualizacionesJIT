@@ -75,6 +75,7 @@ export default function Popup({
     }).then((result) => {
       if (modificar != null) {
         console.log(result.data);
+        
         document.getElementById("nombres").value = result.data["nombres"];
         document.getElementById("apellidos").value = result.data["apellidos"];
         document.getElementById("tipoDocumento").value =

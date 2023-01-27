@@ -48,7 +48,7 @@ const [cargando, setCargando] = useState(false)
         });
         // documentsTransition[index] = { id: result.data.id, nombre: result.data.nombre, fecha: result.data.fecha }
         // setCargando(false)
-        fileDownload(response.data, tempTiposReporte[index].nombre)
+        fileDownload(response.data, tempTiposReporte[index].nombre+".xlsx")
       })
       .catch(err => {
         console.log(err);
