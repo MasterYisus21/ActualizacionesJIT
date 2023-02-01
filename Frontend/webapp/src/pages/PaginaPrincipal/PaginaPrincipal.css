@@ -147,7 +147,7 @@
     }
 
     .contenedor-rectangulo-grande {
-        padding-top: 3em;
+        padding-top: 1em;
     }
 
     .cuerpo-principal {
@@ -166,7 +166,6 @@
         max-height: 550px;
         width: 23em;
         flex-direction: column-reverse;
-        justify-content: flex-end;
         align-items: center;
         border-radius: 1.5em;
     }
@@ -243,4 +242,9 @@
     .titulo {
         margin-bottom: 1em;
     }
+
+    .contenedor-rectangulo-grande {
+        padding-top: 3em;
+    }
+
 }
