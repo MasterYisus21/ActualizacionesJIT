@@ -690,7 +690,7 @@ function RegistrarSolicitud() {
                       className=""
                       type="text"
                       placeholder="name@example.com"
-                 
+
                     />
                   </FloatingLabel>
                   <FloatingLabel controlId="celularApoderado" label="Celular *">
@@ -875,7 +875,7 @@ function RegistrarSolicitud() {
             </div>
             <FloatingLabel
               controlId="descripcionHechos"
-              label="Describa los hechos ocurridos (Camplo obligatorio)"
+              label="Describa los hechos ocurridos (Campo obligatorio)"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"

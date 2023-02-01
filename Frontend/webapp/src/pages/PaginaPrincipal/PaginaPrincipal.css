@@ -1,5 +1,4 @@
-
-.wrapp-main-pantalla-principal{
+.wrapp-main-pantalla-principal {
     width: 100%;
     height: 100%;
     /* display: grid;
@@ -9,31 +8,31 @@
     flex-direction: column;
 }
 
-.dos{
+.dos {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.logo-universidad-movil{
+.logo-universidad-movil {
     display: flex;
     width: 100%;
     justify-content: center;
 }
 
-.imagen-logo-principal{
+.imagen-logo-principal {
     width: 11rem;
 }
 
-.cuerpo-principal{
+.cuerpo-principal {
     display: flex;
     flex-direction: column;
     gap: 2.5vh;
     align-items: center;
 }
 
-.carta-consulta-solicitud{
+.carta-consulta-solicitud {
     display: flex;
     width: 80%;
     height: 10em;
@@ -45,13 +44,13 @@
     align-items: center;
 }
 
-.carta-consulta-solicitud:hover{
+.carta-consulta-solicitud:hover {
     opacity: 0.5;
     background-color: #00460F;
     color: white;
 }
 
-.contenedor-descripcion{
+.contenedor-descripcion {
     height: 100%;
     width: 100%;
     display: flex;
@@ -60,109 +59,109 @@
     flex-direction: column;
 }
 
-.contenedor-imagen{
+.contenedor-imagen {
     height: 100%;
     width: 60%;
     border-radius: .5rem;
 }
 
-.imagen_solicitud{
+.imagen_solicitud {
     width: 100%;
     height: 100%;
     border-bottom-right-radius: .5em;
     border-top-right-radius: .5em;
 }
 
-.titulo{
+.titulo {
     font-size: 1.2rem;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
     font-weight: bold;
 }
 
-.contenido{
+.contenido {
     margin-left: 0.8rem;
     margin-right: 0.8rem;
 }
 
-.boton-ingreso{
+.boton-ingreso {
     width: 8rem;
     border-radius: 0.6rem;
     border: 0;
     text-decoration: none;
-    background-color: #C4C4C4; 
+    background-color: #C4C4C4;
     color: black;
     padding: .5em;
 }
 
-.boton-ingreso:hover{
+.boton-ingreso:hover {
     background-color: #00460F;
     color: white;
 }
 
-.logo-pagina-escritorio{
+.logo-pagina-escritorio {
     display: none;
 }
 
-.logo-icontec{
+.logo-icontec {
     width: 8em;
     height: 8em;
     position: absolute;
-    bottom: 1.5em ;
+    bottom: 1.5em;
     right: 1em;
 }
 
 @media (min-width: 600px) {
 
-    .dos{
+    .dos {
         padding: 1em;
     }
 
-    .carta-consulta-solicitud{
+    .carta-consulta-solicitud {
         height: 25vh;
     }
 
 
 }
 
-@media (min-width: 1000px)  {
+@media (min-width: 1000px) {
 
-    .logo-universidad-movil{
+    .logo-universidad-movil {
         display: none;
     }
 
-    .uno{
+    .uno {
         display: flex;
         flex-direction: column;
     }
 
-    .logo-pagina-escritorio{
+    .logo-pagina-escritorio {
         display: block;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    .imagen-logo-principal2{
+    .imagen-logo-principal2 {
         width: 13em;
         margin-top: 2em;
     }
 
-    .contenedor-rectangulo-grande{
+    .contenedor-rectangulo-grande {
         padding-top: 3em;
     }
 
-    .cuerpo-principal{
+    .cuerpo-principal {
         flex-direction: row;
         gap: 10em;
     }
 
-    .boton-ingreso{
+    .boton-ingreso {
         position: absolute;
         top: 6em;
         right: 3%;
     }
 
-    .carta-consulta-solicitud{
+    .carta-consulta-solicitud {
         height: 55vh;
         max-height: 550px;
         width: 23em;
@@ -177,12 +176,12 @@
         font-size: smaller;
     }
 
-    .contenedor-imagen{
+    .contenedor-imagen {
         width: 100%;
         border-radius: 1.5em;
     }
 
-    .imagen_solicitud{
+    .imagen_solicitud {
         height: 12em;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
@@ -190,15 +189,15 @@
         border-top-right-radius: 1.5em;
     }
 
-    .contenido{
+    .contenido {
         background-color: rgba(117, 116, 116, 0.169);
-        padding: .8em;
+        padding: .4em;
         border-radius: .8em;
         font-size: 1.4em;
     }
 
-    .titulo{
-        font-size: 1.7em;
+    .titulo {
+        font-size: 1.3em;
         font-weight: 500;
         border: .1em solid rgb(96, 96, 96);
         border-radius: .4em;
@@ -209,36 +208,39 @@
 
 @media (min-width: 1400px) {
 
-    .cuerpo-principal{
+    .cuerpo-principal {
         gap: 13em;
     }
 
-    .imagen-logo-principal2{
+    .imagen-logo-principal2 {
         width: 17em;
         margin-top: 6em;
     }
 
-    .imagen_solicitud{
+    .imagen_solicitud {
         height: 18em;
     }
 
-    .contenedor-descripcion{
+    .contenedor-descripcion {
         font-size: large;
     }
 
-    .carta-consulta-solicitud{
+    .carta-consulta-solicitud {
         width: 30em;
     }
 }
 
 @media (min-height: 850px) {
 
-    .imagen-logo-principal2{
+    .imagen-logo-principal2 {
         margin-top: 6em;
     }
 
-    .imagen_solicitud{
+    .imagen_solicitud {
         height: 18em;
     }
-}
 
+    .titulo {
+        margin-bottom: 1em;
+    }
+}
