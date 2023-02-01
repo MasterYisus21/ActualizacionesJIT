@@ -8,6 +8,7 @@ import { RectanguloCelular } from '../../components/RectanguloCelular'
 import { axiosBasicInstanceApiSolicitudes, axiosBasicInstanceApiExpedientes } from '../../helpers/axiosInstances'
 import { Buscador, Button } from '../../components';
 import { useNavigate } from "react-router-dom";
+import swal from 'sweetalert';
 
 import { Link } from "react-router-dom";
 
@@ -87,31 +88,94 @@ function Consultar() {
 
   }
 
-  const notificar=(idSolicitud)=>{
-    const confirmar=()=>{
-    if (!solexp) {
-    axiosBasicInstanceApiSolicitudes({
-      method: 'post',
-      url: "/solicitudes/" + idSolicitud + "/informacion_solicitudes",
-      // headers: req.headers,
-      data: {}
-    })
-
-      .then(result => { 
-        console.log(result.data);
-        toast.success('Se ha enviado la información al correo electrónico registrado', {
-          position: toast.POSITION.BOTTOM_RIGHT
+  const notificar=(resultado)=>{
+    const confirmarSol=()=>{
+      axiosBasicInstanceApiSolicitudes({
+          method: 'post',
+          url: "/solicitudes/" + resultado["solicitud_id"] + "/enviar_codigos",
+          // headers: req.headers,
+          data:{
+            "numero_radicado":resultado["numero_radicado"],
+            "persona_id":resultado["persona_id"]
+          }
         })
-      })
-      .catch(err => {
-        console.log("error");
-      });
-    }else{
+    
+          .then(result => { 
+            console.log(result.data);
+            toast.success('Se ha enviado la información al correo electrónico registrado', {
+            position: toast.POSITION.BOTTOM_RIGHT
+            })
+            swal({
+              title:"Digita el código enviado a tu correo",
+              text:"Si no tienes acceso a este correo contactate con el Centro de conciliación",
+              icon:"info",
+              content:"input",
+              button:"Aceptar"
+            })
+            .then(valor => {
+              axiosBasicInstanceApiSolicitudes({
+                method: 'post',
+                url: "/solicitudes/" + resultado["solicitud_id"] + "/verificar_codigos",
+                
+                data:{
+                  "codigo":valor
+                }
+              })
+              .then((result)=>{
+                
+                localStorage.setItem("codigo", valor)
+                navigate("/consultar/solicitudes/" + resultado["solicitud_id"]);
+              })
+              .catch(err =>{
+                
+                if(err.response.status===401){
+                swal({
+                  title:"Digita el código enviado a tu correo",
+                  text:"Código incorrecto",
+                  icon:"error",
+                  content:"input",
+                  button:"Aceptar"
+                })
+                .then(valor => {
+                  console.log(valor);
+                  axiosBasicInstanceApiSolicitudes({
+                    method: 'post',
+                    url: "/solicitudes/" + resultado["solicitud_id"] + "/verificar_codigos",
+                    
+                    data:{
+                      "codigo":valor
+                    }
+                  })
+                  .then((result)=>{
+                    localStorage.setItem("codigo", valor)
+                    navigate("/consultar/solicitudes/" + resultado["solicitud_id"]);
+                  })
+                  .catch(err=>{
+                    toast.error('Código invalido intenta de nuevo', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                    })
+                  })
+                })
+                
+              }
+            
+                
+              })
+            })
+          })
+          .catch(err => {
+            console.log("error");
+          });
+    }
+
+    const confirmarExp=()=>{
       axiosBasicInstanceApiSolicitudes({
         method: 'post',
-        url: "/solicitudes/" + idSolicitud + "/enviar_resultados",
+        url: "/solicitudes/" + resultado["expediente_id"] + "/enviar_resultados",
         // headers: req.headers,
-        data: {}
+        data: {
+          "persona_id":resultado["persona_id"]
+        }
       })
   
         .then(result => { 
@@ -121,17 +185,21 @@ function Consultar() {
           })
         })
         .catch(err => {
+          toast.error('No ha sido posible enviar el correo por favor intenta de nuevo', {
+          position: toast.POSITION.BOTTOM_RIGHT
+            })
           console.log("error");
         });
       }
-    }
+    
+    if (!solexp) {
       confirmAlert({
         title: `Confirmación`,
-        message: `¿Quieres que se envíe a tu correo toda la información?`,
+        message: `¿Quieres que enviemos un código a tu correo para ver la información de tu solicitud?`,
         buttons: [
           {
             label: 'Si',
-            onClick: () => confirmar()
+            onClick: () => confirmarSol()
             
           },
           {
@@ -140,6 +208,26 @@ function Consultar() {
           }
         ]
       });
+      
+      
+    }else{
+      confirmAlert({
+        title: `Confirmación`,
+        message: `¿Quieres que enviemos la información del expediente al correo electrónico registrado?`,
+        buttons: [
+          {
+            label: 'Si',
+            onClick: () => confirmarExp()
+            
+          },
+          {
+            label: 'No',
+            onClick: () => { }
+          }
+        ]
+      });
+      
+    }
     
   }
   
@@ -230,7 +318,7 @@ function Consultar() {
           {resultadosBusqueda.map(resultado => {
             return (
               
-              <div className='carta-caso-consulta' onClick={e =>notificar(resultado["id"])}>
+              <div className='carta-caso-consulta' onClick={e =>notificar(resultado)}>
                 <div className='contenedor-rectangulo-tarjeta-consultar'>
                   <RectanguloCelular text={resultado["numero_caso"] || resultado["numero_radicado"]} />
                 </div>
@@ -263,6 +351,7 @@ function Consultar() {
         </div>
       </div>
       <ToastContainer />
+      
     </div>
 
   )

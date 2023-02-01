@@ -2,6 +2,7 @@ const axios = require("axios");
 const express = require("express");
 const unirest = require('unirest');
 const fs = require('fs');
+const FormData = require('form-data');
 const app = express(); // aplicaicon express
 const views = {};
 const error = require("../requests/requests_error.js")
@@ -25,7 +26,7 @@ function cadenaAleatoria(longitud) {
  
 };
 
-const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
+const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo,adjunto=false) => {
   
   const correoCopia=config.copia_correo
   correoQuienRecibe.push(correoCopia)
@@ -42,7 +43,7 @@ const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo) => {
       
     }
   }
-
+  if(adjunto){ email.adjunto=adjunto}
   return email
 }
 //listar Seleccionables Principales
@@ -217,7 +218,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
   let datos = []
 
   try {
-    console.log("entre")
+   
     // console.log(req.file)
     if (Object.keys(req.files).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
 
@@ -226,7 +227,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     for await (const iterator of req.files) {
 
       await unirest
-        .post(config.urlApiSolicitudes + 'documentos/')
+        .post(config.urlApiSolicitudes + 'documentos/',)
 
 
         .field('estado', true)
@@ -237,6 +238,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
         //.attach('Ruta_directorio', req.file.path) // reads directly from local file
         .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
         //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+        .headers({"X-Api-Key":config.apiKey})
         .then(function (response) {
           try {
             fs.unlinkSync(iterator.path)
@@ -252,6 +254,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     }
     if (intento < 2) { return;
      }
+  
      await axios.patch(config.urlApiSolicitudes+"solicitudes/"+req.params.id+"/",{estado_solicitud_id:1})
       .then(result=>{
         res.status(201).json(datos)
@@ -306,7 +309,7 @@ views.Listar_estados_expediente = async (req, res) => {
       .then(result=>{
         let datos=[]
         for (const iterator of result.data.results) {
-          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado,numero_radicado:iterator.expediente_id})
+          datos.push({fecha_registro:iterator.fecha_registro,numero_caso:iterator.numero_caso,estado_expediente:iterator.estado_expediente,numero_radicado:iterator.numero_radicado,expediente_id:iterator.expediente_id,persona_id:iterator.persona_id})
         }
         result.data.results=datos
         res.status(200).json(result.data)
@@ -358,17 +361,81 @@ views.DescargarDocumentos = async (req, res) => {
 views.EnviarResultadoExpediente = async (req, res) => {
   try {
 
-
-    await axios.get(config.urlApiExpedientes+"resultados?expediente_id="+req.params.id)
-      .then(async result=>{
-        if (Object.keys(result.data.results).length<1) {
-          let endpoints=[config.urlApiExpedientes+"resultados?expediente_id="+req.params.id,config.urlApiExpedientes+"citaciones?expediente_id="+req.params.id]
-          await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           
-          .then(axios.spread((data3, data4, data5) => {
-            res.status(201).json(data2.data)
-        
-            // res.status(201).json(data2.data[0])
+      
+          let endpoints=[config.urlApiExpedientes+"resultados?expediente_id="+req.params.id,config.urlApiExpedientes+"citaciones?expediente_id="+req.params.id,config.urlApiExpedientes+"expedientes/"+req.params.id,config.urlApiExpedientes+"relaciones_persona_expediente?expediente_id="+req.params.id+"&persona_id="+req.body.persona_id]
+          await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+          
+          .then(axios.spread(async (data1, data2, data3,data4) => {
+            
+            if(Object.keys(data4.data.results).length<1){res.sendStatus(403);return}
+            let cuerpo=""
+            const saludo = `<br>Reciba un cordial saludo `
+            let asunto = `Consulta del expediente:${data3.data.numero_caso}`
+            const  encabezado = `Este mensaje notifica que el estado de su expediente ${data3.data.numero_caso} es el siguiente:<br><br>
+            <b>Numero Caso:</b> ${data3.data.numero_caso}
+            <br><b>Estado Actual :</b>${data3.data.estado_expediente}
+            `
+            
+            if(Object.keys(data1.data.results).length<1){
+              
+              if(Object.keys(data2.data.results).length<1){
+                
+                cuerpo=cuerpo+"<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso. "
+                const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { (error(err));  })
+                return;
+              }
+           
+              cuerpo=cuerpo+`<br>Además, cuenta con la siguiente fecha de audiencia<br>
+                  <br><b>Expediente:</b> ${data2.data.results[0].numero_caso}
+                  <br><b>Fecha:</b> ${data2.data.results[0].fecha_sesion} 
+                  <br><b>Hora:</b> ${data2.data.results[0].turno} 
+                  <br><b>Medio:</b> ${data2.data.results[0].medio} 
+                  <br><b>Enlace:</b> ${data2.data.results[0].enlace} 
+                  <br><b>Descripcion:</b> ${data2.data.results[0].descripcion} 
+              `
+              const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { (error(err)); falla=true  })
+              return
+            }else{
+              
+              if(!data1.data.results[0].documento){ cuerpo="<br>Cabe mencionar que en este momento no cuenta con un resultado del caso"; res.sendStatus(200)
+              const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { (error(err));}); return}
+              
+              cuerpo=cuerpo+"<br>El resultado del caso se anexa en esta correo."
+               await axios.get(data1.data.results[0].documento,{ responseType: 'arraybuffer' })
+                 .then(async result=>{
+                  fs.writeFile("./public/resultado.pdf", result.data, async (err) => {console.log(err)})
+              let formdata = new FormData()
+              let fil = fs.createReadStream("./public/resultado.pdf",)
+              formdata.append("adjunto", fil)
+                      // res.end(result.data)
+                     await axios.post(config.urlEmail+"adjuntar",formdata)
+                        .then(response=>{
+                          try {
+                            fs.unlinkSync("./public/resultado.pdf")
+                          } catch (err) {
+                            error(err)
+                            return
+                          }
+                         
+                          const correo = axios.post(config.urlEmail, email("html", [data4.data.results[0].correo], asunto, encabezado, cuerpo,response.data)).catch(err => { (error(err));})
+                          
+                          // console.log(result.data)
+                      })
+                        .catch(err => {
+                          res.sendStatus(error(err))
+                        })
+
+
+               })
+                 .catch(err => {
+                   res.status(error(err))
+                 })
+               
+            }
+           
+            res.status(200).json("ok")
+
 
           }))
           .catch(err => {
@@ -377,31 +444,11 @@ views.EnviarResultadoExpediente = async (req, res) => {
             return
 
           })
-          axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
-            .then(result=>{
-
-              
-              const  encabezado = `Este mensaje notifica que el estado de su expediente ${result.data.numero_caso} es el siguiente:<br><br>
-               <b>Numero Caso:</b> ${result.data.numero_caso}
-               <br><b>Estado actual :</b>${result.data.estado_expediente}
-              
-               `
-               const  cuerpo ="En este momento no cuenta con un resultado del caso, "
-              let asunto = `Cambio de estado de la Solicitud:${req.body.numero_radicado}`
-          })
-            .catch(err => {
-              res.sendStatus(error(err))
-            })
          
-          
-          res.sendStatus(200)}
-        if (Object.keys(result.data.results).length<1) {res.sendStatus(200)}
 
-    })
-      .catch(err => {
-        res.sendStatus(error(err))
-      })
-    res.sendStatus(200)
+  
+   
+   
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -412,7 +459,7 @@ views.VerificarCodigo = async (req, res) => {
   try {
     axios.get(config.urlApiSolicitudes+"codigos?solicitud_id="+req.params.id)
       .then(result=>{
-        console.log(result.data.results[0])
+   
         if (Object.keys(result.data.results).length<1) {res.sendStatus(401);return}
         if(req.body.codigo!=result.data.results[0].codigo){res.sendStatus(401);return}
         res.sendStatus(200)
@@ -436,7 +483,7 @@ views.CodigoSolicitud = async (req, res) => {
           .then(result=>{
         
         res.sendStatus(200)
-        const  encabezado = `Este mensaje notifica que estas intentando ingresar a la solicitud número:<b> ${req.body.numero_radicado}</b> y para esto debes ingresar la siguiente clave de acceso:<br><br>Clave de Acceso: <b>${result.data.codigo}</b>.`
+        const  encabezado = `Este mensaje notifica que estas intentando ingresar a la solicitud número:<b> ${req.body.numero_radicado}</b> y para esto debes ingresar la siguiente clave de acceso:<br><br>Clave de Acceso: <b>${result.data.codigo}</b>`
         const cuerpo= `<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
         let asunto = `Clave de Acceso Solicitud  ${req.body.numero_radicado}`
         
@@ -464,6 +511,7 @@ views.CodigoSolicitud = async (req, res) => {
 
 views.ListarSolicitudes = async (req, res) => {
   try {
+  
     const url = config.urlApiSolicitudes + req.route.path.slice(1)
     requests.get(req, res, url, "?")
   } catch (error) {
@@ -472,23 +520,7 @@ views.ListarSolicitudes = async (req, res) => {
     return;
   }
 }
-views.AutenticacionUsuario = async (req, res) => {
-  try {
 
-
-    axios.get(config.urlApiExpedientes + "relaciones_persona_solicitud?solicitud_id=")
-      .then(result => {
-
-      })
-      .catch(err => {
-        res.sendStatus(error(err))
-      })
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-    return;
-  }
-}
 
 // app.use(verifier);
 views.VerSolicitud = async (req, res) => {
@@ -585,7 +617,7 @@ views.DetalleSolicitud = async (req, res) => {
 }
 views.AprobarSolicitud = async (req, res) => {
   try {
-    console.log("el error esta aqui")
+    
     let  cuerpo =""
     const  encabezado = `Este mensaje notifica que el estado de su solicitud ${req.body.numero_radicado} es el siguiente:<br><br>
      <b>Numero Radicado:</b> ${req.body.numero_radicado}
@@ -593,7 +625,7 @@ views.AprobarSolicitud = async (req, res) => {
      <br><b>Comentario :</b> ${req.body.comentario}   
      `
      
-    let asunto = `Cambio de estado de la Solicitud:${req.body.numero_radicado}`
+    let asunto = `Cambio de estado de la Solicitud: ${req.body.numero_radicado}`
     
     
   
@@ -603,9 +635,9 @@ views.AprobarSolicitud = async (req, res) => {
       
         let correoConvocante =[]
         // console.log(config.urlGatewaySolicitudes+"solicitudes/"+req.params.id)
-          req.headers['X-Api-Key'] =config.apiKey
-          console.log(req.headers)
-          await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id,{headers:{authorization :req.headers.authorization}})
+          
+         
+          await axios.get(config.urlGatewaySolicitudes + "solicitudes/" + req.params.id,{headers:{authorization :req.headers.authorization,"X-Api-Key":config.apiKey}})
             .then(async result => {
             
               // const myHeaders = new Headers();
@@ -619,8 +651,7 @@ views.AprobarSolicitud = async (req, res) => {
               result.data.conciliador = req.body.conciliador_id
               result.data.hechos[0].cuantia = req.body.valor_caso
               
-              
-              await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data)
+              await axios.post(config.urlGatewayExpedientes + "expedientes/", result.data,{headers:{authorization :req.headers.authorization}})
                 .then(resul => {
                   
                   // res.status(200).json(resul.data)
@@ -631,12 +662,12 @@ views.AprobarSolicitud = async (req, res) => {
                    `
                    }
               
-                  
+                 
                   res.status(200).json(resul.data)
                 })
 
                 .catch(err => {
-                  // console.log(err)
+                 console.log("el error esta en este catch");
                   res.status(error(err)).json(error(err))
                   
                   return 
@@ -644,6 +675,11 @@ views.AprobarSolicitud = async (req, res) => {
               }
               else{
                 res.status(200).json(resul.data)
+                cuerpo= cuerpo + `<br>Recuerde que podrá consultar esta y demás información del caso en la página principal del Centro de Conciliación en la sección: <b>Consulta tu solicitud</b> 
+                pulsando click en la opción <b>Solicitudes</b> e ingresando su número de identificación para luego seleccionar la solicitud:<b> ${req.body.numero_radicado}</b>.
+                
+                <br><b>Nota:*</b>Si su solicitud se encuentra en el estado: <b>FALTA DE INFROMACIÓN</b>  se le habilitara en el módulo <b>Consulta tu Solicitud</b>  
+                la opción de ingresar al detalle de su solicitud mediante su número de identificación  y allí subir los documentos solicitados.( EL TAMAÑO LIMITE TOTAL DE LOS ARCHIVOS ES 10Mb)</b>:`
                 cuerpo= cuerpo+`<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
                
             }

@@ -237,6 +237,7 @@ class Tipo_resultadoSerializer(serializers.ModelSerializer):
         fields = '__all__'  # Coje todos los campos del modelo 
 class ResultadoSerializer(serializers.ModelSerializer):
     tipo_resultado= serializers.CharField(source='tipo_resultado_id', read_only=True)
+    numero_caso= serializers.CharField(source='expediente_id.numero_caso', read_only=True)
     consecutivo_resultado= serializers.CharField(source='tipo_resultado_id.consecutivo', read_only=True)
     
     class Meta:

@@ -169,6 +169,18 @@ function RegistrarSolicitud() {
         })
         .catch((err) => {
           console.log(err);
+          if (err.response.status == 413) {
+            toast.error("El tamaño de los archivos excede el limite admitido.", {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
+          else {
+            toast.error(`Ha  ocurrido un error al cargar su solicitud con estado ${err.response.status}.
+            Por favor verifique la información diligenciada.`, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
+
         });
     };
     confirmAlert({
@@ -562,7 +574,7 @@ function RegistrarSolicitud() {
               <>
                 <label className="subtitles-secciones">Nombre</label>
                 <div className="col-registro-solicitud">
-                  <FloatingLabel controlId="nombresApoderado" label="Nombres ">
+                  <FloatingLabel controlId="nombresApoderado" label="Nombres *">
                     <Form.Control
                       className=""
                       type="text"
@@ -572,12 +584,13 @@ function RegistrarSolicitud() {
                   </FloatingLabel>
                   <FloatingLabel
                     controlId="apellidosApoderado"
-                    label="Apellidos"
+                    label="Apellidos *"
                   >
                     <Form.Control
                       className=""
                       type="text"
                       placeholder="name@example.com"
+                      required
                     />
                   </FloatingLabel>
                 </div>
@@ -586,12 +599,13 @@ function RegistrarSolicitud() {
                 <div className="col-registro-solicitud">
                   <FloatingLabel
                     controlId="tipoDocumentoApoderado"
-                    label="Tipo de documento"
+                    label="Tipo de documento *"
                   >
                     <Form.Select
                       className=""
                       aria-label="Floating label select example"
                       name="tipoDocumentoApoderado"
+                      required
                     >
                       <option value={""}>
                         Abre el menú para ver las opciones
@@ -610,12 +624,13 @@ function RegistrarSolicitud() {
                   </FloatingLabel>
                   <FloatingLabel
                     controlId="identificacionApoderado"
-                    label="Número de documento"
+                    label="Número de documento *"
                   >
                     <Form.Control
                       className=""
                       type="text"
                       placeholder="name@example.com"
+                      required
                     />
                   </FloatingLabel>
                 </div>
@@ -650,19 +665,21 @@ function RegistrarSolicitud() {
                 <div className="col-registro-solicitud">
                   <FloatingLabel
                     controlId="tarjetaApoderado"
-                    label="Tarjeta profesional "
+                    label="Tarjeta profesional *"
                   >
                     <Form.Control
                       className=""
                       type="text"
                       placeholder="name@example.com"
+                      required
                     />
                   </FloatingLabel>
-                  <FloatingLabel controlId="correoApoderado" label="correo">
+                  <FloatingLabel controlId="correoApoderado" label="Correo *">
                     <Form.Control
                       className=""
                       type="text"
                       placeholder="name@example.com"
+                      required
                     />
                   </FloatingLabel>
                 </div>
@@ -673,13 +690,15 @@ function RegistrarSolicitud() {
                       className=""
                       type="text"
                       placeholder="name@example.com"
+                 
                     />
                   </FloatingLabel>
-                  <FloatingLabel controlId="celularApoderado" label="Celular">
+                  <FloatingLabel controlId="celularApoderado" label="Celular *">
                     <Form.Control
                       className=""
                       type="text"
                       placeholder="name@example.com"
+                      required
                     />
                   </FloatingLabel>
                 </div>
@@ -752,7 +771,7 @@ function RegistrarSolicitud() {
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">Tipo de Persona</label>
+            <label className="subtitles-secciones">Tipo de Persona *</label>
             <div className="d-flex gap-5">
               {tiposPersona.map((tipoPersona) => {
                 return (
@@ -766,6 +785,7 @@ function RegistrarSolicitud() {
                       name="flexRadioDefault"
                       id="tipoPersonaConvocado"
                       value={tipoPersona["id"]}
+                      required
                     />
                     <label
                       className="form-check-label"

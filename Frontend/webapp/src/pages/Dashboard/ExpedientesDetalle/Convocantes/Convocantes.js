@@ -183,7 +183,7 @@ function Convocantes() {
             className="boton-crear-convocante"
             onClick={() => setPopupconv(!popupconv)}
           >
-            Crear Convocado
+            Crear Convocante
           </button>
         </div>
 

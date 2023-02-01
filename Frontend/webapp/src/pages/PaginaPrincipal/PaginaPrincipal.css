@@ -103,6 +103,14 @@
     display: none;
 }
 
+.logo-icontec{
+    width: 8em;
+    height: 8em;
+    position: absolute;
+    bottom: 1.5em ;
+    right: 1em;
+}
+
 @media (min-width: 600px) {
 
     .dos{
@@ -112,6 +120,8 @@
     .carta-consulta-solicitud{
         height: 25vh;
     }
+
+
 }
 
 @media (min-width: 1000px)  {

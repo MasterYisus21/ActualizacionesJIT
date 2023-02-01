@@ -184,7 +184,7 @@ function Seguimientos() {
                       name={`pregunta${pregunta.id}`}
                       value={true}
                       onClick={e => { let el = document.getElementById(`pregunta${pregunta.id}detalle`); el.setAttribute('disabled', true); el.value = ""; el.removeAttribute('required') }}
-                      required
+                      // required
                     />
                     <Form.Check
                       // disabled
@@ -193,7 +193,7 @@ function Seguimientos() {
                       name={`pregunta${pregunta.id}`}
                       value={false}
                       onClick={e => { let el = document.getElementById(`pregunta${pregunta.id}detalle`); el.removeAttribute('disabled'); el.setAttribute('required', true) }}
-                      required
+                      // required
                     />
                   </div>
                   <Form.Control as="textarea" id={`pregunta${pregunta.id}detalle`} name={`pregunta${pregunta.id}detalle`} placeholder="Detalle" style={{ height: '10rem' }} />
@@ -213,7 +213,7 @@ function Seguimientos() {
                   label={'Si'}
                   value={true}
                   name="se_cumplio_acuerdo"
-                  required
+                  // required
                 />
                 <Form.Check
                   // disabled
@@ -221,7 +221,7 @@ function Seguimientos() {
                   label={'No'}
                   value={false}
                   name="se_cumplio_acuerdo"
-                  required
+                  // required
                 />
               </div>
               <br />

@@ -9,7 +9,8 @@ from django_filters import FilterSet, AllValuesFilter
 from django_filters import DateTimeFilter, NumberFilter
 from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.permissions import DjangoModelPermissions
-from rest_framework.permissions import *
+from rest_framework.permissions import IsAuthenticated,DjangoModelPermissionsOrAnonReadOnly
+from rest_framework_api_key.permissions import HasAPIKey
 # from apiInventarioApp.pagination import StandardResultsSetPagination
 from django.http import JsonResponse
 def Modulos(request):
@@ -21,9 +22,12 @@ def Modulos(request):
     data['modulo_solicitudes']= (request.user.has_perm('apiSolicitudesApp.change_solicitud') |request.user.has_perm('apiSolicitudesApp.view_solicitud'))
     data['modulo_personas']= request.user.has_perm('auth.add_user')
     data['modulo_reportes']= request.user.has_perm('apiExpedientesApp.add_tipo_reporte')
+    data['modulo_modificar_resultado']= request.user.has_perm('apiExpedientesApp.add_tipo_resultado')
         
 
     return JsonResponse(data)
+
+
 # Create your views here.
 class PaisViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     serializer_class = PaisSerializer
@@ -103,11 +107,14 @@ class EscolaridadViewSet(GeneralViewSet):  # Una sola clase para los metodos de 
 class ApoderadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = ApoderadoSerializer
+  
     search_fields=['nombres','apellidos','identificacion','tarjeta_profesional']
+    
 
 class PersonaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
     serializer_class = PersonaSerializer
+
     search_fields=['nombres','apellidos','=identificacion','tarjeta_profesional','tipo_cargo_id__nombre']
 class Solicitante_servicioViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
@@ -151,7 +158,7 @@ class ExpedienteFilter(FilterSet):
 class ExpedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
     serializer_class = ExpedienteSerializer
-   
+    permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
     search_fields=['numero_caso','fecha_registro','tipo_servicio_id__nombre','subtema_id__nombre','numero_radicado','estado_expediente_id__nombre']
     filter_class = ExpedienteFilter
    
@@ -160,12 +167,13 @@ class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de
     serializer_class = Tipo_clienteSerializer
 
 class Relacion_persona_expedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+    serializer_class = Relacion_persona_expedienteSerializer
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = ['persona_id__identificacion','persona_id','expediente_id','tipo_cliente_id']
     ordering_fields = '__all__'
-    # permission_classes = [HasAPIKey & (IsAuthenticatedOrReadOnly |CustomDjangoModelPermission)]
+    permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
     search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre','expediente_id__estado_expediente_id__nombre','persona_id__nombres']
-    serializer_class = Relacion_persona_expedienteSerializer
+    
    
     # def get_queryset(self,pk=None):
        
@@ -195,13 +203,14 @@ class ResultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de re
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter]
     filterset_fields = ['tipo_resultado_id__nombre','expediente_id']
     ordering_fields = '__all__'
-    
+    permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
     search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre']
     serializer_class = ResultadoSerializer
 
 class HechosViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = HechosSerializer
+
 
 class Medio_seguimientoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
@@ -230,6 +239,7 @@ class Tipo_medioViewSet(GeneralViewSet):  # Una sola clase para los metodos de r
 class CitacionViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = CitacionSerializer
+    permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
 
 class Relacion_persona_citacionViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
@@ -272,7 +282,7 @@ class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de res
     
     serializer_class=ListaUsuarioSerializer
     filter_backends = [DjangoFilterBackend]
-    search_fields = ['persona_id__nombres']
+   
     filterset_fields = '__all__'
 
     # permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
@@ -313,9 +323,32 @@ class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de res
 
     
     
-class GruposViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos de rest 
-   queryset = Group.objects.all()
-   serializer_class= ListaGrupoSerializer  
-   permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+class GruposViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+#    queryset = Group.objects.all()
+    serializer_class= ListaGrupoSerializer  
+    
+   
+    def get_queryset(self,pk=None):
+        model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
+       
+        if pk is None:
+            return model.filter()
+        
+        return model.filter( id=pk).first() # retorna todos los valores con estado = t
+    def destroy(self,request,pk=None):
+                
+            queryset = self.get_queryset().filter(id=pk).first()
+            if  queryset:
+                queryset.is_active= False
+                queryset.save()
+                return Response (queryset.id)
+            return Response(status = status.HTTP_404_NOT_FOUND)
+        
+    # permission_classes=[DjangoModelPermissionsOrAnonReadOnly]
+    # print(req)
+    
+    # permission_classes = [(HasAPIKey | IsAuthenticated) & CustomDjangoModelPermission]
+
+    # permission_classes = [HasAPIKey|IsAuthenticated]
 
     

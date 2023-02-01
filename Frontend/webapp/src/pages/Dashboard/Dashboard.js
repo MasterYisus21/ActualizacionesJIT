@@ -24,7 +24,6 @@ function Dashboard() {
     try {
       setNombre(JSON.parse(localStorage.getItem("usuario")).nombres);
       setPermisos(JSON.parse(localStorage.getItem("modulos")))
-      console.log(JSON.parse(localStorage.getItem("modulos")));
     } catch {
       navigate("/", { replace: true });
     }

@@ -15,7 +15,7 @@ app.post("/api/gateway/v1/auth/ingresar/", async (req, res) => {
   try {
     let modulos=[]
     const data = req.body;
-    axios.defaults.headers['X-Api-Key'] =config.apiKey ;
+    axios.defaults.headers.common['X-Api-Key'] =config.apiKey ;
     axios.defaults.headers['Id'] =data.username;
     let endpoints = [config.urlApiExpedientes + "usuarios?username=" + data.username,
     config.urlApiExpedientes + "personas?identificacion=" + data.username,config.urlApiExpedientes+"modulos"]
@@ -108,12 +108,13 @@ app.get("/api/gateway/v1/protectedView", verifier, (req, res) => {
 async function verifier(req, res, next) {
 
   // console.log(req.headers.authorization)
+
   try {
-    axios.defaults.headers['X-Api-Key'] =config.apiKey ;
+    axios.defaults.headers.common['X-Api-Key'] =config.apiKey ;
     
    
     if (req.headers.authorization) {
-      
+      axios.defaults.headers.common['Authorization'] =req.headers.authorization
       await axios
         .post(
           config.urlAutenticacion + "get_identity",
@@ -126,7 +127,7 @@ async function verifier(req, res, next) {
         )
         .then((response) => {
           if (response.data["logged_in_as"]) {
-            axios.defaults.headers['Id'] =response.data.claims.sub;
+            axios.defaults.headers.common['Id'] =response.data.claims.sub;
             req.grupo = response.data.claims.rol;
             req.identificacion = response.data.claims.sub;
           
@@ -136,7 +137,7 @@ async function verifier(req, res, next) {
             next();
           } else {
             
-            res.sendStatus(401);
+            res.statStatus(401);
           }
         })
         .catch(function (error) {
@@ -145,7 +146,7 @@ async function verifier(req, res, next) {
             res.sendStatus(401);
           }
           
-          res.sendStatus(404);
+          res.status(404);
         });
     } else {
 

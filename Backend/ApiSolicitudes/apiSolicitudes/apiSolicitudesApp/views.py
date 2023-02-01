@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from apiSolicitudesApp.general.general_views import  *
 
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
-
+from rest_framework_api_key.permissions import HasAPIKey
 # from django_filters import FilterSet, AllValuesFilter
 # from django_filters import DateTimeFilter, NumberFilter
 # from apiInventarioApp.pagination import StandardResultsSetPagination
@@ -48,14 +48,16 @@ class SolicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de 
     ordering_fields = '__all__'
     search_fields=['numero_radicado','fecha_registro','estado_solicitud_id__nombre']
     serializer_class = SolicitudSerializer
-    # permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
+    permission_classes = [(HasAPIKey & CustomUpdateDjangoModelPermission)|(HasAPIKey & CustomDjangoModelPermission) ]
     #permission_classes = [CustomDjangoModelPermission]
 class Documento_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = ['solicitud_id']
     ordering_fields = '__all__'
-    serializer_class = DocumentoSerializer
-    # permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
+    serializer_class = DocumentoSerializer 
+    # permission_classes = [HasAPIKey ]
+
+    permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
 
 class Relacion_persona_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
@@ -63,7 +65,7 @@ class Relacion_persona_solicitudViewSet(EspecificViewSet):  # Una sola clase par
     ordering_fields = '__all__'
     serializer_class = Relacion_persona_solicitudSerializer
     search_fields=['=solicitud_id__numero_radicado','=persona_id__identificacion','solicitud_id__fecha_registro']
-    # permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
+    permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
 
 class SexoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
@@ -97,7 +99,7 @@ class Persona_solicitudViewSet(EspecificViewSet):  # Una sola clase para los met
     ordering_fields = '__all__'
     search_fields=['nombres','apellidos','identificacion']
     serializer_class = Persona_solicitudSerializer
-    # permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
+    permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
 
 
 class Tipo_clienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
@@ -109,14 +111,14 @@ class Hechos_solicitudViewSet(EspecificViewSet):  # Una sola clase para los meto
     filterset_fields = '__all__'
     ordering_fields = '__all__'
     serializer_class = HechosSerializer
-    # permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
+    permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
 
 class CodigoViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = '__all__'
     ordering_fields = '__all__'
     serializer_class = CodigoSerializer
-    # permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
+    permission_classes = [(HasAPIKey & CustomCreateDjangoModelPermission )|(HasAPIKey & CustomDjangoModelPermission) ]
 
      
     
@@ -128,7 +130,7 @@ class UsuariosViewSet(viewsets.ModelViewSet):  # Una sola clase para los metodos
    
    filter_backends = [DjangoFilterBackend]
    filterset_fields = '__all__'
-#    permission_classes = [(HasAPIKey  | IsAuthenticated )& CustomDjangoModelPermission]
+   permission_classes = [(HasAPIKey  | IsAuthenticated )& CustomDjangoModelPermission]
 
    
    def perform_create(self, serializer):

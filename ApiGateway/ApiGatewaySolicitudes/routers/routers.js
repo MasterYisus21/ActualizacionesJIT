@@ -6,10 +6,10 @@ const views_genericos = require("../views/views");
 const archivo = require("../views/cargar_documentos.js")
 const config = require("../config.json");
 const error = require("../requests/requests_error.js")
-
+axios.defaults.headers.common['X-Api-Key'] =config.apiKey
 async function verifier(req, res, next) {
     
-   
+  
     try {
      
       if (req.headers.authorization) {
@@ -25,7 +25,7 @@ async function verifier(req, res, next) {
             }
           )
           .then((response) => {
-            console.log("oki")
+         
             if (response.data["logged_in_as"]) {
               axios.defaults.headers['Id'] =response.data.claims.sub;
               req.grupo = response.data.claims.rol;

@@ -36,10 +36,10 @@ views.CrearPersonas = async (req, res) => {
     if (req.body.identificacion == "" | req.body.identificacion == null) { res.sendStatus(error({ message: "No ha ingresado la identificacion" })); return }
     if (req.body.celular == "" | req.body.celular == null) { res.sendStatus(error({ message: "No ha ingresado el telefono celular" })); return }
     if (req.body.correo == "" | req.body.correo == null) { res.sendStatus(error({ message: "No ha ingresado el correo electronico" })); return }
-    if (req.body.tipo_cargo_id == "" | req.body.grupo_id == null) { res.sendStatus(error({ message: "No ha ingresado los permisos del usuario" })); return }
-    if (req.body.grupo_id == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
+    if (req.body.tipo_cargo_id == "" ) { res.sendStatus(error({ message: "No ha ingresado  el cargo del del usuario" })); return }
+    if (req.body.grupo_id == null) { res.sendStatus(error({ message: "No ha ingresado el grupo del usuario" })); return }
     if (req.body.tarjeta_profesional == null) { res.sendStatus(error({ message: "La tarjeta profesional no puede ser null" })); return }
-    req.body.persona_ugc=true
+    req.body.persona_ugc = true
     let datos = { username: req.body.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [req.body.grupo_id] }
 
     await axios.post(config.urlApiExpedientes + "usuarios/", datos)
@@ -159,6 +159,7 @@ views.GenericList = async (req, res) => {
   try {
     // console.log(config.urlApiExpedientes + req.url.slice(1))
     axios({
+      
       method: req.method.toLowerCase(),
       url: config.urlApiExpedientes + req.url.slice(1),
       // headers: req.headers,
@@ -183,15 +184,15 @@ views.GenericList = async (req, res) => {
 views.CrearExpediente = async (req, res) => {
   try {
 
-    
+
     if (req.body.apoderado) {
 
 
       if (!(req.body.apoderado.identificacion & req.body.apoderado.identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
-      
+
       await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
         .then((result) => {
-          
+
           req.body.convocante.apoderado_id = result.data.id
 
         })
@@ -218,20 +219,20 @@ views.CrearExpediente = async (req, res) => {
 
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
       .then(axios.spread(async (data1, data2) => {
-        
+
         req.body.hechos[0].expediente_id = data2.data.id
         const relacion_convocante_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
-        
+
         const relacion_convocado_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
         const relacion_conciliador_expediente = [config.urlApiExpedientes + "relaciones_persona_expediente/", { expediente_id: data2.data.id, persona_id: req.body.conciliador, tipo_cliente_id: 3 }]
         const hechos = [config.urlApiExpedientes + "hechos/", req.body.hechos[0]]
-        
+
         // const documentos = views.CargarDocumentos(req, res)
         endpoints = [relacion_convocante_expediente, relacion_convocado_expediente, relacion_conciliador_expediente, hechos]
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           .then(axios.spread(async (data3, data4, data5) => {
 
-            
+
             res.status(201).json(data2.data)
 
             const saludo = `<br>Reciba un cordial saludo ${data5.data.nombres}`
@@ -251,7 +252,7 @@ views.CrearExpediente = async (req, res) => {
             for await (const iterator of req.body.documentos.results) {
               await axios.get(iterator.documento, { responseType: 'arraybuffer' })
                 .then(async result => {
-                  
+
                   await fs.writeFile("./public/" + iterator.nombre, result.data, (err) => {
                     if (err)
                       console.log(err);
@@ -261,7 +262,7 @@ views.CrearExpediente = async (req, res) => {
 
                     }
                   })
-                  
+
                   let bodyFormData = new FormData();
                   const file = fs.createReadStream("./public/" + iterator.nombre)
                   bodyFormData.append('files', file);
@@ -282,7 +283,7 @@ views.CrearExpediente = async (req, res) => {
                         return
                       }
                     }).catch((err) => {
-             
+
                       error(err)
                       return
                     });
@@ -290,27 +291,27 @@ views.CrearExpediente = async (req, res) => {
 
                 })
                 .catch(err => {
-            
+
                   error(err)
                   return
                 })
-                
+
             }
 
             // res.status(200).json(data2.data)
           })
           )
-          
+
           .catch(err => {
 
             res.sendStatus(error(err))
             return
 
           })
-          // console.log("entre aq este lado");
+        // console.log("entre aq este lado");
       }))
       .catch(err => {
-        
+
         res.sendStatus(error(err))
         return
       })
@@ -411,22 +412,28 @@ views.ListarDepartamentos = async (req, res) => {
 }
 views.VerPersonas = async (req, res) => {
   try {
+    
     await axios.get(config.urlApiExpedientes + "personas/" + req.params.id)
       .then(async result => {
-        if (result.data.usuario_id) {
+        
+        if (!result.data.usuario_id) {res.status(200).json(result.data);return;}
+         
           await axios.get(config.urlApiExpedientes + "usuarios/" + result.data.usuario_id)
             .then(resul => {
-
+             
               result.data.grupo_id = resul.data.groups[0]
-
+              
+             
+            
+              res.status(200).json(result.data) 
             })
             .catch(err => {
               res.status(error(err))
             })
-        }
-        res.status(200).json(result.data)
+          
+         
       })
-      .catch(err => {
+      .catch(err => { 
         res.sendStatus(error(err))
       })
   } catch (error) {
@@ -440,14 +447,14 @@ views.ListarExpedientes = async (req, res) => {
   try {
     if (req.grupo == 1) {
       let url = config.urlApiExpedientes + "expedientes";
-      
-      if(req.query.search){url = config.urlApiExpedientes + "relaciones_persona_expediente"}
+
+      if (req.query.search) { url = config.urlApiExpedientes + "relaciones_persona_expediente" }
       requests.get(req, res, url, "?")
-      
+
     } else {
 
       const url = config.urlApiExpedientes + "relaciones_persona_expediente?persona_id__identificacion=" + req.identificacion
-     
+
       requests.get(req, res, url, "&")
     }
   } catch (error) {
@@ -737,11 +744,11 @@ const informacionCitacion = async (req) => {
       }
       if (Object.keys(estudiante.data.results).length < 0) { datos.estudiante = [] } else {
         let contador = 1
-        let i=0
+        let i = 0
         for (const iterator of estudiante.data.results) {
-        
+
           for (const item in iterator) {
-            
+
             if (typeof (estudiante.data.results[i][item]) == 'string') { estudiante.data.results[i][item] = estudiante.data.results[i][item].toUpperCase() }
             if (estudiante.data.results[i][item] == null) { estudiante.data.results[i][item] = "___" }
             datos["estudiante" + contador + "_" + item] = estudiante.data.results[i][item]
@@ -931,25 +938,25 @@ views.GenerarReportes = async (req, res) => {
     axios.post(config.urlGeneradorReportes, req.body, { responseType: 'arraybuffer' })
 
       .then(result => {
-        
-        
+
+
         res.end(result.data)
 
       })
       .catch(err => {
-        req.body.reporte_id = req.params.id
-    
-        let file = fs.readFileSync("./public/formato_personas (1) (1).xlsx.xlsx")
-                 
-        
-        res.end(file)
-        // if (err.response) {
-        //   res.sendStatus(error(err));
-        //   return
-        // }
-        // if (err.request) {
-        //   res.sendStatus(503); return
-        // }
+       
+
+        // let file = fs.readFileSync("./public/formato_personas (1) (1).xlsx.xlsx")
+
+
+        // res.end(file)
+        if (err.response) {
+          res.sendStatus(error(err));
+          return
+        }
+        if (err.request) {
+          res.sendStatus(503); return
+        }
       })
 
   } catch (error) {
@@ -963,7 +970,7 @@ views.DescargarFormatoCitacion = async (req, res) => {
 
     axios.get(config.urlApiExpedientes + "citaciones/" + req.params.id_citacion)
       .then(async result => {
-        if (Object.keys(result.data).length < 1) { res.sendStatus(error({ message: "El expediente aun no tiene resultado" }, 204)); return }
+        if (Object.keys(result.data).length < 1) { res.sendStatus(error({ message: "El expediente aun no tiene citacion" }, 204)); return }
         await informacionCitacion(req).then(async (resul) => {
           // console.log(resul.data.results[0])
 
@@ -1055,11 +1062,11 @@ views.ListarPersonasCitadasyPorCitar = async (req, res) => {
 
 
         // // personas_disponibles = personas_disponibles.sort((a, b) => { return a - b });
-       
+
         if (datos2.data.results.length < 1) { personas_citadas = [] } else {
           for (const iterator of datos2.data.results) {
             id_personas_citadas[personas_citadas.length] = iterator.persona_id
-            if(personas_disponibles.indexOf(iterator.persona_id)<0){break}
+            if (personas_disponibles.indexOf(iterator.persona_id) < 0) { break }
             datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)].id_relacion = iterator.id
             personas_citadas.push(datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)])
             if (datos1.data.results[personas_disponibles.indexOf(iterator.persona_id)] == null) { personas_citadas = []; break }
@@ -1151,7 +1158,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
   try {
     let falla = false
     // validacion correo 
-    if(Object.keys(req.body).length<1){return res.sendStatus(204)}
+    if (Object.keys(req.body).length < 1) { return res.sendStatus(204) }
     for await (const iterator of req.body) {
       req.params.id_relacion = iterator
       await informacionCitacion(req).then(async (resul) => {
@@ -1162,10 +1169,10 @@ views.EnviarNotificacionCitacion = async (req, res) => {
         if (!resul.citado_ciudad) { resul.citado_ciudad = "______" }
         if (!resul.estudiante1_nombres) { resul.estudiante1_nombres = "" }
         if (!resul.estudiante2_nombres) { resul.estudiante2_nombres = "" }
-     
+
         await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
           .then(async (result) => {
-            
+
 
             fs.writeFile("./public/formatos/citacion_" + resul.citado_nombres + ".docx", result.data, async (err) => {
               if (err) { throw new Error(err) }
@@ -1199,6 +1206,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                       //.attach('Ruta_directorio', req.file.path) // reads directly from local file
                       .attach('adjunto', fs.createReadStream("./public/formatos/citacion_" + resul.citado_nombres + ".pdf")) // creates a read stream
                       //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+                      .headers({ "X-Api-Key": config.apiKey,"Id":req.identificacion })
                       .then(async function (response) {
 
                         try {
@@ -1211,7 +1219,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                         const saludo = `<br>Reciba un cordial saludo `
                         const encabezado = `Este mensaje notifica que se ha generado una citación de audiencia de conciliación con la siguiente informacion:`
                         const cuerpo = `
-                  <br><b>Expediente:</b> ${resul.expediente_numero_radicado}
+                  <br><b>Expediente:</b> ${resul.expediente_numero_caso}
                   <br><b>Nombre del Citado:</b> ${resul.citado_nombres}
                   <br><b>Fecha:</b> ${resul.citado_fecha_sesion} 
                   <br><b>Hora:</b> ${resul.citacion_turno} 
@@ -1220,28 +1228,28 @@ views.EnviarNotificacionCitacion = async (req, res) => {
                   <br><b>Descripcion:</b> ${resul.citacion_descripcion} 
 
 
-                  <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento  .<br>`
+                  <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento.`
 
                         let asunto = `Citación Audiencia Conciliación`
 
 
-                        const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { (error(err)); falla=true  })
+                        const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { (error(err)); falla = true })
 
-  
+
                       })
-         
-                    
+
+
                   })
                 })
                 .catch(err => {
                   if (err.response) {
-                    (error(err)); falla=true
-                    
+                    (error(err)); falla = true
+
                     return
                   }
                   if (err.request) {
-                    (error(err)); falla=true
-                     return
+                    (error(err)); falla = true
+                    return
                   }
 
                 })
@@ -1252,21 +1260,21 @@ views.EnviarNotificacionCitacion = async (req, res) => {
             })
           })
           .catch(err => {
-            (error(err)); falla=true
+            (error(err)); falla = true
           })
       })
         .catch(err => {
-          (error(err)); falla=true
-          
+          (error(err)); falla = true
+
         })
 
 
     }
-    if(!falla){
-    res.sendStatus(200)
+    if (!falla) {
+      res.sendStatus(200)
     }
-    else{
-    res.sendstatus(503) 
+    else {
+      res.sendStatus(503)
     }
 
 
@@ -1332,6 +1340,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
 }
 views.EnviarResultado = async (req, res) => {
   try {
+    
     res.sendStatus(200)
   } catch (error) {
     console.log(error);
@@ -1369,6 +1378,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
             //.attach('Ruta_directorio', req.file.path) // reads directly from local file
             .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
             //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+            .headers({ "X-Api-Key": config.apiKey,"Id":req.identificacion })
             .then(function (response) {
               try {
                 fs.unlinkSync(iterator.path)
@@ -1426,30 +1436,30 @@ views.CargarTemplatePersonas = async (req, res) => {
         for (const iterator in workbook.Sheets[sheet]) {
 
           if (iterator != "!ref") {
-            if(workbook.Sheets[sheet][iterator].w==undefined){break}
+            if (workbook.Sheets[sheet][iterator].w == undefined) { break }
             workbook.Sheets[sheet][iterator].w = workbook.Sheets[sheet][iterator].w.toLowerCase()
             if (iterator[0] == letra) { break }
           }
         }
-        
-        
-        
-        for await(iterator of xlsx.utils.sheet_to_json(workbook.Sheets[sheet])) {
+
+
+
+        for await (iterator of xlsx.utils.sheet_to_json(workbook.Sheets[sheet])) {
 
           if (!iterator.identificacion | !iterator.correo | iterator.nombres) { res.status(400).json({ message: "Se encuentan celdas obligatorias vacias" }); return }
-      
-          
+
+
           usuarios.push({ username: iterator.identificacion, password: config.clave_usuarios_nuevos, is_staff: false, is_active: true, groups: [id_grupo] })
           identificacion.push(iterator.identificacion)
-          iterator.persona_ugc=true
+          iterator.persona_ugc = true
           email.push(iterator.correo)
-          iterator.tipo_cargo_id=id_grupo
+          iterator.tipo_cargo_id = id_grupo
           personas.push(iterator)
-          
+
 
         }
 
-        
+
       }
 
       function repetidos(arr) {
@@ -1474,10 +1484,10 @@ views.CargarTemplatePersonas = async (req, res) => {
         res.status(400).json({ message: mensaje }); return
       }
 
-
+      console.log(usuarios)
       await axios.post(config.urlApiExpedientes + "usuarios/", usuarios)
         .then(async result => {
-        
+
           for (const iterator in result.data) {
 
             personas[iterator].usuario_id = result.data[iterator].id
@@ -1639,6 +1649,7 @@ views.CambiarDocumentoCaso = async (req, res) => {
           //.attach('Ruta_directorio', req.file.path) // reads directly from local file
           .attach('documento', fs.createReadStream(req.files[0].path)) // creates a read stream
           //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+          .headers({ "X-Api-Key": config.apiKey,"Id":req.identificacion })
           .then(function (response) {
             try {
               fs.unlinkSync(req.files[0].path)
@@ -1742,7 +1753,7 @@ views.CrearResultado = async (req, res) => {
                 correos.push(iterator.correo)
               }
 
-              const saludo = `<br>Reciba un cordial saludo `
+              const saludo = `<br>Reciba un cordial saludo. `
               const encabezado = `Este mensaje notifica que el expediente <b>${casoCerrado.data.numero_caso}</b> posee el siguiente resultado:`
               const cuerpo = `
           <br><b>Expediente:</b> ${casoCerrado.data.numero_caso}
@@ -1780,7 +1791,7 @@ views.CrearResultado = async (req, res) => {
 }
 views.CargarResultadoCaso = async (req, res) => {
   try {
- 
+
     if (Object.keys(req.files).length > 1) {
       res.sendStatus(error({ message: "Solo puede subir un documento" }));
       for (const iterator of req.files) {
@@ -1804,6 +1815,7 @@ views.CargarResultadoCaso = async (req, res) => {
       //.attach('Ruta_directorio', req.file.path) // reads directly from local file
       .attach('documento', fs.createReadStream(req.files[0].path)) // creates a read stream
       //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+      .headers({ "X-Api-Key": config.apiKey,"Id":req.identificacion })
       .then(function (response) {
         try {
           fs.unlinkSync(req.files[0].path)
@@ -2064,15 +2076,15 @@ views.EliminarPersonaCaso = async (req, res) => {
   try {
     const url = config.urlApiExpedientes + "relaciones_persona_expediente/" + req.params.id_relacion + "/"
     requests.delete(req, res, url)
-    
-   
-      .then(result=>{
-        
-    })
+
+
+      .then(result => {
+
+      })
       .catch(err => {
         res.sendStatus(error(err))
       })
-    
+
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -2083,7 +2095,7 @@ views.AgregarConciliadores = async (req, res) => {
   try {
     axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
       .then(async result => {
-        
+
         if (Object.keys(result.data.results).length > 0) { res.status(400).json({ response: { mensaje: "Ya se encuentra reportada esta persona " } }); return }
         const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
@@ -2164,17 +2176,42 @@ views.CambiarEstadoExpediente = async (req, res) => {
   try {
 
     axios.patch(config.urlApiExpedientes + "expedientes/" + req.params.id + "/", { estado_expediente_id: req.body.estado_expediente_id })
-      .then(result => {
-
-        axios.post(config.urlApiExpedientes + "historicos/", { estado_id: req.body.estado_expediente_id, expediente_id: req.params.id })
-          .then(resul => {
-
+      .then(async result => {
+        axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?tipo_cliente_id=1&expediente_id=" + req.params.id)
+          .then(async response => {
             res.status(200).json(result.data)
+            
+            const encabezado = `Este mensaje notifica que el estado de su expediente ${result.data.numero_caso} es el siguiente:<br><br>
+            <b>Numero Caso:</b> ${result.data.numero_caso}.
+            <br><b>Estado actual :</b>${result.data.estado_expediente}.
+            `
+            let cuerpo =
+            `<br> <br>Recuerde que podrá consultar esta y demás información del caso en la página principal del Centro de Conciliación en la sección: <b>Consulta tu solicitud</b> 
+            pulsando click en la opción <b>Expedientes</b> e ingresando su número de identificación para luego seleccionar el expediente:<b> ${result.data.numero_caso}</b>.
+`
+      
+             cuerpo = cuerpo+ `<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
+            let asunto = `Cambio de estado del caso: ${result.data.numero_caso} (${result.data.estado_expediente}) `
+            if (Object.keys(response.data.results).length > 0) {
+              const saludo = `<br>Reciba un cordial saludo ${response.data.results[0].nombres}.`
+              const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [response.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
+            }
+
+            await axios.post(config.urlApiExpedientes + "historicos/", { estado_id: req.body.estado_expediente_id, expediente_id: req.params.id })
+              .then(resul => {
+
+
+
+              })
+              .catch(err => {
+                res.sendStatus(error(err))
+                return
+              })
           })
           .catch(err => {
             res.sendStatus(error(err))
-            return
           })
+
       })
       .catch(err => {
         res.sendStatus(error(err))
@@ -2212,28 +2249,28 @@ views.ActualizarCitacion = async (req, res) => {
 }
 views.ActualizarPersonas = async (req, res) => {
   try {
-   
-    let endpoints=[]
+
+    let endpoints = []
     let datos = {}
-   
-    req.body.grupo_id=parseInt(req.body.grupo_id)
-    if (req.body.identificacion) { delete req.body["identificacion"] ;  endpoints.push(config.urlApiExpedientes+"personas/"+req.params.id+"/") }
-    if (req.body.usuario_id) {endpoints.push(config.urlApiExpedientes+"usuarios/"+req.body.usuario_id+"/"); }
-    req.body.groups=[parseInt(req.body.grupo_id)]
-    console.log(req.body)
-    await Promise.all(endpoints.map((endpoint) => axios.patch(endpoint,req.body)))
-      .then(axios.spread(async (data1,data2) => {
-      
-      
+
+    req.body.grupo_id = parseInt(req.body.grupo_id)
+    if (req.body.identificacion) { endpoints.push(config.urlApiExpedientes + "personas/" + req.params.id + "/") }
+    if (req.body.usuario_id) { req.body.username = req.body.identificacion; endpoints.push(config.urlApiExpedientes + "usuarios/" + req.body.usuario_id + "/"); }
+    req.body.groups = [parseInt(req.body.grupo_id)]
+    
+    await Promise.all(endpoints.map((endpoint) => axios.patch(endpoint, req.body)))
+      .then(axios.spread(async (data1, data2) => {
+
+        
         res.status(200).json(data1.data)
       }))
       .catch(err => {
-      
+
         res.sendStatus(error(err))
         return
 
       })
-    
+
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -2255,11 +2292,11 @@ views.ActualizarApoderado = async (req, res) => {
 //turnos para una fecha 
 views.ListarPersonas = async (req, res) => {
   try {
-   
-    const url = config.urlApiExpedientes + "personas?persona_ugc=true" 
+
+    const url = config.urlApiExpedientes + "personas?persona_ugc=true"
 
     requests.get(req, res, url, "&")
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     res.sendStatus(500);
     return;

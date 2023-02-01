@@ -3,7 +3,7 @@ import { Buscador, Button, Popup } from '../../../components'
 import TarjetaPersonas from '../../../components/Tarjeta/TarjetaPersonas'
 import { useState, useEffect } from 'react'
 import FileDownload from 'js-file-download'
-
+import { toast } from "react-toastify";
 
 // import css
 import './Personas.css'
@@ -112,8 +112,13 @@ function Personas() {
     })
       .then(result => {
         console.log(result);
+        toast.success("Las personas han sido creadas correctamente", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+        
       })
       .catch(err => {
+        
         console.log(err);
       });
   }

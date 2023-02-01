@@ -19,7 +19,7 @@ email.enviar= (tipo_mensaje, saludo,correoQuienRecibe, asunto, encabezado,cuerpo
         
       }
     }
-    if(adjunto){ email.adjunto=adjunto}
+    if(adjunto){ email.adjunto=adjunto }
     return email
   } 
 

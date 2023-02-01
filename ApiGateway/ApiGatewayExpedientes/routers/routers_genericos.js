@@ -1,11 +1,10 @@
 const express = require("express");
 const axios = require("axios");
-const app = express();
 const router = express.Router();
 const archivo = require("../views/cargar_documentos.js")
 const cargar_excel = require("../views/cargar_descargar_excel")
 const config = require("../config.json");
-const error = require("../requests/requests_error.js")
+
 async function ValidacionExpedientes(req, res, next) {
     if(req.grupo ==1){next();return}
     await axios.get(config.urlApiExpedientes+"relaciones_persona_expediente?expediente_id="+req.params.id+"&persona_id__identificacion="+req.identificacion)
