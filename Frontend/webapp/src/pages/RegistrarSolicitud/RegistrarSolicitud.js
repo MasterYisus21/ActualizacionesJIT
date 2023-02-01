@@ -1,9 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import {
-  BarRectangulo,
-  SearchableSelect,
-  SubtemaRectangulo,
-} from "../../components";
+import { BarRectangulo, SearchableSelect, SubtemaRectangulo } from "../../components";
 import { useDropzone } from "react-dropzone";
 
 // Importing css
@@ -11,16 +7,14 @@ import "./RegistrarSolicitud.css";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Collapse from "react-bootstrap/Collapse";
-import {
-  axiosBasicInstanceApiExpedientes,
-  axiosBasicInstanceApiSolicitudes,
-} from "../../helpers/axiosInstances";
+import { axiosBasicInstanceApiExpedientes, axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 
 function RegistrarSolicitud() {
+
   const navigate = useNavigate();
   const [seccion1, setSeccion1] = useState(true);
   const [seccion2, setSeccion2] = useState(false);
@@ -187,7 +181,7 @@ function RegistrarSolicitud() {
         },
         {
           label: "Todavia no",
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     });
@@ -971,7 +965,7 @@ function RegistrarSolicitud() {
           linkto={""}
           text={"Enviar Solicitud"}
           icon={""}
-          onClick={() => {}}
+          onClick={() => { }}
         />
       </Form>
     </div>

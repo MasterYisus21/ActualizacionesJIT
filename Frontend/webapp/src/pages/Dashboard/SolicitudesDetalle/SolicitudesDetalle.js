@@ -8,10 +8,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import "./SolicitudesDetalle.css";
 import { useDropzone } from "react-dropzone";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  axiosBasicInstanceApiSolicitudes,
-  axiosTokenInstanceApiSolicitudes,
-} from "../../../helpers/axiosInstances";
+import { axiosBasicInstanceApiSolicitudes, axiosTokenInstanceApiSolicitudes } from "../../../helpers/axiosInstances";
 import { axiosTokenInstanceApiExpedientes } from "../../../helpers/axiosInstances";
 import { SearchableSelect } from "../../../components";
 import FileDownload from "js-file-download";
@@ -425,8 +422,8 @@ function SolicitudesDetalle() {
         });
         navigate(
           "/dashboard/expedientes/detalle/" +
-            response.data.id +
-            "/datosgenerales"
+          response.data.id +
+          "/datosgenerales"
         );
       })
       .catch((err) => {
