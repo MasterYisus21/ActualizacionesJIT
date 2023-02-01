@@ -162,7 +162,7 @@
     }
 
     .carta-consulta-solicitud {
-        height: 55vh;
+        height: fit-content;
         max-height: 550px;
         width: 23em;
         flex-direction: column-reverse;
@@ -229,18 +229,20 @@
     }
 }
 
-@media (min-height: 850px) {
+@media (min-height: 850px) and (min-width: 1000px) {
 
     .imagen-logo-principal2 {
         margin-top: 6em;
     }
 
-    .imagen_solicitud {
-        height: 18em;
-    }
-
     .titulo {
         margin-bottom: 1em;
+        font-size: 1.7em;
+    }
+
+    .contenido {
+        padding: 1em;
+        font-size: 1.5em;
     }
 
     .contenedor-rectangulo-grande {
