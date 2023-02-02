@@ -261,7 +261,7 @@ function Audiencia() {
         </Link>
       </div> */}
       <div className='titulo-informacion-audiencia'>
-        <label className='titulo-audiencia'>Sesion de Audiencia</label>
+        <label className='titulo-audiencia'>Sesión de Audiencia</label>
 
       </div>
       <div className='contenedor-subtitulo'>
