@@ -110,7 +110,7 @@ function Conciliador() {
     }
     confirmAlert({
       title: `Confirmación para agregar persona`,
-      message: `¿Estas seguro de agregar a ${nombre.toUpperCase()} al caso?.`,
+      message: `¿Estás seguro de agregar a ${nombre.toUpperCase()} al caso?.`,
       buttons: [
         {
           label: 'Si',
@@ -197,7 +197,7 @@ function Conciliador() {
     }
     confirmAlert({
       title: `Confirmación para eliminar`,
-      message: `¿Estas seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
+      message: `¿Estás seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
       buttons: [
         {
           label: 'Si',

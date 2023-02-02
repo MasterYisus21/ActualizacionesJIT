@@ -199,7 +199,7 @@ function DatosGenerales() {
     })
       .then(result => {
         console.log(result.data);
-        toast.success('La información se ha guardado con exito', {
+        toast.success('La información se ha guardado con éxito', {
           position: toast.POSITION.BOTTOM_RIGHT
         })
       })
@@ -267,8 +267,8 @@ function DatosGenerales() {
 
         </div>
         <div className='modulo-solicitud-content-main-column2-form1'>
-          <div><h2>Definición del asunto juridico</h2></div>
-          <h4>¿Asunto juridico definible?</h4>
+          <div><h2>Definición del asunto jurídico</h2></div>
+          <h4>¿Asunto jurídico definible?</h4>
           <div className='d-flex'>
             <div className="form-check">
               <input className="form-check-input" type="radio" name="asunto_definible" id="asunto_definible1" value="si" />
@@ -286,9 +286,9 @@ function DatosGenerales() {
         </div>
 
         <div className='modulo-solicitud-content-main-column2-form2'>
-          <div><h2>Area y Tema</h2></div>
+          <div><h2>Área y Tema</h2></div>
           <div className="mb-3">
-            <label htmlFor="Area_Id" className="form-label h4">Area:</label>
+            <label htmlFor="Area_Id" className="form-label h4">Área:</label>
             <select className="form-select form-select-lg" aria-label="Default select example" id="Area_Id" name='Area_Id' required>
               <option value={""}>Abre el menú para ver las opciones</option>
               {areas.map(area => {

@@ -48,7 +48,7 @@ function ManejoConflicto() {
         })
             .then(result => {
                 console.log(result.data);
-                toast.success('La información se ha guardado con exito', {
+                toast.success('La información se ha guardado con éxito', {
                     position: toast.POSITION.BOTTOM_RIGHT
                 })
             })

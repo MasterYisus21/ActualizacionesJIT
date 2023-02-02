@@ -152,9 +152,9 @@ function ExpedientesDetalle() {
                         })}
                     </ul>
                     <div>
-                        <div className='h6'>Numero de expediente:</div>
+                        <div className='h6'>Número de expediente:</div>
                         <div className='h5'><strong>{numeroExpediente}</strong></div>
-                        <div className='h6'>Numero de radicado:</div>
+                        <div className='h6'>Número de radicado:</div>
                         <div className='h5'><strong>{numeroRadicado}</strong></div>
                     </div>
                 </div>

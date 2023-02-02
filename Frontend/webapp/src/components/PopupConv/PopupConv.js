@@ -1040,7 +1040,7 @@ export default function PopupConv({
                         </FloatingLabel>
                         <FloatingLabel
                           controlId="correoApoderado"
-                          label="correo"
+                          label="Correo"
                         >
                           <Form.Control
                             className="col-inputs"
@@ -1080,7 +1080,7 @@ export default function PopupConv({
           </div>
 
           <div className="wrapp-botones">
-            <button className="botones-popup" onClick={() => {}}>
+            <button className="botones-popup" onClick={() => { }}>
               Guardar
             </button>
             <button

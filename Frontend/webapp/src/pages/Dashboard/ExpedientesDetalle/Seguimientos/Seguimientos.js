@@ -11,14 +11,14 @@ import { toast } from 'react-toastify'
 
 
 function Seguimientos() {
-  
+
   const [open, setOpen] = useState(false)
   const [seguimientos, setSeguimientos] = useState([])
   const [preguntas, setPreguntas] = useState([])
   const [mediosSeguimiento, setMediosSeguimiento] = useState([])
   const [page, setPage] = useState(1);
   const [numPages, setNumPages] = useState(1);
-  
+
   let resultados = useRef([]);
   let { id } = useParams();
 
@@ -135,7 +135,7 @@ function Seguimientos() {
         e.target.reset();
         setOpen(false)
         setSeguimientos([...seguimientos, result.data])
-        toast.success('La información se ha guardado con exito', {
+        toast.success('La información se ha guardado con éxito', {
           position: toast.POSITION.BOTTOM_RIGHT
         })
       })
@@ -184,7 +184,7 @@ function Seguimientos() {
                       name={`pregunta${pregunta.id}`}
                       value={true}
                       onClick={e => { let el = document.getElementById(`pregunta${pregunta.id}detalle`); el.setAttribute('disabled', true); el.value = ""; el.removeAttribute('required') }}
-                      // required
+                    // required
                     />
                     <Form.Check
                       // disabled
@@ -193,7 +193,7 @@ function Seguimientos() {
                       name={`pregunta${pregunta.id}`}
                       value={false}
                       onClick={e => { let el = document.getElementById(`pregunta${pregunta.id}detalle`); el.removeAttribute('disabled'); el.setAttribute('required', true) }}
-                      // required
+                    // required
                     />
                   </div>
                   <Form.Control as="textarea" id={`pregunta${pregunta.id}detalle`} name={`pregunta${pregunta.id}detalle`} placeholder="Detalle" style={{ height: '10rem' }} />
@@ -213,7 +213,7 @@ function Seguimientos() {
                   label={'Si'}
                   value={true}
                   name="se_cumplio_acuerdo"
-                  // required
+                // required
                 />
                 <Form.Check
                   // disabled
@@ -221,7 +221,7 @@ function Seguimientos() {
                   label={'No'}
                   value={false}
                   name="se_cumplio_acuerdo"
-                  // required
+                // required
                 />
               </div>
               <br />

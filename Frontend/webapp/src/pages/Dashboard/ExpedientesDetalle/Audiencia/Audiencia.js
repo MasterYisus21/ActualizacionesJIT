@@ -141,7 +141,7 @@ function Audiencia() {
       .then(result => {
         // console.log(result.data);
         setDataApi(result.data)
-        toast.success('La información se ha guardado con exito', {
+        toast.success('La información se ha guardado con éxito', {
           position: toast.POSITION.BOTTOM_RIGHT
         })
       })
@@ -236,7 +236,7 @@ function Audiencia() {
     }
     confirmAlert({
       title: `Confirmación`,
-      message: `¿Estas seguro de notificar a los usuarios?. Esta acción enviara un correo electrónico y no puede ser revertida`,
+      message: `¿Estás seguro de notificar a los usuarios?. Esta acción enviara un correo electrónico y no puede ser revertida`,
       buttons: [
         {
           label: 'Si',
