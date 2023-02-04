@@ -907,7 +907,7 @@ views.DescargarFormatoResultado = async (req, res) => {
         await informacionCaso(req).then(async (resul) => {
           // console.log(resul.data.results[0])
           resul.nombre_documento = result.data.tipo_resultado
-
+          console.log(resul)
           await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
             .then(async result => {
 
