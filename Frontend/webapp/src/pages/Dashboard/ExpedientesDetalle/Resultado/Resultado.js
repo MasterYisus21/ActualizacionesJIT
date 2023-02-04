@@ -73,7 +73,7 @@ function Resultado() {
     }
     confirmAlert({
       title: `Confirmación para crear resultado`,
-      message: `¿Estas seguro de crear este resultado en el caso?, recuerda que este resultado ya no podra ser modificado.`,
+      message: `¿Estás seguro de crear este resultado en el caso?, recuerda que este resultado ya no podrá ser modificado.`,
       buttons: [
         {
           label: 'Si',
@@ -209,12 +209,12 @@ function Resultado() {
               <p>DESCARGAR</p>
               {previousData && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
             </button>
-              <button className="resultado-button" type='button' onClick={e => uploadDocument(e)} disabled={documentUploaded && !permisos.includes("modulo_modificar_resultado")}>
-                <img src='/icons/upload.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
-                <p>CARGAR</p>
-                {documentUploaded && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
-                <input ref={uploadDocumentField} type='file' style={{ display: "none" }} onChange={e => handleDocumentChange(e)}></input>
-              </button>
+            <button className="resultado-button" type='button' onClick={e => uploadDocument(e)} disabled={documentUploaded && !permisos.includes("modulo_modificar_resultado")}>
+              <img src='/icons/upload.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
+              <p>CARGAR</p>
+              {documentUploaded && <img src='/icons/check-mark.svg' alt='imagen guardar' className="resultado-floating-corner" />}
+              <input ref={uploadDocumentField} type='file' style={{ display: "none" }} onChange={e => handleDocumentChange(e)}></input>
+            </button>
             <button className="resultado-button" type='button' onClick={e => { downloadResult(e) }}>
               <img src='/icons/download.svg' alt='imagen guardar' className="modulo-solicitud-content-main-column2-save-button-img" />
               <p>DESCARGAR</p>

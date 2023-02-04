@@ -155,7 +155,7 @@ function EvaluacionServicio() {
         let tempRespuestasData = { ...respuestasData }
         tempRespuestasData.fecha = result.data.fecha
         setRespuestasData(tempRespuestasData)
-        toast.success('Encuesta creada con exito.', {
+        toast.success('Encuesta creada con éxito.', {
           position: toast.POSITION.BOTTOM_RIGHT
         })
         setPreviousData(true)

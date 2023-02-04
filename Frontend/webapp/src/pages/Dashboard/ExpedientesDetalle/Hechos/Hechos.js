@@ -65,7 +65,7 @@ function Hechos() {
         })
             .then(result => {
                 console.log(result.data);
-                toast.success('La información se ha guardado con exito', {
+                toast.success('La información se ha guardado con éxito', {
                     position: toast.POSITION.BOTTOM_RIGHT
                 })
             })
@@ -115,7 +115,7 @@ function Hechos() {
                 </div>
             </div>
             <div className='modulo-solicitud-content-main-hechos-determinacion-cuantia'>
-                <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h6>Determinación de la cuantia</h6></div>
+                <div className='modulo-solicitud-content-main-hechos-lugar-titulo'><h6>Determinación de la cuantía</h6></div>
                 <div className="mb-3" style={{ display: "flex", width: "35%", justifyContent: "space-evenly" }}>
                     <label htmlFor="cuantia_hechos" className="form-label">Cuantía:</label>
                     <input type="text" className="form-control form-control-sm" id="cuantia_hechos" name='cuantia_hechos' placeholder="" required />

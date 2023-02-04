@@ -119,7 +119,7 @@ function Convocados() {
     }
     confirmAlert({
       title: `Confirmación para eliminar`,
-      message: `¿Estas seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
+      message: `¿Estás seguro de borrar a ${nombre.toUpperCase()} del caso?.`,
       buttons: [
         {
           label: "Si",

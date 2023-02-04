@@ -109,7 +109,7 @@ function Estudiantes() {
     }
     confirmAlert({
       title: `Confirmación para agregar persona`,
-      message: `¿Estas seguro de agregar a ${nombre.toUpperCase()} al caso?.`,
+      message: `¿Estás seguro de agregar a ${nombre.toUpperCase()} al caso?.`,
       buttons: [
         {
           label: 'Si',

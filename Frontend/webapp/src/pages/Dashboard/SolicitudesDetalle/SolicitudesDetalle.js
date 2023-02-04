@@ -69,7 +69,7 @@ function SolicitudesDetalle() {
         setData(result.data);
 
         //Convocante
-        
+
         document.getElementById("identificacion").value =
           result.data.convocante["identificacion"];
         document.getElementById("tipoDocumento").value =
@@ -190,7 +190,7 @@ function SolicitudesDetalle() {
 
   useEffect(() => {
     // const calcularEdad
-      
+
     if (data.apoderado && apoderado_convocante) {
       document.getElementById("identificacion_Apoderado").value =
         data?.apoderado?.identificacion;
@@ -480,7 +480,7 @@ function SolicitudesDetalle() {
   }, [conciliador]);
 
   return (
-    
+
     <div className="wrapp-main-detalle-solicitud">
       <div className="wrapp-introduccion">
         <label className="introduccion-texto-solicitud">
@@ -889,7 +889,7 @@ function SolicitudesDetalle() {
                       disabled
                     />
                   </FloatingLabel>
-                  <FloatingLabel controlId="correo_Apoderado" label="correo">
+                  <FloatingLabel controlId="correo_Apoderado" label="Correo">
                     <Form.Control
                       className="col-inputs"
                       type="text"
@@ -1232,7 +1232,7 @@ function SolicitudesDetalle() {
             >
               <div className="contenedor-rechazar">
                 <label className="label-explicacion-rechazar">
-                  Escriba una nota explicando al usuario el por qué se rechaza o
+                  Escriba una nota explicando al usuario el porqué se rechaza o
                   no se puede atender su solicitud
                 </label>
                 <textarea
@@ -1256,7 +1256,7 @@ function SolicitudesDetalle() {
               <div className="contenedor-incompleto">
                 <label className="label-explicacion-rechazar">
                   Escriba una nota explicando al usuario que información hace
-                  falta o una razón del por qué se retorna su solicitud
+                  falta o una razón del porqué se retorna su solicitud
                 </label>
                 <textarea
                   className="campo-explicacion"
@@ -1418,7 +1418,7 @@ function SolicitudesDetalle() {
               >
                 <div className="contenedor-rechazar">
                   <label className="label-explicacion-rechazar">
-                    Escriba una nota explicando al usuario el por qué se rechaza
+                    Escriba una nota explicando al usuario el porqué se rechaza
                     o no se puede atender su solicitud
                   </label>
                   <textarea
@@ -1444,7 +1444,7 @@ function SolicitudesDetalle() {
                 <div className="contenedor-incompleto">
                   <label className="label-explicacion-rechazar">
                     Escriba una nota explicando al usuario que información hace
-                    falta o una razón del por qué se retorna su solicitud
+                    falta o una razón del porqué se retorna su solicitud
                   </label>
                   <textarea
                     className="campo-explicacion"
