@@ -46,7 +46,7 @@ class Departamento(GeneralModel):
 class Ciudad(GeneralModel):
     
     departamento_id=models.ForeignKey(Departamento, on_delete=models.SET_NULL,blank=False,null=True)
-    nombre= models.CharField(max_length=50,blank=False, null=False)
+    nombre= models.CharField(max_length=80,blank=False, null=False,unique=False)
     class Meta:
         managed = False
         db_table='Ciudad'
@@ -496,7 +496,8 @@ class Solicitante_servicio(GeneralModel):
 
 
 class Tema(GeneralModel):
-
+    
+    nombre= models.CharField(max_length=100,blank=False, null=False,unique=True)
     class Meta:
         db_table='Tema'
         verbose_name = ("Tema")
@@ -507,7 +508,7 @@ class Tema(GeneralModel):
 
 
 class Subtema(GeneralModel):
-    
+    nombre= models.CharField(max_length=210,blank=False, null=False,unique=False)
     tema_id = models.ForeignKey(Tema, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
         db_table='Subtema'
@@ -549,11 +550,12 @@ class Inicio_conflicto(GeneralModel):
     def __str__(self):
         return self.nombre
 class Estado_expediente(GeneralModel):
-
+     nombre= models.CharField(max_length=100,blank=False, null=False,unique=True)
      class Meta:
         db_table='Estado_expediente'
         verbose_name = ('Estado')
         verbose_name_plural = ('Estados_expediente')
+        ordering = ['-id']
      def __str__(self):
         return self.nombre
 
@@ -800,7 +802,7 @@ class Encuesta(EstadoModel):
         return  '%s' % (self.expediente_id)
 
 class Pregunta_encuesta(GeneralModel):
-
+    nombre = models.TextField(blank=False, null=False)
     class Meta:
         db_table='Pregunta_encuesta'
         verbose_name = ('Pregunta_encuesta')
@@ -829,8 +831,4 @@ class Tipo_reporte(GeneralModel):
         verbose_name_plural = ('Tipos_reporte')
     def __str__(self):
         return self.nombre
-
-
-
-
 
