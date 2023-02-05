@@ -2182,6 +2182,7 @@ views.ActualizarExpediente = async (req, res) => {
 views.CambiarEstadoExpediente = async (req, res) => {
   try {
     
+    if(req.body.estado_expediente=="Cerrada" & req.grupo!=1 ){res.sendStatus(403);return } else{
     axios.patch(config.urlApiExpedientes + "expedientes/" + req.params.id + "/", { estado_expediente_id: req.body.estado_expediente_id })
       .then(async result => {
         axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?tipo_cliente_id=1&expediente_id=" + req.params.id)
@@ -2201,13 +2202,12 @@ views.CambiarEstadoExpediente = async (req, res) => {
             let asunto = `Cambio de estado del caso: ${result.data.numero_caso} (${result.data.estado_expediente}) `
             if (Object.keys(response.data.results).length > 0) {
               const saludo = `<br>Reciba un cordial saludo. ${response.data.results[0].nombres}.`
+              if(req.body.estado_expediente!="Pre-Cerrada"){
               const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [response.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
-            }
+              }}
 
             await axios.post(config.urlApiExpedientes + "historicos/", { estado_id: req.body.estado_expediente_id, expediente_id: req.params.id })
               .then(resul => {
-
-
 
               })
               .catch(err => {
@@ -2223,7 +2223,7 @@ views.CambiarEstadoExpediente = async (req, res) => {
       .catch(err => {
         res.sendStatus(error(err))
         return
-      })
+      })}
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
