@@ -89,6 +89,9 @@ export default function Popup({
         document.getElementById("cargo").value = result.data["tipo_cargo_id"];
         document.getElementById("permiso").value = result.data["grupo_id"];
         setUsuarioid(result.data["usuario_id"]);
+
+          document.getElementById("lugarExpedicion").value =
+            result.data["lugar_expedicion"];
       }
     });
   }, []);
@@ -107,6 +110,7 @@ export default function Popup({
       tipo_cargo_id: event.target.cargo.value,
       grupo_id: event.target.permiso.value,
       usuario_id: usuarioid,
+      lugar_expedicion: event.target.lugarExpedicion.value,
     };
 
     if (modificar == null) {
@@ -243,7 +247,16 @@ export default function Popup({
               </FloatingLabel>
               
             </div>
-                  
+            <label className="subtitles-secciones">
+               Lugar de expedición de documento
+            </label>
+            <FloatingLabel controlId="lugarExpedicion" label="Lugar de expedición">
+              <Form.Control
+                className=""
+                type="text"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
             <label className="subtitles-secciones">Tarjeta profesional</label>
             <FloatingLabel controlId="tarjetaProfesional" label="Número">
               <Form.Control
@@ -252,7 +265,7 @@ export default function Popup({
                 placeholder="name@example.com"
               />
             </FloatingLabel>
-
+                
             <label className="subtitles-secciones">Datos Adicionales</label>
 
             <div className="columnas-inputs">
