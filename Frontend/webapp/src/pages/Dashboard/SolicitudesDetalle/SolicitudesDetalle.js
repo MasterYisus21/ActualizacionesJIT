@@ -49,6 +49,8 @@ function SolicitudesDetalle() {
   const [tiposPersona, setTiposPersona] = useState([]);
   const [tiposDocumento, setTiposDocumento] = useState([]);
 
+  const [permisos, setPermisos] = useState([])
+
   // data from api
   const [data, setData] = useState({});
 
@@ -56,6 +58,19 @@ function SolicitudesDetalle() {
 
   // Getting solicitud id from urlParams
   let { id } = useParams();
+
+  useEffect(() => {
+    try {
+      // setNombre(JSON.parse(localStorage.getItem("usuario")).nombres);
+      setPermisos(JSON.parse(localStorage.getItem("modulos")))
+    } catch {
+      navigate("/", { replace: true });
+    }
+
+    return () => {
+      // setNombre("");
+    };
+  }, []);
 
   useEffect(() => {
     axiosTokenInstanceApiSolicitudes({
@@ -1145,7 +1160,7 @@ function SolicitudesDetalle() {
         </Collapse>
       </div>
 
-      {estadoSolicitud == 1 ? (
+      {estadoSolicitud == 1 && permisos.includes("modulo_aprobar_solicitud") ? (
         <div className="contenedor-botones-detalle-solicitud">
           <div className="mb-4">
             <button
@@ -1328,7 +1343,7 @@ function SolicitudesDetalle() {
         </h1>
       )}
 
-      {estadoSolicitud == 4 && (
+      {estadoSolicitud == 4 && permisos.includes("modulo_aprobar_solicitud") (
         <>
           <div className="contenedor-botones-detalle-solicitud">
             <div className="mb-4">

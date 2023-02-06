@@ -241,8 +241,9 @@ export default function Popup({
                   required
                 />
               </FloatingLabel>
+              
             </div>
-
+                  
             <label className="subtitles-secciones">Tarjeta profesional</label>
             <FloatingLabel controlId="tarjetaProfesional" label="Número">
               <Form.Control
@@ -255,6 +256,7 @@ export default function Popup({
             <label className="subtitles-secciones">Datos Adicionales</label>
 
             <div className="columnas-inputs">
+              
               <FloatingLabel controlId="correo" label="Correo Electrónico">
                 <Form.Control
                   className="inputs-personas"
@@ -312,7 +314,7 @@ export default function Popup({
                 </Form.Select>
               </FloatingLabel>
             </div>
-
+            
             <div className="wrapp-botones">
               <button className="botones-popup">Guardar</button>
               <button

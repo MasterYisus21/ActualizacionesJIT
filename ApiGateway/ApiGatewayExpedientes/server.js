@@ -23,7 +23,7 @@ app.post("/api/gateway/v1/auth/ingresar/", async (req, res) => {
     await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
       .then(axios.spread(async (data1, data2,data3) => {
         if (Object.keys(data1.data.results).length < 1|Object.keys(data2.data.results).length < 1) { res.sendStatus(401); return }
-        data.rol = data1.data.results[0].groups
+        data.rol = data1.data.results[0].groups[0]
         data.app = "Centro Conciliacion JIT";
         await axios.post(config.urlAutenticacion + "auth", data)
           .then(async function (response) {

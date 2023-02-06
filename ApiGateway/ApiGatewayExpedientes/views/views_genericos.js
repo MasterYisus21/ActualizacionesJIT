@@ -759,14 +759,14 @@ const informacionCitacion = async (req) => {
       }
       if (Object.keys(hechos.data.results).length < 0) { datos.hechos = [] } else {
         for (const iterator in hechos.data.results[0]) {
-          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator] = hechos.data.results[0][iterator].toUpperCase() }
+          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator] = hechos.data.results[0][iterator] }
           if (hechos.data.results[0][iterator] == null) { hechos.data.results[0][iterator] = "___" }
           datos["hechos_" + iterator] = hechos.data.results[0][iterator]
         }
       }
       if (Object.keys(citacion.data).length < 0) { datos.citacion = [] } else {
         for (const iterator in citacion.data) {
-          if (typeof (citacion.data[iterator]) == 'string') { citacion.data[iterator] = citacion.data[iterator].toUpperCase() }
+          if (typeof (citacion.data[iterator]) == 'string') { citacion.data[iterator] = citacion.data[iterator] }
           if (citacion.data[iterator] == null) { citacion.data[iterator] = "___" }
           datos["citacion_" + iterator] = citacion.data[iterator]
         }
@@ -859,14 +859,14 @@ const informacionCaso = async (req) => {
       }
       if (Object.keys(hechos.data.results).length < 0) { datos.hechos = [] } else {
         for (const iterator in hechos.data.results[0]) {
-          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator] = hechos.data.results[0][iterator].toUpperCase() }
+          if (typeof (hechos.data.results[0][iterator]) == 'string') { hechos.data.results[0][iterator] = hechos.data.results[0][iterator]}
           if (hechos.data.results[0][iterator] == null) { hechos.data.results[0][iterator] = "___" }
           datos["hechos_" + iterator] = hechos.data.results[0][iterator]
         }
       }
       if (Object.keys(citacion.data.results).length < 0) { datos.citacion = [] } else {
         for (const iterator in citacion.data.results[0]) {
-          if (typeof (citacion.data.results[0][iterator]) == 'string') { citacion.data.results[0][iterator] = citacion.data.results[0][iterator].toUpperCase() }
+          if (typeof (citacion.data.results[0][iterator]) == 'string') { citacion.data.results[0][iterator] = citacion.data.results[0][iterator]}
           if (citacion.data.results[0][iterator] == null) { citacion.data.results[0][iterator] = "___" }
           datos["citacion_" + iterator] = citacion.data.results[0][iterator]
         }
@@ -907,7 +907,11 @@ views.DescargarFormatoResultado = async (req, res) => {
         await informacionCaso(req).then(async (resul) => {
           // console.log(resul.data.results[0])
           resul.nombre_documento = result.data.tipo_resultado
-          console.log(resul)
+          if (!resul.citado_localidad) { resul.citado_localidad = "______" }
+          if (!resul.citado_ciudad) { resul.citado_ciudad = "______" }
+          if (!resul.estudiante1_nombres) { resul.estudiante1_nombres = "" }
+          if (!resul.estudiante2_nombres) { resul.estudiante2_nombres = "" }
+          
           await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
             .then(async result => {
 
@@ -975,7 +979,10 @@ views.DescargarFormatoCitacion = async (req, res) => {
           // console.log(resul.data.results[0])
 
           resul.nombre_documento = "CITACION AUDIENCIA DE CONCILIACION"
-
+          if (!resul.citado_localidad) { resul.citado_localidad = "______" }
+          if (!resul.citado_ciudad) { resul.citado_ciudad = "______" }
+          if (!resul.estudiante1_nombres) { resul.estudiante1_nombres = "" }
+          if (!resul.estudiante2_nombres) { resul.estudiante2_nombres = "" }
           await axios.post(config.urlGeneradorDocumentos + "generar/", resul, { responseType: 'arraybuffer' })
             .then(async result => {
 
@@ -1151,7 +1158,7 @@ views.CitarPersonas = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
-    return;
+    return;____
   }
 }
 views.EnviarNotificacionCitacion = async (req, res) => {
@@ -2174,7 +2181,8 @@ views.ActualizarExpediente = async (req, res) => {
 }
 views.CambiarEstadoExpediente = async (req, res) => {
   try {
-
+    
+    if(req.body.estado_expediente=="Cerrada" & req.grupo!=1 ){res.sendStatus(403);return } else{
     axios.patch(config.urlApiExpedientes + "expedientes/" + req.params.id + "/", { estado_expediente_id: req.body.estado_expediente_id })
       .then(async result => {
         axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?tipo_cliente_id=1&expediente_id=" + req.params.id)
@@ -2193,14 +2201,13 @@ views.CambiarEstadoExpediente = async (req, res) => {
              cuerpo = cuerpo+ `<br><br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
             let asunto = `Cambio de estado del caso: ${result.data.numero_caso} (${result.data.estado_expediente}) `
             if (Object.keys(response.data.results).length > 0) {
-              const saludo = `<br>Reciba un cordial saludo ${response.data.results[0].nombres}.`
+              const saludo = `<br>Reciba un cordial saludo. ${response.data.results[0].nombres}.`
+              if(req.body.estado_expediente!="Pre-Cerrada"){
               const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [response.data.results[0].correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
-            }
+              }}
 
             await axios.post(config.urlApiExpedientes + "historicos/", { estado_id: req.body.estado_expediente_id, expediente_id: req.params.id })
               .then(resul => {
-
-
 
               })
               .catch(err => {
@@ -2216,7 +2223,7 @@ views.CambiarEstadoExpediente = async (req, res) => {
       .catch(err => {
         res.sendStatus(error(err))
         return
-      })
+      })}
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -2225,6 +2232,7 @@ views.CambiarEstadoExpediente = async (req, res) => {
 }
 views.ActualizarHechos = async (req, res) => {
   try {
+    
     if (req.body.expediente_id) { delete req.body["expediente_id"]; }
 
     const url = config.urlApiExpedientes + "hechos/" + req.params.id + "/"

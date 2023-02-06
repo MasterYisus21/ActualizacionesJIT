@@ -62,14 +62,16 @@ function ExpedientesDetalle() {
     }, [estadoExpediente])
 
     const changeEstadoExpediente = (estado) => {
-        console.log(estado);
+        
         const cambiarEstado = (estado) => {
+            
             axiosTokenInstanceApiExpedientes({
                 method: 'post',
                 url: `/expedientes/${id}/estado`,
                 // headers: req.headers,
                 data: {
-                    "estado_expediente_id": estado.id
+                    "estado_expediente_id": estado.id,
+                    "estado_expediente": estado.nombre
                 }
             })
                 .then(result => {
