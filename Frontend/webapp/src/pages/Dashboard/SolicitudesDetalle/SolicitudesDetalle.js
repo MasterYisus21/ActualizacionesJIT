@@ -80,6 +80,24 @@ function SolicitudesDetalle() {
       data: {},
     })
       .then((result) => {
+        // Solicitud
+        setRadicado(result.data.solicitud["numero_radicado"]);
+        setEstadoSolicitud(result.data.solicitud["estado_solicitud_id"]);
+        setEstado(result.data.solicitud["estado_solicitud"]);
+      })
+      .catch((err) => {
+        console.log("error");
+      });
+  }, []);
+
+  useEffect(() => {
+    axiosTokenInstanceApiSolicitudes({
+      method: "get",
+      url: "/solicitudes/" + id,
+      // headers: req.headers,
+      data: {},
+    })
+      .then((result) => {
         console.log(result.data);
         setData(result.data);
 
@@ -138,9 +156,9 @@ function SolicitudesDetalle() {
           result.data.hechos[0].descripcion;
 
         // Solicitud
-        setRadicado(result.data.solicitud["numero_radicado"]);
-        setEstadoSolicitud(result.data.solicitud["estado_solicitud_id"]);
-        setEstado(result.data.solicitud["estado_solicitud"]);
+        // setRadicado(result.data.solicitud["numero_radicado"]);
+        // setEstadoSolicitud(result.data.solicitud["estado_solicitud_id"]);
+        // setEstado(result.data.solicitud["estado_solicitud"]);
 
         //document.getElementById("descripcion_hechos").value = result.data.documentos.result[0].descripcion
 
@@ -1343,7 +1361,7 @@ function SolicitudesDetalle() {
         </h1>
       )}
 
-      {estadoSolicitud == 4 && permisos.includes("modulo_aprobar_solicitud") (
+      {estadoSolicitud == 4 && permisos.includes("modulo_aprobar_solicitud")(
         <>
           <div className="contenedor-botones-detalle-solicitud">
             <div className="mb-4">
