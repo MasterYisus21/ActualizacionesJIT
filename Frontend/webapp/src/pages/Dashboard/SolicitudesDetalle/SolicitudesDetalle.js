@@ -156,9 +156,9 @@ function SolicitudesDetalle() {
           result.data.hechos[0].descripcion;
 
         // Solicitud
-        // setRadicado(result.data.solicitud["numero_radicado"]);
-        // setEstadoSolicitud(result.data.solicitud["estado_solicitud_id"]);
-        // setEstado(result.data.solicitud["estado_solicitud"]);
+        setRadicado(result.data.solicitud["numero_radicado"]);
+        setEstadoSolicitud(result.data.solicitud["estado_solicitud_id"]);
+        setEstado(result.data.solicitud["estado_solicitud"]);
 
         //document.getElementById("descripcion_hechos").value = result.data.documentos.result[0].descripcion
 
