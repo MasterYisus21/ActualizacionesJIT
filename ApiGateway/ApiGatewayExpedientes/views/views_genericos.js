@@ -243,7 +243,7 @@ views.CrearExpediente = async (req, res) => {
             <br><b>Estado del Expediente:</b> ${data5.data.estado_expediente} 
             <br><b>Conciliador:</b> ${data5.data.nombres} 
             <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br>`
-            let asunto = `Asignación Caso de Conciliación`
+            let asunto = `Asignación Caso de Conciliación del Expediente: ${data5.data.numero_caso}`
             const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [data5.data.correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
 
             //get res.status(201).json(data2.data[0])
@@ -1143,6 +1143,7 @@ views.EliminarPersonaDeCitacion = async (req, res) => {
 
 views.CitarPersonas = async (req, res) => {
   try {
+    
     let datos = {
       persona_id: req.params.id_persona,
       citacion_id: req.params.id
@@ -1237,7 +1238,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
 
                   <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento.`
 
-                        let asunto = `Citación Audiencia Conciliación`
+                        let asunto = `Citación Audiencia Conciliación Expediente: ${resul.expediente_numero_caso}`
 
 
                         const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { (error(err)); falla = true })
@@ -1491,7 +1492,7 @@ views.CargarTemplatePersonas = async (req, res) => {
         res.status(400).json({ message: mensaje }); return
       }
 
-      console.log(usuarios)
+    
       await axios.post(config.urlApiExpedientes + "usuarios/", usuarios)
         .then(async result => {
 
@@ -2117,7 +2118,7 @@ views.AgregarConciliadores = async (req, res) => {
             <br><b>Estado del Expediente:</b> ${result.data.estado_expediente} 
             <br><b>Conciliador:</b> ${result.data.nombres} 
             <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br><br>`
-            let asunto = `Asignación Caso de Concilaición `
+            let asunto = `Asignación Caso de Conciliación Expediente: ${result.data.numero_caso}`
             const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [result.data.correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
 
           })

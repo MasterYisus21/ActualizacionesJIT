@@ -35,6 +35,8 @@ function Audiencia() {
           setDataApi(result.data.results[0])
           document.getElementById("fecha_sesion").value = result.data.results[0].fecha_sesion
           document.getElementById("descripcion").value = result.data.results[0].descripcion
+          
+          
           if (result.data.results[0].enlace) { document.getElementById("link-audiencia").value = result.data.results[0].enlace }
         }
       })
@@ -42,7 +44,16 @@ function Audiencia() {
         console.log(err);
       });
   }, [])
-
+  useEffect(() => {
+    if (dataApi) {
+      const turnos = [{
+        id: dataApi.turno_id,
+        estado: dataApi.estado,
+        nombre: dataApi.turno
+      }]
+      getTurnosDisponibles(dataApi.fecha_sesion, turnos)
+    }
+  }, [dataApi])
   useEffect(() => {
     axiosTokenInstanceApiExpedientes({
       method: 'get',
@@ -61,14 +72,10 @@ function Audiencia() {
 
   useEffect(() => {
     if (dataApi) {
-      const turnos = [{
-        id: dataApi.turno_id,
-        estado: dataApi.estado,
-        nombre: dataApi.turno
-      }]
-      getTurnosDisponibles(dataApi.fecha_sesion, turnos)
+      document.getElementById("turno-seleccionado").value = dataApi.turno_id
     }
-  }, [dataApi])
+  }, [turnosDisponibles])
+
 
   useEffect(() => {
     if (dataApi?.id) {
@@ -88,11 +95,6 @@ function Audiencia() {
     }
   }, [dataApi])
 
-  useEffect(() => {
-    if (dataApi) {
-      document.getElementById("turno-seleccionado").value = dataApi.turno_id
-    }
-  }, [turnosDisponibles])
 
   useEffect(() => {
     if (dataApi) {

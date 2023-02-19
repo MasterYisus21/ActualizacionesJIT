@@ -299,7 +299,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     
      await axios.patch(config.urlApiSolicitudes+"solicitudes/"+req.params.id+"/",{estado_solicitud_id:1})
       .then(result=>{
-        console.log(datos)
+      
         res.status(201).json(datos)
      })
       .catch(err => {
@@ -555,9 +555,14 @@ views.CodigoSolicitud = async (req, res) => {
 
 views.ListarSolicitudes = async (req, res) => {
   try {
-  
-    const url = config.urlApiSolicitudes + req.route.path.slice(1)
-    requests.get(req, res, url, "?")
+    axios.get(config.urlApiExpedientes+"modulos")
+    .then((result)=>{
+      if(!result.data.modulo_solicitudes){res.status(200).json({results:[]});return}
+      const url = config.urlApiSolicitudes + req.route.path.slice(1)
+      requests.get(req, res, url, "?")
+      
+    })
+    
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
