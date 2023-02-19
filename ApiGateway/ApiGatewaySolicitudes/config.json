@@ -1,12 +1,13 @@
-{
+
+{   
     "urlApiExpedientes": "http://0.0.0.0:8000/api/jit_expedientes/v1/",
     "urlApiSolicitudes": "http://0.0.0.0:8001/api/jit_solicitudes/v1/",
     "urlDocumentos": "http://0.0.0.0:8002/api/documentos/v1/",
     "urlEmail": "http://0.0.0.0:5001/",
-    "urlGatewaySolicitudes": "http://localhost:3001/api/gateway/v1/",
-    "urlGatewayExpedientes": "http://localhost:3002/api/gateway/v1/",
-    "apiKey":"2ZwZtPbd.34ikEaXRQrblBlJRD6XxxfR5lau6GMFE",
     "urlAutenticacion": "http://0.0.0.0:4000/",
-    "copia_correo":"jairo.urrego@ugc.edu.co"
+    "urlGatewaySolicitudes": "http://0.0.0.0:3001/api/gateway/v1/",
+    "urlGatewayExpedientes": "http://0.0.0.0:3002/api/gateway/v1/",
+    "apiKey":"2ZwZtPbd.34ikEaXRQrblBlJRD6XxxfR5lau6GMFE"
+
     
 }

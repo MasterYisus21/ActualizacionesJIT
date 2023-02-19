@@ -1,0 +1,1107 @@
+id,estado,nombre,departamento_id_id
+427,true,Medellin,1
+428,true,Abejorral,1
+429,true,Abriaqui,1
+430,true,Alejandria,1
+431,true,Amaga,1
+432,true,Amalfi,1
+433,true,Andes,1
+434,true,Angelopolis,1
+435,true,Angostura,1
+436,true,Anori,1
+437,true,Antioquia,1
+438,true,Anza,1
+439,true,Apartado,1
+440,true,Arboletes,1
+441,true,Argelia,1
+442,true,Armenia,1
+443,true,Barbosa,1
+444,true,Belmira,1
+445,true,Bello,1
+446,true,Betania,1
+447,true,Betulia,1
+448,true,Bolivar,1
+449,true,Briceño,1
+450,true,Buritica,1
+451,true,Caceres,1
+452,true,Caicedo,1
+453,true,Caldas,1
+454,true,Campamento,1
+455,true,Cañasgordas,1
+456,true,Caracoli,1
+457,true,Caramanta,1
+458,true,Carepa,1
+459,true,Carmen De Viboral,1
+460,true,Carolina,1
+461,true,Caucasia,1
+462,true,Chigorodo,1
+463,true,Cisneros,1
+464,true,Cocorna,1
+465,true,Concepcion,1
+466,true,Concordia,1
+467,true,Copacabana,1
+468,true,Dabeiba,1
+469,true,Don Matias,1
+470,true,Ebejico,1
+471,true,El Bagre,1
+472,true,Entrerrios,1
+473,true,Envigado,1
+474,true,Fredonia,1
+475,true,Frontino,1
+476,true,Giraldo,1
+477,true,Girardota,1
+478,true,Gomez Plata,1
+479,true,Granada,1
+480,true,Guadalupe,1
+481,true,Guarne,1
+482,true,Guatape,1
+483,true,Heliconia,1
+484,true,Hispania,1
+485,true,Itagui,1
+486,true,Ituango,1
+487,true,Jardin,1
+488,true,Jerico,1
+489,true,La Ceja,1
+490,true,La Estrella,1
+491,true,La Pintada,1
+492,true,La Union,1
+493,true,Liborina,1
+494,true,Maceo,1
+495,true,Marinilla,1
+496,true,Montebello,1
+497,true,Murindo,1
+498,true,Mutata,1
+499,true,Nariño,1
+500,true,Necocli,1
+501,true,Nechi,1
+502,true,Olaya,1
+503,true,Peñol,1
+504,true,Peque,1
+505,true,Pueblorrico,1
+506,true,Puerto Berrio,1
+507,true,Puerto Nare ,1
+508,true,Puerto Triunfo,1
+509,true,Remedios,1
+510,true,Retiro,1
+511,true,Rionegro,1
+512,true,Sabanalarga,1
+513,true,Sabaneta,1
+514,true,Salgar,1
+515,true,San Andres,1
+516,true,San Carlos,1
+517,true,San Francisco,1
+518,true,San Jeronimo,1
+519,true,San Jose De La Montaña,1
+520,true,San Juan De Uraba,1
+521,true,San Luis,1
+522,true,San Pedro,1
+523,true,San Pedro De Uraba,1
+524,true,San Rafael,1
+525,true,San Roque,1
+526,true,San Vicente,1
+527,true,Santa Barbara,1
+528,true,Santa Rosa De Osos,1
+529,true,Santo Domingo,1
+530,true,Santuario,1
+531,true,Segovia,1
+532,true,Sonson,1
+533,true,Sopetran,1
+534,true,Tamesis,1
+535,true,Taraza,1
+536,true,Tarso,1
+537,true,Titiribi,1
+538,true,Toledo,1
+539,true,Turbo,1
+540,true,Uramita,1
+541,true,Urrao,1
+542,true,Valdivia,1
+543,true,Valparaiso,1
+544,true,Vegachi,1
+545,true,Venecia,1
+546,true,Vigia Del Fuerte,1
+547,true,Yali,1
+548,true,Yarumal,1
+549,true,Yolombo,1
+550,true,Yondo,1
+551,true,Zaragoza,1
+552,true,Barranquilla ,2
+553,true,Baranoa,2
+554,true,Campo De La Cruz,2
+555,true,Candelaria,2
+556,true,Galapa,2
+557,true,Juan De Acosta,2
+558,true,Luruaco,2
+559,true,Malambo,2
+560,true,Manati,2
+561,true,Palmar De Varela,2
+562,true,Piojo,2
+563,true,Polo Nuevo,2
+564,true,Ponedera,2
+565,true,Puerto Colombia,2
+566,true,Repelon,2
+567,true,Sabanagrande,2
+568,true,Sabanalarga,2
+569,true,Santa Lucia,2
+570,true,Santo Tomas,2
+571,true,Soledad,2
+572,true,Suan,2
+573,true,Tubara,2
+574,true,Usiacuri,2
+575,true,Bogota D.C,3
+576,true,Cartagena ,4
+577,true,Achi,4
+578,true,Altos Del Rosario,4
+579,true,Arenal,4
+580,true,Arjona,4
+581,true,Arroyohondo,4
+582,true,Barranco De Loba,4
+583,true,Calamar,4
+584,true,Cantagallo,4
+585,true,Cicuco,4
+586,true,Cordoba,4
+587,true,Clemencia,4
+588,true,El Carmen De Bolivar,4
+589,true,El Guamo,4
+590,true,El Peñon,4
+591,true,Hatillo De Loba,4
+592,true,Magangue,4
+593,true,Mahates,4
+594,true,Margarita,4
+595,true,Maria La Baja,4
+596,true,Montecristo,4
+597,true,Mompos,4
+598,true,Morales,4
+599,true,Pinillos,4
+600,true,Regidor,4
+601,true,Rio Viejo,4
+602,true,San Cristobal,4
+603,true,San Estanislao,4
+604,true,San Fernando,4
+605,true,San Jacinto,4
+606,true,San Jacinto Del Cauca,4
+607,true,San Juan Nepomuceno,4
+608,true,San Martin De Loba,4
+609,true,San Pablo,4
+610,true,Santa Catalina,4
+611,true,Santa Rosa,4
+612,true,Santa Rosa Del Sur,4
+613,true,Simiti,4
+614,true,Soplaviento,4
+615,true,Talaigua Nuevo,4
+616,true,Tiquisio ,4
+617,true,Turbaco,4
+618,true,Turbana,4
+619,true,Villanueva,4
+620,true,Zambrano,4
+621,true,Tunja,5
+622,true,Almeida,5
+623,true,Aquitania,5
+624,true,Arcabuco,5
+625,true,Belen,5
+626,true,Berbeo,5
+627,true,Beteitiva,5
+628,true,Boavita,5
+629,true,Boyaca,5
+630,true,Briceño,5
+631,true,Buenavista,5
+632,true,Busbanza,5
+633,true,Caldas,5
+634,true,Campohermoso,5
+635,true,Cerinza,5
+636,true,Chinavita,5
+637,true,Chiquinquira,5
+638,true,Chiscas,5
+639,true,Chita,5
+640,true,Chitaraque,5
+641,true,Chivata,5
+642,true,Cienega,5
+643,true,Combita,5
+644,true,Coper,5
+645,true,Corrales,5
+646,true,Covarachia,5
+647,true,Cubara,5
+648,true,Cucaita,5
+649,true,Cuitiva,5
+650,true,Chiquiza,5
+651,true,Chivor,5
+652,true,Duitama,5
+653,true,El Cocuy,5
+654,true,El Espino,5
+655,true,Firavitoba,5
+656,true,Floresta,5
+657,true,Gachantiva,5
+658,true,Gameza,5
+659,true,Garagoa,5
+660,true,Guacamayas,5
+661,true,Guateque,5
+662,true,Guayata,5
+663,true,Guican,5
+664,true,Iza,5
+665,true,Jenesano,5
+666,true,Jerico,5
+667,true,Labranzagrande,5
+668,true,La Capilla,5
+669,true,La Victoria,5
+670,true,La Uvita,5
+671,true,Villa De Leiva,5
+672,true,Macanal,5
+673,true,Maripi,5
+674,true,Miraflores,5
+675,true,Mongua,5
+676,true,Mongui,5
+677,true,Moniquira,5
+678,true,Motavita,5
+679,true,Muzo,5
+680,true,Nobsa,5
+681,true,Nuevo Colon,5
+682,true,Oicata,5
+683,true,Otanche,5
+684,true,Pachavita,5
+685,true,Paez,5
+686,true,Paipa,5
+687,true,Pajarito,5
+688,true,Panqueba,5
+689,true,Pauna,5
+690,true,Paya,5
+691,true,Paz Del Rio,5
+692,true,Pesca,5
+693,true,Pisba,5
+694,true,Puerto Boyaca,5
+695,true,Quipama,5
+696,true,Ramiriqui,5
+697,true,Raquira,5
+698,true,Rondon,5
+699,true,Saboya,5
+700,true,Sachica,5
+701,true,Samaca,5
+702,true,San Eduardo,5
+703,true,San Jose De Pare,5
+704,true,San Luis De Gaceno,5
+705,true,San Mateo,5
+706,true,San Miguel De Sema,5
+707,true,San Pablo De Borbur,5
+708,true,Santana,5
+709,true,Santa Maria,5
+710,true,Santa Rosa De Viterbo,5
+711,true,Santa Sofia,5
+712,true,Sativanorte,5
+713,true,Sativasur,5
+714,true,Siachoque,5
+715,true,Soata,5
+716,true,Socota,5
+717,true,Socha,5
+718,true,Sogamoso,5
+719,true,Somondoco,5
+720,true,Sora,5
+721,true,Sotaquira,5
+722,true,Soraca,5
+723,true,Susacon,5
+724,true,Sutamarchan,5
+725,true,Sutatenza,5
+726,true,Tasco,5
+727,true,Tenza,5
+728,true,Tibana,5
+729,true,Tibasosa,5
+730,true,Tinjaca,5
+731,true,Tipacoque,5
+732,true,Toca,5
+733,true,Togui,5
+734,true,Topaga,5
+735,true,Tota,5
+736,true,Tunungua,5
+737,true,Turmeque,5
+738,true,Tuta,5
+739,true,Tutasa,5
+740,true,Umbita,5
+741,true,Ventaquemada,5
+742,true,Viracacha,5
+743,true,Zetaquira,5
+744,true,Manizales,6
+745,true,Aguadas,6
+746,true,Anserma,6
+747,true,Aranzazu,6
+748,true,Belalcazar,6
+749,true,Chinchina,6
+750,true,Filadelfia,6
+751,true,La Dorada,6
+752,true,La Merced,6
+753,true,Manzanares,6
+754,true,Marmato,6
+755,true,Marquetalia,6
+756,true,Marulanda,6
+757,true,Neira,6
+758,true,Norcasia,6
+759,true,Pacora,6
+760,true,Palestina,6
+761,true,Pensilvania,6
+762,true,Riosucio,6
+763,true,Risaralda,6
+764,true,Salamina,6
+765,true,Samana,6
+766,true,San Jose,6
+767,true,Supia,6
+768,true,Victoria,6
+769,true,Villamaria,6
+770,true,Viterbo,6
+771,true,Florencia,7
+772,true,Albania,7
+773,true,Belen De Los Andaquies,7
+774,true,Cartagena Del Chaira,7
+775,true,Curillo,7
+776,true,El Doncello,7
+777,true,El Paujil,7
+778,true,La Montañita,7
+779,true,Milan,7
+780,true,Morelia,7
+781,true,Puerto Rico,7
+782,true,San Jose De Fragua,7
+783,true,San Vicente Del Caguan,7
+784,true,Solano,7
+785,true,Solita,7
+786,true,Valparaiso,7
+787,true,Popayan,8
+788,true,Almaguer,8
+789,true,Argelia,8
+790,true,Balboa,8
+791,true,Bolivar,8
+792,true,Buenos Aires,8
+793,true,Cajibio,8
+794,true,Caldono,8
+795,true,Caloto,8
+796,true,Corinto,8
+797,true,El Tambo,8
+798,true,Florencia,8
+799,true,Guapi,8
+800,true,Inza,8
+801,true,Jambalo,8
+802,true,La Sierra,8
+803,true,La Vega,8
+804,true,Lopez ,8
+805,true,Mercaderes,8
+806,true,Miranda,8
+807,true,Morales,8
+808,true,Padilla,8
+809,true,Paez ,8
+810,true,Patia ,8
+811,true,Piamonte,8
+812,true,Piendamo,8
+813,true,Puerto Tejada,8
+814,true,Purace ,8
+815,true,Rosas,8
+816,true,San Sebastian,8
+817,true,Santander De Quilichao,8
+818,true,Santa Rosa,8
+819,true,Silvia,8
+820,true,Sotara ,8
+821,true,Suarez,8
+822,true,Timbio,8
+823,true,Timbiqui,8
+824,true,Toribio,8
+825,true,Totoro,8
+826,true,Villarica,8
+827,true,Valledupar,9
+828,true,Aguachica,9
+829,true,Agustin Codazzi,9
+830,true,Astrea,9
+831,true,Becerril,9
+832,true,Bosconia,9
+833,true,Chimichagua,9
+834,true,Chiriguana,9
+835,true,Curumani,9
+836,true,El Copey,9
+837,true,El Paso,9
+838,true,Gamarra,9
+839,true,Gonzalez,9
+840,true,La Gloria,9
+841,true,La Jagua Ibirico,9
+842,true,Manaure ,9
+843,true,Pailitas,9
+844,true,Pelaya,9
+845,true,Pueblo Bello,9
+846,true,Rio De Oro,9
+847,true,La Paz ,9
+848,true,San Alberto,9
+849,true,San Diego,9
+850,true,San Martin,9
+851,true,Tamalameque,9
+852,true,Monteria,10
+853,true,Ayapel,10
+854,true,Buenavista,10
+855,true,Canalete,10
+856,true,Cerete,10
+857,true,Chima,10
+858,true,Chinu,10
+859,true,Cienaga De Oro,10
+860,true,Cotorra,10
+861,true,La Apartada,10
+862,true,Lorica,10
+863,true,Los Cordobas,10
+864,true,Momil,10
+865,true,Montelibano,10
+866,true,Moñitos,10
+867,true,Planeta Rica,10
+868,true,Pueblo Nuevo,10
+869,true,Puerto Escondido,10
+870,true,Puerto Libertador,10
+871,true,Purisima,10
+872,true,Sahagun,10
+873,true,San Andres Sotavento,10
+874,true,San Antero,10
+875,true,San Bernardo Del Viento,10
+876,true,San Carlos,10
+877,true,San Pelayo,10
+878,true,Tierralta,10
+879,true,Valencia,10
+880,true,Agua De Dios,11
+881,true,Alban,11
+882,true,Anapoima,11
+883,true,Anolaima,11
+884,true,Arbelaez,11
+885,true,Beltran,11
+886,true,Bituima,11
+887,true,Bojaca,11
+888,true,Cabrera,11
+889,true,Cachipay,11
+890,true,Cajica,11
+891,true,Caparrapi,11
+892,true,Caqueza,11
+893,true,Carmen De Carupa,11
+894,true,Chaguani,11
+895,true,Chia,11
+896,true,Chipaque,11
+897,true,Choachi,11
+898,true,Choconta,11
+899,true,Cogua,11
+900,true,Cota,11
+901,true,Cucunuba,11
+902,true,El Colegio,11
+903,true,El Peñon,11
+904,true,El Rosal,11
+905,true,Facatativa,11
+906,true,Fomeque,11
+907,true,Fosca,11
+908,true,Funza,11
+909,true,Fuquene,11
+910,true,Fusagasuga,11
+911,true,Gachala,11
+912,true,Gachancipa,11
+913,true,Gacheta,11
+914,true,Gama,11
+915,true,Girardot,11
+916,true,Granada,11
+917,true,Guacheta,11
+918,true,Guaduas,11
+919,true,Guasca,11
+920,true,Guataqui,11
+921,true,Guatavita,11
+922,true,Guayabal De Siquima,11
+923,true,Guayabetal,11
+924,true,Gutierrez,11
+925,true,Jerusalen,11
+926,true,Junin,11
+927,true,La Calera,11
+928,true,La Mesa,11
+929,true,La Palma,11
+930,true,La Peña,11
+931,true,La Vega,11
+932,true,Lenguazaque,11
+933,true,Macheta,11
+934,true,Madrid,11
+935,true,Manta,11
+936,true,Medina,11
+937,true,Mosquera,11
+938,true,Nariño,11
+939,true,Nemocon,11
+940,true,Nilo,11
+941,true,Nimaima,11
+942,true,Nocaima,11
+943,true,Venecia ,11
+944,true,Pacho,11
+945,true,Paime,11
+946,true,Pandi,11
+947,true,Paratebueno,11
+948,true,Pasca,11
+949,true,Puerto Salgar,11
+950,true,Puli,11
+951,true,Quebradanegra,11
+952,true,Quetame,11
+953,true,Quipile,11
+954,true,Apulo ,11
+955,true,Ricaurte,11
+956,true,San Antonio Del Tequendama,11
+957,true,San Bernardo,11
+958,true,San Cayetano,11
+959,true,San Francisco,11
+960,true,San Juan De Rioseco,11
+961,true,Sasaima,11
+962,true,Sesquile,11
+963,true,Sibate,11
+964,true,Silvania,11
+965,true,Simijaca,11
+966,true,Soacha,11
+967,true,Sopo,11
+968,true,Subachoque,11
+969,true,Suesca,11
+970,true,Supata,11
+971,true,Susa,11
+972,true,Sutatausa,11
+973,true,Tabio,11
+974,true,Tausa,11
+975,true,Tena,11
+976,true,Tenjo,11
+977,true,Tibacuy,11
+978,true,Tibirita,11
+979,true,Tocaima,11
+980,true,Tocancipa,11
+981,true,Topaipi,11
+982,true,Ubala,11
+983,true,Ubaque,11
+984,true,Ubate,11
+985,true,Une,11
+986,true,Utica,11
+987,true,Vergara,11
+988,true,Viani,11
+989,true,Villagomez,11
+990,true,Villapinzon,11
+991,true,Villeta,11
+992,true,Viota,11
+993,true,Yacopi,11
+994,true,Zipacon,11
+995,true,Zipaquira,11
+996,true,Quibdo ,12
+997,true,Acandi,12
+998,true,Alto Baudo ,12
+999,true,Atrato,12
+1000,true,Bagado,12
+1001,true,Bahia Solano ,12
+1002,true,Bajo Baudo ,12
+1003,true,Bojaya ,12
+1004,true,Canton De San Pablo ,12
+1005,true,Condoto,12
+1006,true,El Carmen De Atrato,12
+1007,true,Litoral Del Bajo San Juan ,12
+1008,true,Istmina,12
+1009,true,Jurado,12
+1010,true,Lloro,12
+1011,true,Medio Atrato,12
+1012,true,Medio Baudo,12
+1013,true,Novita,12
+1014,true,Nuqui,12
+1015,true,Rioquito,12
+1016,true,Riosucio,12
+1017,true,San Jose Del Palmar,12
+1018,true,Sipi,12
+1019,true,Tado,12
+1020,true,Unguia,12
+1021,true,Union Panamericana,12
+1022,true,Neiva,13
+1023,true,Acevedo,13
+1024,true,Agrado,13
+1025,true,Aipe,13
+1026,true,Algeciras,13
+1027,true,Altamira,13
+1028,true,Baraya,13
+1029,true,Campoalegre,13
+1030,true,Colombia,13
+1031,true,Elias,13
+1032,true,Garzon,13
+1033,true,Gigante,13
+1034,true,Guadalupe,13
+1035,true,Hobo,13
+1036,true,Iquira,13
+1037,true,Isnos ,13
+1038,true,La Argentina,13
+1039,true,La Plata,13
+1040,true,Nataga,13
+1041,true,Oporapa,13
+1042,true,Paicol,13
+1043,true,Palermo,13
+1044,true,Palestina,13
+1045,true,Pital,13
+1046,true,Pitalito,13
+1047,true,Rivera,13
+1048,true,Saladoblanco,13
+1049,true,San Agustin,13
+1050,true,Santa Maria,13
+1051,true,Suaza,13
+1052,true,Tarqui,13
+1053,true,Tesalia,13
+1054,true,Tello,13
+1055,true,Teruel,13
+1056,true,Timana,13
+1057,true,Villavieja,13
+1058,true,Yaguara,13
+1059,true,Riohacha,14
+1060,true,Barrancas,14
+1061,true,Dibulla,14
+1062,true,Distraccion,14
+1063,true,El Molino,14
+1064,true,Fonseca,14
+1065,true,Hatonuevo,14
+1066,true,La Jagua Del Pilar,14
+1067,true,Maicao,14
+1068,true,Manaure,14
+1069,true,San Juan Del Cesar,14
+1070,true,Uribia,14
+1071,true,Urumita,14
+1072,true,Villanueva,14
+1073,true,Santa Marta ,15
+1074,true,Algarrobo,15
+1075,true,Aracataca,15
+1076,true,Ariguani ,15
+1077,true,Cerro San Antonio,15
+1078,true,Chivolo,15
+1079,true,Cienaga,15
+1080,true,Concordia,15
+1081,true,El Banco,15
+1082,true,El Piñon,15
+1083,true,El Reten,15
+1084,true,Fundacion,15
+1085,true,Guamal,15
+1086,true,Pedraza,15
+1087,true,Pijiño Del Carmen ,15
+1088,true,Pivijay,15
+1089,true,Plato,15
+1090,true,Puebloviejo,15
+1091,true,Remolino,15
+1092,true,Sabanas De San Angel,15
+1093,true,Salamina,15
+1094,true,San Sebastian De Buenavista,15
+1095,true,San Zenon,15
+1096,true,Santa Ana,15
+1097,true,Sitionuevo,15
+1098,true,Tenerife,15
+1099,true,Villavicencio,16
+1100,true,Acacias,16
+1101,true,Barranca De Upia,16
+1102,true,Cabuyaro,16
+1103,true,Castilla La Nueva,16
+1104,true,San Luis De Cubarral,16
+1105,true,Cumaral,16
+1106,true,El Calvario,16
+1107,true,El Castillo,16
+1108,true,El Dorado,16
+1109,true,Fuente De Oro,16
+1110,true,Granada,16
+1111,true,Guamal,16
+1112,true,Mapiripan,16
+1113,true,Mesetas,16
+1114,true,La Macarena,16
+1115,true,La Uribe,16
+1116,true,Lejanias,16
+1117,true,Puerto Concordia,16
+1118,true,Puerto Gaitan,16
+1119,true,Puerto Lopez,16
+1120,true,Puerto Lleras,16
+1121,true,Puerto Rico,16
+1122,true,Restrepo,16
+1123,true,San Carlos De Guaroa,16
+1124,true,San Juan De Arama,16
+1125,true,San Juanito,16
+1126,true,San Martin,16
+1127,true,Vistahermosa,16
+1128,true,Pasto ,17
+1129,true,Alban ,17
+1130,true,Aldana,17
+1131,true,Ancuya,17
+1132,true,Arboleda ,17
+1133,true,Barbacoas,17
+1134,true,Belen,17
+1135,true,Buesaco,17
+1136,true,Colon ,17
+1137,true,Consaca,17
+1138,true,Contadero,17
+1139,true,Cordoba,17
+1140,true,Cuaspud ,17
+1141,true,Cumbal,17
+1142,true,Cumbitara,17
+1143,true,Chachagui,17
+1144,true,El Charco,17
+1145,true,El Peñol,17
+1146,true,El Rosario,17
+1147,true,El Tablon,17
+1148,true,El Tambo,17
+1149,true,Funes,17
+1150,true,Guachucal,17
+1151,true,Guaitarilla,17
+1152,true,Gualmatan,17
+1153,true,Iles,17
+1154,true,Imues,17
+1155,true,Ipiales,17
+1156,true,La Cruz,17
+1157,true,La Florida,17
+1158,true,La Llanada,17
+1159,true,La Tola,17
+1160,true,La Union,17
+1161,true,Leiva,17
+1162,true,Linares,17
+1163,true,Los Andes ,17
+1164,true,Magui ,17
+1165,true,Mallama ,17
+1166,true,Mosquera,17
+1167,true,Olaya Herrera ,17
+1168,true,Ospina,17
+1169,true,Francisco Pizarro ,17
+1170,true,Policarpa,17
+1171,true,Potosi,17
+1172,true,Providencia,17
+1173,true,Puerres,17
+1174,true,Pupiales,17
+1175,true,Ricaurte,17
+1176,true,Roberto Payan ,17
+1177,true,Samaniego,17
+1178,true,Sandona,17
+1179,true,San Bernardo,17
+1180,true,San Lorenzo,17
+1181,true,San Pablo,17
+1182,true,San Pedro De Cartago,17
+1183,true,Santa Barbara ,17
+1184,true,Santa Cruz ,17
+1185,true,Sapuyes,17
+1186,true,Taminango,17
+1187,true,Tangua,17
+1188,true,Tumaco,17
+1189,true,Tuquerres,17
+1190,true,Yacuanquer,17
+1191,true,Cucuta,18
+1192,true,Abrego,18
+1193,true,Arboledas,18
+1194,true,Bochalema,18
+1195,true,Bucarasica,18
+1196,true,Cacota,18
+1197,true,Cachira,18
+1198,true,Chinacota,18
+1199,true,Chitaga,18
+1200,true,Convencion,18
+1201,true,Cucutilla,18
+1202,true,Durania,18
+1203,true,El Carmen,18
+1204,true,El Tarra,18
+1205,true,El Zulia,18
+1206,true,Gramalote,18
+1207,true,Hacari,18
+1208,true,Herran,18
+1209,true,Labateca,18
+1210,true,La Esperanza,18
+1211,true,La Playa,18
+1212,true,Los Patios,18
+1213,true,Lourdes,18
+1214,true,Mutiscua,18
+1215,true,Ocaña,18
+1216,true,Pamplona,18
+1217,true,Pamplonita,18
+1218,true,Puerto Santander,18
+1219,true,Ragonvalia,18
+1220,true,Salazar,18
+1221,true,San Calixto,18
+1222,true,San Cayetano,18
+1223,true,Santiago,18
+1224,true,Sardinata,18
+1225,true,Silos,18
+1226,true,Teorama,18
+1227,true,Tibu,18
+1228,true,Toledo,18
+1229,true,Villacaro,18
+1230,true,Villa Del Rosario,18
+1231,true,Armenia,19
+1232,true,Buenavista,19
+1233,true,Calarca,19
+1234,true,Circasia,19
+1235,true,Cordoba,19
+1236,true,Filandia,19
+1237,true,Genova,19
+1238,true,La Tebaida,19
+1239,true,Montenegro,19
+1240,true,Pijao,19
+1241,true,Quimbaya,19
+1242,true,Salento,19
+1243,true,Pereira,20
+1244,true,Apia,20
+1245,true,Balboa,20
+1246,true,Belen De Umbria,20
+1247,true,Dos Quebradas,20
+1248,true,Guatica,20
+1249,true,La Celia,20
+1250,true,La Virginia,20
+1251,true,Marsella,20
+1252,true,Mistrato,20
+1253,true,Pueblo Rico,20
+1254,true,Quinchia,20
+1255,true,Santa Rosa De Cabal,20
+1256,true,Santuario,20
+1257,true,Bucaramanga,21
+1258,true,Aguada,21
+1259,true,Albania,21
+1260,true,Aratoca,21
+1261,true,Barbosa,21
+1262,true,Barichara,21
+1263,true,Barrancabermeja,21
+1264,true,Betulia,21
+1265,true,Bolivar,21
+1266,true,Cabrera,21
+1267,true,California,21
+1268,true,Capitanejo,21
+1269,true,Carcasi,21
+1270,true,Cepita,21
+1271,true,Cerrito,21
+1272,true,Charala,21
+1273,true,Charta,21
+1274,true,Chima,21
+1275,true,Chipata,21
+1276,true,Cimitarra,21
+1277,true,Concepcion,21
+1278,true,Confines,21
+1279,true,Contratacion,21
+1280,true,Coromoro,21
+1281,true,Curiti,21
+1282,true,El Carmen De Chucury,21
+1283,true,El Guacamayo,21
+1284,true,El Peñon,21
+1285,true,El Playon,21
+1286,true,Encino,21
+1287,true,Enciso,21
+1288,true,Florian,21
+1289,true,Floridablanca,21
+1290,true,Galan,21
+1291,true,Gambita,21
+1292,true,Giron,21
+1293,true,Guaca,21
+1294,true,Guadalupe,21
+1295,true,Guapota,21
+1296,true,Guavata,21
+1297,true,Guepsa,21
+1298,true,Hato,21
+1299,true,Jesus Maria,21
+1300,true,Jordan,21
+1301,true,La Belleza,21
+1302,true,Landazuri,21
+1303,true,La Paz,21
+1304,true,Lebrija,21
+1305,true,Los Santos,21
+1306,true,Macaravita,21
+1307,true,Malaga,21
+1308,true,Matanza,21
+1309,true,Mogotes,21
+1310,true,Molagavita,21
+1311,true,Ocamonte,21
+1312,true,Oiba,21
+1313,true,Onzaga,21
+1314,true,Palmar,21
+1315,true,Palmas Del Socorro,21
+1316,true,Paramo,21
+1317,true,Piedecuesta,21
+1318,true,Pinchote,21
+1319,true,Puente Nacional,21
+1320,true,Puerto Parra,21
+1321,true,Puerto Wilches,21
+1322,true,Rionegro,21
+1323,true,Sabana De Torres,21
+1324,true,San Andres,21
+1325,true,San Benito,21
+1326,true,San Gil,21
+1327,true,San Joaquin,21
+1328,true,San Jose De Miranda,21
+1329,true,San Miguel,21
+1330,true,San Vicente De Chucuri,21
+1331,true,Santa Barbara,21
+1332,true,Santa Helena Del Opon,21
+1333,true,Simacota,21
+1334,true,Socorro,21
+1335,true,Suaita,21
+1336,true,Sucre,21
+1337,true,Surata,21
+1338,true,Tona,21
+1339,true,Valle San Jose,21
+1340,true,Velez,21
+1341,true,Vetas,21
+1342,true,Villanueva,21
+1343,true,Zapatoca,21
+1344,true,Sincelejo,22
+1345,true,Buenavista,22
+1346,true,Caimito,22
+1347,true,Coloso ,22
+1348,true,Corozal,22
+1349,true,Chalan,22
+1350,true,Galeras ,22
+1351,true,Guaranda,22
+1352,true,La Union,22
+1353,true,Los Palmitos,22
+1354,true,Majagual,22
+1355,true,Morroa,22
+1356,true,Ovejas,22
+1357,true,Palmito,22
+1358,true,Sampues,22
+1359,true,San Benito Abad,22
+1360,true,San Juan De Betulia,22
+1361,true,San Marcos,22
+1362,true,San Onofre,22
+1363,true,San Pedro,22
+1364,true,Since,22
+1365,true,Sucre,22
+1366,true,Tolu,22
+1367,true,Toluviejo,22
+1368,true,Ibague,23
+1369,true,Alpujarra,23
+1370,true,Alvarado,23
+1371,true,Ambalema,23
+1372,true,Anzoategui,23
+1373,true,Armero ,23
+1374,true,Ataco,23
+1375,true,Cajamarca,23
+1376,true,Carmen Apicala,23
+1377,true,Casabianca,23
+1378,true,Chaparral,23
+1379,true,Coello,23
+1380,true,Coyaima,23
+1381,true,Cunday,23
+1382,true,Dolores,23
+1383,true,Espinal,23
+1384,true,Falan,23
+1385,true,Flandes,23
+1386,true,Fresno,23
+1387,true,Guamo,23
+1388,true,Herveo,23
+1389,true,Honda,23
+1390,true,Icononzo,23
+1391,true,Lerida,23
+1392,true,Libano,23
+1393,true,Mariquita,23
+1394,true,Melgar,23
+1395,true,Murillo,23
+1396,true,Natagaima,23
+1397,true,Ortega,23
+1398,true,Palocabildo,23
+1399,true,Piedras,23
+1400,true,Planadas,23
+1401,true,Prado,23
+1402,true,Purificacion,23
+1403,true,Rioblanco,23
+1404,true,Roncesvalles,23
+1405,true,Rovira,23
+1406,true,Saldaña,23
+1407,true,San Antonio,23
+1408,true,San Luis,23
+1409,true,Santa Isabel,23
+1410,true,Suarez,23
+1411,true,Valle De San Juan,23
+1412,true,Venadillo,23
+1413,true,Villahermosa,23
+1414,true,Villarrica,23
+1415,true,Cali ,24
+1416,true,Alcala,24
+1417,true,Andalucia,24
+1418,true,Ansermanuevo,24
+1419,true,Argelia,24
+1420,true,Bolivar,24
+1421,true,Buenaventura,24
+1422,true,Buga,24
+1423,true,Bugalagrande,24
+1424,true,Caicedonia,24
+1425,true,Calima ,24
+1426,true,Candelaria,24
+1427,true,Cartago,24
+1428,true,Dagua,24
+1429,true,El Aguila,24
+1430,true,El Cairo,24
+1431,true,El Cerrito,24
+1432,true,El Dovio,24
+1433,true,Florida,24
+1434,true,Ginebra,24
+1435,true,Guacari,24
+1436,true,Jamundi,24
+1437,true,La Cumbre,24
+1438,true,La Union,24
+1439,true,La Victoria,24
+1440,true,Obando,24
+1441,true,Palmira,24
+1442,true,Pradera,24
+1443,true,Restrepo,24
+1444,true,Riofrio,24
+1445,true,Roldanillo,24
+1446,true,San Pedro,24
+1447,true,Sevilla,24
+1448,true,Toro,24
+1449,true,Trujillo,24
+1450,true,Tulua,24
+1451,true,Ulloa,24
+1452,true,Versalles,24
+1453,true,Vijes,24
+1454,true,Yotoco,24
+1455,true,Yumbo,24
+1456,true,Zarzal,24
+1457,true,Arauca,25
+1458,true,Arauquita,25
+1459,true,Cravo Norte,25
+1460,true,Fortul,25
+1461,true,Puerto Rondon,25
+1462,true,Saravena,25
+1463,true,Tame,25
+1464,true,Yopal,26
+1465,true,Aguazul,26
+1466,true,Chameza,26
+1467,true,Hato Corozal,26
+1468,true,La Salina,26
+1469,true,Mani,26
+1470,true,Monterrey,26
+1471,true,Nunchia,26
+1472,true,Orocue,26
+1473,true,Paz De Ariporo,26
+1474,true,Pore,26
+1475,true,Recetor,26
+1476,true,Sabanalarga,26
+1477,true,Sacama,26
+1478,true,San Luis De Palenque,26
+1479,true,Tamara,26
+1480,true,Tauramena,26
+1481,true,Trinidad,26
+1482,true,Villanueva,26
+1483,true,Mocoa,27
+1484,true,Colon,27
+1485,true,Orito,27
+1486,true,Puerto Asis,27
+1487,true,Puerto Caicedo,27
+1488,true,Puerto Guzman,27
+1489,true,Puerto Leguizamo,27
+1490,true,Sibundoy,27
+1491,true,San Francisco,27
+1492,true,San Miguel ,27
+1493,true,Santiago,27
+1494,true,La Hormiga ,27
+1495,true,Villagarzon,27
+1496,true,San Andres,28
+1497,true,Providencia,28
+1498,true,Leticia,29
+1499,true,El Encanto,29
+1500,true,La Chorrera,29
+1501,true,La Pedrera,29
+1502,true,La Victoria,29
+1503,true,Miriti-Parana,29
+1504,true,Puerto Alegria,29
+1505,true,Puerto Arica,29
+1506,true,Puerto Nariño,29
+1507,true,Puerto Santander,29
+1508,true,Tarapaca,29
+1509,true,Puerto Inirida,30
+1510,true,Barranco Minas,30
+1511,true,San Felipe,30
+1512,true,Puerto Colombia,30
+1513,true,La Guadalupe,30
+1514,true,Cacahual,30
+1515,true,Pana Pana ,30
+1516,true,Morichal ,30
+1517,true,San Jose Del Guaviare,31
+1518,true,Calamar,31
+1519,true,El Retorno,31
+1520,true,Miraflores,31
+1521,true,Mitu,32
+1522,true,Caruru,32
+1523,true,Pacoa,32
+1524,true,Taraira,32
+1525,true,Papunaua ,32
+1526,true,Yavarate,32
+1527,true,Puerto Carreño,33
+1528,true,La Primavera,33
+1529,true,Santa Rita,33
+1530,true,Santa Rosalia,33
+1531,true,San Jose De Ocune,33
+1532,true,Cumaribo,33

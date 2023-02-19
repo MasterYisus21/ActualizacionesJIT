@@ -717,7 +717,7 @@ const informacionCitacion = async (req) => {
 
         }
         const fecha_expediente = new Date(expediente['data'].fecha_registro)
-        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('default', { month: 'long' }).toUpperCase()
+        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('es-es', { month: 'long' }).toUpperCase()
         datos.expediente_fecha_registro_año = fecha_expediente.getFullYear()
         datos.expediente_fecha_registro_dia = fecha_expediente.getUTCDate()
       }
@@ -771,7 +771,7 @@ const informacionCitacion = async (req) => {
           datos["citacion_" + iterator] = citacion.data[iterator]
         }
         const fecha = new Date(citacion.data.fecha_sesion)
-        datos.citacion_mes = fecha.toLocaleString('default', { month: 'long' }).toUpperCase()
+        datos.citacion_mes = fecha.toLocaleString('es-es', { month: 'long' }).toUpperCase()
         datos.citacion_año = fecha.getFullYear()
         datos.citacion_dia = fecha.getUTCDate()
       }
@@ -782,7 +782,7 @@ const informacionCitacion = async (req) => {
     }))
   const hoy = new Date()
   datos.fecha_actual_dia = hoy.getUTCDate()
-  datos.fecha_actual_mes = hoy.toLocaleString('default', { month: 'long' }).toUpperCase()
+  datos.fecha_actual_mes = hoy.toLocaleString('es-es', { month: 'long' }).toUpperCase()
   datos.fecha_actual_año = hoy.getFullYear()
   datos.fecha_actual_hora = hoy.toLocaleTimeString()
 
@@ -820,7 +820,7 @@ const informacionCaso = async (req) => {
 
         }
         const fecha_expediente = new Date(expediente['data'].fecha_registro)
-        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('default', { month: 'long' }).toUpperCase()
+        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('es-es', { month: 'long' }).toUpperCase()
         datos.expediente_fecha_registro_año = fecha_expediente.getFullYear()
         datos.expediente_fecha_registro_dia = fecha_expediente.getUTCDate()
       }
@@ -871,7 +871,7 @@ const informacionCaso = async (req) => {
           datos["citacion_" + iterator] = citacion.data.results[0][iterator]
         }
         const fecha = new Date(citacion.data.results[0].fecha_sesion)
-        datos.citacion_mes = fecha.toLocaleString('default', { month: 'long' }).toUpperCase()
+        datos.citacion_mes = fecha.toLocaleString('es-es', { month: 'long' }).toUpperCase()
         datos.citacion_año = fecha.getFullYear()
         datos.citacion_dia = fecha.getUTCDate()
       }
@@ -889,7 +889,7 @@ const informacionCaso = async (req) => {
     }))
   const hoy = new Date()
   datos.fecha_actual_dia = hoy.getUTCDate()
-  datos.fecha_actual_mes = hoy.toLocaleString('default', { month: 'long' }).toUpperCase()
+  datos.fecha_actual_mes = hoy.toLocaleString('es-es', { month: 'long' }).toUpperCase()
   datos.fecha_actual_año = hoy.getFullYear()
   datos.fecha_actual_hora = hoy.toLocaleTimeString()
 

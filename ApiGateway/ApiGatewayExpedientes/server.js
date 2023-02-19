@@ -13,15 +13,17 @@ app.disable('x-powered-by');
 
 app.post("/api/gateway/v1/auth/ingresar/", async (req, res) => {
   try {
+    
     let modulos=[]
     const data = req.body;
     axios.defaults.headers.common['X-Api-Key'] =config.apiKey ;
     axios.defaults.headers['Id'] =data.username;
     let endpoints = [config.urlApiExpedientes + "usuarios?username=" + data.username,
     config.urlApiExpedientes + "personas?identificacion=" + data.username,config.urlApiExpedientes+"modulos"]
-
+    
     await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
       .then(axios.spread(async (data1, data2,data3) => {
+        
         if (Object.keys(data1.data.results).length < 1|Object.keys(data2.data.results).length < 1) { res.sendStatus(401); return }
         data.rol = data1.data.results[0].groups[0]
         data.app = "Centro Conciliacion JIT";
@@ -35,12 +37,13 @@ app.post("/api/gateway/v1/auth/ingresar/", async (req, res) => {
             res.status(200).json(response.data)
           })
           .catch(function (err) {
-            // console.log("error en el servidor de autenticacion")
+            console.log("error en el servidor de autenticacion")
             res.sendStatus(error(err))
           });
       }))
       .catch(err => {
-
+        console.log(err)
+        console.log("No se encuentra la persona registrada en el aplicativo o no se conecto con el servidor")
         res.sendStatus(401)
         return
 

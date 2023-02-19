@@ -1,0 +1,11 @@
+id,estado,nombre
+1,true,ducación primera infancia 
+2,true,Educación básica primaria
+3,true,Educación básica secundaria o secundaria básica
+4,true,Educación media o secundaria alta
+5,true,Educación postsecundaria no superior
+6,true,Educación técnica profesional y tecnológica
+7,true,Educación universitario o equivalente
+8,true,Especialización maestría o equivalente
+9,true,Doctorado o equivalente
+10,true,Ninguna 

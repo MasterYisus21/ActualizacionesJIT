@@ -19,7 +19,7 @@ function Layout() {
         <Outlet />
       </div>
       <div className='layout-footer' >
-        © Copyright 2022 | Vigilado MINEDUCACIÓN Y MINJUSTICIA
+        © Copyright 2023 | Vigilado MINEDUCACIÓN Y MINJUSTICIA
       </div>
     </div>
   )

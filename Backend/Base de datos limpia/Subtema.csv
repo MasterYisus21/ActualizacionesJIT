@@ -1,0 +1,137 @@
+id,estado,nombre,tema_id_id
+1,true,Donaciones y modos de adquirir el dominio distintos de la compraventa o la sucesión por causa de muerte,1
+2,true,Competencia desleal,2
+3,true,Clausulas abusivas,3
+4,true,Comercio electronico,3
+5,true,Condiciones negociales y contratos de adhesion,3
+6,true,Daños por producto defectuoso,3
+7,true,"Especulacion, acaparamiento y usura",3
+8,true,Garantia legal,3
+9,true,Garantias suplementarias,3
+10,true,Informacion,3
+11,true,Operaciones mediante sistemas de financiacion,3
+12,true,Publicidad,3
+13,true,Ventas por metodos no tradicionales o a distancia,3
+14,true,Otros,3
+15,true,Agencia comercial,4
+16,true,Aparceria,4
+17,true,Arrendamiento comercial,4
+18,true,Arrendamiento de vivienda,4
+19,true,Comision,4
+20,true,Comodato,4
+21,true,Compraventa distinta de actos de consumo,4
+22,true,Consignacion,4
+23,true,Contratos atipicos,4
+24,true,Corretaje,4
+25,true,Depositvo civil,4
+26,true,Depositvo mercantil,4
+27,true,Edicion,4
+28,true,Mandato,4
+29,true,Mutuo distinto de operaciones de crédito realizadas por establecimientos de crédito y sociedades de servicios financieros,4
+30,true,Obra,4
+31,true,Otras formas de arrendamiento distintas del arrendamiento financiero o leasing,4
+32,true,Permuta,4
+33,true,Preposicion,4
+34,true,Suministro,4
+35,true,Transaccion,4
+36,true,Transporte de cosas,4
+37,true,Transporte de personas,4
+38,true,Otros,4
+39,true,Cooperativas de ahorro y credito,5
+40,true,"Arrendamiento, usufructo y anticresis",6
+41,true,Deshaucio,6
+42,true,Renovacion del contrato de arrendamiento,6
+43,true,Subarriendo,6
+44,true,Otros,6
+45,true,Anticresis sobre inmuebles,7
+46,true,Fianza,7
+47,true,Fiducia en garantia,7
+48,true,Garantias inmobiliarias,7
+49,true,Hipoteca,7
+50,true,Otras garantias inmobiliarias,7
+51,true,Propiedad horizontal,8
+52,true,Responsabilidad extracontractual,9
+53,true,Seguros,10
+54,true,"Sociedades, personas juridicas de derecho privado y otras formas asociativas",11
+55,true,Titulos valores,12
+56,true,Turismo,13
+57,true,Otros,14
+58,true,Prevencion de violencia intrafamiliar,15
+59,true,Capitulaciones matrimoniales,16
+60,true,Disolucion y liquidacion de la sociedad conyugal,16
+61,true,Separacion de bienes y cuerpos,16
+62,true,Alimentos,17
+63,true,Custodia y regimen sobre menores e incapaces,17
+64,true,Direccion conjunta del hogar y ejercicio de la patria potestad,17
+65,true,Alimentos de adulto mayor,17
+66,true,Rescision de la particion en las sucesiones,18
+67,true,Declaracion de union marital de hecho,19
+68,true,Disolucion y liquidacion de la sociedad patrimonial de hecho,19
+69,true,Usura y recargo de ventas a plazo,20
+70,true,Ofrecimiento engañoso de productos y servicios,20
+71,true,Hurto simple cuya cuantía no exceda de 150 salarios mínimos mensuales legales vigentes,21
+72,true,"Hurto simple para hacer uso de la cosa, con restitución en término no mayor de 24 horas",21
+73,true,"Hurto simple cometido por socio, copropietario, comunero o heredero, o sobre cosa común indivisible o común divisible, excediendo su cuota parte",21
+74,true,"Alteración, desfiguración y suplantación de marcas de ganado",21
+75,true,Estafa cuya cuantía no exceda de 150 salarios mínimos mensuales legales vigentes,21
+76,true,Emisión y transferencia ilegal de cheques,21
+77,true,Abuso de confianza,21
+78,true,Aprovechamiento de error ajeno o caso fortuito,21
+79,true,Alzamiento de bienes,21
+80,true,Sustracción de bien propio,21
+81,true,Disposición de bien propio gravado con prenda (garantía mobiliaria),21
+82,true,Defraudación de fluidos,21
+83,true,Malversación y dilapidación de bienes,21
+84,true,Usurpación de inmuebles,21
+85,true,Usurpación de aguas,21
+86,true,Invasión de tierras o edificaciones,21
+87,true,Perturbación de la posesión sobre inmueble,21
+88,true,Daño en bien ajeno,21
+89,true,Abuso de autoridad por acto arbitrario e injusto,22
+90,true,Abuso de autoridad por omisión de denuncia simple,22
+91,true,Revelación de secreto simple,22
+92,true,Utilización indebida de información oficial privilegiada,22
+93,true,Asesoramiento y otras actuaciones ilegales simple,22
+94,true,Intervención en política,22
+95,true,Utilización indebida de información obtenida en el ejercicio de función pública,22
+96,true,Utilización indebida de influencias derivadas del ejercicio de función pública,22
+97,true,Utilización de asunto sometido a secreto o reserva,22
+98,true,Falsa autoacusación,23
+99,true,Favorecimiento de la fuga culposa simple,23
+100,true,Infidelidad a los deberes profesionales,23
+101,true,Aceptación indebida de honores,24
+102,true,Violación de inmunidad diplomática,24
+103,true,Maltrato mediante restricción a la libertad física,25
+104,true,Malversación y dilapidación de los bienes de familiares,25
+105,true,Inasistencia alimentaria,25
+106,true,Circulación y uso de efecto oficial o sello falsificado,26
+107,true,Falsedad para obtener prueba de hecho verdadero,26
+108,true,Falsedad personal,26
+109,true,Falsificación o uso fraudulento de sello oficial,26
+110,true,Supresión de signo de anulación de efecto oficial,26
+111,true,Uso y circulación de efecto oficial anulado,26
+112,true,Calumnia,27
+113,true,Injuria,27
+114,true,Injuria por vías de hecho,27
+115,true,Injuria y calumnia indirecta,27
+116,true,Injurias recíprocas,27
+117,true,Daños o agravios a personas o a cosas destinadas al culto,28
+118,true,Divulgación y empleo de documentos reservados,28
+119,true,Impedimento y perturbación de ceremonia religiosa,28
+120,true,Irrespeto a cadáveres,28
+121,true,"Ofrecimiento, venta o compra de instrumento apto para interceptar la comunicación privada entre personas",28
+122,true,Violación a la libertad religiosa,28
+123,true,Violación de habitación ajena,28
+124,true,Violación de habitación ajena por servidor público,28
+125,true,Violación de la libertad de trabajo,28
+126,true,Violación de los derechos de reunión y asociación,28
+127,true,Violación en lugar de trabajo,28
+128,true,Omisión de denuncia de quien tuviere conocimiento de la utilización de menores para la realización de delitos de explotación sexual,29
+129,true,Instigación a delinquir simple,30
+130,true,Inducción o ayuda al suicidio,31
+131,true,Lesiones personales sin secuelas que produjeren incapacidad para trabajar o enfermedad sin exceder de sesenta (60) días,31
+132,true,Lesiones personales con deformidad física transitoria,31
+133,true,Lesiones personales con perturbación funcional transitoria,31
+134,true,Parto o aborto preterintencional,31
+135,true,Lesiones personales culposas,31
+136,true,Omisión de socorro,31

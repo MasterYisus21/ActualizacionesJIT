@@ -28,7 +28,7 @@ function cadenaAleatoria(longitud) {
 
 const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo,adjunto=false) => {
   
-  const correoCopia=config.copia_correo
+  const correoCopia=process.env.correoCopia || 'jairourrego123@gmail.com';
   correoQuienRecibe.push(correoCopia)
   let email = {
     nombre_servicio:"Centro de Conciliación",
@@ -128,7 +128,8 @@ views.CrearSolicitud = async (req, res) => {
     req.body = JSON.parse(req.body.datos)
     if (req.files < 2) { res.sendStatus(error({ message: "Solo ha subido un archivo" })); return }
     if(req.body.apoderado){    if (Object.keys(req.body.apoderado).length > 0) {
-
+    
+    // req. ? if condicion es verdadera : if condicion es falsa
       
 
       if (!(req.body.apoderado[0].identificacion && req.body.apoderado[0].identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
@@ -172,27 +173,39 @@ views.CrearSolicitud = async (req, res) => {
       const cuerpo= `<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
       let asunto = `Solicitud de Conciliacion ${data2.data.numero_radicado}`
         
-        const correo =  axios.post(config.urlEmail,email("html",[req.body.convocante[0].correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
-        
         
         req.params.id = data2.data.id
         req.body.hechos[0].solicitud_id = data2.data.id
         const relacion_convocante_solicitud = [config.urlApiSolicitudes + "relaciones_persona_solicitud/", { solicitud_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
         const relacion_convocado_solicitud = [config.urlApiSolicitudes + "relaciones_persona_solicitud/", { solicitud_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
         const hechos = [config.urlApiSolicitudes + "hechos/", req.body.hechos[0]]
-        const documentos = views.CargarDocumentos(req, res, 1)
+        const documentos = await views.CargarDocumentos(req, res, 1)
+        if (documentos) {
+          const url=config.urlApiSolicitudes+"solicitudes/"+data2.data.id+"/"
+          requests.delete(req, res, url)
+          return;
+        }
+
+      
         endpoints = [relacion_convocante_solicitud, relacion_convocado_solicitud, hechos]
+        
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           
-          .then(axios.spread((data3, data4, data5) => {
+          .then(axios.spread(() => {
+           
+            const correo =  axios.post(config.urlEmail,email("html",[req.body.convocante[0].correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
+        
+            
             res.status(201).json(data2.data)
         
             // res.status(201).json(data2.data[0])
 
           }))
           .catch(err => {
-
-            res.sendStatus(error(err))
+            const url=config.urlApiSolicitudes+"solicitudes/"+data2.data.id+"/"
+            requests.delete(req, res, url)
+            
+            res.status(error(err))
             return
 
           })
@@ -203,10 +216,12 @@ views.CrearSolicitud = async (req, res) => {
         res.sendStatus(error(err))
         
       })
-
+      
     // const hechos= config.urlApiSolicitudes+"hechos",{solicitud_id:}
 
   } catch (error) {
+    
+    
     console.log(error);
     res.sendStatus(500);
   }
@@ -220,41 +235,67 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
   try {
    
     // console.log(req.file)
-    if (Object.keys(req.files).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
+    
+    if (Object.keys(req.files).length < 1) { falla=true; res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
 
-
-
+    let falla=false
+    
     for await (const iterator of req.files) {
+      let bodyFormData = new FormData();
+      const file = fs.createReadStream(iterator.path);
+      bodyFormData.append('estado', 'true');
+      bodyFormData.append('nombre',iterator.originalname);
+      bodyFormData.append('solicitud_id', req.params.id);
+      bodyFormData.append('documento', file);
+      
+  
+  
+  
+  
+      await axios({
+        method: "post",
+        url: config.urlApiSolicitudes + "documentos/",
+        data: bodyFormData,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      // await unirest
+      //   .post(config.urlApiSolicitudes + 'documentos/')
 
-      await unirest
-        .post(config.urlApiSolicitudes + 'documentos/',)
+
+      //   .field('estado', true)
+      //   .field('nombre',count+iterator.originalname)
+      //   .field('solicitud_id', req.params.id)
 
 
-        .field('estado', true)
-        .field('nombre', iterator.originalname)
-        .field('solicitud_id', req.params.id)
-
-
-        //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-        .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
-        //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-        .headers({"X-Api-Key":config.apiKey})
+      //   //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+      //   .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
+      //   //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+      //   .headers({"X-Api-Key":config.apiKey})
         .then(function (response) {
+          
+        
           try {
+            
             fs.unlinkSync(iterator.path)
           } catch (err) {
-            error(err)
+           
+            error(err) 
           }
-
-          datos.push(response.body)
+         
+          datos.push(response.data)
 
         })
-
-
+        .catch((err)=>{
+          falla=true
+          res.status(error(err))
+          return;
+        })
+        
+        
     }
-    if (intento < 2) { return;
+    if (intento < 2) {  res.sendStatus(400);return falla;
      }
-  
+     if(!falla){
      await axios.patch(config.urlApiSolicitudes+"solicitudes/"+req.params.id+"/",{estado_solicitud_id:1})
       .then(result=>{
         res.status(201).json(datos)
@@ -263,10 +304,11 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
         res.sendStatus(error(err))
       })
     
-
+    } else{res.sendStatus(400)}
 
 
   } catch (error) {
+    
     console.log(error);
 
   }
@@ -580,7 +622,7 @@ views.VerSolicitud = async (req, res) => {
         datos.documentos = data3.data
 
         
-        res.status(201).json(datos)
+        res.status(200).json(datos)
 
       }))
       .catch(err => {
@@ -705,6 +747,21 @@ views.AprobarSolicitud = async (req, res) => {
 
     console.log(error);
     res.sendStatus(500);
+  }
+}
+views.EstadoSolicitud = async (req, res) => {
+  try {
+    axios.get(config.urlApiSolicitudes+"solicitudes/"+req.params.id)
+      .then(result=>{
+        res.status(200).json(result.data)
+    })
+      .catch(err => {
+        res.sendStatus(error(err))
+      })
+  }catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    return;
   }
 }
 

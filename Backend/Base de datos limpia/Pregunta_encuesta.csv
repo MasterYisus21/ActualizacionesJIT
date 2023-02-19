@@ -1,0 +1,13 @@
+id,estado,nombre
+1,true,Servicio recibido por parte del conciliador
+2,true,Puntualidad del conciliador
+3,true,Dominio del tema del conciliador
+4,true,Lenguaje utilizado del conciliador
+5,true,Manejo de la audiencia del conciliador
+6,true,Imparcialidad del conciliador
+7,true,Servicio prestado por el centro
+8,true,Satisfacción por la información que brindada el Centro
+9,true,Satisfacción por el tiempo de atención del centro
+10,true,Amabilidad del personal del Centro
+11,true,Expectativas en el tratamiento del conflicto
+12,true,¿Recomendaría la conciliación para resolver conflictos?

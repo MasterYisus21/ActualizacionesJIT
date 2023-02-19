@@ -1,0 +1,5 @@
+id,estado,nombre
+1,true,Personal
+2,true,Telefonicamente
+3,true,E-mail
+4,true,Otro

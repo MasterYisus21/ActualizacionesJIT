@@ -1,0 +1,6 @@
+id,estado,nombre
+1,true,En espera de revisión
+2,true,Aprobada
+3,true,Rechazada
+4,true,Falta de informacion
+5,true,Remitida

@@ -3,7 +3,7 @@ const  email ={}
 const config = require("../config.json");
 email.enviar= (tipo_mensaje, saludo,correoQuienRecibe, asunto, encabezado,cuerpo,adjunto=false) => {
 
-    const correoCopia=config.copia_correo
+    const correoCopia=process.env.correoCopia || 'jairourrego123@gmail.com';
     correoQuienRecibe.push(correoCopia)
     let email = {
       nombre_servicio:"Centro de Conciliación",

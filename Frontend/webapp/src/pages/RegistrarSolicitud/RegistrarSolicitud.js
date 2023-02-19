@@ -906,7 +906,7 @@ function RegistrarSolicitud() {
               los formatos solicitados son PDF, JPEG, JPG y PNG con tamaño total
               máximo de 10Mbytes.
             </label>
-            <label className="subtitles-secciones">Identificación</label>
+            <label className="subtitles-secciones">Fotocopia del documento de identidad (Cedula de ciudadanía, pasaporte, cedula de extranjería.)</label>
             <Form.Control
               className="inputs-registrar-solicitud"
               type="file"

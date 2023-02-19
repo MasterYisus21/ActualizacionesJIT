@@ -1,0 +1,8 @@
+id,password,last_login,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined
+2,pbkdf2_sha256$390000$Nym3aBADqiZyUheif8PPgK$kFeysEXoDQEcLf0d0BrhHCMV42odp0dNM5cJeSX/W5Y=,,true,1013689035,,,,false,true,2023-01-30 15:03:02+00
+1,pbkdf2_sha256$390000$c2sDn8BknFP4PIk5iYgpRO$wVxwgYxHBkQLWfwaI8IA4FzGDA5PiWtSjLbl1GQUX88=,2023-02-01 15:39:26.196636+00,true,admin,,,,true,true,2023-01-30 14:29:34.287632+00
+7,pbkdf2_sha256$390000$KcmE0ccaZXUHPhaksyoUO3$PcB5NpK/YmrQIVscdq0EUcebiqKKZh1m134Dw9Pap9k=,,false,1010074595,,,,false,true,2023-02-01 15:51:58.528526+00
+9,pbkdf2_sha256$390000$j3233jv7G84jlEse0MRIIY$vNeyU3u0SOqkbwzRr9n8SNUN+xjOf9QV149k7us6xq8=,,false,1033816974,,,,false,true,2023-02-01 18:46:33.539799+00
+8,pbkdf2_sha256$390000$xtAXjaHAeKUQBkf8Nl5Xod$HdIUfT81PFBn9oVKPZagzzQBHyFYTi+jl/v5YMB293c=,,false,222222,,,,false,true,2023-02-01 16:17:07.611153+00
+6,pbkdf2_sha256$390000$HQtoUr0foPFbOCDDsvsokt$9mlxb1EzOgcWka8ky1oXXv21AVJPec89Cz00+MomFio=,,false,1000465392,,,,false,true,2023-02-01 15:50:53.244339+00
+10,pbkdf2_sha256$390000$KX9ZtxEZgyU2K5VK2FFVcW$SP3AHUu522uHME+d435np8TyN7B4YKD7Z+je0v2JRBI=,,true,prueba,,,,true,true,2023-02-06 16:25:27.131643+00

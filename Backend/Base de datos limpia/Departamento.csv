@@ -1,0 +1,34 @@
+id,estado,nombre,pais_id_id
+1,true,Antioquia,1
+2,true,Atlantico,1
+3,true,Bogota D.C,1
+4,true,Bolivar,1
+5,true,Boyaca,1
+6,true,Caldas,1
+7,true,Caqueta,1
+8,true,Cauca,1
+9,true,Cesar,1
+10,true,Cordoba,1
+11,true,Cundinamarca,1
+12,true,Choco,1
+13,true,Huila,1
+14,true,La Guajira,1
+15,true,Magdalena,1
+16,true,Meta,1
+18,true,Norte de Santander,1
+19,true,Quindio,1
+20,true,Risaralda,1
+21,true,Santander,1
+22,true,Sucre,1
+23,true,Tolima,1
+24,true,Valle,1
+25,true,Arauca,1
+26,true,Casanare,1
+27,true,Putumayo,1
+28,true,San Andres,1
+29,true,Amazonas,1
+30,true,Guainia,1
+31,true,Guaviare,1
+32,true,Vaupes,1
+33,true,Vichada,1
+17,true,Nariño,1

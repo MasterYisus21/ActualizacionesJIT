@@ -28,4 +28,24 @@ requests.get = async (req, res, url, simbolo) => {
 
 }
 
+requests.delete = async (req, res, url) => {
+
+    try {
+        axios.delete(url)
+            .then(result => {
+                res.sendStatus(400)
+            })
+            .catch(err => {
+                res.sendStatus(error(err))
+                return
+            })
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+
+}
+
 module.exports = requests

@@ -1,0 +1,7 @@
+id,estado,nombre
+1,true,Cedula de Ciudadania
+2,true,Cedula de Extranjeria 
+3,true,Tarjeta de Identidad 
+4,true,Registro Civil 
+5,true,Pasaporte 
+6,true,Nit 

@@ -1,52 +1,67 @@
 # importing libraries
-from tkinter.ttk import Style
-from flask import Flask ,request
+
+from os import remove
+from flask import Flask, request,Response
 from flask_mail import Mail, Message
+from flask_mail import *
+from werkzeug.utils import secure_filename
 
-username= 'no_contestar@ugc.edu.co'
-password= 'zhuzsxaohjpeguix'
-
-
-   
-def tabla() :
-
-  return  """<div style="text-align:center;"> <table class="default" style=" width:100%;">  <tr  style="border: 1px solid black; width:100%; " >"""
-
-def columnas(columnas,estilo):
-  atributos = "<tr>"
-  for iterator in columnas :
-
-    atributos = atributos + f""" <th style="{estilo}" scope="row">{iterator}</th>"""
-      
-  atributos=atributos + "</tr>"
-  return atributos
+import os
+import mimetypes
+import smtplib
 
 
-def registros(columnas,filas,estilo,):
-  registro="<tr>"
-  registro = registro +f"""<th style="{estilo['indice']}" >{filas[0]}</th>"""
-  for iterator in range(len(columnas)-1) :
+username = 'no_contestar@ugc.edu.co'
+password = 'zhuzsxaohjpeguix'
 
-    registro = registro + f""" <td style="{estilo['total']}" >{filas[iterator + 1]}</td>"""
 
-  registro= registro + "</tr>"    
-  return registro
+def tabla():
 
-def firma(datos,estilo):
+    return """<div style="text-align:center;"> <table class="default" style=" width:100%;">  <tr  style="border: 1px solid black; width:100%; " >"""
 
-  pie = f"""<i style="{estilo}">"""
-  for iterator in range(len(datos)) :
 
-    pie = pie + f"""{datos[iterator]} <br>"""
+def columnas(columnas, estilo):
+    atributos = "<tr>"
+    for iterator in columnas:
 
-  pie= pie + f"""</i>"""    
-  return pie
+        atributos = atributos + \
+            f""" <th style="{estilo}" scope="row">{iterator}</th>"""
+
+    atributos = atributos + "</tr>"
+    return atributos
+
+
+def registros(columnas, filas, estilo,):
+    registro = "<tr>"
+    registro = registro + \
+        f"""<th style="{estilo['indice']}" >{filas[0]}</th>"""
+    for iterator in range(len(columnas)-1):
+
+        registro = registro + \
+            f""" <td style="{estilo['total']}" >{filas[iterator + 1]}</td>"""
+
+    registro = registro + "</tr>"
+    return registro
+
+
+def firma(datos, estilo="color:#b2aaaa;"):
+
+    pie = f"""<i style="{estilo}">"""
+    for iterator in range(len(datos)):
+
+        pie = pie + f"""{datos[iterator]} <br>"""
+
+    pie = pie + f"""</i>"""
+    return pie
+
+
 
 
 app = Flask(__name__)
-mail= Mail(app)
+app.config['UPLOAD_FOLDER']="./public/adjuntos"
+mail = Mail(app)
 
-app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = username
 app.config['MAIL_PASSWORD'] = password
@@ -54,67 +69,132 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
+
+
 @app.route('/', methods=['POST'])
-
 def index():
-  try : 
-    request_data = request.get_json()
-
-    destinatario = request_data['destinatario']
-    asunto= request_data['asunto']
-    
+  try:
    
-    msg = Message(asunto, sender = (request_data['nombre_servicio'],username), recipients = destinatario)
+      request_data = request.get_json()
     
-    
-    if request_data['tipo_mensaje']=="html":
-  
+      destinatario = request_data['destinatario']
+      asunto = request_data['asunto']
+      pie = ["Centro de Conciliacion Jose Jose Ignacio Talero Lozada","Universidad la Gran Colombia","Teléfono: 3340883","Calle 12 No.8 -37 ", "<u>ccjoseignaciotalerolosada@ugc.edu.co</u>"]
+      msg = Message(asunto, sender=(
+          request_data['nombre_servicio'], username), recipients=destinatario)
 
-      msg.html = f"""
-      <html>
-      <body>
-      """
-      msg.html = msg.html + request_data['mensaje']['saludo']+"<br><br>"+request_data['mensaje']['encabezado'] + "<br><br>"
       
-      # if request_data['mensaje']['cuerpo']['tabla']:
-        
-      #   atributos= request_data['mensaje']['cuerpo']['tabla']['columnas']['columnas']
-      #   estilo_columnas =request_data['mensaje']['cuerpo']['tabla']['columnas']['style']
-      #   filas= request_data['mensaje']['cuerpo']['tabla']['filas']['filas']
-      #   estilo_filas =request_data['mensaje']['cuerpo']['tabla']['filas']['style']
-      #   pie=request_data['mensaje']['firma']['firma']
-      #   estilo_pie=request_data['mensaje']['firma']['style']
-      #   despedida=request_data['mensaje']['despedida']
+      if request_data['tipo_mensaje'] == "html":
+
+        try: 
+
+          msg.html = f"""
+                        <html>
+                        <body>
+                        """
+          msg.html = msg.html + request_data['mensaje']['saludo'] + \
+              "<br><br>"+request_data['mensaje']['encabezado'] + "<br>"
           
-      #   msg.html = msg.html + tabla() + columnas(atributos,estilo_columnas)
-        
+          if 'tabla' in request_data['mensaje']['cuerpo']: # si existe el atributo tabla 
 
-        
-      #   for iterator in range(len(filas)):
 
-      #     msg.html = msg.html + registros(atributos,filas[iterator],estilo_filas)
-    
-      #   msg.html=msg.html + "</table> </div> <br><br>  " 
-       
+          # if request_data['mensaje']['cuerpo']['tabla']:
+
+              atributos = request_data['mensaje']['cuerpo']['tabla']['columnas']['columnas']
+              estilo_columnas = request_data['mensaje']['cuerpo']['tabla']['columnas']['style']
+              filas = request_data['mensaje']['cuerpo']['tabla']['filas']['filas']
+              estilo_filas = request_data['mensaje']['cuerpo']['tabla']['filas']['style']
+
+              msg.html = msg.html + tabla() + columnas(atributos, estilo_columnas)
+
+              for iterator in range(len(filas)):
+
+                  msg.html = msg.html + \
+                      registros(atributos, filas[iterator], estilo_filas)
+
+              msg.html = msg.html + "</table> </div> <br><br>  "
+
+
+          msg.html = msg.html + request_data['mensaje']['cuerpo'] +"<br><br>"
+          despedida = request_data['mensaje']['despedida']
+          if 'firma'  in request_data['mensaje']:
         
-      pie=request_data['mensaje']['firma']['firma']
-      estilo_pie=request_data['mensaje']['firma']['style']
-      despedida=request_data['mensaje']['despedida']
-      msg.html = msg.html + despedida + "<br> <br>" + "Este es un correo electrónico generado <b> automáticamente </b> por favor no responder. <br><br><br>"
-      msg.html=msg.html + firma(pie,estilo_pie)+"</body></html>"
+               estilo_pie = request_data['mensaje']['firma']['style']
+               pie = request_data['mensaje']['firma']['firma']
+               msg.html = msg.html + firma(pie,estilo_pie)
+             
+         
+          
       
-    else :
 
-      msg.body = request_data['mensaje']
+          msg.html = msg.html + despedida + "<br> <br>" + \
+              "Este es un correo electrónico generado <b> automáticamente </b> por favor no responder. <br><br><br>"
 
-    print("entre")
-    mail.send(msg)
-    print("envie")
-    return "Sent"
+          msg.html = msg.html + firma(pie)
+        
+        except :
+          
+          return "Ocurrio un error al la informacion del cuerpo "
+
+      else:
+          
+          msg.body = request_data['mensaje']                                        
+
+      if 'adjunto'  in request_data:
+      
+        with app.open_resource(os.getcwd()+"/public/adjuntos/"+request_data["adjunto"]) as fp:  
+          mime = mimetypes.guess_type(os.getcwd()+"/public/adjuntos/"+request_data["adjunto"])
+          msg.attach(request_data["adjunto"].capitalize(), mime[0], fp.read()) 
+          
+        mail.send(msg)
+        remove(os.getcwd()+"/public/adjuntos/"+request_data["adjunto"])
+      else:
+
+        mail.send(msg)
+      
+      
+      return Response("Enviado con exito",200)
+
+  except NameError :
+     
+      return Response("El correo no se pudo enviar",404)
+
+
   
-  except Exception as e:
-        return print(e)
+@app.route('/adjuntar', methods=['POST'])
+def adjuntar():
+  try:
+    print("entreee aquii")
+    if 'adjunto' not in request.files:
 
+      return Response ("El name para enviar adjuntos debe ser ""adjunto""",400)
+      
+      
+    
+    file=request.files['adjunto']
+    if file.filename == '':
+        return Response ("No selecciono el archivo",404)
+           
+  
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+      
+    return  Response (filename,201)
+
+  except NameError :
+    
+      Response ("No se pudo guardar cargar el archivo",400)
+      
+@app.route('/validar', methods=['POST'])
+def validar():
+  try:
+    server=smtplib.SMTP_SSL("smtp.gmail.com",465 )
+    # server.starttls()
+    server.login(username,password)
+    server.quit()
+    return Response ("OK",200)
+  except :
+    return Response ("No pudo ingresar al Correo",503)
 if __name__ == '__main__':
 
-    app.run(debug = True,port=8004)
+    app.run(debug=True, port=5001)

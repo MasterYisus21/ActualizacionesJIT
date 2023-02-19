@@ -1,0 +1,4 @@
+id,estado,nombres,apellidos,identificacion,fecha_expedicion,lugar_expedicion,fecha_nacimiento,telefono,direccion,ocupacion,celular,correo,persona_ugc,tarjeta_profesional,lugar_nacimiento,apoderado_id_id,barrio_id_id,escolaridad_id_id,estado_civil_id_id,estrato_socioeconomico_id_id,genero_id_id,grupo_etnico_id_id,perfil_id_id,sexo_id_id,tipo_cargo_id_id,tipo_discapacidad_id_id,tipo_documento_id_id,tipo_persona_id_id,tipo_vivienda_id_id,usuario_id_id
+1,true,JAIRO MILLER,URREGO,1013689035,,,,,,,3144216973,jairo.urrego@ugc.edu.co,false,,,,,,,,,,,,,,,,,2
+27,true,Juan Sebastian,Suarez Calderon,1000465392,,,,,,,3138191589,juan.suarez@ugc.edu.co,true,,,,,,,,,,,,3,,1,,,6
+28,true,Andres Felipe,Villamizar,1010074595,,,,,,,300 5126595,andres.villamizar@ugc.edu.co,true,,,,,,,,,,,,1,,1,,,7

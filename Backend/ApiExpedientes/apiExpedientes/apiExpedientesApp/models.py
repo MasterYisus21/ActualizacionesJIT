@@ -451,7 +451,7 @@ class Persona(EstadoModel):
     lugar_expedicion = models.CharField(max_length=20, blank=True, null=True)
     fecha_nacimiento = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     telefono = models.CharField(max_length=10, blank=True, null=True)
-    direccion = models.CharField(max_length= 40, blank=True, null=True)
+    direccion = models.CharField(max_length= 220, blank=True, null=True)
     ocupacion = models.CharField(max_length = 25,blank=True,null=False)
     celular = models.CharField(max_length=15, blank=False, null=False)
     correo = models.EmailField(max_length=120,blank=False,null=False)
@@ -555,7 +555,7 @@ class Estado_expediente(GeneralModel):
         db_table='Estado_expediente'
         verbose_name = ('Estado')
         verbose_name_plural = ('Estados_expediente')
-        ordering = ['-id']
+        ordering = ['id']
      def __str__(self):
         return self.nombre
 
@@ -569,7 +569,7 @@ class Finalidad_servicio(GeneralModel):
         return self.nombre
 class Expediente(EstadoModel):
     identificador_sicaac= models.CharField(max_length=15,blank=True,null=True)
-    numero_radicado = models.CharField(max_length =20,editable=True,null=True,blank=True)
+    numero_radicado = models.CharField(max_length =20,editable=True,null=True,blank=True,unique=True)
     numero_caso = models.CharField(max_length=25,default = increment_numero_caso_number,editable=False,unique=True)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=False,auto_now_add=True) # Se crea automaticamente 
     caso_gratuito= models.BooleanField(default=True, blank=True,null=True)
@@ -641,7 +641,7 @@ class Categoria_resultado(GeneralModel):
         return self.nombre
         
 class Tipo_resultado(GeneralModel):
-    
+    nombre= models.CharField(max_length=220,blank=False, null=False,unique=True)
     categoria_id = models.ForeignKey(Categoria_resultado, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
         db_table='Tipo_resultado'
@@ -669,7 +669,7 @@ class Hechos(EstadoModel):
     cuantia_indeterminada=models.BooleanField(default=False, blank=True,null=True)
     flag_interviene_tercero=models.BooleanField(default=False, blank=True,null=True)
     flag_violencia=models.BooleanField(default=False, blank=True,null=True)
-    cuantia= models.PositiveIntegerField(blank=True,null=True)
+    cuantia= models.IntegerField(default=0,blank=True,null=True)
     descripcion = models.TextField(blank=False,null=False)
     Flag_conflicto_por_incapacidad=models.BooleanField(default=False, blank=True,null=True)
     pretension = models.TextField(blank=True,null=True)

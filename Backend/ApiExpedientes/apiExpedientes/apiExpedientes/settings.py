@@ -82,16 +82,19 @@ WSGI_APPLICATION = 'apiExpedientes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Centro_Conciliacion_Jose_Ignacion',
-        'USER': 'sisinfo',
-        'PASSWORD': 'Ugc2021BD$%',
-        'HOST': '172.20.100.124',
-        'PORT': 3306,
+ 'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv("DB_NAME", "db_conciliacion_jit_expedientes"),
+        'USER': os.getenv("DB_USER", "jit_expedientes"),
+        'PASSWORD': os.getenv("DB_PASS", "Ugc$%jit2022"),
+        'HOST': os.getenv("DB_HOST", "172.20.100.20"),
+        'PORT': os.getenv("PORT",'5435')
     }
 }
+
+
 # DATABASES = {
 #  'default': {
 #        'ENGINE': 'django.db.backends.mysql',
@@ -122,12 +125,20 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-CORS_ALLOWED_ORIGINS = [
-'http://localhost',
-'http://0.0.0.0'
-]
-
+CSRF_TRUSTED_ORIGINS = [
+                        'http://172.20.100.20', 
+                        'https://172.20.100.20', 
+                        'http://172.16.29.108',
+                        'http://172.20.100.108',
+                        'https://centrodeconciliacionjoseignaciotalerolosada.ugc.edu.co',
+                        'http://centrodeconciliacionjoseignaciotalerolosada.ugc.edu.co'
+                        
+                       ]
+# CORS_ALLOWED_ORIGINS = [
+# 'http://localhost',
+# 'http://0.0.0.0'
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -141,10 +152,7 @@ USE_I18N = False
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -157,6 +165,14 @@ REST_FRAMEWORK = {
     
     # 'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.DjangoModelPermissions']
 }
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
+
+# STATIC_URL = 'static/'
+
 API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
+STATIC_ROOT = os.path.join(BASE_DIR, 'api/jit_expedientes/v1/static')
+STATIC_URL = '/api/jit_expedientes/v1/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media') 

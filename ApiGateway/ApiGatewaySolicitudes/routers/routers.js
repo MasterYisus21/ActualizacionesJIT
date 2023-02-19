@@ -91,6 +91,7 @@ router.get("/solicitudes",views_genericos.ListarSolicitudes);
 router.get("/estados_solicitud",views_genericos.SeleccionablesPricipales);
 router.get("/paises/:id", views_genericos.ListarDepartamentos);
 router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
+router.get("/paises/:id/departamentos/:id2", views_genericos.ListarCiudades);
 router.get("/estados_solicitudes/:identificacion",views_genericos.Listar_estados_solicitud);
 router.get("/estados_expedientes/:identificacion",views_genericos.Listar_estados_expediente);
 router.post("/solicitudes/:id/informacion_solicitudes",verificarCodigo,views_genericos.DetalleSolicitud);
@@ -101,7 +102,7 @@ router.get("/solicitud", views_genericos.DatosCrearSolicitud);
 router.get("/documentos/:id",verifier,views_genericos.DescargarDocumentos);
 // app.use(verifier);
 router.get("/solicitudes/:id",verifier,views_genericos.VerSolicitud);
-
+router.get("/solicitudes/:id/estado",verifier,views_genericos.EstadoSolicitud);
 
 // Post
 router.post("/solicitud",archivo.uploadMiddleware,views_genericos.CrearSolicitud);

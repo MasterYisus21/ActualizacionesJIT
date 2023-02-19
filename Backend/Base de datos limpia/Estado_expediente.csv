@@ -1,0 +1,11 @@
+id,estado,nombre
+1,true,Nueva
+2,true,Asignada
+3,true,Se requiere información
+4,true,Audiencia pendiente
+5,true,Generando resultado
+6,true,Resuelta
+7,true,Encuesta pendiente
+8,true,En seguimiento
+9,true,Cerrada
+10,true,Inadmitida

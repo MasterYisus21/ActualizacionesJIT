@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from tkinter.tix import Tree
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,6 +27,7 @@ SECRET_KEY = 'django-insecure-7-_0)5qnbg=88y8^w4*7_^xro$xei#td3p!tsxh@0)*)ry#h--
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -76,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'apiSolicitudes.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -91,16 +92,18 @@ WSGI_APPLICATION = 'apiSolicitudes.wsgi.application'
 #         'PORT': '5432',
 #     }
 # }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Centro_Conciliacion_Jose_Ignacion',
-        'USER': 'sisinfo',
-        'PASSWORD': 'Ugc2021BD$%',
-        'HOST': '172.20.100.124',
-        'PORT': 3306,
+ 'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv("DB_NAME", "db_conciliacion_jit_expedientes"),
+        'USER': os.getenv("DB_USER", "jit_expedientes"),
+        'PASSWORD': os.getenv("DB_PASS", "Ugc$%jit2022"),
+        'HOST': os.getenv("DB_HOST", "172.20.100.20"),
+        'PORT': os.getenv("PORT",'5435')
     }
 }
+
 
 
 # Password validation
@@ -121,14 +124,28 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ALLOWED_ORIGINS = [
-'http://localhost',
-'http://0.0.0.0',
-]
+
+API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
+
+
+# 'http://localhost',
+# 'http://0.0.0.0',
+# ]
 # CORS_ORIGIN_ALLOW_ALL = True
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
+CSRF_TRUSTED_ORIGINS = [
+                        'http://172.20.100.20', 
+                        'https://172.20.100.20', 
+                        'http://172.16.29.108:8080', 
+                        'http://172.16.29.108',
+                        'http://172.20.100.108',
+                        'https://centrodeconciliacionjoseignaciotalerolosada.ugc.edu.co/',
+                        'http://centrodeconciliacionjoseignaciotalerolosada.ugc.edu.co/'
+                        
+                       ]
+CORS_ALLOW_ALL_ORIGINS = True
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/Bogota'
@@ -141,7 +158,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+
+
+# STATIC_ROOT = '/static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -154,6 +174,9 @@ REST_FRAMEWORK = {
     
     # 'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
 }
-API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'api/jit_solicitudes/v1/static')
+STATIC_URL = '/api/jit_solicitudes/v1/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media') 

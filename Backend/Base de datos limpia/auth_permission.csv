@@ -1,0 +1,349 @@
+id,name,content_type_id,codename
+1,Can add log entry,1,add_logentry
+2,Can change log entry,1,change_logentry
+3,Can delete log entry,1,delete_logentry
+4,Can view log entry,1,view_logentry
+5,Can add permission,2,add_permission
+6,Can change permission,2,change_permission
+7,Can delete permission,2,delete_permission
+8,Can view permission,2,view_permission
+9,Can add group,3,add_group
+10,Can change group,3,change_group
+11,Can delete group,3,delete_group
+12,Can view group,3,view_group
+13,Can add user,4,add_user
+14,Can change user,4,change_user
+15,Can delete user,4,delete_user
+16,Can view user,4,view_user
+17,Can add content type,5,add_contenttype
+18,Can change content type,5,change_contenttype
+19,Can delete content type,5,delete_contenttype
+20,Can view content type,5,view_contenttype
+21,Can add session,6,add_session
+22,Can change session,6,change_session
+23,Can delete session,6,delete_session
+24,Can view session,6,view_session
+25,Can add Apoderado,7,add_apoderado_solicitud
+26,Can change Apoderado,7,change_apoderado_solicitud
+27,Can delete Apoderado,7,delete_apoderado_solicitud
+28,Can view Apoderado,7,view_apoderado_solicitud
+29,Can add Centro_conciliacion,8,add_centro_conciliacion
+30,Can change Centro_conciliacion,8,change_centro_conciliacion
+31,Can delete Centro_conciliacion,8,delete_centro_conciliacion
+32,Can view Centro_conciliacion,8,view_centro_conciliacion
+33,Can add Ciudad,9,add_ciudad
+34,Can change Ciudad,9,change_ciudad
+35,Can delete Ciudad,9,delete_ciudad
+36,Can view Ciudad,9,view_ciudad
+37,Can add Estado_solicitud,10,add_estado_solicitud
+38,Can change Estado_solicitud,10,change_estado_solicitud
+39,Can delete Estado_solicitud,10,delete_estado_solicitud
+40,Can view Estado_solicitud,10,view_estado_solicitud
+41,Can add estratos_socioeconomicos,11,add_estrato_socioeconomico
+42,Can change estratos_socioeconomicos,11,change_estrato_socioeconomico
+43,Can delete estratos_socioeconomicos,11,delete_estrato_socioeconomico
+44,Can view estratos_socioeconomicos,11,view_estrato_socioeconomico
+45,Can add Genero,12,add_genero
+46,Can change Genero,12,change_genero
+47,Can delete Genero,12,delete_genero
+48,Can view Genero,12,view_genero
+49,Can add Pais,13,add_pais
+50,Can change Pais,13,change_pais
+51,Can delete Pais,13,delete_pais
+52,Can view Pais,13,view_pais
+53,Can add Persona,14,add_persona_solicitud
+54,Can change Persona,14,change_persona_solicitud
+55,Can delete Persona,14,delete_persona_solicitud
+56,Can view Persona,14,view_persona_solicitud
+57,Can add Sexo,15,add_sexo
+58,Can change Sexo,15,change_sexo
+59,Can delete Sexo,15,delete_sexo
+60,Can view Sexo,15,view_sexo
+61,Can add Tipo_cliente,16,add_tipo_cliente
+62,Can change Tipo_cliente,16,change_tipo_cliente
+63,Can delete Tipo_cliente,16,delete_tipo_cliente
+64,Can view Tipo_cliente,16,view_tipo_cliente
+65,Can add Tipo_documento,17,add_tipo_documento
+66,Can change Tipo_documento,17,change_tipo_documento
+67,Can delete Tipo_documento,17,delete_tipo_documento
+68,Can view Tipo_documento,17,view_tipo_documento
+69,Can add Tipo_persona,18,add_tipo_persona
+70,Can change Tipo_persona,18,change_tipo_persona
+71,Can delete Tipo_persona,18,delete_tipo_persona
+72,Can view Tipo_persona,18,view_tipo_persona
+73,Can add Solicitud,19,add_solicitud
+74,Can change Solicitud,19,change_solicitud
+75,Can delete Solicitud,19,delete_solicitud
+76,Can view Solicitud,19,view_solicitud
+77,Can add Relacion_persona_solicitud,20,add_relacion_persona_solicitud
+78,Can change Relacion_persona_solicitud,20,change_relacion_persona_solicitud
+79,Can delete Relacion_persona_solicitud,20,delete_relacion_persona_solicitud
+80,Can view Relacion_persona_solicitud,20,view_relacion_persona_solicitud
+81,Can add Hechos,21,add_hechos_solicitud
+82,Can change Hechos,21,change_hechos_solicitud
+83,Can delete Hechos,21,delete_hechos_solicitud
+84,Can view Hechos,21,view_hechos_solicitud
+85,Can add Documento,22,add_documento_solicitud
+86,Can change Documento,22,change_documento_solicitud
+87,Can delete Documento,22,delete_documento_solicitud
+88,Can view Documento,22,view_documento_solicitud
+89,Can add Departamento,23,add_departamento
+90,Can change Departamento,23,change_departamento
+91,Can delete Departamento,23,delete_departamento
+92,Can view Departamento,23,view_departamento
+93,Can add Codigo,24,add_codigo
+94,Can change Codigo,24,change_codigo
+95,Can delete Codigo,24,delete_codigo
+96,Can view Codigo,24,view_codigo
+97,Can add API key,25,add_apikey
+98,Can change API key,25,change_apikey
+99,Can delete API key,25,delete_apikey
+100,Can view API key,25,view_apikey
+101,Can add auth group,26,add_authgroup
+102,Can change auth group,26,change_authgroup
+103,Can delete auth group,26,delete_authgroup
+104,Can view auth group,26,view_authgroup
+105,Can add auth group permissions,27,add_authgrouppermissions
+106,Can change auth group permissions,27,change_authgrouppermissions
+107,Can delete auth group permissions,27,delete_authgrouppermissions
+108,Can view auth group permissions,27,view_authgrouppermissions
+109,Can add auth permission,28,add_authpermission
+110,Can change auth permission,28,change_authpermission
+111,Can delete auth permission,28,delete_authpermission
+112,Can view auth permission,28,view_authpermission
+113,Can add auth user,29,add_authuser
+114,Can change auth user,29,change_authuser
+115,Can delete auth user,29,delete_authuser
+116,Can view auth user,29,view_authuser
+117,Can add auth user groups,30,add_authusergroups
+118,Can change auth user groups,30,change_authusergroups
+119,Can delete auth user groups,30,delete_authusergroups
+120,Can view auth user groups,30,view_authusergroups
+121,Can add auth user user permissions,31,add_authuseruserpermissions
+122,Can change auth user user permissions,31,change_authuseruserpermissions
+123,Can delete auth user user permissions,31,delete_authuseruserpermissions
+124,Can view auth user user permissions,31,view_authuseruserpermissions
+125,Can add Centro_conciliacion,32,add_centro_conciliacion
+126,Can change Centro_conciliacion,32,change_centro_conciliacion
+127,Can delete Centro_conciliacion,32,delete_centro_conciliacion
+128,Can view Centro_conciliacion,32,view_centro_conciliacion
+129,Can add Codigo,33,add_codigo
+130,Can change Codigo,33,change_codigo
+131,Can delete Codigo,33,delete_codigo
+132,Can view Codigo,33,view_codigo
+133,Can add Departamento,34,add_departamento
+134,Can change Departamento,34,change_departamento
+135,Can delete Departamento,34,delete_departamento
+136,Can view Departamento,34,view_departamento
+137,Can add django admin log,35,add_djangoadminlog
+138,Can change django admin log,35,change_djangoadminlog
+139,Can delete django admin log,35,delete_djangoadminlog
+140,Can view django admin log,35,view_djangoadminlog
+141,Can add django content type,36,add_djangocontenttype
+142,Can change django content type,36,change_djangocontenttype
+143,Can delete django content type,36,delete_djangocontenttype
+144,Can view django content type,36,view_djangocontenttype
+145,Can add django migrations,37,add_djangomigrations
+146,Can change django migrations,37,change_djangomigrations
+147,Can delete django migrations,37,delete_djangomigrations
+148,Can view django migrations,37,view_djangomigrations
+149,Can add django session,38,add_djangosession
+150,Can change django session,38,change_djangosession
+151,Can delete django session,38,delete_djangosession
+152,Can view django session,38,view_djangosession
+153,Can add Estado_solicitud,39,add_estado_solicitud
+154,Can change Estado_solicitud,39,change_estado_solicitud
+155,Can delete Estado_solicitud,39,delete_estado_solicitud
+156,Can view Estado_solicitud,39,view_estado_solicitud
+157,Can add Pais,40,add_pais
+158,Can change Pais,40,change_pais
+159,Can delete Pais,40,delete_pais
+160,Can view Pais,40,view_pais
+161,Can add Tipo_reporte,41,add_tipo_reporte
+162,Can change Tipo_reporte,41,change_tipo_reporte
+163,Can delete Tipo_reporte,41,delete_tipo_reporte
+164,Can view Tipo_reporte,41,view_tipo_reporte
+165,Can add Grupo_etnico,42,add_grupo_etnico
+166,Can change Grupo_etnico,42,change_grupo_etnico
+167,Can delete Grupo_etnico,42,delete_grupo_etnico
+168,Can view Grupo_etnico,42,view_grupo_etnico
+169,Can add Tipo_Discapacidad,43,add_tipo_discapacidad
+170,Can change Tipo_Discapacidad,43,change_tipo_discapacidad
+171,Can delete Tipo_Discapacidad,43,delete_tipo_discapacidad
+172,Can view Tipo_Discapacidad,43,view_tipo_discapacidad
+173,Can add Escolaridad,44,add_escolaridad
+174,Can change Escolaridad,44,change_escolaridad
+175,Can delete Escolaridad,44,delete_escolaridad
+176,Can view Escolaridad,44,view_escolaridad
+177,Can add Tipo_medio,45,add_tipo_medio
+178,Can change Tipo_medio,45,change_tipo_medio
+179,Can delete Tipo_medio,45,delete_tipo_medio
+180,Can view Tipo_medio,45,view_tipo_medio
+181,Can add estratos_socioeconomicos,46,add_estrato_socioeconomico
+182,Can change estratos_socioeconomicos,46,change_estrato_socioeconomico
+183,Can delete estratos_socioeconomicos,46,delete_estrato_socioeconomico
+184,Can view estratos_socioeconomicos,46,view_estrato_socioeconomico
+185,Can add Localidad,47,add_localidad
+186,Can change Localidad,47,change_localidad
+187,Can delete Localidad,47,delete_localidad
+188,Can view Localidad,47,view_localidad
+189,Can add Hechos,48,add_hechos
+190,Can change Hechos,48,change_hechos
+191,Can delete Hechos,48,delete_hechos
+192,Can view Hechos,48,view_hechos
+193,Can add Respuesta_seguimiento,49,add_respuesta_seguimiento
+194,Can change Respuesta_seguimiento,49,change_respuesta_seguimiento
+195,Can delete Respuesta_seguimiento,49,delete_respuesta_seguimiento
+196,Can view Respuesta_seguimiento,49,view_respuesta_seguimiento
+197,Can add Objetivo_servicio,50,add_objetivo_servicio
+198,Can change Objetivo_servicio,50,change_objetivo_servicio
+199,Can delete Objetivo_servicio,50,delete_objetivo_servicio
+200,Can view Objetivo_servicio,50,view_objetivo_servicio
+201,Can add Tipo_cargo,51,add_tipo_cargo
+202,Can change Tipo_cargo,51,change_tipo_cargo
+203,Can delete Tipo_cargo,51,delete_tipo_cargo
+204,Can view Tipo_cargo,51,view_tipo_cargo
+205,Can add Barrio,52,add_barrio
+206,Can change Barrio,52,change_barrio
+207,Can delete Barrio,52,delete_barrio
+208,Can view Barrio,52,view_barrio
+209,Can add Inicio_conflicto,53,add_inicio_conflicto
+210,Can change Inicio_conflicto,53,change_inicio_conflicto
+211,Can delete Inicio_conflicto,53,delete_inicio_conflicto
+212,Can view Inicio_conflicto,53,view_inicio_conflicto
+213,Can add Subtema,54,add_subtema
+214,Can change Subtema,54,change_subtema
+215,Can delete Subtema,54,delete_subtema
+216,Can view Subtema,54,view_subtema
+217,Can add Area,55,add_area
+218,Can change Area,55,change_area
+219,Can delete Area,55,delete_area
+220,Can view Area,55,view_area
+221,Can add Medio_seguimiento,56,add_medio_seguimiento
+222,Can change Medio_seguimiento,56,change_medio_seguimiento
+223,Can delete Medio_seguimiento,56,delete_medio_seguimiento
+224,Can view Medio_seguimiento,56,view_medio_seguimiento
+225,Can add Genero,57,add_genero
+226,Can change Genero,57,change_genero
+227,Can delete Genero,57,delete_genero
+228,Can view Genero,57,view_genero
+229,Can add Historico,58,add_historico
+230,Can change Historico,58,change_historico
+231,Can delete Historico,58,delete_historico
+232,Can view Historico,58,view_historico
+233,Can add Respuesta_encuesta,59,add_respuesta_encuesta
+234,Can change Respuesta_encuesta,59,change_respuesta_encuesta
+235,Can delete Respuesta_encuesta,59,delete_respuesta_encuesta
+236,Can view Respuesta_encuesta,59,view_respuesta_encuesta
+237,Can add Seguimiento,60,add_seguimiento
+238,Can change Seguimiento,60,change_seguimiento
+239,Can delete Seguimiento,60,delete_seguimiento
+240,Can view Seguimiento,60,view_seguimiento
+241,Can add Tipo_documento,61,add_tipo_documento
+242,Can change Tipo_documento,61,change_tipo_documento
+243,Can delete Tipo_documento,61,delete_tipo_documento
+244,Can view Tipo_documento,61,view_tipo_documento
+245,Can add Tipo_servicio,62,add_tipo_servicio
+246,Can change Tipo_servicio,62,change_tipo_servicio
+247,Can delete Tipo_servicio,62,delete_tipo_servicio
+248,Can view Tipo_servicio,62,view_tipo_servicio
+249,Can add Perfil,63,add_perfil
+250,Can change Perfil,63,change_perfil
+251,Can delete Perfil,63,delete_perfil
+252,Can view Perfil,63,view_perfil
+253,Can add Relacion_persona_citacion,64,add_relacion_persona_citacion
+254,Can change Relacion_persona_citacion,64,change_relacion_persona_citacion
+255,Can delete Relacion_persona_citacion,64,delete_relacion_persona_citacion
+256,Can view Relacion_persona_citacion,64,view_relacion_persona_citacion
+257,Can add Categoria_resultado,65,add_categoria_resultado
+258,Can change Categoria_resultado,65,change_categoria_resultado
+259,Can delete Categoria_resultado,65,delete_categoria_resultado
+260,Can view Categoria_resultado,65,view_categoria_resultado
+261,Can add Persona,66,add_persona
+262,Can change Persona,66,change_persona
+263,Can delete Persona,66,delete_persona
+264,Can view Persona,66,view_persona
+265,Can add Tipo_resultado,67,add_tipo_resultado
+266,Can change Tipo_resultado,67,change_tipo_resultado
+267,Can delete Tipo_resultado,67,delete_tipo_resultado
+268,Can view Tipo_resultado,67,view_tipo_resultado
+269,Can add Tema,68,add_tema
+270,Can change Tema,68,change_tema
+271,Can delete Tema,68,delete_tema
+272,Can view Tema,68,view_tema
+273,Can add Encuesta,69,add_encuesta
+274,Can change Encuesta,69,change_encuesta
+275,Can delete Encuesta,69,delete_encuesta
+276,Can view Encuesta,69,view_encuesta
+277,Can add Citacion,70,add_citacion
+278,Can change Citacion,70,change_citacion
+279,Can delete Citacion,70,delete_citacion
+280,Can view Citacion,70,view_citacion
+281,Can add Solicitante_servicio,71,add_solicitante_servicio
+282,Can change Solicitante_servicio,71,change_solicitante_servicio
+283,Can delete Solicitante_servicio,71,delete_solicitante_servicio
+284,Can view Solicitante_servicio,71,view_solicitante_servicio
+285,Can add Turno,72,add_turno
+286,Can change Turno,72,change_turno
+287,Can delete Turno,72,delete_turno
+288,Can view Turno,72,view_turno
+289,Can add Estado_civil,73,add_estado_civil
+290,Can change Estado_civil,73,change_estado_civil
+291,Can delete Estado_civil,73,delete_estado_civil
+292,Can view Estado_civil,73,view_estado_civil
+293,Can add Resultado,74,add_resultado
+294,Can change Resultado,74,change_resultado
+295,Can delete Resultado,74,delete_resultado
+296,Can view Resultado,74,view_resultado
+297,Can add Ciudad,75,add_ciudad
+298,Can change Ciudad,75,change_ciudad
+299,Can delete Ciudad,75,delete_ciudad
+300,Can view Ciudad,75,view_ciudad
+301,Can add Tipo_vivienda,76,add_tipo_vivienda
+302,Can change Tipo_vivienda,76,change_tipo_vivienda
+303,Can delete Tipo_vivienda,76,delete_tipo_vivienda
+304,Can view Tipo_vivienda,76,view_tipo_vivienda
+305,Can add Pregunta_seguimiento,77,add_pregunta_seguimiento
+306,Can change Pregunta_seguimiento,77,change_pregunta_seguimiento
+307,Can delete Pregunta_seguimiento,77,delete_pregunta_seguimiento
+308,Can view Pregunta_seguimiento,77,view_pregunta_seguimiento
+309,Can add Tipo_persona,78,add_tipo_persona
+310,Can change Tipo_persona,78,change_tipo_persona
+311,Can delete Tipo_persona,78,delete_tipo_persona
+312,Can view Tipo_persona,78,view_tipo_persona
+313,Can add Expediente,79,add_expediente
+314,Can change Expediente,79,change_expediente
+315,Can delete Expediente,79,delete_expediente
+316,Can view Expediente,79,view_expediente
+317,Can add Tipo_cliente,80,add_tipo_cliente
+318,Can change Tipo_cliente,80,change_tipo_cliente
+319,Can delete Tipo_cliente,80,delete_tipo_cliente
+320,Can view Tipo_cliente,80,view_tipo_cliente
+321,Can add Pregunta_encuesta,81,add_pregunta_encuesta
+322,Can change Pregunta_encuesta,81,change_pregunta_encuesta
+323,Can delete Pregunta_encuesta,81,delete_pregunta_encuesta
+324,Can view Pregunta_encuesta,81,view_pregunta_encuesta
+325,Can add Sexo,82,add_sexo
+326,Can change Sexo,82,change_sexo
+327,Can delete Sexo,82,delete_sexo
+328,Can view Sexo,82,view_sexo
+329,Can add Relacion_persona_expediente,83,add_relacion_persona_expediente
+330,Can change Relacion_persona_expediente,83,change_relacion_persona_expediente
+331,Can delete Relacion_persona_expediente,83,delete_relacion_persona_expediente
+332,Can view Relacion_persona_expediente,83,view_relacion_persona_expediente
+333,Can add Apoderado,84,add_apoderado
+334,Can change Apoderado,84,change_apoderado
+335,Can delete Apoderado,84,delete_apoderado
+336,Can view Apoderado,84,view_apoderado
+337,Can add Medio_conocimiento,85,add_medio_conocimiento
+338,Can change Medio_conocimiento,85,change_medio_conocimiento
+339,Can delete Medio_conocimiento,85,delete_medio_conocimiento
+340,Can view Medio_conocimiento,85,view_medio_conocimiento
+341,Can add Estado,86,add_estado_expediente
+342,Can change Estado,86,change_estado_expediente
+343,Can delete Estado,86,delete_estado_expediente
+344,Can view Estado,86,view_estado_expediente
+345,Can add finalidad_servicio,87,add_finalidad_servicio
+346,Can change finalidad_servicio,87,change_finalidad_servicio
+347,Can delete finalidad_servicio,87,delete_finalidad_servicio
+348,Can view finalidad_servicio,87,view_finalidad_servicio

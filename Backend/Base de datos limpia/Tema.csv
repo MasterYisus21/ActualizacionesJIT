@@ -1,0 +1,32 @@
+id,estado,nombre
+1,true,Bienes
+2,true,Competencia desleal
+3,true,Consumo
+4,true,Contratos
+5,true,Economia solidaria
+6,true,Establecimiento de comercio
+7,true,Garantias
+8,true,Propiedad horizontal
+9,true,Responsabilidad extracontractual
+10,true,Seguros
+11,true,"Sociedades, personas juridicas de derecho privado y otras formas asociativas"
+12,true,Titulos valores
+13,true,Turismo
+14,true,Otros
+15,true,Convivencia
+16,true,Matrimonio
+17,true,Obligaciones frente a los hijos e incapaces
+18,true,Sucesiones
+19,true,Union marital del hecho
+20,true,Delitos contra el orden economico social
+21,true,Delitos contra el patrimonio economico
+22,true,Delitos contra la administracion publica
+23,true,Delitos contra la eficaz y recta imparticion de justicia
+24,true,Delitos contra la existencia y seguridad del estado
+25,true,Delitos contra la familia
+26,true,Delitos contra la fe publica
+27,true,Delitos contra la integridad moral
+28,true,Delitos contra la libertad individual y otras garantias
+29,true,"Delitos contra la libertad , integridad y formacion sexuales"
+30,true,Delitos contra la seguridad publica
+31,true,Delito contra la vida y la integridad personal

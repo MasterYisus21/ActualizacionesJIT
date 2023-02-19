@@ -1,0 +1,5 @@
+id,estado,nombre
+1,true,Convocante
+2,true,Convocado
+3,true,Conciliador
+4,true,Estudiante

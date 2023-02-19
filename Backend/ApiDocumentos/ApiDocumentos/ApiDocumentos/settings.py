@@ -90,19 +90,33 @@ WSGI_APPLICATION = 'ApiDocumentos.wsgi.application'
 #     }
 # }
 
+
 DATABASES = {
  'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_conciliacion_jit_documentos',
-        'USER': 'jit_documentos',
-        'PASSWORD': 'Ugc$%jit2022',
-        'HOST': '172.20.100.5',
-        'PORT': '5436',
+        'NAME': os.getenv("DB_NAME", "db_conciliacion_jit_documentos"),
+        'USER': os.getenv("DB_USER", "jit_documentos"),
+        'PASSWORD': os.getenv("DB_PASS", "Ugc$%jit2022"),
+        'HOST': os.getenv("DB_HOST", "172.20.100.20"),
+        'PORT': os.getenv("PORT",'5436')
+        
     }
+
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+CSRF_TRUSTED_ORIGINS = [
+                        'http://172.20.100.20', 
+                        'https://172.20.100.20', 
+                        'http://172.16.29.108:8080', 
+                        'http://172.16.29.108',
+                        'http://172.20.100.108',
+                        'https://centrodeconciliacionjoseignaciotalerolosada.ugc.edu.co/',
+                        'http://centrodeconciliacionjoseignaciotalerolosada.ugc.edu.co/'
+                        
+                       ]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -118,14 +132,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-CORS_ALLOWED_ORIGINS = [
-'http://localhost',
-'http://0.0.0.0'
-]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
-
+CORS_ALLOW_ALL_ORIGINS = True
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/Bogota'
@@ -136,7 +147,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -149,5 +159,7 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.DjangoModelPermissions']
 }
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'api/documentos/v1/static')
+STATIC_URL = '/api/documentos/v1/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media') 

@@ -75,15 +75,15 @@ function SolicitudesDetalle() {
   useEffect(() => {
     axiosTokenInstanceApiSolicitudes({
       method: "get",
-      url: "/solicitudes/" + id,
+      url: "/solicitudes/" + id+"/estado",
       // headers: req.headers,
       data: {},
     })
       .then((result) => {
         // Solicitud
-        setRadicado(result.data.solicitud["numero_radicado"]);
-        setEstadoSolicitud(result.data.solicitud["estado_solicitud_id"]);
-        setEstado(result.data.solicitud["estado_solicitud"]);
+        setRadicado(result.data["numero_radicado"]);
+        setEstadoSolicitud(result.data["estado_solicitud_id"]);
+        setEstado(result.data["estado_solicitud"]);
       })
       .catch((err) => {
         console.log("error");
@@ -156,9 +156,9 @@ function SolicitudesDetalle() {
           result.data.hechos[0].descripcion;
 
         // Solicitud
-        setRadicado(result.data.solicitud["numero_radicado"]);
-        setEstadoSolicitud(result.data.solicitud["estado_solicitud_id"]);
-        setEstado(result.data.solicitud["estado_solicitud"]);
+        // setRadicado(result.data.solicitud["numero_radicado"]);
+        // setEstadoSolicitud(result.data.solicitud["estado_solicitud_id"]);
+        // setEstado(result.data.solicitud["estado_solicitud"]);
 
         //document.getElementById("descripcion_hechos").value = result.data.documentos.result[0].descripcion
 
@@ -1320,9 +1320,11 @@ function SolicitudesDetalle() {
                     <input
                       className="input-aceptar-valor"
                       id="valorCaso"
-                      min="1"
+                      min="0"
                       pattern="^[0-9]+"
                       type="number"
+                      required
+                     
                     ></input>
                   </div>
                   <div className="derecha-aceptar-caso">
@@ -1337,6 +1339,8 @@ function SolicitudesDetalle() {
                         setConciliador(val);
                       }}
                       label="nombres"
+                      required
+                  
                     />
                   </div>
                 </div>
@@ -1347,6 +1351,8 @@ function SolicitudesDetalle() {
                 <textarea
                   className="campo-explicacion"
                   id="descripcionAprovado"
+                  required
+                 
                 ></textarea>
                 <div className="contenedor-boton-remitir">
                   <button className="boton-remitir-solicitud">Aceptar</button>

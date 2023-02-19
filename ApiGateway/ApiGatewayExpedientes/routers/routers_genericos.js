@@ -64,7 +64,7 @@ router.get("/inicios_conflicto", views_genericos.GenericList)
 
 router.get("/apoderados", views_genericos.GenericList)
 
-router.get("/tipos_resultado", views_genericos.GenericList)
+router.get("/tipos_sltado", views_genericos.GenericList)
 router.get("/preguntas_encuesta", views_genericos.GenericList)
 router.get("/medios_conocimiento", views_genericos.GenericList)
 router.get("/medios_seguimiento", views_genericos.GenericList)
