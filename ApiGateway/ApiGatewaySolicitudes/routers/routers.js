@@ -45,6 +45,7 @@ async function verifier(req, res, next) {
             
             if (error.response.status == 401) {
               res.sendStatus(401);
+              return
             }
             
             res.sendStatus(404);

@@ -243,10 +243,10 @@ views.CrearSolicitud = async (req, res) => {
 //crear solicitud
 views.CargarDocumentos = async (req, res, intento = 2) => {
 
-  let datos = []
-
+  
   try {
-   
+    let datos = []
+    
     // console.log(req.file)
     
     if (Object.keys(req.files).length < 1) { falla=true; res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
@@ -254,36 +254,22 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     let falla=false
     
     for await (const iterator of req.files) {
-      let bodyFormData = new FormData();
-      const file = fs.createReadStream(iterator.path);
-      bodyFormData.append('estado', 'true');
-      bodyFormData.append('nombre',iterator.originalname);
-      bodyFormData.append('solicitud_id', req.params.id);
-      bodyFormData.append('documento', file);
-      
   
   
   
-  
-      await axios({
-        method: "post",
-        url: config.urlApiSolicitudes + "documentos/",
-        data: bodyFormData,
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      // await unirest
-      //   .post(config.urlApiSolicitudes + 'documentos/')
+      await unirest
+        .post(config.urlApiSolicitudes + 'documentos/')
 
 
-      //   .field('estado', true)
-      //   .field('nombre',count+iterator.originalname)
-      //   .field('solicitud_id', req.params.id)
+        .field('estado', true)
+        .field('nombre',iterator.originalname)
+        .field('solicitud_id', req.params.id)
 
 
-      //   //.attach('Ruta_directorio', req.file.path) // reads directly from local file
-      //   .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
-      //   //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-      //   .headers({"X-Api-Key":config.apiKey})
+        //.attach('Ruta_directorio', req.file.path) // reads directly from local file
+        .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
+        //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
+        .headers({"X-Api-Key":config.apiKey,"Content-Length": iterator.size})
         .then(function (response) {
           
         
@@ -295,7 +281,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
             error(err) 
           }
          
-          datos.push(response.data)
+          datos.push(response.body)
 
         })
         .catch((err)=>{
@@ -308,9 +294,12 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
     }
     if (intento < 2) { return falla;
      }
+     
      if(!falla){
+    
      await axios.patch(config.urlApiSolicitudes+"solicitudes/"+req.params.id+"/",{estado_solicitud_id:1})
       .then(result=>{
+        console.log(datos)
         res.status(201).json(datos)
      })
       .catch(err => {
