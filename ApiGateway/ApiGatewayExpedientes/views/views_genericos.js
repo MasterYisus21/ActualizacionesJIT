@@ -2334,34 +2334,23 @@ views.TurnosFecha = async (req, res) => {
 
             for (const iterator of result.data.results) {
               turnos_ocupados[turnos_ocupados.length] = parseInt(iterator.turno_id)
-            }
 
-            turnos_ocupados = turnos_ocupados.sort((a, b) => { return a - b });
+            }
+            
+            // turnos_ocupados = turnos_ocupados.sort((a, b) => { return a - b });
 
             turnos_disponibles = turnos_totales.filter(element => !turnos_ocupados.includes(element))
-
-            endpoints = []
+         
+            let horas_posibles=[]
             if (turnos_disponibles.length < 1) { res.status(200).json([]); return }
-            // res.status(200).json(result.data.results)
-            for await (const iterator of turnos_disponibles) {
-              endpoints[endpoints.length] = config.urlApiExpedientes + "turnos/" + iterator
+            for (const iterator of turnos_disponibles) {
+              horas_posibles.push(data2.data.results[turnos_totales.indexOf(iterator)])
             }
-
-            await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-              .then(axios.spread(async (...allData) => {
-                let datos = []
-                for (const iterator of allData) {
-                  datos.push(iterator.data)
-                }
-
-                res.status(200).json(datos)
-              }))
-              .catch(err => {
-
-                res.sendStatus(error(err))
-                return
-
-              })
+            
+            res.send(horas_posibles)
+           
+            // res.status(200).json(result.data.results)
+           
 
           })
           .catch(err => {

@@ -59,6 +59,7 @@ router.get("/solicitantes_servicio", views_genericos.GenericList)
 router.get("/areas", views_genericos.GenericList)
 router.get("/tipos_medio", views_genericos.GenericList)
 router.get("/tipos_reporte", views_genericos.GenericList)
+router.get("/tipos_resultado", views_genericos.GenericList)
 router.get("/inicios_conflicto", views_genericos.GenericList)
 
 
