@@ -126,6 +126,8 @@ views.DatosCrearSolicitud = async (req, res) => {
 views.CrearSolicitud = async (req, res) => {
   try {
     req.body = JSON.parse(req.body.datos)
+    
+    
     if (req.files < 2) { res.sendStatus(error({ message: "Solo ha subido un archivo" })); return }
     if(req.body.apoderado){    if (Object.keys(req.body.apoderado).length > 0) {
     
@@ -160,14 +162,15 @@ views.CrearSolicitud = async (req, res) => {
     datos.push(req.body.convocado[0])
     
     const personas = [config.urlApiSolicitudes + "personas_solicitud/", datos]
-    const solicitud = [config.urlApiSolicitudes + "solicitudes/", { estado_solicitud_id: 1 }]
     
-    let endpoints = [personas, solicitud]
     
+    let endpoints = [personas]
+    axios.post(config.urlApiSolicitudes + "solicitudes/", { estado_solicitud_id: 1 })
+    .then(async data2=>{
     // const hechos=config.urlApiSolicitudes+"hechos/"+","+
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
-      .then(axios.spread(async (data1, data2) => {
-    
+      .then(axios.spread(async (data1) => {
+        
       const  encabezado = `Este mensaje notifica que hemos recibido una solicitud de audiencia al Centro de Conciliación José Ignacio Talero Losada 
         de la Universidad La Gran Colombia con el siguiente número de radicado: <b>${data2.data.numero_radicado}</b> `
       const cuerpo= `<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
@@ -204,7 +207,7 @@ views.CrearSolicitud = async (req, res) => {
           .catch(err => {
             const url=config.urlApiSolicitudes+"solicitudes/"+data2.data.id+"/"
             requests.delete(req, res, url)
-            
+          
             res.status(error(err))
             return
 
@@ -213,15 +216,25 @@ views.CrearSolicitud = async (req, res) => {
       }))
       .catch(err => {
         
-        res.sendStatus(error(err))
+        const url=config.urlApiSolicitudes+"solicitudes/"+data2.data.id+"/"
+        requests.delete(req, res, url)
+        
+        res.status(error(err))
+        return
         
       })
+    })
+    .catch(err => {
+        
+      res.sendStatus(error(err))
       
+      
+    }) 
     // const hechos= config.urlApiSolicitudes+"hechos",{solicitud_id:}
 
   } catch (error) {
     
-    
+   
     console.log(error);
     res.sendStatus(500);
   }
@@ -293,7 +306,7 @@ views.CargarDocumentos = async (req, res, intento = 2) => {
         
         
     }
-    if (intento < 2) {  res.sendStatus(400);return falla;
+    if (intento < 2) { return falla;
      }
      if(!falla){
      await axios.patch(config.urlApiSolicitudes+"solicitudes/"+req.params.id+"/",{estado_solicitud_id:1})
