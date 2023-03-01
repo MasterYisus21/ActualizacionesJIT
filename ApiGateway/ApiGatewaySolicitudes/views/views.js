@@ -31,7 +31,7 @@ const email = (tipo_mensaje, correoQuienRecibe, asunto, encabezado,cuerpo,adjunt
   const correoCopia=process.env.correoCopia || 'jairourrego123@gmail.com';
   correoQuienRecibe.push(correoCopia)
   let email = {
-    nombre_servicio:"Centro de Conciliación",
+    nombre_servicio:"Centro De Conciliación, Arbitraje y Amigable Composición",
     tipo_mensaje: tipo_mensaje,
     destinatario: correoQuienRecibe,
     asunto: asunto,
@@ -91,6 +91,18 @@ views.DatosCrearSolicitud = async (req, res) => {
       config.urlApiSolicitudes + 'departamentos?search=colombia',
       config.urlApiSolicitudes + 'generos',
       config.urlApiSolicitudes + 'sexos',
+      config.urlApiSolicitudes + 'areas',
+      config.urlApiSolicitudes + 'temas',
+      config.urlApiSolicitudes + 'grupos_etnicos',
+      config.urlApiSolicitudes + 'estados_civiles',
+      config.urlApiSolicitudes + 'estratos_socioeconomicos',
+      config.urlApiSolicitudes + 'tipos_discapacidad',
+      config.urlApiSolicitudes + 'tipos_vivienda',
+      config.urlApiSolicitudes + 'escolaridades',
+
+
+
+
 
     ];
 

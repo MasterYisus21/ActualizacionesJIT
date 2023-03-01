@@ -464,7 +464,7 @@ class Persona(EstadoModel):
     direccion = models.CharField(max_length= 220, blank=True, null=True)
     ocupacion = models.CharField(max_length = 40,blank=True,null=False)
     celular = models.CharField(max_length=15, blank=False, null=False)
-    correo = models.EmailField(max_length=124,blank=False,null=False)
+    correo = models.EmailField(max_length=140,blank=False,null=False)
     persona_ugc= models.BooleanField(default=False, blank=True,null=True)
     tarjeta_profesional= models.CharField(max_length=25, blank=True, null=True)
     barrio_id= models.ForeignKey(Barrio, on_delete=models.SET_NULL, blank=True, null=True)
