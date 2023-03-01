@@ -307,6 +307,7 @@ class Localidad(GeneralModel):
     nombre= models.CharField(max_length=50,blank=False, null=False)
     
     class Meta:
+        managed = False
         db_table='Localidad'
         ordering = ['-id']
         verbose_name = ("Localidad")
@@ -321,6 +322,7 @@ class Barrio(GeneralModel):
     localidad_id=models.ForeignKey(Localidad, on_delete=models.SET_NULL,blank=False,null=True)
 
     class Meta:
+        managed = False
         db_table='Barrio'
         ordering = ['-id']
         verbose_name = ("Barrio")
@@ -334,6 +336,7 @@ class Estado_civil(GeneralModel):
 
  
     class Meta:
+        managed = False
         db_table='Estado_civil'
         verbose_name = ("Estado_civil")
         verbose_name_plural = ("Estados_civiles")
@@ -346,6 +349,7 @@ class Estado_civil(GeneralModel):
 class Grupo_etnico(GeneralModel):
 
     class Meta:
+        managed = False
         db_table='Grupo_etnico'
         verbose_name = ("Grupo_etnico")
         verbose_name_plural = ("Grupos_etnicos")
@@ -356,6 +360,7 @@ class Grupo_etnico(GeneralModel):
 class Tipo_discapacidad(GeneralModel):
 
     class Meta:
+        managed = False
         db_table='Tipo_discapacidad'
         verbose_name = ("Tipo_Discapacidad")
         verbose_name_plural = ("Tipos_Discapacidad")
@@ -367,6 +372,7 @@ class Tipo_discapacidad(GeneralModel):
 class Tipo_vivienda(GeneralModel):
 
     class Meta:
+        managed = False
         db_table='Tipo_vivienda'
         verbose_name = ("Tipo_vivienda")
         verbose_name_plural = ("Tipos_vivienda")
@@ -378,6 +384,7 @@ class Tipo_vivienda(GeneralModel):
 class Area(GeneralModel):
 
     class Meta:
+        managed = False
         db_table='Area'
         verbose_name = ("Area")
         verbose_name_plural = ("Areas")
@@ -390,6 +397,7 @@ class Perfil(GeneralModel):
 
     area_id= models.ForeignKey(Area,on_delete=models.CASCADE)
     class Meta:
+        
         db_table='Perfil'
         verbose_name = ("Perfil")
         verbose_name_plural = ("Perfiles")
@@ -401,6 +409,7 @@ class Perfil(GeneralModel):
 class Tipo_cargo(GeneralModel):
 
     class Meta:
+        
         db_table='Tipo_cargo'
         verbose_name = ("Tipo_cargo")
         verbose_name_plural = ("Tipos_cargo")
@@ -412,6 +421,7 @@ class Tipo_cargo(GeneralModel):
 class Escolaridad(GeneralModel):
 
     class Meta:
+        managed = False
         db_table='Escolaridad'
         verbose_name = ("Escolaridad")
         verbose_name_plural = ("Escolaridades")
@@ -444,17 +454,17 @@ class Apoderado(EstadoModel):
 class Persona(EstadoModel):
 
   
-    nombres = models.CharField(max_length = 25,blank=False,null=False)
-    apellidos = models.CharField(max_length= 25, blank=False, null=False)
+    nombres = models.CharField(max_length = 40,blank=False,null=False)
+    apellidos = models.CharField(max_length= 40, blank=False, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False)
     fecha_expedicion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     lugar_expedicion = models.CharField(max_length=20, blank=True, null=True)
     fecha_nacimiento = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     telefono = models.CharField(max_length=10, blank=True, null=True)
     direccion = models.CharField(max_length= 220, blank=True, null=True)
-    ocupacion = models.CharField(max_length = 25,blank=True,null=False)
+    ocupacion = models.CharField(max_length = 40,blank=True,null=False)
     celular = models.CharField(max_length=15, blank=False, null=False)
-    correo = models.EmailField(max_length=120,blank=False,null=False)
+    correo = models.EmailField(max_length=124,blank=False,null=False)
     persona_ugc= models.BooleanField(default=False, blank=True,null=True)
     tarjeta_profesional= models.CharField(max_length=25, blank=True, null=True)
     barrio_id= models.ForeignKey(Barrio, on_delete=models.SET_NULL, blank=True, null=True)
@@ -499,6 +509,7 @@ class Tema(GeneralModel):
     
     nombre= models.CharField(max_length=100,blank=False, null=False,unique=True)
     class Meta:
+        managed = False
         db_table='Tema'
         verbose_name = ("Tema")
         verbose_name_plural = ("Temas")
@@ -511,6 +522,7 @@ class Subtema(GeneralModel):
     nombre= models.CharField(max_length=210,blank=False, null=False,unique=False)
     tema_id = models.ForeignKey(Tema, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
+        managed = False
         db_table='Subtema'
         verbose_name = ("Subtema")
         verbose_name_plural = ("Subtemas")
