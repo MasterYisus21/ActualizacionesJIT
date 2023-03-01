@@ -7,7 +7,7 @@ import "./RegistrarSolicitud.css";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Collapse from "react-bootstrap/Collapse";
-import { axiosBasicInstanceApiExpedientes, axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
+import { axiosTokenInstanceApiExpedientes, axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { toast } from "react-toastify";
@@ -28,6 +28,9 @@ function RegistrarSolicitud() {
   const [tiposDocumento, setTiposDocumento] = useState([]);
   const [departamento, setDepartamento] = useState("");
   const [ciudad, setCiudad] = useState("");
+  const [escolaridad, setEscolaridad] = useState([]);
+  const [etnicos, setEtnicos] = useState([]);
+  const [discapacidad, setDiscapacidad] = useState([]);
 
   const [conv2, setConv2] = useState(false);
 
@@ -267,6 +270,21 @@ function RegistrarSolicitud() {
       });
   }, []);
 
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: "get",
+      url: "/escolaridades/?count=20",
+      // headers: req.headers,
+      data: {},
+    })
+      .then((result) => {
+        setEscolaridad(result.data.results);
+      })
+      .catch((err) => {
+        console.log("error");
+      });
+  }, []);
+
   // fetch tiposDocumento options
   useEffect(() => {
     axiosBasicInstanceApiSolicitudes({
@@ -278,6 +296,35 @@ function RegistrarSolicitud() {
       .then((result) => {
         console.log(result.data);
         setTiposDocumento(result.data.results);
+      })
+      .catch((err) => {
+        console.log("error");
+      });
+  }, []);
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: "get",
+      url: "/grupos_etnicos/?count=20",
+      // headers: req.headers,
+      data: {},
+    })
+      .then((result) => {
+        setEtnicos(result.data.results);
+      })
+      .catch((err) => {
+        console.log("error");
+      });
+  }, []);
+
+  useEffect(() => {
+    axiosTokenInstanceApiExpedientes({
+      method: "get",
+      url: "/tipos_discapacidad/?count=20",
+      // headers: req.headers,
+      data: {},
+    })
+      .then((result) => {
+        setDiscapacidad(result.data.results);
       })
       .catch((err) => {
         console.log("error");
@@ -450,46 +497,112 @@ function RegistrarSolicitud() {
                 );
               })}
             </div>
-            <label className="subtitles-secciones">Sexo y Género</label>
-            <FloatingLabel controlId="floatingSelectGrid" label="Sexo *">
-              <Form.Select
-                className="inputs-registrar-solicitud"
-                aria-label="Floating label select example"
-                name="sexo"
-                required
-              >
-                <option value={""}>Abre el menú para ver las opciones</option>
-                {sexos.map((sexo) => {
-                  return (
-                    <option key={"sexos" + sexo["id"]} value={sexo["id"]}>
-                      {sexo["nombre"]}
-                    </option>
-                  );
-                })}
-              </Form.Select>
-            </FloatingLabel>
-            <FloatingLabel controlId="genero" label="Género *">
-              <Form.Select
-                className="inputs-registrar-solicitud"
-                aria-label="Floating label select example"
-                name="genero"
-                required
-              >
-                <option value={""}>Abre el menú para ver las opciones</option>
-                {generos.map((genero) => {
-                  return (
-                    <option key={"generos" + genero["id"]} value={genero["id"]}>
-                      {genero["nombre"]}
-                    </option>
-                  );
-                })}
-              </Form.Select>
-            </FloatingLabel>
+
+            <label className="subtitles-secciones">Sexo y género</label>
+            <div className="col-detalle-solicitud">
+              <FloatingLabel controlId="sexoConvocado" label="Sexo">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="sexo"
+                >
+                  {/* <option value={""}>
+                    Abre el menú para ver las opciones
+                  </option>
+                  {escolaridad.map((escolaridad) => {
+                    return (
+                      <option
+                        key={"estratos" + escolaridad["id"]}
+                        value={escolaridad["id"]}
+                      >
+                        {escolaridad["nombre"]}
+                      </option>
+                    );
+                  })} */}
+                </Form.Select>
+              </FloatingLabel>
+              <FloatingLabel controlId="generoConvocado" label="Género">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="genero"
+                >
+                  {/* <option value={""}>
+                    Abre el menú para ver las opciones
+                  </option>
+                  {escolaridad.map((escolaridad) => {
+                    return (
+                      <option
+                        key={"estratos" + escolaridad["id"]}
+                        value={escolaridad["id"]}
+                      >
+                        {escolaridad["nombre"]}
+                      </option>
+                    );
+                  })} */}
+                </Form.Select>
+              </FloatingLabel>
+            </div>
+
+            <label className="subtitles-secciones">Escolaridad y ocupación</label>
+            <div className="col-detalle-solicitud">
+              <FloatingLabel controlId="escolaridad" label="Escolaridad">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="estrato"
+                >
+                  <option value={""}>
+                    Abre el menú para ver las opciones
+                  </option>
+                  {escolaridad.map((escolaridad) => {
+                    return (
+                      <option
+                        key={"estratos" + escolaridad["id"]}
+                        value={escolaridad["id"]}
+                      >
+                        {escolaridad["nombre"]}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </FloatingLabel>
+              <FloatingLabel controlId="ocupacion" label="Ocupación">
+                <Form.Control
+                  className="col-inputs"
+                  type="text"
+                  placeholder="name@example.com"
+                />
+              </FloatingLabel>
+            </div>
+
             <label className="subtitles-secciones">Datos adicionales</label>
-            <div className="col-registro-solicitud">
+
+            <div className="col-detalle-solicitud">
+              <FloatingLabel controlId="estadoCivil" label="Estado Civil">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="estrato"
+                >
+                  {/* <option value={""}>
+                      Abre el menú para ver las opciones
+                    </option>
+                    {escolaridad.map((escolaridad) => {
+                      return (
+                        <option
+                          key={"estratos" + escolaridad["id"]}
+                          value={escolaridad["id"]}
+                        >
+                          {escolaridad["nombre"]}
+                        </option>
+                      );
+                    })} */}
+                </Form.Select>
+              </FloatingLabel>
               <FloatingLabel controlId="floatingSelectGrid" label="Estrato">
                 <Form.Select
-                  className=""
+                  className="col-inputs"
                   aria-label="Floating label select example"
                   name="estratoSocioeconomico"
                 >
@@ -506,9 +619,20 @@ function RegistrarSolicitud() {
                   })}
                 </Form.Select>
               </FloatingLabel>
+            </div>
+
+            <div className="col-detalle-solicitud">
+              <FloatingLabel controlId="correoConvocado" label="Correo *">
+                <Form.Control
+                  className="col-inputs"
+                  type="text"
+                  placeholder="name@example.com"
+                  required
+                />
+              </FloatingLabel>
               <FloatingLabel controlId="floatingInputGrid" label="Teléfono">
                 <Form.Control
-                  className=""
+                  className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
                   name="telefono"
@@ -525,15 +649,6 @@ function RegistrarSolicitud() {
                   required
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="floatingInputGrid" label="Correo *">
-                <Form.Control
-                  className=""
-                  type="text"
-                  placeholder="name@example.com"
-                  name="correo"
-                  required
-                />
-              </FloatingLabel>
             </div>
             <FloatingLabel controlId="floatingInputGrid" label="Dirección *">
               <Form.Control
@@ -544,6 +659,53 @@ function RegistrarSolicitud() {
                 required
               />
             </FloatingLabel>
+
+            <label className="subtitles-secciones">
+              Presenta algún tipo de discapacidad
+            </label>
+            <FloatingLabel controlId="tipoDiscapacidad" label="Cuál?">
+              <Form.Select
+                className="col-inputs"
+                aria-label="Floating label select example"
+                name="estrato"
+              >
+                <option value={""}>Abre el menú para ver las opciones</option>
+                {discapacidad.map((discapacidad) => {
+                  return (
+                    <option
+                      key={"estratos" + discapacidad["id"]}
+                      value={discapacidad["id"]}
+                    >
+                      {discapacidad["nombre"]}
+                    </option>
+                  );
+                })}
+              </Form.Select>
+            </FloatingLabel>
+
+            <label className="subtitles-secciones">
+              Hace parte de algún grupo minoritarío
+            </label>
+            <FloatingLabel controlId="grupo_etnico" label="Cuál?">
+              <Form.Select
+                className="col-inputs"
+                aria-label="Floating label select example"
+                name="estrato"
+              >
+                <option value={""}>Abre el menú para ver las opciones</option>
+                {etnicos.map((etnico) => {
+                  return (
+                    <option
+                      key={"etnico" + etnico["id"]}
+                      value={etnico["id"]}
+                    >
+                      {etnico["nombre"]}
+                    </option>
+                  );
+                })}
+              </Form.Select>
+            </FloatingLabel>
+
             {/* Parte 1 - DATOS APODERADO ---------------------------------> */}
             <label className="subtitles-secciones">Posee apoderado</label>
             <div className="col-detalle-solicitud">
@@ -771,6 +933,18 @@ function RegistrarSolicitud() {
               />
             </FloatingLabel>
 
+            <FloatingLabel
+              controlId="ciudadResisdencia"
+              label="Ciudad de resisdencia *"
+            >
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                type="text"
+                placeholder="name@example.com"
+                required
+              />
+            </FloatingLabel>
+
             <label className="subtitles-secciones">Tipo de Persona *</label>
             <div className="d-flex gap-5">
               {tiposPersona.map((tipoPersona) => {
@@ -798,8 +972,120 @@ function RegistrarSolicitud() {
               })}
             </div>
 
+            <label className="subtitles-secciones">Sexo y género</label>
+            <div className="col-detalle-solicitud">
+              <FloatingLabel controlId="sexoConvocado" label="Sexo">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="sexo"
+                >
+                  {/* <option value={""}>
+                    Abre el menú para ver las opciones
+                  </option>
+                  {escolaridad.map((escolaridad) => {
+                    return (
+                      <option
+                        key={"estratos" + escolaridad["id"]}
+                        value={escolaridad["id"]}
+                      >
+                        {escolaridad["nombre"]}
+                      </option>
+                    );
+                  })} */}
+                </Form.Select>
+              </FloatingLabel>
+              <FloatingLabel controlId="generoConvocado" label="Género">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="genero"
+                >
+                  {/* <option value={""}>
+                    Abre el menú para ver las opciones
+                  </option>
+                  {escolaridad.map((escolaridad) => {
+                    return (
+                      <option
+                        key={"estratos" + escolaridad["id"]}
+                        value={escolaridad["id"]}
+                      >
+                        {escolaridad["nombre"]}
+                      </option>
+                    );
+                  })} */}
+                </Form.Select>
+              </FloatingLabel>
+            </div>
+
+            <label className="subtitles-secciones">Escolaridad y ocupación</label>
+            <div className="col-detalle-solicitud">
+              <FloatingLabel controlId="escolaridad" label="Escolaridad">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="estrato"
+                >
+                  <option value={""}>
+                    Abre el menú para ver las opciones
+                  </option>
+                  {escolaridad.map((escolaridad) => {
+                    return (
+                      <option
+                        key={"estratos" + escolaridad["id"]}
+                        value={escolaridad["id"]}
+                      >
+                        {escolaridad["nombre"]}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </FloatingLabel>
+              <FloatingLabel controlId="ocupacion" label="Ocupación">
+                <Form.Control
+                  className="col-inputs"
+                  type="text"
+                  placeholder="name@example.com"
+                />
+              </FloatingLabel>
+            </div>
+
             <label className="subtitles-secciones">Datos Adicionales</label>
             <div className="col-registro-solicitud">
+
+              <div className="col-detalle-solicitud">
+                <FloatingLabel controlId="estadoCivil" label="Estado Civil">
+                  <Form.Select
+                    className="col-inputs"
+                    aria-label="Floating label select example"
+                    name="estrato"
+                  >
+                    {/* <option value={""}>
+                      Abre el menú para ver las opciones
+                    </option>
+                    {escolaridad.map((escolaridad) => {
+                      return (
+                        <option
+                          key={"estratos" + escolaridad["id"]}
+                          value={escolaridad["id"]}
+                        >
+                          {escolaridad["nombre"]}
+                        </option>
+                      );
+                    })} */}
+                  </Form.Select>
+                </FloatingLabel>
+                <FloatingLabel controlId="correoConvocado" label="Correo *">
+                  <Form.Control
+                    className="col-inputs"
+                    type="text"
+                    placeholder="name@example.com"
+                    required
+                  />
+                </FloatingLabel>
+              </div>
+
+
               <FloatingLabel controlId="celularConvocado" label="Celular *">
                 <Form.Control
                   className=""
@@ -808,7 +1094,7 @@ function RegistrarSolicitud() {
                   required
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="correoConvocado" label="Correo *">
+              <FloatingLabel controlId="telefonoConvocado" label="Teléfono">
                 <Form.Control
                   className=""
                   type="text"
@@ -818,14 +1104,40 @@ function RegistrarSolicitud() {
               </FloatingLabel>
             </div>
 
-            <FloatingLabel controlId="direccionConvocado" label="Dirección">
-              <Form.Control
-                className="inputs-registrar-solicitud"
-                type="text"
-                placeholder="name@example.com"
-              />
-            </FloatingLabel>
+            <div className="col-detalle-solicitud">
+              <FloatingLabel controlId="estratoConvocado" label="estrato">
+                <Form.Select
+                  className="col-inputs"
+                  aria-label="Floating label select example"
+                  name="estrato"
+                >
+                  {/* <option value={""}>
+                    Abre el menú para ver las opciones
+                  </option>
+                  {escolaridad.map((escolaridad) => {
+                    return (
+                      <option
+                        key={"estratos" + escolaridad["id"]}
+                        value={escolaridad["id"]}
+                      >
+                        {escolaridad["nombre"]}
+                      </option>
+                    );
+                  })} */}
+                </Form.Select>
+              </FloatingLabel>
+              <FloatingLabel controlId="direccionConvocado" label="Dirección">
+                <Form.Control
+                  className="col-inputs"
+                  type="text"
+                  placeholder="name@example.com"
+                />
+              </FloatingLabel>
+            </div>
+
           </div>
+
+
         </Collapse>
 
         {/* Parte 3 - DATOS DE LOS HECHOS ---------------------------------> */}
@@ -876,6 +1188,18 @@ function RegistrarSolicitud() {
             <FloatingLabel
               controlId="descripcionHechos"
               label="Describa los hechos ocurridos (Campo obligatorio)"
+            >
+              <Form.Control
+                className="inputs-registrar-solicitud"
+                as="textarea"
+                placeholder=""
+                style={{ height: "130px" }}
+                required
+              />
+            </FloatingLabel>
+            <FloatingLabel
+              controlId="pretenciones"
+              label="Pretenciones"
             >
               <Form.Control
                 className="inputs-registrar-solicitud"
