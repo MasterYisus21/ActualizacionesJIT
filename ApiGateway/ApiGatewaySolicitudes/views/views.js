@@ -96,9 +96,9 @@ views.DatosCrearSolicitud = async (req, res) => {
       config.urlApiSolicitudes + 'grupos_etnicos',
       config.urlApiSolicitudes + 'estados_civiles',
       config.urlApiSolicitudes + 'estratos_socioeconomicos',
-      config.urlApiSolicitudes + 'tipos_discapacidad',
-      config.urlApiSolicitudes + 'tipos_vivienda',
-      config.urlApiSolicitudes + 'escolaridades',
+      // config.urlApiSolicitudes + 'tipos_discapacidad',
+      // config.urlApiSolicitudes + 'tipos_vivienda',
+      // config.urlApiSolicitudes + 'escolaridades',
 
 
 
@@ -106,8 +106,9 @@ views.DatosCrearSolicitud = async (req, res) => {
 
     ];
 
-    Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
-      .then(axios.spread((data1, data2, data3, data4, data5, data6) => {
+    await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+      .then(axios.spread((data1, data2, data3, data4, data5, data6,data7,data8,data9,data10,data11) => {
+        
         datos = {
           "tipos_documento": data1.data.results,
           "tipos_persona": data2.data.results,
@@ -115,14 +116,24 @@ views.DatosCrearSolicitud = async (req, res) => {
           "departamentos": data4.data.results,
           "generos": data5.data.results,
           "sexos": data6.data.results,
+          "areas": data7.data.results,
+          "temas": data8.data.results,
+          "grupos_etnicos": data9.data.results,
+          "estados_civiles":data10.data.results,
+          "estratos_socioeconomicos":data11.data.results,
+          // "tipos_discapacidad":data12.data.results,
+          // "tipos_viviendas":data13.data.results,
+          // "escolaridades": data14.data.results
+
+          
 
 
         }
-        res.status(201).json(datos)
+        res.status(200).json(datos)
 
       }))
       .catch(err => {
-
+        console.log(err)
         res.sendStatus(error(err))
 
       })

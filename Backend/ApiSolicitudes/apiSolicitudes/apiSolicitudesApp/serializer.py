@@ -22,6 +22,17 @@ class CiudadSerializer(serializers.ModelSerializer):
         model = Ciudad          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
+class LocalidadSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Localidad          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+class BarrioSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Barrio          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+
 
 class Tipo_personaSerializer(serializers.ModelSerializer):
 
@@ -64,6 +75,47 @@ class Centro_conciliacionSerializer(serializers.ModelSerializer):
         model = Centro_conciliacion      # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
 
+
+class AreaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Area          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+class TemaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tema          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+class Grupo_etnicoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Grupo_etnico          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+class Estado_civilSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Estado_civil          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+class Tipo_discapacidadSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tipo_discapacidad          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+class Tipo_viviendaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tipo_vivienda          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+class EscolaridadSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Escolaridad          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
+class SubtemaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Subtema          # El modelo al que pertenece este serializador
+        fields = '__all__'  # Coje todos los campos del modelo 
 
 
 class ApoderadoSerializer(serializers.ModelSerializer):

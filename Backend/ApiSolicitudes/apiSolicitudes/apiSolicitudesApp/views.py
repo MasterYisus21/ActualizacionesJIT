@@ -26,7 +26,13 @@ class CiudadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest
     serializer_class = CiudadSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
-filters
+class LocalidadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = LocalidadSerializer
+class BarrioViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = BarrioSerializer
+
 class Tipo_personaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = Tipo_personaSerializer
@@ -84,6 +90,30 @@ class Estrato_socioeconomicoViewSet(GeneralViewSet):  # Una sola clase para los 
 
     serializer_class = Estrato_socioeconomicoSerializer
     #permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+class TemaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = TemaSerializer
+class SubtemaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = SubtemaSerializer
+class AreaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = AreaSerializer
+class Grupo_etnicoViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = Grupo_etnicoSerializer
+class Estado_civilViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = Estado_civilSerializer
+class Tipo_discapacidadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = Tipo_discapacidadSerializer
+class Tipo_viviendaViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = Tipo_viviendaSerializer
+class EscolaridadViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
+
+    serializer_class = EscolaridadSerializer
 
 class Apoderado_solicitudViewSet(EspecificViewSet):  # Una sola clase para los metodos de rest 
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
