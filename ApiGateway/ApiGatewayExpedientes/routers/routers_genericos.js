@@ -8,14 +8,12 @@ const config = require("../config.json");
 async function ValidacionExpedientes(req, res, next) {
    
     if(req.grupo ==1){next();return}
-   
     await axios.get(config.urlApiExpedientes+"relaciones_persona_expediente?expediente_id="+req.params.id+"&persona_id__identificacion="+req.identificacion)
         .then(result=>{
             if(Object.keys(result.data.results).length<1){{res.sendStatus(403);return}}
             next()
     })
         .catch(err => {
-         
             res.sendStatus(403)
         })
     
@@ -24,10 +22,8 @@ async function ValidacionExpedientes(req, res, next) {
 async function ValidacionCasoCerrado(req, res, next) {
    
     if(req.grupo ==1){next();return}
-    
     await axios.get(config.urlApiExpedientes+"expedientes/"+req.params.id)
         .then(result=>{
-            
             if(result.data.estado_expediente=="Cerrada")
            {res.sendStatus(403);return}
             next()
@@ -63,13 +59,12 @@ router.get("/solicitantes_servicio", views_genericos.GenericList)
 router.get("/areas", views_genericos.GenericList)
 router.get("/tipos_medio", views_genericos.GenericList)
 router.get("/tipos_reporte", views_genericos.GenericList)
-router.get("/tipos_resultado", views_genericos.GenericList)
 router.get("/inicios_conflicto", views_genericos.GenericList)
 
 
 router.get("/apoderados", views_genericos.GenericList)
 
-router.get("/tipos_sltado", views_genericos.GenericList)
+router.get("/tipos_resultado", views_genericos.GenericList)
 router.get("/preguntas_encuesta", views_genericos.GenericList)
 router.get("/medios_conocimiento", views_genericos.GenericList)
 router.get("/medios_seguimiento", views_genericos.GenericList)
@@ -88,7 +83,7 @@ router.post("/expedientes/:id/conciliadores/:id2", ValidacionExpedientes,Validac
 router.post("/expedientes/:id/estudiantes/:id2", ValidacionExpedientes,ValidacionCasoCerrado,views_genericos.AgregarEstudiantes)
 router.post("/expedientes/:id/citaciones", ValidacionExpedientes,ValidacionCasoCerrado,views_genericos.CrearCitaciones);
 router.post("/expedientes/:id/citaciones/:id_citacion/notificar",ValidacionExpedientes,ValidacionCasoCerrado, views_genericos.EnviarNotificacionCitacion);
-router.post("/citaciones/:id/personas/:id_persona",views_genericos.CitarPersonas);
+router.post("/citaciones/:id/personas/:id_persona",ValidacionExpedientes,ValidacionCasoCerrado,views_genericos.CitarPersonas);
 router.post("/expedientes/:id/resultados", ValidacionExpedientes,ValidacionCasoCerrado,views_genericos.CrearResultado)
 router.post("/expedientes/:id/enviar_resultados",ValidacionExpedientes,ValidacionCasoCerrado, views_genericos.EnviarResultado)
 

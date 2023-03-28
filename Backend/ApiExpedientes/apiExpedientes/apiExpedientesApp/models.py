@@ -301,6 +301,7 @@ def increment_numero_caso_number():
     return new_solicitud_id
 
 
+
 class Localidad(GeneralModel):
 
     ciudad_id=models.ForeignKey(Ciudad, on_delete=models.SET_NULL,blank=False,null=True)

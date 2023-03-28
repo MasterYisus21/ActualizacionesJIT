@@ -126,12 +126,9 @@ views.DatosCrearSolicitud = async (req, res) => {
 views.CrearSolicitud = async (req, res) => {
   try {
     req.body = JSON.parse(req.body.datos)
-    
-    
     if (req.files < 2) { res.sendStatus(error({ message: "Solo ha subido un archivo" })); return }
     if(req.body.apoderado){    if (Object.keys(req.body.apoderado).length > 0) {
-    
-    // req. ? if condicion es verdadera : if condicion es falsa
+
       
 
       if (!(req.body.apoderado[0].identificacion && req.body.apoderado[0].identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
@@ -162,19 +159,20 @@ views.CrearSolicitud = async (req, res) => {
     datos.push(req.body.convocado[0])
     
     const personas = [config.urlApiSolicitudes + "personas_solicitud/", datos]
+    const solicitud = [config.urlApiSolicitudes + "solicitudes/", { estado_solicitud_id: 1 }]
     
+    let endpoints = [personas, solicitud]
     
-    let endpoints = [personas]
-    axios.post(config.urlApiSolicitudes + "solicitudes/", { estado_solicitud_id: 1 })
-    .then(async data2=>{
     // const hechos=config.urlApiSolicitudes+"hechos/"+","+
     await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
-      .then(axios.spread(async (data1) => {
-        
+      .then(axios.spread(async (data1, data2) => {
+    
       const  encabezado = `Este mensaje notifica que hemos recibido una solicitud de audiencia al Centro de Conciliación José Ignacio Talero Losada 
         de la Universidad La Gran Colombia con el siguiente número de radicado: <b>${data2.data.numero_radicado}</b> `
       const cuerpo= `<br>Le invitamos a estar atento a  este medio de comunicación con el objetivo de indicarle el estado de su solicitud y demás información importante para su proceso.`
       let asunto = `Solicitud de Conciliacion ${data2.data.numero_radicado}`
+        
+        const correo =  axios.post(config.urlEmail,email("html",[req.body.convocante[0].correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
         
         
         req.params.id = data2.data.id
@@ -182,33 +180,19 @@ views.CrearSolicitud = async (req, res) => {
         const relacion_convocante_solicitud = [config.urlApiSolicitudes + "relaciones_persona_solicitud/", { solicitud_id: data2.data.id, persona_id: data1.data[0].id, tipo_cliente_id: 1 }]
         const relacion_convocado_solicitud = [config.urlApiSolicitudes + "relaciones_persona_solicitud/", { solicitud_id: data2.data.id, persona_id: data1.data[1].id, tipo_cliente_id: 2 }]
         const hechos = [config.urlApiSolicitudes + "hechos/", req.body.hechos[0]]
-        const documentos = await views.CargarDocumentos(req, res, 1)
-        if (documentos) {
-          const url=config.urlApiSolicitudes+"solicitudes/"+data2.data.id+"/"
-          requests.delete(req, res, url)
-          return;
-        }
-
-      
+        const documentos = views.CargarDocumentos(req, res, 1)
         endpoints = [relacion_convocante_solicitud, relacion_convocado_solicitud, hechos]
-        
         await Promise.all(endpoints.map((endpoint) => axios.post(endpoint[0], endpoint[1])))
           
-          .then(axios.spread(() => {
-           
-            const correo =  axios.post(config.urlEmail,email("html",[req.body.convocante[0].correo],asunto,encabezado,cuerpo)).catch(err => {res.status(error(err))})
-        
-            
+          .then(axios.spread((data3, data4, data5) => {
             res.status(201).json(data2.data)
         
             // res.status(201).json(data2.data[0])
 
           }))
           .catch(err => {
-            const url=config.urlApiSolicitudes+"solicitudes/"+data2.data.id+"/"
-            requests.delete(req, res, url)
-          
-            res.status(error(err))
+
+            res.sendStatus(error(err))
             return
 
           })
@@ -216,25 +200,13 @@ views.CrearSolicitud = async (req, res) => {
       }))
       .catch(err => {
         
-        const url=config.urlApiSolicitudes+"solicitudes/"+data2.data.id+"/"
-        requests.delete(req, res, url)
-        
-        res.status(error(err))
-        return
+        res.sendStatus(error(err))
         
       })
-    })
-    .catch(err => {
-        
-      res.sendStatus(error(err))
-      
-      
-    }) 
+
     // const hechos= config.urlApiSolicitudes+"hechos",{solicitud_id:}
 
   } catch (error) {
-    
-   
     console.log(error);
     res.sendStatus(500);
   }
@@ -243,74 +215,58 @@ views.CrearSolicitud = async (req, res) => {
 //crear solicitud
 views.CargarDocumentos = async (req, res, intento = 2) => {
 
-  
-  try {
-    let datos = []
-    
-    // console.log(req.file)
-    
-    if (Object.keys(req.files).length < 1) { falla=true; res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
+  let datos = []
 
-    let falla=false
-    
+  try {
+   
+    // console.log(req.file)
+    if (Object.keys(req.files).length < 1) { res.sendStatus(error({ message: "No ha subido ningun archivo" })); return }
+
+
+
     for await (const iterator of req.files) {
-  
-  
-  
+
       await unirest
-        .post(config.urlApiSolicitudes + 'documentos/')
+        .post(config.urlApiSolicitudes + 'documentos/',)
 
 
         .field('estado', true)
-        .field('nombre',iterator.originalname)
+        .field('nombre', iterator.originalname)
         .field('solicitud_id', req.params.id)
 
 
         //.attach('Ruta_directorio', req.file.path) // reads directly from local file
         .attach('documento', fs.createReadStream(iterator.path)) // creates a read stream
         //.attach('data', fs.readFileSync(filename)) // 400 - The submitted data was not a file. Check the encoding type on the form. -> maybe check encoding?
-        .headers({"X-Api-Key":config.apiKey,"Content-Length": iterator.size})
+        .headers({"X-Api-Key":config.apiKey})
         .then(function (response) {
-          
-        
           try {
-            
             fs.unlinkSync(iterator.path)
           } catch (err) {
-           
-            error(err) 
+            error(err)
           }
-         
+
           datos.push(response.body)
 
         })
-        .catch((err)=>{
-          falla=true
-          res.status(error(err))
-          return;
-        })
-        
-        
+
+
     }
-    if (intento < 2) { return falla;
+    if (intento < 2) { return;
      }
-     
-     if(!falla){
-    
+  
      await axios.patch(config.urlApiSolicitudes+"solicitudes/"+req.params.id+"/",{estado_solicitud_id:1})
       .then(result=>{
-      
         res.status(201).json(datos)
      })
       .catch(err => {
         res.sendStatus(error(err))
       })
     
-    } else{res.sendStatus(400)}
+
 
 
   } catch (error) {
-    
     console.log(error);
 
   }
@@ -555,14 +511,9 @@ views.CodigoSolicitud = async (req, res) => {
 
 views.ListarSolicitudes = async (req, res) => {
   try {
-    axios.get(config.urlApiExpedientes+"modulos")
-    .then((result)=>{
-      if(!result.data.modulo_solicitudes){res.status(200).json({results:[]});return}
-      const url = config.urlApiSolicitudes + req.route.path.slice(1)
-      requests.get(req, res, url, "?")
-      
-    })
-    
+  
+    const url = config.urlApiSolicitudes + req.route.path.slice(1)
+    requests.get(req, res, url, "?")
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

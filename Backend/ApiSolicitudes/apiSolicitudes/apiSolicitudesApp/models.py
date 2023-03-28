@@ -133,8 +133,8 @@ class Centro_conciliacion(GeneralModel):
 class Apoderado_solicitud(models.Model):
 
  
-    nombres = models.CharField(max_length = 80,blank=False,null=False)
-    apellidos = models.CharField(max_length= 80, blank=True, null=False)
+    nombres = models.CharField(max_length = 25,blank=False,null=False)
+    apellidos = models.CharField(max_length= 25, blank=True, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False,primary_key=True)
     fecha_expedicion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     lugar_expedicion = models.CharField(max_length=20, blank=True, null=True)
@@ -158,8 +158,8 @@ class Apoderado_solicitud(models.Model):
 class Persona_solicitud(EstadoModel):
 
   
-    nombres = models.CharField(max_length = 80,blank=False,null=False)
-    apellidos = models.CharField(max_length= 80, blank=False, null=False)
+    nombres = models.CharField(max_length = 25,blank=False,null=False)
+    apellidos = models.CharField(max_length= 25, blank=False, null=False)
     identificacion = models.CharField(max_length=25, blank=False, null=False,unique=False)
     fecha_expedicion = models.DateField(blank=True,null=True)#Campo de tipo fecha pero debe ser escrita por el usuario
     lugar_expedicion = models.CharField(max_length=20, blank=True, null=True)
@@ -237,9 +237,9 @@ class Relacion_persona_solicitud(EstadoModel):
         return '%s %s' % (self.solicitud_id,self.tipo_cliente_id.nombre)
 
 class Documento_solicitud(GeneralModel):
-    nombre= models.CharField(max_length=210,blank=True, null=False)
+    nombre= models.CharField(max_length=170,blank=True, null=False)
     fecha_registro=models.DateField(blank=False , null=False,auto_now=True) # Se crea automaticamente 
-    documento = models.FileField(upload_to='documentos/', max_length=210, blank=True,null=True)
+    documento = models.FileField(upload_to='documentos/', max_length=100, blank=True,null=True)
     solicitud_id= models.ForeignKey(Solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     
     class Meta:

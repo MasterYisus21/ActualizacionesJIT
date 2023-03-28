@@ -1,7 +1,7 @@
 {
    
-    "ApiSolicitudes":"http://localhost:3001/api/gateway/v1",
-    "ApiExpedientes":"http://localhost:3002/api/gateway/v1",
-    "WebApp": "http://localhost:3000"
+    "ApiSolicitudes":"/solicitudes/api/gateway/v1",
+    "ApiExpedientes":"/expedientes/api/gateway/v1",
+    "WebApp": "http://centrodeconciliacionjoseignaciotalerolosada.ugc.edu.co/"
 
 }
