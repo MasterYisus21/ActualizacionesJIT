@@ -7,8 +7,8 @@ import "./RegistrarSolicitud.css";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Collapse from "react-bootstrap/Collapse";
-import { axiosBasicInstanceApiExpedientes, axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
-import { Link, useNavigate } from "react-router-dom";
+import { axiosBasicInstanceApiSolicitudes } from "../../helpers/axiosInstances";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
@@ -27,7 +27,7 @@ function RegistrarSolicitud() {
   const [tiposPersona, setTiposPersona] = useState([]);
   const [tiposDocumento, setTiposDocumento] = useState([]);
   const [departamento, setDepartamento] = useState("");
-  const [ciudad, setCiudad] = useState("");
+  // const [ciudad, setCiudad] = useState("");
 
   const [conv2, setConv2] = useState(false);
 
@@ -169,7 +169,7 @@ function RegistrarSolicitud() {
         })
         .catch((err) => {
           console.log(err);
-          if (err.response.status == 413) {
+          if (err.response.status === '413') {
             toast.error("El tamaño de los archivos excede el limite admitido.", {
               position: toast.POSITION.BOTTOM_RIGHT,
             });
@@ -853,7 +853,7 @@ function RegistrarSolicitud() {
                   initialValue={""}
                   onChange={(val) => {
                     setDepartamento(val);
-                    setCiudad("");
+                    // setCiudad("");
                   }}
                 />
               </div>
@@ -868,7 +868,7 @@ function RegistrarSolicitud() {
                   identifier={"id"}
                   initialValue={""}
                   onChange={(val) => {
-                    setCiudad(val);
+                    // setCiudad(val);
                   }}
                 />
               </div>
@@ -963,6 +963,7 @@ function RegistrarSolicitud() {
               href={
                 "https://www.ugc.edu.co/sede/bogota/documentos/ministerio/politica_tratamiento_de_la_informacion.pdf"
               }
+              rel="noopener"
               target="_blank"
             >
               AVISO DE PRIVACIDAD
@@ -972,6 +973,7 @@ function RegistrarSolicitud() {
               href={
                 "https://docs.google.com/document/d/1NlUD6XCS1bm7bnhHCoIMgsAshpA0EgpjnXi9y_S2TfU/edit?usp=sharing"
               }
+              rel="noopener"
               target="_blank"
             >
               LEY DE PROTECCIÓN DE DATOS.
