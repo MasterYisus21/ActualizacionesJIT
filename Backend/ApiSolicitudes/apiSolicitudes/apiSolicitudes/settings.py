@@ -99,7 +99,7 @@ DATABASES = {
         'NAME': os.getenv("DB_NAME", "db_conciliacion_jit_expedientes"),
         'USER': os.getenv("DB_USER", "jit_expedientes"),
         'PASSWORD': os.getenv("DB_PASS", "Ugc$%jit2022"),
-        'HOST': os.getenv("DB_HOST", "172.20.100.20"),
+        'HOST': os.getenv("DB_HOST", "172.20.100.15"),
         'PORT': os.getenv("PORT",'5435')
     }
 }
