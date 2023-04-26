@@ -3,7 +3,7 @@ errores =(error,code=0) => {
     if (error.response) {
         //response status is an error code
         console.log("El error ocurrio en la peticion: \n"+error.response.request.path);
-        console.log(error.response.data)
+        
         if(JSON.stringify(error.response.data).includes("already exists")){return 208;}
         
         // if(error.response.dataincludes(" already exists")){console.log(true)}
