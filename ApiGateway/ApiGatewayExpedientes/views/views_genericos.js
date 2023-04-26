@@ -657,10 +657,12 @@ views.DescargarDocumentos = async (req, res) => {
 }
 views.DescargarResultados = async (req, res) => {
   try {
-    if (typeof num1 !='number'){return res.sendStatus(404)}
+   
+    if (req.params.id =='null'|req.params.id =='undefined'){return res.sendStatus(404)}
+    
     await axios.get(config.urlApiExpedientes + "resultados/" + req.params.id)
       .then(async resp => {
-
+        
 
         // res.status(200).json(resp.data)
         await axios.get(resp.data.documento, { responseType: 'arraybuffer' })//,
