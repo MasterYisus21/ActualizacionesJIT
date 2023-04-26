@@ -297,9 +297,9 @@ export default function PopupConv({
         nombres: event.target.nombres.value,
         apellidos: event.target.apellidos.value,
         identificacion: event.target.identificacion.value,
-        fecha_expedicion: event.target.fecha_expedicion.value,
+        fecha_expedicion: event.target.fecha_expedicion.value === "" ? null : event.target.fecha_expedicion.value,
         lugar_expedicion: event.target.lugar_expedicion.value,
-        fecha_nacimiento: event.target.fecha_nacimiento.value,
+        fecha_nacimiento: event.target.fecha_nacimiento.value === "" ? null : event.target.fecha_nacimiento.value,
         telefono: event.target.telefono.value,
         direccion: event.target.direccion.value,
         ocupacion: event.target.ocupacion.value,
@@ -326,9 +326,9 @@ export default function PopupConv({
       nombres: event.target.nombres.value,
       apellidos: event.target.apellidos.value,
       identificacion: event.target.identificacion.value,
-      fecha_expedicion: event.target.fecha_expedicion.value,
+      fecha_expedicion: event.target.fecha_expedicion.value === "" ? null : event.target.fecha_expedicion.value,
       lugar_expedicion: event.target.lugar_expedicion.value,
-      fecha_nacimiento: event.target.fecha_nacimiento.value,
+      fecha_nacimiento: event.target.fecha_nacimiento.value === "" ? null : event.target.fecha_nacimiento.value,
       telefono: event.target.telefono.value,
       direccion: event.target.direccion.value,
       ocupacion: event.target.ocupacion.value,
@@ -407,7 +407,7 @@ export default function PopupConv({
         });
     } else {
       console.log(data.persona);
-      axiosBasicInstanceApiExpedientes({
+      axiosTokenInstanceApiExpedientes({
         method: "post",
         url: `/expedientes/${id}/${personas}/`,
         // headers: req.headers,
