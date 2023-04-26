@@ -657,6 +657,7 @@ views.DescargarDocumentos = async (req, res) => {
 }
 views.DescargarResultados = async (req, res) => {
   try {
+    if (typeof num1 !='number'){return res.sendStatus(404)}
     await axios.get(config.urlApiExpedientes + "resultados/" + req.params.id)
       .then(async resp => {
 
@@ -2109,7 +2110,7 @@ views.AgregarConciliadores = async (req, res) => {
     axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
       .then(async result => {
 
-        if (Object.keys(result.data.results).length > 0) { res.status(400).json({ response: { mensaje: "Ya se encuentra reportada esta persona " } }); return }
+        if (Object.keys(result.data.results).length > 0) { res.status(208).json({ response: { mensaje: "Ya se encuentra registrada la persona  " } }); return }
         const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
           .then(result => {
