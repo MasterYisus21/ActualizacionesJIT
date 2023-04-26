@@ -771,7 +771,7 @@ function RegistrarSolicitud() {
               />
             </FloatingLabel>
 
-            <label className="subtitles-secciones">Tipo de Persona *</label>
+            <label className="subtitles-secciones">Tipo de Persona</label>
             <div className="d-flex gap-5">
               {tiposPersona.map((tipoPersona) => {
                 return (
@@ -785,7 +785,6 @@ function RegistrarSolicitud() {
                       name="flexRadioDefault"
                       id="tipoPersonaConvocado"
                       value={tipoPersona["id"]}
-                      required
                     />
                     <label
                       className="form-check-label"
@@ -818,11 +817,12 @@ function RegistrarSolicitud() {
               </FloatingLabel>
             </div>
 
-            <FloatingLabel controlId="direccionConvocado" label="Dirección">
+            <FloatingLabel controlId="direccionConvocado" label="Dirección *">
               <Form.Control
                 className="inputs-registrar-solicitud"
                 type="text"
                 placeholder="name@example.com"
+                required
               />
             </FloatingLabel>
           </div>
