@@ -1,7 +1,7 @@
-# Proyecto Centros de Conciliacion
-*Actualizacion de formatos y api de informes
+# Centro de Conciliacion JIT V 2.1.3
+*Actualizacion de formatos y api de informes.
 
-Correccion de error : 
+Corrección de error : 
 
     -SubTema
   
