@@ -12,8 +12,6 @@ def increment_entrada_number():
     return 'S'+str(date.year)+str(date.month)+'CCJIT' +'001'
   
   año_registro = ultima_solicitud.fecha_registro.year
-  print(ultima_solicitud)
-  print("ultima solicitud"+str(año_registro))
   if año_registro!=year:
     return 'S'+str(date.year)+str(date.month)+'CCJIT' +'001'
   
@@ -21,7 +19,6 @@ def increment_entrada_number():
   position_int=str(solicitud_id).index('T')
   solicitud_int = int(solicitud_id[position_int+1:])
   new_solicitud_int = solicitud_int + 1
-  print("nueva solicitud"+ str(new_solicitud_int))
   new_solicitud_id = 'S'+str(date.year)+str(date.month)+'CCJIT' +str(new_solicitud_int).zfill(3)
   return new_solicitud_id
 class Pais(GeneralModel):
@@ -43,6 +40,7 @@ class Departamento(GeneralModel):
         ordering = ['-id']
         verbose_name = ("Departamento")
         verbose_name_plural = ("Departamentos")
+        
 
     def __str__(self):
         return self.nombre
@@ -53,7 +51,7 @@ class Ciudad(GeneralModel):
     nombre= models.CharField(max_length=80,blank=False, null=False,unique=False)
     class Meta:
         db_table='Ciudad'
-        ordering = ['-id']
+        ordering = ['nombre']
         verbose_name = ("Ciudad")
         verbose_name_plural = ("Ciudades")
 
@@ -65,7 +63,9 @@ class Tipo_documento(GeneralModel):
     class Meta:
         db_table='Tipo_documento'
         verbose_name = ("Tipo_documento")
+        ordering = ['nombre']
         verbose_name_plural = ("Tipos_documento")
+        
 
     def __str__(self):
         return self.nombre
@@ -75,6 +75,7 @@ class Tipo_persona(GeneralModel):
     class Meta:
         db_table='Tipo_persona'
         verbose_name = ("Tipo_persona")
+        ordering = ['nombre']
         verbose_name_plural = ("Tipos_persona")
 
     def __str__(self):
@@ -85,6 +86,7 @@ class Sexo(GeneralModel):
     class Meta:
         db_table='Sexo'
         verbose_name = ("Sexo")
+        ordering = ['nombre']
         verbose_name_plural = ("Sexos")
 
     def __str__(self):
@@ -96,6 +98,7 @@ class Genero(GeneralModel):
     class Meta:
         db_table='Genero'
         verbose_name = ("Genero")
+        ordering = ['nombre']
         verbose_name_plural = ("Generos")
 
     def __str__(self):
@@ -106,6 +109,7 @@ class Estrato_socioeconomico(GeneralModel):
     class Meta:
         db_table='Estrato_socioeconomico'
         verbose_name = ("estratos_socioeconomicos")
+        ordering = ['nombre']
         verbose_name_plural = ("estratos_socioeconomicos")
 
     def __str__(self):
@@ -116,6 +120,7 @@ class Estado_solicitud(GeneralModel):
     class Meta:
         db_table='Estado_solicitud'
         verbose_name = ('Estado_solicitud')
+        ordering = ['nombre']
         verbose_name_plural = ('Estados_solicitud')
     def __str__(self):
         return self.nombre
@@ -125,6 +130,7 @@ class Centro_conciliacion(GeneralModel):
     class Meta:
         db_table='Centro_conciliacion'
         verbose_name = ('Centro_conciliacion')
+        ordering = ['nombre']
         verbose_name_plural = ('Centros_conciliacion')
     def __str__(self):
         return self.nombre
@@ -149,6 +155,7 @@ class Apoderado_solicitud(models.Model):
     class Meta:
         db_table='Apoderado_solicitud'
         verbose_name = ("Apoderado")
+        ordering = ['nombres']
         verbose_name_plural = ("Apoderados")
 
     def __str__(self):
@@ -176,11 +183,12 @@ class Persona_solicitud(EstadoModel):
     estrato_socioeconomico_id = models.ForeignKey(Estrato_socioeconomico, on_delete=models.SET_NULL, blank=True, null=True)      
     tipo_documento_id = models.ForeignKey(Tipo_documento, on_delete=models.SET_NULL, blank=False, null=True)
     apoderado_id = models.ForeignKey(Apoderado_solicitud, on_delete=models.SET_NULL, blank=True, null=True)
-              
+    
               
     class Meta:
         db_table='Persona_solicitud'
         verbose_name = ("Persona")
+        ordering = ['nombres']
         verbose_name_plural = ("Personas")
 
     def __str__(self):
@@ -196,6 +204,7 @@ class Solicitud(models.Model):
     class Meta:
         db_table='Solicitud'
         verbose_name = ('Solicitud')
+        ordering = ['-id']
         verbose_name_plural = ('Solicitudes')
     def __str__(self):
         return str(self.numero_radicado)
@@ -219,6 +228,7 @@ class Tipo_cliente(GeneralModel):
     class Meta:
         db_table='Tipo_cliente'
         verbose_name = ("Tipo_cliente")
+        ordering = ['nombre']
         verbose_name_plural = ("Tipos_cliente")
 
     def __str__(self):
@@ -229,6 +239,7 @@ class Relacion_persona_solicitud(EstadoModel):
     persona_id = models.ForeignKey(Persona_solicitud, on_delete=models.SET_NULL, blank=False, null=True)
     tipo_cliente_id = models.ForeignKey(Tipo_cliente, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
+        ordering = ['-id']
         db_table='Relacion_persona_solicitud'
         verbose_name = ("Relacion_persona_solicitud")
         verbose_name_plural = ("Relaciones_persona_solicitud")
@@ -245,6 +256,7 @@ class Documento_solicitud(GeneralModel):
     class Meta:
         db_table='Documento_solicitud'
         verbose_name = ('Documento')
+        ordering = ['-id']
         verbose_name_plural = ('Documentos')
     def __str__(self):  
         return  '%s %s'%(self.solicitud_id,self.nombre)
@@ -260,6 +272,7 @@ class Hechos_solicitud(EstadoModel):
     class Meta:
         db_table='Hechos_solicitud'
         verbose_name = ('Hechos')
+        ordering = ['-id']
         verbose_name_plural = ('Hechos')
     def __str__(self):
         return  '%s'%(self.solicitud_id)

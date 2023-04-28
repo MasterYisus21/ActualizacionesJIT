@@ -14,6 +14,9 @@ from rest_framework_api_key.permissions import HasAPIKey
 # from apiInventarioApp.pagination import StandardResultsSetPagination
 from django.http import JsonResponse
 def Modulos(request):
+
+    if 'Id' not in request.headers:
+        return JsonResponse({'error': 'El encabezado "Id" es requerido.'}, status=400)
     data={}
     user=User.objects.get(username=request.headers['Id'])
     request.user=user
@@ -304,7 +307,7 @@ class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de res
     def get_queryset(self,pk=None):
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
         if pk is None:
-            return model.filter(is_active=True)
+            return model.filter(is_active=True).order_by('username')
     
         return model.filter(is_active=True, id=pk).first() # retorna todos los valores con estado = true
     def destroy(self,request,pk=None):
@@ -333,7 +336,7 @@ class GruposViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
        
         if pk is None:
-            return model.filter()
+            return model.filter().order_by('name')
         
         return model.filter( id=pk).first() # retorna todos los valores con estado = t
     def destroy(self,request,pk=None):
