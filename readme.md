@@ -1,4 +1,4 @@
-# Centro de Conciliacion JIT V 2.1.3
+# SOFTWARE CENTRO DE CONCILIACIÓN V 2.1.3
 *Actualizacion de formatos y api de informes.
 
 Corrección de error : 
