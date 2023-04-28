@@ -1,5 +1,5 @@
 # Proyecto Centros de Conciliacion
-*Actualizacion de formatos y api de informes\n
+*Actualizacion de formatos y api de informes
 *Correccion de error : 
   -SubTema
   -Quitar datos Obligatorios
