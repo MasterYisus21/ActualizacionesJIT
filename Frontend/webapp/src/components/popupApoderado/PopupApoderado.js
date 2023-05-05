@@ -262,6 +262,7 @@ export default function PopupApoderado({
                   type="date"
                   placeholder="name@example.com"
                   required
+                  
                 />
               </FloatingLabel>
               <FloatingLabel
@@ -287,6 +288,7 @@ export default function PopupApoderado({
                   className="col-inputs"
                   type="text"
                   placeholder="name@example.com"
+                  required
                 />
               </FloatingLabel>
               <FloatingLabel controlId="correo" label="Correo">

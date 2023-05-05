@@ -64,6 +64,7 @@ class Tipo_documento(GeneralModel):
         db_table='Tipo_documento'
         verbose_name = ("Tipo_documento")
         verbose_name_plural = ("Tipos_documento")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -73,6 +74,7 @@ class Tipo_persona(GeneralModel):
     class Meta:
         managed = False
         db_table='Tipo_persona'
+        ordering = ['nombre']
         verbose_name = ("Tipo_persona")
         verbose_name_plural = ("Tipos_persona")
 
@@ -84,6 +86,7 @@ class Sexo(GeneralModel):
     class Meta:
         managed = False
         db_table='Sexo'
+        ordering = ['nombre']
         verbose_name = ("Sexo")
         verbose_name_plural = ("Sexos")
 
@@ -96,6 +99,7 @@ class Genero(GeneralModel):
     class Meta:
         managed = False
         db_table='Genero'
+        ordering = ['nombre']
         verbose_name = ("Genero")
         verbose_name_plural = ("Generos")
 
@@ -107,6 +111,7 @@ class Estrato_socioeconomico(GeneralModel):
     class Meta:
         managed = False
         db_table='Estrato_socioeconomico'
+        ordering = ['nombre']
         verbose_name = ("estratos_socioeconomicos")
         verbose_name_plural = ("estratos_socioeconomicos")
 
@@ -118,6 +123,7 @@ class Estado_solicitud(GeneralModel):
     class Meta:
         managed = False
         db_table='Estado_solicitud'
+        ordering = ['nombre']
         verbose_name = ('Estado_solicitud')
         verbose_name_plural = ('Estados_solicitud')
     def __str__(self):
@@ -128,6 +134,7 @@ class Centro_conciliacion(GeneralModel):
     class Meta:
         managed = False
         db_table='Centro_conciliacion'
+        ordering = ['nombre']
         verbose_name = ('Centro_conciliacion')
         verbose_name_plural = ('Centros_conciliacion')
     def __str__(self):
@@ -141,6 +148,7 @@ class Tipo_cliente(GeneralModel):
     class Meta:
         managed = False
         db_table='Tipo_cliente'
+        ordering = ['nombre']
         verbose_name = ("Tipo_cliente")
         verbose_name_plural = ("Tipos_cliente")
 
@@ -338,6 +346,7 @@ class Estado_civil(GeneralModel):
         db_table='Estado_civil'
         verbose_name = ("Estado_civil")
         verbose_name_plural = ("Estados_civiles")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -350,6 +359,7 @@ class Grupo_etnico(GeneralModel):
         db_table='Grupo_etnico'
         verbose_name = ("Grupo_etnico")
         verbose_name_plural = ("Grupos_etnicos")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -360,6 +370,7 @@ class Tipo_discapacidad(GeneralModel):
         db_table='Tipo_discapacidad'
         verbose_name = ("Tipo_Discapacidad")
         verbose_name_plural = ("Tipos_Discapacidad")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -371,6 +382,7 @@ class Tipo_vivienda(GeneralModel):
         db_table='Tipo_vivienda'
         verbose_name = ("Tipo_vivienda")
         verbose_name_plural = ("Tipos_vivienda")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -382,6 +394,7 @@ class Area(GeneralModel):
         db_table='Area'
         verbose_name = ("Area")
         verbose_name_plural = ("Areas")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -394,6 +407,7 @@ class Perfil(GeneralModel):
         db_table='Perfil'
         verbose_name = ("Perfil")
         verbose_name_plural = ("Perfiles")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -405,6 +419,7 @@ class Tipo_cargo(GeneralModel):
         db_table='Tipo_cargo'
         verbose_name = ("Tipo_cargo")
         verbose_name_plural = ("Tipos_cargo")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -416,6 +431,7 @@ class Escolaridad(GeneralModel):
         db_table='Escolaridad'
         verbose_name = ("Escolaridad")
         verbose_name_plural = ("Escolaridades")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -437,6 +453,7 @@ class Apoderado(EstadoModel):
         db_table='Apoderado_expediente'
         verbose_name = ("Apoderado")
         verbose_name_plural = ("Apoderados")
+        ordering = ['nombres']
 
     def __str__(self):
        return '%s %s' % (self.nombres, self.apellidos)
@@ -481,6 +498,8 @@ class Persona(EstadoModel):
         db_table='Persona'
         verbose_name = ("Persona")
         verbose_name_plural = ("Personas")
+        ordering = ['nombres']
+        
 
     def __str__(self):
        return '%s %s' % (self.nombres, self.apellidos)
@@ -491,7 +510,7 @@ class Solicitante_servicio(GeneralModel):
         db_table='Solicitud_servicio'
         verbose_name = ("Solicitante_servicio")
         verbose_name_plural = ("Solicitantes_servicio")
-
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
 
@@ -503,6 +522,7 @@ class Tema(GeneralModel):
         db_table='Tema'
         verbose_name = ("Tema")
         verbose_name_plural = ("Temas")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -515,6 +535,7 @@ class Subtema(GeneralModel):
         db_table='Subtema'
         verbose_name = ("Subtema")
         verbose_name_plural = ("Subtemas")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -526,6 +547,7 @@ class Objetivo_servicio(GeneralModel):
         db_table='Objetivo_servicio'
         verbose_name = ("Objetivo_servicio")
         verbose_name_plural = ("Objetivos_servicio")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -537,6 +559,7 @@ class Tipo_servicio(GeneralModel):
         db_table='Tipo_servicio'
         verbose_name = ("Tipo_servicio")
         verbose_name_plural = ("Tipos_servicio")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -547,6 +570,7 @@ class Inicio_conflicto(GeneralModel):
         db_table='Inicio_conflicto'
         verbose_name = ("Inicio_conflicto")
         verbose_name_plural = ("Inicios_conflicto")
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -566,6 +590,7 @@ class Finalidad_servicio(GeneralModel):
         db_table='finalidad_servicio'
         verbose_name = ('finalidad_servicio')
         verbose_name_plural = ('finalidades_servicio')
+        ordering = ['nombre']
      def __str__(self):
         return self.nombre
 class Expediente(EstadoModel):
@@ -592,6 +617,7 @@ class Expediente(EstadoModel):
         db_table='Expediente'      
         verbose_name = ("Expediente")
         verbose_name_plural = ("Expedientes")
+        ordering = ['-id']
         
     
 
@@ -609,7 +635,7 @@ class Relacion_persona_expediente(EstadoModel):
         db_table='Relacion_persona_expediente'
         verbose_name = ("Relacion_persona_expediente")
         verbose_name_plural = ("Relaciones_persona_expediente")
-
+        ordering = ['-id']
     def __str__(self):
         return '%s %s' % (self.expediente_id, self.tipo_cliente_id)
 
@@ -626,6 +652,7 @@ class Historico(models.Model):
         ordering = ["-fecha"] 
         verbose_name = ('Historico')
         verbose_name_plural = ('Historicos')
+        ordering = ['-id']
     def __str__(self):
          return '%s '% (self.id)
 
@@ -638,6 +665,7 @@ class Categoria_resultado(GeneralModel):
         db_table='Categoria_resultado'
         verbose_name = ('Categoria_resultado')
         verbose_name_plural = ('Categorias _resultado')
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
         
@@ -648,6 +676,7 @@ class Tipo_resultado(GeneralModel):
         db_table='Tipo_resultado'
         verbose_name = ('Tipo_resultado')
         verbose_name_plural = ('Tipos_resultado')
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
 class Resultado(EstadoModel):
@@ -662,6 +691,7 @@ class Resultado(EstadoModel):
         db_table='Resultado'
         verbose_name = ('Resultado')
         verbose_name_plural = ('Resultados')
+        ordering = ['-id']
     def __str__(self):
         return str(self.expediente_id.numero_caso)
 
@@ -682,6 +712,7 @@ class Hechos(EstadoModel):
         db_table='Hechos_expediente'
         verbose_name = ('Hechos')
         verbose_name_plural = ('Hechos')
+        ordering = ['-id']
     def __str__(self):
         return '%s' % (self.expediente_id)
 
@@ -691,6 +722,7 @@ class Medio_seguimiento(GeneralModel):
         db_table='Medio_seguimiento'
         verbose_name = ('Medio_seguimiento')
         verbose_name_plural = ('Medios_seguimiento')
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
 
@@ -706,6 +738,7 @@ class Seguimiento(EstadoModel):
         db_table='Seguimiento'
         verbose_name = ('Seguimiento')
         verbose_name_plural = ('Seguimientos')
+        ordering = ['-id']
     def __str__(self):
         return str(self.fecha)
 
@@ -716,6 +749,7 @@ class Pregunta_seguimiento(GeneralModel):
         db_table='Pregunta_seguimiento'
         verbose_name = ('Pregunta_seguimiento')
         verbose_name_plural = ('Preguntas_seguimiento')
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
 
@@ -732,6 +766,7 @@ class Respuesta_seguimiento(EstadoModel):
         db_table='Respuesta_seguimiento'
         verbose_name = ('Respuesta_seguimiento')
         verbose_name_plural = ('Respuestas_seguimiento')
+        ordering = ['-id']
     def __str__(self):
         return str(self.id)
 
@@ -741,6 +776,7 @@ class Turno(GeneralModel):
         db_table='Turno'
         verbose_name = ('Turno')
         verbose_name_plural = ('Turnos')
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
 
@@ -750,6 +786,7 @@ class Tipo_medio(GeneralModel):
         db_table='Tipo_medio'
         verbose_name = ('Tipo_medio')
         verbose_name_plural = ('Tipos_medio')
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
 
@@ -766,6 +803,7 @@ class Citacion(EstadoModel):
         db_table='Citacion'
         verbose_name = ('Citacion')
         verbose_name_plural = ('Citaciones')
+        ordering = ['-id']
     def __str__(self):
         return str(self.expediente_id)
 
@@ -776,6 +814,7 @@ class Relacion_persona_citacion(EstadoModel):
         db_table='Relacion_persona_citacion'
         verbose_name = ('Relacion_persona_citacion')
         verbose_name_plural = ('Relaciones_persona_citacion')
+        ordering = ['-id']
     def __str__(self):
         return str(self.citacion_id)
 
@@ -785,6 +824,7 @@ class Medio_conocimiento(GeneralModel):
         db_table='Medio_conocimiento'
         verbose_name = ('Medio_conocimiento')
         verbose_name_plural = ('Medios_conocimiento')
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
 
@@ -792,13 +832,12 @@ class Encuesta(EstadoModel):
     fecha = models.DateField(auto_now=True, auto_now_add=False,null=False)
     medio_conocimiento_id = models.ForeignKey(Medio_conocimiento, on_delete=models.SET_NULL,blank=False,null=True)
     observacion = models.TextField(blank=True,null=True)
-    
-    
     expediente_id = models.OneToOneField(Expediente, on_delete=models.SET_NULL, blank=False, null=True)
     class Meta:
         db_table='Encuesta'
         verbose_name = ('Encuesta')
         verbose_name_plural = ('Encuestas')
+        ordering = ['-id']
     def __str__(self):
         return  '%s' % (self.expediente_id)
 
@@ -808,6 +847,7 @@ class Pregunta_encuesta(GeneralModel):
         db_table='Pregunta_encuesta'
         verbose_name = ('Pregunta_encuesta')
         verbose_name_plural = ('Preguntas_encuesta')
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
 
@@ -821,6 +861,7 @@ class Respuesta_encuesta(EstadoModel):
         db_table='Respuesta_encuesta'
         verbose_name = ('Respuesta_encuesta')
         verbose_name_plural = ('Respuestas_encuesta')
+        ordering = ['-id']
     def __str__(self):
         return '%s %s' % (self.encuesta_id,self.pregunta_encuesta_id)
 
@@ -830,6 +871,7 @@ class Tipo_reporte(GeneralModel):
         db_table='Tipo_reporte'
         verbose_name = ('Tipo_reporte')
         verbose_name_plural = ('Tipos_reporte')
+        ordering = ['nombre']
     def __str__(self):
         return self.nombre
 
