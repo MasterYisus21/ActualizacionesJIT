@@ -12,5 +12,6 @@ class Documento(models.Model):
     class Meta:
         verbose_name = ('Documento')
         verbose_name_plural = ('Documento')
+        ordering = ['id']
     def __str__(self):
         return self.nombre
