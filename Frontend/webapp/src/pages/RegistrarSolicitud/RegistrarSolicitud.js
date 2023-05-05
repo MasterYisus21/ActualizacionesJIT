@@ -647,6 +647,7 @@ function RegistrarSolicitud() {
                       className=""
                       type="date"
                       placeholder="name@example.com"
+                      required
                     />
                   </FloatingLabel>
                   <FloatingLabel
@@ -657,6 +658,7 @@ function RegistrarSolicitud() {
                       className=""
                       type="text"
                       placeholder="name@example.com"
+                      required
                     />
                   </FloatingLabel>
                 </div>
@@ -690,6 +692,7 @@ function RegistrarSolicitud() {
                       className=""
                       type="text"
                       placeholder="name@example.com"
+                      required
 
                     />
                   </FloatingLabel>
