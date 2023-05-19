@@ -854,12 +854,13 @@ const informacionCaso = async (req) => {
       }
       if (Object.keys(estudiante.data.results).length < 0) { datos.estudiante = [] } else {
         let contador = 1
+        let i = 0
         for (const iterator of estudiante.data.results) {
 
           for (const item in iterator) {
-            if (typeof (estudiante.data.results[0][item]) == 'string') { estudiante.data.results[0][item] = estudiante.data.results[0][item].toUpperCase() }
-            if (estudiante.data.results[0][item] == null) { estudiante.data.results[0][item] = "___" }
-            datos["estudiante" + contador + "_" + item] = estudiante.data.results[0][item]
+            if (typeof (estudiante.data.results[i][item]) == 'string') { estudiante.data.results[i][item] = estudiante.data.results[i][item].toUpperCase() }
+            if (estudiante.data.results[i][item] == null) { estudiante.data.results[i][item] = "___" }
+            datos["estudiante" + contador + "_" + item] = estudiante.data.results[i][item]
           }
           contador++
         }
