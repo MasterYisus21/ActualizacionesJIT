@@ -948,13 +948,15 @@ views.DescargarFormatoResultado = async (req, res) => {
 }
 views.GenerarReportes = async (req, res) => {
   try {
-
+    
+    req.body.nombre=req.body.nombre.replace(/\s+/g, '')
+ 
     axios.post(config.urlGeneradorReportes, req.body, { responseType: 'arraybuffer' })
-
+   
       .then(result => {
-
-
-        res.end(result.data)
+      // console.log(result);
+       res.end(result.data);
+        
 
       })
       .catch(err => {

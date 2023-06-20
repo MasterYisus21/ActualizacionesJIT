@@ -141,7 +141,7 @@ router.post("/expedientes/:id/documentos/:id_documento",ValidacionExpedientes,Va
 router.get("/resultados/:id",archivo.uploadMiddleware, views_genericos.DescargarResultados);
 
 router.post("/expedientes/:id/respuestas", ValidacionExpedientes,ValidacionCasoCerrado,views_genericos.CrearRespuestas);
-router.post("/reportes/:id/", views_genericos.GenerarReportes)
+router.post("/reportes", views_genericos.GenerarReportes)
 router.post("/expedientes/:id/seguimientos",ValidacionExpedientes, ValidacionCasoCerrado,views_genericos.CrearSeguimientoCaso);
 router.post("/expedientes/:id/estado",ValidacionExpedientes,ValidacionCasoCerrado,views_genericos.CambiarEstadoExpediente)
 
