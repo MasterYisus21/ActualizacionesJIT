@@ -31,24 +31,26 @@ const [cargando, setCargando] = useState(false)
   const generarReporte = (e) => {
     e.preventDefault()
     const data = {
-      "Fecha_inicio": e.target.fechaInicio.value,
-      "Fecha_fin": e.target.fechaFinal.value
+      "fecha_inicio": e.target.fechaInicio.value,
+      "fecha_fin": e.target.fechaFinal.value,
+      "nombre":e.target.reporte.value
     }
     axiosTokenInstanceApiExpedientes({
       method: 'post',
-      url: `/reportes/${e.target.reporte.value}`,
+      url: `/reportes/`,
       // url: `/documentos/2022-452`,
       responseType: "blob",
       data: data
     })
       .then(response => {
         const tempTiposReporte = [...tiposReporte]
-        const index = tempTiposReporte.findIndex(object => {
-          return object.id == e.target.reporte.value;
-        });
+        setCargando(false)
+        // const index = tempTiposReporte.findIndex(object => {
+        //   return object.id == e.target.reporte.value;
+        // });
         // documentsTransition[index] = { id: result.data.id, nombre: result.data.nombre, fecha: result.data.fecha }
         // setCargando(false)
-        fileDownload(response.data, tempTiposReporte[index].nombre+".xlsx")
+        fileDownload(response.data, e.target.reporte.value+".xlsx")
       })
       .catch(err => {
         console.log(err);
@@ -68,7 +70,7 @@ const [cargando, setCargando] = useState(false)
             <select className="input-reportes" name='reporte' required>
               <option value="">Seleccione una opción.</option>
               {tiposReporte.map(dato => {
-                return (<option key={`tipoReporte${dato.id}`} value={dato.id}>{dato.nombre}</option>)
+                return (<option key={`tipoReporte${dato.id}`} value={dato.nombre}>{dato.nombre}</option>)
               })}
             </select>
           </div>
