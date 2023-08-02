@@ -7,11 +7,11 @@ import os
 import json
 import csv
 app = Flask(__name__)
-app.config['NAME'] = os.getenv("DB_NAME", "")
-app.config['USER'] = os.getenv("DB_USER", "")
-app.config['PASSWORD'] = os.getenv("DB_PASS", "")
-app.config['HOST'] = os.getenv("DB_HOST", "")
-app.config['PORT'] = os.getenv("PORT", '')
+app.config['NAME'] = os.getenv("DB_NAME", "db_conciliacion_jit_expedientes")
+app.config['USER'] = os.getenv("DB_USER", "jit_expedientes")
+app.config['PASSWORD'] = os.getenv("DB_PASS", "Ugc$%jit2022")
+app.config['HOST'] = os.getenv("DB_HOST", "172.20.100.5")
+app.config['PORT'] = os.getenv("PORT", '5435')
 
 def conexion():
      
