@@ -83,15 +83,14 @@ WSGI_APPLICATION = 'apiExpedientes.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-
 DATABASES = {
  'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv("DB_NAME", "db_conciliacion_cca"),
-        'USER': os.getenv("DB_USER", "cca"),
-        'PASSWORD': os.getenv("DB_PASS", "Ugc$%cca2022"),
-        'HOST': os.getenv("DB_HOST", "172.20.100.5"),
-        'PORT': os.getenv("PORT",'5434')
+        'NAME': os.getenv("DB_NAME", "db_conciliacion_jit_expedientes"),
+        'USER': os.getenv("DB_USER", "jit_expedientes"),
+        'PASSWORD': os.getenv("DB_PASS", "Ugc$%jit2022"),
+        'HOST': os.getenv("DB_HOST", "172.20.100.15"),
+        'PORT': os.getenv("PORT",'5435')
     }
 }
 

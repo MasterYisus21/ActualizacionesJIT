@@ -192,7 +192,7 @@ function Documentos() {
           <div className="mb-3">
             <input className="form-control" type="file" name={"fileInput"} id="fileInput" required />
             <div>Formatos aceptados: pdf, jpg </div>
-            <div>Tamaño maximo del archivo: 10 Mb </div>
+            <div>Tamaño maximo del archivo: 100 Mb </div>
           </div>
           <div className="mb-3">
             <Button

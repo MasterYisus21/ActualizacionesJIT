@@ -2,7 +2,7 @@ const error = require("../requests/requests_error.js")
 const multer = require("multer");
 const fs = require('fs');
 // seleccionables Principales
-const maxSize = 10 * 1000 * 1000 // 10Mb Max
+const maxSize = 100 * 1000 * 1000 // 10Mb Max
 const archivo = {};
 
 const multerStorage = multer.diskStorage({

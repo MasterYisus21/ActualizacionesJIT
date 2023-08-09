@@ -6,7 +6,7 @@
     "urlGeneradorDocumentos": "http://0.0.0.0:8003/api/generador_documentos/v1/",
     "urlEmail": "http://0.0.0.0:5001/",
     "urlConvertidorPDF":"http://0.0.0.0:9999/docx-to-pdf",
-    "urlGeneradorReportes": "http://0.0.0.0:8006/api/generador_reportes/v1/",
+    "urlGeneradorReportes": "http://0.0.0.0:8005/api/generador_reportes/v1/",
     "urlAutenticacion": "http://0.0.0.0:4000/",
     "urlGatewaySolicitudes": "http://0.0.0.0:3001/api/gateway/v1/",
     "urlGatewayExpedientes": "http://0.0.0.0:3002/api/gateway/v1/",

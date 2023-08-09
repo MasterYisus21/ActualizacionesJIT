@@ -144,7 +144,7 @@ axiosTokenInstanceApiSolicitudes.interceptors.request.use(
         Promise.reject(error)
     });
 
-axiosTokenInstanceApiSolicitudes.interceptors.response.use((response) => {
+    axiosTokenInstanceApiSolicitudes.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     toast.error(`Ocurrió un error con estado ${error.response.status}`, {

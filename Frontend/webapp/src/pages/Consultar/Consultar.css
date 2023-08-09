@@ -155,7 +155,7 @@
 
 .estado-consulta{
  display: flex;
- justify-content: start;
+ justify-content: flex-start;
  font-weight:bold;
 
 }

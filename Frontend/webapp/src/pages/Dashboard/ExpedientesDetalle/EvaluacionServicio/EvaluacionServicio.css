@@ -15,7 +15,7 @@
 
 .contenedor-caras {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin-right: 13vw;
 }
 
@@ -69,7 +69,7 @@
 .preguntas {
     font-size: 1.2vw;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .contenedor-calificacion {

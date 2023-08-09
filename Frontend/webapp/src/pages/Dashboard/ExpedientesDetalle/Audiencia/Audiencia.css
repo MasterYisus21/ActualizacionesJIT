@@ -37,7 +37,7 @@
 
 .contenedor-boton-audiencia {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     margin-left: 6vw;
     margin-top: 5rem;
 }

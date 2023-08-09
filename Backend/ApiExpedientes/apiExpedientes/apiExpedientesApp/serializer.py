@@ -103,6 +103,7 @@ class ApoderadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Apoderado          # El modelo al que pertenece este serializador
         fields = '__all__'  # Coje todos los campos del modelo 
+        
 class PersonaSerializer(serializers.ModelSerializer):
     localidad_id  =  serializers.CharField(source='barrio_id.localidad_id.id', read_only=True)
     ciudad_id  =  serializers.CharField(source='barrio_id.localidad_id.ciudad_id.id', read_only=True)

@@ -243,7 +243,7 @@ views.CrearExpediente = async (req, res) => {
             <br><b>Estado del Expediente:</b> ${data5.data.estado_expediente} 
             <br><b>Conciliador:</b> ${data5.data.nombres} 
             <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br>`
-            let asunto = `Asignación Caso de Conciliación del Expediente: ${data5.data.numero_caso}`
+            let asunto = `Asignación Caso de Conciliación`
             const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [data5.data.correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
 
             //get res.status(201).json(data2.data[0])
@@ -657,9 +657,12 @@ views.DescargarDocumentos = async (req, res) => {
 }
 views.DescargarResultados = async (req, res) => {
   try {
+   
+    if (req.params.id =='null'|req.params.id =='undefined'){return res.sendStatus(404)}
+    
     await axios.get(config.urlApiExpedientes + "resultados/" + req.params.id)
       .then(async resp => {
-
+        
 
         // res.status(200).json(resp.data)
         await axios.get(resp.data.documento, { responseType: 'arraybuffer' })//,
@@ -717,9 +720,10 @@ const informacionCitacion = async (req) => {
 
         }
         const fecha_expediente = new Date(expediente['data'].fecha_registro)
-        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('es-es', { month: 'long' }).toUpperCase()
-        datos.expediente_fecha_registro_año = fecha_expediente.getFullYear()
-        datos.expediente_fecha_registro_dia = fecha_expediente.getUTCDate()
+        const opciones = { timeZone: "America/Bogota" };
+        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('es-CO', { opciones,month: 'long' }).toUpperCase()
+        datos.expediente_fecha_registro_año = fecha_expediente.toLocaleString("es-CO", { opciones, year: "numeric" })
+        datos.expediente_fecha_registro_dia = fecha_expediente.toLocaleString("es-CO", {opciones, day: "numeric" });
       }
       if (Object.keys(convocante.data.results).length < 0) { datos.convocante = [] } else {
         for (const iterator in convocante.data.results[0]) {
@@ -771,9 +775,10 @@ const informacionCitacion = async (req) => {
           datos["citacion_" + iterator] = citacion.data[iterator]
         }
         const fecha = new Date(citacion.data.fecha_sesion)
-        datos.citacion_mes = fecha.toLocaleString('es-es', { month: 'long' }).toUpperCase()
-        datos.citacion_año = fecha.getFullYear()
-        datos.citacion_dia = fecha.getUTCDate()
+        const opciones = { timeZone: "America/Bogota" };
+        datos.citacion_mes = fecha.toLocaleString('es-CO', { opciones,month: 'long' }).toUpperCase()
+        datos.citacion_año = fecha.toLocaleString("es-CO", { opciones, year: "numeric" })
+        datos.citacion_dia = fecha.toLocaleString("es-CO", {opciones, day: "numeric" });
       }
 
 
@@ -781,10 +786,11 @@ const informacionCitacion = async (req) => {
 
     }))
   const hoy = new Date()
-  datos.fecha_actual_dia = hoy.getUTCDate()
-  datos.fecha_actual_mes = hoy.toLocaleString('es-es', { month: 'long' }).toUpperCase()
-  datos.fecha_actual_año = hoy.getFullYear()
-  datos.fecha_actual_hora = hoy.toLocaleTimeString()
+  const opciones = { timeZone: "America/Bogota" };
+  datos.fecha_actual_dia = hoy.toLocaleString("es-CO", {opciones, day: "numeric" });
+  datos.fecha_actual_mes = hoy.toLocaleString('es-CO', { opciones,month: 'long' }).toUpperCase()
+  datos.fecha_actual_año = hoy.toLocaleString("es-CO", { opciones, year: "numeric" })
+  datos.fecha_actual_hora = hoy.toLocaleTimeString("es-CO", opciones)
 
 
 
@@ -820,9 +826,10 @@ const informacionCaso = async (req) => {
 
         }
         const fecha_expediente = new Date(expediente['data'].fecha_registro)
-        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('es-es', { month: 'long' }).toUpperCase()
-        datos.expediente_fecha_registro_año = fecha_expediente.getFullYear()
-        datos.expediente_fecha_registro_dia = fecha_expediente.getUTCDate()
+        const opciones = { timeZone: "America/Bogota" };
+        datos.expediente_fecha_registro_mes = fecha_expediente.toLocaleString('es-CO', { opciones,month: 'long' }).toUpperCase()
+        datos.expediente_fecha_registro_año = fecha_expediente.toLocaleString("es-CO", { opciones, year: "numeric" })
+        datos.expediente_fecha_registro_dia = fecha_expediente.toLocaleString("es-CO", {opciones, day: "numeric" });
       }
       if (Object.keys(convocante.data.results).length < 0) { datos.convocante = [] } else {
         for (const iterator in convocante.data.results[0]) {
@@ -847,12 +854,13 @@ const informacionCaso = async (req) => {
       }
       if (Object.keys(estudiante.data.results).length < 0) { datos.estudiante = [] } else {
         let contador = 1
+        let i = 0
         for (const iterator of estudiante.data.results) {
 
           for (const item in iterator) {
-            if (typeof (estudiante.data.results[0][item]) == 'string') { estudiante.data.results[0][item] = estudiante.data.results[0][item].toUpperCase() }
-            if (estudiante.data.results[0][item] == null) { estudiante.data.results[0][item] = "___" }
-            datos["estudiante" + contador + "_" + item] = estudiante.data.results[0][item]
+            if (typeof (estudiante.data.results[i][item]) == 'string') { estudiante.data.results[i][item] = estudiante.data.results[i][item].toUpperCase() }
+            if (estudiante.data.results[i][item] == null) { estudiante.data.results[i][item] = "___" }
+            datos["estudiante" + contador + "_" + item] = estudiante.data.results[i][item]
           }
           contador++
         }
@@ -871,9 +879,10 @@ const informacionCaso = async (req) => {
           datos["citacion_" + iterator] = citacion.data.results[0][iterator]
         }
         const fecha = new Date(citacion.data.results[0].fecha_sesion)
-        datos.citacion_mes = fecha.toLocaleString('es-es', { month: 'long' }).toUpperCase()
-        datos.citacion_año = fecha.getFullYear()
-        datos.citacion_dia = fecha.getUTCDate()
+        const opciones = { timeZone: "America/Bogota" };
+        datos.citacion_mes = fecha.toLocaleString('es-CO', { opciones,month: 'long' }).toUpperCase()
+        datos.citacion_año = fecha.toLocaleString("es-CO", { opciones, year: "numeric" })
+        datos.citacion_dia = fecha.toLocaleString("es-CO", {opciones, day: "numeric" });
       }
       if (Object.keys(resultado.data).length < 0) { datos.resultado = [] } else {
         for (const iterator in resultado.data) {
@@ -888,10 +897,11 @@ const informacionCaso = async (req) => {
 
     }))
   const hoy = new Date()
-  datos.fecha_actual_dia = hoy.getUTCDate()
-  datos.fecha_actual_mes = hoy.toLocaleString('es-es', { month: 'long' }).toUpperCase()
-  datos.fecha_actual_año = hoy.getFullYear()
-  datos.fecha_actual_hora = hoy.toLocaleTimeString()
+  const opciones = { timeZone: "America/Bogota" };
+  datos.fecha_actual_dia = hoy.toLocaleString("es-CO", {opciones, day: "numeric" });
+  datos.fecha_actual_mes = hoy.toLocaleString('es-CO', { opciones,month: 'long' }).toUpperCase()
+  datos.fecha_actual_año = hoy.toLocaleString("es-CO", { opciones, year: "numeric" })
+  datos.fecha_actual_hora = hoy.toLocaleTimeString("es-CO", opciones)
 
 
 
@@ -938,13 +948,15 @@ views.DescargarFormatoResultado = async (req, res) => {
 }
 views.GenerarReportes = async (req, res) => {
   try {
-
+    
+    req.body.nombre=req.body.nombre.replace(/\s+/g, '')
+ 
     axios.post(config.urlGeneradorReportes, req.body, { responseType: 'arraybuffer' })
-
+   
       .then(result => {
-
-
-        res.end(result.data)
+      // console.log(result);
+       res.end(result.data);
+        
 
       })
       .catch(err => {
@@ -1143,7 +1155,6 @@ views.EliminarPersonaDeCitacion = async (req, res) => {
 
 views.CitarPersonas = async (req, res) => {
   try {
-    
     let datos = {
       persona_id: req.params.id_persona,
       citacion_id: req.params.id
@@ -1238,7 +1249,7 @@ views.EnviarNotificacionCitacion = async (req, res) => {
 
                   <br><br>Adicional a esto, en este correo se adjunta un documento con la respectiva citación  y demás información importante para su conocimiento.`
 
-                        let asunto = `Citación Audiencia Conciliación Expediente: ${resul.expediente_numero_caso}`
+                        let asunto = `Citación Audiencia Conciliación`
 
 
                         const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [resul.citado_correo], asunto, encabezado, cuerpo, response.body)).catch(err => { (error(err)); falla = true })
@@ -1492,7 +1503,7 @@ views.CargarTemplatePersonas = async (req, res) => {
         res.status(400).json({ message: mensaje }); return
       }
 
-    
+      console.log(usuarios)
       await axios.post(config.urlApiExpedientes + "usuarios/", usuarios)
         .then(async result => {
 
@@ -1746,7 +1757,7 @@ views.CrearResultado = async (req, res) => {
         const resultado = axios.post(config.urlApiExpedientes + "resultados/", req.body)
         const categoria = axios.patch(config.urlApiExpedientes + "categorias_resultado/" + result.data.categoria_id + "/", { consecutivo_actual: result.data.consecutivo })
 
-        const cerrarCaso = axios.patch(config.urlApiExpedientes + "expedientes/" + req.params.id + "/", { expediente_cerrado: 1 })
+        const cerrarCaso = axios.patch(config.urlApiExpedientes + "expedientes/" + req.params.id + "/", { expediente_pre_cerrado: 1 })
 
         await Promise.all([resultado, categoria, cerrarCaso]).then(axios.spread(async (result, data2, casoCerrado) => {
 
@@ -2104,7 +2115,7 @@ views.AgregarConciliadores = async (req, res) => {
     axios.get(config.urlApiExpedientes + "relaciones_persona_expediente?persona_id=" + req.params.id2 + "&expediente_id=" + req.params.id)
       .then(async result => {
 
-        if (Object.keys(result.data.results).length > 0) { res.status(400).json({ response: { mensaje: "Ya se encuentra reportada esta persona " } }); return }
+        if (Object.keys(result.data.results).length > 0) { res.status(208).json({ response: { mensaje: "Ya se encuentra registrada la persona  " } }); return }
         const datos = { persona_id: req.params.id2, expediente_id: req.params.id, tipo_cliente_id: 3 }
         await axios.post(config.urlApiExpedientes + "relaciones_persona_expediente/", datos)
           .then(result => {
@@ -2118,7 +2129,7 @@ views.AgregarConciliadores = async (req, res) => {
             <br><b>Estado del Expediente:</b> ${result.data.estado_expediente} 
             <br><b>Conciliador:</b> ${result.data.nombres} 
             <br><br>Podrá revisar toda la información del caso en el  sistema de información manejado por el centro de conciliación.<br><br>`
-            let asunto = `Asignación Caso de Conciliación Expediente: ${result.data.numero_caso}`
+            let asunto = `Asignación Caso de Concilaición `
             const correo = axios.post(config.urlEmail, email.enviar("html", saludo, [result.data.correo], asunto, encabezado, cuerpo)).catch(err => { res.status(error(err)) })
 
           })
@@ -2335,23 +2346,34 @@ views.TurnosFecha = async (req, res) => {
 
             for (const iterator of result.data.results) {
               turnos_ocupados[turnos_ocupados.length] = parseInt(iterator.turno_id)
-
             }
-            
-            // turnos_ocupados = turnos_ocupados.sort((a, b) => { return a - b });
+
+            turnos_ocupados = turnos_ocupados.sort((a, b) => { return a - b });
 
             turnos_disponibles = turnos_totales.filter(element => !turnos_ocupados.includes(element))
-         
-            let horas_posibles=[]
+
+            endpoints = []
             if (turnos_disponibles.length < 1) { res.status(200).json([]); return }
-            for (const iterator of turnos_disponibles) {
-              horas_posibles.push(data2.data.results[turnos_totales.indexOf(iterator)])
-            }
-            
-            res.send(horas_posibles)
-           
             // res.status(200).json(result.data.results)
-           
+            for await (const iterator of turnos_disponibles) {
+              endpoints[endpoints.length] = config.urlApiExpedientes + "turnos/" + iterator
+            }
+
+            await Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+              .then(axios.spread(async (...allData) => {
+                let datos = []
+                for (const iterator of allData) {
+                  datos.push(iterator.data)
+                }
+
+                res.status(200).json(datos)
+              }))
+              .catch(err => {
+
+                res.sendStatus(error(err))
+                return
+
+              })
 
           })
           .catch(err => {

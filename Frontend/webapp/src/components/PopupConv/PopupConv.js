@@ -297,9 +297,9 @@ export default function PopupConv({
         nombres: event.target.nombres.value,
         apellidos: event.target.apellidos.value,
         identificacion: event.target.identificacion.value,
-        fecha_expedicion: event.target.fecha_expedicion.value,
+        fecha_expedicion: event.target.fecha_expedicion.value === "" ? null : event.target.fecha_expedicion.value,
         lugar_expedicion: event.target.lugar_expedicion.value,
-        fecha_nacimiento: event.target.fecha_nacimiento.value,
+        fecha_nacimiento: event.target.fecha_nacimiento.value === "" ? null : event.target.fecha_nacimiento.value,
         telefono: event.target.telefono.value,
         direccion: event.target.direccion.value,
         ocupacion: event.target.ocupacion.value,
@@ -326,9 +326,9 @@ export default function PopupConv({
       nombres: event.target.nombres.value,
       apellidos: event.target.apellidos.value,
       identificacion: event.target.identificacion.value,
-      fecha_expedicion: event.target.fecha_expedicion.value,
+      fecha_expedicion: event.target.fecha_expedicion.value === "" ? null : event.target.fecha_expedicion.value,
       lugar_expedicion: event.target.lugar_expedicion.value,
-      fecha_nacimiento: event.target.fecha_nacimiento.value,
+      fecha_nacimiento: event.target.fecha_nacimiento.value === "" ? null : event.target.fecha_nacimiento.value,
       telefono: event.target.telefono.value,
       direccion: event.target.direccion.value,
       ocupacion: event.target.ocupacion.value,
@@ -407,7 +407,7 @@ export default function PopupConv({
         });
     } else {
       console.log(data.persona);
-      axiosBasicInstanceApiExpedientes({
+      axiosTokenInstanceApiExpedientes({
         method: "post",
         url: `/expedientes/${id}/${personas}/`,
         // headers: req.headers,
@@ -454,7 +454,7 @@ export default function PopupConv({
           <div className="body-popup">
             <div className="form-datos pr-2">
               <label className="subtitles-secciones">Nombre</label>
-              <FloatingLabel controlId="nombres" label="Nombres">
+              <FloatingLabel controlId="nombres" label="Nombres *">
                 <Form.Control
                   className="inputs-registrar-solicitud"
                   type="text"
@@ -462,7 +462,7 @@ export default function PopupConv({
                   required
                 />
               </FloatingLabel>
-              <FloatingLabel controlId="apellidos" label="Apellidos">
+              <FloatingLabel controlId="apellidos" label="Apellidos *">
                 <Form.Control
                   className="inputs-registrar-solicitud"
                   type="text"
@@ -482,7 +482,6 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="date"
                   placeholder="name@example.com"
-                  required
                 />
               </FloatingLabel>
               <FloatingLabel
@@ -493,14 +492,13 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="text"
                   placeholder="name@example.com"
-                  required
                 />
               </FloatingLabel>
 
               <label className="subtitles-secciones">Identificación</label>
               <FloatingLabel
                 controlId="tipoDocumento"
-                label="Tipo de documento"
+                label="Tipo de documento *"
               >
                 <Form.Select
                   className="inputs-registrar-solicitud"
@@ -523,7 +521,7 @@ export default function PopupConv({
               </FloatingLabel>
               <FloatingLabel
                 controlId="identificacion"
-                label="Número de documento"
+                label="Número de documento *"
               >
                 <Form.Control
                   className="inputs-registrar-solicitud"
@@ -544,7 +542,6 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="date"
                   placeholder="name@example.com"
-                  required
                 />
               </FloatingLabel>
               <FloatingLabel
@@ -555,7 +552,6 @@ export default function PopupConv({
                   className="inputs-registrar-solicitud"
                   type="text"
                   placeholder="name@example.com"
-                  required
                 />
               </FloatingLabel>
 
@@ -573,7 +569,6 @@ export default function PopupConv({
                         name="tipoPersona"
                         id={"tipoPersona" + tipoPersona["id"]}
                         value={tipoPersona["id"]}
-                        required
                       />
                       <label
                         className="form-check-label"
@@ -655,11 +650,12 @@ export default function PopupConv({
                     })}
                   </Form.Select>
                 </FloatingLabel>
-                <FloatingLabel controlId="direccion" label="Dirección">
+                <FloatingLabel controlId="direccion" label="Dirección *">
                   <Form.Control
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    required
                   />
                 </FloatingLabel>
               </div>
@@ -766,11 +762,12 @@ export default function PopupConv({
                     })}
                   </Form.Select>
                 </FloatingLabel>
-                <FloatingLabel controlId="celular" label="Celular">
+                <FloatingLabel controlId="celular" label="Celular *">
                   <Form.Control
                     className="col-inputs"
                     type="text"
                     placeholder="name@example.com"
+                    required
                   />
                 </FloatingLabel>
               </div>
@@ -783,7 +780,7 @@ export default function PopupConv({
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
-                <FloatingLabel controlId="correo" label="Correo">
+                <FloatingLabel controlId="correo" label="Correo *">
                   <Form.Control
                     className="col-inputs"
                     type="text"

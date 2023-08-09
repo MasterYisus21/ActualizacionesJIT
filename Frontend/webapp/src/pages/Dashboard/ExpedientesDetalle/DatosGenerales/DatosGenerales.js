@@ -35,9 +35,9 @@ function DatosGenerales() {
       data: {}
     })
       .then(result => {
-        // console.log(result.data);
+        // //console.log(result.data);
         setSolicitantesServicio(result.data.results)
-        // console.log(result)
+        // //console.log(result)
       })
       .catch(err => {
         console.log(err);
@@ -53,7 +53,7 @@ function DatosGenerales() {
       data: {}
     })
       .then(result => {
-        // console.log(result.data);
+        // //console.log(result.data);
         setTiposServicio(result.data.results)
       })
       .catch(err => {
@@ -70,7 +70,7 @@ function DatosGenerales() {
       data: {}
     })
       .then(result => {
-        // console.log(result.data);
+        // //console.log(result.data);
         setIniciosConflicto(result.data.results)
       })
       .catch(err => {
@@ -87,7 +87,7 @@ function DatosGenerales() {
       data: {}
     })
       .then(result => {
-        // console.log(result.data);
+        // //console.log(result.data);
         setAreas(result.data.results)
       })
       .catch(err => {
@@ -104,7 +104,7 @@ function DatosGenerales() {
       data: {}
     })
       .then(result => {
-        //console.log(result.data);
+        ////console.log(result.data);
         temasRef.current = result.data.results
         setTemas(temasRef.current)
       })
@@ -115,6 +115,7 @@ function DatosGenerales() {
 
   // Fetch subtemas
   const fetchSubtemas = (tema) => {
+    console.log("fetching subtemas");
     if (tema) {
       axiosTokenInstanceApiExpedientes({
         method: 'get',
@@ -123,7 +124,7 @@ function DatosGenerales() {
         data: {}
       })
         .then(result => {
-          //console.log(result.data);
+          console.log(result.data);
           subtemasRef.current = result.data.results
           setSubtemas(subtemasRef.current)
         })
@@ -143,7 +144,7 @@ function DatosGenerales() {
       data: {}
     })
       .then(result => {
-        console.log(result.data);
+        //console.log(result.data);
         document.getElementById("Numero_caso").value = result.data["numero_caso"]
         document.getElementById("solicitante").value = result.data["solicitante_servicio_id"]
         document.getElementById("Inicio_conflicto_Id").value = result.data["inicio_conflicto_id"]
@@ -161,7 +162,9 @@ function DatosGenerales() {
           ))
         )
         setTemas(temasRef.current)
-        subtemasRef.current = ([{ id: parseInt(result.data["subtema_id"]), nombre: result.data["subtema"] }, ...temasRef.current])
+        // setTimeout(() => {
+        // }, 1000);
+        subtemasRef.current = ([{ id: parseInt(result.data["subtema_id"]), nombre: result.data["subtema"] }, ...subtemasRef.current])
         subtemasRef.current = subtemasRef.current.filter((value, index, self) =>
           index === self.findIndex((t) => (
             t.id === value.id
@@ -198,7 +201,7 @@ function DatosGenerales() {
       data: data
     })
       .then(result => {
-        console.log(result.data);
+        //console.log(result.data);
         toast.success('La información se ha guardado con éxito', {
           position: toast.POSITION.BOTTOM_RIGHT
         })

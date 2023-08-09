@@ -9,11 +9,14 @@ from django_filters import FilterSet, AllValuesFilter
 from django_filters import DateTimeFilter, NumberFilter
 from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.permissions import DjangoModelPermissions
-# from rest_framework.permissions import IsAuthenticated,DjangoModelPermissionsOrAnonReadOnly
-# from rest_framework_api_key.permissions import HasAPIKey
-
+from rest_framework.permissions import IsAuthenticated,DjangoModelPermissionsOrAnonReadOnly
+from rest_framework_api_key.permissions import HasAPIKey
+# from apiInventarioApp.pagination import StandardResultsSetPagination
 from django.http import JsonResponse
 def Modulos(request):
+
+    if 'Id' not in request.headers:
+        return JsonResponse({'error': 'El encabezado "Id" es requerido.'}, status=400)
     data={}
     user=User.objects.get(username=request.headers['Id'])
     request.user=user
@@ -159,7 +162,7 @@ class ExpedienteFilter(FilterSet):
 class ExpedienteViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
     serializer_class = ExpedienteSerializer
-    # permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
+    permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
     search_fields=['numero_caso','fecha_registro','tipo_servicio_id__nombre','subtema_id__nombre','numero_radicado','estado_expediente_id__nombre']
     filter_class = ExpedienteFilter
    
@@ -172,7 +175,7 @@ class Relacion_persona_expedienteViewSet(GeneralViewSet):  # Una sola clase para
     filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = ['persona_id__identificacion','persona_id','expediente_id','tipo_cliente_id']
     ordering_fields = '__all__'
-    # permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
+    permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
     search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre','expediente_id__estado_expediente_id__nombre','persona_id__nombres']
     
    
@@ -204,7 +207,7 @@ class ResultadoViewSet(GeneralViewSet):  # Una sola clase para los metodos de re
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter]
     filterset_fields = ['tipo_resultado_id__nombre','expediente_id']
     ordering_fields = '__all__'
-    # permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
+    permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
     search_fields=['=expediente_id__numero_caso','=persona_id__identificacion','expediente_id__fecha_registro','tipo_cliente_id__nombre']
     serializer_class = ResultadoSerializer
 
@@ -240,7 +243,7 @@ class Tipo_medioViewSet(GeneralViewSet):  # Una sola clase para los metodos de r
 class CitacionViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
 
     serializer_class = CitacionSerializer
-    # permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
+    permission_classes=[(HasAPIKey|IsAuthenticated) & (DjangoModelPermissionsOrAnonReadOnly | CustomDjangoModelPermission)]
 
 class Relacion_persona_citacionViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest 
     
@@ -304,7 +307,7 @@ class UsuariosViewSet(GeneralViewSet):  # Una sola clase para los metodos de res
     def get_queryset(self,pk=None):
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
         if pk is None:
-            return model.filter(is_active=True)
+            return model.filter(is_active=True).order_by('username')
     
         return model.filter(is_active=True, id=pk).first() # retorna todos los valores con estado = true
     def destroy(self,request,pk=None):
@@ -333,7 +336,7 @@ class GruposViewSet(GeneralViewSet):  # Una sola clase para los metodos de rest
         model=self.get_serializer().Meta.model.objects # Recoje la informacion del modelo que aparece en el meta de los serializer
        
         if pk is None:
-            return model.filter()
+            return model.filter().order_by('name')
         
         return model.filter( id=pk).first() # retorna todos los valores con estado = t
     def destroy(self,request,pk=None):

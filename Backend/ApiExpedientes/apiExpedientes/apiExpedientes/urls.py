@@ -30,9 +30,9 @@ from django.urls import re_path
 from django.views.static import serve
 
 urlpatterns = [
-    path('api/cca_expedientes/v1/admin/', admin.site.urls),
-    path('api/cca_expedientes/v1/modulos', Modulos),
-    path('api/cca_expedientes/v1/', include('apiExpedientesApp.routers')), # Todas las url   deberan empezar por 'api/'
+    path('api/jit_expedientes/v1/admin/', admin.site.urls),
+    path('api/jit_expedientes/v1/modulos', Modulos),
+    path('api/jit_expedientes/v1/', include('apiExpedientesApp.routers')), # Todas las url   deberan empezar por 'api/'
     
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 
