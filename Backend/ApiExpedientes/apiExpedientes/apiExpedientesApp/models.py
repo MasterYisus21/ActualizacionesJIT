@@ -291,7 +291,7 @@ class Codigo(EstadoModel):
 def increment_numero_caso_number():
     date = datetime.now()
     year = date.year 
-    ultima_solicitud = Expediente.objects.all().last()
+    ultima_solicitud = Expediente.objects.all().first()
     
     if not ultima_solicitud:
         return str(year)+"-" +'001'
