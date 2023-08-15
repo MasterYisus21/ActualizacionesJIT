@@ -5,7 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from apiExpedientesApp.general.general_views import  *
 from django.contrib.auth.models import User, Group
 from django_filters import FilterSet, AllValuesFilter
-
+from .models import Relacion_persona_expediente
 from django_filters import DateTimeFilter, NumberFilter
 from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.permissions import DjangoModelPermissions
@@ -13,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated,DjangoModelPermissionsOrA
 from rest_framework_api_key.permissions import HasAPIKey
 # from apiInventarioApp.pagination import StandardResultsSetPagination
 from django.http import JsonResponse
+
 def Modulos(request):
 
     if 'Id' not in request.headers:

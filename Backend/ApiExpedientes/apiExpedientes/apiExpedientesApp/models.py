@@ -791,7 +791,7 @@ class Tipo_medio(GeneralModel):
         return self.nombre
 
 class Citacion(EstadoModel):
-    enlace = models.CharField(max_length = 150,blank=True,null=True)
+    enlace = models.CharField(max_length = 330,blank=True,null=True)
     descripcion = models.TextField(blank=True,null=True)
     fecha_sesion = models.DateField(auto_now=False, auto_now_add=False,blank=False,null=False)
     turno_id = models.ForeignKey(Turno, on_delete=models.SET_NULL,blank=False,null=True)
