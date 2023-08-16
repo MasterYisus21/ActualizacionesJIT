@@ -409,6 +409,7 @@ function SolicitudesDetalle() {
       valor_caso: null,
       conciliador: null,
       conciliador_id: null,
+      numero_radicado: radicado,
     };
     console.log(body);
     axiosTokenInstanceApiSolicitudes({
@@ -421,6 +422,9 @@ function SolicitudesDetalle() {
         toast.info("La solicitud ha sido rechazada", {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
+        navigate(
+          "/dashboard/solicitudes" 
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -490,9 +494,9 @@ function SolicitudesDetalle() {
             position: toast.POSITION.BOTTOM_RIGHT,
           }
         );
-        // navigate(
-        //   "/dashboard/solicitudes/"
-        // );
+        navigate(
+          "/dashboard/solicitudes/"
+        );
       })
       .catch((err) => {
         console.log(err);
