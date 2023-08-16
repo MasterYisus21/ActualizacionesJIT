@@ -187,8 +187,9 @@ views.CrearExpediente = async (req, res) => {
 
     if (req.body.apoderado) {
 
-
-      if (!(req.body.apoderado.identificacion & req.body.apoderado.identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
+    
+      
+      if (!(req.body.apoderado.hasOwnProperty('identificacion') & req.body.apoderado.identificacion != "")) { res.sendStatus(error({ message: "El numero de identificacion del apoderado es incorrecto" })); return; }
 
       await axios.post(config.urlApiExpedientes + "apoderados/", req.body.apoderado)
         .then((result) => {
