@@ -7,7 +7,7 @@ from datetime import datetime
 def increment_entrada_number():
   date = datetime.now()
   year = date.year 
-  ultima_solicitud = Solicitud.objects.all().last()
+  ultima_solicitud = Solicitud.objects.all().first()
   if not ultima_solicitud:
     return 'S'+str(date.year)+str(date.month)+'CCJIT' +'001'
   
