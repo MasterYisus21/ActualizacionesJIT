@@ -1,5 +1,5 @@
-# SOFTWARE CENTRO DE CONCILIACIÓN V2.1.3
-*Actualizacion de formatos y api de informes.
+# SOFTWARE CENTRO DE CONCILIACIÓN V2.1.5
+*Correcciones realizadas.
 
 Corrección de error : 
 
