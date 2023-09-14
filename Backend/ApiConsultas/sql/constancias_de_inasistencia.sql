@@ -2,7 +2,7 @@ SELECT
     COUNT (expedientes) as Expedientes,
     SUM(
         CASE
-            WHEN tipo_resultado_id_id = 2 THEN 1
+            WHEN tipo_resultado_id_id = 4 THEN 1
             ELSE 0
         END
     ) AS Resultados,
