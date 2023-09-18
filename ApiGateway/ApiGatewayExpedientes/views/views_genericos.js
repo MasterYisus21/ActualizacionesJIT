@@ -1038,8 +1038,9 @@ views.CrearCitaciones = async (req, res) => {
         res.status(200).json(result.data)
       })
       .catch(err => {
+        console.log("error al crear citacion")
         res.sendStatus(error(err))
-        return
+     
       })
   } catch (error) {
     console.log(error);
