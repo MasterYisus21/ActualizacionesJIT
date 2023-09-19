@@ -950,8 +950,8 @@ views.DescargarFormatoResultado = async (req, res) => {
 views.GenerarReportes = async (req, res) => {
   try {
     
-    req.body.nombre=req.body.nombre.replace(/\s+/g, '')
- 
+    req.body.nombre=req.body.nombre.replace(/\s+/g, '_').toLowerCase()
+    console.log(req.body.nombre)
     axios.post(config.urlGeneradorReportes, req.body, { responseType: 'arraybuffer' })
    
       .then(result => {
@@ -1038,8 +1038,9 @@ views.CrearCitaciones = async (req, res) => {
         res.status(200).json(result.data)
       })
       .catch(err => {
+        console.log("error al crear citacion")
         res.sendStatus(error(err))
-        return
+     
       })
   } catch (error) {
     console.log(error);

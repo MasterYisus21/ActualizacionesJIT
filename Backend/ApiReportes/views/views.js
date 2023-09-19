@@ -17,10 +17,10 @@ views.Reportes = async (req, res) => {
             let data = {}
             
             switch (req.body.nombre) {
-                case "LibroRadicador":
+                case "libro_radicador":
                     LibroRadicador.LibroRadicador(res, result.data);
                     break;
-                case "SNIES":
+                case "snies":
 
                     data = {}
                     for (const iterator of result.data) {
@@ -31,14 +31,17 @@ views.Reportes = async (req, res) => {
 
                     FuncionRemplazar(req.body.nombre, data, res);
                     break;
-                case "ContanciasInasistencia":
-                case "Actas":
+                case "constancias_de_inasistencia":
+                case "constancias_de_no_acuerdo":
+                case "actas_de_conciliación":
+                case "actas_cumplidas":    
                     data = {}
                     let i = 1
                     for (const iterator of result.data) {
+                     
                         for (const key in iterator) {
 
-                            data[key + "_" + i] = iterator[key]
+                            data[key + "_" + iterator.semestre] = iterator[key]
 
                         }
 
