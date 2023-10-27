@@ -11,7 +11,7 @@ Corrección de error :
 
     - Ajuste en la hora de citacion de los formatos 
 
-    -
+    - Se añade nuevos reportes 
 
 
     
